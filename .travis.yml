@@ -8,5 +8,5 @@ before_script:
   - psql -c 'create database revolv_db;' -U postgres
   - psql -c "create user revolv with password 'revolv';" -U postgres
   - psql -c "grant all privileges on database revolv_db to revolv;" -U postgres
-  - psql -c "grant all privileges on all tables in schema public to revolv;" -U postgres
+  - psql -c "alter user revolv createdb;" -U postgres
 script: python -Wall manage.py test
