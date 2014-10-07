@@ -7,4 +7,4 @@ class RevolvBaseConfig(AppConfig):
 
     def ready(self):
         import revolv.base.signals
-        revolv.base.signals
+        revolv.base.signals  # quiet the pep8 flaker
