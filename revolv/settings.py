@@ -16,6 +16,11 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IS_STAGE = 'IS_STAGE' in os.environ
 IS_PROD = 'IS_PROD' in os.environ
 IS_HEROKU = IS_STAGE or IS_PROD
+IS_LOCAL = not IS_HEROKU
+
+IS_STAGE = 'IS_STAGE' in os.environ
+IS_PROD = 'IS_PROD' in os.environ
+IS_HEROKU = IS_STAGE or IS_PROD
 
 # Hard-coded urls: kind of ugly but we need these for when we
 # want to send links in emails
@@ -23,6 +28,19 @@ SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'bj0bs@i#b@fp7i-zrv6w+piwqzwh@-+0v(e@n^028cl2*xmnk-'
+
+# Facebook app keys
+# @todo (noah): find some way to extract these to a non-repo file and still
+# have the tests work, cause technically these are secret
+if IS_PROD:
+    FACEBOOK_APP_ID = "739531572786032"
+    FACEBOOK_APP_SECRET = "9f15aaa8c50e7ff285708ba0eda5a8ce"
+elif IS_STAGE:
+    FACEBOOK_APP_ID = "534999713303566"
+    FACEBOOK_APP_SECRET = "5d0b88d5bbf87599135ba9464cba0b02"
+else:
+    FACEBOOK_APP_ID = "739541629451693"
+    FACEBOOK_APP_SECRET = "1531152e8fe8bd8ce4a023a145a6be27"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
