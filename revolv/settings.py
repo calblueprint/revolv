@@ -41,7 +41,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djangobower'
+    'djangobower',
+    'revolv.base',
+    'revolv.project',
+    'revolv.administrator',
+    'revolv.ambassador',
+    'revolv.donor',
 )
 
 MIDDLEWARE_CLASSES = (
