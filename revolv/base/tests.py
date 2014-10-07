@@ -11,6 +11,10 @@ class SmokeTestCase(TestCase):
 
 class UserAuthTestCase(TestCase):
     def test_user_profile_sync(self):
+        """
+        Test that saving/deleting a User will get/create/delete the
+        appropriate user profile as well.
+        """
         test_user = User.objects.create_user(
             "John",
             "john@example.com",
@@ -19,6 +23,12 @@ class UserAuthTestCase(TestCase):
         profile = RevolvUserProfile.objects.filter(user=test_user).first()
         self.assertIsNotNone(profile)
         self.assertEqual(profile, test_user.revolvuserprofile)
+
+        test_user.last_name = "Doe"
+        test_user.save()
+
+        profiles = RevolvUserProfile.objects.filter(user=test_user)
+        self.assertEqual(len(profiles), 1)
 
         test_user.delete()
         profile = RevolvUserProfile.objects.filter(user=test_user).first()
