@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'djangobower',
     'revolv.base',
     'revolv.project',
-    'revolv.admin',
+    'revolv.administrator',
     'revolv.ambassador',
     'revolv.donor',
 )
