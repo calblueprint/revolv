@@ -2,7 +2,7 @@ from django.apps import AppConfig
 
 
 class RevolvBaseConfig(AppConfig):
-    name = 'base'
+    name = 'revolv.base'
     verbose_name = "Revolv Base User"
 
     def ready(self):

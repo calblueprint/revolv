@@ -3,7 +3,6 @@ from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
 
 
-
 class SmokeTestCase(TestCase):
     def test_works(self):
         """Test that the test framework works."""
@@ -19,4 +18,8 @@ class UserAuthTestCase(TestCase):
         )
         profile = RevolvUserProfile.objects.filter(user=test_user).first()
         self.assertIsNotNone(profile)
-        self.assertIs(profile, test_user.revolv_user_profile)
+        self.assertEqual(profile, test_user.revolvuserprofile)
+
+        test_user.delete()
+        profile = RevolvUserProfile.objects.filter(user=test_user).first()
+        self.assertIsNone(profile)
