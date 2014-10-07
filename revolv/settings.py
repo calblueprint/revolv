@@ -10,13 +10,15 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 IS_STAGE = 'IS_STAGE' in os.environ
 IS_PROD = 'IS_PROD' in os.environ
 IS_HEROKU = IS_STAGE or IS_PROD
 
-# Hard-coded urls: kind of ugly but we need these for when we want to send links in emails
+# Hard-coded urls: kind of ugly but we need these for when we
+# want to send links in emails
 SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -59,7 +61,8 @@ WSGI_APPLICATION = 'revolv.wsgi.application'
 # Templates
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates"
+    # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),
@@ -130,4 +133,3 @@ BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
 BOWER_INSTALLED_APPS = (
     'foundation',
 )
-
