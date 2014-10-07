@@ -12,6 +12,7 @@ class ProjectTests(TestCase):
 		# Note: there is a runtime warning of using a datetime
 		# that is not timezone aware
 		tomorrow = datetime.datetime.now() + datetime.timedelta(days=1)
+		Project.objects.create(
 			funding_goal=50.0,
 			title="Hello",
 			video_url="https://www.youtube.com/watch?v=9bZkp7q19f0",
