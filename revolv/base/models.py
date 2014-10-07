@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django_facebook.models import FacebookModel
-from revolv import settings
 
 
 class RevolvUserProfile(FacebookModel):
@@ -10,4 +10,4 @@ class RevolvUserProfile(FacebookModel):
     and a django auth.User model together, so that we can use both Facebook
     and non-Facebook user profiles.
     """
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(User)
