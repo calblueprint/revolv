@@ -7,6 +7,7 @@ urlpatterns = patterns('',
                        # url(r'^$', 'revolv.views.home', name='home'),
                        # url(r'^blog/', include('blog.urls')),
 
+                       (r'^facebook/', include('django_facebook.urls')),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^$', HomePageView.as_view(), name='home'),
                        )
