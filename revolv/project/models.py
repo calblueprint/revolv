@@ -32,6 +32,7 @@ class Project(models.Model):
     # or an ImageField if we let them upload images
     cover_photo = models.URLField(max_length=255)
     org_start_date = models.DateField()
+    
     # commented out until Donor model is implemented
     # donor = models.ManyToManyField(Donor)
 
