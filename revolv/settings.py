@@ -10,11 +10,16 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
+IS_STAGE = 'IS_STAGE' in os.environ
+IS_PROD = 'IS_PROD' in os.environ
+IS_HEROKU = IS_STAGE or IS_PROD
+
+# Hard-coded urls: kind of ugly but we need these for when we
+# want to send links in emails
+SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'bj0bs@i#b@fp7i-zrv6w+piwqzwh@-+0v(e@n^028cl2*xmnk-'
@@ -36,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangobower'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,6 +58,26 @@ ROOT_URLCONF = 'revolv.urls'
 
 WSGI_APPLICATION = 'revolv.wsgi.application'
 
+# Templates
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates"
+    # or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(BASE_DIR, 'templates'),
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    'django.core.context_processors.request',
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -85,3 +111,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Static asset configuration
+STATIC_ROOT = 'staticfiles'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.6/howto/static-files/
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+)
+
+# djangobower settings
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
+BOWER_INSTALLED_APPS = (
+    'foundation',
+)
