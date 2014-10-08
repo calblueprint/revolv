@@ -16,25 +16,42 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IS_STAGE = 'IS_STAGE' in os.environ
 IS_PROD = 'IS_PROD' in os.environ
 IS_HEROKU = IS_STAGE or IS_PROD
+IS_LOCAL = not IS_HEROKU
+
+IS_STAGE = 'IS_STAGE' in os.environ
+IS_PROD = 'IS_PROD' in os.environ
+IS_HEROKU = IS_STAGE or IS_PROD
 
 # Hard-coded urls: kind of ugly but we need these for when we
 # want to send links in emails
 SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'bj0bs@i#b@fp7i-zrv6w+piwqzwh@-+0v(e@n^028cl2*xmnk-'
+SECRET_KEY = os.environ.get(
+    "REVOLV_SECRET_KEY",
+    "mysecretkeyshhhguysitsasecret"
+)
+
+# Facebook app keys
+FACEBOOK_APP_ID = os.environ.get("REVOLV_FACEBOOK_APP_ID")
+FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    'django_facebook.context_processors.facebook',
+)
 
+ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = (
+    # django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,11 +59,16 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
+
+    # revolv apps
     'revolv.base',
     'revolv.project',
     'revolv.administrator',
     'revolv.ambassador',
     'revolv.donor',
+
+    # vendor apps
+    'django_facebook',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,6 +79,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django_facebook.auth_backends.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 ROOT_URLCONF = 'revolv.urls'
