@@ -27,20 +27,14 @@ IS_HEROKU = IS_STAGE or IS_PROD
 SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'bj0bs@i#b@fp7i-zrv6w+piwqzwh@-+0v(e@n^028cl2*xmnk-'
+SECRET_KEY = os.environ.get(
+    "REVOLV_SECRET_KEY",
+    "mysecretkeyshhhguysitsasecret"
+)
 
 # Facebook app keys
-# @todo (noah): find some way to extract these to a non-repo file and still
-# have the tests work, cause technically these are secret
-if IS_PROD:
-    FACEBOOK_APP_ID = "739531572786032"
-    FACEBOOK_APP_SECRET = "9f15aaa8c50e7ff285708ba0eda5a8ce"
-elif IS_STAGE:
-    FACEBOOK_APP_ID = "534999713303566"
-    FACEBOOK_APP_SECRET = "5d0b88d5bbf87599135ba9464cba0b02"
-else:
-    FACEBOOK_APP_ID = "739541629451693"
-    FACEBOOK_APP_SECRET = "1531152e8fe8bd8ce4a023a145a6be27"
+FACEBOOK_APP_ID = os.environ.get("REVOLV_FACEBOOK_APP_ID")
+FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
