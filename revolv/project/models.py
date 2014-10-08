@@ -1,6 +1,8 @@
 from django.db import models
 
+
 # Create your models here.
+
 
 class Project(models.Model):
     ACCEPTED = 'AC'
@@ -32,7 +34,7 @@ class Project(models.Model):
     # or an ImageField if we let them upload images
     cover_photo = models.URLField(max_length=255)
     org_start_date = models.DateField()
-    
+
     # commented out until Donor model is implemented
     # donor = models.ManyToManyField(Donor)
 
@@ -42,3 +44,8 @@ class Project(models.Model):
     # energy produced in kilowatt hours
     actual_energy = models.FloatField()
     amount_repaid = models.DecimalField(max_digits=15, decimal_places=2)
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=50, unique=True)
+    projects = models.ManyToManyField(Project)
