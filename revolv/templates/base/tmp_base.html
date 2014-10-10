@@ -24,6 +24,16 @@
 
     {% block body-bottom %}
     {% endblock %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/js/foundation.min.js"></script>
+    
+    <script>
+      $(document).foundation();
+    </script>
+    
+    {% block javascripts %}
+    {% endblock %}
 </body>
 
 </html>
