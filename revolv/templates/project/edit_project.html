@@ -1,0 +1,44 @@
+{% extends "base/tmp_base.html" %}
+{% load staticfiles %}
+
+{% block title %}Create Project{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+    <div class='large-12 columns'>
+        <h1>Create Project</h1>
+    </div>
+</div>
+<div class="row white-section">
+    <div class="large-12 columns">
+        <form method="POST" enctype="multipart/form-data">
+      		{% csrf_token %}
+      		{% for error in form.non_field_errors %}
+        	<div data-alert class="alert-box alert">
+            	{{ error }}
+            	<a href="#" class="close">&times;</a>
+          	</div>
+        	{% endfor %}
+
+            <div class="row">
+        		{% for field in form %}
+                <div class="medium-12 columns">
+                    <div id="{{ field.auto_id }}_container">
+				    	{{ field.help_text }}
+				    	<div>
+				      		{{ field.label_tag }} {{ field }}
+				    	</div>
+				    	<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>
+				  	</div>
+                </div>
+            	{% endfor %}
+        	</div>
+                
+            <button class="large right" id="save_course" type="submit">Create Project</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+

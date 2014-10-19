@@ -42,8 +42,12 @@ class Project(models.Model):
     # ambassador = models.ForeignKey(Ambassador)
 
     # energy produced in kilowatt hours
-    actual_energy = models.FloatField()
-    amount_repaid = models.DecimalField(max_digits=15, decimal_places=2)
+    actual_energy = models.FloatField(default=0.0)
+    amount_repaid = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        default=0.0
+    )
 
 
 class Category(models.Model):
