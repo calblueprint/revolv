@@ -14,7 +14,12 @@ class CreateProjectView(CreateView):
     form_class = forms.ProjectForm
 
     def get_success_url(self):
-        return reverse('home')
+        return reverse('project-view', kwargs={'pk': self.get_object().id})
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateProjectView, self).get_context_data(**kwargs)
+        context['action'] = reverse('project-create')
+        return context
 
 
 class UpdateProjectView(UpdateView):
@@ -23,7 +28,13 @@ class UpdateProjectView(UpdateView):
     form_class = forms.ProjectForm
 
     def get_success_url(self):
-        return reverse('home')
+        return reverse('project-view', kwargs={'pk': self.get_object().id})
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateProjectView, self).get_context_data(**kwargs)
+        context['action'] = reverse('project-edit',
+                                    kwargs={'pk': self.get_object().id})
+        return context
 
 
 class ProjectView(DetailView):
