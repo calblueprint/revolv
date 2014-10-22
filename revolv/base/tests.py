@@ -33,3 +33,10 @@ class UserAuthTestCase(TestCase):
         test_user.delete()
         profile = RevolvUserProfile.objects.filter(user=test_user).first()
         self.assertIsNone(profile)
+
+
+class LoginSignupPageTestCase(TestCase):
+    def test_page_found(self):
+        """Test that we can actually render a page."""
+        response = self.client.get("/signin/")
+        self.assertEqual(response.status_code, 200)
