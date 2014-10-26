@@ -1,6 +1,13 @@
 {% extends "base/tmp_base.html" %}
 {% load staticfiles %}
 
+{% block head %}
+<style type="text/css">
+    #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
+    #map-canvas img {max-width: none;}
+</style>
+{% endblock %}
+
 {% block title %}Create Project{% endblock %}
 
 {% block body %}
@@ -11,7 +18,11 @@
         <h3>Funding Goal : {{ project.funding_goal }}</h3>
         <h3>End Date : {{ project.end_date }}</h3>
         <h5>Location : {{ project.location}}</h5>
-        <p>{{ project.mission_statement }}</p>
+        <div id="map-canvas"></div>
+        <p>Organization : {{project.org_name}}</p>
+        <p>About {{org_name}} : {{project.org_about}}</p>
+        <img src="{{project.cover_photo}}"></img>
+        <p>Mission Statement : {{ project.mission_statement }}</p>
         <iframe width="420" height="315" src="{{ project.video_url }}">
 		</iframe>
     </div>
@@ -22,4 +33,26 @@
 		<a class="button" href="{% url "project-edit" pk=project.id %}">Edit Project</a>
 	</div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE">
+</script>
+<script type="text/javascript">
+    function initialize() {
+        var location = { lat: {{project.location_latitude}}, lng: {{project.location_longitude}} }
+        var mapOptions = {
+            center: location,
+            zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
 {% endblock %}

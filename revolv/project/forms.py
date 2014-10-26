@@ -6,6 +6,8 @@ from models import Project
 class ProjectForm(forms.ModelForm):
 
     mission_statement = forms.CharField(widget=forms.Textarea)
+    location_latitude = forms.DecimalField(widget=forms.HiddenInput())
+    location_longitude = forms.DecimalField(widget=forms.HiddenInput())
 
     class Meta:
         model = Project
@@ -19,5 +21,9 @@ class ProjectForm(forms.ModelForm):
             'end_date',
             'video_url',
             'cover_photo',
-            'org_start_date'
+            'org_name',
+            'org_about',
+            'org_start_date',
+            'location_latitude',
+            'location_longitude'
         )

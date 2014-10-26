@@ -3,7 +3,7 @@
 
 {% block head %}
 <style type="text/css">
-    #map-canvas { width: 100%; height: 500px !important; margin: 0; padding: 0;}
+    #map-canvas { width: 100%; height: 500px; margin: 0; padding: 0;}
     #map-canvas img {max-width: none;}
 </style>
 {% endblock %}
@@ -88,8 +88,13 @@
                 map: map,
                 draggable: true
             });
+            $('#id_location_latitude').val(location.lat());
+            $('#id_location_longitude').val(location.lng());
+            console.log(location);
             google.maps.event.addListener(marker, "dragend", function (event) {
                 //TODO : Have this update the location fields in the form
+                $('#id_location_latitude').val(this.position.lat());
+                $('#id_location_longitude').val(this.position.lng());
                 console.log(this.position);
             });
         }

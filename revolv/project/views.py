@@ -14,7 +14,7 @@ class CreateProjectView(CreateView):
     form_class = forms.ProjectForm
 
     def get_success_url(self):
-        return reverse('project-view', kwargs={'pk': self.get_object().id})
+        return reverse('home')
 
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
