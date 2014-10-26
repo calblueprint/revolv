@@ -68,7 +68,7 @@ class ProjectFormTests(TestCase):
         form_data['location_latitude'] = 0
         form_data['location_longitude'] = 0
         form_data['impact_power'] = 500.0
-        form_data['end_date'] = '2014-10-25 00:00:00'
+        form_data['end_date'] = '2014-10-25'
         form_data['video_url'] = 'https://www.youtube.com/watch?v=9bZkp7q19f0'
         form_data['cover_photo'] = 'http://i.imgur.com/2zMTZgi.jpg'
         form_data['org_start_date'] = '2014-10-10'
