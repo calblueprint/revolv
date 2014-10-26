@@ -33,7 +33,7 @@ class Project(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    end_date = models.DateTimeField()
+    end_date = models.DateField()
     project_status = models.CharField(
         max_length=2,
         choices=PROJECT_STATUS_CHOICES,
