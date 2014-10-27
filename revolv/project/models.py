@@ -3,6 +3,11 @@ from django.db import models
 
 # Create your models here.
 
+"""
+Project model. Stores basic metadata, information about the project,
+donations, energy impact, goals, and info about the organization.
+"""
+
 
 class Project(models.Model):
     ACCEPTED = 'AC'
@@ -21,6 +26,7 @@ class Project(models.Model):
     # power output of array in kilowatts
     impact_power = models.FloatField()
     location = models.CharField(max_length=255)
+    # latitude and longitude of the organization location
     location_latitude = models.DecimalField(
         max_digits=17,
         decimal_places=14,

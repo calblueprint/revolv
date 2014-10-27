@@ -16,7 +16,7 @@ class ProjectTests(TestCase):
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
         # Note: there is a runtime warning of using a datetime
         # that is not timezone aware
-        tomorrow = datetime.datetime.now() + datetime.timedelta(days=1)
+        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
         Project.objects.create(
             funding_goal=50.0,
             title="Hello",
@@ -38,7 +38,7 @@ class ProjectTests(TestCase):
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
         # Note: there is a runtime warning of using a datetime
         # that is not timezone aware
-        tomorrow = datetime.datetime.now() + datetime.timedelta(days=1)
+        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
         p = Project(
             funding_goal=20.0,
             title="Hello",
@@ -58,7 +58,10 @@ class ProjectTests(TestCase):
 
 
 class ProjectFormTests(TestCase):
-    # fills out a form for a sample project and tests that it is valid
+    """
+    Project form tests
+    """
+
     def test_project_form_is_valid(self):
         form_data = {}
         form_data['title'] = 'Hello'
@@ -68,7 +71,7 @@ class ProjectFormTests(TestCase):
         form_data['location_latitude'] = 0
         form_data['location_longitude'] = 0
         form_data['impact_power'] = 500.0
-        form_data['end_date'] = '2014-10-25'
+        form_data['end_date'] = '2024-10-25'
         form_data['video_url'] = 'https://www.youtube.com/watch?v=9bZkp7q19f0'
         form_data['cover_photo'] = 'http://i.imgur.com/2zMTZgi.jpg'
         form_data['org_start_date'] = '2014-10-10'

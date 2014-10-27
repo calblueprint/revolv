@@ -3,15 +3,22 @@ from django import forms
 from models import Project
 
 
+"""
+Form used for the Create and Update Project View. Controls what fields
+the user can access and their basic appearance to the user.
+"""
+
+
 class ProjectForm(forms.ModelForm):
 
     mission_statement = forms.CharField(widget=forms.Textarea)
+    # sets the lat and long fields to hidden (clicking on the map updates them)
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
 
     class Meta:
         model = Project
-        # exclude = ('amount_repaid', 'actual_energy', 'project_status')
+        # fields that need to be filled out
         fields = (
             'title',
             'mission_statement',
