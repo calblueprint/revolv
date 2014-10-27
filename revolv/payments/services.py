@@ -15,12 +15,13 @@ class PaymentService(object):
     @classmethod
     def create_payment(cls, user, amount, payment_instrument):
         """Create a payment based on a configured payment_instrument."""
+        # TODO(anthonys): document args
         if not cls.check_valid_payment_instrument(payment_instrument.type):
             raise PaymentServiceException('Not a valid payment instrument.')
         if not cls.check_valid_amount(amount):
             raise PaymentServiceException('Not a valid dollar amount.')
 
-        payment_instrument.charge()
+        payment_instrument.charge(amount)
         payment_transaction = PaymentTransaction(
             user=user,
             amount=float(amount),

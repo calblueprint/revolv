@@ -30,3 +30,10 @@ class Donation(models.Model):
     payment_transaction = models.ForeignKey(PaymentTransaction)
     created_at = models.DateTimeField(auto_now_add=True)
     project = models.ForeignKey(Project)
+
+    @property
+    def amount(self):
+        """
+        :return: The amount tied to this donation
+        """
+        return self.payment_transaction.amount
