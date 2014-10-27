@@ -16,6 +16,7 @@ class CreateProjectView(CreateView):
     def get_success_url(self):
         return reverse('home')
 
+    # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['action'] = reverse('project-new')
@@ -30,6 +31,7 @@ class UpdateProjectView(UpdateView):
     def get_success_url(self):
         return reverse('project-view', kwargs={'pk': self.get_object().id})
 
+    # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
         context['action'] = reverse('project-edit',

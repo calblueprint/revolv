@@ -56,14 +56,14 @@
 {% block javascripts %}
 <!-- Initializes the Google Map / Location Selection -->
 <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE">
 </script>
 <script type="text/javascript">
     function initialize() {
         //start location of the map
         var startLocation = new google.maps.LatLng(37.7699298, -122.4469157);
+        //initializes map and the marker
         var marker;
-        //initializes map
         var mapOptions = {
             center: startLocation,
             zoom: 8
@@ -76,26 +76,24 @@
         google.maps.event.addListener(map, 'click', function(event) {
             addMarker(event.latLng);
         });
+
         // Adds a marker to the map / updates the existing position of the marker
         function addMarker(location) {
             // if there already is a marker, deletes it so a new one can be created
             if(marker != null) {
                 deleteMarker();
             }
-            // TODO: have this update the location fields in the form
+            // adds the marker and updates the location fields
             marker = new google.maps.Marker({
                 position: location,
                 map: map,
                 draggable: true
             });
-            $('#id_location_latitude').val(location.lat());
-            $('#id_location_longitude').val(location.lng());
-            console.log(location);
+            updateLocation(location.lat(), location.lng());
+
+            // adds a drag listener for the marker to update on change
             google.maps.event.addListener(marker, "dragend", function (event) {
-                //TODO : Have this update the location fields in the form
-                $('#id_location_latitude').val(this.position.lat());
-                $('#id_location_longitude').val(this.position.lng());
-                console.log(this.position);
+                updateLocation(this.position.lat(), this.position.lng());
             });
         }
         // Deletes the current marker
@@ -103,7 +101,13 @@
             marker.setMap(null);
             marker = null;
         }
+        // uses jquery to update the latitude and longitude hidden fields 
+        function updateLocation(latitude, longitude) {
+            $('#id_location_latitude').val(latitude);
+            $('#id_location_longitude').val(longitude);
+        }
     }
+
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 

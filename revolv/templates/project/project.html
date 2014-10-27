@@ -40,6 +40,7 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE">
 </script>
 <script type="text/javascript">
+    // initializes the map based on the projects latitude and longitude, and adds the marker
     function initialize() {
         var location = { lat: {{project.location_latitude}}, lng: {{project.location_longitude}} }
         var mapOptions = {

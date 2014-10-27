@@ -21,6 +21,7 @@ class Project(models.Model):
     # power output of array in kilowatts
     impact_power = models.FloatField()
     location = models.CharField(max_length=255)
+    # latitude and longitude of the organization location
     location_latitude = models.DecimalField(
         max_digits=17,
         decimal_places=14,

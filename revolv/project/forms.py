@@ -6,12 +6,13 @@ from models import Project
 class ProjectForm(forms.ModelForm):
 
     mission_statement = forms.CharField(widget=forms.Textarea)
+    # sets the lat and long fields to hidden (clicking on the map updates them)
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
 
     class Meta:
         model = Project
-        # exclude = ('amount_repaid', 'actual_energy', 'project_status')
+        # fields that need to be filled out
         fields = (
             'title',
             'mission_statement',
