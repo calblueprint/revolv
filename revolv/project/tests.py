@@ -1,7 +1,8 @@
 import datetime
 
-import forms
 from django.test import TestCase
+
+import forms
 from models import Project
 
 

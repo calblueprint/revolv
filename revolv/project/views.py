@@ -1,6 +1,7 @@
-import forms
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, UpdateView
+
+import forms
 from models import Project
 
 
