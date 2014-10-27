@@ -61,15 +61,19 @@
 <script type="text/javascript">
     function initialize() {
         //start location of the map (if this is a new project, just pick SF as default)
-        var latitude = {{project.location_latitude}};
-        var longitude = {{project.location_longitude}};
-        var startLocation;
-        // checks if latitude and longitude already exists, otherwise prepopulates it
-        if(latitude && longitude) {
-            startLocation = new google.maps.LatLng(latitude, longitude);
-        } else {
-            startLocation = new google.maps.LatLng(37.7699298, -122.4469157);
-        }
+        {% if project.location_latitude %}
+            var latitude = {{project.location_latitude}};
+        {% else %}
+            var latitude = 37.7699298;
+        {% endif %}
+
+        {% if project.location_longitude %}
+            var longitude = {{project.location_longitude}};
+        {% else %}
+            var longitude = -122.4469157;
+        {% endif %}
+        
+        var startLocation = new google.maps.LatLng(latitude, longitude);
         //initializes map and the marker
         var marker;
         var mapOptions = {
