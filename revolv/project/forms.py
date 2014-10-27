@@ -1,6 +1,11 @@
 from django import forms
-
 from models import Project
+
+
+"""
+Form used for the Create and Update Project View. Controls what fields
+the user can access and their basic appearance to the user.
+"""
 
 
 class ProjectForm(forms.ModelForm):

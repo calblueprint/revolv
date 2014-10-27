@@ -3,6 +3,11 @@ from django.db import models
 
 # Create your models here.
 
+"""
+Project model. Stores basic metadata, information about the project,
+donations, energy impact, goals, and info about the organization.
+"""
+
 
 class Project(models.Model):
     ACCEPTED = 'AC'

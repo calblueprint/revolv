@@ -1,11 +1,16 @@
+import forms
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, UpdateView
-
-import forms
 from models import Project
 
 
 # Create your views here.
+
+"""
+The view to create a new project. Redirects to the homepage upon success.
+
+Accessed through /project/create
+"""
 
 
 class CreateProjectView(CreateView):
@@ -22,6 +27,14 @@ class CreateProjectView(CreateView):
         context['action'] = reverse('project-new')
         return context
 
+"""
+The view to update a project. It is the same view as creating a new project,
+though it prepopulates the existing field and passes in the project id.
+Redirects to the project page upon success.
+
+Accessed through /project/edit/{project_id}
+"""
+
 
 class UpdateProjectView(UpdateView):
     model = Project
@@ -37,6 +50,13 @@ class UpdateProjectView(UpdateView):
         context['action'] = reverse('project-edit',
                                     kwargs={'pk': self.get_object().id})
         return context
+
+
+"""
+The project view. Displays project details and allows for editing.
+
+Accessed through /project/{project_id}
+"""
 
 
 class ProjectView(DetailView):
