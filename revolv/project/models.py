@@ -51,9 +51,16 @@ class Project(models.Model):
     # or an ImageField if we let them upload images
     cover_photo = ProcessedImageField(
         upload_to='covers',
-        processors=[ResizeToFill(100, 50)],
+        processors=[ResizeToFill(1200, 500)],
         format='JPEG',
-        options={'quality': 80}
+        options={'quality': 80},
+        default=None
+    )
+    preview_photo = ImageSpecField(
+        source='cover_photo',
+        processors=[ResizeToFill(400, 300)],
+        format='JPEG',
+        options={'quality': 80},
     )
     org_start_date = models.DateField()
     org_name = models.CharField(max_length=255)
