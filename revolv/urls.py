@@ -18,7 +18,12 @@ urlpatterns = patterns('',
                            name='project-view'),
                        url(r'^signin/$', SignInView.as_view(), name='signin'),
                        url(r'^login/$', LoginView.as_view(), name='login'),
-                       url(r'^logout/$', auth_views.login, name='logout'),
+                       url(
+                           r'^logout/$',
+                           auth_views.logout,
+                           {"next_page": "/"},
+                           name='logout'
+                       ),
                        )
 
 
