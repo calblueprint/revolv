@@ -10,6 +10,12 @@ class SmokeTestCase(TestCase):
 
 
 class UserAuthTestCase(TestCase):
+    SIGNIN_URL = "/signin/"
+    LOGIN_URL = "/login/"
+    LOGOUT_URL = "/logout/"
+    SIGNUP_URL = "/signup/"
+    HOME_URL = "/"
+
     def _send_test_user_login_request(self):
         response = self.client.post(
             "/login/",
@@ -20,6 +26,12 @@ class UserAuthTestCase(TestCase):
             follow=True
         )
         return response
+
+    def _assert_no_user_authed(self, response):
+        self.assertFalse(response.context["user"].is_authenticated())
+
+    def _assert_user_authed(self, response):
+        self.assertTrue(response.context["user"].is_authenticated())
 
     def setUp(self):
         """Every test in this case has a test user."""
@@ -55,6 +67,7 @@ class UserAuthTestCase(TestCase):
         """Test that the login endpoint correctly logs in a user."""
         response = self._send_test_user_login_request()
         self.assertEqual(response.context["user"], self.test_user)
+        self.assertTrue(response.context["user"].is_authenticated())
 
     def test_login_logout(self):
         """
@@ -62,12 +75,35 @@ class UserAuthTestCase(TestCase):
         logged out.
         """
         self._send_test_user_login_request()
-        response = self.client.get("/signin/", follow=True)
-        self.assertRedirects(response, "/")
-        response = self.client.get("/login/", follow=True)
-        self.assertRedirects(response, "/")
-        response = self.client.get("/logout/", follow=True)
-        self.assertEqual(response.context["user"].is_authenticated(), False)
+        response = self.client.get(self.SIGNIN_URL, follow=True)
+        self.assertRedirects(response, self.HOME_URL)
+        response = self.client.get(self.LOGIN_URL, follow=True)
+        self.assertRedirects(response, self.HOME_URL)
+        response = self.client.get(self.LOGOUT_URL, follow=True)
+        self._assert_no_user_authed(response)
+
+    def test_signup_endpoint(self):
+        """Test that we can create a new user through the signup form."""
+        valid_data = {
+            "username": "john123",
+            "password1": "doe_password_1",
+            "password2": "doe_password_1",
+            "first_name": "John",
+            "last_name": "Doe"
+        }
+
+        no_name_data = valid_data.copy()
+        no_name_data["first_name"] = ""
+
+        response = self.client.post(self.SIGNUP_URL, no_name_data, follow=True)
+        self.assertRedirects(response, self.SIGNIN_URL)
+        self._assert_no_user_authed(response)
+
+        response = self.client.post(self.SIGNUP_URL, valid_data, follow=True)
+        self.assertRedirects(response, self.HOME_URL)
+        self._assert_user_authed(response)
+        # make sure the user was actually saved
+        User.objects.get(username="john123")
 
 
 class LoginSignupPageTestCase(TestCase):
