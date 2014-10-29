@@ -4,6 +4,7 @@ from django.contrib import admin
 from revolv.base.views import HomePageView, LoginView, SignInView, SignupView
 from revolv.project.views import (CreateProjectView, ProjectView,
                                   UpdateProjectView)
+
 urlpatterns = patterns('',
                        (r'^facebook/', include('django_facebook.urls')),
                        url(r'^admin/', include(admin.site.urls)),
