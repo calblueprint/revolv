@@ -1,5 +1,4 @@
-from revolv.payments.models import (Donation, PaymentInstrumentType,
-                                    PaymentTransaction)
+from revolv.payments.models import PaymentInstrumentType, PaymentTransaction
 
 
 # Exceptions
@@ -14,8 +13,14 @@ class PaymentService(object):
 
     @classmethod
     def create_payment(cls, user, amount, payment_instrument):
-        """Create a payment based on a configured payment_instrument."""
-        # TODO(anthonys): document args
+        """
+        Create a payment based on a configured payment_instrument.
+
+        :user: a User making the payment
+        :amount: float amount in USD
+        :payment_instrument: a PaymentInstrument object (see PayPalCreditCardInstrument)
+        :return: a PaymentTransaction object
+        """
         if not cls.check_valid_payment_instrument(payment_instrument.type):
             raise PaymentServiceException('Not a valid payment instrument.')
         if not cls.check_valid_amount(amount):
@@ -35,7 +40,8 @@ class PaymentService(object):
         """Return True if the payment instrument type is legit."""
         return (
             isinstance(payment_instrument_type, PaymentInstrumentType) and
-            PaymentInstrumentType.objects.get(name=payment_instrument_type.name)
+            PaymentInstrumentType.objects.get(
+                name=payment_instrument_type.name)
         )
 
     @classmethod
