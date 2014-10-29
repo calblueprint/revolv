@@ -34,6 +34,9 @@ class UserAuthTestCase(TestCase):
         profile = RevolvUserProfile.objects.filter(user=test_user).first()
         self.assertIsNone(profile)
 
+    def test_login_page_submission(self):
+        pass
+
 
 class LoginSignupPageTestCase(TestCase):
     def test_page_found(self):
