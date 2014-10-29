@@ -46,7 +46,3 @@ class PaymentService(object):
             return amount > 0.0
         except:
             return False
-
-
-class PaypalService(PaymentService):
-    pass
