@@ -1,5 +1,7 @@
 from django.db import models
 
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 # Create your models here.
 
@@ -47,8 +49,11 @@ class Project(models.Model):
     )
     mission_statement = models.CharField(max_length=5000)
     # or an ImageField if we let them upload images
-    cover_photo = models.ImageField(
-        upload_to='covers'
+    cover_photo = ProcessedImageField(
+        upload_to='covers',
+        processors=[ResizeToFill(100, 50)],
+        format='JPEG',
+        options={'quality': 80}
     )
     org_start_date = models.DateField()
     org_name = models.CharField(max_length=255)
