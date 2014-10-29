@@ -10,6 +10,17 @@ class SmokeTestCase(TestCase):
 
 
 class UserAuthTestCase(TestCase):
+    def _send_test_user_login_request(self):
+        response = self.client.post(
+            "/login/",
+            {
+                "username": self.test_user.get_username(),
+                "password": "test_user_password"
+            },
+            follow=True
+        )
+        return response
+
     def setUp(self):
         """Every test in this case has a test user."""
         self.test_user = User.objects.create_user(
@@ -42,15 +53,21 @@ class UserAuthTestCase(TestCase):
 
     def test_login_endpoint(self):
         """Test that the login endpoint correctly logs in a user."""
-        response = self.client.post(
-            "/login/",
-            {
-                "username": self.test_user.get_username(),
-                "password": "test_user_password"
-            },
-            follow=True
-        )
+        response = self._send_test_user_login_request()
         self.assertEqual(response.context["user"], self.test_user)
+
+    def test_login_logout(self):
+        """
+        Test that after logging in, the user object can be correctly
+        logged out.
+        """
+        self._send_test_user_login_request()
+        response = self.client.get("/signin/", follow=True)
+        self.assertRedirects(response, "/")
+        response = self.client.get("/login/", follow=True)
+        self.assertRedirects(response, "/")
+        response = self.client.get("/logout/", follow=True)
+        self.assertEqual(response.context["user"].is_authenticated(), False)
 
 
 class LoginSignupPageTestCase(TestCase):

@@ -35,6 +35,11 @@ class SignInView(TemplateView):
     login_form_class = AuthenticationForm
     signup_form_class = SignupForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return redirect("home")
+        return super(SignInView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, *args, **kwargs):
         context = super(SignInView, self).get_context_data(**kwargs)
         login_form = self.login_form_class()
