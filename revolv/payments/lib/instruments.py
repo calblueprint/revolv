@@ -59,13 +59,13 @@ class PayPalCreditCardInstrument(object):
         :param amount:
         :return:
         """
-        amount = "{0:.2f}".format(round(float(amount),2))
+        amount = "{0:.2f}".format(round(float(amount), 2))
         payment = Payment({
             "intent": "sale",
             "payer": {
                 "payment_method": "credit_card",
                 "funding_instruments": [{
-                "credit_card": self.credit_card.to_dict()
+                    "credit_card": self.credit_card.to_dict()
                 }]
             },
             "transactions": [{

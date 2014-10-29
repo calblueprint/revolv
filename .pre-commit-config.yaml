@@ -10,7 +10,6 @@
     -   id: check-json
     -   id: check-yaml
     -   id: debug-statements
-    -   id: name-tests-test
     -   id: flake8
         args:
         - --exclude=**/migrations/*.py

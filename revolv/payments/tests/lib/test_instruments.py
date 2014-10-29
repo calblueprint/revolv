@@ -1,10 +1,7 @@
 from django.test import TestCase
-
-from revolv.payments.lib.instruments import (
-    CreditCard,
-    PayPalCreditCardInstrument,
-    InvalidCreditCardException,
-)
+from revolv.payments.lib.instruments import (CreditCard,
+                                             InvalidCreditCardException,
+                                             PayPalCreditCardInstrument)
 
 
 class CreditCardTestCase(TestCase):
