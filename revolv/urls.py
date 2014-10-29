@@ -1,7 +1,7 @@
 import django.contrib.auth.views as auth_views
 from django.conf.urls import include, patterns, url
 from django.contrib import admin
-from revolv.base.views import HomePageView, SignInView
+from revolv.base.views import HomePageView, LoginView, SignInView
 
 urlpatterns = patterns('',
                        # Examples:
@@ -12,5 +12,6 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^$', HomePageView.as_view(), name='home'),
                        url(r'^signin/$', SignInView.as_view(), name='signin'),
-                       url(r'^logout/$', auth_views.login, name='login'),
+                       url(r'^login/$', LoginView.as_view(), name='login'),
+                       url(r'^logout/$', auth_views.login, name='logout'),
                        )

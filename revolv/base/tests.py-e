@@ -41,11 +41,8 @@ class UserAuthTestCase(TestCase):
 
     def test_login_endpoint(self):
         response = self.client.post(
-            "/login/",
-            {
-                "username": self.test_user.get_username(),
-                "password": "test_user_password"
-            }
+            "/login/", 
+            {"username": self.test_user.get_username(), "password": "test_user_password"}
         )
         self.assertEqual(response.renderer_context.user, self.test_user)
 
