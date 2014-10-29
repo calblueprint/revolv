@@ -11,6 +11,7 @@ class SmokeTestCase(TestCase):
 
 class UserAuthTestCase(TestCase):
     def setUp(self):
+        """Every test in this case has a test user."""
         self.test_user = User.objects.create_user(
             "John",
             "john@example.com",
@@ -40,14 +41,16 @@ class UserAuthTestCase(TestCase):
         self.assertIsNone(profile)
 
     def test_login_endpoint(self):
+        """Test that the login endpoint correctly logs in a user."""
         response = self.client.post(
             "/login/",
             {
                 "username": self.test_user.get_username(),
                 "password": "test_user_password"
-            }
+            },
+            follow=True
         )
-        self.assertEqual(response.renderer_context.user, self.test_user)
+        self.assertEqual(response.context["user"], self.test_user)
 
 
 class LoginSignupPageTestCase(TestCase):
