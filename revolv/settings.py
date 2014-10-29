@@ -70,6 +70,7 @@ INSTALLED_APPS = (
 
     # vendor apps
     'django_facebook',
+    'storages'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -160,3 +161,9 @@ BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
 BOWER_INSTALLED_APPS = (
     'foundation',
 )
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+AWS_ACCESS_KEY_ID = os.environ.get('REVOLV_AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.environ.get('REVOLV_AWS_SECRET_KEY', '')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('REVOLV_S3_BUCKET', '')

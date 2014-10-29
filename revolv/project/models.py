@@ -47,7 +47,9 @@ class Project(models.Model):
     )
     mission_statement = models.CharField(max_length=5000)
     # or an ImageField if we let them upload images
-    cover_photo = models.URLField(max_length=255)
+    cover_photo = models.ImageField(
+        upload_to='covers'
+    )
     org_start_date = models.DateField()
     org_name = models.CharField(max_length=255)
     org_about = models.CharField(max_length=1000)
