@@ -14,15 +14,17 @@ class SignupForm(UserCreationForm):
         last names.
         """
         user = super(SignupForm, self).save(commit=False)
-        profile = user.revolvuserprofile
-        profile.first_name = self.cleaned_data["first_name"]
-        profile.last_name = self.cleaned_data["last_name"]
-        profile.save()
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
         if commit:
             user.save()
         return user
 
     def ensure_authenticated_user(self):
+        """
+        Return the User model related to this valid form, or raise an
+        IntegrityError if it does not exist (because it should).
+        """
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password2')
         user = authenticate(username=username, password=password)
