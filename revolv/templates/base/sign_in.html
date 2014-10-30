@@ -1,0 +1,28 @@
+{% extends "base/tmp_base.html" %}
+{% load staticfiles %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+    <div class='small-12 columns'>
+        <h1>Log in or sign up</h1>
+        <div class="span-6">
+            <form action="/login/" method="post" id="login_form">
+                {% csrf_token %}
+                {{ login_form }}
+                <input type="submit" value="Log in">
+            </form>
+        </div>
+        <div class="span-6">
+            <form action="/signup/" method="post" id="login_form">
+                {% csrf_token %}
+                {{ signup_form }}
+                <input type="submit" value="Log in">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
