@@ -30,17 +30,21 @@
         	{% endfor %}
 
             <div class="row">
-        		{% for field in form %}
                 <div class="medium-12 columns">
-                    <div id="{{ field.auto_id }}_container">
-				    	{{ field.help_text }}
-				    	<div>
-				      		{{ field.label_tag }} {{ field }}
-				    	</div>
-				    	<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>
-				  	</div>
+                    {% include "base/partials/tooltip_formfield.html" with field=form.title %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.mission_statement %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.location %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.end_date %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.video_url %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.cover_photo %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_name %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.location_longtitude %}
                 </div>
-            	{% endfor %}
         	</div>
             <div class="row">
                 <div class="medium-8 columns">
@@ -76,6 +80,10 @@
         {% else %}
             var longitude = -122.4469157;
         {% endif %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> Add fancy tooltips and error stuff to form fields. odalc++
         var startLocation = new google.maps.LatLng(latitude, longitude);
         // instantiate the addressPicker suggestion engine (based on bloodhound)
         var addressPicker = new AddressPicker({
@@ -98,6 +106,7 @@
                     country: 'US'}
                 }
             }
+<<<<<<< HEAD
         );
         // instantiate the typeahead UI
         $('#id_location').typeahead(null, {
@@ -110,6 +119,34 @@
             $('#id_location_longitude').val(result.lng());
         })
     });
+=======
+            // adds the marker and updates the location fields
+            marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                draggable: true
+            });
+            updateLocation(location.lat(), location.lng());
+
+            // adds a drag listener for the marker to update on change
+            google.maps.event.addListener(marker, "dragend", function (event) {
+                updateLocation(this.position.lat(), this.position.lng());
+            });
+        }
+        // Deletes the current marker
+        function deleteMarker() {
+            marker.setMap(null);
+            marker = null;
+        }
+        // uses jquery to update the latitude and longitude hidden fields
+        function updateLocation(latitude, longitude) {
+            $('#id_location_latitude').val(latitude);
+            $('#id_location_longitude').val(longitude);
+        }
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+>>>>>>> Add fancy tooltips and error stuff to form fields. odalc++
 </script>
 
 {% endblock %}
