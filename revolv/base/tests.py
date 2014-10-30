@@ -69,6 +69,14 @@ class UserAuthTestCase(TestCase):
         self.assertEqual(response.context["user"], self.test_user)
         self.assertTrue(response.context["user"].is_authenticated())
 
+    def test_garbage_login(self):
+        response = self.client.post(self.LOGIN_URL, {
+            "username": "hjksadhfiobhv",
+            "password": "njnpvbebijrwehgjsd"
+        }, follow=True)
+        self.assertRedirects(response, self.SIGNIN_URL)
+        self._assert_no_user_authed(response)
+
     def test_login_logout(self):
         """
         Test that after logging in, the user object can be correctly
