@@ -5,6 +5,12 @@ from django.db import IntegrityError
 
 
 class SignupForm(UserCreationForm):
+    """
+    Form for a user to sign up for an account. Note that we manually clean
+    and save the first and last name of the user and their email, since
+    django.contrib.auth.forms.UserCreationForm does not do that by default.
+    """
+    email = forms.EmailField(label="Email")
     first_name = forms.CharField(label="First name")
     last_name = forms.CharField(label="Last name")
 
@@ -16,6 +22,7 @@ class SignupForm(UserCreationForm):
         user = super(SignupForm, self).save(commit=False)
         user.first_name = self.cleaned_data["first_name"]
         user.last_name = self.cleaned_data["last_name"]
+        user.email = self.cleaned_data["email"]
         if commit:
             user.save()
         return user
