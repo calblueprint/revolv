@@ -71,7 +71,8 @@ INSTALLED_APPS = (
     # vendor apps
     'django_facebook',
     'storages',
-    'imagekit'
+    'imagekit',
+    'widget_tweaks'
 )
 
 MIDDLEWARE_CLASSES = (

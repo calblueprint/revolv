@@ -9,3 +9,4 @@ paypalrestsdk==1.4.1
 pytz==2014.7
 django-storages==1.1.7
 django-imagekit==3.0
+django-widget-tweaks==1.3
