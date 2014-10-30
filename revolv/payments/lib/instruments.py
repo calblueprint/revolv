@@ -40,7 +40,7 @@ class CreditCard(AbstractCreditCard):
         }
 
 
-class PayPalCreditCardInstrument(object):
+class PayPalCreditCardInstrument(PaymentInstrument):
 
     def __init__(self, credit_card):
         if not isinstance(credit_card, CreditCard):
