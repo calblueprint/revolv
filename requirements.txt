@@ -4,3 +4,5 @@ pre-commit==0.3.0
 django-bower==5.0.1
 django-facebook==6.0.1
 Pillow==2.6.0
+mock==1.0.1
+paypalrestsdk==1.4.1

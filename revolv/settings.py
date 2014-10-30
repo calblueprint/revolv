@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     'revolv.administrator',
     'revolv.ambassador',
     'revolv.donor',
+    'revolv.payments',
 
     # vendor apps
     'django_facebook',
