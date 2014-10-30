@@ -14,8 +14,6 @@ class ProjectTests(TestCase):
 
     def test_construct(self):
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
-        # Note: there is a runtime warning of using a datetime
-        # that is not timezone aware
         tomorrow = datetime.date.today() + datetime.timedelta(days=1)
         Project.objects.create(
             funding_goal=50.0,
@@ -36,8 +34,6 @@ class ProjectTests(TestCase):
 
     def test_save_and_query(self):
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
-        # Note: there is a runtime warning of using a datetime
-        # that is not timezone aware
         tomorrow = datetime.date.today() + datetime.timedelta(days=1)
         p = Project(
             funding_goal=20.0,

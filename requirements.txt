@@ -6,3 +6,4 @@ django-facebook==6.0.1
 Pillow==2.6.0
 mock==1.0.1
 paypalrestsdk==1.4.1
+pytz==2014.7
