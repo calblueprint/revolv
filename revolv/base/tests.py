@@ -97,13 +97,25 @@ class UserAuthTestCase(TestCase):
             "password1": "doe_password_1",
             "password2": "doe_password_1",
             "first_name": "John",
-            "last_name": "Doe"
+            "last_name": "Doe",
+            "email": "john@example.com"
         }
 
         no_name_data = valid_data.copy()
         no_name_data["first_name"] = ""
 
+        no_email_data = valid_data.copy()
+        no_email_data["email"] = ""
+
         response = self.client.post(self.SIGNUP_URL, no_name_data, follow=True)
+        self.assertRedirects(response, self.SIGNIN_URL)
+        self._assert_no_user_authed(response)
+
+        response = self.client.post(
+            self.SIGNUP_URL,
+            no_email_data,
+            follow=True
+        )
         self.assertRedirects(response, self.SIGNIN_URL)
         self._assert_no_user_authed(response)
 
