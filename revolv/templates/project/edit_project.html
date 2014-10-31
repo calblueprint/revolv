@@ -64,9 +64,41 @@
 <script type="text/javascript">
 
     $( function() {
-        // instantiate the addressPicker suggestion engine (based on bloodhound)
-        var addressPicker = new AddressPicker({map: {id: '#map-canvas', displayMarker: true}, zoomForLocation: 18, draggable: true, reverseGeocoding: true, autocompleteService: {componentRestrictions: {country: 'US'}}});
+        // gets the start location of the map
+        {% if project.location_latitude %}
+            var latitude = {{project.location_latitude}};
+        {% else %}
+            var latitude = 37.7699298;
+        {% endif %}
 
+        {% if project.location_longitude %}
+            var longitude = {{project.location_longitude}};
+        {% else %}
+            var longitude = -122.4469157;
+        {% endif %}
+        var startLocation = new google.maps.LatLng(latitude, longitude);
+        // instantiate the addressPicker suggestion engine (based on bloodhound)
+        var addressPicker = new AddressPicker({
+            map: {
+                center: startLocation,
+                id: '#map-canvas',
+                displayMarker: true,
+                zoom: 6
+            },
+            marker: {
+                position: startLocation,
+                visible: true,
+                draggable: false
+            },
+            zoomForLocation: 18,
+            draggable: false,
+            reverseGeocoding: true, 
+            utocompleteService: {
+                componentRestrictions: {
+                    country: 'US'}
+                }
+            }
+        );
         // instantiate the typeahead UI
         $('#id_location').typeahead(null, {
             displayKey: 'description',
@@ -76,7 +108,6 @@
         $(addressPicker).on('addresspicker:selected', function (event, result) {
             $('#id_location_latitude').val(result.lat());
             $('#id_location_longitude').val(result.lng());
-            console.log("SUCCESS!");
         })
     });
 </script>
