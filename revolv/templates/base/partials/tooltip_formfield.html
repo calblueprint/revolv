@@ -1,7 +1,7 @@
 {% load widget_tweaks %}
 
 <label has-tooltip for="{{ field.id_for_label }}">
-    <span data-tooltip class="has-tip tip-top tip-thin" title="{{ field.help_text }}">
+    <span {% if field.help_text %}data-tooltip{% endif %} class="{% if field.help_text %} has-tip tip-top tip-thin {% endif %}" title="{{ field.help_text }}">
     {{ field.label }} {% if field.field.required %}<small>Required</small>{% endif %}
     </span>
     {% if field.errors %}
