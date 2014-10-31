@@ -84,6 +84,7 @@
         {% endif %}
         var startLocation = new google.maps.LatLng(latitude, longitude);
         // instantiate the addressPicker suggestion engine (based on bloodhound)
+        // https://github.com/sgruhier/typeahead-addresspicker
         var addressPicker = new AddressPicker({
             map: {
                 center: startLocation,
@@ -110,6 +111,7 @@
             displayKey: 'description',
             source: addressPicker.ttAdapter()
         });
+        // add click listeners
         addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
         $(addressPicker).on('addresspicker:selected', function (event, result) {
             $('#id_location_latitude').val(result.lat());
