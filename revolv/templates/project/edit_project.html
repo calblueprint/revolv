@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block head %}
+<link rel="stylesheet" href="{% static "typeahead/typeahead.css" %}" />
 <style type="text/css">
     #map-canvas { width: 100%; height: 500px; margin: 0; padding: 0;}
     #map-canvas img {max-width: none;}
@@ -61,14 +62,13 @@
 {% endblock %}
 
 {% block javascripts %}
-<!-- Initializes the Google Map / Location Selection -->
+<!-- Initializes the Google Map / Location Selection Typeahead -->
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE&libraries=places">
 </script>
-<script src="{% static 'js/typeahead.bundle.js' %}"></script>
-<script src="{% static 'js/typeahead-addresspicker.js' %}"></script>
+<script src="{% static 'typeahead/typeahead.bundle.js' %}"></script>
+<script src="{% static 'typeahead/typeahead-addresspicker.js' %}"></script>
 <script type="text/javascript">
-
     $( function() {
         // gets the start location of the map
         {% if project.location_latitude %}
@@ -82,18 +82,16 @@
         {% else %}
             var longitude = -122.4469157;
         {% endif %}
-<<<<<<< HEAD
-=======
 
->>>>>>> Add fancy tooltips and error stuff to form fields. odalc++
         var startLocation = new google.maps.LatLng(latitude, longitude);
         // instantiate the addressPicker suggestion engine (based on bloodhound)
+        // https://github.com/sgruhier/typeahead-addresspicker
         var addressPicker = new AddressPicker({
             map: {
                 center: startLocation,
                 id: '#map-canvas',
                 displayMarker: true,
-                zoom: 6
+                zoom: 18
             },
             marker: {
                 position: startLocation,
@@ -105,50 +103,21 @@
             reverseGeocoding: true, 
             utocompleteService: {
                 componentRestrictions: {
-                    country: 'US'}
+                    country: 'US'
                 }
             }
-<<<<<<< HEAD
-        );
+        });
         // instantiate the typeahead UI
         $('#id_location').typeahead(null, {
             displayKey: 'description',
             source: addressPicker.ttAdapter()
         });
+        // add click listeners
         addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
         $(addressPicker).on('addresspicker:selected', function (event, result) {
             $('#id_location_latitude').val(result.lat());
             $('#id_location_longitude').val(result.lng());
         })
     });
-=======
-            // adds the marker and updates the location fields
-            marker = new google.maps.Marker({
-                position: location,
-                map: map,
-                draggable: true
-            });
-            updateLocation(location.lat(), location.lng());
-
-            // adds a drag listener for the marker to update on change
-            google.maps.event.addListener(marker, "dragend", function (event) {
-                updateLocation(this.position.lat(), this.position.lng());
-            });
-        }
-        // Deletes the current marker
-        function deleteMarker() {
-            marker.setMap(null);
-            marker = null;
-        }
-        // uses jquery to update the latitude and longitude hidden fields
-        function updateLocation(latitude, longitude) {
-            $('#id_location_latitude').val(latitude);
-            $('#id_location_longitude').val(longitude);
-        }
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialize);
->>>>>>> Add fancy tooltips and error stuff to form fields. odalc++
 </script>
-
 {% endblock %}
