@@ -42,8 +42,10 @@
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_name %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.location_longtitude %}
+                    <div class="hidden hide">
+                        {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
+                        {% include "base/partials/tooltip_formfield.html" with field=form.location_longtitude %}
+                    </div>
                 </div>
         	</div>
             <div class="row">

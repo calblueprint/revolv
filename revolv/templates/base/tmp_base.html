@@ -12,14 +12,14 @@
     {% endblock %}
 
     <link rel="stylesheet" href="{% static "main.css" %}" />
-    <link rel="stylesheet" href="{% static "typeahead.css" %}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
     {% block head %}
     {% endblock %}
 </head>
 
 <body>
-    {% include "base/partials/nav.html" %}    
+    {% include "base/partials/nav.html" %}
 
     {% block body %}
     {% endblock %}
@@ -31,14 +31,13 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/js/foundation.min.js"></script>
-    
+
     <script>
       $(document).foundation();
     </script>
-    
+
     {% block javascripts %}
     {% endblock %}
 </body>
 
 </html>
-

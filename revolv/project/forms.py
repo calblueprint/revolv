@@ -11,7 +11,6 @@ the user can access and their basic appearance to the user.
 
 class ProjectForm(forms.ModelForm):
 
-    mission_statement = forms.CharField(widget=forms.Textarea)
     # sets the lat and long fields to hidden (clicking on the map updates them)
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
