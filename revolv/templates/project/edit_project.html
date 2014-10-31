@@ -76,16 +76,14 @@
         {% else %}
             var latitude = 37.7699298;
         {% endif %}
-
+        
         {% if project.location_longitude %}
             var longitude = {{project.location_longitude}};
         {% else %}
             var longitude = -122.4469157;
         {% endif %}
-
         var startLocation = new google.maps.LatLng(latitude, longitude);
         // instantiate the addressPicker suggestion engine (based on bloodhound)
-        // https://github.com/sgruhier/typeahead-addresspicker
         var addressPicker = new AddressPicker({
             map: {
                 center: startLocation,
