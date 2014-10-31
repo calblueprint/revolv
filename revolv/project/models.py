@@ -95,6 +95,7 @@ class Project(models.Model):
         help_text = 'What is the name of the organizatoin being helped?'
     )
     mission_statement = models.TextField(
+        'Organization Mission',
         help_text = 'What is the mission statement of the organization being helped by this project?'
     )
     org_about = models.TextField(
