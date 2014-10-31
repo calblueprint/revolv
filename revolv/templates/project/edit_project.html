@@ -41,11 +41,12 @@
 				  	</div>
                 </div>
             	{% endfor %}
-                <div class="medium-12 columns">
-                    Select location (click to place a marker / update its location!):
+        	</div>
+            <div class="row">
+                <div class="medium-8 columns">
                     <div id="map-canvas"></div>
                 </div>
-        	</div>
+            </div>
             <button class="large right" id="save_project" type="submit">Save</button>
         </form>
     </div>
@@ -56,71 +57,28 @@
 {% block javascripts %}
 <!-- Initializes the Google Map / Location Selection -->
 <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE&libraries=places">
 </script>
+<script src="{% static 'js/typeahead.bundle.js' %}"></script>
+<script src="{% static 'js/typeahead-addresspicker.js' %}"></script>
 <script type="text/javascript">
-    function initialize() {
-        //start location of the map (if this is a new project, just pick SF as default)
-        {% if project.location_latitude %}
-            var latitude = {{project.location_latitude}};
-        {% else %}
-            var latitude = 37.7699298;
-        {% endif %}
 
-        {% if project.location_longitude %}
-            var longitude = {{project.location_longitude}};
-        {% else %}
-            var longitude = -122.4469157;
-        {% endif %}
-        
-        var startLocation = new google.maps.LatLng(latitude, longitude);
-        //initializes map and the marker
-        var marker;
-        var mapOptions = {
-            center: startLocation,
-            zoom: 8
-        };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-        addMarker(startLocation);
+    $( function() {
+        // instantiate the addressPicker suggestion engine (based on bloodhound)
+        var addressPicker = new AddressPicker({map: {id: '#map-canvas', displayMarker: true}, zoomForLocation: 18, draggable: true, reverseGeocoding: true, autocompleteService: {componentRestrictions: {country: 'US'}}});
 
-        // This event listener will call addMarker() when the map is clicked.
-        google.maps.event.addListener(map, 'click', function(event) {
-            addMarker(event.latLng);
+        // instantiate the typeahead UI
+        $('#id_location').typeahead(null, {
+            displayKey: 'description',
+            source: addressPicker.ttAdapter()
         });
-
-        // Adds a marker to the map / updates the existing position of the marker
-        function addMarker(location) {
-            // if there already is a marker, deletes it so a new one can be created
-            if(marker != null) {
-                deleteMarker();
-            }
-            // adds the marker and updates the location fields
-            marker = new google.maps.Marker({
-                position: location,
-                map: map,
-                draggable: true
-            });
-            updateLocation(location.lat(), location.lng());
-
-            // adds a drag listener for the marker to update on change
-            google.maps.event.addListener(marker, "dragend", function (event) {
-                updateLocation(this.position.lat(), this.position.lng());
-            });
-        }
-        // Deletes the current marker
-        function deleteMarker() {
-            marker.setMap(null);
-            marker = null;
-        }
-        // uses jquery to update the latitude and longitude hidden fields 
-        function updateLocation(latitude, longitude) {
-            $('#id_location_latitude').val(latitude);
-            $('#id_location_longitude').val(longitude);
-        }
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialize);
+        addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
+        $(addressPicker).on('addresspicker:selected', function (event, result) {
+            $('#id_location_latitude').val(result.lat());
+            $('#id_location_longitude').val(result.lng());
+            console.log("SUCCESS!");
+        })
+    });
 </script>
 
 {% endblock %}
