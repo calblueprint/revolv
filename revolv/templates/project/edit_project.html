@@ -32,7 +32,6 @@
             <div class="row">
                 <div class="medium-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.title %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.mission_statement %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
@@ -40,11 +39,12 @@
                     {% include "base/partials/tooltip_formfield.html" with field=form.video_url %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.cover_photo %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_name %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.mission_statement %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
-                    <div class="hidden hide">
+                    <div class="hide">
                         {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
-                        {% include "base/partials/tooltip_formfield.html" with field=form.location_longtitude %}
+                        {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
                     </div>
                 </div>
         	</div>
