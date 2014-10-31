@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block head %}
+<link rel="stylesheet" href="{% static "typeahead/typeahead.css" %}" />
 <style type="text/css">
     #map-canvas { width: 100%; height: 500px; margin: 0; padding: 0;}
     #map-canvas img {max-width: none;}
@@ -61,12 +62,12 @@
 {% endblock %}
 
 {% block javascripts %}
-<!-- Initializes the Google Map / Location Selection -->
+<!-- Initializes the Google Map / Location Selection Typeahead -->
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE&libraries=places">
 </script>
-<script src="{% static 'js/typeahead.bundle.js' %}"></script>
-<script src="{% static 'js/typeahead-addresspicker.js' %}"></script>
+<script src="{% static 'typeahead/typeahead.bundle.js' %}"></script>
+<script src="{% static 'typeahead/typeahead-addresspicker.js' %}"></script>
 <script type="text/javascript">
     $( function() {
         // gets the start location of the map
@@ -83,12 +84,13 @@
         {% endif %}
         var startLocation = new google.maps.LatLng(latitude, longitude);
         // instantiate the addressPicker suggestion engine (based on bloodhound)
+        // https://github.com/sgruhier/typeahead-addresspicker
         var addressPicker = new AddressPicker({
             map: {
                 center: startLocation,
                 id: '#map-canvas',
                 displayMarker: true,
-                zoom: 6
+                zoom: 18
             },
             marker: {
                 position: startLocation,
@@ -100,15 +102,16 @@
             reverseGeocoding: true, 
             utocompleteService: {
                 componentRestrictions: {
-                    country: 'US'}
+                    country: 'US'
                 }
             }
-        );
+        });
         // instantiate the typeahead UI
         $('#id_location').typeahead(null, {
             displayKey: 'description',
             source: addressPicker.ttAdapter()
         });
+        // add click listeners
         addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
         $(addressPicker).on('addresspicker:selected', function (event, result) {
             $('#id_location_latitude').val(result.lat());
@@ -116,5 +119,4 @@
         })
     });
 </script>
-
 {% endblock %}
