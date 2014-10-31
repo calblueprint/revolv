@@ -22,7 +22,6 @@ class ProjectForm(forms.ModelForm):
             'title',
             'mission_statement',
             'funding_goal',
-            'location',
             'impact_power',
             'end_date',
             'video_url',
@@ -30,6 +29,7 @@ class ProjectForm(forms.ModelForm):
             'org_name',
             'org_about',
             'org_start_date',
+            'location',
             'location_latitude',
             'location_longitude'
         )
