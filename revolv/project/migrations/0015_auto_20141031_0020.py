@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('project', '0014_auto_20141031_0001'),
+    ]
+
+    operations = [
+        migrations.AlterField(
+            model_name='project',
+            name='mission_statement',
+            field=models.TextField(help_text=b'What is the mission statement of the organization being helped by this project?', verbose_name=b'Organization Mission'),
+        ),
+    ]
