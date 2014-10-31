@@ -68,7 +68,6 @@ class Project(models.Model):
         choices=PROJECT_STATUS_CHOICES,
         default=PROPOSED
     )
-    # or an ImageField if we let them upload images
     cover_photo = ProcessedImageField(
         upload_to='covers',
         processors=[ResizeToFill(1200, 500)],
