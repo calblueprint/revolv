@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block head %}
+<link rel="stylesheet" href="{% static "typeahead/typeahead.css" %}" />
 <style type="text/css">
     #map-canvas { width: 100%; height: 500px; margin: 0; padding: 0;}
     #map-canvas img {max-width: none;}
@@ -47,11 +48,12 @@
                         {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
                     </div>
                 </div>
-                <div class="medium-12 columns">
-                    Select location (click to place a marker / update its location!):
+        	</div>
+            <div class="row">
+                <div class="medium-8 columns">
                     <div id="map-canvas"></div>
                 </div>
-        	</div>
+            </div>
             <button class="large right" id="save_project" type="submit">Save</button>
         </form>
     </div>
@@ -60,73 +62,61 @@
 {% endblock %}
 
 {% block javascripts %}
-<!-- Initializes the Google Map / Location Selection -->
+<!-- Initializes the Google Map / Location Selection Typeahead -->
 <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE&libraries=places">
 </script>
+<script src="{% static 'typeahead/typeahead.bundle.js' %}"></script>
+<script src="{% static 'typeahead/typeahead-addresspicker.js' %}"></script>
 <script type="text/javascript">
-    function initialize() {
-        //start location of the map (if this is a new project, just pick SF as default)
+    $( function() {
+        // gets the start location of the map
         {% if project.location_latitude %}
             var latitude = {{project.location_latitude}};
         {% else %}
             var latitude = 37.7699298;
         {% endif %}
-
+        
         {% if project.location_longitude %}
             var longitude = {{project.location_longitude}};
         {% else %}
             var longitude = -122.4469157;
         {% endif %}
-
         var startLocation = new google.maps.LatLng(latitude, longitude);
-        //initializes map and the marker
-        var marker;
-        var mapOptions = {
-            center: startLocation,
-            zoom: 8
-        };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-        addMarker(startLocation);
-
-        // This event listener will call addMarker() when the map is clicked.
-        google.maps.event.addListener(map, 'click', function(event) {
-            addMarker(event.latLng);
-        });
-
-        // Adds a marker to the map / updates the existing position of the marker
-        function addMarker(location) {
-            // if there already is a marker, deletes it so a new one can be created
-            if(marker != null) {
-                deleteMarker();
+        // instantiate the addressPicker suggestion engine (based on bloodhound)
+        // https://github.com/sgruhier/typeahead-addresspicker
+        var addressPicker = new AddressPicker({
+            map: {
+                center: startLocation,
+                id: '#map-canvas',
+                displayMarker: true,
+                zoom: 18
+            },
+            marker: {
+                position: startLocation,
+                visible: true,
+                draggable: false
+            },
+            zoomForLocation: 18,
+            draggable: false,
+            reverseGeocoding: true, 
+            utocompleteService: {
+                componentRestrictions: {
+                    country: 'US'
+                }
             }
-            // adds the marker and updates the location fields
-            marker = new google.maps.Marker({
-                position: location,
-                map: map,
-                draggable: true
-            });
-            updateLocation(location.lat(), location.lng());
-
-            // adds a drag listener for the marker to update on change
-            google.maps.event.addListener(marker, "dragend", function (event) {
-                updateLocation(this.position.lat(), this.position.lng());
-            });
-        }
-        // Deletes the current marker
-        function deleteMarker() {
-            marker.setMap(null);
-            marker = null;
-        }
-        // uses jquery to update the latitude and longitude hidden fields
-        function updateLocation(latitude, longitude) {
-            $('#id_location_latitude').val(latitude);
-            $('#id_location_longitude').val(longitude);
-        }
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialize);
+        });
+        // instantiate the typeahead UI
+        $('#id_location').typeahead(null, {
+            displayKey: 'description',
+            source: addressPicker.ttAdapter()
+        });
+        // add click listeners
+        addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
+        $(addressPicker).on('addresspicker:selected', function (event, result) {
+            $('#id_location_latitude').val(result.lat());
+            $('#id_location_longitude').val(result.lng());
+        })
+    });
 </script>
-
 {% endblock %}

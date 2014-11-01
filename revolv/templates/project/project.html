@@ -2,10 +2,10 @@
 {% load staticfiles %}
 
 {% block head %}
-<style type="text/css">
-    #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
-    #map-canvas img {max-width: none;}
-</style>
+    <style type="text/css">
+        #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
+        #map-canvas img {max-width: none;}
+    </style>
 {% endblock %}
 
 {% block title %}Create Project{% endblock %}
@@ -45,7 +45,7 @@
         var location = { lat: {{project.location_latitude}}, lng: {{project.location_longitude}} }
         var mapOptions = {
             center: location,
-            zoom: 8
+            zoom: 18
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
