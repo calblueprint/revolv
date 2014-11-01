@@ -1,17 +1,43 @@
+from itertools import chain
+
 from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 
 
-# Create your models here.
+class ProjectManager(models.Manager):
+    """
+    Manager for running custom operations on the Projects.
+    """
+    def get_featured(self, num_projects, queryset=None):
+        """ Get num_projects amount of accepted projects. If we don't have
+        enough accepted projects, then we retrieve completed projects. This
+        function may return fewer projects than requested if not enough exist.
 
-"""
-Project model. Stores basic metadata, information about the project,
-donations, energy impact, goals, and info about the organization.
-"""
+        :num_projects: Number of projects to be retrieved
+        :queryset: The queryset in which to search for projects
+        :return: A list of featured project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        featured_projects = queryset.filter(
+            project_status=Project.ACCEPTED).order_by(
+            'end_date')[:num_projects]
+        if featured_projects.count() < num_projects:
+            num_completed_needed = num_projects - featured_projects.count()
+            completed_projects = queryset.filter(
+                project_status=Project.COMPLETED).order_by(
+                'end_date')[:num_completed_needed]
+            return list(chain(featured_projects, completed_projects))
+        else:
+            return featured_projects
 
 
 class Project(models.Model):
+    """
+    Project model. Stores basic metadata, information about the project,
+    donations, energy impact, goals, and info about the organization.
+    """
     ACCEPTED = 'AC'
     PROPOSED = 'PR'
     COMPLETED = 'CO'
@@ -115,6 +141,8 @@ class Project(models.Model):
         decimal_places=2,
         default=0.0
     )
+
+    objects = ProjectManager()
 
 
 class Category(models.Model):

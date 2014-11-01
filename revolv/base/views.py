@@ -5,12 +5,20 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
 from revolv.base.forms import SignupForm
+from revolv.project.models import Project
 
 
 class HomePageView(TemplateView):
     """Website home page. THIS VIEW IS INCOMPLETE. UPDATE DOCSTRING
     WHEN COMPLETED."""
     template_name = 'base/home.html'
+    NUM_PROJECTS_SHOWN = 1000
+
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data(**kwargs)
+        context["featured_projects"] = Project.objects.get_featured(
+            HomePageView.NUM_PROJECTS_SHOWN)
+        return context
 
 
 class SignInView(TemplateView):
