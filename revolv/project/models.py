@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 # Create your models here.
@@ -20,12 +22,31 @@ class Project(models.Model):
         (COMPLETED, 'Completed'),
         (BUILDING, 'Building'),
     )
-    funding_goal = models.DecimalField(max_digits=15, decimal_places=2)
-    title = models.CharField(max_length=255)
-    video_url = models.URLField(max_length=255)
+    funding_goal = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        help_text='How much do you aim to raise for this project?'
+    )
+    title = models.CharField(
+        max_length=255,
+        help_text='How would you like to title this project?'
+    )
+    video_url = models.URLField(
+        'Video URL',
+        max_length=255,
+        blank=True,
+        help_text='Optional: Link to a Youtube video about the project or community.'
+    )
     # power output of array in kilowatts
-    impact_power = models.FloatField()
-    location = models.CharField(max_length=255)
+    impact_power = models.FloatField(
+        'Expected Killowatt Output',
+        help_text='What is the expected output in killowatts of the proposed solar array?'
+    )
+    location = models.CharField(
+        'Organization Address',
+        max_length=255,
+        help_text='What is the address of the organization where the solar panels will be installed?'
+    )
     # latitude and longitude of the organization location
     location_latitude = models.DecimalField(
         max_digits=17,
@@ -39,18 +60,47 @@ class Project(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    end_date = models.DateField()
+    end_date = models.DateField(
+        help_text='When will this crowdfunding project end?'
+    )
     project_status = models.CharField(
         max_length=2,
         choices=PROJECT_STATUS_CHOICES,
         default=PROPOSED
     )
-    mission_statement = models.CharField(max_length=5000)
-    # or an ImageField if we let them upload images
-    cover_photo = models.URLField(max_length=255)
-    org_start_date = models.DateField()
-    org_name = models.CharField(max_length=255)
-    org_about = models.CharField(max_length=1000)
+    cover_photo = ProcessedImageField(
+        upload_to='covers',
+        processors=[ResizeToFill(1200, 500)],
+        format='JPEG',
+        options={'quality': 80},
+        default=None,
+        help_text='Choose a beautiful high resolution image to represent this project.'
+    )
+    preview_photo = ImageSpecField(
+        source='cover_photo',
+        processors=[ResizeToFill(400, 300)],
+        format='JPEG',
+        options={'quality': 80},
+    )
+    org_start_date = models.DateField(
+        'Organization Founding Date',
+        blank=True,
+        null=True,
+        help_text='When was the organization being helped established?'
+    )
+    org_name = models.CharField(
+        'Organization Name',
+        max_length=255,
+        help_text='What is the name of the organization being helped?'
+    )
+    mission_statement = models.TextField(
+        'Organization Mission',
+        help_text='What is the mission statement of the organization being helped by this project?'
+    )
+    org_about = models.TextField(
+        'Organization Description',
+        help_text='Elaborate more about the organization, what it does, who it serves, etc.'
+    )
 
     # commented out until Donor model is implemented
     # donor = models.ManyToManyField(Donor)

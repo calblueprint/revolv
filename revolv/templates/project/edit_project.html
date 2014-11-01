@@ -30,17 +30,23 @@
         	{% endfor %}
 
             <div class="row">
-        		{% for field in form %}
                 <div class="medium-12 columns">
-                    <div id="{{ field.auto_id }}_container">
-				    	{{ field.help_text }}
-				    	<div>
-				      		{{ field.label_tag }} {{ field }}
-				    	</div>
-				    	<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>
-				  	</div>
+                    {% include "base/partials/tooltip_formfield.html" with field=form.title %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.location %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.end_date %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.video_url %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.cover_photo %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_name %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.mission_statement %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
+                    <div class="hide">
+                        {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
+                        {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
+                    </div>
                 </div>
-            	{% endfor %}
                 <div class="medium-12 columns">
                     Select location (click to place a marker / update its location!):
                     <div id="map-canvas"></div>
@@ -72,7 +78,7 @@
         {% else %}
             var longitude = -122.4469157;
         {% endif %}
-        
+
         var startLocation = new google.maps.LatLng(latitude, longitude);
         //initializes map and the marker
         var marker;
@@ -113,7 +119,7 @@
             marker.setMap(null);
             marker = null;
         }
-        // uses jquery to update the latitude and longitude hidden fields 
+        // uses jquery to update the latitude and longitude hidden fields
         function updateLocation(latitude, longitude) {
             $('#id_location_latitude').val(latitude);
             $('#id_location_longitude').val(longitude);
