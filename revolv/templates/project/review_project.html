@@ -1,0 +1,22 @@
+{% extends "project/project.html" %}
+{% load staticfiles %}
+
+{% block title %}Review Project{% endblock %}
+
+{% block body %}
+{{ block.super }}
+<form enctype="multipart/form-data" method="POST">
+{% csrf_token %}
+<div class="row">
+    <div class="large-12 columns">
+        <ul class="button-group right nav-tab-button-group">
+            <li><input id="propose_project" class="tiny button radius" name="_propose" type="submit" value="Propose"></input></li>
+            <li><input id="approve_project" class="tiny button success radius" name="_approve" type="submit" value="Approve" ></input></li>
+            <li><input id="deny_project" class="tiny button alert radius" name="_deny" type="submit" value="Deny"></input></li>
+            <li><a class="tiny button info radius" href="{% url "project:edit" pk=project.id %}">Edit Project</a></li> 
+        </ul>                    
+    </div>
+</div>
+</form>
+
+{% endblock %}
