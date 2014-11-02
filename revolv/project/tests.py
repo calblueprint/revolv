@@ -1,8 +1,6 @@
 import datetime
 
 from django.test import TestCase
-
-import forms
 from models import Project
 
 
@@ -51,3 +49,16 @@ class ProjectTests(TestCase):
         p.save()
         entry = Project.objects.all().filter(location="San Francisco")[0]
         self.assertEqual(entry.mission_statement, "Blueprint!")
+
+
+class ProjectManagerTests(TestCase):
+    """Tests for the Project manager"""
+    fixtures = ['project']
+
+    def test_get_featured(self):
+        context = Project.objects.get_featured(1)
+        self.assertEqual(len(context), 1)
+        self.assertEqual(context[0].org_name, "The Community Dance Studio")
+        context = Project.objects.get_featured(10)
+        self.assertEqual(len(context), 2)
+        self.assertEqual(context[1].org_name, "Comoonity Dairy")

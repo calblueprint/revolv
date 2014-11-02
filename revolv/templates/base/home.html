@@ -7,12 +7,16 @@
 
 <div class='row'>
     <div class='small-12 columns'>
-        <h1>Hello World!</h1>
+        <h1>RE-volv</h1>
         {% if request.user.is_authenticated %}
         <p>You're logged in as {{user.first_name}} {{user.last_name}}</p>
         {% endif %}
+        <ul>
+            {% for project in featured_projects %}
+                <li>{{ project.title }}</li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 
 {% endblock %}
-

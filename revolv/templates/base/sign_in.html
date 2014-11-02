@@ -6,22 +6,25 @@
 {% block body %}
 
 <div class='row'>
-    <div class='small-12 columns'>
-        <h1>Log in or sign up</h1>
-        <div class="span-6">
-            <form action="/login/" method="post" id="login_form">
-                {% csrf_token %}
-                {{ login_form }}
-                <input type="submit" value="Log in">
-            </form>
-        </div>
-        <div class="span-6">
-            <form action="/signup/" method="post" id="login_form">
-                {% csrf_token %}
-                {{ signup_form }}
-                <input type="submit" value="Log in">
-            </form>
-        </div>
+    <div class='small-6 columns'>
+        <h1>Log in</h1>
+        <form action="/login/" method="post" id="login_form">
+            {% csrf_token %}
+            {% for login_field in login_form %}
+                {% include "base/partials/tooltip_formfield.html" with field=login_field %}
+            {% endfor %}
+            <button class="medium" type="submit" value="Log in">Sign In</button>
+        </form>
+    </div>
+    <div class="small-6 columns">
+        <h1>Sign Up</h1>
+        <form action="/signup/" method="post" id="login_form">
+            {% csrf_token %}
+            {% for signup_field in signup_form %}
+                {% include "base/partials/tooltip_formfield.html" with field=signup_field %}
+            {% endfor %}
+            <button class="medium" type="submit" value="Log in">Log In</button>
+        </form>
     </div>
 </div>
 
