@@ -55,7 +55,7 @@ class ProjectManager(models.Manager):
         return drafted_projects
 
     def approve_project(self, project):
-        project.project_status = Project.APPROVED
+        project.project_status = Project.ACCEPTED
         project.save()
         return project
 
@@ -65,7 +65,12 @@ class ProjectManager(models.Manager):
         return project
 
     def deny_project(self, project):
-        project.project_status = project.PROPOSED
+        project.project_status = Project.DRAFTED
+        project.save()
+        return project
+
+    def complete_project(self, project):
+        project.project_status = Project.COMPLETED
         project.save()
         return project
 

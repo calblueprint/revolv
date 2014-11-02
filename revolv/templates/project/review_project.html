@@ -4,19 +4,25 @@
 {% block title %}Review Project{% endblock %}
 
 {% block body %}
-{{ block.super }}
 <form enctype="multipart/form-data" method="POST">
 {% csrf_token %}
 <div class="row">
     <div class="large-12 columns">
-        <ul class="button-group right nav-tab-button-group">
+        <h2>Project Review</h2> 
+        <p>Help : Propose sets project status to "PROPOSED", Approve sets project status to "ACCEPTED", Deny sets project status to "DRAFTED", Complete sets project status to "COMPLETED", Edit redirects to the edit page.</p>
+        <p>In the final version, only a subset of buttons will be available to admins and solar ambassadors.</p>
+    </div>
+    <div class="large-12 columns">
+        <ul class="button-group nav-tab-button-group">
             <li><input id="propose_project" class="tiny button radius" name="_propose" type="submit" value="Propose"></input></li>
             <li><input id="approve_project" class="tiny button success radius" name="_approve" type="submit" value="Approve" ></input></li>
             <li><input id="deny_project" class="tiny button alert radius" name="_deny" type="submit" value="Deny"></input></li>
+            <li><input id="complete_project" class="tiny button radius" name="_complete" type="submit" value="Complete"></input></li>
             <li><a class="tiny button info radius" href="{% url "project:edit" pk=project.id %}">Edit Project</a></li> 
-        </ul>                    
+        </ul>  
     </div>
 </div>
+{{ block.super }}
 </form>
 
 {% endblock %}
