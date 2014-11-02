@@ -28,11 +28,8 @@
 				<p>Solar Ambassador!</p>
 				<p>Make a project!</p>
 				<a href="{% url "project:new" %}" class="large button">Create Project</a>
-			</div>
-			<div class="content" id="panel3">
-				<p>Admin dashboard!</p>
 				<div class="drafted_projects">
-					<h2>Proposed Projects</h2>
+					<h2>My Projects</h2>
 					{% for project in drafted_projects %}
 			            <div class="row">
 			                <div class="small-9 columns">
@@ -61,7 +58,43 @@
 			            <hr/>
 			            <br/>
 			        {% empty %}
-			            <p> There are no projects in review right now. Check again later! </p>
+			            <p> There are no drafted projects right now. Check again later! </p>
+			        {% endfor %}
+				</div>
+			</div>
+			<div class="content" id="panel3">
+				<p>Admin dashboard!</p>
+				<div class="proposed_projects">
+					<h2>Proposed Projects</h2>
+					{% for project in proposed_projects %}
+			            <div class="row">
+			                <div class="small-9 columns">
+			                    <div class="row">
+			                        <div class="small-12 columns">
+			                        	<h3><a href="{% url "project:view" project.pk %}"> {{ project.title }}</a></h3>
+			                        </div>
+			                    </div>
+			                    <div class="row">
+			                    	<div class="small-12 columns">
+			                    		<h4>{{ project.org_name }}</h4>
+			                    	</div>
+			                    </div>
+			                    <div class="row">
+			                        <div class="small-12 columns">
+			                            <p> {{ project.mission_statement }} </p>
+			                        </div>
+			                    </div>
+			                </div>
+			                <div class="small-3 columns">
+			                    <a href="{% url "project:view" project.pk %}">
+			                        <img src="{{ project.preview_photo.url }}"></img>
+			                    </a>
+			                </div>
+			            </div>
+			            <hr/>
+			            <br/>
+			        {% empty %}
+			            <p> There are no proposed projects right now. Check again later! </p>
 			        {% endfor %}
 				</div>
 			</div>

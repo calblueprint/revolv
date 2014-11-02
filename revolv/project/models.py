@@ -33,8 +33,16 @@ class ProjectManager(models.Manager):
         else:
             return featured_projects
 
+    def get_proposed(self, queryset=None):
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        proposed_projects = queryset.filter(
+            project_status=Project.PROPOSED).order_by(
+            'updated_at')
+        return proposed_projects
+
     def get_drafted(self, queryset=None):
-        """ Gets all the projects that are currently in review.
+        """ Gets all the projects that are currently in review (drafted).
 
         :queryset: The queryset in which to search for projects
         :return: A list of in review project objects

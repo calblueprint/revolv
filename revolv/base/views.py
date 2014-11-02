@@ -21,13 +21,19 @@ class HomePageView(TemplateView):
             HomePageView.NUM_PROJECTS_SHOWN)
         return context
 
+
 class DashboardView(TemplateView):
+    """Basic view for the dashboard. THIS VIEW IS INCOMPLETE. UPDATE
+    DOCSTRING WHEN COMPLETED.
+    """
     template_name = 'base/dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
+        context['proposed_projects'] = Project.objects.get_proposed()
         context['drafted_projects'] = Project.objects.get_drafted()
         return context
+
 
 class SignInView(TemplateView):
     """Signup and login page. Has three submittable forms: login, signup,
