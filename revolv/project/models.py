@@ -141,6 +141,13 @@ class Project(models.Model):
         decimal_places=2,
         default=0.0
     )
+    internal_rate_return = models.DecimalField(
+        'Internal Rate of Return',
+        max_digits=6,
+        decimal_places=3,
+        default=0.0,
+        help_text='The internal rate of return for this project.'
+    )
 
     objects = ProjectManager()
 

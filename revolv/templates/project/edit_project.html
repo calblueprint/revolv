@@ -43,6 +43,7 @@
                     {% include "base/partials/tooltip_formfield.html" with field=form.mission_statement %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.internal_rate_return %}
                     <div class="hide">
                         {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
                         {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
@@ -76,7 +77,7 @@
         {% else %}
             var latitude = 37.7699298;
         {% endif %}
-        
+
         {% if project.location_longitude %}
             var longitude = {{project.location_longitude}};
         {% else %}
@@ -99,7 +100,7 @@
             },
             zoomForLocation: 18,
             draggable: false,
-            reverseGeocoding: true, 
+            reverseGeocoding: true,
             utocompleteService: {
                 componentRestrictions: {
                     country: 'US'
