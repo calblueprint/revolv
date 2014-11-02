@@ -54,6 +54,7 @@ class UpdateProjectView(UpdateView):
         return context
 
 
+
 """
 The project view. Displays project details and allows for editing.
 
