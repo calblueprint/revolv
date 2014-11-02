@@ -19,7 +19,7 @@ class RevolvUserProfile(FacebookModel):
 
     Ambassadors are users who can donate AND create projects, to be
     approved by the admin.
-
+    
     Admins are users who can approve and manage projects, AND control whether
     other users are ambassadors or admins themselves. Admins can also donate to
     projects like regular donors can.
@@ -54,3 +54,5 @@ class RevolvUserProfile(FacebookModel):
         """Take away all the user's permissions."""
         self.user.groups.remove(get_group_by_name(self.ADMIN_GROUP))
         self.user.groups.remove(get_group_by_name(self.AMBASSADOR_GROUP))
+
+

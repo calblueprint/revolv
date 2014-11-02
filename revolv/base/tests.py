@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
+from revolv.base.utils import get_group_by_name
 
 
 class SmokeTestCase(TestCase):
@@ -124,6 +125,74 @@ class UserAuthTestCase(TestCase):
         self._assert_user_authed(response)
         # make sure the user was actually saved
         User.objects.get(username="john123")
+
+class UserPermissionsTestCase(TestCase):
+    fixtures = ['base_groups.json', 'base_permissions.json']
+
+    def setUp(self):
+        """Every test in this case has a test user."""
+        self.test_user = User.objects.create_user(
+            "permissionTestUser",
+            "john@example.com",
+            "permission_test_user_password"
+        )
+
+    def _assert_group_relationship(self, user, group_name, relIn):
+        group = get_group_by_name(group_name)
+        if relIn:
+            self.assertIn(group, user.groups.all())
+        else:
+            self.assertNotIn(group, user.groups.all())
+
+    def _assert_in_group(self, user, group_name):
+        return self._assert_group_relationship(user, group_name, True)
+
+    def _assert_not_in_group(self, user, group_name):
+        return self._assert_group_relationship(user, group_name, False)
+
+    def _assert_revolv_permissions_correct(self, user, ambassador, admin, ambassador_perm=None, admin_perm=None):
+        ambassador_perm = ambassador if ambassador_perm is None else ambassador_perm
+        admin_perm = admin if admin_perm is None else admin_perm
+
+        amb_group_check = self._assert_in_group if ambassador else self._assert_not_in_group
+        ad_group_check = self._assert_in_group if admin else self._assert_not_in_group
+        amb_perm_check = self.assertTrue if ambassador_perm else self.assertFalse
+        ad_perm_check = self.assertTrue if admin_perm else self.assertFalse
+
+        amb_group_check(user, RevolvUserProfile.AMBASSADOR_GROUP)
+        ad_group_check(user, RevolvUserProfile.ADMIN_GROUP)
+        amb_perm_check(user.has_perm(RevolvUserProfile.AMBASSADOR_PERM))
+        ad_perm_check(user.has_perm(RevolvUserProfile.ADMIN_PERM))
+
+    def test_correct_groups_exist(self):
+        get_group_by_name(RevolvUserProfile.AMBASSADOR_GROUP)
+        get_group_by_name(RevolvUserProfile.ADMIN_GROUP)
+
+    def test_all_users_are_donors(self):
+        self.assertTrue(self.test_user.revolvuserprofile.is_donor())
+        self._assert_revolv_permissions_correct(self.test_user, False, False)
+
+    def test_ambassadors(self):
+        self.test_user.revolvuserprofile.make_ambassador()
+        self._assert_revolv_permissions_correct(self.test_user, ambassador=True, admin=False)
+
+        self.test_user.revolvuserprofile.make_donor()
+        self._assert_revolv_permissions_correct(self.test_user, ambassador=False, admin=False)
+
+    def test_admins(self):
+        self.test_user.revolvuserprofile.make_admin()
+        self._assert_revolv_permissions_correct(
+            self.test_user,
+            ambassador=False,
+            admin=True,
+            ambassador_perm=True,
+            admin_perm=True
+        )
+
+        self.test_user.revolvuserprofile.make_ambassador()
+        self._assert_revolv_permissions_correct(self.test_user, ambassador=True, admin=False)
+        self.test_user.revolvuserprofile.make_donor()
+        self._assert_revolv_permissions_correct(self.test_user, ambassador=False, admin=False)
 
 
 class LoginSignupPageTestCase(TestCase):
