@@ -1,6 +1,7 @@
 from itertools import chain
 
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 
@@ -32,6 +33,34 @@ class ProjectManager(models.Manager):
         else:
             return featured_projects
 
+    def get_drafted(self, queryset=None):
+        """ Gets all the projects that are currently in review.
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of in review project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        drafted_projects = queryset.filter(
+            project_status=Project.DRAFTED).order_by(
+            'updated_at')
+        return drafted_projects
+
+    def approve_project(self, project):
+        project.project_status = Project.APPROVED
+        project.save()
+        return project
+
+    def propose_project(self, project):
+        project.project_status = Project.PROPOSED
+        project.save()
+        return project
+
+    def deny_project(self, project):
+        project.project_status = project.PROPOSED
+        project.save()
+        return project
+
 
 class Project(models.Model):
     """
@@ -41,12 +70,12 @@ class Project(models.Model):
     ACCEPTED = 'AC'
     PROPOSED = 'PR'
     COMPLETED = 'CO'
-    BUILDING = 'BU'
+    DRAFTED = 'DR'
     PROJECT_STATUS_CHOICES = (
         (ACCEPTED, 'Accepted'),
         (PROPOSED, 'Proposed'),
         (COMPLETED, 'Completed'),
-        (BUILDING, 'Building'),
+        (DRAFTED, 'Drafted'),
     )
     funding_goal = models.DecimalField(
         max_digits=15,
@@ -92,7 +121,7 @@ class Project(models.Model):
     project_status = models.CharField(
         max_length=2,
         choices=PROJECT_STATUS_CHOICES,
-        default=PROPOSED
+        default=DRAFTED
     )
     cover_photo = ProcessedImageField(
         upload_to='covers',

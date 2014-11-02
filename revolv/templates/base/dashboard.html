@@ -1,0 +1,72 @@
+{% extends "base/tmp_base.html" %}
+{% load staticfiles %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+    <div class='small-12 columns'>
+        <h1>Hello User!</h1>
+        {% if request.user.is_authenticated %}
+        <p>You're logged in as {{user.first_name}} {{user.last_name}}</p>
+        {% endif %}
+    </div>
+</div>
+<div class='row'>
+	<div class='small-12 columns'>
+		<dl class="tabs" data-tab>
+			<dd class="active"><a href="#panel1">Donor</a></dd>
+			<dd><a href="#panel2">Ambassador</a></dd>
+			<dd><a href="#panel3">Admin</a></dd>
+		</dl>
+		<div class="tabs-content">
+			<div class="content active" id="panel1">
+				<p>Donor Dashboard. To be implemented.</p>
+			</div>
+			<div class="content" id="panel2">
+				<p>Solar Ambassador!</p>
+				<p>Make a project!</p>
+				<a href="{% url "project:new" %}" class="large button">Create Project</a>
+			</div>
+			<div class="content" id="panel3">
+				<p>Admin dashboard!</p>
+				<div class="drafted_projects">
+					<h2>Proposed Projects</h2>
+					{% for project in drafted_projects %}
+			            <div class="row">
+			                <div class="small-9 columns">
+			                    <div class="row">
+			                        <div class="small-12 columns">
+			                        	<h3><a href="{% url "project:view" project.pk %}"> {{ project.title }}</a></h3>
+			                        </div>
+			                    </div>
+			                    <div class="row">
+			                    	<div class="small-12 columns">
+			                    		<h4>{{ project.org_name }}</h4>
+			                    	</div>
+			                    </div>
+			                    <div class="row">
+			                        <div class="small-12 columns">
+			                            <p> {{ project.mission_statement }} </p>
+			                        </div>
+			                    </div>
+			                </div>
+			                <div class="small-3 columns">
+			                    <a href="{% url "project:view" project.pk %}">
+			                        <img src="{{ project.preview_photo.url }}"></img>
+			                    </a>
+			                </div>
+			            </div>
+			            <hr/>
+			            <br/>
+			        {% empty %}
+			            <p> There are no projects in review right now. Check again later! </p>
+			        {% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

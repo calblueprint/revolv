@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
+
 from revolv.base.forms import SignupForm
 from revolv.base.models import RevolvUserProfile
 from revolv.project.models import Project
@@ -64,6 +65,13 @@ class HomePageView(UserDataMixin, TemplateView):
             HomePageView.NUM_PROJECTS_SHOWN)
         return context
 
+class DashboardView(TemplateView):
+    template_name = 'base/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+        context['drafted_projects'] = Project.objects.get_drafted()
+        return context
 
 class SignInView(TemplateView):
     """Signup and login page. Has three submittable forms: login, signup,
