@@ -33,3 +33,16 @@ class ProjectForm(forms.ModelForm):
             'location_latitude',
             'location_longitude'
         )
+
+
+"""
+An empty form, used so that one can update the project status through
+the ReviewProjectView
+"""
+
+
+class ProjectStatusForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        # fields that need to be filled out, empty on purpose
+        fields = ()

@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 
 import forms
@@ -52,6 +53,40 @@ class UpdateProjectView(UpdateView):
         context['action'] = reverse('project:edit',
                                     kwargs={'pk': self.get_object().id})
         return context
+
+
+"""
+The view to review a project. Shows the same view as ProjectView, but at
+the top, has a button group through which an ambassador or admin can
+update the project status.
+
+
+Accessed through /project/review/{project_id}
+"""
+
+
+class ReviewProjectView(UpdateView):
+    model = Project
+    template_name = 'project/review_project.html'
+    form_class = forms.ProjectStatusForm
+
+    def get_success_url(self):
+        return reverse('dashboard')
+
+    """
+    Checks the post request and updates the project_status
+    """
+    def form_valid(self, form):
+        project = self.object
+        if '_approve' in self.request.POST:
+            Project.objects.approve_project(project)
+        elif '_propose' in self.request.POST:
+            Project.objects.propose_project(project)
+        elif '_deny' in self.request.POST:
+            Project.objects.deny_project(project)
+        elif '_complete' in self.request.POST:
+            Project.objects.complete_project(project)
+        return redirect(self.get_success_url())
 
 
 """
