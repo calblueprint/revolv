@@ -28,6 +28,7 @@ class CreateProjectView(CreateView):
         context['action'] = reverse('project:new')
         return context
 
+
 """
 The view to update a project. It is the same view as creating a new project,
 though it prepopulates the existing field and passes in the project id.
@@ -51,7 +52,6 @@ class UpdateProjectView(UpdateView):
         context['action'] = reverse('project:edit',
                                     kwargs={'pk': self.get_object().id})
         return context
-
 
 
 """
