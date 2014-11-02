@@ -34,6 +34,11 @@ class ProjectManager(models.Manager):
             return featured_projects
 
     def get_proposed(self, queryset=None):
+        """ Gets all the projects that are currently in review (proposed).
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of in review project objects
+        """
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         proposed_projects = queryset.filter(
@@ -42,10 +47,8 @@ class ProjectManager(models.Manager):
         return proposed_projects
 
     def get_drafted(self, queryset=None):
-        """ Gets all the projects that are currently in review (drafted).
-
-        :queryset: The queryset in which to search for projects
-        :return: A list of in review project objects
+        """ Get all the projects that are drafted by the current user.
+        THIS METHOD IS NOT FINISHED, IT HAS TO QUERY AGAINST THE USER SOMEHOW
         """
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()

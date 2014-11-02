@@ -1,6 +1,7 @@
 import datetime
 
 from django.test import TestCase
+
 from models import Project
 
 
@@ -62,3 +63,8 @@ class ProjectManagerTests(TestCase):
         context = Project.objects.get_featured(10)
         self.assertEqual(len(context), 2)
         self.assertEqual(context[1].org_name, "Comoonity Dairy")
+
+    def test_get_proposed(self):
+        context = Project.objects.get_proposed()
+        self.assertEqual(len(context), 1)
+        self.assertEqual(context[0].org_name, "Educathing")
