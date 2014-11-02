@@ -126,6 +126,7 @@ class UserAuthTestCase(TestCase):
         # make sure the user was actually saved
         User.objects.get(username="john123")
 
+
 class UserPermissionsTestCase(TestCase):
     fixtures = ['base_groups.json', 'base_permissions.json']
 
@@ -150,19 +151,20 @@ class UserPermissionsTestCase(TestCase):
     def _assert_not_in_group(self, user, group_name):
         return self._assert_group_relationship(user, group_name, False)
 
-    def _assert_revolv_permissions_correct(self, user, ambassador, admin, ambassador_perm=None, admin_perm=None):
-        ambassador_perm = ambassador if ambassador_perm is None else ambassador_perm
-        admin_perm = admin if admin_perm is None else admin_perm
+    def _assert_groups_correct(self, user, ambassador, admin,
+                               ambassador_perm=None, admin_perm=None):
+        if ambassador:
+            amb_group_check = self._assert_in_group
+        else:
+            amb_group_check = self._assert_not_in_group
 
-        amb_group_check = self._assert_in_group if ambassador else self._assert_not_in_group
-        ad_group_check = self._assert_in_group if admin else self._assert_not_in_group
-        amb_perm_check = self.assertTrue if ambassador_perm else self.assertFalse
-        ad_perm_check = self.assertTrue if admin_perm else self.assertFalse
+        if admin:
+            ad_group_check = self._assert_in_group
+        else:
+            ad_group_check = self._assert_not_in_group
 
         amb_group_check(user, RevolvUserProfile.AMBASSADOR_GROUP)
         ad_group_check(user, RevolvUserProfile.ADMIN_GROUP)
-        amb_perm_check(user.has_perm(RevolvUserProfile.AMBASSADOR_PERM))
-        ad_perm_check(user.has_perm(RevolvUserProfile.ADMIN_PERM))
 
     def test_correct_groups_exist(self):
         get_group_by_name(RevolvUserProfile.AMBASSADOR_GROUP)
@@ -170,18 +172,22 @@ class UserPermissionsTestCase(TestCase):
 
     def test_all_users_are_donors(self):
         self.assertTrue(self.test_user.revolvuserprofile.is_donor())
-        self._assert_revolv_permissions_correct(self.test_user, False, False)
+        self._assert_groups_correct(self.test_user, False, False)
 
     def test_ambassadors(self):
         self.test_user.revolvuserprofile.make_ambassador()
-        self._assert_revolv_permissions_correct(self.test_user, ambassador=True, admin=False)
+        self._assert_groups_correct(
+            self.test_user, ambassador=True, admin=False
+        )
 
         self.test_user.revolvuserprofile.make_donor()
-        self._assert_revolv_permissions_correct(self.test_user, ambassador=False, admin=False)
+        self._assert_groups_correct(
+            self.test_user, ambassador=False, admin=False
+        )
 
     def test_admins(self):
         self.test_user.revolvuserprofile.make_admin()
-        self._assert_revolv_permissions_correct(
+        self._assert_groups_correct(
             self.test_user,
             ambassador=False,
             admin=True,
@@ -190,9 +196,13 @@ class UserPermissionsTestCase(TestCase):
         )
 
         self.test_user.revolvuserprofile.make_ambassador()
-        self._assert_revolv_permissions_correct(self.test_user, ambassador=True, admin=False)
+        self._assert_groups_correct(
+            self.test_user, ambassador=True, admin=False
+        )
         self.test_user.revolvuserprofile.make_donor()
-        self._assert_revolv_permissions_correct(self.test_user, ambassador=False, admin=False)
+        self._assert_groups_correct(
+            self.test_user, ambassador=False, admin=False
+        )
 
 
 class LoginSignupPageTestCase(TestCase):

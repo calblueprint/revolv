@@ -3,21 +3,16 @@
   "pk": 1,
   "model": "auth.group",
   "fields": {
-    "name": "Re-volv Admins",
-    "permissions": [
-        1,
-        2
-    ]
+    "name": "administrators",
+    "permissions": []
   }
 },
 {
   "pk": 2,
   "model": "auth.group",
   "fields": {
-    "name": "Re-volv Solar Ambassadors",
-    "permissions": [
-        1
-    ]
+    "name": "ambassadors",
+    "permissions": []
   }
 }
 ]

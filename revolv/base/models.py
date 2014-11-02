@@ -24,11 +24,8 @@ class RevolvUserProfile(FacebookModel):
     other users are ambassadors or admins themselves. Admins can also donate to
     projects like regular donors can.
     """
-    # these names should match those defined in the fixtures
-    AMBASSADOR_PERM = "revolv_ambassador"
-    ADMIN_PERM = "revolv_admin"
-    AMBASSADOR_GROUP = "Re-volv Solar Ambassadors"
-    ADMIN_GROUP = "Re-volv Admins"
+    AMBASSADOR_GROUP = "ambassadors"
+    ADMIN_GROUP = "administrators"
 
     user = models.OneToOneField(User)
 
