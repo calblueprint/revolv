@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+import dj_database_url
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SETTINGS_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -42,8 +44,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django_facebook.context_processors.facebook',
 )
-
-ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -125,6 +125,9 @@ DATABASES = {
     }
 }
 
+if IS_HEROKU:
+    DATABASES['default'] = dj_database_url.config()
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -171,10 +174,18 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('REVOLV_S3_BUCKET', '')
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'administration@revolv.org')
+EMAIL_HOST_USER = os.environ.get(
+    'EMAIL_HOST_USER',
+    'administration@revolv.org'
+)
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
-EMAIL_TEMPLATES_PATH = os.path.join(SETTINGS_PATH, 'templates', 'emails', 'emails.yml')
+EMAIL_TEMPLATES_PATH = os.path.join(
+    SETTINGS_PATH,
+    'templates',
+    'emails',
+    'emails.yml'
+)
 # Hard-coded urls: kind of ugly but we need these for when we
 # want to send links in emails
 SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
@@ -183,3 +194,10 @@ if IS_HEROKU:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Heroku Settings
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
