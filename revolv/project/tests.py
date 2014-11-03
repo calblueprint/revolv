@@ -68,3 +68,8 @@ class ProjectManagerTests(TestCase):
         context = Project.objects.get_proposed()
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Educathing")
+
+    def test_get_drafted(self):
+        context = Project.objects.test_get_drafted()
+        self.assertEqual(len(context, 1))
+        self.assertEqual(context[0].org_name, "Fire Emblem")
