@@ -54,7 +54,7 @@ class ProjectTests(TestCase):
 
 class ProjectManagerTests(TestCase):
     """Tests for the Project manager"""
-    fixtures = ['project']
+    fixtures = ['project', 'user']
 
     def test_get_featured(self):
         context = Project.objects.get_featured(1)
@@ -70,6 +70,6 @@ class ProjectManagerTests(TestCase):
         self.assertEqual(context[0].org_name, "Educathing")
 
     def test_get_drafted(self):
-        context = Project.objects.test_get_drafted()
-        self.assertEqual(len(context, 1))
+        context = Project.objects.get_drafted()
+        self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Fire Emblem")

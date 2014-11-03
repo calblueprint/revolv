@@ -93,7 +93,8 @@
         "location": "School, San Francisco, CA, United States",
         "mission_statement": "Fire Emblem, the best game ever.",
         "org_about": "Embark with our heroes on a quest to save the world!",
-        "amount_repaid": "0.00"
+        "amount_repaid": "0.00",
+        "internal_rate_return": "7.0"
     },
     "model": "project.project",
     "pk": 4
