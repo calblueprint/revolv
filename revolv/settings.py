@@ -175,15 +175,15 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('REVOLV_S3_BUCKET', '')
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
 EMAIL_HOST_USER = os.environ.get(
-    'EMAIL_HOST_USER', 
+    'EMAIL_HOST_USER',
     'administration@revolv.org'
 )
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
 EMAIL_TEMPLATES_PATH = os.path.join(
-    SETTINGS_PATH, 
-    'templates', 
-    'emails', 
+    SETTINGS_PATH,
+    'templates',
+    'emails',
     'emails.yml'
 )
 # Hard-coded urls: kind of ugly but we need these for when we
