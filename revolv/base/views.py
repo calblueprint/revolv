@@ -37,18 +37,15 @@ class UserDataMixin(object):
         """ dispatch() gets request.user and downcasts self.user to the actual
         user type, if possible. If the user isn't logged in, then self.user is
         an AnonymousUser, which is a built-in Django user type. If the user is
-        logged in, self.user is either a TeacherUser, StudentUser, or
-        AdminUser.
+        logged in, self.user is a django.contrib.auth.models.User.
         """
         self.user = request.user
         if isinstance(self.user, User):
             self.user = self.user.child
             self.user_profile = RevolvUserProfile.objects.get(user=self.user)
-            self.is_donor = self.user_profile.is_donor(self.user_profile)
-            self.is_ambassador = self.user_profile.is_ambassador(
-                self.user_profile)
-            self.is_administrator = self.user_profile.is_administrator(
-                self.user_profile)
+            self.is_donor = self.user_profile.is_donor()
+            self.is_ambassador = self.user_profile.is_ambassador()
+            self.is_administrator = self.user_profile.is_administrator()
         else:
             self.is_donor = False
             self.is_ambassador = False
