@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect
@@ -5,10 +6,53 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
 from revolv.base.forms import SignupForm
+from revolv.base.models import RevolvUserProfile
 from revolv.project.models import Project
 
 
-class HomePageView(TemplateView):
+class UserDataMixin(object):
+    def deny_access(self):
+        """Basic method to replace the default PermissionDenied()"""
+        messages.error(
+            self.request,
+            'Oops! You do not have permission to access this page.'
+        )
+        return redirect('home')
+
+    def dispatch(self, request, *args, **kwargs):
+        """ dispatch() gets request.user and downcasts self.user to the actual
+        user type, if possible. If the user isn't logged in, then self.user is
+        an AnonymousUser, which is a built-in Django user type. If the user is
+        logged in, self.user is a django.contrib.auth.models.User.
+        """
+        self.user = request.user
+        if self.user.is_authenticated():
+            self.user_profile = RevolvUserProfile.objects.get(user=self.user)
+            self.is_donor = self.user_profile.is_donor()
+            self.is_ambassador = self.user_profile.is_ambassador()
+            self.is_administrator = self.user_profile.is_administrator()
+        else:
+            self.is_donor = False
+            self.is_ambassador = False
+            self.is_administrator = False
+        return super(UserDataMixin, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        """ 'revolv_user' is included here for convenience. By default, the
+        variable {{ user }} in the templates refers to 'request.user' above,
+        which is either an AnonymousUser or a User with a RevolvUserProfile.
+        We may want access to attributes in the downcasted user type, so to
+        access these we can use {{ revolv_user }} in the templates.
+        """
+        context = super(UserDataMixin, self).get_context_data(**kwargs)
+        context['revolv_user'] = self.user
+        context['is_donor'] = self.is_donor
+        context['is_ambassador'] = self.is_ambassador
+        context['is_administrator'] = self.is_administrator
+        return context
+
+
+class HomePageView(UserDataMixin, TemplateView):
     """Website home page. THIS VIEW IS INCOMPLETE. UPDATE DOCSTRING
     WHEN COMPLETED."""
     template_name = 'base/home.html'

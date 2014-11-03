@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
+from revolv.base.utils import get_group_by_name, get_profile
 
 
 class SmokeTestCase(TestCase):
@@ -9,13 +10,7 @@ class SmokeTestCase(TestCase):
         self.assertEqual(1, 1)
 
 
-class UserAuthTestCase(TestCase):
-    SIGNIN_URL = "/signin/"
-    LOGIN_URL = "/login/"
-    LOGOUT_URL = "/logout/"
-    SIGNUP_URL = "/signup/"
-    HOME_URL = "/"
-
+class TestUserMixin(object):
     def _send_test_user_login_request(self):
         response = self.client.post(
             "/login/",
@@ -27,12 +22,6 @@ class UserAuthTestCase(TestCase):
         )
         return response
 
-    def _assert_no_user_authed(self, response):
-        self.assertFalse(response.context["user"].is_authenticated())
-
-    def _assert_user_authed(self, response):
-        self.assertTrue(response.context["user"].is_authenticated())
-
     def setUp(self):
         """Every test in this case has a test user."""
         self.test_user = User.objects.create_user(
@@ -40,6 +29,20 @@ class UserAuthTestCase(TestCase):
             "john@example.com",
             "test_user_password"
         )
+
+
+class UserAuthTestCase(TestUserMixin, TestCase):
+    SIGNIN_URL = "/signin/"
+    LOGIN_URL = "/login/"
+    LOGOUT_URL = "/logout/"
+    SIGNUP_URL = "/signup/"
+    HOME_URL = "/"
+
+    def _assert_no_user_authed(self, response):
+        self.assertFalse(response.context["user"].is_authenticated())
+
+    def _assert_user_authed(self, response):
+        self.assertTrue(response.context["user"].is_authenticated())
 
     def test_user_profile_sync(self):
         """
@@ -124,6 +127,102 @@ class UserAuthTestCase(TestCase):
         self._assert_user_authed(response)
         # make sure the user was actually saved
         User.objects.get(username="john123")
+
+
+class UserPermissionsTestCase(TestCase):
+
+    def setUp(self):
+        """Every test in this case has a test user."""
+        self.test_user = User.objects.create_user(
+            "permissionTestUser",
+            "john@example.com",
+            "permission_test_user_password"
+        )
+
+    def _assert_group_relationship(self, user, group_name, relIn):
+        group = get_group_by_name(group_name)
+        if relIn:
+            self.assertIn(group, user.groups.all())
+        else:
+            self.assertNotIn(group, user.groups.all())
+
+    def _assert_in_group(self, user, group_name):
+        return self._assert_group_relationship(user, group_name, True)
+
+    def _assert_not_in_group(self, user, group_name):
+        return self._assert_group_relationship(user, group_name, False)
+
+    def _assert_groups_correct(self, user, ambassador, admin):
+        if ambassador:
+            amb_group_check = self._assert_in_group
+        else:
+            amb_group_check = self._assert_not_in_group
+
+        if admin:
+            ad_group_check = self._assert_in_group
+        else:
+            ad_group_check = self._assert_not_in_group
+
+        amb_group_check(user, RevolvUserProfile.AMBASSADOR_GROUP)
+        ad_group_check(user, RevolvUserProfile.ADMIN_GROUP)
+
+    def test_correct_groups_exist(self):
+        get_group_by_name(RevolvUserProfile.AMBASSADOR_GROUP)
+        get_group_by_name(RevolvUserProfile.ADMIN_GROUP)
+
+    def test_all_users_are_donors(self):
+        self.assertTrue(self.test_user.revolvuserprofile.is_donor())
+        self._assert_groups_correct(self.test_user, False, False)
+
+    def test_ambassadors(self):
+        self.test_user.revolvuserprofile.make_ambassador()
+        self._assert_groups_correct(
+            self.test_user, ambassador=True, admin=False
+        )
+
+        self.test_user.revolvuserprofile.make_donor()
+        self._assert_groups_correct(
+            self.test_user, ambassador=False, admin=False
+        )
+
+    def test_admins(self):
+        self.test_user.revolvuserprofile.make_administrator()
+        self._assert_groups_correct(
+            self.test_user,
+            ambassador=True,
+            admin=True
+        )
+
+        self.test_user.revolvuserprofile.make_ambassador()
+        self._assert_groups_correct(
+            self.test_user, ambassador=True, admin=False
+        )
+        self.test_user.revolvuserprofile.make_donor()
+        self._assert_groups_correct(
+            self.test_user, ambassador=False, admin=False
+        )
+
+
+class UserDataMixinTestCase(TestUserMixin, TestCase):
+    def test_donor(self):
+        response = self._send_test_user_login_request()
+        self.assertEqual(response.context["is_donor"], True)
+        self.assertEqual(response.context["is_ambassador"], False)
+        self.assertEqual(response.context["is_administrator"], False)
+
+    def test_ambassador(self):
+        get_profile(self.test_user).make_ambassador()
+        response = self._send_test_user_login_request()
+        self.assertEqual(response.context["is_donor"], True)
+        self.assertEqual(response.context["is_ambassador"], True)
+        self.assertEqual(response.context["is_administrator"], False)
+
+    def test_admin(self):
+        get_profile(self.test_user).make_administrator()
+        response = self._send_test_user_login_request()
+        self.assertEqual(response.context["is_donor"], True)
+        self.assertEqual(response.context["is_ambassador"], True)
+        self.assertEqual(response.context["is_administrator"], True)
 
 
 class LoginSignupPageTestCase(TestCase):
