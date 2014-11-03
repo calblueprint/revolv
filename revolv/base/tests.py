@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
-from revolv.base.utils import get_group_by_name
+from revolv.base.utils import get_group_by_name, get_profile
 
 
 class SmokeTestCase(TestCase):
@@ -10,13 +10,7 @@ class SmokeTestCase(TestCase):
         self.assertEqual(1, 1)
 
 
-class UserAuthTestCase(TestCase):
-    SIGNIN_URL = "/signin/"
-    LOGIN_URL = "/login/"
-    LOGOUT_URL = "/logout/"
-    SIGNUP_URL = "/signup/"
-    HOME_URL = "/"
-
+class TestUserMixin(object):
     def _send_test_user_login_request(self):
         response = self.client.post(
             "/login/",
@@ -28,12 +22,6 @@ class UserAuthTestCase(TestCase):
         )
         return response
 
-    def _assert_no_user_authed(self, response):
-        self.assertFalse(response.context["user"].is_authenticated())
-
-    def _assert_user_authed(self, response):
-        self.assertTrue(response.context["user"].is_authenticated())
-
     def setUp(self):
         """Every test in this case has a test user."""
         self.test_user = User.objects.create_user(
@@ -41,6 +29,20 @@ class UserAuthTestCase(TestCase):
             "john@example.com",
             "test_user_password"
         )
+
+
+class UserAuthTestCase(TestUserMixin, TestCase):
+    SIGNIN_URL = "/signin/"
+    LOGIN_URL = "/login/"
+    LOGOUT_URL = "/logout/"
+    SIGNUP_URL = "/signup/"
+    HOME_URL = "/"
+
+    def _assert_no_user_authed(self, response):
+        self.assertFalse(response.context["user"].is_authenticated())
+
+    def _assert_user_authed(self, response):
+        self.assertTrue(response.context["user"].is_authenticated())
 
     def test_user_profile_sync(self):
         """
@@ -187,7 +189,7 @@ class UserPermissionsTestCase(TestCase):
         self.test_user.revolvuserprofile.make_admin()
         self._assert_groups_correct(
             self.test_user,
-            ambassador=False,
+            ambassador=True,
             admin=True
         )
 
@@ -199,6 +201,28 @@ class UserPermissionsTestCase(TestCase):
         self._assert_groups_correct(
             self.test_user, ambassador=False, admin=False
         )
+
+
+class UserDataMixinTestCase(TestUserMixin, TestCase):
+    def test_donor(self):
+        response = self._send_test_user_login_request()
+        self.assertEqual(response.context["is_donor"], True)
+        self.assertEqual(response.context["is_ambassador"], False)
+        self.assertEqual(response.context["is_admin"], False)
+
+    def test_ambassador(self):
+        get_profile(self.test_user).make_ambassador()
+        response = self._send_test_user_login_request()
+        self.assertEqual(response.context["is_donor"], True)
+        self.assertEqual(response.context["is_ambassador"], True)
+        self.assertEqual(response.context["is_admin"], False)
+
+    def test_admin(self):
+        get_profile(self.test_user).make_admin()
+        response = self._send_test_user_login_request()
+        self.assertEqual(response.context["is_donor"], True)
+        self.assertEqual(response.context["is_ambassador"], True)
+        self.assertEqual(response.context["is_admin"], True)
 
 
 class LoginSignupPageTestCase(TestCase):

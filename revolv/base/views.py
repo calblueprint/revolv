@@ -10,19 +10,6 @@ from revolv.base.models import RevolvUserProfile
 from revolv.project.models import Project
 
 
-class HomePageView(TemplateView):
-    """Website home page. THIS VIEW IS INCOMPLETE. UPDATE DOCSTRING
-    WHEN COMPLETED."""
-    template_name = 'base/home.html'
-    NUM_PROJECTS_SHOWN = 1000
-
-    def get_context_data(self, **kwargs):
-        context = super(HomePageView, self).get_context_data(**kwargs)
-        context["featured_projects"] = Project.objects.get_featured(
-            HomePageView.NUM_PROJECTS_SHOWN)
-        return context
-
-
 class UserDataMixin(object):
     def deny_access(self):
         """Basic method to replace the default PermissionDenied()"""
@@ -43,11 +30,11 @@ class UserDataMixin(object):
             self.user_profile = RevolvUserProfile.objects.get(user=self.user)
             self.is_donor = self.user_profile.is_donor()
             self.is_ambassador = self.user_profile.is_ambassador()
-            self.is_administrator = self.user_profile.is_administrator()
+            self.is_admin = self.user_profile.is_admin()
         else:
             self.is_donor = False
             self.is_ambassador = False
-            self.is_administrator = False
+            self.is_admin = False
         return super(UserDataMixin, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -61,7 +48,20 @@ class UserDataMixin(object):
         context['revolv_user'] = self.user
         context['is_donor'] = self.is_donor
         context['is_ambassador'] = self.is_ambassador
-        context['is_administrator'] = self.is_administrator
+        context['is_admin'] = self.is_admin
+        return context
+
+
+class HomePageView(UserDataMixin, TemplateView):
+    """Website home page. THIS VIEW IS INCOMPLETE. UPDATE DOCSTRING
+    WHEN COMPLETED."""
+    template_name = 'base/home.html'
+    NUM_PROJECTS_SHOWN = 1000
+
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data(**kwargs)
+        context["featured_projects"] = Project.objects.get_featured(
+            HomePageView.NUM_PROJECTS_SHOWN)
         return context
 
 
