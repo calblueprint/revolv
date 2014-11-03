@@ -6,16 +6,12 @@ import forms
 from models import Project
 
 
-# Create your views here.
-
-"""
-The view to create a new project. Redirects to the homepage upon success.
-
-Accessed through /project/create
-"""
-
-
 class CreateProjectView(CreateView):
+    """
+    The view to create a new project. Redirects to the homepage upon success.
+
+    Accessed through /project/create
+    """
     model = Project
     template_name = 'project/edit_project.html'
     form_class = forms.ProjectForm
@@ -34,16 +30,14 @@ class CreateProjectView(CreateView):
         return context
 
 
-"""
-The view to update a project. It is the same view as creating a new project,
-though it prepopulates the existing field and passes in the project id.
-Redirects to the project page upon success.
-
-Accessed through /project/edit/{project_id}
-"""
-
-
 class UpdateProjectView(UpdateView):
+    """
+    The view to update a project. It is the same view as creating a new
+    project, though it prepopulates the existing field and passes in the
+    project id. Redirects to the project page upon success.
+
+    Accessed through /project/edit/{project_id}
+    """
     model = Project
     template_name = 'project/edit_project.html'
     form_class = forms.ProjectForm
@@ -59,16 +53,14 @@ class UpdateProjectView(UpdateView):
         return context
 
 
-"""
-The view to review a project. Shows the same view as ProjectView, but at
-the top, has a button group through which an ambassador or admin can
-update the project status.
-
-Accessed through /project/review/{project_id}
-"""
-
-
 class ReviewProjectView(UpdateView):
+    """
+    The view to review a project. Shows the same view as ProjectView, but at
+    the top, has a button group through which an ambassador or admin can
+    update the project status.
+
+    Accessed through /project/review/{project_id}
+    """
     model = Project
     template_name = 'project/review_project.html'
     form_class = forms.ProjectStatusForm
@@ -76,9 +68,7 @@ class ReviewProjectView(UpdateView):
     def get_success_url(self):
         return reverse('dashboard')
 
-    """
-    Checks the post request and updates the project_status
-    """
+    # Checks the post request and updates the project_status
     def form_valid(self, form):
         project = self.object
         if '_approve' in self.request.POST:
@@ -92,13 +82,11 @@ class ReviewProjectView(UpdateView):
         return redirect(self.get_success_url())
 
 
-"""
-The project view. Displays project details and allows for editing.
-
-Accessed through /project/{project_id}
-"""
-
-
 class ProjectView(DetailView):
+    """
+    The project view. Displays project details and allows for editing.
+
+    Accessed through /project/{project_id}
+    """
     model = Project
     template_name = 'project/project.html'
