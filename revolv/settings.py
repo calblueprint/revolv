@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SETTINGS_PATH = os.path.dirname(os.path.realpath(__file__))
 
 IS_STAGE = 'IS_STAGE' in os.environ
 IS_PROD = 'IS_PROD' in os.environ
@@ -21,10 +22,6 @@ IS_LOCAL = not IS_HEROKU
 IS_STAGE = 'IS_STAGE' in os.environ
 IS_PROD = 'IS_PROD' in os.environ
 IS_HEROKU = IS_STAGE or IS_PROD
-
-# Hard-coded urls: kind of ugly but we need these for when we
-# want to send links in emails
-SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
@@ -169,3 +166,20 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_ACCESS_KEY_ID = os.environ.get('REVOLV_AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.environ.get('REVOLV_AWS_SECRET_KEY', '')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('REVOLV_S3_BUCKET', '')
+
+# email settings
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
+EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'administration@revolv.org')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = True
+EMAIL_TEMPLATES_PATH = os.path.join(SETTINGS_PATH, 'templates', 'emails', 'emails.yml')
+# Hard-coded urls: kind of ugly but we need these for when we
+# want to send links in emails
+SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
+
+if IS_HEROKU:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
