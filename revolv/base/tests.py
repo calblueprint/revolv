@@ -186,7 +186,7 @@ class UserPermissionsTestCase(TestCase):
         )
 
     def test_admins(self):
-        self.test_user.revolvuserprofile.make_admin()
+        self.test_user.revolvuserprofile.make_administrator()
         self._assert_groups_correct(
             self.test_user,
             ambassador=True,
@@ -208,21 +208,21 @@ class UserDataMixinTestCase(TestUserMixin, TestCase):
         response = self._send_test_user_login_request()
         self.assertEqual(response.context["is_donor"], True)
         self.assertEqual(response.context["is_ambassador"], False)
-        self.assertEqual(response.context["is_admin"], False)
+        self.assertEqual(response.context["is_administrator"], False)
 
     def test_ambassador(self):
         get_profile(self.test_user).make_ambassador()
         response = self._send_test_user_login_request()
         self.assertEqual(response.context["is_donor"], True)
         self.assertEqual(response.context["is_ambassador"], True)
-        self.assertEqual(response.context["is_admin"], False)
+        self.assertEqual(response.context["is_administrator"], False)
 
     def test_admin(self):
-        get_profile(self.test_user).make_admin()
+        get_profile(self.test_user).make_administrator()
         response = self._send_test_user_login_request()
         self.assertEqual(response.context["is_donor"], True)
         self.assertEqual(response.context["is_ambassador"], True)
-        self.assertEqual(response.context["is_admin"], True)
+        self.assertEqual(response.context["is_administrator"], True)
 
 
 class LoginSignupPageTestCase(TestCase):

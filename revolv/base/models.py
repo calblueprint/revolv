@@ -36,10 +36,10 @@ class RevolvUserProfile(FacebookModel):
     def is_ambassador(self):
         return get_group_by_name(self.AMBASSADOR_GROUP) in self.user.groups.all()
 
-    def is_admin(self):
+    def is_administrator(self):
         return get_group_by_name(self.ADMIN_GROUP) in self.user.groups.all()
 
-    def make_admin(self):
+    def make_administrator(self):
         self.user.groups.add(get_group_by_name(self.AMBASSADOR_GROUP))
         self.user.groups.add(get_group_by_name(self.ADMIN_GROUP))
 

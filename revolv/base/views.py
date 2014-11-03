@@ -30,11 +30,11 @@ class UserDataMixin(object):
             self.user_profile = RevolvUserProfile.objects.get(user=self.user)
             self.is_donor = self.user_profile.is_donor()
             self.is_ambassador = self.user_profile.is_ambassador()
-            self.is_admin = self.user_profile.is_admin()
+            self.is_administrator = self.user_profile.is_administrator()
         else:
             self.is_donor = False
             self.is_ambassador = False
-            self.is_admin = False
+            self.is_administrator = False
         return super(UserDataMixin, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -48,7 +48,7 @@ class UserDataMixin(object):
         context['revolv_user'] = self.user
         context['is_donor'] = self.is_donor
         context['is_ambassador'] = self.is_ambassador
-        context['is_admin'] = self.is_admin
+        context['is_administrator'] = self.is_administrator
         return context
 
 
