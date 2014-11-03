@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -40,8 +39,7 @@ class UserDataMixin(object):
         logged in, self.user is a django.contrib.auth.models.User.
         """
         self.user = request.user
-        if isinstance(self.user, User):
-            self.user = self.user.child
+        if self.user.is_authenticated():
             self.user_profile = RevolvUserProfile.objects.get(user=self.user)
             self.is_donor = self.user_profile.is_donor()
             self.is_ambassador = self.user_profile.is_ambassador()
