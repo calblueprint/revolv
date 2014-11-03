@@ -30,7 +30,7 @@ class RevolvUserProfile(FacebookModel):
     user = models.OneToOneField(User)
 
     def is_donor(self):
-        """Return whether the associated user can donate"""
+        """Return whether the associated user can donate."""
         return True
 
     def is_ambassador(self):

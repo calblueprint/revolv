@@ -128,7 +128,6 @@ class UserAuthTestCase(TestCase):
 
 
 class UserPermissionsTestCase(TestCase):
-    fixtures = ['base_groups.json', 'base_permissions.json']
 
     def setUp(self):
         """Every test in this case has a test user."""
@@ -151,8 +150,7 @@ class UserPermissionsTestCase(TestCase):
     def _assert_not_in_group(self, user, group_name):
         return self._assert_group_relationship(user, group_name, False)
 
-    def _assert_groups_correct(self, user, ambassador, admin,
-                               ambassador_perm=None, admin_perm=None):
+    def _assert_groups_correct(self, user, ambassador, admin):
         if ambassador:
             amb_group_check = self._assert_in_group
         else:
@@ -190,9 +188,7 @@ class UserPermissionsTestCase(TestCase):
         self._assert_groups_correct(
             self.test_user,
             ambassador=False,
-            admin=True,
-            ambassador_perm=True,
-            admin_perm=True
+            admin=True
         )
 
         self.test_user.revolvuserprofile.make_ambassador()
