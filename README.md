@@ -3,6 +3,8 @@ RE-volv
 
 This application allows RE-volv to crowdfund donations to community solar projects in order to spread green energy and save the planet.
 
+Stage URL: http://www.revolv-stage.herokuapp.com
+
 Who We Are
 ----------
 ![bp](http://bptech.berkeley.edu/assets/logo-full-large-d6419503b443e360bc6c404a16417583.png "BP Banner")
