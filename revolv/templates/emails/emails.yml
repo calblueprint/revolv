@@ -1,0 +1,16 @@
+test:
+    subject: "What's the best team in Blueprint?"
+    body:
+        "
+        Re-volv!\n
+        {% for name in names %}
+        @{{name}}++
+        {% endfor %}
+        "
+    html:
+        "
+        <h1>Re-volv!</h1>
+        {% for name in names %}
+        <p>@{{name}}++</p>
+        {% endfor %}
+        "
