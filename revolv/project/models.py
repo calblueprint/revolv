@@ -1,5 +1,6 @@
 from itertools import chain
 
+from django.contrib.auth.models import User
 from django.db import models
 
 from imagekit.models import ImageSpecField, ProcessedImageField
@@ -57,23 +58,9 @@ class ProjectManager(models.Manager):
             'updated_at')
         return drafted_projects
 
-    def approve_project(self, project):
-        project.project_status = Project.ACCEPTED
-        project.save()
-        return project
-
-    def propose_project(self, project):
-        project.project_status = Project.PROPOSED
-        project.save()
-        return project
-
-    def deny_project(self, project):
-        project.project_status = Project.DRAFTED
-        project.save()
-        return project
-
-    def complete_project(self, project):
-        project.project_status = Project.COMPLETED
+    def create_from_form(self, form, ambassador):
+        project = form.save(commit=False)
+        project.ambassador = ambassador
         project.save()
         return project
 
@@ -177,7 +164,9 @@ class Project(models.Model):
     # donor = models.ManyToManyField(Donor)
 
     # commented out until Ambassador model is implemented
-    # ambassador = models.ForeignKey(Ambassador)
+    # ambassador = models.ForeignKey('base.RevolvUserProfile')
+    # ambassador = models.ForeignKey(User, default=User.objects.get(pk=1))
+    ambassador = models.ForeignKey(User)
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)
@@ -195,6 +184,26 @@ class Project(models.Model):
     )
 
     objects = ProjectManager()
+
+    def approve_project(self):
+        self.project_status = Project.ACCEPTED
+        self.save()
+        return self
+
+    def propose_project(self):
+        self.project_status = Project.PROPOSED
+        self.save()
+        return self
+
+    def deny_project(self):
+        self.project_status = Project.DRAFTED
+        self.save()
+        return self
+
+    def complete_project(self):
+        self.project_status = Project.COMPLETED
+        self.save()
+        return self
 
 
 class Category(models.Model):

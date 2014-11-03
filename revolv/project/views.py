@@ -23,6 +23,10 @@ class CreateProjectView(CreateView):
     def get_success_url(self):
         return reverse('home')
 
+    def form_valid(self, form):
+        Project.objects.create_from_form(form, self.request.user)
+        return super(CreateProjectView, self).form_valid(form)
+
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
@@ -55,12 +59,10 @@ class UpdateProjectView(UpdateView):
         return context
 
 
-
 """
 The view to review a project. Shows the same view as ProjectView, but at
 the top, has a button group through which an ambassador or admin can
 update the project status.
-
 
 Accessed through /project/review/{project_id}
 """
@@ -80,13 +82,13 @@ class ReviewProjectView(UpdateView):
     def form_valid(self, form):
         project = self.object
         if '_approve' in self.request.POST:
-            Project.objects.approve_project(project)
+            project.approve_project()
         elif '_propose' in self.request.POST:
-            Project.objects.propose_project(project)
+            project.propose_project()
         elif '_deny' in self.request.POST:
-            Project.objects.deny_project(project)
+            project.deny_project()
         elif '_complete' in self.request.POST:
-            Project.objects.complete_project(project)
+            project.complete_project()
         return redirect(self.get_success_url())
 
 
