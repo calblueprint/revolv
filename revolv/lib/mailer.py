@@ -60,4 +60,4 @@ def send_revolv_email(
     )
     if html_template:
         email.attach_alternative(html_body, "text/html")
-    email.send()
+    email.send(fail_silently=True)
