@@ -64,10 +64,6 @@ The view to review a project. Shows the same view as ProjectView, but at
 the top, has a button group through which an ambassador or admin can
 update the project status.
 
-<<<<<<< HEAD
-=======
-
->>>>>>> FETCH_HEAD
 Accessed through /project/review/{project_id}
 """
 
@@ -86,7 +82,6 @@ class ReviewProjectView(UpdateView):
     def form_valid(self, form):
         project = self.object
         if '_approve' in self.request.POST:
-<<<<<<< HEAD
             project.approve_project()
         elif '_propose' in self.request.POST:
             project.propose_project()
@@ -94,15 +89,6 @@ class ReviewProjectView(UpdateView):
             project.deny_project()
         elif '_complete' in self.request.POST:
             project.complete_project()
-=======
-            Project.objects.approve_project(project)
-        elif '_propose' in self.request.POST:
-            Project.objects.propose_project(project)
-        elif '_deny' in self.request.POST:
-            Project.objects.deny_project(project)
-        elif '_complete' in self.request.POST:
-            Project.objects.complete_project(project)
->>>>>>> FETCH_HEAD
         return redirect(self.get_success_url())
 
 

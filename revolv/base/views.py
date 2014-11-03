@@ -66,11 +66,7 @@ class HomePageView(UserDataMixin, TemplateView):
         return context
 
 
-<<<<<<< HEAD
 class DashboardView(UserDataMixin, TemplateView):
-=======
-class DashboardView(TemplateView):
->>>>>>> FETCH_HEAD
     """Basic view for the dashboard. THIS VIEW IS INCOMPLETE. UPDATE
     DOCSTRING WHEN COMPLETED.
     """
@@ -78,16 +74,11 @@ class DashboardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
-<<<<<<< HEAD
         owned_projects = Project.objects.filter(ambassador=self.user)
         context['proposed_projects'] = Project.objects.get_proposed()
         context['drafted_projects'] = Project.objects.get_drafted(
             owned_projects
         )
-=======
-        context['proposed_projects'] = Project.objects.get_proposed()
-        context['drafted_projects'] = Project.objects.get_drafted()
->>>>>>> FETCH_HEAD
         return context
 
 

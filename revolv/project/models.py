@@ -58,29 +58,9 @@ class ProjectManager(models.Manager):
             'updated_at')
         return drafted_projects
 
-<<<<<<< HEAD
     def create_from_form(self, form, ambassador):
         project = form.save(commit=False)
         project.ambassador = ambassador
-=======
-    def approve_project(self, project):
-        project.project_status = Project.ACCEPTED
-        project.save()
-        return project
-
-    def propose_project(self, project):
-        project.project_status = Project.PROPOSED
-        project.save()
-        return project
-
-    def deny_project(self, project):
-        project.project_status = Project.DRAFTED
-        project.save()
-        return project
-
-    def complete_project(self, project):
-        project.project_status = Project.COMPLETED
->>>>>>> FETCH_HEAD
         project.save()
         return project
 
