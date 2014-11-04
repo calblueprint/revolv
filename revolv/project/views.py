@@ -1,9 +1,10 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
-
-import forms
-from models import Project
+from django.views.generic.edit import FormView
+from revolv.payments.forms import CreditCardDonationForm
+from revolv.project import forms
+from revolv.project.models import Project
 
 
 class CreateProjectView(CreateView):
@@ -90,3 +91,13 @@ class ProjectView(DetailView):
     """
     model = Project
     template_name = 'project/project.html'
+
+
+class CreateProjectDonationView(FormView):
+    template_name = None
+    form_class = CreditCardDonationForm
+    success_url = None
+
+    def form_valid(self, form):
+        form.process_payment()
+        return super(CreateProjectDonationView, self).form_valid(form)

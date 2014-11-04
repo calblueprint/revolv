@@ -46,5 +46,5 @@ class DonationServiceTest(TestCase):
 
     def test_create_donation_service(self):
         """Verify that we can create a donation through the service."""
-        self.donation = DonationService.create_donation(self.project, self.payment_transaction)
+        self.donation = DonationService.link_donation(self.project, self.payment_transaction)
         self.assertIsNotNone(self.donation)

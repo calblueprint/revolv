@@ -58,7 +58,7 @@ class PaymentService(object):
 class DonationService(object):
 
     @classmethod
-    def create_donation(cls, project, payment_transaction):
+    def link_donation(cls, project, payment_transaction):
         """
         Create a donation that ties a PaymentTransaction with a Project.
 
