@@ -49,7 +49,9 @@ class ProjectManager(models.Manager):
 
     def get_drafted(self, queryset=None):
         """ Get all the projects that are drafted by the current user.
-        THIS METHOD IS NOT FINISHED, IT HAS TO QUERY AGAINST THE USER SOMEHOW
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of in review project objects
         """
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
@@ -57,6 +59,14 @@ class ProjectManager(models.Manager):
             project_status=Project.DRAFTED).order_by(
             'updated_at')
         return drafted_projects
+
+    def owned_projects(self, user):
+        """ Returns a queryset of projects that were created by the
+        specified user.
+
+        :user: The user of interest
+        """
+        return Project.objects.filter(ambassador=user)
 
     def create_from_form(self, form, ambassador):
         project = form.save(commit=False)
