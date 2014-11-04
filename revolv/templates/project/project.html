@@ -8,7 +8,7 @@
     </style>
 {% endblock %}
 
-{% block title %}Create Project{% endblock %}
+{% block title %}Project{% endblock %}
 
 {% block body %}
 
@@ -28,11 +28,6 @@
     </div>
 </div>
 
-<div class="row">
-	<div class="large-12 columns">
-		<a class="button" href="{% url "project:edit" pk=project.id %}">Edit Project</a>
-	</div>
-</div>
 {% endblock %}
 
 {% block javascripts %}

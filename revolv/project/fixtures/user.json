@@ -1,0 +1,28 @@
+[
+{
+    "fields": {
+        "is_superuser": "True",
+        "username": "revolv",
+        "first_name":"revolv",
+        "last_name":"revolv",
+        "email":"revolv@gmail.com",
+        "is_staff": "True",
+        "is_active": "True"
+    },
+    "model": "auth.user",
+    "pk": 1
+},
+{
+    "fields": {
+        "is_superuser": "True",
+        "username": "revolvchill",
+        "first_name":"revolvup",
+        "last_name":"revolvdown",
+        "email":"revolv2@gmail.com",
+        "is_staff": "True",
+        "is_active": "True"
+    },
+    "model": "auth.user",
+    "pk": 2
+}
+]

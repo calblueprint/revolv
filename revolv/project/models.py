@@ -1,6 +1,8 @@
 from itertools import chain
 
+from django.contrib.auth.models import User
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 
@@ -32,6 +34,46 @@ class ProjectManager(models.Manager):
         else:
             return featured_projects
 
+    def get_proposed(self, queryset=None):
+        """ Gets all the projects that are currently in review (proposed).
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of in review project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        proposed_projects = queryset.filter(
+            project_status=Project.PROPOSED).order_by(
+            'updated_at')
+        return proposed_projects
+
+    def get_drafted(self, queryset=None):
+        """ Get all the projects that are drafted by the current user.
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of in review project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        drafted_projects = queryset.filter(
+            project_status=Project.DRAFTED).order_by(
+            'updated_at')
+        return drafted_projects
+
+    def owned_projects(self, user):
+        """ Returns a queryset of projects that were created by the
+        specified user.
+
+        :user: The user of interest
+        """
+        return Project.objects.filter(ambassador=user)
+
+    def create_from_form(self, form, ambassador):
+        project = form.save(commit=False)
+        project.ambassador = ambassador
+        project.save()
+        return project
+
 
 class Project(models.Model):
     """
@@ -41,12 +83,12 @@ class Project(models.Model):
     ACCEPTED = 'AC'
     PROPOSED = 'PR'
     COMPLETED = 'CO'
-    BUILDING = 'BU'
+    DRAFTED = 'DR'
     PROJECT_STATUS_CHOICES = (
         (ACCEPTED, 'Accepted'),
         (PROPOSED, 'Proposed'),
         (COMPLETED, 'Completed'),
-        (BUILDING, 'Building'),
+        (DRAFTED, 'Drafted'),
     )
     funding_goal = models.DecimalField(
         max_digits=15,
@@ -92,7 +134,7 @@ class Project(models.Model):
     project_status = models.CharField(
         max_length=2,
         choices=PROJECT_STATUS_CHOICES,
-        default=PROPOSED
+        default=DRAFTED
     )
     cover_photo = ProcessedImageField(
         upload_to='covers',
@@ -132,7 +174,7 @@ class Project(models.Model):
     # donor = models.ManyToManyField(Donor)
 
     # commented out until Ambassador model is implemented
-    # ambassador = models.ForeignKey(Ambassador)
+    ambassador = models.ForeignKey(User)
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)
@@ -150,6 +192,26 @@ class Project(models.Model):
     )
 
     objects = ProjectManager()
+
+    def approve_project(self):
+        self.project_status = Project.ACCEPTED
+        self.save()
+        return self
+
+    def propose_project(self):
+        self.project_status = Project.PROPOSED
+        self.save()
+        return self
+
+    def deny_project(self):
+        self.project_status = Project.DRAFTED
+        self.save()
+        return self
+
+    def complete_project(self):
+        self.project_status = Project.COMPLETED
+        self.save()
+        return self
 
 
 class Category(models.Model):

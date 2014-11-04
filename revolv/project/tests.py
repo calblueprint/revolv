@@ -1,6 +1,7 @@
 import datetime
 
 from django.test import TestCase
+
 from models import Project
 
 
@@ -25,6 +26,7 @@ class ProjectTests(TestCase):
             org_start_date=yesterday,
             actual_energy=25.5,
             amount_repaid=29.25,
+            ambassador_id=1,
         )
         testProject = Project.objects.get(title="Hello")
         self.assertEqual(testProject.mission_statement, "We do solar!")
@@ -45,6 +47,7 @@ class ProjectTests(TestCase):
             org_start_date=yesterday,
             actual_energy=25.5,
             amount_repaid=29.25,
+            ambassador_id=1,
         )
         p.save()
         entry = Project.objects.all().filter(location="San Francisco")[0]
@@ -53,7 +56,7 @@ class ProjectTests(TestCase):
 
 class ProjectManagerTests(TestCase):
     """Tests for the Project manager"""
-    fixtures = ['project']
+    fixtures = ['project', 'user']
 
     def test_get_featured(self):
         context = Project.objects.get_featured(1)
@@ -62,3 +65,13 @@ class ProjectManagerTests(TestCase):
         context = Project.objects.get_featured(10)
         self.assertEqual(len(context), 2)
         self.assertEqual(context[1].org_name, "Comoonity Dairy")
+
+    def test_get_proposed(self):
+        context = Project.objects.get_proposed()
+        self.assertEqual(len(context), 1)
+        self.assertEqual(context[0].org_name, "Educathing")
+
+    def test_get_drafted(self):
+        context = Project.objects.get_drafted()
+        self.assertEqual(len(context), 1)
+        self.assertEqual(context[0].org_name, "Fire Emblem")
