@@ -26,6 +26,7 @@ class ProjectTests(TestCase):
             org_start_date=yesterday,
             actual_energy=25.5,
             amount_repaid=29.25,
+            ambassador_id=1,
         )
         testProject = Project.objects.get(title="Hello")
         self.assertEqual(testProject.mission_statement, "We do solar!")
@@ -46,6 +47,7 @@ class ProjectTests(TestCase):
             org_start_date=yesterday,
             actual_energy=25.5,
             amount_repaid=29.25,
+            ambassador_id=1,
         )
         p.save()
         entry = Project.objects.all().filter(location="San Francisco")[0]
