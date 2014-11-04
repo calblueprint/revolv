@@ -11,6 +11,7 @@
     -   id: flake8
         args:
         - --exclude=**/migrations/*.py
+        - --ignore=E265,E309,E501
 -   repo: git@github.com:FalconSocial/pre-commit-python-sorter.git
     sha: 3d2f6802292d6413ad8312cd7c8be9c41409d326
     hooks:

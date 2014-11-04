@@ -50,5 +50,5 @@ class PaymentService(object):
         try:
             amount = float(amount)
             return amount > 0.0
-        except:
+        except ValueError:
             return False
