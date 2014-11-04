@@ -94,7 +94,7 @@ class ProjectView(DetailView):
 
 
 class CreateProjectDonationView(FormView):
-    template_name = None
+    template_name = 'project/donate.html'
     form_class = CreditCardDonationForm
     success_url = None
 

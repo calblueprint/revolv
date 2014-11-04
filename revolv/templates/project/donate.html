@@ -1,0 +1,23 @@
+{% extends "base/tmp_base.html" %}
+{% load staticfiles %}
+
+{% block title %}Donate to Project{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+    <div class='large-12 columns'>
+        <h1>Create Project</h1>
+    </div>
+</div>
+<div class="row white-section">
+    <div class="large-12 columns">
+        <form method="POST" enctype="multipart/form-data">
+      		{% csrf_token %}
+            {% form.as_ul %}
+            <button class="large right" id="save_project" type="submit">Donate</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
