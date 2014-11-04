@@ -5,7 +5,6 @@ from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
-
 from revolv.base.forms import SignupForm
 from revolv.base.models import RevolvUserProfile
 from revolv.project.models import Project
@@ -74,6 +73,8 @@ class DashboardView(UserDataMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
+        context['donated_projects'] = Project.objects.donated_projects(
+            self.user)
         context['proposed_projects'] = Project.objects.get_proposed()
         context['drafted_projects'] = Project.objects.get_drafted(
             Project.objects.owned_projects(self.user)

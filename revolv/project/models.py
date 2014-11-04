@@ -2,9 +2,9 @@ from itertools import chain
 
 from django.contrib.auth.models import User
 from django.db import models
-
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
+from revolv.base.models import RevolvUserProfile
 
 
 class ProjectManager(models.Manager):
@@ -59,6 +59,14 @@ class ProjectManager(models.Manager):
             project_status=Project.DRAFTED).order_by(
             'updated_at')
         return drafted_projects
+
+    def donated_projects(self, user):
+        """ Returns a queryset of projects that the specified user
+        donated to.
+
+        :user: The user of interest
+        """
+        return Project.objects.filter(donors__id=user.id)
 
     def owned_projects(self, user):
         """ Returns a queryset of projects that were created by the
@@ -171,7 +179,7 @@ class Project(models.Model):
     )
 
     # commented out until Donor model is implemented
-    # donor = models.ManyToManyField(Donor)
+    donors = models.ManyToManyField(RevolvUserProfile)
 
     # commented out until Ambassador model is implemented
     ambassador = models.ForeignKey(User)
