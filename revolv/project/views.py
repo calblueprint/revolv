@@ -2,7 +2,6 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
-
 from revolv.base.views import UserDataMixin
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.project import forms
@@ -95,13 +94,16 @@ class ProjectView(DetailView):
     template_name = 'project/project.html'
 
 
-class CreateProjectDonationView(FormView, UserDataMixin):
+class CreateProjectDonationView(UserDataMixin, FormView):
     model = Project
     template_name = 'project/donate.html'
     form_class = CreditCardDonationForm
-    # success_url = None
 
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
         form.process_payment(project, self.user)
         return super(CreateProjectDonationView, self).form_valid(form)
+
+    @property
+    def success_url(self):
+        return '/project/{0}'.format(self.kwargs.get('pk'))

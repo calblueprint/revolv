@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
-
-from revolv.project.views import (CreateProjectView, ProjectView,
-                                  ReviewProjectView, UpdateProjectView, CreateProjectDonationView)
+from revolv.project.views import (CreateProjectDonationView, CreateProjectView,
+                                  ProjectView, ReviewProjectView,
+                                  UpdateProjectView)
 
 urlpatterns = patterns(
     '',
