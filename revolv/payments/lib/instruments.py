@@ -2,8 +2,8 @@ from __future__ import absolute_import
 
 from collections import namedtuple
 
-from revolv.payments.models import PaymentInstrumentType
 from paypalrestsdk import Payment
+from revolv.payments.models import PaymentInstrumentType
 
 
 class PaymentInstrument(object):
