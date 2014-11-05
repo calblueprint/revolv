@@ -14,7 +14,7 @@
     <div class="large-12 columns">
         <form method="POST" enctype="multipart/form-data">
       		{% csrf_token %}
-            {% form.as_ul %}
+            {{ form.as_ul }}
             <button class="large right" id="save_project" type="submit">Donate</button>
         </form>
     </div>
