@@ -34,6 +34,32 @@ class ProjectManager(models.Manager):
         else:
             return featured_projects
 
+    def get_completed(self, queryset=None):
+        """ Gets all the projects that have been completed funding.
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of completed project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        completed_projects = queryset.filter(
+            project_status=Project.COMPLETED).order_by(
+            'end_date')
+        return completed_projects
+
+    def get_accepted(self, queryset=None):
+        """ Gets all the projects that have been accepted to go into funding.
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of accepted project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        accepted_projects = queryset.filter(
+            project_status=Project.ACCEPTED).order_by(
+            'end_date')
+        return accepted_projects
+
     def get_proposed(self, queryset=None):
         """ Gets all the projects that are currently in review (proposed).
 

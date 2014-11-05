@@ -76,10 +76,12 @@ class DashboardView(UserDataMixin, TemplateView):
         context = super(DashboardView, self).get_context_data(**kwargs)
         context['donated_projects'] = Project.objects.donated_projects(
             self.user)
-        context['proposed_projects'] = Project.objects.get_proposed()
-        context['drafted_projects'] = Project.objects.get_drafted(
-            Project.objects.owned_projects(self.user)
-        )
+        if self.is_administrator:
+            context['proposed_projects'] = Project.objects.get_proposed()
+        if self.is_ambassador:
+            context['drafted_projects'] = Project.objects.get_drafted(
+                Project.objects.owned_projects(self.user)
+            )
         return context
 
 
