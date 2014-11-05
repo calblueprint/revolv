@@ -66,7 +66,7 @@ class ProjectManager(models.Manager):
 
         :user: The user of interest
         """
-        return Project.objects.filter(donors__id=user.id)
+        return user.project_set.all()
 
     def owned_projects(self, user):
         """ Returns a queryset of projects that were created by the
@@ -179,10 +179,10 @@ class Project(models.Model):
     )
 
     # commented out until Donor model is implemented
-    donors = models.ManyToManyField(RevolvUserProfile)
+    donors = models.ManyToManyField(User)
 
     # commented out until Ambassador model is implemented
-    ambassador = models.ForeignKey(User)
+    ambassador = models.ForeignKey(User, null=True, related_name='ambassador')
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)
