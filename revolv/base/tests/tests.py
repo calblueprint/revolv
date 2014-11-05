@@ -126,7 +126,8 @@ class UserAuthTestCase(TestUserMixin, TestCase):
         self.assertRedirects(response, self.HOME_URL)
         self._assert_user_authed(response)
         # make sure the user was actually saved
-        User.objects.get(username="john123")
+        test_user = User.objects.get(username="john123")
+        RevolvUserProfile.objects.get(user=test_user)
 
 
 class UserPermissionsTestCase(TestCase):
