@@ -179,7 +179,7 @@ class Project(models.Model):
     )
 
     # commented out until Donor model is implemented
-    donors = models.ManyToManyField(User)
+    donors = models.ManyToManyField(RevolvUserProfile)
 
     # commented out until Ambassador model is implemented
     ambassador = models.ForeignKey(User, null=True, related_name='ambassador')

@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('base', '0002_auto_20141102_0206'),
         ('project', '0018_auto_20141103_1913'),
     ]
 
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='donors',
-            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(to='base.RevolvUserProfile'),
             preserve_default=True,
         ),
         migrations.AlterField(
