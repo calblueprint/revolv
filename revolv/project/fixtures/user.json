@@ -2,27 +2,46 @@
 {
     "fields": {
         "is_superuser": "True",
-        "username": "revolv",
+        "username": "administrator",
         "first_name":"revolv",
         "last_name":"revolv",
         "email":"revolv@gmail.com",
         "is_staff": "True",
-        "is_active": "True"
+        "is_active": "True",
+        "password":"pbkdf2_sha256$12000$wElSur69dDGI$seGQ9L3n+DcckBnCcgHjMnYK3dhLuKjNjbrWeRx+U2Q=",
+        "groups":[1, 2]
     },
     "model": "auth.user",
     "pk": 1
 },
 {
     "fields": {
-        "is_superuser": "True",
-        "username": "revolvchill",
-        "first_name":"revolvup",
-        "last_name":"revolvdown",
-        "email":"revolv2@gmail.com",
+        "is_superuser": "False",
+        "username": "ambassador",
+        "first_name":"ambas",
+        "last_name":"sador",
+        "email":"revolv@gmail.com",
         "is_staff": "True",
-        "is_active": "True"
+        "is_active": "True",
+        "password":"pbkdf2_sha256$12000$wElSur69dDGI$seGQ9L3n+DcckBnCcgHjMnYK3dhLuKjNjbrWeRx+U2Q=",
+        "groups":[2]
     },
     "model": "auth.user",
     "pk": 2
+},
+{
+    "fields": {
+        "is_superuser": "False",
+        "username": "donor",
+        "first_name":"do",
+        "last_name":"nor",
+        "email":"revolv@gmail.com",
+        "is_staff": "True",
+        "is_active": "True",
+        "password":"pbkdf2_sha256$12000$wElSur69dDGI$seGQ9L3n+DcckBnCcgHjMnYK3dhLuKjNjbrWeRx+U2Q=",
+        "groups":[]
+    },
+    "model": "auth.user",
+    "pk": 3
 }
 ]

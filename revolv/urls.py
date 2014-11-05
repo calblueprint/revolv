@@ -1,7 +1,10 @@
 import django.contrib.auth.views as auth_views
 from django.conf.urls import include, patterns, url
-from django.contrib.auth.decorators import login_required
 from django.contrib import admin
+<<<<<<< HEAD
+=======
+from django.contrib.auth.decorators import login_required
+>>>>>>> Change user fixture to include password and groups. Add resetdb shell script.
 from revolv.base.views import (DashboardView, HomePageView, LoginView,
                                SignInView, SignupView)
 
