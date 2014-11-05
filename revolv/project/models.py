@@ -12,8 +12,8 @@ class ProjectManager(models.Manager):
     Manager for running custom operations on the Projects.
     """
     def get_featured(self, num_projects, queryset=None):
-        """ Get num_projects amount of accepted projects. If we don't have
-        enough accepted projects, then we retrieve completed projects. This
+        """ Get num_projects amount of active projects. If we don't have
+        enough active projects, then we retrieve completed projects. This
         function may return fewer projects than requested if not enough exist.
 
         :num_projects: Number of projects to be retrieved
@@ -23,7 +23,7 @@ class ProjectManager(models.Manager):
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         featured_projects = queryset.filter(
-            project_status=Project.ACCEPTED).order_by(
+            project_status=Project.ACTIVE).order_by(
             'end_date')[:num_projects]
         if featured_projects.count() < num_projects:
             num_completed_needed = num_projects - featured_projects.count()
@@ -47,18 +47,18 @@ class ProjectManager(models.Manager):
             'end_date')
         return completed_projects
 
-    def get_accepted(self, queryset=None):
-        """ Gets all the projects that have been accepted to go into funding.
+    def get_active(self, queryset=None):
+        """ Gets all the projects that have been active to go into funding.
 
         :queryset: The queryset in which to search for projects
-        :return: A list of accepted project objects
+        :return: A list of active project objects
         """
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
-        accepted_projects = queryset.filter(
-            project_status=Project.ACCEPTED).order_by(
+        active_projects = queryset.filter(
+            project_status=Project.ACTIVE).order_by(
             'end_date')
-        return accepted_projects
+        return active_projects
 
     def get_proposed(self, queryset=None):
         """ Gets all the projects that are currently in review (proposed).
@@ -114,12 +114,12 @@ class Project(models.Model):
     Project model. Stores basic metadata, information about the project,
     donations, energy impact, goals, and info about the organization.
     """
-    ACCEPTED = 'AC'
+    ACTIVE = 'AC'
     PROPOSED = 'PR'
     COMPLETED = 'CO'
     DRAFTED = 'DR'
     PROJECT_STATUS_CHOICES = (
-        (ACCEPTED, 'Accepted'),
+        (ACTIVE, 'Active'),
         (PROPOSED, 'Proposed'),
         (COMPLETED, 'Completed'),
         (DRAFTED, 'Drafted'),
@@ -228,7 +228,7 @@ class Project(models.Model):
     objects = ProjectManager()
 
     def approve_project(self):
-        self.project_status = Project.ACCEPTED
+        self.project_status = Project.ACTIVE
         self.save()
         return self
 

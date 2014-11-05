@@ -82,6 +82,7 @@ class DashboardView(UserDataMixin, TemplateView):
             context['drafted_projects'] = Project.objects.get_drafted(
                 Project.objects.owned_projects(self.user)
             )
+            context['active_projects'] = Project.objects.get_active()
         return context
 
 

@@ -70,8 +70,8 @@ class ProjectManagerTests(TestCase):
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Comoonity Dairy")
 
-    def test_get_accepted(self):
-        context = Project.objects.get_accepted()
+    def test_get_active(self):
+        context = Project.objects.get_active()
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "The Community Dance Studio")
 
