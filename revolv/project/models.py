@@ -182,7 +182,7 @@ class Project(models.Model):
     donors = models.ManyToManyField(RevolvUserProfile)
 
     # commented out until Ambassador model is implemented
-    ambassador = models.ForeignKey(User, null=True, related_name='ambassador')
+    ambassador = models.ForeignKey(User, related_name='ambassador')
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)
