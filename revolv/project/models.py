@@ -1,6 +1,5 @@
 from itertools import chain
 
-from django.contrib.auth.models import User
 from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -11,6 +10,7 @@ class ProjectManager(models.Manager):
     """
     Manager for running custom operations on the Projects.
     """
+
     def get_featured(self, num_projects, queryset=None):
         """ Get num_projects amount of active projects. If we don't have
         enough active projects, then we retrieve completed projects. This
@@ -74,7 +74,7 @@ class ProjectManager(models.Manager):
         return proposed_projects
 
     def get_drafted(self, queryset=None):
-        """ Get all the projects that are drafted by the current user.
+        """ Get all the projects that are drafted in the queryset.
 
         :queryset: The queryset in which to search for projects
         :return: A list of in review project objects
@@ -86,21 +86,21 @@ class ProjectManager(models.Manager):
             'updated_at')
         return drafted_projects
 
-    def donated_projects(self, user):
-        """ Returns a queryset of projects that the specified user
-        donated to.
+    def donated_projects(self, user_profile):
+        """ Get all projects user donotated to.
 
         :user: The user of interest
+        :return: A list of donated projects
         """
-        return user.project_set.all()
+        return Project.objects.filter(donors=user_profile)
 
-    def owned_projects(self, user):
-        """ Returns a queryset of projects that were created by the
-        specified user.
+    def owned_projects(self, user_profile):
+        """ Get all projects owned by a user.
 
         :user: The user of interest
+        :return: A list of projects for which user is the ambassador
         """
-        return Project.objects.filter(ambassador=user)
+        return Project.objects.filter(ambassador=user_profile)
 
     def create_from_form(self, form, ambassador):
         project = form.save(commit=False)
@@ -208,7 +208,7 @@ class Project(models.Model):
     donors = models.ManyToManyField(RevolvUserProfile)
 
     # commented out until Ambassador model is implemented
-    ambassador = models.ForeignKey(User, related_name='ambassador')
+    ambassador = models.ForeignKey(RevolvUserProfile, related_name='ambassador')
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)

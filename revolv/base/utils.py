@@ -17,3 +17,11 @@ def get_all_administrators():
 
 def get_all_administrator_emails():
     return [data["email"] for data in get_all_administrators().values("email")]
+
+
+def is_ambassador(user):
+    return user.user_profile.is_ambassador()
+
+
+def is_administrator(user):
+    return user.user_profile.is_administrator()

@@ -1,0 +1,57 @@
+{% extends "base/tmp_base.html" %}
+{% load staticfiles %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+    <div class='small-12 columns'>
+        <h1>Hello User!</h1>
+        {% if request.user.is_authenticated %}
+        <p>You're logged in as {{user.first_name}} {{user.last_name}}</p>
+        {% endif %}
+    </div>
+</div>
+<div class='row'>
+	<div class="small-12 columns">
+		<p>Make a project!</p>
+		<a href="{% url "project:new" %}" class="large button">Create Project</a>
+		<div class="drafted_projects">
+			<h2>My Projects</h2>
+			<p>Edit or submit your drafted projects for review!</p>
+			{% for project in drafted_projects %}
+	            <div class="row">
+	                <div class="small-9 columns">
+	                    <div class="row">
+	                        <div class="small-12 columns">
+	                        	<h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                    	<div class="small-12 columns">
+	                    		<h4>{{ project.org_name }}</h4>
+	                    	</div>
+	                    </div>
+	                    <div class="row">
+	                        <div class="small-12 columns">
+	                            <p> {{ project.mission_statement }} </p>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="small-3 columns">
+	                    <a href="{% url "project:review" project.pk %}">
+	                        <img src="{{ project.preview_photo.url }}"></img>
+	                    </a>
+	                </div>
+	            </div>
+	            <hr/>
+	            <br/>
+	        {% empty %}
+	            <p> There are no drafted projects right now. Check again later! </p>
+	        {% endfor %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
