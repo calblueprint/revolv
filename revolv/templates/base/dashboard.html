@@ -22,7 +22,52 @@
 		</dl>
 		<div class="tabs-content">
 			<div class="content active" id="panel1">
-				<p>Donor Dashboard. To be implemented.</p>
+      	<h2>My Projects</h2>
+      	<dl class="tabs vertical" data-tab>
+	      	{% for project in donated_projects %}
+	      		{% if project.id == donated_projects.first.id %}
+							<dd class="active"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+	          {% else %}
+							<dd><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+	          {% endif %}
+	      	{% endfor %}
+      	</dl>
+       	<div class="tabs-content vertical">
+	      	{% for project in donated_projects %}
+	      		{% if project.id == donated_projects.first.id %}
+	          	<div class="content active" id="proj{{project.id}}">
+	          {% else %}
+	          	<div class="content" id="proj{{project.id}}">
+	          {% endif %}
+	              <div class="small-9 columns">
+	                  <div class="row">
+	                      <div class="small-12 columns">
+	                      	<h3><a href="{% url "project:view" project.pk %}"> {{ project.title }}</a></h3>
+	                      </div>
+	                  </div>
+	                  <div class="row">
+	                  	<div class="small-12 columns">
+	                  		<h4>{{ project.org_name }}</h4>
+	                  	</div>
+	                  </div>
+	                  <div class="row">
+	                      <div class="small-12 columns">
+	                          <p> {{ project.mission_statement }} </p>
+	                      </div>
+	                  </div>
+	              </div>
+	              <div class="small-3 columns">
+	                  <a href="{% url "project:view" project.pk %}">
+	                      <img src="{{ project.preview_photo.url }}"></img>
+	                  </a>
+	              </div>
+		            <hr/>
+		            <br/>
+	          	</div>
+			  	{% empty %}
+			    	<p> You have not donated to any projects. </p>
+	      	{% endfor %}
+      	</div>
 			</div>
 			<div class="content" id="panel2">
 				<p>Solar Ambassador!</p>
