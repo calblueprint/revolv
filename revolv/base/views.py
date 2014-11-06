@@ -5,7 +5,6 @@ from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
-
 from revolv.base.forms import SignupForm
 from revolv.base.models import RevolvUserProfile
 from revolv.project.models import Project
@@ -21,10 +20,10 @@ class UserDataMixin(object):
         return redirect('home')
 
     def dispatch(self, request, *args, **kwargs):
-        """ dispatch() gets request.user and downcasts self.user to the actual
-        user type, if possible. If the user isn't logged in, then self.user is
-        an AnonymousUser, which is a built-in Django user type. If the user is
-        logged in, self.user is a django.contrib.auth.models.User.
+        """ dispatch() gets request.user and populates the view with relevant
+        information, if applicable. If the user isn't logged in, then self.user
+        is an AnonymousUser, which is a built-in Django user type. If the user
+        is logged in, self.user is a django.contrib.auth.models.User.
         """
         self.user = request.user
         if self.user.is_authenticated():
@@ -33,6 +32,7 @@ class UserDataMixin(object):
             self.is_ambassador = self.user_profile.is_ambassador()
             self.is_administrator = self.user_profile.is_administrator()
         else:
+            self.user_profile = None
             self.is_donor = False
             self.is_ambassador = False
             self.is_administrator = False
@@ -152,24 +152,26 @@ class LoginView(RedirectToSigninOrHomeMixin, FormView):
         GET: redirect to signin page
         POST: check post parameters for user credentials, login the user
             and redirect to the specified next page (home by default), or
-            redirect back to signin page.
-
-    Todo(noah): add in form error messages for the signin page.
+            render the sign in page with errors.
     """
     form_class = AuthenticationForm
+    template_name = 'base/sign_in.html'
 
     @method_decorator(sensitive_post_parameters('password'))
     def dispatch(self, request, *args, **kwargs):
         self.next_url = request.POST.get("next", "home")
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
-    def form_invalid(self, form):
-        return redirect("signin")
-
     def form_valid(self, form):
         """Log the user in and redirect them to the supplied next page."""
         auth_login(self.request, form.get_user())
         return redirect(self.next_url)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(LoginView, self).get_context_data(*args, **kwargs)
+        context["signup_form"] = SignupForm()
+        context["login_form"] = self.get_form(self.form_class)
+        return context
 
 
 class SignupView(RedirectToSigninOrHomeMixin, FormView):
@@ -182,16 +184,18 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
         GET: redirect to signin page
         POST: check post params against form, redirect to signin page if the
             form is not valid.
-
-    Todo(noah): add in form error messages for the signin page
     """
     form_class = SignupForm
-
-    def form_invalid(self, form):
-        return redirect("signin")
+    template_name = "base/sign_in.html"
 
     def form_valid(self, form):
         form.save()
         # log in the newly created user model. if there is a problem, error
         auth_login(self.request, form.ensure_authenticated_user())
         return redirect("home")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(SignupView, self).get_context_data(**kwargs)
+        context["signup_form"] = self.get_form(self.form_class)
+        context["login_form"] = AuthenticationForm()
+        return context
