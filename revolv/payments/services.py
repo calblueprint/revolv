@@ -1,4 +1,5 @@
-from revolv.payments.models import PaymentInstrumentType, PaymentTransaction
+from revolv.payments.models import (Donation, PaymentInstrumentType,
+                                    PaymentTransaction)
 
 
 # Exceptions
@@ -19,7 +20,7 @@ class PaymentService(object):
         :user: a User making the payment
         :amount: float amount in USD
         :payment_instrument: a PaymentInstrument object (see PayPalCreditCardInstrument)
-        :return: a PaymentTransaction object
+        :return: revolv.payments.models.PaymentTransaction
         """
         if not cls.check_valid_payment_instrument(payment_instrument.type):
             raise PaymentServiceException('Not a valid payment instrument.')
@@ -50,5 +51,21 @@ class PaymentService(object):
         try:
             amount = float(amount)
             return amount > 0.0
-        except:
+        except ValueError:
             return False
+
+
+class DonationService(object):
+
+    @classmethod
+    def link_donation(cls, project, payment_transaction):
+        """
+        Create a donation that ties a PaymentTransaction with a Project.
+
+        :param project: revolv.project.models.Project
+        :param payment_transaction: revolv.payments.models.PaymentTransaction
+        :return: revolv.payments.models.Donation
+        """
+        donation = Donation(project=project, payment_transaction=payment_transaction)
+        donation.save()
+        return donation
