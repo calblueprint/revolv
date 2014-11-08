@@ -11,6 +11,12 @@
         {% if request.user.is_authenticated %}
         <p>You're logged in as {{user.first_name}} {{user.last_name}}</p>
         {% endif %}
+        <a href="{% url "administrator:dashboard" %}">
+            <div class='medium primary button'>Admin Dash</div>
+        </a>
+        <a href="{% url "ambassador:dashboard" %}">
+            <div class='medium primary button'>Ambassador Dash</div>
+        </a>
     </div>
 </div>
 <div class='row'>
