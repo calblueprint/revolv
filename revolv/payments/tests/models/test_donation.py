@@ -29,6 +29,9 @@ class DonationManagerTest(TestCase):
         post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
         call_command('loaddata', 'user', 'revolvuserprofile', 'donation', 'payment_transaction', 'project')
 
+    def tearDown(self):
+        post_save.connect(create_profile_of_user, sender=get_user_model())
+
     def test_user_donations(self):
         """Verify that we can find donations by user"""
         user = User.objects.get(id=1)
