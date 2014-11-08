@@ -77,7 +77,7 @@ class UserAuthTestCase(TestUserMixin, TestCase):
             "username": "hjksadhfiobhv",
             "password": "njnpvbebijrwehgjsd"
         }, follow=True)
-        self.assertRedirects(response, self.SIGNIN_URL)
+        self.assertTemplateUsed(response, "base/sign_in.html")
         self._assert_no_user_authed(response)
 
     def test_login_logout(self):
@@ -111,7 +111,7 @@ class UserAuthTestCase(TestUserMixin, TestCase):
         no_email_data["email"] = ""
 
         response = self.client.post(self.SIGNUP_URL, no_name_data, follow=True)
-        self.assertRedirects(response, self.SIGNIN_URL)
+        self.assertTemplateUsed(response, "base/sign_in.html")
         self._assert_no_user_authed(response)
 
         response = self.client.post(
@@ -119,7 +119,7 @@ class UserAuthTestCase(TestUserMixin, TestCase):
             no_email_data,
             follow=True
         )
-        self.assertRedirects(response, self.SIGNIN_URL)
+        self.assertTemplateUsed(response, "base/sign_in.html")
         self._assert_no_user_authed(response)
 
         response = self.client.post(self.SIGNUP_URL, valid_data, follow=True)
