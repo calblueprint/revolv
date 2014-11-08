@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from revolv.base.users import UserDataMixin
-from revolv.project.models import Project
+from revolv.payments.models import Donation
 
 
 class DonorDashboardView(UserDataMixin, TemplateView):
@@ -10,5 +10,5 @@ class DonorDashboardView(UserDataMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DonorDashboardView, self).get_context_data(**kwargs)
-        context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
+        context['donated_projects'] = Donation.objects.donated_projects(self.user_profile)
         return context

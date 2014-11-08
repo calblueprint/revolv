@@ -86,14 +86,6 @@ class ProjectManager(models.Manager):
             'updated_at')
         return drafted_projects
 
-    def donated_projects(self, user_profile):
-        """ Get all projects user donotated to.
-
-        :user: The user of interest
-        :return: A list of donated projects
-        """
-        return Project.objects.filter(donors=user_profile)
-
     def owned_projects(self, user_profile):
         """ Get all projects owned by a user.
 
@@ -204,11 +196,7 @@ class Project(models.Model):
         help_text='Elaborate more about the organization, what it does, who it serves, etc.'
     )
 
-    # commented out until Donor model is implemented
-    donors = models.ManyToManyField(RevolvUserProfile)
-
-    # commented out until Ambassador model is implemented
-    ambassador = models.ForeignKey(RevolvUserProfile, related_name='ambassador')
+    ambassador = models.ForeignKey(RevolvUserProfile)
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)

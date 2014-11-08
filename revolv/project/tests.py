@@ -1,7 +1,11 @@
 import datetime
 
+from django.core.management import call_command
+from django.db.models.signals import post_save
 from django.test import TestCase
+from django_facebook.utils import get_user_model
 from models import Project
+from revolv.base.signals import create_profile_of_user
 
 
 # Create your tests here.
@@ -55,7 +59,10 @@ class ProjectTests(TestCase):
 
 class ProjectManagerTests(TestCase):
     """Tests for the Project manager"""
-    fixtures = ['user', 'project']
+
+    def setUp(self):
+        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
+        call_command('loaddata', 'user', 'revolvuserprofile', 'donation', 'payment_transaction', 'project')
 
     def test_get_featured(self):
         context = Project.objects.get_featured(1)
