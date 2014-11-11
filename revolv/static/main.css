@@ -14344,27 +14344,12 @@ th.hide-for-touch {
   font-size: 14px;
   line-height: 70px; }
 
-nav.header {
-  display: block;
-  width: 100%; }
-  nav.header .logo-container {
+nav.header .logo-container {
+  display: inline-block;
+  margin: 0 20px; }
+  nav.header .logo-container .logo {
     display: inline-block;
-    height: 70px;
-    margin: 0 20px; }
-    nav.header .logo-container .logo {
-      display: inline-block;
-      width: 65px;
-      margin: 0 5px 0 0; }
-    nav.header .logo-container .tagline {
-      color: white; }
-
-/**
- * Foundation provides this media query interface: when we're working with a
- * small screen (i.e. portrait OR landscape mobile) then we don't show the
- * tagline in order to make room for the user welcome (the tagline is too long
- * to fit on portriat mobile screens, and making the text smaller would make it
- * hard to read).
- */
-@media only screen and (max-width: 40em) {
-  .tagline {
-    display: none; } }
+    width: 65px;
+    margin: 0 5px 0 0; }
+  nav.header .logo-container .tagline {
+    color: white; }
