@@ -4,12 +4,18 @@
     http://stackoverflow.com/questions/22650371/django-is-it-impossible-to-static-tag-into-block-tag
 {% endcomment %}
 {% load staticfiles %}
-<nav class="header">
-    <section class="logo-container">
-        <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a>
-        <span class="tagline">People Funded Renewable Energy</span>
-    </section>
-    <section class="user-controls">
+{% spaceless %}
+<nav class="header top-bar" data-topbar role="navigation">
+    <ul class="title-area">
+        <li class="left logo-container">
+            <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a>
+            <span class="tagline">People Funded Renewable Energy</span>
+        </li>
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span class="this-is-the-menu-icon"></span></a></li>
+    </ul>
+    <section class="top-bar-section">
+        <ul class="right">
             {% if request.user.is_authenticated %}
             <li class="has-dropdown">
                 <a href="#">{{user.username}}</a>
@@ -19,12 +25,14 @@
                 </ul>
             </li>
             {% else %}
-            <div class="signin-link signup">
+            <li>
                 <a href="{% url "signin" %}">Sign Up</a>
-            </div>
-            <div class="signin-link login">
-                <a href="{% url "signin" %}">Log In</a>
-            </div>
+            </li>
+            <li>
+                <a href="{% url "signin" %}">Sign In</a>
+            </li>
             {% endif %}
+        </ul>
     </section>
 </nav>
+{% endspaceless %}

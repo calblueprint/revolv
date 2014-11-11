@@ -1,5 +1,7 @@
-$header-color: #C0E7F6;
-$header-height: 70px;
+@import "revolv-settings";
+
+$header-color: $revolv-header-color;
+$header-height: $revolv-header-height;
 .header-small-text {
     font-size: 14px;
     line-height: $header-height;
@@ -10,8 +12,6 @@ $header-page-padding: 20px;
 nav.header {
     display: block;
     width: 100%;
-    height: $header-height;
-    background-color: $header-color;
 
     $logo-dimension: $header-height - 5px;
     .logo-container {
@@ -30,24 +30,17 @@ nav.header {
             @extend .header-small-text;
         }
     }
+}
 
-    /**
-     * Controls, alinged to right side of header for login/signup/signout.
-     */
-    .user-controls {
-        display: block;
-        float: right;
-        height: $header-height;
-
-        .signin-link {
-            display: inline-block;
-            height: 100%;
-            @extend .header-small-text;
-            margin: 0 5px;
-
-            &:last-of-type {
-                margin-right: $header-page-padding;
-            }
-        }
+/**
+ * Foundation provides this media query interface: when we're working with a
+ * small screen (i.e. portrait OR landscape mobile) then we don't show the
+ * tagline in order to make room for the user welcome (the tagline is too long
+ * to fit on portriat mobile screens, and making the text smaller would make it
+ * hard to read).
+ */
+@media #{$small-only} {
+    .tagline {
+        display: none;
     }
 }
