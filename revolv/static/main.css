@@ -1,3 +1,9 @@
+/**
+ * This file overrides specific foundation settings in order to make foundation
+ * work nicely with revolv's design. Note that only some, but not all, of
+ * foundation's settings are overriden here: for the full list, see _settings.scss
+ * in revolv/static/bower_components/foundation/scss/foundation.
+ */
 meta.foundation-version {
   font-family: "/5.4.7/"; }
 
@@ -4010,7 +4016,7 @@ meta.foundation-mq-topbar {
 /* Wrapped around .top-bar to contain to grid width */
 .contain-to-grid {
   width: 100%;
-  background: #333333; }
+  background: #c0e7f6; }
   .contain-to-grid .top-bar {
     margin-bottom: 0; }
 
@@ -4031,14 +4037,14 @@ meta.foundation-mq-topbar {
       z-index: 99; }
     .fixed.expanded:not(.top-bar) .top-bar-section {
       z-index: 98;
-      margin-top: 45px; }
+      margin-top: 70px; }
 
 .top-bar {
   overflow: hidden;
-  height: 45px;
-  line-height: 45px;
+  height: 70px;
+  line-height: 70px;
   position: relative;
-  background: #333333;
+  background: #c0e7f6;
   margin-bottom: 0; }
   .top-bar ul {
     margin-bottom: 0;
@@ -4065,40 +4071,40 @@ meta.foundation-mq-topbar {
     position: relative;
     margin: 0; }
   .top-bar .name {
-    height: 45px;
+    height: 70px;
     margin: 0;
     font-size: 16px; }
     .top-bar .name h1 {
-      line-height: 45px;
+      line-height: 70px;
       font-size: 1.0625rem;
       margin: 0; }
       .top-bar .name h1 a {
         font-weight: normal;
-        color: white;
+        color: #02b2e2;
         width: 75%;
         display: block;
-        padding: 0 15px; }
+        padding: 0 23.33333px; }
   .top-bar .toggle-topbar {
     position: absolute;
     right: 0;
     top: 0; }
     .top-bar .toggle-topbar a {
-      color: white;
+      color: #02b2e2;
       text-transform: uppercase;
       font-size: 0.8125rem;
       font-weight: bold;
       position: relative;
       display: block;
-      padding: 0 15px;
-      height: 45px;
-      line-height: 45px; }
+      padding: 0 23.33333px;
+      height: 70px;
+      line-height: 70px; }
     .top-bar .toggle-topbar.menu-icon {
       top: 50%;
       margin-top: -16px; }
       .top-bar .toggle-topbar.menu-icon a {
         height: 34px;
         line-height: 33px;
-        padding: 0 40px 0 15px;
+        padding: 0 48.33333px 0 23.33333px;
         color: white;
         position: relative; }
         .top-bar .toggle-topbar.menu-icon a span::after {
@@ -4108,7 +4114,7 @@ meta.foundation-mq-topbar {
           height: 0;
           top: 50%;
           margin-top: -8px;
-          right: 15px;
+          right: 23.33333px;
           box-shadow: 0 0px 0 1px white, 0 7px 0 1px white, 0 14px 0 1px white;
           width: 16px; }
         .top-bar .toggle-topbar.menu-icon a span:hover:after {
@@ -4117,7 +4123,7 @@ meta.foundation-mq-topbar {
     height: auto;
     background: transparent; }
     .top-bar.expanded .title-area {
-      background: #333333; }
+      background: #c0e7f6; }
     .top-bar.expanded .toggle-topbar a {
       color: #888888; }
       .top-bar.expanded .toggle-topbar a span::after {
@@ -4136,26 +4142,26 @@ meta.foundation-mq-topbar {
     font-size: 16px;
     margin: 0; }
   .top-bar-section .divider, .top-bar-section [role="separator"] {
-    border-top: solid 1px #1a1a1a;
+    border-top: solid 1px #1b94c0;
     clear: both;
     height: 1px;
     width: 100%; }
   .top-bar-section ul li {
-    background: #333333; }
+    background: #c0e7f6; }
     .top-bar-section ul li > a {
       display: block;
       width: 100%;
-      color: white;
+      color: #02b2e2;
       padding: 12px 0 12px 0;
-      padding-left: 15px;
+      padding-left: 23.33333px;
       font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
       font-size: 0.8125rem;
       font-weight: normal;
       text-transform: none; }
       .top-bar-section ul li > a.button {
         font-size: 0.8125rem;
-        padding-right: 15px;
-        padding-left: 15px;
+        padding-right: 23.33333px;
+        padding-left: 23.33333px;
         background-color: #008cba;
         border-color: #007295;
         color: white; }
@@ -4197,8 +4203,8 @@ meta.foundation-mq-topbar {
           color: white; }
     .top-bar-section ul li > button {
       font-size: 0.8125rem;
-      padding-right: 15px;
-      padding-left: 15px;
+      padding-right: 23.33333px;
+      padding-left: 23.33333px;
       background-color: #008cba;
       border-color: #007295;
       color: white; }
@@ -4240,7 +4246,7 @@ meta.foundation-mq-topbar {
           color: white; }
     .top-bar-section ul li:hover:not(.has-form) > a {
       background-color: #555555;
-      background: #272727;
+      background: #93d7f0;
       color: white; }
     .top-bar-section ul li.active > a {
       background: #008cba;
@@ -4249,7 +4255,7 @@ meta.foundation-mq-topbar {
         background: #007ba0;
         color: white; }
   .top-bar-section .has-form {
-    padding: 15px; }
+    padding: 23.33333px; }
   .top-bar-section .has-dropdown {
     position: relative; }
     .top-bar-section .has-dropdown > a:after {
@@ -4260,7 +4266,7 @@ meta.foundation-mq-topbar {
       border: inset 5px;
       border-color: transparent transparent transparent rgba(255, 255, 255, 0.4);
       border-left-style: solid;
-      margin-right: 15px;
+      margin-right: 23.33333px;
       margin-top: -4.5px;
       position: absolute;
       top: 50%;
@@ -4295,7 +4301,7 @@ meta.foundation-mq-topbar {
       height: auto; }
       .top-bar-section .dropdown li a {
         font-weight: normal;
-        padding: 8px 15px; }
+        padding: 8px 23.33333px; }
         .top-bar-section .dropdown li a.parent-link {
           font-weight: normal; }
       .top-bar-section .dropdown li.title h5, .top-bar-section .dropdown li.parent-link {
@@ -4303,19 +4309,19 @@ meta.foundation-mq-topbar {
         margin-top: 0;
         font-size: 1.125rem; }
         .top-bar-section .dropdown li.title h5 a, .top-bar-section .dropdown li.parent-link a {
-          color: white;
+          color: #02b2e2;
           display: block; }
           .top-bar-section .dropdown li.title h5 a:hover, .top-bar-section .dropdown li.parent-link a:hover {
             background: none; }
       .top-bar-section .dropdown li.has-form {
-        padding: 8px 15px; }
+        padding: 8px 23.33333px; }
       .top-bar-section .dropdown li .button, .top-bar-section .dropdown li button {
         top: auto; }
     .top-bar-section .dropdown label {
-      padding: 8px 15px 2px;
+      padding: 8px 23.33333px 2px;
       margin-bottom: 0;
       text-transform: uppercase;
-      color: #777777;
+      color: #c0e7f6;
       font-weight: bold;
       font-size: 0.625rem; }
 
@@ -4324,7 +4330,7 @@ meta.foundation-mq-topbar {
 
 @media only screen and (min-width:40.063em) {
   .top-bar {
-    background: #333333;
+    background: #c0e7f6;
     overflow: visible; }
     .top-bar:before, .top-bar:after {
       content: " ";
@@ -4342,7 +4348,7 @@ meta.foundation-mq-topbar {
       position: relative;
       top: 7px; }
     .top-bar.expanded {
-      background: #333333; }
+      background: #c0e7f6; }
   .contain-to-grid .top-bar {
     max-width: 62.5rem;
     margin: 0 auto;
@@ -4360,25 +4366,25 @@ meta.foundation-mq-topbar {
           display: none; }
     .top-bar-section li.hover > a:not(.button) {
       background-color: #555555;
-      background: #272727;
+      background: #93d7f0;
       color: white; }
     .top-bar-section li:not(.has-form) a:not(.button) {
-      padding: 0 15px;
-      line-height: 45px;
-      background: #333333; }
+      padding: 0 23.33333px;
+      line-height: 70px;
+      background: #c0e7f6; }
       .top-bar-section li:not(.has-form) a:not(.button):hover {
         background-color: #555555;
-        background: #272727; }
+        background: #93d7f0; }
     .top-bar-section li.active:not(.has-form) a:not(.button) {
-      padding: 0 15px;
-      line-height: 45px;
+      padding: 0 23.33333px;
+      line-height: 70px;
       color: white;
       background: #008cba; }
       .top-bar-section li.active:not(.has-form) a:not(.button):hover {
         background: #007ba0;
         color: white; }
     .top-bar-section .has-dropdown > a {
-      padding-right: 35px !important; }
+      padding-right: 43.33333px !important; }
       .top-bar-section .has-dropdown > a:after {
         content: "";
         display: block;
@@ -4388,7 +4394,7 @@ meta.foundation-mq-topbar {
         border-color: rgba(255, 255, 255, 0.4) transparent transparent transparent;
         border-top-style: solid;
         margin-top: -2.5px;
-        top: 22.5px; }
+        top: 35px; }
     .top-bar-section .has-dropdown.moved {
       position: relative; }
       .top-bar-section .has-dropdown.moved > .dropdown {
@@ -4428,34 +4434,34 @@ meta.foundation-mq-topbar {
       min-width: 100%; }
       .top-bar-section .dropdown li a {
         color: white;
-        line-height: 45px;
+        line-height: 70px;
         white-space: nowrap;
-        padding: 12px 15px;
-        background: #333333; }
+        padding: 12px 23.33333px;
+        background: #c0e7f6; }
       .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
         color: white;
-        background: #333333; }
+        background: #c0e7f6; }
       .top-bar-section .dropdown li:not(.has-form):not(.active):hover > a:not(.button) {
         color: white;
         background-color: #555555;
-        background: #272727; }
+        background: #93d7f0; }
       .top-bar-section .dropdown li label {
         white-space: nowrap;
-        background: #333333; }
+        background: #c0e7f6; }
       .top-bar-section .dropdown li .dropdown {
         left: 100%;
         top: 0; }
     .top-bar-section > ul > .divider, .top-bar-section > ul > [role="separator"] {
       border-bottom: none;
       border-top: none;
-      border-right: solid 1px #4e4e4e;
+      border-right: solid 1px #c8ebf7;
       clear: none;
-      height: 45px;
+      height: 70px;
       width: 0; }
     .top-bar-section .has-form {
-      background: #333333;
-      padding: 0 15px;
-      height: 45px; }
+      background: #c0e7f6;
+      padding: 0 23.33333px;
+      height: 70px; }
     .top-bar-section .right li .dropdown {
       left: auto;
       right: 0; }
@@ -4468,7 +4474,7 @@ meta.foundation-mq-topbar {
         left: 100%; }
   .no-js .top-bar-section ul li:hover > a {
     background-color: #555555;
-    background: #272727;
+    background: #93d7f0;
     color: white; }
   .no-js .top-bar-section ul li:active > a {
     background: #008cba;
@@ -5558,18 +5564,13 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
-.header-small-text, nav.header .logo-container .tagline, nav.header .user-controls .signin-link {
+.header-small-text, nav.header .logo-container .tagline {
   font-size: 14px;
   line-height: 70px; }
 
 nav.header {
   display: block;
-  width: 100%;
-  height: 70px;
-  background-color: #c0e7f6;
-  /**
-     * Controls, alinged to right side of header for login/signup/signout.
-     */ }
+  width: 100%; }
   nav.header .logo-container {
     display: inline-block;
     height: 70px;
@@ -5580,13 +5581,14 @@ nav.header {
       margin: 0 5px 0 0; }
     nav.header .logo-container .tagline {
       color: white; }
-  nav.header .user-controls {
-    display: block;
-    float: right;
-    height: 70px; }
-    nav.header .user-controls .signin-link {
-      display: inline-block;
-      height: 100%;
-      margin: 0 5px; }
-      nav.header .user-controls .signin-link:last-of-type {
-        margin-right: 20px; }
+
+/**
+ * Foundation provides this media query interface: when we're working with a
+ * small screen (i.e. portrait OR landscape mobile) then we don't show the
+ * tagline in order to make room for the user welcome (the tagline is too long
+ * to fit on portriat mobile screens, and making the text smaller would make it
+ * hard to read).
+ */
+@media only screen and (max-width: 40em) {
+  .tagline {
+    display: none; } }
