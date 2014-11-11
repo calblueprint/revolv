@@ -1,13 +1,15 @@
-<nav class="top-bar" data-topbar role="navigation">
-  <ul class="title-area">
-    <li class="name">
-      <h1><a href="{% url "home" %}">RE-volv</a></h1>
-    </li>
-    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-  </ul>
-
-    <section class="top-bar-section">
-        <ul class="right">
+{% comment %}
+    We have to load staticfiles here, even though it's already loaded
+    in the base template, because of how django does staticfile processing:
+    http://stackoverflow.com/questions/22650371/django-is-it-impossible-to-static-tag-into-block-tag
+{% endcomment %}
+{% load staticfiles %}
+<nav class="header">
+    <section class="logo-container">
+        <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a>
+        <span class="tagline">People Funded Renewable Energy</span>
+    </section>
+    <section class="user-controls">
             {% if request.user.is_authenticated %}
             <li class="has-dropdown">
                 <a href="#">{{user.username}}</a>
@@ -16,13 +18,12 @@
                 </ul>
             </li>
             {% else %}
-            <li>
+            <div class="signin-link signup">
                 <a href="{% url "signin" %}">Sign Up</a>
-            </li>
-            <li>
-                <a href="{% url "signin" %}">Sign In</a>
-            </li>
+            </div>
+            <div class="signin-link login">
+                <a href="{% url "signin" %}">Log In</a>
+            </div>
             {% endif %}
-        </ul>
     </section>
 </nav>

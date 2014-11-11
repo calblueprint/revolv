@@ -1,0 +1,53 @@
+$header-color: #C0E7F6;
+$header-height: 70px;
+.header-small-text {
+    font-size: 14px;
+    line-height: $header-height;
+}
+
+$header-page-padding: 20px;
+
+nav.header {
+    display: block;
+    width: 100%;
+    height: $header-height;
+    background-color: $header-color;
+
+    $logo-dimension: $header-height - 5px;
+    .logo-container {
+        display: inline-block;
+        height: $header-height;
+        margin: 0 $header-page-padding;
+
+        .logo {
+            display: inline-block;
+            width: $logo-dimension;
+            margin: 0 5px 0 0;
+        }
+
+        .tagline {
+            color: white;
+            @extend .header-small-text;
+        }
+    }
+
+    /**
+     * Controls, alinged to right side of header for login/signup/signout.
+     */
+    .user-controls {
+        display: block;
+        float: right;
+        height: $header-height;
+
+        .signin-link {
+            display: inline-block;
+            height: 100%;
+            @extend .header-small-text;
+            margin: 0 5px;
+
+            &:last-of-type {
+                margin-right: $header-page-padding;
+            }
+        }
+    }
+}
