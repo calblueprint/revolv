@@ -11,9 +11,11 @@
         {% if request.user.is_authenticated %}
         <p>You're logged in as {{user.first_name}} {{user.last_name}}</p>
         {% endif %}
+        {% if user.revolvuserprofile.is_administrator %}
         <a href="{% url "administrator:dashboard" %}">
             <div class='medium primary button'>Admin Dash</div>
         </a>
+        {% endif %}
         <a href="{% url "donor:dashboard" %}">
             <div class='medium primary button'>Donor Dash</div>
         </a>

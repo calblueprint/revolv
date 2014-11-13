@@ -14,9 +14,11 @@
         <a href="{% url "donor:dashboard" %}">
             <div class='medium primary button'>Donor Dash</div>
         </a>
+        {% if user.revolvuserprofile.is_ambassador %}
         <a href="{% url "ambassador:dashboard" %}">
             <div class='medium primary button'>Ambassador Dash</div>
         </a>
+        {% endif %}
     </div>
 </div>
 <div class='row'>
