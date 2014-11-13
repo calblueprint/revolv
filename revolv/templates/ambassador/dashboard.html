@@ -6,24 +6,24 @@
 {% block body %}
 
 <div class='row'>
-    <div class='small-12 columns'>
-        <h1>Hello User!</h1>
-        {% if request.user.is_authenticated %}
-        <p>You're logged in as {{user.first_name}} {{user.last_name}}</p>
-        {% endif %}
+    <div class='small-12 text-center columns'>
+        <a href="{% url "donor:dashboard" %}">
+            <div class='medium primary button'>Donor Dash</div>
+        </a>
         {% if user.revolvuserprofile.is_administrator %}
         <a href="{% url "administrator:dashboard" %}">
             <div class='medium primary button'>Admin Dash</div>
         </a>
         {% endif %}
-        <a href="{% url "donor:dashboard" %}">
-            <div class='medium primary button'>Donor Dash</div>
+        {% if user.revolvuserprofile.is_ambassador %}
+        <a href="{% url "ambassador:dashboard" %}">
+            <div class='medium active button'>Ambassador Dash</div>
         </a>
+        {% endif %}
     </div>
 </div>
 <div class='row'>
 	<div class="small-12 columns">
-		<p>Make a project!</p>
 		<a href="{% url "project:new" %}" class="large button">Create Project</a>
 		<div class="drafted_projects">
 			<h2>My Projects</h2>
