@@ -68,7 +68,7 @@ class ReviewProjectView(UpdateView):
     form_class = forms.ProjectStatusForm
 
     def get_success_url(self):
-        return reverse('dashboard')
+        return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     # Checks the post request and updates the project_status
     def form_valid(self, form):

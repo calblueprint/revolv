@@ -96,7 +96,7 @@ class ProjectManager(models.Manager):
 
     def create_from_form(self, form, ambassador):
         project = form.save(commit=False)
-        project.ambassador = ambassador
+        project.ambassador = ambassador.revolvuserprofile
         project.save()
         return project
 
