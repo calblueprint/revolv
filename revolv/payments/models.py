@@ -45,7 +45,8 @@ class DonationManager(models.Manager):
             queryset = self.user_donations(user).select_related("project")
         projects = []
         for donation in queryset:
-            projects.append(donation.project)
+            if donation.project not in projects:
+                projects.append(donation.project)
         return projects
 
 
