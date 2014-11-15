@@ -5568,12 +5568,24 @@ th.hide-for-touch {
   font-size: 14px;
   line-height: 70px; }
 
-nav.header .logo-container {
-  display: inline-block;
-  margin: 0 20px; }
-  nav.header .logo-container .logo {
+nav.header {
+  /**
+     * Foundation will by default show all the menu items on the movile version
+     * of the top bar, but we want to prevent it from showing the user's username
+     * at the second level, since they've already clicked on it.
+     */ }
+  nav.header .logo-container {
     display: inline-block;
-    width: 65px;
-    margin: 0 5px 0 0; }
-  nav.header .logo-container .tagline {
-    color: white; }
+    margin: 0 20px; }
+    nav.header .logo-container .logo {
+      display: inline-block;
+      width: 65px;
+      margin: 0 5px 0 0; }
+    nav.header .logo-container .tagline {
+      color: white; }
+  nav.header .user-controls > .dropdown a.js-generated {
+    display: none; }
+
+@media only screen and (max-width: 40em) and (orientation: portrait) {
+  nav.header .tagline {
+    display: none !important; } }
