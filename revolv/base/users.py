@@ -3,6 +3,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect
 from revolv.base.models import RevolvUserProfile
+from revolv.base.utils import get_profile
 
 
 def is_ambassador(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
@@ -11,7 +12,7 @@ def is_ambassador(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_
     to the log-in page if necessary.
     """
     actual_decorator = user_passes_test(
-        lambda u: u.is_authenticated() and RevolvUserProfile.objects.get(user=u).is_ambassador(),
+        lambda u: u.is_authenticated() and get_profile(u).is_ambassador(),
         login_url=login_url,
         redirect_field_name=redirect_field_name
     )
@@ -26,7 +27,7 @@ def is_administrator(function=None, redirect_field_name=REDIRECT_FIELD_NAME, log
     to the log-in page if necessary.
     """
     actual_decorator = user_passes_test(
-        lambda u: u.is_authenticated() and RevolvUserProfile.objects.get(user=u).is_administrator(),
+        lambda u: u.is_authenticated() and get_profile(u).is_administrator(),
         login_url=login_url,
         redirect_field_name=redirect_field_name
     )
