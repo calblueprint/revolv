@@ -37,18 +37,6 @@ class DonationManager(models.Manager):
         donations = queryset.filter(payment_transaction__user=user).order_by('created_at')
         return donations
 
-    def donated_projects(self, user, queryset=None):
-        """
-        :return: Projects to which this user has donated
-        """
-        if queryset is None:
-            queryset = self.user_donations(user).select_related("project")
-        projects = []
-        for donation in queryset:
-            if donation.project not in projects:
-                projects.append(donation.project)
-        return projects
-
 
 class Donation(models.Model):
     """
