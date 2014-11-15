@@ -1,0 +1,64 @@
+{% extends "base/tmp_base.html" %}
+{% load staticfiles %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+    <div class='small-12 text-center columns'>
+        <a href="{% url "donor:dashboard" %}">
+            <div class='medium primary button'>Donor Dash</div>
+        </a>
+        {% if user.revolvuserprofile.is_administrator %}
+        <a href="{% url "administrator:dashboard" %}">
+            <div class='medium active button'>Admin Dash</div>
+        </a>
+        {% endif %}
+        {% if user.revolvuserprofile.is_ambassador %}
+        <a href="{% url "ambassador:dashboard" %}">
+            <div class='medium primary button'>Ambassador Dash</div>
+        </a>
+        {% endif %}
+    </div>
+</div>
+<div class='row'>
+	<div class='small-12 columns'>
+    	<div class="proposed_projects">
+    		<h2>Proposed Projects</h2>
+    		<p>Edit, accept, or deny proposed projects!</p>
+    		{% for project in proposed_projects %}
+                <div class="row">
+                    <div class="small-9 columns">
+                        <div class="row">
+                            <div class="small-12 columns">
+                            	<h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                        	<div class="small-12 columns">
+                        		<h4>{{ project.org_name }}</h4>
+                        	</div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <p> {{ project.mission_statement }} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small-3 columns">
+                        <a href="{% url "project:review" project.pk %}">
+                            <img src="{{ project.preview_photo.url }}"></img>
+                        </a>
+                    </div>
+                </div>
+                <hr/>
+                <br/>
+            {% empty %}
+                <p> There are no proposed projects right now. Check again later! </p>
+            {% endfor %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,8 +1,11 @@
 import datetime
 
+from django.core.management import call_command
+from django.db.models.signals import post_save
 from django.test import TestCase
-
+from django_facebook.utils import get_user_model
 from models import Project
+from revolv.base.signals import create_profile_of_user
 
 
 # Create your tests here.
@@ -56,7 +59,13 @@ class ProjectTests(TestCase):
 
 class ProjectManagerTests(TestCase):
     """Tests for the Project manager"""
-    fixtures = ['project', 'user']
+
+    def setUp(self):
+        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
+        call_command('loaddata', 'user', 'revolvuserprofile', 'donation', 'payment_transaction', 'project')
+
+    def tearDown(self):
+        post_save.connect(create_profile_of_user, sender=get_user_model())
 
     def test_get_featured(self):
         context = Project.objects.get_featured(1)
@@ -66,15 +75,20 @@ class ProjectManagerTests(TestCase):
         self.assertEqual(len(context), 2)
         self.assertEqual(context[1].org_name, "Comoonity Dairy")
 
+    def test_get_completed(self):
+        context = Project.objects.get_completed()
+        self.assertEqual(len(context), 1)
+        self.assertEqual(context[0].org_name, "Comoonity Dairy")
+
+    def test_get_active(self):
+        context = Project.objects.get_active()
+        self.assertEqual(len(context), 1)
+        self.assertEqual(context[0].org_name, "The Community Dance Studio")
+
     def test_get_proposed(self):
         context = Project.objects.get_proposed()
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Educathing")
-
-    def test_get_drafted(self):
-        context = Project.objects.get_drafted()
-        self.assertEqual(len(context), 1)
-        self.assertEqual(context[0].org_name, "Fire Emblem")
 
     def test_get_drafted(self):
         context = Project.objects.get_drafted()

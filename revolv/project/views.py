@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
-from revolv.base.views import UserDataMixin
+from revolv.base.users import UserDataMixin
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.project import forms
 from revolv.project.models import Project
@@ -22,7 +22,7 @@ class CreateProjectView(CreateView):
         return reverse('home')
 
     def form_valid(self, form):
-        Project.objects.create_from_form(form, self.request.user)
+        Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
         return super(CreateProjectView, self).form_valid(form)
 
     # sets context to be the create view, doesn't pass in the id
@@ -68,7 +68,7 @@ class ReviewProjectView(UpdateView):
     form_class = forms.ProjectStatusForm
 
     def get_success_url(self):
-        return reverse('dashboard')
+        return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     # Checks the post request and updates the project_status
     def form_valid(self, form):

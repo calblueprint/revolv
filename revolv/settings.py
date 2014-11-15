@@ -142,6 +142,9 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Login settings
+LOGIN_URL = '/signin'
+
 # Static asset configuration
 STATIC_ROOT = 'staticfiles'
 

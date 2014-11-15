@@ -10305,6 +10305,10 @@ button, .button {
       background-color: #b9b9b9; }
     button.secondary:hover, button.secondary:focus, .button.secondary:hover, .button.secondary:focus {
       color: #333333; }
+  button.active, .button.active {
+    background: white;
+    color: #008cba; }
+  }
   button.success, .button.success {
     background-color: #43ac6a;
     border-color: #368a54;

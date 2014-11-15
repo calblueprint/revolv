@@ -1,6 +1,5 @@
 from itertools import chain
 
-from django.contrib.auth.models import User
 from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -11,9 +10,10 @@ class ProjectManager(models.Manager):
     """
     Manager for running custom operations on the Projects.
     """
+
     def get_featured(self, num_projects, queryset=None):
-        """ Get num_projects amount of accepted projects. If we don't have
-        enough accepted projects, then we retrieve completed projects. This
+        """ Get num_projects amount of active projects. If we don't have
+        enough active projects, then we retrieve completed projects. This
         function may return fewer projects than requested if not enough exist.
 
         :num_projects: Number of projects to be retrieved
@@ -23,7 +23,7 @@ class ProjectManager(models.Manager):
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         featured_projects = queryset.filter(
-            project_status=Project.ACCEPTED).order_by(
+            project_status=Project.ACTIVE).order_by(
             'end_date')[:num_projects]
         if featured_projects.count() < num_projects:
             num_completed_needed = num_projects - featured_projects.count()
@@ -34,6 +34,32 @@ class ProjectManager(models.Manager):
         else:
             return featured_projects
 
+    def get_completed(self, queryset=None):
+        """ Gets all the projects that have been completed funding.
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of completed project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        completed_projects = queryset.filter(
+            project_status=Project.COMPLETED
+        ).order_by('end_date')
+        return completed_projects
+
+    def get_active(self, queryset=None):
+        """ Gets all the projects that have been active to go into funding.
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of active project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        active_projects = queryset.filter(
+            project_status=Project.ACTIVE
+        ).order_by('end_date')
+        return active_projects
+
     def get_proposed(self, queryset=None):
         """ Gets all the projects that are currently in review (proposed).
 
@@ -43,12 +69,12 @@ class ProjectManager(models.Manager):
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         proposed_projects = queryset.filter(
-            project_status=Project.PROPOSED).order_by(
-            'updated_at')
+            project_status=Project.PROPOSED
+        ).order_by('updated_at')
         return proposed_projects
 
     def get_drafted(self, queryset=None):
-        """ Get all the projects that are drafted by the current user.
+        """ Get all the projects that are drafted in the queryset.
 
         :queryset: The queryset in which to search for projects
         :return: A list of in review project objects
@@ -56,27 +82,32 @@ class ProjectManager(models.Manager):
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         drafted_projects = queryset.filter(
-            project_status=Project.DRAFTED).order_by(
-            'updated_at')
+            project_status=Project.DRAFTED
+        ).order_by('updated_at')
         return drafted_projects
 
-    def donated_projects(self, user):
-        """ Returns a queryset of projects that the specified user
-        donated to.
+    def owned_projects(self, user_profile):
+        """ Get all projects owned by a RevolvUserProfile.
 
         :user: The user of interest
+        :return: A list of projects for which user's RevolvUserProfile
+        is the ambassador
         """
-        return user.project_set.all()
+        return Project.objects.filter(ambassador=user_profile)
 
-    def owned_projects(self, user):
-        """ Returns a queryset of projects that were created by the
-        specified user.
-
-        :user: The user of interest
+    def donated_projects(self, user_profile):
         """
-        return Project.objects.filter(ambassador=user)
+        :return: Projects to which this RevolvUserProfile has donated
+        """
+        return user_profile.project_set.all()
 
     def create_from_form(self, form, ambassador):
+        """ Creates project from form and sets ambassador to a RevolvUserProfile.
+
+        :form: The form
+        :ambassador: The RevolvUserProfile of the ambassador of the project
+        :return: Project created and saved
+        """
         project = form.save(commit=False)
         project.ambassador = ambassador
         project.save()
@@ -88,12 +119,12 @@ class Project(models.Model):
     Project model. Stores basic metadata, information about the project,
     donations, energy impact, goals, and info about the organization.
     """
-    ACCEPTED = 'AC'
+    ACTIVE = 'AC'
     PROPOSED = 'PR'
     COMPLETED = 'CO'
     DRAFTED = 'DR'
     PROJECT_STATUS_CHOICES = (
-        (ACCEPTED, 'Accepted'),
+        (ACTIVE, 'Active'),
         (PROPOSED, 'Proposed'),
         (COMPLETED, 'Completed'),
         (DRAFTED, 'Drafted'),
@@ -178,11 +209,9 @@ class Project(models.Model):
         help_text='Elaborate more about the organization, what it does, who it serves, etc.'
     )
 
-    # commented out until Donor model is implemented
     donors = models.ManyToManyField(RevolvUserProfile)
 
-    # commented out until Ambassador model is implemented
-    ambassador = models.ForeignKey(User, related_name='ambassador')
+    ambassador = models.ForeignKey(RevolvUserProfile, related_name='ambassador')
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)
@@ -202,7 +231,7 @@ class Project(models.Model):
     objects = ProjectManager()
 
     def approve_project(self):
-        self.project_status = Project.ACCEPTED
+        self.project_status = Project.ACTIVE
         self.save()
         return self
 

@@ -20,6 +20,7 @@
         "org_about": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n",
         "amount_repaid": "0.00",
         "internal_rate_return": "7.8",
+        "donors": [1,2],
         "ambassador": 1
     },
     "model": "project.project",
@@ -46,6 +47,7 @@
         "org_about": "The idea that companies should prioritize phones and tablets over old-school PCs isn't new, and companies like Google claim to have been doing it for years. But what they're finally realizing is that mobile-first means more than just making a finely polished app for touch screens. User behavior isn't the same on phones as it is on PCs, which means the app itself must be fundamentally different.\r\n\r\nMicrosoft's Sway, for instance, throws out most of the robust tools that PowerPoint offers, and instead focuses on letting people throw things together quickly, even on a smartphone. It's sort of like using templates in PowerPoint, except that each slide can adapt to the amount of photos and text you put in it, and will format itself automatically for any screen size.",
         "amount_repaid": "0.00",
         "internal_rate_return": "7.5",
+        "donors": [1],
         "ambassador": 1
     },
     "model": "project.project",
@@ -72,6 +74,7 @@
         "org_about": "\u201cThe environment for interns at Google is healthier than it might be portrayed in the movie,\u201d Ewing says with a laugh, noting, \u201cOne of the biggest differences between the movie and a real internship at Google is that interns are not competing against each other, not for jobs or anything else. We would never pit them against each other.\u201d\r\n\r\nIn addition to working in what Ewing describes as a supportive and collaborative environment, Google interns enjoy competitive pay and perks, and interning can indeed be a path to a full-time job.",
         "amount_repaid": "0.00",
         "internal_rate_return": "7.2",
+        "donors": [2],
         "ambassador": 1
     },
     "model": "project.project",
@@ -98,6 +101,7 @@
         "org_about": "Embark with our heroes on a quest to save the world!",
         "amount_repaid": "0.00",
         "internal_rate_return": "7.0",
+        "donors": [1,2],
         "ambassador": 1
     },
     "model": "project.project",
