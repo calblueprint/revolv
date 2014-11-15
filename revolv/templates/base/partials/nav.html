@@ -1,15 +1,23 @@
-<nav class="top-bar" data-topbar role="navigation">
-  <ul class="title-area">
-    <li class="name">
-      <h1><a href="{% url "home" %}">RE-volv</a></h1>
-    </li>
-    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-  </ul>
-
+{% comment %}
+    We have to load staticfiles here, even though it's already loaded
+    in the base template, because of how django does staticfile processing:
+    http://stackoverflow.com/questions/22650371/django-is-it-impossible-to-static-tag-into-block-tag
+{% endcomment %}
+{% load staticfiles %}
+{% spaceless %}
+<nav class="header top-bar" data-topbar role="navigation">
+    <ul class="title-area">
+        <li class="logo-container name">
+            <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a>
+            <span class="tagline">People Funded Renewable Energy</span>
+        </li>
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+    </ul>
     <section class="top-bar-section">
         <ul class="right">
             {% if request.user.is_authenticated %}
-            <li class="has-dropdown">
+            <li class="user-controls has-dropdown">
                 <a href="#">{{user.username}}</a>
                 <ul class="dropdown">
                     <li><a href="{% url "logout" %}">Sign Out</a></li>
@@ -26,3 +34,4 @@
         </ul>
     </section>
 </nav>
+{% endspaceless %}
