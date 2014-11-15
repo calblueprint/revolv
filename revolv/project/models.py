@@ -43,8 +43,8 @@ class ProjectManager(models.Manager):
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         completed_projects = queryset.filter(
-            project_status=Project.COMPLETED).order_by(
-            'end_date')
+            project_status=Project.COMPLETED
+        ).order_by('end_date')
         return completed_projects
 
     def get_active(self, queryset=None):
@@ -56,8 +56,8 @@ class ProjectManager(models.Manager):
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         active_projects = queryset.filter(
-            project_status=Project.ACTIVE).order_by(
-            'end_date')
+            project_status=Project.ACTIVE
+        ).order_by('end_date')
         return active_projects
 
     def get_proposed(self, queryset=None):
@@ -69,8 +69,8 @@ class ProjectManager(models.Manager):
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         proposed_projects = queryset.filter(
-            project_status=Project.PROPOSED).order_by(
-            'updated_at')
+            project_status=Project.PROPOSED
+        ).order_by('updated_at')
         return proposed_projects
 
     def get_drafted(self, queryset=None):
@@ -82,8 +82,8 @@ class ProjectManager(models.Manager):
         if queryset is None:
             queryset = super(ProjectManager, self).get_queryset()
         drafted_projects = queryset.filter(
-            project_status=Project.DRAFTED).order_by(
-            'updated_at')
+            project_status=Project.DRAFTED
+        ).order_by('updated_at')
         return drafted_projects
 
     def owned_projects(self, user_profile):
@@ -96,6 +96,12 @@ class ProjectManager(models.Manager):
         return Project.objects.filter(ambassador=user_profile)
 
     def create_from_form(self, form, ambassador):
+        """ Creates project from form and sets ambassador to a RevolvUserProfile.
+
+        :form: The form
+        :ambassador: The RevolvUserProfile of the ambassador of the project
+        :return: Project created and saved
+        """
         project = form.save(commit=False)
         project.ambassador = ambassador
         project.save()
