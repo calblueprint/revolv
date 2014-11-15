@@ -87,16 +87,17 @@ class ProjectManager(models.Manager):
         return drafted_projects
 
     def owned_projects(self, user_profile):
-        """ Get all projects owned by a user.
+        """ Get all projects owned by a RevolvUserProfile.
 
         :user: The user of interest
-        :return: A list of projects for which user is the ambassador
+        :return: A list of projects for which user's RevolvUserProfile
+        is the ambassador
         """
         return Project.objects.filter(ambassador=user_profile)
 
     def create_from_form(self, form, ambassador):
         project = form.save(commit=False)
-        project.ambassador = ambassador.revolvuserprofile
+        project.ambassador = ambassador
         project.save()
         return project
 

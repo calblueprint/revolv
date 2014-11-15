@@ -22,7 +22,7 @@ class CreateProjectView(CreateView):
         return reverse('home')
 
     def form_valid(self, form):
-        Project.objects.create_from_form(form, self.request.user)
+        Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
         return super(CreateProjectView, self).form_valid(form)
 
     # sets context to be the create view, doesn't pass in the id
