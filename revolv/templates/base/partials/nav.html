@@ -11,13 +11,13 @@
             <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a>
             <span class="tagline">People Funded Renewable Energy</span>
         </li>
-     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
         <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
     </ul>
     <section class="top-bar-section">
         <ul class="right">
             {% if request.user.is_authenticated %}
-            <li class="has-dropdown">
+            <li class="user-controls has-dropdown">
                 <a href="#">{{user.username}}</a>
                 <ul class="dropdown">
                     <li><a href="{% url "donor:dashboard" %}">Dashboard</a></li>

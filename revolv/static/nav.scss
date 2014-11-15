@@ -27,4 +27,19 @@ nav.header {
             @extend .header-small-text;
         }
     }
+
+    /**
+     * Foundation will by default show all the menu items on the movile version
+     * of the top bar, but we want to prevent it from showing the user's username
+     * at the second level, since they've already clicked on it.
+     */
+    .user-controls > .dropdown a.js-generated {
+        display: none;
+    }
+}
+
+@media #{$small-only} and (orientation: portrait) {
+    nav.header .tagline {
+        display: none !important;
+    }
 }
