@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
@@ -22,7 +23,8 @@ class CreateProjectView(CreateView):
         return reverse('home')
 
     def form_valid(self, form):
-        Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+        new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+        messages.success(self.request, new_project.title + ' is now pending approval')
         return super(CreateProjectView, self).form_valid(form)
 
     # sets context to be the create view, doesn't pass in the id
