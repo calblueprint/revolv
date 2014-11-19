@@ -1,3 +1,4 @@
+{% load cms_tags sekizai_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -13,6 +14,8 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css" />
     <link rel="stylesheet" href="{% static "main.css" %}" />
+    {% render_block "css" %}
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
     {% block head %}
@@ -20,6 +23,9 @@
 </head>
 
 <body>
+    {% cms_toolbar %}
+    {% placeholder base_content %}
+
     {% include "base/partials/nav.html" %}
 
     {% block body %}
@@ -50,6 +56,7 @@
       $(document).foundation();
     </script>
 
+    {% render_block "js" %}
     {% block javascripts %}
     {% endblock %}
 </body>
