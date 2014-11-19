@@ -16,10 +16,11 @@ $topbar-bg: $revolv-header-color;
 
 // Height and margin
 $topbar-height: $revolv-header-height;
+$topbar-margin-bottom: 10px;
 
 // Style the top bar dropdown elements
 $topbar-dropdown-bg: $revolv-header-color;
-// $topbar-dropdown-link-color: $white;
+$topbar-dropdown-link-color: $revolv-logo-color-dark;
 $topbar-dropdown-link-bg: $revolv-header-color;
 // $topbar-dropdown-link-weight: $font-weight-normal;
 // $topbar-dropdown-toggle-size: 5px;
@@ -27,12 +28,12 @@ $topbar-dropdown-link-bg: $revolv-header-color;
 // $topbar-dropdown-toggle-alpha: 0.4;
 
 // Set the link colors and styles for top-level nav
-$topbar-link-color: $revolv-logo-color-light;
+$topbar-link-color: $revolv-logo-color-dark;
 // $topbar-link-color-hover: $white;
 // $topbar-link-color-active: $white;
 // $topbar-link-color-active-hover: $white;
 // $topbar-link-weight: $font-weight-normal;
-// $topbar-link-font-size: rem-calc(13);
+$topbar-link-font-size: 0.9rem;
 // $topbar-link-hover-lightness: -10%; // Darken by 10%
 // $topbar-link-bg: $topbar-bg;
 // $topbar-link-bg-color-hover: $revolv-header-color;
@@ -72,3 +73,72 @@ $topbar-dropdown-label-bg: $revolv-header-color;
 // Divider Styles
 // $topbar-divider-border-bottom: solid 1px  scale-color($topbar-bg-color, $lightness: 13%);
 // $topbar-divider-border-top: solid 1px scale-color($topbar-bg-color, $lightness: -50%);
+
+// 05. Buttons
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// $include-html-button-classes: $include-html-classes;
+
+// We use these to build padding for buttons.
+// $button-tny: rem-calc(10);
+// $button-sml: rem-calc(14);
+// $button-med: rem-calc(16);
+// $button-lrg: rem-calc(18);
+
+// We use this to control the display property.
+// $button-display: inline-block;
+// $button-margin-bottom: rem-calc(20);
+
+// We use these to control button text styles.
+// $button-font-family: $body-font-family;
+// $button-font-color: $white;
+// $button-font-color-alt: $oil;
+// $button-font-tny: rem-calc(11);
+// $button-font-sml: rem-calc(13);
+// $button-font-med: rem-calc(16);
+// $button-font-lrg: rem-calc(20);
+// $button-font-weight: $font-weight-normal;
+// $button-font-align: center;
+
+// We use these to control various hover effects.
+// $button-function-factor: -20%;
+
+// We use these to control button border and hover styles.
+$button-border-width: 2px;
+// $button-border-style: solid;
+$button-bg-color: white;
+$button-bg-hover: white;
+$button-border-color: $button-bg-hover;
+// $secondary-button-bg-hover: scale-color($secondary-color, $lightness: $button-function-factor);
+// $secondary-button-border-color: $secondary-button-bg-hover;
+// $success-button-bg-hover: scale-color($success-color, $lightness: $button-function-factor);
+// $success-button-border-color: $success-button-bg-hover;
+// $alert-button-bg-hover: scale-color($alert-color, $lightness: $button-function-factor);
+// $alert-button-border-color: $alert-button-bg-hover;
+
+// We use this to set the default radius used throughout the core.
+// $button-radius: $global-radius;
+// $button-round: $global-rounded;
+
+// We use this to set default opacity and cursor for disabled buttons.
+// $button-disabled-opacity: 0.7;
+// $button-disabled-cursor: $cursor-default-value;
+
+// 31. Tabs
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// $include-html-tabs-classes: $include-html-classes;
+
+// $tabs-navigation-padding: rem-calc(16);
+$tabs-navigation-bg-color: $revolv-light-blue-bg;
+$tabs-navigation-active-bg-color: white;
+// $tabs-navigation-hover-bg-color: scale-color($tabs-navigation-bg-color, $lightness: -6%);
+// $tabs-navigation-font-color: $jet;
+// $tabs-navigation-active-font-color: $tabs-navigation-font-color;
+// $tabs-navigation-font-size: rem-calc(16);
+// $tabs-navigation-font-family: $body-font-family;
+
+// $tabs-content-margin-bottom: rem-calc(24);
+// $tabs-content-padding: $column-gutter/2;
+
+// $tabs-vertical-navigation-margin-bottom: 1.25rem;

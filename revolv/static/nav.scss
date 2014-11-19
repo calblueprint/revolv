@@ -11,7 +11,7 @@ $header-page-padding: 20px;
 
 nav.header {
 
-    $logo-dimension: $header-height - 5px;
+    $logo-dimension: $header-height;
     .logo-container {
         display: inline-block;
         margin: 0 $header-page-padding;
@@ -19,12 +19,12 @@ nav.header {
         .logo {
             display: inline-block;
             width: $logo-dimension;
-            margin: 0 5px 0 0;
+            margin: 0 10px 0 0;
         }
 
         .tagline {
-            color: white;
-            @extend .header-small-text;
+            color: $revolv-logo-color-dark;
+            font-size: 1rem;
         }
     }
 
