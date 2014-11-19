@@ -8,16 +8,16 @@
 <div class='row'>
     <div class='small-12 text-center columns'>
         <a href="{% url "donor:dashboard" %}">
-            <div class='medium primary button'>Donor Dash</div>
+            <div class='medium primary dashboard-button button'>Donor Dash</div>
         </a>
         {% if user.revolvuserprofile.is_administrator %}
         <a href="{% url "administrator:dashboard" %}">
-            <div class='medium active button'>Admin Dash</div>
+            <div class='medium active dashboard-button button'>Admin Dash</div>
         </a>
         {% endif %}
         {% if user.revolvuserprofile.is_ambassador %}
         <a href="{% url "ambassador:dashboard" %}">
-            <div class='medium primary button'>Ambassador Dash</div>
+            <div class='medium primary dashboard-button button'>Ambassador Dash</div>
         </a>
         {% endif %}
     </div>
