@@ -1,15 +1,16 @@
 @import "revolv-settings";
 
-button.active, .button.active {
+dashboard-button:hover, dashboard-button:focus, .dashboard-button:hover, .dashboard-button:focus, dashboard-button.active, .dashboard-button.active {
+  color: black;
   border-width: 2px;
   border-color: $revolv-header-color;
-}
-
-dashboard-button:hover, dashboard-button:focus, .dashboard-button:hover, .dashboard-button:focus {
-  border-width: 2px;
-  border-color: $revolv-header-color;
+  background-color: white;
 }
 
 dashboard-button, .dashboard-button {
+  color: black;
+  background-color: white;
+  border-width: 2px;
+  border-color: white;
   transition: border-color 200ms linear;
 }

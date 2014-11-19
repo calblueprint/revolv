@@ -74,56 +74,6 @@ $topbar-dropdown-label-bg: $revolv-header-color;
 // $topbar-divider-border-bottom: solid 1px  scale-color($topbar-bg-color, $lightness: 13%);
 // $topbar-divider-border-top: solid 1px scale-color($topbar-bg-color, $lightness: -50%);
 
-// 05. Buttons
-// - - - - - - - - - - - - - - - - - - - - - - - - -
-
-// $include-html-button-classes: $include-html-classes;
-
-// We use these to build padding for buttons.
-// $button-tny: rem-calc(10);
-// $button-sml: rem-calc(14);
-// $button-med: rem-calc(16);
-// $button-lrg: rem-calc(18);
-
-// We use this to control the display property.
-// $button-display: inline-block;
-// $button-margin-bottom: rem-calc(20);
-
-// We use these to control button text styles.
-// $button-font-family: $body-font-family;
-// $button-font-color: $white;
-// $button-font-color-alt: $oil;
-// $button-font-tny: rem-calc(11);
-// $button-font-sml: rem-calc(13);
-// $button-font-med: rem-calc(16);
-// $button-font-lrg: rem-calc(20);
-// $button-font-weight: $font-weight-normal;
-// $button-font-align: center;
-
-// We use these to control various hover effects.
-// $button-function-factor: -20%;
-
-// We use these to control button border and hover styles.
-$button-border-width: 2px;
-// $button-border-style: solid;
-$button-bg-color: white;
-$button-bg-hover: white;
-$button-border-color: $button-bg-hover;
-// $secondary-button-bg-hover: scale-color($secondary-color, $lightness: $button-function-factor);
-// $secondary-button-border-color: $secondary-button-bg-hover;
-// $success-button-bg-hover: scale-color($success-color, $lightness: $button-function-factor);
-// $success-button-border-color: $success-button-bg-hover;
-// $alert-button-bg-hover: scale-color($alert-color, $lightness: $button-function-factor);
-// $alert-button-border-color: $alert-button-bg-hover;
-
-// We use this to set the default radius used throughout the core.
-// $button-radius: $global-radius;
-// $button-round: $global-rounded;
-
-// We use this to set default opacity and cursor for disabled buttons.
-// $button-disabled-opacity: 0.7;
-// $button-disabled-cursor: $cursor-default-value;
-
 // 31. Tabs
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
