@@ -1,5 +1,3 @@
-## /project_name/app_name/tasks.py
-
 import re
 import tempfile
 import urllib2
@@ -13,7 +11,8 @@ from utils import get_solar_csv_url
 
 @task
 def scrape():
-    """Scrape for solar log csv data"""
+    """Celery task to scrape for solar log csv data"""
+
     CSV_URL_REGEX = '(var svgsrc = ")[^"]+(";)'
 
     for project in Project.objects.all():
@@ -29,7 +28,7 @@ def scrape():
         csvstr = response.read()
         lines = csvstr.split("\r\n")
 
-        # Write data to CSV of project through temporary file
+        # Write data to file field of project through temporary file
         temp = tempfile.TemporaryFile()
         for line in lines:
             temp.write(line + "\n")
