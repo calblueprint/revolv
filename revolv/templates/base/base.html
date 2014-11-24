@@ -35,13 +35,15 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 
     {% if messages %}
-    <ul class="messages">
+        <script>
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = "toast-bottom-right";
+        </script>
         {% for message in messages %}
         <script>
             toastr.{{ message.tags }}('{{ message }}')
         </script>
         {% endfor %}
-    </ul>
     {% endif %}
 
     <script>
