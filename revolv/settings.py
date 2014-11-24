@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'sekizai',  # for javascript and css management
     'djangocms_picture',
     'djangocms_googlemap',
+    'djangocms_file',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -245,6 +246,7 @@ MIGRATION_MODULES = {
     'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
     'djangocms_picture': 'djangocms_picture.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
+    'djangocms_file': 'djangocms_file.migrations_django',
 }
 
 LANGUAGES = [
