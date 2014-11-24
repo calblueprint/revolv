@@ -1,16 +1,51 @@
-<div id="footer">
+{% load staticfiles %}
+
+<div id="footer" class="footer">
     <div class="row">
-        <div class="small-4 columns">
-            <div class="left">
-                <small>&copy; 2014 <a href="http://www.re-volv.org">RE-volv</a></small>
+        <div class="divider"></div>
+        <div class="section large-6 medium-7 small-8 columns">
+            <div class="row">
+                <section class="small-3 columns">
+                    <div class="left">
+                        <h3>Explore</h3>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Volunteer</a></li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="small-3 columns show-for-medium-up">
+                    <div class="left">
+                        <h3>Account</h3>
+                        <ul>
+                            {% if request.user.is_authenticated %}
+                                <li><a href="/logout/">Sign out</a></li>
+                            {% else %}
+                                <li><a href="/signin/">Log in</a></li>
+                                <li><a href="/signin/">Sign up</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </section>
+                <section class="medium-6 small-9 columns end">
+                    <div class="left">
+                        <h3>Contact</h3>
+                        <p>info@<!-- this comment here to break spam email parsers -->re-volv.org</p>
+                        <p>415.314.7719</p>
+                        <p>972 Mission St. Suite 500</p>
+                        <p>San Francisco, CA 94103</p>
+                    </div>
+                </section>
             </div>
         </div>
-        <div class="small-4 offset-4 columns">
-            <div class="right">
-                <a href="http://www.calblueprint.org">
-                    <div class="powered_by"><small>Developed by Blueprint</small></div>
-                </a>
+        <section class="large-4 medium-4 small-3 columns">
+            <div class="right right-aligned-text">
+                <h3></h3>
+                <p class="show-for-medium-up">All solar projects have been vetted and approved by RE-volv.</p>
+                <p><a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a></p>
+                <p class="show-for-medium-up">Developed with care by <a class="underline" href="http://calblueprint.org">Blueprint</a>.</p>
             </div>
-        </div>
+        </section>
     </div>
 </div>

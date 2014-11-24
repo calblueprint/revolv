@@ -2,3 +2,10 @@
 @import "bower_components/foundation/scss/foundation";
 @import "nav";
 @import "dashboard";
+
+body {
+    background-color: $revolv-gray-bg;
+    font-weight: 300;
+}
+
+@import "footer";
