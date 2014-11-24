@@ -50,7 +50,7 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = (
-    'djangocms_admin_style',  # for the admin skin. You **must** add 'djangocms_admin_style' in the list **before** 'django.contrib.admin'.
+    'djangocms_admin_style',  # must go before 'django.contrib.admin'.
 
     # django apps
     'django.contrib.admin',
@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'mptt',  # utilities for implementing a modified pre-order traversal tree
     'menus',  # helper for model independent hierarchical website navigation
     'sekizai',  # for javascript and css management
+    'djangocms_picture',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -241,6 +242,7 @@ MIGRATION_MODULES = {
     'cms': 'cms.migrations_django',
     'menus': 'menus.migrations_django',
     'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
+    'djangocms_picture': 'djangocms_picture.migrations_django',
 }
 
 LANGUAGES = [

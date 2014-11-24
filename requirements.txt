@@ -26,3 +26,4 @@ django-filer==0.9.5
 cmsplugin-filer==0.9.5
 django-reversion==1.7
 djangocms-text-ckeditor
+djangocms-picture==0.1
