@@ -5636,3 +5636,11 @@ body {
   .footer section li .logo, .footer section p .logo {
     display: inline-block;
     width: 120px; }
+
+@media only screen and (max-width: 40em) {
+  .footer section h3, .footer section li, .footer section p {
+    font-size: 14px; } }
+
+@media only screen and (max-width: 40em) and (orientation: portrait) {
+  .footer section h3, .footer section li, .footer section p {
+    font-size: 12px; } }

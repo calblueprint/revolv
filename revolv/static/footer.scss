@@ -48,3 +48,15 @@ $footer-divider-height: 2px;
         }
     }
 }
+
+@media #{$small-only} {
+    .footer section h3, .footer section li, .footer section p {
+        font-size: $revolv-footer-heading-font-size - 2px;
+    }
+}
+
+@media #{$small-only} and (orientation: portrait) {
+    .footer section h3, .footer section li, .footer section p {
+        font-size: $revolv-footer-heading-font-size - 4px;
+    }
+}
