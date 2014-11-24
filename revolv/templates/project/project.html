@@ -25,7 +25,7 @@
         <p>Mission Statement : {{ project.mission_statement }}</p>
         <iframe width="420" height="315" src="{{ project.video_url }}">
 		</iframe>
-        {% if project.project_status == project.COMPLETED %}
+        {% if project.project_status == project.COMPLETED or project.project_status == project.ACTIVE %}
         <h5>Post Funding Updates</h5>
         <p>{{ project.post_funding_updates}}</p>
         {% endif %}
