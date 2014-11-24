@@ -85,6 +85,7 @@ INSTALLED_APPS = (
     'djangocms_picture',
     'djangocms_googlemap',
     'djangocms_file',
+    'djangocms_video',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -247,6 +248,7 @@ MIGRATION_MODULES = {
     'djangocms_picture': 'djangocms_picture.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
     'djangocms_file': 'djangocms_file.migrations_django',
+    'djangocms_video': 'djangocms_video.migrations_django',
 }
 
 LANGUAGES = [

@@ -29,3 +29,4 @@ djangocms-text-ckeditor
 djangocms-picture==0.1
 djangocms-googlemap==0.2
 djangocms-file==0.1
+djangocms-video==0.1
