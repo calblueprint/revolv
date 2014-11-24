@@ -5603,3 +5603,44 @@ dashboard-button, .dashboard-button {
   border-width: 2px;
   border-color: white;
   transition: border-color 200ms linear; }
+
+body {
+  background-color: #f9f9fa;
+  font-weight: 300; }
+
+.footer .divider {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: #11ade5; }
+.footer section .right-aligned-text {
+  text-align: right; }
+.footer section h3 {
+  font-size: 16px;
+  font-weight: 300;
+  margin: 20px 0 20px 0; }
+.footer section ul {
+  list-style-type: none;
+  margin: 0; }
+.footer section li, .footer section p {
+  font-size: 16px;
+  line-height: 23px;
+  color: #a8aaaa;
+  font-weight: 100;
+  margin-top: 0;
+  margin-bottom: 0; }
+  .footer section li a, .footer section li a:active, .footer section li a:visited, .footer section p a, .footer section p a:active, .footer section p a:visited {
+    color: inherit; }
+  .footer section li a:hover, .footer section li a.underline, .footer section p a:hover, .footer section p a.underline {
+    text-decoration: underline; }
+  .footer section li .logo, .footer section p .logo {
+    display: inline-block;
+    width: 120px; }
+
+@media only screen and (max-width: 40em) {
+  .footer section h3, .footer section li, .footer section p {
+    font-size: 14px; } }
+
+@media only screen and (max-width: 40em) and (orientation: portrait) {
+  .footer section h3, .footer section li, .footer section p {
+    font-size: 12px; } }

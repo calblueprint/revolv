@@ -1,7 +1,8 @@
-import django.contrib.auth.views as auth_views
 from django.conf.urls import include, patterns, url
 from django.contrib import admin
-from revolv.base.views import HomePageView, LoginView, SignInView, SignupView
+
+from revolv.base.views import (HomePageView, LoginView, LogoutView, SignInView,
+                               SignupView)
 
 urlpatterns = patterns('',
                        url(r'^facebook/', include('django_facebook.urls')),
@@ -14,5 +15,6 @@ urlpatterns = patterns('',
                        url(r'^signin/$', SignInView.as_view(), name='signin'),
                        url(r'^login/$', LoginView.as_view(), name='login'),
                        url(r'^signup/$', SignupView.as_view(), name='signup'),
-                       url(r'^logout/$', auth_views.logout, {"next_page": "/"}, name='logout'),
+                       url(r'^logout/$', LogoutView.as_view(), name='logout'),
+                       url(r'^', include('cms.urls')),
                        )

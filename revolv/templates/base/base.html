@@ -1,3 +1,4 @@
+{% load cms_tags sekizai_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -11,7 +12,10 @@
     {% block meta %}
     {% endblock %}
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css" />
     <link rel="stylesheet" href="{% static "main.css" %}" />
+    {% render_block "css" %}
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
     {% block head %}
@@ -19,7 +23,15 @@
 </head>
 
 <body>
+    {% cms_toolbar %}
+
     {% include "base/partials/nav.html" %}
+
+    <div class='row'>
+        <div class='small-12 columns'>
+            {% placeholder base_content %}
+        </div>
+    </div>
 
     {% block body %}
     {% endblock %}
@@ -31,11 +43,25 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/js/foundation.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+
+    {% if messages %}
+        <script>
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = "toast-bottom-right";
+        </script>
+        {% for message in messages %}
+        <script>
+            toastr.{{ message.tags }}('{{ message }}')
+        </script>
+        {% endfor %}
+    {% endif %}
 
     <script>
       $(document).foundation();
     </script>
 
+    {% render_block "js" %}
     {% block javascripts %}
     {% endblock %}
 </body>
