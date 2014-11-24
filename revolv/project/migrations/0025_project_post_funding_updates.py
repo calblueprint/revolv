@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+from django.db import models, migrations
 
 
 class Migration(migrations.Migration):
@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='post_funding_updates',
-            field=models.TextField(default=b'No Updates Available', help_text=b'Add any post project completion updates you want to let your backers know about.', verbose_name=b'Updates After Completion'),
+            field=models.TextField(help_text=b'Add any post project completion updates you want to let your backers know about.', null=True, verbose_name=b'Updates After Completion'),
             preserve_default=True,
         ),
     ]

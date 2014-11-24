@@ -232,7 +232,7 @@ class Project(models.Model):
     post_funding_updates = models.TextField(
         'Updates After Completion',
         help_text='Add any post project completion updates you want to let your backers know about.',
-        default='No Updates Available'
+        null=True
     )
 
     objects = ProjectManager()
