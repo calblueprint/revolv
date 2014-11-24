@@ -257,6 +257,22 @@ class Project(models.Model):
         self.save()
         return self
 
+    @property
+    def is_active(self):
+        return self.project_status == Project.ACTIVE
+
+    @property
+    def is_proposed(self):
+        return self.project_status == Project.PROPOSED
+
+    @property
+    def is_drafted(self):
+        return self.project_status == Project.DRAFTED
+
+    @property
+    def is_completed(self):
+        return self.project_status == Project.COMPLETED
+
 
 class Category(models.Model):
     title = models.CharField(max_length=50, unique=True)
