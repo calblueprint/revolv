@@ -1,6 +1,7 @@
 from itertools import chain
 
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -226,6 +227,12 @@ class Project(models.Model):
         decimal_places=3,
         default=0.0,
         help_text='The internal rate of return for this project.'
+    )
+
+    post_funding_updates = models.TextField(
+        'Updates After Completion',
+        help_text='Add any post project completion updates you want to let your backers know about.',
+        default='No Updates Available'
     )
 
     objects = ProjectManager()
