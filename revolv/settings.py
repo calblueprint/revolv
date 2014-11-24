@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
 
     # django-cms
+    'djangocms_text_ckeditor',
     'cms',  # django CMS itself
     'mptt',  # utilities for implementing a modified pre-order traversal tree
     'menus',  # helper for model independent hierarchical website navigation
@@ -239,6 +240,7 @@ ALLOWED_HOSTS = ['*']
 MIGRATION_MODULES = {
     'cms': 'cms.migrations_django',
     'menus': 'menus.migrations_django',
+    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
 }
 
 LANGUAGES = [

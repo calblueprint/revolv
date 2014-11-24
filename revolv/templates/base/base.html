@@ -24,9 +24,14 @@
 
 <body>
     {% cms_toolbar %}
-    {% placeholder base_content %}
 
     {% include "base/partials/nav.html" %}
+
+    <div class='row'>
+        <div class='small-12 columns'>
+            {% placeholder base_content %}
+        </div>
+    </div>
 
     {% block body %}
     {% endblock %}
