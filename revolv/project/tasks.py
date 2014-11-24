@@ -1,10 +1,12 @@
 ## /project_name/app_name/tasks.py
 
 import re
+import tempfile
 import urllib2
 
 from bs4 import BeautifulSoup
 from celery.task import task
+from django.core.files import File
 from models import Project
 from utils import get_solar_csv_url
 
@@ -24,11 +26,15 @@ def scrape():
 
         # Retrieve the webpage as a string
         response = urllib2.urlopen(get_solar_csv_url(csv_id, 0))
-        csv = response.read()
+        csvstr = response.read()
+        lines = csvstr.split("\r\n")
 
-        # Save the string to a file
-        csvstr = str(csv).strip("b'")
-
-        lines = csvstr.split("\\n")
+        # Write data to CSV of project through temporary file
+        temp = tempfile.TemporaryFile()
         for line in lines:
+            temp.write(line + "\n")
+        temp.seek(0)
+        for line in temp.readlines():
             print line
+        project.solar_data.save(csv_id, File(temp))
+        temp.close()

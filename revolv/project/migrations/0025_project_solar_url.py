@@ -14,7 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='solar_url',
-            field=models.URLField(default='http://home.solarlog-web.net/1445.html', help_text=b'This can be found by going to http://home.solarlog-web.net/, going to the         solar log profile for your site, and clicking on the Graphics sub-page. Copy and paste         the URL in the address bar into here.', max_length=255, verbose_name=b'Solar Log Graphics URL', blank=True),
-            preserve_default=False,
+            field=models.URLField(help_text=b'This can be found by going to http://home.solarlog-web.net/, going to the         solar log profile for your site, and clicking on the Graphics sub-page. Copy and paste         the URL in the address bar into here.', max_length=255, verbose_name=b'Solar Log Graphics URL', blank=True),
         ),
     ]

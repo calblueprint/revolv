@@ -237,6 +237,9 @@ class Project(models.Model):
         help_text='The internal rate of return for this project.'
     )
 
+    # solar data csv file
+    solar_data = models.FileField(upload_to="projects")
+
     objects = ProjectManager()
 
     def approve_project(self):

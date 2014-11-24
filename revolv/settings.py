@@ -80,7 +80,7 @@ INSTALLED_APPS = (
     'storages',
     'imagekit',
     'widget_tweaks',
-    'djcelery'
+    'djcelery',
 
     # django-cms
     'djangocms_text_ckeditor',
