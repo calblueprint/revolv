@@ -83,6 +83,7 @@ INSTALLED_APPS = (
     'menus',  # helper for model independent hierarchical website navigation
     'sekizai',  # for javascript and css management
     'djangocms_picture',
+    'djangocms_googlemap',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -243,6 +244,7 @@ MIGRATION_MODULES = {
     'menus': 'menus.migrations_django',
     'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
     'djangocms_picture': 'djangocms_picture.migrations_django',
+    'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
 }
 
 LANGUAGES = [
