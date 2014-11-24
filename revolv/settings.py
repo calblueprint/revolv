@@ -45,9 +45,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django_facebook.context_processors.facebook',
 )
 
+SITE_ID = 1
+
 # Application definition
 
 INSTALLED_APPS = (
+    'djangocms_admin_style',  # must go before 'django.contrib.admin'.
+
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +59,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'djangobower',
 
     # revolv apps
@@ -69,17 +74,35 @@ INSTALLED_APPS = (
     'django_facebook',
     'storages',
     'imagekit',
-    'widget_tweaks'
+    'widget_tweaks',
+
+    # django-cms
+    'djangocms_text_ckeditor',
+    'cms',  # django CMS itself
+    'mptt',  # utilities for implementing a modified pre-order traversal tree
+    'menus',  # helper for model independent hierarchical website navigation
+    'sekizai',  # for javascript and css management
+    'djangocms_picture',
+    'djangocms_googlemap',
+    'djangocms_file',
+    'djangocms_video',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.doc.XViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -100,6 +123,10 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
+CMS_TEMPLATES = (
+    ('base/cms_templates/template_1.html', 'Template One'),
+)
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
@@ -109,6 +136,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
+
+    'sekizai.context_processors.sekizai',
+    'cms.context_processors.cms_settings',
 )
 
 # Database
@@ -173,6 +203,10 @@ AWS_ACCESS_KEY_ID = os.environ.get('REVOLV_AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.environ.get('REVOLV_AWS_SECRET_KEY', '')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('REVOLV_S3_BUCKET', '')
 
+S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+MEDIA_DIRECTORY = '/media/'
+MEDIA_URL = S3_URL + MEDIA_DIRECTORY
+
 # email settings
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
@@ -204,3 +238,18 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
+# django-cms
+MIGRATION_MODULES = {
+    'cms': 'cms.migrations_django',
+    'menus': 'menus.migrations_django',
+    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
+    'djangocms_picture': 'djangocms_picture.migrations_django',
+    'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
+    'djangocms_file': 'djangocms_file.migrations_django',
+    'djangocms_video': 'djangocms_video.migrations_django',
+}
+
+LANGUAGES = [
+    ('en-us', 'English'),
+]
