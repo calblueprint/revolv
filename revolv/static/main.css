@@ -5591,6 +5591,9 @@ nav.header {
   nav.header .tagline {
     display: none !important; } }
 
+body {
+  background-color: #f9f9fa; }
+
 dashboard-button:hover, dashboard-button:focus, .dashboard-button:hover, .dashboard-button:focus, dashboard-button.active, .dashboard-button.active {
   color: black;
   border-width: 2px;

@@ -1,4 +1,9 @@
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
 @import "nav";
+
+body {
+    background-color: $revolv-gray-bg;
+}
+
 @import "dashboard";
