@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
+
 from revolv.base.users import UserDataMixin
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.project import forms
@@ -22,7 +24,8 @@ class CreateProjectView(CreateView):
         return reverse('home')
 
     def form_valid(self, form):
-        Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+        new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+        messages.success(self.request, new_project.title + ' has been created!')
         return super(CreateProjectView, self).form_valid(form)
 
     # sets context to be the create view, doesn't pass in the id
@@ -45,6 +48,7 @@ class UpdateProjectView(UpdateView):
     form_class = forms.ProjectForm
 
     def get_success_url(self):
+        messages.success(self.request, 'Project details updated')
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     # sets context to be the edit view by providing in the model id
@@ -74,12 +78,16 @@ class ReviewProjectView(UpdateView):
     def form_valid(self, form):
         project = self.object
         if '_approve' in self.request.POST:
+            messages.success(self.request, project.title + ' has been approved')
             project.approve_project()
         elif '_propose' in self.request.POST:
+            messages.success(self.request, project.title + ' is now pending approval')
             project.propose_project()
         elif '_deny' in self.request.POST:
+            messages.error(self.request, project.title + ' has been denied')
             project.deny_project()
         elif '_complete' in self.request.POST:
+            messages.success(self.request, project.title + ' has been completed')
             project.complete_project()
         return redirect(self.get_success_url())
 
