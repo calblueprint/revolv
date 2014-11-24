@@ -124,8 +124,7 @@ TEMPLATE_DIRS = (
 )
 
 CMS_TEMPLATES = (
-    ('base/template_1.html', 'Template One'),
-    ('base/template_2.html', 'Template Two'),
+    ('base/cms_templates/template_1.html', 'Template One'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
