@@ -149,6 +149,15 @@ class Project(models.Model):
         'Expected Killowatt Output',
         help_text='What is the expected output in killowatts of the proposed solar array?'
     )
+    # solar log graphics url
+    solar_url = models.URLField(
+        'Solar Log Graphics URL',
+        max_length=255,
+        blank=True,
+        help_text='This can be found by going to http://home.solarlog-web.net/, going to the \
+        solar log profile for your site, and clicking on the Graphics sub-page. Copy and paste \
+        the URL in the address bar into here.'
+    )
     location = models.CharField(
         'Organization Address',
         max_length=255,
