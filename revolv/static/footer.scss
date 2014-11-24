@@ -29,7 +29,7 @@ $footer-divider-height: 2px;
         li, p {
             font-size: $revolv-footer-heading-font-size;
             line-height: $revolv-footer-heading-font-size + 7px;
-            color: #c8cacc;
+            color: $revolv-footer-text-color;
             font-weight: 100;
             margin-top: 0;
             margin-bottom: 0;
