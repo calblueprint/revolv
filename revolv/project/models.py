@@ -237,8 +237,10 @@ class Project(models.Model):
         help_text='The internal rate of return for this project.'
     )
 
-    # solar data csv file
-    solar_data = models.FileField(upload_to="projects")
+    # solar data csv files
+    daily_solar_data = models.FileField(null=True, upload_to="projects/daily/")
+    monthly_solar_data = models.FileField(null=True, upload_to="projects/monthly/")
+    annual_solar_data = models.FileField(null=True, upload_to="projects/annual/")
 
     objects = ProjectManager()
 
