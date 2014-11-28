@@ -13,7 +13,8 @@ module.exports = function(grunt) {
           //outputStyle: 'compressed'
         },
         files: {
-          'revolv/static/main.css': 'revolv/static/main.scss'
+          'revolv/static/main.css': 'revolv/static/main.scss',
+          'revolv/static/home.css': 'revolv/static/home.scss'
         }
       }
     },

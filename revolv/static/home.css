@@ -1,0 +1,9 @@
+.cover-image {
+  background: url(/static/images/solar-worker-stockphoto.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  display: block;
+  width: 100%;
+  height: 400px;
+  margin-bottom: 20px; }
