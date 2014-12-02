@@ -1,4 +1,30 @@
+@import "foundation-settings";
+@import "bower_components/foundation/scss/foundation";
 @import "revolv-settings";
+
+@mixin vertically-centered($font-size) {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: $font-size;
+}
+
+@mixin vertically-centered-parent() {
+    &:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+    font-size: 0;
+}
+
+@mixin dark-shade($opacity) {
+    position: absolute;
+    z-index: $revolv-shade-z-index;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, $opacity);
+}
 
 .cover-image {
     background: url(/static/images/solar-worker-stockphoto.jpg);
@@ -10,4 +36,81 @@
     width: 100%;
     height: $revolv-cover-photo-height;
     margin-bottom: 20px;
+
+    position: relative;
+
+    .shade {
+        @include dark-shade(0.2);
+    }
+
+    .cover-inset {
+        position: absolute;
+        top: $revolv-cover-inset-top-offset;
+        right: $revolv-cover-inset-right-offset;
+
+        background-color: rgba(255, 255, 255, $revolv-cover-inset-opacity);
+        padding: 25px;
+
+        min-width: $revolv-cover-inset-min-width;
+        max-width: $revolv-cover-inset-max-width;
+
+        z-index: $revolv-shade-z-index + 10;
+
+        .title-header {
+            font-size: $revolv-cover-inset-title-size;
+            line-height: $revolv-cover-inset-title-size;
+            font-weight: 200;
+            color: rgba(0, 0, 0, 0.8);
+
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .title-header-tagline {
+            display: none;
+        }
+
+        p {
+            font-size: $revolv-cover-inset-paragraph-size;
+            line-height: $revolv-cover-inset-paragraph-size + 6px;
+            font-weight: 200;
+            color: rgba(0, 0, 0, 0.8);
+
+            margin: 0;
+        }
+    }
+}
+
+@media #{$small-only} {
+    html .top-bar {
+        margin-bottom: 0;
+    }
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    html .cover-image {
+        height: $revolv-mobile-cover-photo-height;
+
+        .shade {
+            @include dark-shade(0.6);
+        }
+    }
+
+    html .cover-image .cover-inset {
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: inherit;
+
+        .title-header, p {
+            color: white;
+        }
+    }
+}
+
+@media #{$small-only} and (orientation: portrait) {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    html .cover-image .cover-inset p {
+        font-size: $revolv-cover-inset-paragraph-size - 2px;
+        line-height: $revolv-cover-inset-paragraph-size + 4px;
+    }
 }

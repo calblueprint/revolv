@@ -1,4 +1,16 @@
 /**
+ * Height of the main cover photo on the homepage in mobile phone landscape AND
+ * portrait orientations.
+ */
+/**
+ * The values by which the inset of the cover photo (the part that has a description
+ * of re-volv and "about re-volv") should be offset from the upper right corner
+ * of the cover photo.
+ */
+/**
+ * Font size of the title "About RE-volv"
+ */
+/**
  * This file overrides specific foundation settings in order to make foundation
  * work nicely with revolv's design. Note that only some, but not all, of
  * foundation's settings are overriden here: for the full list, see _settings.scss
@@ -5564,6 +5576,18 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
+/**
+ * Height of the main cover photo on the homepage in mobile phone landscape AND
+ * portrait orientations.
+ */
+/**
+ * The values by which the inset of the cover photo (the part that has a description
+ * of re-volv and "about re-volv") should be offset from the upper right corner
+ * of the cover photo.
+ */
+/**
+ * Font size of the title "About RE-volv"
+ */
 .header-small-text {
   font-size: 14px;
   line-height: 60px; }
@@ -5591,6 +5615,18 @@ nav.header {
   nav.header .tagline {
     display: none !important; } }
 
+/**
+ * Height of the main cover photo on the homepage in mobile phone landscape AND
+ * portrait orientations.
+ */
+/**
+ * The values by which the inset of the cover photo (the part that has a description
+ * of re-volv and "about re-volv") should be offset from the upper right corner
+ * of the cover photo.
+ */
+/**
+ * Font size of the title "About RE-volv"
+ */
 dashboard-button:hover, dashboard-button:focus, .dashboard-button:hover, .dashboard-button:focus, dashboard-button.active, .dashboard-button.active {
   color: black;
   border-width: 2px;
@@ -5608,6 +5644,18 @@ body {
   background-color: #f9f9fa;
   font-weight: 300; }
 
+/**
+ * Height of the main cover photo on the homepage in mobile phone landscape AND
+ * portrait orientations.
+ */
+/**
+ * The values by which the inset of the cover photo (the part that has a description
+ * of re-volv and "about re-volv") should be offset from the upper right corner
+ * of the cover photo.
+ */
+/**
+ * Font size of the title "About RE-volv"
+ */
 .footer .divider {
   display: block;
   height: 2px;
