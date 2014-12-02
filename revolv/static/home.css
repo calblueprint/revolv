@@ -5588,107 +5588,68 @@ th.hide-for-touch {
 /**
  * Font size of the title "About RE-volv"
  */
-.header-small-text {
-  font-size: 14px;
-  line-height: 60px; }
-
-nav.header {
-  /**
-     * Foundation will by default show all the menu items on the movile version
-     * of the top bar, but we want to prevent it from showing the user's username
-     * at the second level, since they've already clicked on it.
-     */ }
-  nav.header .logo-container {
-    display: inline-block;
-    margin: 0 20px; }
-    nav.header .logo-container .logo {
-      display: inline-block;
-      width: 60px;
-      margin: 0 10px 0 0; }
-    nav.header .logo-container .tagline {
-      color: #2c398c;
-      font-size: 1rem; }
-  nav.header .user-controls > .dropdown a.js-generated {
-    display: none; }
-
-@media only screen and (max-width: 40em) and (orientation: portrait) {
-  nav.header .tagline {
-    display: none !important; } }
-
-/**
- * Height of the main cover photo on the homepage in mobile phone landscape AND
- * portrait orientations.
- */
-/**
- * The values by which the inset of the cover photo (the part that has a description
- * of re-volv and "about re-volv") should be offset from the upper right corner
- * of the cover photo.
- */
-/**
- * Font size of the title "About RE-volv"
- */
-dashboard-button:hover, dashboard-button:focus, .dashboard-button:hover, .dashboard-button:focus, dashboard-button.active, .dashboard-button.active {
-  color: black;
-  border-width: 2px;
-  border-color: #c0e7f6;
-  background-color: white; }
-
-dashboard-button, .dashboard-button {
-  color: black;
-  background-color: white;
-  border-width: 2px;
-  border-color: white;
-  transition: border-color 200ms linear; }
-
-body {
-  background-color: #f9f9fa;
-  font-weight: 300; }
-
-/**
- * Height of the main cover photo on the homepage in mobile phone landscape AND
- * portrait orientations.
- */
-/**
- * The values by which the inset of the cover photo (the part that has a description
- * of re-volv and "about re-volv") should be offset from the upper right corner
- * of the cover photo.
- */
-/**
- * Font size of the title "About RE-volv"
- */
-.footer .divider {
+.cover-image {
+  background: url(/static/images/solar-worker-stockphoto.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   display: block;
-  height: 2px;
   width: 100%;
-  background-color: #11ade5; }
-.footer section .right-aligned-text {
-  text-align: right; }
-.footer section h3 {
-  font-size: 16px;
-  font-weight: 300;
-  margin: 20px 0 20px 0; }
-.footer section ul {
-  list-style-type: none;
-  margin: 0; }
-.footer section li, .footer section p {
-  font-size: 16px;
-  line-height: 23px;
-  color: #a8aaaa;
-  font-weight: 100;
-  margin-top: 0;
-  margin-bottom: 0; }
-  .footer section li a, .footer section li a:active, .footer section li a:visited, .footer section p a, .footer section p a:active, .footer section p a:visited {
-    color: inherit; }
-  .footer section li a:hover, .footer section li a.underline, .footer section p a:hover, .footer section p a.underline {
-    text-decoration: underline; }
-  .footer section li .logo, .footer section p .logo {
-    display: inline-block;
-    width: 120px; }
+  height: 400px;
+  margin-bottom: 20px;
+  position: relative; }
+  .cover-image .shade {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); }
+  .cover-image .cover-inset {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 25px;
+    min-width: 350px;
+    max-width: 350px;
+    z-index: 11; }
+    .cover-image .cover-inset .title-header {
+      font-size: 32px;
+      line-height: 32px;
+      font-weight: 200;
+      color: rgba(0, 0, 0, 0.8);
+      margin: 0;
+      margin-bottom: 10px; }
+    .cover-image .cover-inset .title-header-tagline {
+      display: none; }
+    .cover-image .cover-inset p {
+      font-size: 20px;
+      line-height: 26px;
+      font-weight: 200;
+      color: rgba(0, 0, 0, 0.8);
+      margin: 0; }
 
 @media only screen and (max-width: 40em) {
-  .footer section h3, .footer section li, .footer section p {
-    font-size: 14px; } }
+  html .top-bar {
+    margin-bottom: 0; }
+  html .cover-image {
+    height: 200px; }
+    html .cover-image .shade {
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); }
+  html .cover-image .cover-inset {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: inherit; }
+    html .cover-image .cover-inset .title-header, html .cover-image .cover-inset p {
+      color: white; } }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
-  .footer section h3, .footer section li, .footer section p {
-    font-size: 12px; } }
+  html .cover-image .cover-inset p {
+    font-size: 18px;
+    line-height: 24px; } }
