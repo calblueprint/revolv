@@ -92,6 +92,22 @@ class ReviewProjectView(UpdateView):
         return redirect(self.get_success_url())
 
 
+class PostFundingUpdateView(UpdateView):
+    """
+    The view to review a project. Shows the same view as ProjectView, but at
+    the top, has a button group through which an ambassador or admin can
+    update the project status.
+
+    Accessed through /project/review/{project_id}
+    """
+    model = Project
+    template_name = 'project/post_funding_update.html'
+    form_class = forms.PostFundingUpdateForm
+
+    def get_success_url(self):
+        return reverse('project:view', kwargs={'pk': self.get_object().id})
+
+
 class ProjectView(DetailView):
     """
     The project view. Displays project details and allows for editing.

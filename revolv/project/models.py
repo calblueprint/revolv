@@ -1,6 +1,7 @@
 from itertools import chain
 
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -236,6 +237,11 @@ class Project(models.Model):
         default=0.0,
         help_text='The internal rate of return for this project.'
     )
+    post_funding_updates = models.TextField(
+        'Updates After Completion',
+        help_text='Add any post project completion updates you want to let your backers know about.',
+        null=True
+    )
 
     # solar data csv files
     daily_solar_data = models.FileField(null=True, upload_to="projects/daily/")
@@ -263,6 +269,22 @@ class Project(models.Model):
         self.project_status = Project.COMPLETED
         self.save()
         return self
+
+    @property
+    def is_active(self):
+        return self.project_status == Project.ACTIVE
+
+    @property
+    def is_proposed(self):
+        return self.project_status == Project.PROPOSED
+
+    @property
+    def is_drafted(self):
+        return self.project_status == Project.DRAFTED
+
+    @property
+    def is_completed(self):
+        return self.project_status == Project.COMPLETED
 
 
 class Category(models.Model):

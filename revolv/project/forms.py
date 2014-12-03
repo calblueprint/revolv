@@ -42,3 +42,14 @@ class ProjectStatusForm(forms.ModelForm):
         model = Project
         # fields that need to be filled out, empty on purpose
         fields = ()
+
+
+class PostFundingUpdateForm(forms.ModelForm):
+    """
+    A form for providing post funding updates about a project
+    """
+    class Meta:
+        model = Project
+        fields = (
+            'post_funding_updates',
+        )

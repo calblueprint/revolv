@@ -3,20 +3,28 @@
 
 {% block title %}Home{% endblock %}
 
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
+
+{% endblock %}
+
 {% block body %}
 
 <div class='row'>
-    <div class='small-12 columns'>
-        <h1>RE-volv</h1>
-        {% if request.user.is_authenticated %}
-        <p>You're logged in as {{user.first_name}} {{user.last_name}}</p>
-        {% endif %}
-        <ul>
-            {% for project in featured_projects %}
-                <li><a href="{% url "project:view" project.pk %}">{{ project.title }}</a></li>
-            {% endfor %}
-        </ul>
+    <div class="cover-image">
+        <div class="shade"></div>
+        <div class="cover-inset">
+            <h1 class="title-header title-header-about">About RE-volv</h1>
+            <h1 class="title-header title-header-tagline">People Funded Renewable Energy</h1>
+            <p>When you donate to revolv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
+        </div>
     </div>
+    <!-- <ul>
+        {% for project in featured_projects %}
+            <li><a href="{% url "project:view" project.pk %}">{{ project.title }}</a></li>
+        {% endfor %}
+    </ul> -->
 </div>
 
 {% endblock %}
