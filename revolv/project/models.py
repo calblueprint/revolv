@@ -250,6 +250,12 @@ class Project(models.Model):
         self.save()
         return self
 
+    @property
+    def amount_donated(self):
+        return self.donation_set.aggregate(
+            models.Sum('payment_transaction__amount')
+        )["payment_transaction__amount__sum"]
+
 
 class Category(models.Model):
     title = models.CharField(max_length=50, unique=True)
