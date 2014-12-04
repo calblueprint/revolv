@@ -109,12 +109,15 @@ class ProjectTests(TestCase):
         """Test that project.partial_completeness works."""
         project = self._create_test_project(funding_goal=100.0)
         self.assertEqual(project.partial_completeness, 0.0)
+        self.assertEqual(project.partial_completeness_as_js(), "0.0")
         self._create_test_donation_for_project(project, 50.0)
         self.assertEqual(project.partial_completeness, 0.5)
         self._create_test_donation_for_project(project, 25.0)
         self.assertEqual(project.partial_completeness, 0.75)
+        self.assertEqual(project.partial_completeness_as_js(), "0.75")
         self._create_test_donation_for_project(project, 25.0)
         self.assertEqual(project.partial_completeness, 1.0)
+        self.assertEqual(project.partial_completeness_as_js(), "1.0")
         self._create_test_donation_for_project(project, 25.0)
         self.assertEqual(project.partial_completeness, 1.0)
 

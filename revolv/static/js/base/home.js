@@ -36,15 +36,17 @@ $(document).ready(function () {
 
     var dimension = (2 * radius) + (2 * padding);
 
-    var svg = d3.select(".project-badges-container").append("svg")
-        .attr("width", dimension)
-        .attr("height", dimension)
-    .append("g");
+    window.HOMEPAGE_PROJECT_DATA.forEach(function (data) {
+        var svg = d3.select(".project-badges-container").append("svg")
+            .attr("width", dimension)
+            .attr("height", dimension)
+        .append("g");
 
-    var circleGrouping = svg.append("g").attr("class", "project-badge-circle-grouping");
-    var partialGrouping = svg.append("g").attr("class", "project-badge-partial-grouping");
+        var circleGrouping = svg.append("g").attr("class", "project-badge-circle-grouping");
+        var partialGrouping = svg.append("g").attr("class", "project-badge-partial-grouping");
 
-    drawD3PartialTriangle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
-    drawD3PartialTriangle(partialGrouping, ["project-badge-line"], radius, padding, 0.75);
+        drawD3PartialTriangle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
+        drawD3PartialTriangle(partialGrouping, ["project-badge-line"], radius, padding, data.partialCompleteness);
+    });
 
 });

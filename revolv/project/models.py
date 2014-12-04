@@ -270,10 +270,13 @@ class Project(models.Model):
             project with respect to its goal (1 if exactly the goal amount, or
             more, has been donated, 0 if nothing has been donated).
         """
-        ratio = self.amount_donated / self.funding_goal
+        ratio = self.amount_donated / float(self.funding_goal)
         if ratio > 1.0:
             ratio = 1.0
         return ratio
+
+    def partial_completeness_as_js(self):
+        return unicode(self.partial_completeness)
 
 
 class Category(models.Model):
