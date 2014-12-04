@@ -5615,6 +5615,9 @@ nav.header {
   nav.header .tagline {
     display: none !important; } }
 
+div.nav-bg-wrap {
+  background-color: #c0e7f6; }
+
 /**
  * Height of the main cover photo on the homepage in mobile phone landscape AND
  * portrait orientations.
