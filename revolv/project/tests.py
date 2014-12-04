@@ -17,23 +17,68 @@ from revolv.payments.models import (Donation, PaymentInstrumentType,
 class ProjectTests(TestCase):
     """Project model tests."""
 
-    def _create_test_project(self):
-        yesterday = datetime.date.today() - datetime.timedelta(days=1)
-        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+    def _create_test_project(self,
+                             funding_goal=50.0,
+                             title="Hello",
+                             video_url="https://www.youtube.com/watch?v=9bZkp7q19f0",
+                             impact_power=50.5,
+                             location="Berkeley",
+                             end_date=None,
+                             mission_statement="We do solar!",
+                             cover_photo="http://i.imgur.com/2zMTZgi.jpg",
+                             org_start_date=None,
+                             actual_energy=25.5,
+                             amount_repaid=29.25,
+                             ambassador_id=1
+                             ):
+        """
+        Create and return a dummy project for the purposes of testing. Each
+        kwarg of this function represents a default value, which can be changed
+        if the value matters for the test, or left alone if not relevant. This
+        allows test projects with different settings to be created easily based
+        on what is being tested.
+        """
+        if end_date is None:
+            end_date = datetime.date.today() - datetime.timedelta(days=1)  # tomorrow
+        if org_start_date is None:
+            org_start_date = datetime.date.today() + datetime.timedelta(days=1)  # today
         return Project.objects.create(
-            funding_goal=50.0,
-            title="Hello",
-            video_url="https://www.youtube.com/watch?v=9bZkp7q19f0",
-            impact_power=50.5,
-            location="Berkeley",
-            end_date=tomorrow,
-            mission_statement="We do solar!",
-            cover_photo="http://i.imgur.com/2zMTZgi.jpg",
-            org_start_date=yesterday,
-            actual_energy=25.5,
-            amount_repaid=29.25,
-            ambassador_id=1,
+            funding_goal=funding_goal,
+            title=title,
+            video_url=video_url,
+            impact_power=impact_power,
+            location=location,
+            end_date=end_date,
+            mission_statement=mission_statement,
+            cover_photo=cover_photo,
+            org_start_date=org_start_date,
+            actual_energy=actual_energy,
+            amount_repaid=amount_repaid,
+            ambassador_id=ambassador_id,
         )
+
+    def _create_test_donation_for_project(self, project, amount):
+        """
+        Create a donation to the given project of the given amount, made by a
+        dummy user via paypal.
+
+        :return: the donation, the transaction, and the user
+        """
+        user, is_new = User.objects.get_or_create(
+            username="aggregateDonationsTestUser",
+            email="john@example.com",
+            password="permission_test_user_password"
+        )
+        transaction = PaymentTransaction.objects.create(
+            amount=amount,
+            payment_instrument_type=PaymentInstrumentType.objects.get_paypal(),
+            user=user
+        )
+        donation = Donation.objects.create(
+            payment_transaction=transaction,
+            project=project
+        )
+        return donation, transaction, user
 
     def test_construct(self):
         self._create_test_project()
@@ -42,53 +87,36 @@ class ProjectTests(TestCase):
         self.assertEqual(testProject.impact_power, 50.5)
 
     def test_save_and_query(self):
-        yesterday = datetime.date.today() - datetime.timedelta(days=1)
-        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
-        p = Project(
+        p = self._create_test_project(
             funding_goal=20.0,
-            title="Hello",
-            video_url="https://www.youtube.com/watch?v=9bZkp7q19f0",
-            impact_power=50.5,
             location="San Francisco",
-            end_date=tomorrow,
-            mission_statement="Blueprint!",
-            cover_photo="http://i.imgur.com/2zMTZgi.jpg",
-            org_start_date=yesterday,
-            actual_energy=25.5,
-            amount_repaid=29.25,
-            ambassador_id=1,
+            mission_statement="Blueprint!"
         )
         p.save()
         entry = Project.objects.all().filter(location="San Francisco")[0]
         self.assertEqual(entry.mission_statement, "Blueprint!")
 
     def test_aggregate_donations(self):
-        user = User.objects.create_user(
-            "aggregateDonationsTestUser",
-            "john@example.com",
-            "permission_test_user_password"
-        )
+        """Test that project.amount_donated works."""
         project = self._create_test_project()
-        transaction1 = PaymentTransaction.objects.create(
-            amount=50.0,
-            payment_instrument_type=PaymentInstrumentType.objects.get_paypal(),
-            user=user
-        )
-        Donation.objects.create(
-            payment_transaction=transaction1,
-            project=project
-        )
+        self.assertEqual(project.amount_donated, 0.0)
+        self._create_test_donation_for_project(project, 50.0)
         self.assertEqual(project.amount_donated, 50.0)
-        transaction2 = PaymentTransaction.objects.create(
-            amount=25.0,
-            payment_instrument_type=PaymentInstrumentType.objects.get_paypal(),
-            user=user
-        )
-        Donation.objects.create(
-            payment_transaction=transaction2,
-            project=project
-        )
+        self._create_test_donation_for_project(project, 25.0)
         self.assertEqual(project.amount_donated, 75.0)
+
+    def test_partial_completeness(self):
+        """Test that project.partial_completeness works."""
+        project = self._create_test_project(funding_goal=100.0)
+        self.assertEqual(project.partial_completeness, 0.0)
+        self._create_test_donation_for_project(project, 50.0)
+        self.assertEqual(project.partial_completeness, 0.5)
+        self._create_test_donation_for_project(project, 25.0)
+        self.assertEqual(project.partial_completeness, 0.75)
+        self._create_test_donation_for_project(project, 25.0)
+        self.assertEqual(project.partial_completeness, 1.0)
+        self._create_test_donation_for_project(project, 25.0)
+        self.assertEqual(project.partial_completeness, 1.0)
 
 
 class ProjectManagerTests(TestCase):

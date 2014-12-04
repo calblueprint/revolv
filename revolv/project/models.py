@@ -256,9 +256,24 @@ class Project(models.Model):
         :return: the current total amount that has been donated to this project,
             as a float
         """
-        return self.donation_set.aggregate(
+        result = self.donation_set.aggregate(
             models.Sum('payment_transaction__amount')
         )["payment_transaction__amount__sum"]
+        if result is None:
+            return 0.0
+        return result
+
+    @property
+    def partial_completeness(self):
+        """
+        :return: a float between 0 and 1, representing the completeness of this
+            project with respect to its goal (1 if exactly the goal amount, or
+            more, has been donated, 0 if nothing has been donated).
+        """
+        ratio = self.amount_donated / self.funding_goal
+        if ratio > 1.0:
+            ratio = 1.0
+        return ratio
 
 
 class Category(models.Model):
