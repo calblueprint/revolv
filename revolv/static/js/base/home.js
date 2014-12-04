@@ -11,7 +11,7 @@ var drawD3PartialTriangle = function (destination, classes, radius, padding, par
         .interpolate("basis")
         .tension(0)
         .radius(radius)
-        .angle(function(d, i) { return angle(i); });
+        .angle(function(d, i) { return -angle(i); });
 
     var result = destination.append("path").datum(d3.range(pointsToDraw));
 
