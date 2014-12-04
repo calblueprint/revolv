@@ -114,3 +114,18 @@
         line-height: $revolv-cover-inset-paragraph-size + 4px;
     }
 }
+
+// --- svg --------------------------------------------------------------------
+
+.project-badge-line, .project-badge-circle {
+  fill: none;
+  stroke-width: $revolv-project-badge-stroke-width;
+}
+
+.project-badge-line {
+  stroke: $revolv-project-badge-fulfilled-color;
+}
+
+.project-badge-circle {
+  stroke: $revolv-project-badge-unfulfilled-color;
+}

@@ -25,11 +25,7 @@
             <p>When you donate to revolv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
         </div>
     </div>
-    <ul>
-        {% for project in featured_projects %}
-            <li><a href="{% url "project:view" project.pk %}">{{ project.title }}</a></li>
-        {% endfor %}
-    </ul>
 </div>
+<div class="row project-badges-container"></div>
 
 {% endblock %}
