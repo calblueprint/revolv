@@ -71,7 +71,7 @@ class ProjectTests(TestCase):
         project = self._create_test_project()
         transaction1 = PaymentTransaction.objects.create(
             amount=50.0,
-            payment_instrument_type=PaymentInstrumentType.objects.get(name="paypal"),
+            payment_instrument_type=PaymentInstrumentType.objects.get_paypal(),
             user=user
         )
         Donation.objects.create(
@@ -81,7 +81,7 @@ class ProjectTests(TestCase):
         self.assertEqual(project.amount_donated, 50.0)
         transaction2 = PaymentTransaction.objects.create(
             amount=25.0,
-            payment_instrument_type=PaymentInstrumentType.objects.get(name="paypal"),
+            payment_instrument_type=PaymentInstrumentType.objects.get_paypal(),
             user=user
         )
         Donation.objects.create(

@@ -252,6 +252,10 @@ class Project(models.Model):
 
     @property
     def amount_donated(self):
+        """
+        :return: the current total amount that has been donated to this project,
+            as a float
+        """
         return self.donation_set.aggregate(
             models.Sum('payment_transaction__amount')
         )["payment_transaction__amount__sum"]
