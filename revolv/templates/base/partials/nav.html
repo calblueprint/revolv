@@ -6,38 +6,40 @@
 {% load staticfiles %}
 {% load menu_tags %}
 {% spaceless %}
-<nav class="header top-bar" data-topbar role="navigation">
-    <ul class="title-area">
-        <li class="logo-container name">
-            <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a>
-            <span class="tagline">People Funded Renewable Energy</span>
-        </li>
-        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-        <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
-    </ul>
-    <section class="top-bar-section">
-        <ul class='left'>
-            {% show_menu 0 100 100 100 "base/partials/menu.html" %}
-        </ul>
+<div class="nav-bg-wrap">
+   <nav class="row header top-bar" data-topbar role="navigation">
+       <ul class="title-area">
+           <li class="logo-container name">
+               <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a>
+               <span class="tagline">People Funded Renewable Energy</span>
+           </li>
+           <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+           <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+       </ul>
+       <section class="top-bar-section">
+           <ul class='left'>
+               {% show_menu 0 100 100 100 "base/partials/menu.html" %}
+           </ul>
 
-        <ul class="right">
-            {% if request.user.is_authenticated %}
-            <li class="user-controls has-dropdown">
-                <a href="#">{{user.username}}</a>
-                <ul class="dropdown">
-                    <li><a href="{% url "donor:dashboard" %}">Dashboard</a></li>
-                    <li><a href="{% url "logout" %}">Sign Out</a></li>
-                </ul>
-            </li>
-            {% else %}
-            <li>
-                <a href="{% url "signin" %}">Sign Up</a>
-            </li>
-            <li>
-                <a href="{% url "signin" %}">Sign In</a>
-            </li>
-            {% endif %}
-        </ul>
-    </section>
-</nav>
+           <ul class="right">
+               {% if request.user.is_authenticated %}
+               <li class="user-controls has-dropdown">
+                   <a href="#">{{user.username}}</a>
+                   <ul class="dropdown">
+                       <li><a href="{% url "donor:dashboard" %}">Dashboard</a></li>
+                       <li><a href="{% url "logout" %}">Sign Out</a></li>
+                   </ul>
+               </li>
+               {% else %}
+               <li>
+                   <a href="{% url "signin" %}">Sign Up</a>
+               </li>
+               <li>
+                   <a href="{% url "signin" %}">Sign In</a>
+               </li>
+               {% endif %}
+           </ul>
+       </section>
+   </nav>
+</div>
 {% endspaceless %}
