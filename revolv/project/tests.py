@@ -6,6 +6,7 @@ from django.test import TestCase
 from django_facebook.utils import get_user_model
 from models import Project
 from revolv.base.signals import create_profile_of_user
+from tasks import scrape
 
 
 # Create your tests here.
@@ -94,3 +95,12 @@ class ProjectManagerTests(TestCase):
         context = Project.objects.get_drafted()
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Fire Emblem")
+
+
+class ScrapeTest(TestCase):
+    """Test that the scrape task runs with no errors,
+        and changes the project's solar data files"""
+
+    def test_scrape(self):
+        result = scrape.delay()
+        self.assertTrue(result.successful())

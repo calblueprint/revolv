@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 
 import dj_database_url
+import djcelery
+from celery.schedules import crontab
+
+# import celery for scheduled tasks
+djcelery.setup_loader()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SETTINGS_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -75,6 +80,7 @@ INSTALLED_APPS = (
     'storages',
     'imagekit',
     'widget_tweaks',
+    'djcelery',
 
     # django-cms
     'djangocms_text_ckeditor',
@@ -238,6 +244,29 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
+# The backend used to store task results - because we're going to be
+# using RabbitMQ as a broker, this sends results back as AMQP messages
+CELERY_RESULT_BACKEND = "amqp"
+CELERY_ALWAYS_EAGER = True
+
+# RabbitMQ broker settings
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_PASSWORD = "revolv"
+BROKER_USER = "revolv"
+BROKER_URL = "amqp://revolv:revolv@localhost:5672//revolv"
+
+# The default Django db scheduler
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+CELERYBEAT_SCHEDULE = {
+    "scrape": {
+        "task": "revolv.project.tasks.scrape",
+        # Every Sunday at 4:30AM
+        "schedule": crontab(hour=4, minute=30, day_of_week=0),
+        "args": (2, 4),
+    },
+}
 
 # django-cms
 MIGRATION_MODULES = {
