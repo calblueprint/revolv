@@ -40,7 +40,13 @@
 </div>
 <div class="row project-badges-container">
     {% for project in featured_projects %}
-        <div class="project-badge project-id-{{ project.pk }}"></div>
+        <div class="project-badge project-id-{{ project.pk }}">
+            <!-- the svg for the partial circles will go here -->
+            <div class="project-badge-detail-container">
+                <p class="project-title">{{ project.title }}</p>
+                <p class="project-organization">{{ project.org_name }}</p>
+            </div>
+        </div>
     {% endfor %}
 </div>
 {% endspaceless %}

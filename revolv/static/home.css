@@ -5655,7 +5655,26 @@ th.hide-for-touch {
     line-height: 24px; } }
 
 .project-badge {
-  display: inline-block; }
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  height: 220px;
+  width: 220px; }
+  .project-badge svg {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .project-badge .project-badge-detail-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 50%;
+    border: 1px solid #f9f9fa;
+    background-color: red;
+    border-bottom-left-radius: 50% 100%;
+    border-bottom-right-radius: 50% 100%; }
 
 .project-badge-line, .project-badge-circle {
   fill: none;
