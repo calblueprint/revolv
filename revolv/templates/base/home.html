@@ -14,7 +14,9 @@
     window.HOMEPAGE_PROJECT_DATA = [
         {% for project in featured_projects %}
             {
-                "partialCompleteness": {{ project.partial_completeness_as_js }}
+                "id": "{{ project.pk }}",
+                "partialCompleteness": {{ project.partial_completeness_as_js }},
+                "url": "{% url "project:view" project.pk %}"
             }{% if not forloop.last %},{% endif %}
         {% endfor %}
     ];
@@ -25,7 +27,7 @@
 {% endblock %}
 
 {% block body %}
-
+{% spaceless %}
 <div class='row'>
     <div class="cover-image">
         <div class="shade"></div>
@@ -36,6 +38,10 @@
         </div>
     </div>
 </div>
-<div class="row project-badges-container"></div>
-
+<div class="row project-badges-container">
+    {% for project in featured_projects %}
+        <div class="project-badge project-id-{{ project.pk }}"></div>
+    {% endfor %}
+</div>
+{% endspaceless %}
 {% endblock %}

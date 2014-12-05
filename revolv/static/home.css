@@ -5654,6 +5654,9 @@ th.hide-for-touch {
     font-size: 18px;
     line-height: 24px; } }
 
+.project-badge {
+  display: inline-block; }
+
 .project-badge-line, .project-badge-circle {
   fill: none;
   stroke-width: 20px; }
