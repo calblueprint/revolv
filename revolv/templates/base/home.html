@@ -40,11 +40,14 @@
 </div>
 <div class="row project-badges-container">
     {% for project in featured_projects %}
-        <div class="project-badge project-id-{{ project.pk }}">
-            <!-- the svg for the partial circles will go here -->
-            <div class="project-badge-detail-container">
-                <p class="project-title">{{ project.title }}</p>
-                <p class="project-organization">{{ project.org_name }}</p>
+        <div class="project-badge-container small-4 columns {% if forloop.last %}end{% endif %}">
+            <div class="project-badge project-id-{{ project.pk }}">
+                <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
+                <!-- the svg for the partial circles will go here -->
+                <div class="project-badge-detail-container">
+                    <p class="project-title">{{ project.title }}</p>
+                    <p class="project-organization">{{ project.org_name }}</p>
+                </div>
             </div>
         </div>
     {% endfor %}

@@ -5658,12 +5658,20 @@ th.hide-for-touch {
   display: inline-block;
   position: relative;
   vertical-align: top;
-  height: 220px;
-  width: 220px; }
-  .project-badge svg {
+  height: 280px;
+  width: 280px; }
+  .project-badge svg, .project-badge .project-badge-photo {
+    display: block;
     position: absolute;
     top: 0;
     left: 0; }
+  .project-badge .project-badge-photo {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 50%; }
   .project-badge .project-badge-detail-container {
     position: absolute;
     bottom: 0;
@@ -5671,10 +5679,15 @@ th.hide-for-touch {
     display: block;
     width: 100%;
     height: 50%;
-    border: 1px solid #f9f9fa;
-    background-color: red;
+    background-color: rgba(255, 255, 255, 0.8);
     border-bottom-left-radius: 50% 100%;
     border-bottom-right-radius: 50% 100%; }
+  .project-badge .project-badge-detail-container {
+    border-bottom: 1px solid #f9f9fa;
+    border-left: 1px solid #f9f9fa;
+    border-right: 1px solid #f9f9fa; }
+  .project-badge .project-badge-photo {
+    border: 6px solid #f9f9fa; }
 
 .project-badge-line, .project-badge-circle {
   fill: none;

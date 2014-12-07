@@ -30,7 +30,7 @@ var drawD3PartialTriangle = function (destination, classes, radius, padding, par
 
 $(document).ready(function () {
     // method of drawing partial circles in d3 open source from http://jsfiddle.net/Wexcode/CrDUy/
-    var radius = 100,
+    var radius = 130,
         padding = 10,
         radians = 2 * Math.PI;
 
