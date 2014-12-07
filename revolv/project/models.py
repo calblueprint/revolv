@@ -264,6 +264,28 @@ class Project(models.Model):
         return result
 
     @property
+    def amount_left(self):
+        """
+        :return: the current amount of money needed for this project to
+            reach its goal, as a float.
+        """
+        amt_left = float(self.funding_goal) - self.amount_donated
+        if amt_left < 0:
+            return 0.0
+        return amt_left
+
+    @property
+    def rounded_amount_left(self):
+        """
+        :return: The amount needed to complete this project, floored to the nearest
+            dollar.
+
+        Note: if for some reason the amount left is negative, this will perform a
+        ceiling operation instead of a floor, but that should never happen.
+        """
+        return int(self.amount_left)
+
+    @property
     def partial_completeness(self):
         """
         :return: a float between 0 and 1, representing the completeness of this

@@ -98,12 +98,16 @@ class ProjectTests(TestCase):
 
     def test_aggregate_donations(self):
         """Test that project.amount_donated works."""
-        project = self._create_test_project()
+        project = self._create_test_project(funding_goal=200.0)
         self.assertEqual(project.amount_donated, 0.0)
+        self.assertEqual(project.amount_left, 200.0)
         self._create_test_donation_for_project(project, 50.0)
         self.assertEqual(project.amount_donated, 50.0)
-        self._create_test_donation_for_project(project, 25.0)
-        self.assertEqual(project.amount_donated, 75.0)
+        self.assertEqual(project.amount_left, 150.0)
+        self._create_test_donation_for_project(project, 25.50)
+        self.assertEqual(project.amount_donated, 75.50)
+        self.assertEqual(project.amount_left, 124.50)
+        self.assertEqual(project.rounded_amount_left, 124.00)
 
     def test_partial_completeness(self):
         """Test that project.partial_completeness works."""
