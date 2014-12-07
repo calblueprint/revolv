@@ -1,6 +1,7 @@
 from itertools import chain
 
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -248,6 +249,9 @@ class Project(models.Model):
     annual_solar_data = models.FileField(null=True, upload_to="projects/annual/")
 
     objects = ProjectManager()
+
+    def is_owner(self, ambassador):
+        return self.ambassador == ambassador
 
     def approve_project(self):
         self.project_status = Project.ACTIVE

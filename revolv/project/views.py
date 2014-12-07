@@ -108,7 +108,7 @@ class PostFundingUpdateView(UpdateView):
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
 
-class ProjectView(DetailView):
+class ProjectView(UserDataMixin, DetailView):
     """
     The project view. Displays project details and allows for editing.
 
@@ -116,6 +116,15 @@ class ProjectView(DetailView):
     """
     model = Project
     template_name = 'project/project.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        handler = super(ProjectView, self).dispatch(request, *args, **kwargs)
+        project = self.get_object()
+        if (project.is_active or project.is_completed or
+                (self.user.is_authenticated and (project.is_owner(self.user.revolvuserprofile) or self.is_administrator))):
+            return handler
+        else:
+            return self.deny_access()
 
 
 class CreateProjectDonationView(UserDataMixin, FormView):
