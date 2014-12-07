@@ -47,7 +47,9 @@ $(document).ready(function () {
         var partialGrouping = svg.append("g").attr("class", "project-badge-partial-grouping");
 
         drawD3PartialTriangle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
-        drawD3PartialTriangle(partialGrouping, ["project-badge-line"], radius, padding, data.partialCompleteness);
+        var partialCompleteness = data.partialCompleteness;
+        if (partialCompleteness <= 0.01) partialCompleteness = 0.02;
+        drawD3PartialTriangle(partialGrouping, ["project-badge-line"], radius, padding, partialCompleteness);
     });
 
 });

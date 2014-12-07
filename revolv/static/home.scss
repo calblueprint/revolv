@@ -126,6 +126,10 @@
     }
 }
 
+.project-badges-container {
+    margin-bottom: 20px;
+}
+
 .project-badge {
     display: inline-block;
     position: relative;
@@ -180,25 +184,27 @@
             @include soft-header-text(20px);
             width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
 
-            margin-bottom: 10px;
+            margin: 0;
         }
 
+        $org-line-height: 17px;
         .project-organization {
             width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2;
-            line-height: 14px;
-            max-height: 28px;
+            line-height: $org-line-height;
+            max-height: $org-line-height * 2;
             @include soft-header-text(14px);
-            margin-bottom: 5px;
+            margin-bottom: 11px;
         }
 
 
+        $left-line-height: 22px;
         .project-amount-left, .project-days-left {
             width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
             display: inline-block;
             text-align: center;
-            height: 20px;
-            line-height: 20px;
-            font-size: 14px;
+            height: $left-line-height;
+            line-height: $left-line-height;
+            font-size: 16px;
             margin: 0;
         }
     }

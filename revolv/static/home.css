@@ -5655,6 +5655,9 @@ th.hide-for-touch {
     font-size: 18px;
     line-height: 24px; } }
 
+.project-badges-container {
+  margin-bottom: 20px; }
+
 .project-badge {
   display: inline-block;
   position: relative;
@@ -5695,22 +5698,22 @@ th.hide-for-touch {
       font-weight: 200;
       color: rgba(0, 0, 0, 0.8);
       width: 200px;
-      margin-bottom: 10px; }
+      margin: 0; }
     .project-badge .project-badge-detail-container .project-organization {
       width: 220px;
-      line-height: 14px;
-      max-height: 28px;
+      line-height: 17px;
+      max-height: 34px;
       font-size: 14px;
       font-weight: 200;
       color: rgba(0, 0, 0, 0.8);
-      margin-bottom: 5px; }
+      margin-bottom: 11px; }
     .project-badge .project-badge-detail-container .project-amount-left, .project-badge .project-badge-detail-container .project-days-left {
       width: 200px;
       display: inline-block;
       text-align: center;
-      height: 20px;
-      line-height: 20px;
-      font-size: 14px;
+      height: 22px;
+      line-height: 22px;
+      font-size: 16px;
       margin: 0; }
   .project-badge .project-badge-photo {
     border: 10px solid #f9f9fa; }
