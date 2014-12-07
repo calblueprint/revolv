@@ -25,7 +25,7 @@
         <h4 class='subheader text-center'>Proposed Projects</h4>
         <dl class="tabs vertical-dash" data-tab>
             {% for project in proposed_projects %}
-                {% if project.id == proposed_projects.first.id %}
+                {% if project == proposed_projects.first %}
                     <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
                 {% else %}
                     <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
@@ -36,7 +36,7 @@
     <div class='small-9 columns dash-box right'>
         <div class="tabs-content">
             {% for project in proposed_projects %}
-                {% if project.id == proposed_projects.first.id %}
+                {% if project == proposed_projects.first %}
                     <div class="content active" id="proj{{project.id}}">
                 {% else %}
                     <div class="content" id="proj{{project.id}}">

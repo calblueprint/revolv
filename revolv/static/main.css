@@ -5668,7 +5668,8 @@ div.nav-bg-wrap {
 
 .proj-button {
   width: 100%;
-  float: none !important; }
+  float: none !important;
+  margin: 0px; }
 
 .vertical-dash {
   width: 100%;

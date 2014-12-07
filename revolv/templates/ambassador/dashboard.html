@@ -22,23 +22,19 @@
 </div>
 <div class='row'>
     <div class='small-3 columns dash-box'>
-		<a href="{% url "project:new" %}" class="large button">Create Project</a>
+		<a href="{% url "project:new" %}" class="large button proj-button">Create Project</a>
         <dl class="tabs vertical-dash" data-tab>
             {% for project in all_projects %}
-            	{% if not drafted and project in drafted_projects %}
+            	{% if project in drafted_projects and project == drafted_projects.first %}
 					<h4 class='subheader text-center'>Drafted Projects</h4>
-					{% with drafted=true %}{% endwith %}
-            	{% elif not proposed and project in proposed_projects %}
+            	{% elif project in proposed_projects and project == proposed_projects.first %}
 					<h4 class='subheader text-center'>Proposed Projects</h4>
-					{% with proposed=true %}{% endwith %}
-            	{% elif not active and project in active_projects %}
+            	{% elif project in active_projects and project == active_projects.first %}
 					<h4 class='subheader text-center'>Active Projects</h4>
-					{% with active=true %}{% endwith %}
-            	{% elif not completed and project in completed_projects %}
+            	{% elif project in completed_projects and project == completed_projects.first %}
 					<h4 class='subheader text-center'>Completed Projects</h4>
-					{% with completed=true %}{% endwith %}
             	{% endif %}
-                {% if project.id == all_projects.first.id %}
+                {% if project == all_projects.first %}
                     <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
                 {% else %}
                     <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
@@ -49,7 +45,7 @@
 	<div class='small-9 columns dash-box right'>
         <div class="tabs-content">
             {% for project in all_projects %}
-                {% if project.id == all_projects.first.id %}
+                {% if project == all_projects.first %}
                     <div class="content active" id="proj{{project.id}}">
                 {% else %}
                     <div class="content" id="proj{{project.id}}">
