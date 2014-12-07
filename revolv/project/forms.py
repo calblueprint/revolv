@@ -22,7 +22,6 @@ class ProjectForm(forms.ModelForm):
             'impact_power',
             'end_date',
             'video_url',
-            'solar_url',
             'cover_photo',
             'org_name',
             'org_about',
@@ -52,4 +51,5 @@ class PostFundingUpdateForm(forms.ModelForm):
         model = Project
         fields = (
             'post_funding_updates',
+            'solar_url',
         )
