@@ -5600,14 +5600,15 @@ nav.header {
      */ }
   nav.header .logo-container {
     display: inline-block;
-    margin: 0 20px; }
+    margin: 0 20px 0 0; }
     nav.header .logo-container .logo {
       display: inline-block;
       width: 60px;
       margin: 0 10px 0 0; }
     nav.header .logo-container .tagline {
       color: #2c398c;
-      font-size: 1rem; }
+      font-size: 1rem;
+      font-weight: 300; }
   nav.header .user-controls > .dropdown a.js-generated {
     display: none; }
 
