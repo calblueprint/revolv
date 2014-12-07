@@ -1,3 +1,4 @@
+import datetime
 from itertools import chain
 
 from django.db import models
@@ -129,6 +130,9 @@ class Project(models.Model):
         (COMPLETED, 'Completed'),
         (DRAFTED, 'Drafted'),
     )
+    LESS_THAN_ONE_DAY_LEFT_STATEMENT = "only hours left"
+    NO_DAYS_LEFT_STATEMENT = "deadline reached"
+
     funding_goal = models.DecimalField(
         max_digits=15,
         decimal_places=2,
@@ -249,6 +253,9 @@ class Project(models.Model):
 
     objects = ProjectManager()
 
+    def has_owner(self, ambassador):
+        return self.ambassador == ambassador
+
     def approve_project(self):
         self.project_status = Project.ACTIVE
         self.save()
@@ -268,6 +275,72 @@ class Project(models.Model):
         self.project_status = Project.COMPLETED
         self.save()
         return self
+
+    @property
+    def amount_donated(self):
+        """
+        :return: the current total amount that has been donated to this project,
+            as a float
+        """
+        result = self.donation_set.aggregate(
+            models.Sum('payment_transaction__amount')
+        )["payment_transaction__amount__sum"]
+        if result is None:
+            return 0.0
+        return result
+
+    @property
+    def amount_left(self):
+        """
+        :return: the current amount of money needed for this project to
+            reach its goal, as a float.
+        """
+        amt_left = float(self.funding_goal) - self.amount_donated
+        if amt_left < 0:
+            return 0.0
+        return amt_left
+
+    @property
+    def rounded_amount_left(self):
+        """
+        :return: The amount needed to complete this project, floored to the nearest
+            dollar.
+
+        Note: if for some reason the amount left is negative, this will perform a
+        ceiling operation instead of a floor, but that should never happen.
+        """
+        return int(self.amount_left)
+
+    @property
+    def partial_completeness(self):
+        """
+        :return: a float between 0 and 1, representing the completeness of this
+            project with respect to its goal (1 if exactly the goal amount, or
+            more, has been donated, 0 if nothing has been donated).
+        """
+        ratio = self.amount_donated / float(self.funding_goal)
+        return min(ratio, 1.0)
+
+    def partial_completeness_as_js(self):
+        return unicode(self.partial_completeness)
+
+    @property
+    def days_until_end(self):
+        return (datetime.date.today() - self.end_date).days
+
+    @property
+    def days_left(self):
+        return max(self.days_until_end, 0)
+
+    def formatted_days_left(self):
+        days_left = self.days_until_end
+        if days_left == 1:
+            return "1 day left"
+        if days_left == 0:
+            return self.LESS_THAN_ONE_DAY_LEFT_STATEMENT
+        if days_left < 0:
+            return self.NO_DAYS_LEFT_STATEMENT
+        return unicode(days_left) + " days left"
 
     @property
     def is_active(self):

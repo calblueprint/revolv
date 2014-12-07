@@ -26,6 +26,18 @@
     background-color: rgba(0, 0, 0, $opacity);
 }
 
+@mixin ellipsis-overflow() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin soft-header-text($font-size) {
+    font-size: $font-size;
+    font-weight: 200;
+    color: rgba(0, 0, 0, 0.8);
+}
+
 .cover-image {
     background: url(/static/images/solar-worker-stockphoto.jpg);
     background-repeat: no-repeat;
@@ -59,8 +71,7 @@
         .title-header {
             font-size: $revolv-cover-inset-title-size;
             line-height: $revolv-cover-inset-title-size;
-            font-weight: 200;
-            color: rgba(0, 0, 0, 0.8);
+            @include soft-header-text(23px);
 
             margin: 0;
             margin-bottom: 10px;
@@ -113,4 +124,113 @@
         font-size: $revolv-cover-inset-paragraph-size - 2px;
         line-height: $revolv-cover-inset-paragraph-size + 4px;
     }
+}
+
+.project-badges-container {
+    margin-bottom: 20px;
+}
+
+.project-badge {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+
+    height: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
+    width: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
+
+    svg, .project-badge-photo {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .project-badge-photo {
+        width: 100%;
+        height: 100%;
+
+        // background will be set in html since the photo url is a template variable
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+
+        border-radius: 50%;
+    }
+
+    .project-badge-detail-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: $revolv-project-badge-inset-height;
+
+        background-color: rgba(255, 255, 255, 0.8);
+        border-bottom-left-radius: $revolv-project-badge-inset-height 100%;
+        border-bottom-right-radius: $revolv-project-badge-inset-height 100%;
+
+        text-align: center;
+
+        padding: 10px;
+
+        .project-title, .project-organization {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .project-title {
+            line-height: 22px;
+            max-height: 44px;
+            @include soft-header-text(20px);
+            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
+
+            margin: 0;
+        }
+
+        $org-line-height: 17px;
+        .project-organization {
+            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2;
+            line-height: $org-line-height;
+            max-height: $org-line-height * 2;
+            @include soft-header-text(14px);
+            margin-bottom: 11px;
+        }
+
+
+        $left-line-height: 22px;
+        .project-amount-left, .project-days-left {
+            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
+            display: inline-block;
+            text-align: center;
+            height: $left-line-height;
+            line-height: $left-line-height;
+            font-size: 16px;
+            margin: 0;
+        }
+    }
+
+    .project-badge-photo {
+        border: 10px solid $revolv-gray-bg;
+    }
+
+    .project-badge-detail-container {
+        border-bottom: 1px solid $revolv-gray-bg;
+        border-left: 1px solid $revolv-gray-bg;
+        border-right: 1px solid $revolv-gray-bg;
+    }
+}
+
+// --- svg --------------------------------------------------------------------
+
+.project-badge-line, .project-badge-circle {
+  fill: none;
+  stroke-width: $revolv-project-badge-stroke-width;
+}
+
+.project-badge-line {
+  stroke: $revolv-project-badge-fulfilled-color;
+}
+
+.project-badge-circle {
+  stroke: $revolv-project-badge-unfulfilled-color;
 }

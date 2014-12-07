@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'djangobower',
+    'django.contrib.humanize',
 
     # revolv apps
     'revolv.base',

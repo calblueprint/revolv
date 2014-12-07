@@ -6,11 +6,21 @@ INSTRUMENT_PAYPAL = 'paypal'
 INSTRUMENT_CHECK = 'check'
 
 
+class PaymentInstrumentTypeManager(models.Manager):
+    def get_paypal(self, queryset=None):
+        """Return the PaymentInstrumentTypeManager for paypal payments."""
+        if queryset is None:
+            queryset = super(PaymentInstrumentTypeManager, self).get_queryset()
+        return queryset.get(name="paypal")
+
+
 class PaymentInstrumentType(models.Model):
     """
         Abstraction for a payment instrument. (e.g. Paypal)
     """
     name = models.CharField(max_length=80, unique=True)
+
+    objects = PaymentInstrumentTypeManager()
 
 
 class PaymentTransaction(models.Model):

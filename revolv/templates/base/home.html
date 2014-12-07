@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block title %}Home{% endblock %}
 
@@ -7,10 +8,29 @@
 
 <link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
 
+<script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
+
+<script type="text/javascript">
+    window.HOMEPAGE_PROJECT_DATA = [
+        {% for project in featured_projects %}
+            {
+                "id": "{{ project.pk }}",
+                "partialCompleteness": {{ project.partial_completeness_as_js }},
+                "url": "{% url "project:view" project.pk %}"
+            }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+</script>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{% static "js/base/home.js" %}"></script>
 {% endblock %}
 
 {% block body %}
-
+{% spaceless %}
 <div class='row'>
     <div class="cover-image">
         <div class="shade"></div>
@@ -20,11 +40,22 @@
             <p>When you donate to revolv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
         </div>
     </div>
-    <!-- <ul>
-        {% for project in featured_projects %}
-            <li><a href="{% url "project:view" project.pk %}">{{ project.title }}</a></li>
-        {% endfor %}
-    </ul> -->
 </div>
-
+<div class="row project-badges-container">
+    {% for project in featured_projects %}
+        <div class="project-badge-container small-4 columns {% if forloop.last %}end{% endif %}">
+            <div class="project-badge project-id-{{ project.pk }}">
+                <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
+                <!-- the svg for the partial circles will go here -->
+                <div class="project-badge-detail-container">
+                    <p class="project-title">{{ project.title }}</p>
+                    <p class="project-organization">{{ project.org_name }}</p>
+                    <p class="project-amount-left">${{ project.rounded_amount_left|intcomma }} left</p>
+                    <p class="project-days-left">{{ project.formatted_days_left }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endspaceless %}
 {% endblock %}
