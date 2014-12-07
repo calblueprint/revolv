@@ -8,19 +8,33 @@
 {% csrf_token %}
 <div class="row">
     <div class="large-12 columns">
-        <h2>Project Review</h2> 
-        <p>Help : Propose sets project status to "PROPOSED", Approve sets project status to "ACTIVE", Deny sets project status to "DRAFTED", Complete sets project status to "COMPLETED", Edit redirects to the edit page.</p>
-        <p>In the final version, only a subset of buttons will be available to admins and solar ambassadors.</p>
-    </div>
-    <div class="large-12 columns">
+        <h2>Project Review</h2>
         <ul class="button-group nav-tab-button-group">
         {% if user.revolvuserprofile.is_administrator %}
-            <li><input id="propose_project" class="tiny button radius" name="_propose" type="submit" value="Propose"></input></li>
-            <li><input id="approve_project" class="tiny button success radius" name="_approve" type="submit" value="Approve" ></input></li>
-            <li><input id="deny_project" class="tiny button alert radius" name="_deny" type="submit" value="Deny"></input></li>
-            <li><input id="complete_project" class="tiny button radius" name="_complete" type="submit" value="Complete"></input></li>
-            <li><a class="tiny button info radius" href="{% url "project:edit" pk=project.id %}">Edit Project</a></li>
-            <li><a class="tiny button success radius" href="{% url "project:update" pk=project.id %}">Post Project Updates</a></li>
+            {% if project.is_drafted %}
+            <li><input id="propose_project" class="small button radius" name="_propose" type="submit" value="Propose"></input></li>
+            {% endif %}
+            {% if project.is_proposed %}
+            <li><input id="approve_project" class="small button success radius" name="_approve" type="submit" value="Approve" ></input></li>
+            <li><input id="deny_project" class="small button alert radius" name="_deny" type="submit" value="Deny"></input></li>
+            {% endif %}
+            {% if project.is_active %}
+            <li><input id="complete_project" class="small button radius" name="_complete" type="submit" value="Complete"></input></li>
+            {% endif %}
+            <li><a class="small button info radius" href="{% url "project:edit" pk=project.id %}">Edit Project</a></li>
+            {% if project.is_completed or project.is_active %}
+            <li><a class="small button success radius" href="{% url "project:update" pk=project.id %}">Post Project Updates</a></li>
+            {% endif %}
+        {% elif user.revolvuserprofile.is_ambassador %}
+            {% if project.is_drafted %}
+            <li><input id="propose_project" class="small button radius" name="_propose" type="submit" value="Propose"></input></li>
+            {% endif %}
+            {% if project.is_drafted or project.is_proposed %}
+            <li><a class="small button info radius" href="{% url "project:edit" pk=project.id %}">Edit Project</a></li>
+            {% endif %}
+            {% if project.is_completed or project.is_active %}
+                <li><a class="small button success radius" href="{% url "project:update" pk=project.id %}">Post Project Updates</a></li>
+            {% endif %}
         {% endif %}
         </ul>
     </div>
