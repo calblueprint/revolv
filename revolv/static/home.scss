@@ -188,17 +188,29 @@
             line-height: 14px;
             max-height: 28px;
             @include soft-header-text(14px);
+            margin-bottom: 5px;
         }
+
+
+        .project-amount-left, .project-days-left {
+            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
+            display: inline-block;
+            text-align: center;
+            height: 20px;
+            line-height: 20px;
+            font-size: 14px;
+            margin: 0;
+        }
+    }
+
+    .project-badge-photo {
+        border: 10px solid $revolv-gray-bg;
     }
 
     .project-badge-detail-container {
         border-bottom: 1px solid $revolv-gray-bg;
         border-left: 1px solid $revolv-gray-bg;
         border-right: 1px solid $revolv-gray-bg;
-    }
-
-    .project-badge-photo {
-        border: 6px solid $revolv-gray-bg;
     }
 }
 

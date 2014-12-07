@@ -1,3 +1,4 @@
+import datetime
 from itertools import chain
 
 from django.db import models
@@ -129,6 +130,9 @@ class Project(models.Model):
         (COMPLETED, 'Completed'),
         (DRAFTED, 'Drafted'),
     )
+    LESS_THAN_ONE_DAY_LEFT_STATEMENT = "only hours left"
+    NO_DAYS_LEFT_STATEMENT = "deadline reached"
+
     funding_goal = models.DecimalField(
         max_digits=15,
         decimal_places=2,
@@ -293,12 +297,28 @@ class Project(models.Model):
             more, has been donated, 0 if nothing has been donated).
         """
         ratio = self.amount_donated / float(self.funding_goal)
-        if ratio > 1.0:
-            ratio = 1.0
-        return ratio
+        return min(ratio, 1.0)
 
     def partial_completeness_as_js(self):
         return unicode(self.partial_completeness)
+
+    @property
+    def days_until_end(self):
+        return (datetime.date.today() - self.end_date).days
+
+    @property
+    def days_left(self):
+        return max(self.days_until_end, 0)
+
+    def formatted_days_left(self):
+        days_left = self.days_until_end
+        if days_left == 1:
+            return "1 day left"
+        if days_left == 0:
+            return self.LESS_THAN_ONE_DAY_LEFT_STATEMENT
+        if days_left < 0:
+            return self.NO_DAYS_LEFT_STATEMENT
+        return unicode(days_left) + " days left"
 
 
 class Category(models.Model):

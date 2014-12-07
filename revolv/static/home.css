@@ -5702,13 +5702,22 @@ th.hide-for-touch {
       max-height: 28px;
       font-size: 14px;
       font-weight: 200;
-      color: rgba(0, 0, 0, 0.8); }
+      color: rgba(0, 0, 0, 0.8);
+      margin-bottom: 5px; }
+    .project-badge .project-badge-detail-container .project-amount-left, .project-badge .project-badge-detail-container .project-days-left {
+      width: 200px;
+      display: inline-block;
+      text-align: center;
+      height: 20px;
+      line-height: 20px;
+      font-size: 14px;
+      margin: 0; }
+  .project-badge .project-badge-photo {
+    border: 10px solid #f9f9fa; }
   .project-badge .project-badge-detail-container {
     border-bottom: 1px solid #f9f9fa;
     border-left: 1px solid #f9f9fa;
     border-right: 1px solid #f9f9fa; }
-  .project-badge .project-badge-photo {
-    border: 6px solid #f9f9fa; }
 
 .project-badge-line, .project-badge-circle {
   fill: none;

@@ -125,6 +125,24 @@ class ProjectTests(TestCase):
         self._create_test_donation_for_project(project, 25.0)
         self.assertEqual(project.partial_completeness, 1.0)
 
+    def test_days_remaining(self):
+        """
+        Test that the functions related to the amount of time remaning in
+        the project work correctly.
+        """
+        project = self._create_test_project(end_date=datetime.date.today() - datetime.timedelta(days=10))
+        self.assertEqual(project.days_left, 10)
+        self.assertEqual(project.formatted_days_left(), "10 days left")
+        project = self._create_test_project(end_date=datetime.date.today() - datetime.timedelta(days=1))
+        self.assertEqual(project.days_left, 1)
+        self.assertEqual(project.formatted_days_left(), "1 day left")
+        project = self._create_test_project(end_date=datetime.date.today() - datetime.timedelta(minutes=10, days=0))
+        self.assertEqual(project.days_left, 0)
+        self.assertEqual(project.formatted_days_left(), Project.LESS_THAN_ONE_DAY_LEFT_STATEMENT)
+        project = self._create_test_project(end_date=datetime.date.today() + datetime.timedelta(days=1))
+        self.assertEqual(project.days_left, 0)
+        self.assertEqual(project.formatted_days_left(), Project.NO_DAYS_LEFT_STATEMENT)
+
 
 class ProjectManagerTests(TestCase):
     """Tests for the Project manager"""
