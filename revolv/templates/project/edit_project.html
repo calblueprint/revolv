@@ -21,14 +21,14 @@
 </div>
 <div class="row white-section">
     <div class="large-12 columns">
-        <form method="POST" enctype="multipart/form-data">
-      		{% csrf_token %}
-      		{% for error in form.non_field_errors %}
-        	<div data-alert class="alert-box alert">
-            	{{ error }}
-            	<a href="#" class="close">&times;</a>
-          	</div>
-        	{% endfor %}
+        <form method="POST" enctype="multipart/form-data" id="project_form">
+              {% csrf_token %}
+              {% for error in form.non_field_errors %}
+            <div data-alert class="alert-box alert">
+                {{ error }}
+                <a href="#" class="close">&times;</a>
+              </div>
+            {% endfor %}
 
             <div class="row">
                 <div class="medium-12 columns">
@@ -116,7 +116,17 @@
         $(addressPicker).on('addresspicker:selected', function (event, result) {
             $('#id_location_latitude').val(result.lat());
             $('#id_location_longitude').val(result.lng());
-        })
+        });
+
+        $("#project_form").on('submit', function(e) {
+            if (!$('#id_location_latitude').val() || !$('#id_location_longitude').val()) {
+                toastr.options.closeButton = true;
+                toastr.options.positionClass = "toast-bottom-right";
+                toastr.error("Please enter a valid address");
+                e.preventDefault();
+                return false;
+            }
+        });
     });
 </script>
 {% endblock %}

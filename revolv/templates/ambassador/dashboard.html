@@ -66,7 +66,7 @@
 	                <div class="small-9 columns">
 	                    <div class="row">
 	                        <div class="small-12 columns">
-	                        	<h3><a href="{% url "project:view" project.pk %}"> {{ project.title }}</a></h3>
+	                        	<h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
 	                        </div>
 	                    </div>
 	                    <div class="row">
@@ -81,7 +81,7 @@
 	                    </div>
 	                </div>
 	                <div class="small-3 columns">
-	                    <a href="{% url "project:view" project.pk %}">
+	                    <a href="{% url "project:review" project.pk %}">
 	                        <img src="{{ project.preview_photo.url }}"></img>
 	                    </a>
 	                </div>

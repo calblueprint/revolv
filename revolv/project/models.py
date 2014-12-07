@@ -253,6 +253,9 @@ class Project(models.Model):
 
     objects = ProjectManager()
 
+    def has_owner(self, ambassador):
+        return self.ambassador == ambassador
+
     def approve_project(self):
         self.project_status = Project.ACTIVE
         self.save()
