@@ -153,6 +153,15 @@ class Project(models.Model):
         'Expected Killowatt Output',
         help_text='What is the expected output in killowatts of the proposed solar array?'
     )
+    # solar log graphics url
+    solar_url = models.URLField(
+        'Solar Log Graphics URL',
+        max_length=255,
+        blank=True,
+        help_text='This can be found by going to http://home.solarlog-web.net/, going to the \
+        solar log profile for your site, and clicking on the Graphics sub-page. Copy and paste \
+        the URL in the address bar into here.'
+    )
     location = models.CharField(
         'Organization Address',
         max_length=255,
@@ -231,6 +240,16 @@ class Project(models.Model):
         default=0.0,
         help_text='The internal rate of return for this project.'
     )
+    post_funding_updates = models.TextField(
+        'Updates After Completion',
+        help_text='Add any post project completion updates you want to let your backers know about.',
+        null=True
+    )
+
+    # solar data csv files
+    daily_solar_data = models.FileField(null=True, upload_to="projects/daily/")
+    monthly_solar_data = models.FileField(null=True, upload_to="projects/monthly/")
+    annual_solar_data = models.FileField(null=True, upload_to="projects/annual/")
 
     objects = ProjectManager()
 
@@ -319,6 +338,22 @@ class Project(models.Model):
         if days_left < 0:
             return self.NO_DAYS_LEFT_STATEMENT
         return unicode(days_left) + " days left"
+
+    @property
+    def is_active(self):
+        return self.project_status == Project.ACTIVE
+
+    @property
+    def is_proposed(self):
+        return self.project_status == Project.PROPOSED
+
+    @property
+    def is_drafted(self):
+        return self.project_status == Project.DRAFTED
+
+    @property
+    def is_completed(self):
+        return self.project_status == Project.COMPLETED
 
 
 class Category(models.Model):

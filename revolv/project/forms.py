@@ -1,5 +1,4 @@
 from django import forms
-
 from models import Project
 
 
@@ -23,6 +22,7 @@ class ProjectForm(forms.ModelForm):
             'impact_power',
             'end_date',
             'video_url',
+            'solar_url',
             'cover_photo',
             'org_name',
             'org_about',
@@ -42,3 +42,14 @@ class ProjectStatusForm(forms.ModelForm):
         model = Project
         # fields that need to be filled out, empty on purpose
         fields = ()
+
+
+class PostFundingUpdateForm(forms.ModelForm):
+    """
+    A form for providing post funding updates about a project
+    """
+    class Meta:
+        model = Project
+        fields = (
+            'post_funding_updates',
+        )
