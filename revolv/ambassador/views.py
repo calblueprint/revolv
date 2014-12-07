@@ -15,4 +15,6 @@ class AmbassadorDashboardView(UserDataMixin, TemplateView):
         context['proposed_projects'] = Project.objects.get_proposed(user_projects)
         context['active_projects'] = Project.objects.get_active(user_projects)
         context['completed_projects'] = Project.objects.get_completed(user_projects)
+        context['all_projects'] = context['completed_projects'] | context['proposed_projects'] | \
+            context['active_projects'] | context['completed_projects']
         return context

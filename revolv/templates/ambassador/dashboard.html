@@ -6,159 +6,83 @@
 {% block body %}
 
 <div class='row'>
-    <div class='small-12 text-center columns'>
-        <a href="{% url "donor:dashboard" %}">
-            <div class='medium primary dashboard-button button'>Donor Dash</div>
-        </a>
-        {% if user.revolvuserprofile.is_administrator %}
-        <a href="{% url "administrator:dashboard" %}">
-            <div class='medium primary dashboard-button button'>Admin Dash</div>
-        </a>
-        {% endif %}
-        {% if user.revolvuserprofile.is_ambassador %}
-        <a href="{% url "ambassador:dashboard" %}">
-            <div class='medium active dashboard-button button'>Ambassador Dash</div>
-        </a>
-        {% endif %}
-    </div>
+    <a href="{% url "donor:dashboard" %}">
+        <div class='medium primary dashboard-button button'>Donor Dashboard</div>
+    </a>
+    {% if user.revolvuserprofile.is_administrator %}
+    <a href="{% url "administrator:dashboard" %}">
+        <div class='medium primary dashboard-button button'>Administrator Dashboard</div>
+    </a>
+    {% endif %}
+    {% if user.revolvuserprofile.is_ambassador %}
+    <a href="{% url "ambassador:dashboard" %}">
+        <div class='medium active dashboard-button button'>Ambassador Dashboard</div>
+    </a>
+    {% endif %}
 </div>
 <div class='row'>
-	<div class="small-12 columns">
+    <div class='small-3 columns dash-box'>
 		<a href="{% url "project:new" %}" class="large button">Create Project</a>
-		<div class="drafted_projects">
-			<h2>Drafted Projects</h2>
-			<p>Edit or submit your drafted projects for review!</p>
-			{% for project in drafted_projects %}
-	            <div class="row">
-	                <div class="small-9 columns">
-	                    <div class="row">
-	                        <div class="small-12 columns">
-	                        	<h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                    	<div class="small-12 columns">
-	                    		<h4>{{ project.org_name }}</h4>
-	                    	</div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="small-12 columns">
-	                            <p> {{ project.mission_statement }} </p>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="small-3 columns">
-	                    <a href="{% url "project:review" project.pk %}">
-	                        <img src="{{ project.preview_photo.url }}"></img>
-	                    </a>
-	                </div>
-	            </div>
-	            <hr/>
-	            <br/>
-	        {% empty %}
-	            <p> There are no drafted projects right now. Check again later! </p>
-	        {% endfor %}
-		</div>
-		<div class="proposed_projects">
-			<h2>Proposed Projects</h2>
-			{% for project in proposed_projects %}
-	            <div class="row">
-	                <div class="small-9 columns">
-	                    <div class="row">
-	                        <div class="small-12 columns">
-	                        	<h3><a href="{% url "project:view" project.pk %}"> {{ project.title }}</a></h3>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                    	<div class="small-12 columns">
-	                    		<h4>{{ project.org_name }}</h4>
-	                    	</div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="small-12 columns">
-	                            <p> {{ project.mission_statement }} </p>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="small-3 columns">
-	                    <a href="{% url "project:view" project.pk %}">
-	                        <img src="{{ project.preview_photo.url }}"></img>
-	                    </a>
-	                </div>
-	            </div>
-	            <hr/>
-	            <br/>
-	        {% empty %}
-	            <p> There are no projects in review right now. Check again later! </p>
-	        {% endfor %}
-		</div>
-		<div class="active_projects">
-			<h2>Active Projects</h2>
-			{% for project in active_projects %}
-	            <div class="row">
-	                <div class="small-9 columns">
-	                    <div class="row">
-	                        <div class="small-12 columns">
-	                        	<h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                    	<div class="small-12 columns">
-	                    		<h4>{{ project.org_name }}</h4>
-	                    	</div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="small-12 columns">
-	                            <p> {{ project.mission_statement }} </p>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="small-3 columns">
-	                    <a href="{% url "project:review" project.pk %}">
-	                        <img src="{{ project.preview_photo.url }}"></img>
-	                    </a>
-	                </div>
-	            </div>
-	            <hr/>
-	            <br/>
-	        {% empty %}
-	            <p> There are no active projects right now. Check again later! </p>
-	        {% endfor %}
-		</div>
-		<div class="completed_projects">
-			<h2>Completed Projects</h2>
-			{% for project in completed_projects %}
-	            <div class="row">
-	                <div class="small-9 columns">
-	                    <div class="row">
-	                        <div class="small-12 columns">
-	                        	<h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                    	<div class="small-12 columns">
-	                    		<h4>{{ project.org_name }}</h4>
-	                    	</div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="small-12 columns">
-	                            <p> {{ project.mission_statement }} </p>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="small-3 columns">
-	                    <a href="{% url "project:review" project.pk %}">
-	                        <img src="{{ project.preview_photo.url }}"></img>
-	                    </a>
-	                </div>
-	            </div>
-	            <hr/>
-	            <br/>
-	        {% empty %}
-	            <p> There are no completed projects right now. Check again later! </p>
-	        {% endfor %}
-		</div>
-	</div>
+        <dl class="tabs vertical-dash" data-tab>
+            {% for project in all_projects %}
+            	{% if not drafted and project in drafted_projects %}
+					<h4 class='subheader text-center'>Drafted Projects</h4>
+					{% with drafted=true %}{% endwith %}
+            	{% elif not proposed and project in proposed_projects %}
+					<h4 class='subheader text-center'>Proposed Projects</h4>
+					{% with proposed=true %}{% endwith %}
+            	{% elif not active and project in active_projects %}
+					<h4 class='subheader text-center'>Active Projects</h4>
+					{% with active=true %}{% endwith %}
+            	{% elif not completed and project in completed_projects %}
+					<h4 class='subheader text-center'>Completed Projects</h4>
+					{% with completed=true %}{% endwith %}
+            	{% endif %}
+                {% if project.id == all_projects.first.id %}
+                    <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+                {% else %}
+                    <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+                {% endif %}
+            {% endfor %}
+        </dl>
+    </div>
+	<div class='small-9 columns dash-box right'>
+        <div class="tabs-content">
+            {% for project in all_projects %}
+                {% if project.id == all_projects.first.id %}
+                    <div class="content active" id="proj{{project.id}}">
+                {% else %}
+                    <div class="content" id="proj{{project.id}}">
+                {% endif %}
+                    <div class="small-9 columns">
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <h4>{{ project.org_name }}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <p> {{ project.mission_statement }} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small-3 columns">
+                        <a href="{% url "project:review" project.pk %}">
+                            <img src="{{ project.preview_photo.url }}"></img>
+                        </a>
+                    </div>
+                    <br/>
+                </div>
+            {% empty %}
+                <p> You have not donated to any projects. </p>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
 {% endblock %}

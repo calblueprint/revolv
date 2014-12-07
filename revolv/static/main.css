@@ -5630,22 +5630,59 @@ div.nav-bg-wrap {
 /**
  * Font size of the title "About RE-volv"
  */
-dashboard-button:hover, dashboard-button:focus, .dashboard-button:hover, .dashboard-button:focus, dashboard-button.active, .dashboard-button.active {
-  color: black;
-  border-width: 2px;
-  border-color: #c0e7f6;
-  background-color: white; }
+.dash-box {
+  background-color: #e9f6fc;
+  padding: 0px 0px;
+  border: solid #c0e7f6;
+  border-width: 1px;
+  margin-bottom: 20px; }
+  .dash-box.right {
+    width: 73%;
+    padding: 10px 10px; }
+  .dash-box .subheader {
+    font-weight: 300;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-size: 1.4375rem;
+    color: #222222;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0px 0px;
+    background-color: #c0e7f6; }
 
-dashboard-button, .dashboard-button {
+.dashboard-button {
+  width: 33%;
   color: black;
-  background-color: white;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  background-color: #f9f9fa;
+  font-weight: 300;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   border-width: 2px;
-  border-color: white;
+  border-color: #f9f9fa;
   transition: border-color 200ms linear; }
+  .dashboard-button.active, .dashboard-button:focus, .dashboard-button:hover {
+    color: black;
+    background-color: #f9f9fa;
+    border-color: #c0e7f6; }
+
+.proj-button {
+  width: 100%;
+  float: none !important; }
+
+.vertical-dash {
+  width: 100%;
+  max-width: 100%;
+  float: left; }
 
 body {
   background-color: #f9f9fa;
-  font-weight: 300; }
+  font-weight: 300;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-size: 1rem; }
+
+p, h2, h3, h4 {
+  font-weight: 300;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
 
 /**
  * Height of the main cover photo on the homepage in mobile phone landscape AND

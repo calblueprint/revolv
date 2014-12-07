@@ -6,73 +6,73 @@
 {% block body %}
 
 <div class='row'>
-    <div class='small-12 text-center columns'>
-        <a href="{% url "donor:dashboard" %}">
-            <div class='medium active dashboard-button button'>Donor Dash</div>
-        </a>
-        {% if user.revolvuserprofile.is_administrator %}
-        <a href="{% url "administrator:dashboard" %}">
-            <div class='medium primary dashboard-button button'>Admin Dash</div>
-        </a>
-        {% endif %}
-        {% if user.revolvuserprofile.is_ambassador %}
-        <a href="{% url "ambassador:dashboard" %}">
-            <div class='medium primary dashboard-button button'>Ambassador Dash</div>
-        </a>
-        {% endif %}
-    </div>
+    <a href="{% url "donor:dashboard" %}">
+        <div class='medium active dashboard-button button'>Donor Dashboard</div>
+    </a>
+    {% if user.revolvuserprofile.is_administrator %}
+    <a href="{% url "administrator:dashboard" %}">
+        <div class='medium primary dashboard-button button'>Administrator Dashboard</div>
+    </a>
+    {% endif %}
+    {% if user.revolvuserprofile.is_ambassador %}
+    <a href="{% url "ambassador:dashboard" %}">
+        <div class='medium primary dashboard-button button'>Ambassador Dashboard</div>
+    </a>
+    {% endif %}
 </div>
 <div class='row'>
-	<div class='small-12 columns'>
-        <h2>My Projects</h2>
-        <dl class="tabs vertical" data-tab>
+	<div class='small-3 columns dash-box'>
+        <h4 class='subheader text-center'>My Projects</h4>
+        <dl class="tabs vertical-dash" data-tab>
             {% for project in donated_projects %}
                 {% if project.id == donated_projects.first.id %}
-                    <dd class="active"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+                    <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
                 {% else %}
-                    <dd><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+                    <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
                 {% endif %}
             {% endfor %}
         </dl>
-        <div class="tabs-content vertical">
+    </div>
+    <div class='small-9 columns dash-box right'>
+        <div class="tabs-content">
             {% for project in donated_projects %}
                 {% if project.id == donated_projects.first.id %}
                     <div class="content active" id="proj{{project.id}}">
                 {% else %}
                     <div class="content" id="proj{{project.id}}">
                 {% endif %}
-                        <div class="small-9 columns">
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <h3><a href="{% url "project:view" project.pk %}"> {{ project.title }}</a></h3>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <h4>{{ project.org_name }}</h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <p> {{ project.mission_statement }} </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <h3>Solar Log Data</h3>
-                                    {% include "base/partials/solar_data.html" with project=project %}
-                                </div>
+                    <div class="small-9 columns">
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <h3><a href="{% url "project:view" project.pk %}"> {{ project.title }}</a></h3>
                             </div>
                         </div>
-                        <div class="small-3 columns">
-                            <a href="{% url "project:view" project.pk %}">
-                                <img src="{{ project.preview_photo.url }}"></img>
-                            </a>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <h4>{{ project.org_name }}</h4>
+                            </div>
                         </div>
-                        <br/>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <p> {{ project.mission_statement }} </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <h3>Solar Log Data</h3>
+                                {% include "base/partials/solar_data.html" with project=project %}
+                            </div>
+                        </div>
                     </div>
-                    {% empty %}
-                        <p> You have not donated to any projects. </p>
+                    <div class="small-3 columns">
+                        <a href="{% url "project:view" project.pk %}">
+                            <img src="{{ project.preview_photo.url }}"></img>
+                        </a>
+                    </div>
+                    <br/>
+                </div>
+            {% empty %}
+                <p> You have not donated to any projects. </p>
             {% endfor %}
 		</div>
 	</div>
