@@ -114,7 +114,6 @@
         // add click listeners
         addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
         $(addressPicker).on('addresspicker:selected', function (event, result) {
-            console.log(result.lat());
             $('#id_location_latitude').val(result.lat());
             $('#id_location_longitude').val(result.lng());
         });

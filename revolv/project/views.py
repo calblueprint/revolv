@@ -118,11 +118,10 @@ class ProjectView(UserDataMixin, DetailView):
     template_name = 'project/project.html'
 
     def dispatch(self, request, *args, **kwargs):
-        handler = super(ProjectView, self).dispatch(request, *args, **kwargs)
         project = self.get_object()
         if (project.is_active or project.is_completed or
-                (self.user.is_authenticated and (project.is_owner(self.user.revolvuserprofile) or self.is_administrator))):
-            return handler
+                (self.user.is_authenticated() and (project.has_owner(self.user_profile) or self.is_administrator))):
+            return super(ProjectView, self).dispatch(request, *args, **kwargs)
         else:
             return self.deny_access()
 
