@@ -159,11 +159,11 @@
         left: 0;
         display: block;
         width: 100%;
-        height: 75%;
+        height: $revolv-project-badge-inset-height;
 
         background-color: rgba(255, 255, 255, 0.8);
-        border-bottom-left-radius: 75% 100%;
-        border-bottom-right-radius: 75% 100%;
+        border-bottom-left-radius: $revolv-project-badge-inset-height 100%;
+        border-bottom-right-radius: $revolv-project-badge-inset-height 100%;
 
         text-align: center;
 

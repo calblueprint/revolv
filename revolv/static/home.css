@@ -5679,10 +5679,10 @@ th.hide-for-touch {
     left: 0;
     display: block;
     width: 100%;
-    height: 75%;
+    height: 65%;
     background-color: rgba(255, 255, 255, 0.8);
-    border-bottom-left-radius: 75% 100%;
-    border-bottom-right-radius: 75% 100%;
+    border-bottom-left-radius: 65% 100%;
+    border-bottom-right-radius: 65% 100%;
     text-align: center;
     padding: 10px; }
     .project-badge .project-badge-detail-container .project-title, .project-badge .project-badge-detail-container .project-organization {

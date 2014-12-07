@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block title %}Home{% endblock %}
 
@@ -47,6 +48,7 @@
                 <div class="project-badge-detail-container">
                     <p class="project-title">{{ project.title }}</p>
                     <p class="project-organization">{{ project.org_name }}</p>
+                    <p class="project-amount-left">${{ project.rounded_amount_left|intcomma }} left</p>
                 </div>
             </div>
         </div>

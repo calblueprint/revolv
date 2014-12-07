@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
+    'django.contrib.humanize',
 
     # revolv apps
     'revolv.base',
