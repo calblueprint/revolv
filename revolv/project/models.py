@@ -250,7 +250,7 @@ class Project(models.Model):
 
     objects = ProjectManager()
 
-    def is_owner(self, ambassador):
+    def has_owner(self, ambassador):
         return self.ambassador == ambassador
 
     def approve_project(self):
