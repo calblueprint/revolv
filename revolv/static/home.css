@@ -5616,6 +5616,7 @@ th.hide-for-touch {
     .cover-image .cover-inset .title-header {
       font-size: 32px;
       line-height: 32px;
+      font-size: 18px;
       font-weight: 200;
       color: rgba(0, 0, 0, 0.8);
       margin: 0;
@@ -5678,10 +5679,30 @@ th.hide-for-touch {
     left: 0;
     display: block;
     width: 100%;
-    height: 50%;
+    height: 75%;
     background-color: rgba(255, 255, 255, 0.8);
-    border-bottom-left-radius: 50% 100%;
-    border-bottom-right-radius: 50% 100%; }
+    border-bottom-left-radius: 75% 100%;
+    border-bottom-right-radius: 75% 100%;
+    text-align: center;
+    padding: 10px; }
+    .project-badge .project-badge-detail-container .project-title, .project-badge .project-badge-detail-container .project-organization {
+      display: inline-block;
+      text-align: center; }
+    .project-badge .project-badge-detail-container .project-title {
+      line-height: 22px;
+      max-height: 44px;
+      font-size: 20px;
+      font-weight: 200;
+      color: rgba(0, 0, 0, 0.8);
+      width: 200px;
+      margin-bottom: 10px; }
+    .project-badge .project-badge-detail-container .project-organization {
+      width: 220px;
+      line-height: 14px;
+      max-height: 28px;
+      font-size: 14px;
+      font-weight: 200;
+      color: rgba(0, 0, 0, 0.8); }
   .project-badge .project-badge-detail-container {
     border-bottom: 1px solid #f9f9fa;
     border-left: 1px solid #f9f9fa;
