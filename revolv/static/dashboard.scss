@@ -1,16 +1,53 @@
 @import "revolv-settings";
 
-dashboard-button:hover, dashboard-button:focus, .dashboard-button:hover, .dashboard-button:focus, dashboard-button.active, .dashboard-button.active {
-  color: black;
-  border-width: 2px;
-  border-color: $revolv-header-color;
-  background-color: white;
+.dash-box {
+    background-color: $revolv-light-blue-bg;
+    padding: 0px 0px;
+    border: solid $revolv-header-color;
+    border-width: 1px;
+    margin-bottom: 20px;
+    &.right {
+        width: 73%;
+        padding: 10px 10px;
+    }
+    .subheader {
+        font-weight: 300;
+        font-family: $body-font-family;
+        font-size: 1.4375rem;
+        color: #222222;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin: 0px 0px;
+        background-color: $revolv-header-color;
+    }
 }
 
-dashboard-button, .dashboard-button {
-  color: black;
-  background-color: white;
-  border-width: 2px;
-  border-color: white;
-  transition: border-color 200ms linear;
+.dashboard-button {
+    width: 33%;
+    color: black;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    background-color: $revolv-gray-bg;
+    font-weight: 300;
+    font-family: $body-font-family;
+    border-width: 2px;
+    border-color: $revolv-gray-bg;
+    transition: border-color 200ms linear;
+    &.active, &:focus, &:hover {
+        color: black;
+        background-color: $revolv-gray-bg;
+        border-color: $revolv-header-color;
+    }
+}
+
+.proj-button {
+    width: 100%;
+    float: none !important;
+    margin: 0px;
+}
+
+.vertical-dash {
+    width: 100%;
+    max-width: 100%;
+    float: left;
 }

@@ -6,6 +6,13 @@
 body {
     background-color: $revolv-gray-bg;
     font-weight: 300;
+    font-family: $body-font-family;
+    font-size: 1rem;
+}
+
+p, h2, h3, h4 {
+    font-weight: 300;
+    font-family: $body-font-family;
 }
 
 @import "footer";
