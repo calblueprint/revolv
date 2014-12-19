@@ -5588,6 +5588,9 @@ th.hide-for-touch {
 /**
  * Font size of the title "About RE-volv"
  */
+.cover-image-row {
+  margin-bottom: 0; }
+
 .cover-image {
   background: url(/static/images/solar-worker-stockphoto.jpg);
   background-repeat: no-repeat;
@@ -5722,6 +5725,10 @@ th.hide-for-touch {
     border-left: 1px solid #f9f9fa;
     border-right: 1px solid #f9f9fa; }
 
+.icons-container {
+  border: 1px solid #11ade5;
+  background-color: #f5fbfe; }
+
 .project-badge-line, .project-badge-circle {
   fill: none;
   stroke-width: 20px; }
@@ -5731,3 +5738,6 @@ th.hide-for-touch {
 
 .project-badge-circle {
   stroke: #fff4cc; }
+
+.icon-adult use {
+  transform: scale(0.5); }

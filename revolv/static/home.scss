@@ -38,6 +38,10 @@
     color: rgba(0, 0, 0, 0.8);
 }
 
+.cover-image-row {
+    margin-bottom: 0;
+}
+
 .cover-image {
     background: url(/static/images/solar-worker-stockphoto.jpg);
     background-repeat: no-repeat;
@@ -220,6 +224,11 @@
     }
 }
 
+.icons-container {
+    border: 1px solid $revolv-blue;
+    background-color: $revolv-very-light-blue-bg;
+}
+
 // --- svg --------------------------------------------------------------------
 
 .project-badge-line, .project-badge-circle {
@@ -233,4 +242,8 @@
 
 .project-badge-circle {
   stroke: $revolv-project-badge-unfulfilled-color;
+}
+
+.icon-adult use {
+    transform: scale(0.5);
 }

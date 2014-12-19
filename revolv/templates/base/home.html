@@ -10,6 +10,7 @@
 
 <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/svg4everybody.min.js" %}"></script>
 
 <script type="text/javascript">
     window.HOMEPAGE_PROJECT_DATA = [
@@ -31,7 +32,7 @@
 
 {% block body %}
 {% spaceless %}
-<div class='row'>
+<div class='row cover-image-row'>
     <div class="cover-image">
         <div class="shade"></div>
         <div class="cover-inset">
@@ -39,6 +40,11 @@
             <h1 class="title-header title-header-tagline">People Funded Renewable Energy</h1>
             <p>When you donate to revolv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
         </div>
+    </div>
+</div>
+<div class="row icons-container">
+    <div class="small-4 columns">
+        <svg role="img" title="adult" class="icon-adult"><use xlink:href="{% static "images/adult3.svg" %}#entry"></use></svg>
     </div>
 </div>
 <div class="row project-badges-container">
