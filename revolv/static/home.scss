@@ -128,6 +128,11 @@
 
 .project-badges-container {
     margin-bottom: 20px;
+
+    a, a:hover, a:visited, a:active {
+        color: inherit;
+        text-decoration: none;
+    }
 }
 
 .project-badge {
@@ -185,6 +190,10 @@
             width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
 
             margin: 0;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
         $org-line-height: 17px;
