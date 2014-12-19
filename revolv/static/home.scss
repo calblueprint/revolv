@@ -229,6 +229,14 @@
     }
 }
 
+@media #{$small-only}, #{$medium-only} {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    .project-badge-container {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
 // --- svg --------------------------------------------------------------------
 
 .project-badge-line, .project-badge-circle {

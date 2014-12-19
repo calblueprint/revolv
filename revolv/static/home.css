@@ -5727,6 +5727,11 @@ th.hide-for-touch {
     border-left: 1px solid #f9f9fa;
     border-right: 1px solid #f9f9fa; }
 
+@media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
+  .project-badge-container {
+    text-align: center;
+    margin-bottom: 10px; } }
+
 .project-badge-line, .project-badge-circle {
   fill: none;
   stroke-width: 20px; }
