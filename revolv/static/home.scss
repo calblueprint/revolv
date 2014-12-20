@@ -227,6 +227,21 @@
 .icons-container {
     border: 1px solid $revolv-blue;
     background-color: $revolv-very-light-blue-bg;
+    padding: 10px 0;
+
+    .revolv-icon {
+        fill: $revolv-icon-blue;
+    }
+
+    .icon-adult {
+        width: 43px;
+        height: 50px;
+    }
+
+    .icon-frontal {
+        width: 21px;
+        height: 53px;
+    }
 }
 
 // --- svg --------------------------------------------------------------------
@@ -245,5 +260,9 @@
 }
 
 .icon-adult use {
-    transform: scale(0.5);
+    transform: scale(0.4);
+}
+
+.icon-frontal use {
+    transform: scale(0.9) translate(-21px);
 }

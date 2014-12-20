@@ -65,6 +65,7 @@ raw_templates/node_modules/
 raw_templates/bower_components/
 revolv/static/bower_components/
 node_modules/
+.revolv_bash_profile
 
 # IDEA
 .idea

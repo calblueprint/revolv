@@ -5727,7 +5727,16 @@ th.hide-for-touch {
 
 .icons-container {
   border: 1px solid #11ade5;
-  background-color: #f5fbfe; }
+  background-color: #f5fbfe;
+  padding: 10px 0; }
+  .icons-container .revolv-icon {
+    fill: #9adbf4; }
+  .icons-container .icon-adult {
+    width: 43px;
+    height: 50px; }
+  .icons-container .icon-frontal {
+    width: 21px;
+    height: 53px; }
 
 .project-badge-line, .project-badge-circle {
   fill: none;
@@ -5740,4 +5749,7 @@ th.hide-for-touch {
   stroke: #fff4cc; }
 
 .icon-adult use {
-  transform: scale(0.5); }
+  transform: scale(0.4); }
+
+.icon-frontal use {
+  transform: scale(0.9) translate(-21px); }
