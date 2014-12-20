@@ -242,6 +242,11 @@
         width: 21px;
         height: 53px;
     }
+
+    .icon-house {
+        width: 43px;
+        height: 44px;
+    }
 }
 
 // --- svg --------------------------------------------------------------------
@@ -265,4 +270,8 @@
 
 .icon-frontal use {
     transform: scale(0.9) translate(-21px);
+}
+
+.icon-house use {
+    transform: scale(2.7);
 }
