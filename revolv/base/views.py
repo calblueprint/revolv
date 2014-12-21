@@ -9,6 +9,7 @@ from django.views.generic import FormView, TemplateView, View
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
 from revolv.project.models import Project
+from revolv.payments.models import PaymentTransaction
 
 
 class HomePageView(UserDataMixin, TemplateView):
@@ -22,6 +23,7 @@ class HomePageView(UserDataMixin, TemplateView):
         context["featured_projects"] = Project.objects.get_featured(
             HomePageView.NUM_PROJECTS_SHOWN)
         context["completed_projects_count"] = Project.objects.get_completed().count()
+        context["total_donors_count"] = PaymentTransaction.objects.total_distinct_donors()
         return context
 
 
