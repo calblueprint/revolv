@@ -8,8 +8,8 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
-from revolv.project.models import Project
 from revolv.payments.models import PaymentTransaction
+from revolv.project.models import Project
 
 
 class HomePageView(UserDataMixin, TemplateView):
