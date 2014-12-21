@@ -22,6 +22,7 @@ class HomePageView(UserDataMixin, TemplateView):
         context = super(HomePageView, self).get_context_data(**kwargs)
         context["featured_projects"] = Project.objects.get_featured(
             HomePageView.NUM_PROJECTS_SHOWN)
+        context["completed_projects_count"] = Project.objects.get_completed().count()
         return context
 
 

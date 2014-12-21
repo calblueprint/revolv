@@ -56,7 +56,7 @@
     display: block;
     width: 100%;
     height: $revolv-cover-photo-height;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 
     position: relative;
 
@@ -233,6 +233,7 @@
     border: 1px solid $revolv-blue;
     background-color: $revolv-very-light-blue-bg;
     padding: 10px 0;
+    margin-bottom: 20px;
 
     .revolv-icon {
         fill: $revolv-icon-blue;
@@ -279,6 +280,25 @@
     .stat-description {
         font-size: $revolv-stat-description-font-size;
         line-height: $revolv-stat-description-font-size;
+    }
+}
+
+@media #{$medium-only} {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    html .icons-container {
+        display: none;
+    }
+    .cover-image {
+        margin-bottom: 20px;
+    }
+}
+@media #{$small-only} {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    html .icons-container {
+        display: none;
+    }
+    .cover-image {
+        margin-bottom: 20px;
     }
 }
 
