@@ -257,6 +257,29 @@
         width: 56px;
         height: 37px;
     }
+
+    .revolv-icon, .stats-container {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .stat-number, .stat-description {
+        display: block;
+        color: $revolv-blue;
+        margin-left: 20px;
+        font-weight: 100;
+        font-family: "Helvetica Neue", Helvetica, sans-serif;
+    }
+
+    .stat-number {
+        font-size: $revolv-stat-number-font-size;
+        line-height: $revolv-stat-number-font-size;
+    }
+
+    .stat-description {
+        font-size: $revolv-stat-description-font-size;
+        line-height: $revolv-stat-description-font-size;
+    }
 }
 
 // --- svg --------------------------------------------------------------------

@@ -5743,6 +5743,21 @@ th.hide-for-touch {
   .icons-container .icon-co2 {
     width: 56px;
     height: 37px; }
+  .icons-container .revolv-icon, .icons-container .stats-container {
+    display: inline-block;
+    vertical-align: middle; }
+  .icons-container .stat-number, .icons-container .stat-description {
+    display: block;
+    color: #11ade5;
+    margin-left: 20px;
+    font-weight: 100;
+    font-family: "Helvetica Neue", Helvetica, sans-serif; }
+  .icons-container .stat-number {
+    font-size: 36px;
+    line-height: 36px; }
+  .icons-container .stat-description {
+    font-size: 18px;
+    line-height: 18px; }
 
 .project-badge-line, .project-badge-circle {
   fill: none;
