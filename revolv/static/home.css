@@ -5740,6 +5740,9 @@ th.hide-for-touch {
   .icons-container .icon-house {
     width: 43px;
     height: 44px; }
+  .icons-container .icon-co2 {
+    width: 56px;
+    height: 37px; }
 
 .project-badge-line, .project-badge-circle {
   fill: none;
@@ -5759,3 +5762,6 @@ th.hide-for-touch {
 
 .icon-house use {
   transform: scale(2.7); }
+
+.icon-co2 use {
+  transform: scale(0.55) translate(-12px, -30px); }
