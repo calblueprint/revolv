@@ -23,6 +23,18 @@ class PaymentInstrumentType(models.Model):
     objects = PaymentInstrumentTypeManager()
 
 
+class PaymentTransactionManager(models.Manager):
+    def total_distinct_donors(self, queryset=None):
+        """
+        :return: The total number of donors that have ever donated to a RE-volv
+            project. Useful for displaying stats on the homepage.
+        """
+        if queryset is None:
+            queryset = super(PaymentTransactionManager, self).get_queryset()
+        num_users = queryset.values("user").distinct().count()
+        return num_users
+
+
 class PaymentTransaction(models.Model):
     """
         Abstraction indicating one particular payment.
@@ -31,6 +43,8 @@ class PaymentTransaction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
     amount = models.FloatField()
+
+    objects = PaymentTransactionManager()
 
 
 class DonationManager(models.Manager):
