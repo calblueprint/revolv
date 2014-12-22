@@ -5588,6 +5588,9 @@ th.hide-for-touch {
 /**
  * Font size of the title "About RE-volv"
  */
+.cover-image-row {
+  margin-bottom: 0; }
+
 .cover-image {
   background: url(/static/images/solar-worker-stockphoto.jpg);
   background-repeat: no-repeat;
@@ -5596,7 +5599,7 @@ th.hide-for-touch {
   display: block;
   width: 100%;
   height: 400px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   position: relative; }
   .cover-image .shade {
     position: absolute;
@@ -5727,6 +5730,53 @@ th.hide-for-touch {
     border-left: 1px solid #f9f9fa;
     border-right: 1px solid #f9f9fa; }
 
+.icons-container {
+  border: 1px solid #11ade5;
+  background-color: #f5fbfe;
+  padding: 10px 0;
+  margin-bottom: 20px; }
+  .icons-container .revolv-icon {
+    fill: #9adbf4; }
+  .icons-container .icon-adult {
+    width: 43px;
+    height: 50px; }
+  .icons-container .icon-frontal {
+    width: 21px;
+    height: 53px; }
+  .icons-container .icon-house {
+    width: 43px;
+    height: 44px; }
+  .icons-container .icon-co2 {
+    width: 56px;
+    height: 37px; }
+  .icons-container .revolv-icon, .icons-container .stats-container {
+    display: inline-block;
+    vertical-align: middle; }
+  .icons-container .stat-number, .icons-container .stat-description {
+    display: block;
+    color: #11ade5;
+    margin-left: 20px;
+    font-weight: 100;
+    font-family: "Helvetica Neue", Helvetica, sans-serif; }
+  .icons-container .stat-number {
+    font-size: 36px;
+    line-height: 36px; }
+  .icons-container .stat-description {
+    font-size: 18px;
+    line-height: 18px; }
+
+@media only screen and (min-width:40.063em) and (max-width:64em) {
+  html .icons-container {
+    display: none; }
+  .cover-image {
+    margin-bottom: 20px; } }
+
+@media only screen and (max-width: 40em) {
+  html .icons-container {
+    display: none; }
+  .cover-image {
+    margin-bottom: 20px; } }
+
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   .project-badge-container {
     text-align: center;
@@ -5741,3 +5791,15 @@ th.hide-for-touch {
 
 .project-badge-circle {
   stroke: #fff4cc; }
+
+.icon-adult use {
+  transform: scale(0.4); }
+
+.icon-frontal use {
+  transform: scale(0.9) translate(-21px); }
+
+.icon-house use {
+  transform: scale(2.7); }
+
+.icon-co2 use {
+  transform: scale(0.55) translate(-12px, -30px); }

@@ -8,6 +8,11 @@
     font-size: $font-size;
 }
 
+@mixin vertically-centered() {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 @mixin vertically-centered-parent() {
     &:before {
         content: '';
@@ -38,6 +43,10 @@
     color: rgba(0, 0, 0, 0.8);
 }
 
+.cover-image-row {
+    margin-bottom: 0;
+}
+
 .cover-image {
     background: url(/static/images/solar-worker-stockphoto.jpg);
     background-repeat: no-repeat;
@@ -47,7 +56,7 @@
     display: block;
     width: 100%;
     height: $revolv-cover-photo-height;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 
     position: relative;
 
@@ -229,6 +238,79 @@
     }
 }
 
+.icons-container {
+    border: 1px solid $revolv-blue;
+    background-color: $revolv-very-light-blue-bg;
+    padding: 10px 0;
+    margin-bottom: 20px;
+
+    .revolv-icon {
+        fill: $revolv-icon-blue;
+    }
+
+    .icon-adult {
+        width: 43px;
+        height: 50px;
+    }
+
+    .icon-frontal {
+        width: 21px;
+        height: 53px;
+    }
+
+    .icon-house {
+        width: 43px;
+        height: 44px;
+    }
+
+    .icon-co2 {
+        width: 56px;
+        height: 37px;
+    }
+
+    .revolv-icon, .stats-container {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .stat-number, .stat-description {
+        display: block;
+        color: $revolv-blue;
+        margin-left: 20px;
+        font-weight: 100;
+        font-family: "Helvetica Neue", Helvetica, sans-serif;
+    }
+
+    .stat-number {
+        font-size: $revolv-stat-number-font-size;
+        line-height: $revolv-stat-number-font-size;
+    }
+
+    .stat-description {
+        font-size: $revolv-stat-description-font-size;
+        line-height: $revolv-stat-description-font-size;
+    }
+}
+
+@media #{$medium-only} {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    html .icons-container {
+        display: none;
+    }
+    .cover-image {
+        margin-bottom: 20px;
+    }
+}
+@media #{$small-only} {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    html .icons-container {
+        display: none;
+    }
+    .cover-image {
+        margin-bottom: 20px;
+    }
+}
+
 @media #{$small-only}, #{$medium-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
     .project-badge-container {
@@ -250,4 +332,20 @@
 
 .project-badge-circle {
   stroke: $revolv-project-badge-unfulfilled-color;
+}
+
+.icon-adult use {
+    transform: scale(0.4);
+}
+
+.icon-frontal use {
+    transform: scale(0.9) translate(-21px);
+}
+
+.icon-house use {
+    transform: scale(2.7);
+}
+
+.icon-co2 use {
+    transform: scale(0.55) translate(-12px, -30px);
 }
