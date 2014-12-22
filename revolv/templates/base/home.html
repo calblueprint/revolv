@@ -74,17 +74,19 @@
 </div>
 <div class="row project-badges-container">
     {% for project in featured_projects %}
-        <div class="project-badge-container small-4 columns {% if forloop.last %}end{% endif %}">
-            <div class="project-badge project-id-{{ project.pk }}">
-                <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
-                <!-- the svg for the partial circles will go here -->
-                <div class="project-badge-detail-container">
-                    <p class="project-title">{{ project.title }}</p>
-                    <p class="project-organization">{{ project.org_name }}</p>
-                    <p class="project-amount-left">${{ project.rounded_amount_left|intcomma }} left</p>
-                    <p class="project-days-left">{{ project.formatted_days_left }}</p>
+        <div class="project-badge-container small-12 medium-6 large-4 columns {% if forloop.last %}end{% endif %}">
+            <a href="{% url "project:view" project.pk %}">
+                <div class="project-badge project-id-{{ project.pk }}">
+                    <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
+                    <!-- the svg for the partial circles will go here -->
+                    <div class="project-badge-detail-container">
+                        <p class="project-title">{{ project.title }}</p>
+                        <p class="project-organization">{{ project.org_name }}</p>
+                        <p class="project-amount-left">${{ project.rounded_amount_left|intcomma }} left</p>
+                        <p class="project-days-left">{{ project.formatted_days_left }}</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     {% endfor %}
 </div>
