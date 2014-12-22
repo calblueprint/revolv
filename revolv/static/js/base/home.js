@@ -37,7 +37,6 @@ $(document).ready(function () {
     var dimension = (2 * radius) + (2 * padding);
 
     window.HOMEPAGE_PROJECT_DATA.forEach(function (data) {
-        console.log(".project-badge .project-id-" + data.id);
         var svg = d3.select(".project-badge.project-id-" + data.id).append("svg")
             .attr("width", dimension)
             .attr("height", dimension)
@@ -48,7 +47,7 @@ $(document).ready(function () {
 
         drawD3PartialTriangle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
         var partialCompleteness = data.partialCompleteness;
-        if (partialCompleteness <= 0.01) partialCompleteness = 0.02;
+        if (partialCompleteness <= 0.01 && partialCompleteness != 0.0) partialCompleteness = 0.02;
         drawD3PartialTriangle(partialGrouping, ["project-badge-line"], radius, padding, partialCompleteness);
     });
 
