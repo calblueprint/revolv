@@ -60,6 +60,7 @@ class SignInView(TemplateView):
         signup_form = self.signup_form_class()
         context["signup_form"] = signup_form
         context["login_form"] = login_form
+        context["login_redirect_url"] = self.request.GET.get("next")
         return context
 
 
