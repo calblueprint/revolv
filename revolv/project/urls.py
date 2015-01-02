@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
-
 from revolv.base.users import is_ambassador
 from revolv.project.views import (CreateProjectDonationView, CreateProjectView,
                                   PostFundingUpdateView, ProjectView,

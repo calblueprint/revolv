@@ -1,5 +1,6 @@
 from revolv.payments.models import (Donation, PaymentInstrumentType,
                                     PaymentTransaction)
+from revolv.settings import CHARGE_INSTRUMENT
 
 
 # Exceptions
@@ -22,14 +23,12 @@ class PaymentService(object):
         :payment_instrument: a PaymentInstrument object (see PayPalCreditCardInstrument)
         :return: revolv.payments.models.PaymentTransaction
         """
-        charge_instrument = False
-
         if not cls.check_valid_payment_instrument(payment_instrument.type):
             raise PaymentServiceException('Not a valid payment instrument.')
         if not cls.check_valid_amount(amount):
             raise PaymentServiceException('Not a valid dollar amount.')
 
-        if charge_instrument:
+        if CHARGE_INSTRUMENT:
             payment_instrument.charge(amount)
         payment_transaction = PaymentTransaction(
             user=user,
