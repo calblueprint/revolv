@@ -1,9 +1,0 @@
-[
-{
-  "fields": {
-    "name": "paypal"
-  },
-  "model": "payments.paymentinstrumenttype",
-  "pk": 1
-}
-]
