@@ -133,6 +133,11 @@ class CreateProjectDonationView(UserDataMixin, FormView):
     template_name = 'project/donate.html'
     form_class = CreditCardDonationForm
 
+    def get_context_data(self, **kwargs):
+        context = super(CreateProjectDonationView, self).get_context_data(**kwargs)
+        context['project'] = Project.objects.get(pk=self.kwargs.get('pk'))
+        return context
+
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
         form.process_payment(project, self.user)
