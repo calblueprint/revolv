@@ -4,6 +4,7 @@ from revolv.project.models import Project
 
 INSTRUMENT_PAYPAL = 'paypal'
 INSTRUMENT_CHECK = 'check'
+INSTRUMENT_REINVEST = 'reinvest'
 
 
 class PaymentInstrumentTypeManager(models.Manager):
