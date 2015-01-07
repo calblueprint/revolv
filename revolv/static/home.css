@@ -5658,7 +5658,28 @@ th.hide-for-touch {
     font-size: 18px;
     line-height: 24px; } }
 
+.project-badges-divider {
+  display: block;
+  height: 0.5em;
+  line-height: 1em;
+  border: none;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 0.5em;
+  text-align: center;
+  color: #11ade5;
+  height: 0.6em;
+  font-weight: 100; }
+  .project-badges-divider:first-line {
+    background-color: white; }
+  .project-badges-divider:before {
+    display: inline;
+    content: "\a0\a0\a0"; }
+  .project-badges-divider:after {
+    display: inline;
+    content: "\a0\a0\a0"; }
+
 .project-badges-container {
+  margin-top: 20px;
   margin-bottom: 20px; }
   .project-badges-container a, .project-badges-container a:hover, .project-badges-container a:visited, .project-badges-container a:active {
     color: inherit;

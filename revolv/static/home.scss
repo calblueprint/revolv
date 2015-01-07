@@ -43,6 +43,27 @@
     color: rgba(0, 0, 0, 0.8);
 }
 
+@mixin text-with-divider($font-size, $divider-color: #bbb, $divider-width: 1px, $bg-color: white) {
+    display: block;
+    height: 0.5em;
+    line-height: 1em;
+    border: none;
+    border-bottom: $divider-width solid $divider-color;
+    margin-bottom: 0.5em;
+    text-align: center;
+    &:first-line {
+        background-color: $bg-color;
+    }
+    &:before {
+        display: inline;
+        content: "\a0\a0\a0";
+    }
+    &:after {
+        display: inline;
+        content: "\a0\a0\a0";
+    }
+}
+
 .cover-image-row {
     margin-bottom: 0;
 }
@@ -135,7 +156,16 @@
     }
 }
 
+$divider-font-size: 14px;
+.project-badges-divider {
+    @include text-with-divider($divider-font-size, #ddd);
+    color: $revolv-blue;
+    height: 0.6em; // adjustment
+    font-weight: 100;
+}
+
 .project-badges-container {
+    margin-top: 20px;
     margin-bottom: 20px;
 
     a, a:hover, a:visited, a:active {
