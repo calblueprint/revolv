@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
@@ -58,7 +60,7 @@ class UpdateProjectView(UpdateView):
         return context
 
 
-class ReviewProjectView(UpdateView):
+class ReviewProjectView(UserDataMixin, UpdateView):
     """
     The view to review a project. Shows the same view as ProjectView, but at
     the top, has a button group through which an ambassador or admin can
@@ -71,8 +73,10 @@ class ReviewProjectView(UpdateView):
     form_class = forms.ProjectStatusForm
 
     def get_success_url(self):
-        return reverse('administrator:dashboard')
-        # return reverse('project:view', kwargs={'pk': self.get_object().id})
+        if self.is_administrator:
+            return "%s?active_project=%d" % (reverse('administrator:dashboard'), self.get_object().id)
+        else:
+            return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     # Checks the post request and updates the project_status
     def form_valid(self, form):
@@ -90,7 +94,7 @@ class ReviewProjectView(UpdateView):
             messages.success(self.request, project.title + ' has been completed')
             project.complete_project()
         elif '_repayment' in self.request.POST:
-            repayment_amount = int(self.request.POST['_repayment_amount'])
+            repayment_amount = Decimal(self.request.POST['_repayment_amount'])
             project.amount_repaid = project.amount_repaid + repayment_amount
             project.save()
             messages.success(self.request, '$' + str(repayment_amount) + ' repaid by ' + project.org_name)

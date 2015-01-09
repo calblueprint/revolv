@@ -33,7 +33,7 @@
             {% elif project in completed_projects and project == completed_projects.first %}
             <h4 class='subheader text-center'>Completed Projects</h4>
             {% endif %}
-            {% if project == all_projects.0 %}
+            {% if project.id == active_project %}
             <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
             {% else %}
             <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
@@ -44,7 +44,7 @@
     <div class='small-9 columns dash-box right'>
         <div class="tabs-content">
             {% for project in all_projects %}
-                {% if project == all_projects.0 %}
+                {% if project.id == active_project %}
                 <div class="content active" id="proj{{project.id}}">
                 {% else %}
                 <div class="content" id="proj{{project.id}}">
@@ -116,7 +116,7 @@
                                 <span class="prefix">$</span>
                             </div>
                             <div class="small-11 columns">
-                                <input type="text" placeholder="Value" type="number" name="_repayment_amount" required>
+                                <input type="text" placeholder="Value" type="number" name="_repayment_amount" pattern="[0-9]+([\.][0-9]+)?" step="0.01" required>
                             </div>
                         </div>
                         <input id="repayment_project" class="small button radius" name="_repayment" type="submit" value="Submit"></input>
