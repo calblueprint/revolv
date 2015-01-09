@@ -22,24 +22,32 @@
 </div>
 <div class='row'>
     <div class='small-3 columns dash-box'>
-        <h4 class='subheader text-center'>Proposed Projects</h4>
         <dl class="tabs vertical-dash" data-tab>
-            {% for project in proposed_projects %}
-                {% if project == proposed_projects.first %}
-                    <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
-                {% else %}
-                    <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
-                {% endif %}
+            {% for project in all_projects %}
+            {% if project in drafted_projects and project == drafted_projects.first %}
+            <h4 class='subheader text-center'>Drafted Projects</h4>
+            {% elif project in proposed_projects and project == proposed_projects.first %}
+            <h4 class='subheader text-center'>Proposed Projects</h4>
+            {% elif project in active_projects and project == active_projects.first %}
+            <h4 class='subheader text-center'>Active Projects</h4>
+            {% elif project in completed_projects and project == completed_projects.first %}
+            <h4 class='subheader text-center'>Completed Projects</h4>
+            {% endif %}
+            {% if project == all_projects.first %}
+            <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+            {% else %}
+            <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+            {% endif %}
             {% endfor %}
         </dl>
     </div>
     <div class='small-9 columns dash-box right'>
         <div class="tabs-content">
-            {% for project in proposed_projects %}
-                {% if project == proposed_projects.first %}
-                    <div class="content active" id="proj{{project.id}}">
+            {% for project in all_projects %}
+                {% if project == all_projects.0 %}
+                <div class="content active" id="proj{{project.id}}">
                 {% else %}
-                    <div class="content" id="proj{{project.id}}">
+                <div class="content" id="proj{{project.id}}">
                 {% endif %}
                     <div class="small-9 columns">
                         <div class="row">
@@ -65,8 +73,8 @@
                     </div>
                     <br/>
                 </div>
-            {% empty %}
-                <p> You have not donated to any projects. </p>
+                {% empty %}
+                <p> You have not created any projects. </p>
             {% endfor %}
         </div>
     </div>
