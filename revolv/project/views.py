@@ -71,7 +71,8 @@ class ReviewProjectView(UpdateView):
     form_class = forms.ProjectStatusForm
 
     def get_success_url(self):
-        return reverse('project:view', kwargs={'pk': self.get_object().id})
+        return reverse('administrator:dashboard')
+        # return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     # Checks the post request and updates the project_status
     def form_valid(self, form):
@@ -88,6 +89,11 @@ class ReviewProjectView(UpdateView):
         elif '_complete' in self.request.POST:
             messages.success(self.request, project.title + ' has been completed')
             project.complete_project()
+        elif '_repayment' in self.request.POST:
+            repayment_amount = int(self.request.POST['_repayment_amount'])
+            project.amount_repaid = project.amount_repaid + repayment_amount
+            project.save()
+            messages.success(self.request, '$' + str(repayment_amount) + ' repaid by ' + project.org_name)
         return redirect(self.get_success_url())
 
 
