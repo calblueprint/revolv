@@ -16,6 +16,9 @@
             {% for login_field in login_form %}
                 {% include "base/partials/tooltip_formfield.html" with field=login_field %}
             {% endfor %}
+            {% if login_redirect_url %}
+                <input type="hidden" name="next" value="{{ login_redirect_url }}">
+            {% endif %}
             <button class="medium" type="submit" value="Log in">Log in</button>
         </form>
     </div>
