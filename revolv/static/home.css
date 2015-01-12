@@ -5634,7 +5634,7 @@ th.hide-for-touch {
     font-size: 18px;
     line-height: 24px; } }
 
-.homepage-divider {
+.homepage-divider, .mobile-learn-link {
   display: block;
   height: 0.5em;
   line-height: 1em;
@@ -5645,14 +5645,30 @@ th.hide-for-touch {
   color: #11ade5;
   height: 0.6em;
   font-weight: 100; }
-  .homepage-divider:first-line {
+  .homepage-divider:first-line, .mobile-learn-link:first-line {
     background-color: white; }
-  .homepage-divider:before {
+  .homepage-divider:before, .mobile-learn-link:before {
     display: inline;
     content: "\a0\a0\a0"; }
-  .homepage-divider:after {
+  .homepage-divider:after, .mobile-learn-link:after {
     display: inline;
     content: "\a0\a0\a0"; }
+
+.mobile-learn-link {
+  display: none;
+  text-decoration: underline;
+  border: none;
+  margin-bottom: 40px; }
+  .mobile-learn-link:before, .mobile-learn-link:after {
+    content: ""; }
+
+@media only screen and (max-width: 40em) and (orientation: portrait) {
+  html .mobile-learn-link {
+    display: block; }
+  html .nonmobile-learn {
+    display: none; }
+  .infographic {
+    display: none; } }
 
 .project-badges-container {
   margin-top: 20px;

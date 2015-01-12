@@ -157,11 +157,37 @@
 }
 
 $divider-font-size: 14px;
-.homepage-divider {
+.homepage-divider, .mobile-learn-link {
     @include text-with-divider($divider-font-size, #ddd);
     color: $revolv-blue;
     height: 0.6em; // adjustment for helvetica neue
     font-weight: 100;
+}
+
+.mobile-learn-link {
+    display: none;
+    text-decoration: underline;
+
+    border: none;
+    &:before, &:after {
+        content: "";
+    }
+
+    margin-bottom: $revolv-homepage-sections-margin;
+}
+
+@media #{$small-only} and (orientation: portrait) {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    html .mobile-learn-link {
+        display: block;
+    }
+    html .nonmobile-learn {
+        display: none;
+    }
+
+    .infographic {
+        display: none;
+    }
 }
 
 .project-badges-container {
