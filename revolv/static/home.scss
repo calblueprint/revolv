@@ -189,6 +189,20 @@ $divider-font-size: 14px;
         left: 0;
     }
 
+    svg {
+        z-index: 3;
+    }
+    .project-badge-detail-container {
+        z-index: 2;
+    }
+    .project-badge-photo {
+        z-index: 1;
+    }
+
+    svg:hover + .project-badge-detail-container .project-title {
+        text-decoration: underline;
+    }
+
     .project-badge-photo {
         width: 100%;
         height: 100%;
