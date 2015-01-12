@@ -29,24 +29,29 @@ $revolv-footer-text-color: #a8aaaa;
 $revolv-shade-z-index: 1;
 
 $revolv-cover-photo-height: 400px;
-/**
- * Height of the main cover photo on the homepage in mobile phone landscape AND
- * portrait orientations.
- */
+// /**
+//  * Height of the main cover photo on the homepage in mobile phone landscape AND
+//  * portrait orientations.
+//  */
 $revolv-mobile-cover-photo-height: 200px;
 
-/**
- * The values by which the inset of the cover photo (the part that has a description
- * of re-volv and "about re-volv") should be offset from the upper right corner
- * of the cover photo.
- */
+// /**
+//  * The amount of margin betweent he different sections of the homepage (project badges
+//  * and infographic)
+// */
+$revolv-homepage-sections-margin: 40px;
+// /**
+//  * The values by which the inset of the cover photo (the part that has a description
+//  * of re-volv and "about re-volv") should be offset from the upper right corner
+//  * of the cover photo.
+//  */
 $revolv-cover-inset-top-offset: 50px;
 $revolv-cover-inset-right-offset: 50px;
 $revolv-cover-inset-min-width: 350px;
 $revolv-cover-inset-max-width: 350px;
-/**
- * Font size of the title "About RE-volv"
- */
+// /**
+//  * Font size of the title "About RE-volv"
+//  */
 $revolv-cover-inset-title-size: 32px;
 $revolv-cover-inset-paragraph-size: 20px;
 $revolv-cover-inset-opacity: 0.7;

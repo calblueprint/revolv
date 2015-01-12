@@ -157,16 +157,16 @@
 }
 
 $divider-font-size: 14px;
-.project-badges-divider {
+.homepage-divider {
     @include text-with-divider($divider-font-size, #ddd);
     color: $revolv-blue;
-    height: 0.6em; // adjustment
+    height: 0.6em; // adjustment for helvetica neue
     font-weight: 100;
 }
 
 .project-badges-container {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: $revolv-homepage-sections-margin;
 
     a, a:hover, a:visited, a:active {
         color: inherit;
@@ -272,7 +272,7 @@ $divider-font-size: 14px;
     border: 1px solid $revolv-blue;
     background-color: $revolv-very-light-blue-bg;
     padding: 10px 0;
-    margin-bottom: 20px;
+    margin-bottom: $revolv-homepage-sections-margin;
 
     .revolv-icon {
         fill: $revolv-icon-blue;
