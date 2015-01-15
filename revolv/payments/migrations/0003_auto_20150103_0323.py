@@ -7,7 +7,7 @@ from django.db import migrations, models
 def populate_data(apps, schema_editor):
     PaymentInstrumentType = apps.get_model("payments", "PaymentInstrumentType")
 
-    PaymentInstrumentType.objects.create(name="reinvest")
+    PaymentInstrumentType.objects.create(name="reinvestment")
     PaymentInstrumentType.objects.create(name="check")
 
 

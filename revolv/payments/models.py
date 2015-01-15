@@ -4,7 +4,8 @@ from revolv.project.models import Project
 
 INSTRUMENT_PAYPAL = 'paypal'
 INSTRUMENT_CHECK = 'check'
-INSTRUMENT_REINVEST = 'reinvest'
+INSTRUMENT_REINVESTMENT = 'reinvestment'
+INSTRUMENT_REPAYMENT = 'repayment'
 
 
 class PaymentInstrumentTypeManager(models.Manager):
@@ -84,3 +85,62 @@ class Donation(models.Model):
         :return: The user tied to this donation
         """
         return self.payment_transaction.user
+
+
+class PaymentManager(models.Model):
+    """
+        Simple manager for the Payment model.
+    """
+
+    def payments(self, user, queryset=None):
+        """
+        :return: Payments associated with this user
+        """
+        if queryset is None:
+            queryset = super(PaymentManager, self).get_queryset()
+        payments = queryset.filter(user=user).order_by('created_at')
+        return payments
+
+    def donations(self, user, queryset=None):
+        """
+        :return: Returns all payments that are not repayments or reinvestments
+                 associated with this user.
+        """
+        if queryset is None:
+            queryset = super(PaymentManager, self).get_queryset()
+        donations = queryset.exclude(payment_instrument_type=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type=INSTRUMENT_REPAYMENT).filter(user=user)
+        return donations
+
+    def reinvestments(self, user, queryset=None):
+        """
+        :return: Returns all reinvestment payments that are associated with
+                 this user.
+        """
+        if queryset is None:
+            queryset = super(PaymentManager, self).get_queryset()
+        reinvestments = queryset.filter(user=user, payment_instrument_type=INSTRUMENT_REINVESTMENT)
+        return reinvestments
+
+    def repayments(self, project, queryset=None):
+        """
+        :return: Returns all the repayments that are associated with this
+                 project.
+        """
+        if queryset is None:
+            queryset = super(PaymentManager, self).get_queryset()
+        repayments = queryset.filter(project=project, payment_instrument_type=INSTRUMENT_REPAYMENT)
+        return repayments
+
+
+class Payment(models.Model):
+    """
+        Abstraction indicating on particular payment.
+    """
+    user = models.ForeignKey(User)
+    entrant = models.ForeignKey(User, related_name='entrant')
+    amount = models.FloatField()
+    project = models.ForeignKey(Project)
+    payment_instrument_type = models.ForeignKey(PaymentInstrumentType)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    objects = PaymentManager()
