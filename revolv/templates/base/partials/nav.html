@@ -26,7 +26,13 @@
                <li class="user-controls has-dropdown">
                    <a href="#">{{user.username}}</a>
                    <ul class="dropdown">
+                       {% if is_administrator %}
+                       <li><a href="{% url "administrator:dashboard" %}">Dashboard</a></li>
+                       {% elif is_ambassador %}
+                       <li><a href="{% url "ambassador:dashboard" %}">Dashboard</a></li>
+                       {% else %}
                        <li><a href="{% url "donor:dashboard" %}">Dashboard</a></li>
+                       {% endif %}
                        <li><a href="{% url "logout" %}">Sign Out</a></li>
                    </ul>
                </li>
