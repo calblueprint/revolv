@@ -13,7 +13,19 @@ class PaymentInstrumentTypeManager(models.Manager):
         """Return the PaymentInstrumentTypeManager for paypal payments."""
         if queryset is None:
             queryset = super(PaymentInstrumentTypeManager, self).get_queryset()
-        return queryset.get(name="paypal")
+        return queryset.get(name=INSTRUMENT_PAYPAL)
+
+    def get_reinvestment(self, queryset=None):
+        """Return the PaymentInstrumentTypeManager for paypal payments."""
+        if queryset is None:
+            queryset = super(PaymentInstrumentTypeManager, self).get_queryset()
+        return queryset.get(name=INSTRUMENT_REINVESTMENT)
+
+    def get_repayment(self, queryset=None):
+        """Return the PaymentInstrumentTypeManager for repayments."""
+        if queryset is None:
+            queryset = super(PaymentInstrumentTypeManager, self).get_queryset()
+        return queryset.get(name=INSTRUMENT_REPAYMENT)
 
 
 class PaymentInstrumentType(models.Model):
@@ -87,7 +99,7 @@ class Donation(models.Model):
         return self.payment_transaction.user
 
 
-class PaymentManager(models.Model):
+class PaymentManager(models.Manager):
     """
         Simple manager for the Payment model.
     """
@@ -108,7 +120,7 @@ class PaymentManager(models.Model):
         """
         if queryset is None:
             queryset = super(PaymentManager, self).get_queryset()
-        donations = queryset.exclude(payment_instrument_type=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type=INSTRUMENT_REPAYMENT).filter(user=user)
+        donations = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT).filter(user=user)
         return donations
 
     def reinvestments(self, user, queryset=None):
@@ -118,7 +130,7 @@ class PaymentManager(models.Model):
         """
         if queryset is None:
             queryset = super(PaymentManager, self).get_queryset()
-        reinvestments = queryset.filter(user=user, payment_instrument_type=INSTRUMENT_REINVESTMENT)
+        reinvestments = queryset.filter(user=user, payment_instrument_type__name=INSTRUMENT_REINVESTMENT)
         return reinvestments
 
     def repayments(self, project, queryset=None):
@@ -128,8 +140,28 @@ class PaymentManager(models.Model):
         """
         if queryset is None:
             queryset = super(PaymentManager, self).get_queryset()
-        repayments = queryset.filter(project=project, payment_instrument_type=INSTRUMENT_REPAYMENT)
+        repayments = queryset.filter(project=project, payment_instrument_type__name=INSTRUMENT_REPAYMENT)
         return repayments
+
+    def all_donations(self, queryset=None):
+        """
+        :return: Returns all the donations made on the application. Useful helper for distinct
+                 donors.
+        """
+        if queryset is None:
+            queryset = super(PaymentManager, self).get_queryset()
+        donations = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT)
+        return donations
+
+    def total_distinct_donors(self, queryset=None):
+        """
+        :return: The total number of donors that have ever donated to a RE-volv
+            project. Useful for displaying stats on the homepage.
+        """
+        if queryset is None:
+            queryset = self.all_donations()
+        num_users = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT).values("user").distinct().count()
+        return num_users
 
 
 class Payment(models.Model):

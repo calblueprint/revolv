@@ -9,8 +9,6 @@ from revolv.project.models import Project
 
 class DonationServiceTest(TestCase):
 
-    fixtures = ['supported_instruments.json']
-
     def setUp(self):
         self.user = User(username='billnye')
         yesterday = datetime.date.today() - datetime.timedelta(days=1)

@@ -9,6 +9,7 @@ def populate_data(apps, schema_editor):
 
     PaymentInstrumentType.objects.create(name="reinvestment")
     PaymentInstrumentType.objects.create(name="check")
+    PaymentInstrumentType.objects.create(name="repayment")
 
 
 class Migration(migrations.Migration):
@@ -18,4 +19,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(populate_data),
     ]
