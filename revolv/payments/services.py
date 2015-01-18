@@ -1,7 +1,6 @@
 from revolv.base.models import RevolvUserProfile
-from revolv.payments.models import (INSTRUMENT_PAYPAL,
-                                    INSTRUMENT_REPAYMENT, Payment,
-                                    PaymentInstrumentType)
+from revolv.payments.models import (INSTRUMENT_PAYPAL, INSTRUMENT_REPAYMENT,
+                                    Payment, PaymentInstrumentType)
 from revolv.settings import CHARGE_INSTRUMENT
 
 
