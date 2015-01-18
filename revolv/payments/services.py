@@ -1,5 +1,7 @@
-from revolv.payments.models import (Donation, PaymentInstrumentType,
-                                    PaymentTransaction)
+from revolv.base.models import RevolvUserProfile
+from revolv.payments.models import (INSTRUMENT_PAYPAL,
+                                    INSTRUMENT_REPAYMENT, Payment,
+                                    PaymentInstrumentType)
 from revolv.settings import CHARGE_INSTRUMENT
 
 
@@ -14,12 +16,14 @@ class PaymentServiceException(Exception):
 class PaymentService(object):
 
     @classmethod
-    def create_payment(cls, user, amount, payment_instrument):
+    def create_payment(cls, user, entrant, amount, project, payment_instrument):
         """
         Create a payment based on a configured payment_instrument.
 
         :user: a User making the payment
+        :entrant: a User entering the payment
         :amount: float amount in USD
+        :project: Project associated with payment
         :payment_instrument: a PaymentInstrument object (see PayPalCreditCardInstrument)
         :return: revolv.payments.models.PaymentTransaction
         """
@@ -27,16 +31,20 @@ class PaymentService(object):
             raise PaymentServiceException('Not a valid payment instrument.')
         if not cls.check_valid_amount(amount):
             raise PaymentServiceException('Not a valid dollar amount.')
+        if not cls.check_valid_user_entrant(user, entrant, payment_instrument.type):
+            raise PaymentServiceException('Improper Payment structure. Invalid entrant or user.')
 
         if CHARGE_INSTRUMENT:
             payment_instrument.charge(amount)
-        payment_transaction = PaymentTransaction(
+        payment = Payment(
             user=user,
+            entrant=entrant,
             amount=float(amount),
-            payment_instrument_type=payment_instrument.type,
+            project=project,
+            payment_instrument_type=payment_instrument.type
         )
-        payment_transaction.save()
-        return payment_transaction
+        payment.save()
+        return payment
 
     @classmethod
     def check_valid_payment_instrument(cls, payment_instrument_type):
@@ -56,18 +64,12 @@ class PaymentService(object):
         except ValueError:
             return False
 
-
-class DonationService(object):
-
     @classmethod
-    def link_donation(cls, project, payment_transaction):
-        """
-        Create a donation that ties a PaymentTransaction with a Project.
-
-        :param project: revolv.project.models.Project
-        :param payment_transaction: revolv.payments.models.PaymentTransaction
-        :return: revolv.payments.models.Donation
-        """
-        donation = Donation(project=project, payment_transaction=payment_transaction)
-        donation.save()
-        return donation
+    def check_valid_user_entrant(cls, user, entrant, payment_instrument_type):
+        if not isinstance(entrant, RevolvUserProfile):
+            return False
+        if payment_instrument_type.name == INSTRUMENT_PAYPAL and user != entrant:
+            return False
+        if payment_instrument_type.name == INSTRUMENT_REPAYMENT and isinstance(user, RevolvUserProfile):
+            return False
+        return True
