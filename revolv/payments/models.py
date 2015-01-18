@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from revolv.base.models import RevolvUserProfile
 from revolv.project.models import Project
 
 INSTRUMENT_PAYPAL = 'paypal'
@@ -168,8 +169,8 @@ class Payment(models.Model):
     """
         Abstraction indicating on particular payment.
     """
-    user = models.ForeignKey(User)
-    entrant = models.ForeignKey(User, related_name='entrant')
+    user = models.ForeignKey(RevolvUserProfile, null=True)
+    entrant = models.ForeignKey(RevolvUserProfile, related_name='entrant')
     amount = models.FloatField()
     project = models.ForeignKey(Project)
     payment_instrument_type = models.ForeignKey(PaymentInstrumentType)

@@ -1,8 +1,8 @@
-from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.db.models.signals import post_save
 from django.test import TestCase
 from django_facebook.utils import get_user_model
+from revolv.base.models import RevolvUserProfile
 from revolv.base.signals import create_profile_of_user
 from revolv.payments.models import Payment, PaymentInstrumentType
 from revolv.project.models import Project
@@ -26,13 +26,13 @@ class PaymentTest(TestCase):
 
     def test_payment_create(self):
         """Verify that the payment can be created."""
-        user = User.objects.get(id=1)
+        user = RevolvUserProfile.objects.get(id=1)
         self._create_payment(user).save()
 
     def test_total_distinct_donors(self):
-        user1 = User.objects.create_user("user1")
-        user2 = User.objects.create_user("user2")
-        user3 = User.objects.create_user("user3")
+        user1 = RevolvUserProfile.objects.get(id=1)
+        user2 = RevolvUserProfile.objects.get(id=2)
+        user3 = RevolvUserProfile.objects.get(id=3)
 
         self.assertEquals(Payment.objects.total_distinct_donors(), 0)
         self._create_payment(user1).save()
@@ -47,8 +47,8 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.total_distinct_donors(), 3)
 
     def test_payments(self):
-        user1 = User.objects.create_user("user1")
-        user2 = User.objects.create_user("user2")
+        user1 = RevolvUserProfile.objects.get(id=1)
+        user2 = RevolvUserProfile.objects.get(id=2)
 
         self._create_payment(user1).save()
         self._create_payment(user1, instrument_type=PaymentInstrumentType.objects.get_reinvestment()).save()
@@ -61,8 +61,8 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.payments(user2).count(), 2)
 
     def test_donations(self):
-        user1 = User.objects.create_user("user1")
-        user2 = User.objects.create_user("user2")
+        user1 = RevolvUserProfile.objects.get(id=1)
+        user2 = RevolvUserProfile.objects.get(id=2)
 
         self._create_payment(user1).save()
         self._create_payment(user1, instrument_type=PaymentInstrumentType.objects.get_reinvestment()).save()
@@ -74,8 +74,8 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.donations(user2).count(), 0)
 
     def test_reinvestments(self):
-        user1 = User.objects.create_user("user1")
-        user2 = User.objects.create_user("user2")
+        user1 = RevolvUserProfile.objects.get(id=1)
+        user2 = RevolvUserProfile.objects.get(id=2)
 
         self._create_payment(user1).save()
         self._create_payment(user1, instrument_type=PaymentInstrumentType.objects.get_reinvestment()).save()
@@ -87,8 +87,8 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.reinvestments(user2).count(), 0)
 
     def test_repayments(self):
-        user1 = User.objects.create_user("user1")
-        user2 = User.objects.create_user("user2")
+        user1 = RevolvUserProfile.objects.get(id=1)
+        user2 = RevolvUserProfile.objects.get(id=2)
         project = Project.objects.get(id=1)
 
         self._create_payment(user1, project=project).save()
