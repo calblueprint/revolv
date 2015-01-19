@@ -157,18 +157,34 @@
 }
 
 $divider-font-size: 14px;
-.homepage-divider, .mobile-learn-link {
+.homepage-divider {
     @include text-with-divider($divider-font-size, #ddd);
     color: $revolv-blue;
     height: 0.6em; // adjustment for helvetica neue
     font-weight: 100;
 }
 
-.mobile-learn-link {
-    display: none;
-    text-decoration: underline;
+.nonmobile-learn {
+    margin-bottom: $revolv-homepage-sections-margin;
+}
 
-    border: none;
+.mobile-learn-button, .mobile-learn-container {
+    display: none;
+}
+
+.mobile-learn-container {
+    text-align: center;
+}
+
+.mobile-learn-button {
+    padding: 15px 20px;
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: 100;
+    min-width: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
+    background-color: #f7f7f7;
+
+    border: 2px solid $revolv-blue;
     &:before, &:after {
         content: "";
     }
@@ -178,8 +194,11 @@ $divider-font-size: 14px;
 
 @media #{$small-only} and (orientation: portrait) {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .mobile-learn-link {
+    html .mobile-learn-container {
         display: block;
+    }
+    html .mobile-learn-button {
+        display: inline-block;
     }
     html .nonmobile-learn {
         display: none;
@@ -404,18 +423,16 @@ $divider-font-size: 14px;
   stroke: $revolv-project-badge-unfulfilled-color;
 }
 
+// these are all hardcoded to get the icons to look correct
 .icon-adult use {
     transform: scale(0.4);
 }
-
 .icon-frontal use {
     transform: scale(0.9) translate(-21px);
 }
-
 .icon-house use {
     transform: scale(2.7);
 }
-
 .icon-co2 use {
     transform: scale(0.55) translate(-12px, -30px);
 }

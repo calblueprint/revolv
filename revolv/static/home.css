@@ -5634,7 +5634,7 @@ th.hide-for-touch {
     font-size: 18px;
     line-height: 24px; } }
 
-.homepage-divider, .mobile-learn-link {
+.homepage-divider {
   display: block;
   height: 0.5em;
   line-height: 1em;
@@ -5645,26 +5645,41 @@ th.hide-for-touch {
   color: #11ade5;
   height: 0.6em;
   font-weight: 100; }
-  .homepage-divider:first-line, .mobile-learn-link:first-line {
+  .homepage-divider:first-line {
     background-color: white; }
-  .homepage-divider:before, .mobile-learn-link:before {
+  .homepage-divider:before {
     display: inline;
     content: "\a0\a0\a0"; }
-  .homepage-divider:after, .mobile-learn-link:after {
+  .homepage-divider:after {
     display: inline;
     content: "\a0\a0\a0"; }
 
-.mobile-learn-link {
-  display: none;
-  text-decoration: underline;
-  border: none;
+.nonmobile-learn {
   margin-bottom: 40px; }
-  .mobile-learn-link:before, .mobile-learn-link:after {
+
+.mobile-learn-button, .mobile-learn-container {
+  display: none; }
+
+.mobile-learn-container {
+  text-align: center; }
+
+.mobile-learn-button {
+  padding: 15px 20px;
+  line-height: 20px;
+  font-size: 16px;
+  font-weight: 100;
+  min-width: 280px;
+  background-color: #f7f7f7;
+  border: 2px solid #11ade5;
+  margin-bottom: 40px; }
+  .mobile-learn-button:before, .mobile-learn-button:after {
     content: ""; }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
-  html .mobile-learn-link {
+  html .mobile-learn-container {
     display: block; }
+  html .mobile-learn-button {
+    display: inline-block; }
   html .nonmobile-learn {
     display: none; }
   .infographic {
