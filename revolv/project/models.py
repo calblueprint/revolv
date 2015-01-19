@@ -286,9 +286,9 @@ class Project(models.Model):
         :return: the current total amount that has been donated to this project,
             as a float
         """
-        result = self.donation_set.aggregate(
-            models.Sum('payment_transaction__amount')
-        )["payment_transaction__amount__sum"]
+        result = self.payment_set.aggregate(
+            models.Sum('amount')
+        )["amount__sum"]
         if result is None:
             return 0.0
         return result
