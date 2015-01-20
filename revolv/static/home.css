@@ -1,16 +1,4 @@
 /**
- * Height of the main cover photo on the homepage in mobile phone landscape AND
- * portrait orientations.
- */
-/**
- * The values by which the inset of the cover photo (the part that has a description
- * of re-volv and "about re-volv") should be offset from the upper right corner
- * of the cover photo.
- */
-/**
- * Font size of the title "About RE-volv"
- */
-/**
  * This file overrides specific foundation settings in order to make foundation
  * work nicely with revolv's design. Note that only some, but not all, of
  * foundation's settings are overriden here: for the full list, see _settings.scss
@@ -5576,18 +5564,6 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
-/**
- * Height of the main cover photo on the homepage in mobile phone landscape AND
- * portrait orientations.
- */
-/**
- * The values by which the inset of the cover photo (the part that has a description
- * of re-volv and "about re-volv") should be offset from the upper right corner
- * of the cover photo.
- */
-/**
- * Font size of the title "About RE-volv"
- */
 .cover-image-row {
   margin-bottom: 0; }
 
@@ -5658,8 +5634,60 @@ th.hide-for-touch {
     font-size: 18px;
     line-height: 24px; } }
 
+.homepage-divider {
+  display: block;
+  height: 0.5em;
+  line-height: 1em;
+  border: none;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 0.5em;
+  text-align: center;
+  color: #11ade5;
+  height: 0.6em;
+  font-weight: 100; }
+  .homepage-divider:first-line {
+    background-color: white; }
+  .homepage-divider:before {
+    display: inline;
+    content: "\a0\a0\a0"; }
+  .homepage-divider:after {
+    display: inline;
+    content: "\a0\a0\a0"; }
+
+.nonmobile-learn {
+  margin-bottom: 40px; }
+
+.mobile-learn-button, .mobile-learn-container {
+  display: none; }
+
+.mobile-learn-container {
+  text-align: center; }
+
+.mobile-learn-button {
+  padding: 15px 20px;
+  line-height: 20px;
+  font-size: 16px;
+  font-weight: 100;
+  min-width: 280px;
+  background-color: #f7f7f7;
+  border: 2px solid #11ade5;
+  margin-bottom: 40px; }
+  .mobile-learn-button:before, .mobile-learn-button:after {
+    content: ""; }
+
+@media only screen and (max-width: 40em) and (orientation: portrait) {
+  html .mobile-learn-container {
+    display: block; }
+  html .mobile-learn-button {
+    display: inline-block; }
+  html .nonmobile-learn {
+    display: none; }
+  .infographic {
+    display: none; } }
+
 .project-badges-container {
-  margin-bottom: 20px; }
+  margin-top: 20px;
+  margin-bottom: 40px; }
   .project-badges-container a, .project-badges-container a:hover, .project-badges-container a:visited, .project-badges-container a:active {
     color: inherit;
     text-decoration: none; }
@@ -5675,6 +5703,14 @@ th.hide-for-touch {
     position: absolute;
     top: 0;
     left: 0; }
+  .project-badge svg {
+    z-index: 3; }
+  .project-badge .project-badge-detail-container {
+    z-index: 2; }
+  .project-badge .project-badge-photo {
+    z-index: 1; }
+  .project-badge svg:hover + .project-badge-detail-container .project-title {
+    text-decoration: underline; }
   .project-badge .project-badge-photo {
     width: 100%;
     height: 100%;
@@ -5734,7 +5770,7 @@ th.hide-for-touch {
   border: 1px solid #11ade5;
   background-color: #f5fbfe;
   padding: 10px 0;
-  margin-bottom: 20px; }
+  margin-bottom: 40px; }
   .icons-container .revolv-icon {
     fill: #9adbf4; }
   .icons-container .icon-adult {

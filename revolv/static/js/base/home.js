@@ -37,7 +37,8 @@ $(document).ready(function () {
     var dimension = (2 * radius) + (2 * padding);
 
     window.HOMEPAGE_PROJECT_DATA.forEach(function (data) {
-        var svg = d3.select(".project-badge.project-id-" + data.id).append("svg")
+        $(".project-badge.project-id-" + data.id).prepend("<svg>");
+        var svg = d3.select(".project-badge.project-id-" + data.id + " svg")
             .attr("width", dimension)
             .attr("height", dimension)
         .append("g");

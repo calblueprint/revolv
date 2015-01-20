@@ -43,6 +43,27 @@
     color: rgba(0, 0, 0, 0.8);
 }
 
+@mixin text-with-divider($font-size, $divider-color: #bbb, $divider-width: 1px, $bg-color: white) {
+    display: block;
+    height: 0.5em;
+    line-height: 1em;
+    border: none;
+    border-bottom: $divider-width solid $divider-color;
+    margin-bottom: 0.5em;
+    text-align: center;
+    &:first-line {
+        background-color: $bg-color;
+    }
+    &:before {
+        display: inline;
+        content: "\a0\a0\a0";
+    }
+    &:after {
+        display: inline;
+        content: "\a0\a0\a0";
+    }
+}
+
 .cover-image-row {
     margin-bottom: 0;
 }
@@ -135,8 +156,62 @@
     }
 }
 
+$divider-font-size: 14px;
+.homepage-divider {
+    @include text-with-divider($divider-font-size, #ddd);
+    color: $revolv-blue;
+    height: 0.6em; // adjustment for helvetica neue
+    font-weight: 100;
+}
+
+.nonmobile-learn {
+    margin-bottom: $revolv-homepage-sections-margin;
+}
+
+.mobile-learn-button, .mobile-learn-container {
+    display: none;
+}
+
+.mobile-learn-container {
+    text-align: center;
+}
+
+.mobile-learn-button {
+    padding: 15px 20px;
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: 100;
+    min-width: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
+    background-color: #f7f7f7;
+
+    border: 2px solid $revolv-blue;
+    &:before, &:after {
+        content: "";
+    }
+
+    margin-bottom: $revolv-homepage-sections-margin;
+}
+
+@media #{$small-only} and (orientation: portrait) {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    html .mobile-learn-container {
+        display: block;
+    }
+    html .mobile-learn-button {
+        display: inline-block;
+    }
+    html .nonmobile-learn {
+        display: none;
+    }
+
+    .infographic {
+        display: none;
+    }
+}
+
 .project-badges-container {
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: $revolv-homepage-sections-margin;
 
     a, a:hover, a:visited, a:active {
         color: inherit;
@@ -157,6 +232,20 @@
         position: absolute;
         top: 0;
         left: 0;
+    }
+
+    svg {
+        z-index: 3;
+    }
+    .project-badge-detail-container {
+        z-index: 2;
+    }
+    .project-badge-photo {
+        z-index: 1;
+    }
+
+    svg:hover + .project-badge-detail-container .project-title {
+        text-decoration: underline;
     }
 
     .project-badge-photo {
@@ -242,7 +331,7 @@
     border: 1px solid $revolv-blue;
     background-color: $revolv-very-light-blue-bg;
     padding: 10px 0;
-    margin-bottom: 20px;
+    margin-bottom: $revolv-homepage-sections-margin;
 
     .revolv-icon {
         fill: $revolv-icon-blue;
@@ -334,18 +423,16 @@
   stroke: $revolv-project-badge-unfulfilled-color;
 }
 
+// these are all hardcoded to get the icons to look correct
 .icon-adult use {
     transform: scale(0.4);
 }
-
 .icon-frontal use {
     transform: scale(0.9) translate(-21px);
 }
-
 .icon-house use {
     transform: scale(2.7);
 }
-
 .icon-co2 use {
     transform: scale(0.55) translate(-12px, -30px);
 }

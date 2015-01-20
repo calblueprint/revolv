@@ -72,12 +72,12 @@
         </div>
     </div>
 </div>
+<div class="row homepage-divider">our currently active solar projects</div>
 <div class="row project-badges-container">
     {% for project in featured_projects %}
         <div class="project-badge-container small-12 medium-6 large-4 columns {% if forloop.last %}end{% endif %}">
             <a href="{% url "project:view" project.pk %}">
                 <div class="project-badge project-id-{{ project.pk }}">
-                    <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
                     <!-- the svg for the partial circles will go here -->
                     <div class="project-badge-detail-container">
                         <p class="project-title">{{ project.title }}</p>
@@ -85,10 +85,16 @@
                         <p class="project-amount-left">${{ project.rounded_amount_left|intcomma }} left</p>
                         <p class="project-days-left">{{ project.formatted_days_left }}</p>
                     </div>
+                    <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
                 </div>
             </a>
         </div>
     {% endfor %}
 </div>
+<div class="row nonmobile-learn homepage-divider">learn about how RE-volv works</div>
+<div class="row mobile-learn-container">
+    <div class="mobile-learn-button"><a href="/about/">learn about how RE-volv works</a></div>
+</div>
+<div class="row infographic"><img src="{% static "images/infographic.jpg" %}"></div>
 {% endspaceless %}
 {% endblock %}
