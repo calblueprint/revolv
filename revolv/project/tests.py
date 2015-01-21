@@ -13,25 +13,21 @@ from tasks import scrape
 
 
 # Create your tests here.
-
-
-class ProjectTests(TestCase):
-    """Project model tests."""
-
-    def _create_test_project(self,
-                             funding_goal=50.0,
-                             title="Hello",
-                             video_url="https://www.youtube.com/watch?v=9bZkp7q19f0",
-                             impact_power=50.5,
-                             location="Berkeley",
-                             end_date=None,
-                             mission_statement="We do solar!",
-                             cover_photo="http://i.imgur.com/2zMTZgi.jpg",
-                             org_start_date=None,
-                             actual_energy=25.5,
-                             amount_repaid=29.25,
-                             ambassador_id=1
-                             ):
+class CreateTestProjectMixin(object):
+    def create_test_project(self,
+                            funding_goal=50.0,
+                            title="Hello",
+                            video_url="https://www.youtube.com/watch?v=9bZkp7q19f0",
+                            impact_power=50.5,
+                            location="Berkeley",
+                            end_date=None,
+                            mission_statement="We do solar!",
+                            cover_photo="http://i.imgur.com/2zMTZgi.jpg",
+                            org_start_date=None,
+                            actual_energy=25.5,
+                            amount_repaid=29.25,
+                            ambassador_id=1
+                            ):
         """
         Create and return a dummy project for the purposes of testing. Each
         kwarg of this function represents a default value, which can be changed
@@ -58,7 +54,7 @@ class ProjectTests(TestCase):
             ambassador_id=ambassador_id,
         )
 
-    def _create_test_donation_for_project(self, project, amount):
+    def create_test_donation_for_project(self, project, amount):
         """
         Create a donation to the given project of the given amount, made by a
         dummy user via paypal.
@@ -81,14 +77,18 @@ class ProjectTests(TestCase):
         )
         return donation, transaction, user
 
+
+class ProjectTests(CreateTestProjectMixin, TestCase):
+    """Project model tests."""
+
     def test_construct(self):
-        self._create_test_project()
+        self.create_test_project()
         testProject = Project.objects.get(title="Hello")
         self.assertEqual(testProject.mission_statement, "We do solar!")
         self.assertEqual(testProject.impact_power, 50.5)
 
     def test_save_and_query(self):
-        p = self._create_test_project(
+        p = self.create_test_project(
             funding_goal=20.0,
             location="San Francisco",
             mission_statement="Blueprint!"
@@ -99,31 +99,31 @@ class ProjectTests(TestCase):
 
     def test_aggregate_donations(self):
         """Test that project.amount_donated works."""
-        project = self._create_test_project(funding_goal=200.0)
+        project = self.create_test_project(funding_goal=200.0)
         self.assertEqual(project.amount_donated, 0.0)
         self.assertEqual(project.amount_left, 200.0)
-        self._create_test_donation_for_project(project, 50.0)
+        self.create_test_donation_for_project(project, 50.0)
         self.assertEqual(project.amount_donated, 50.0)
         self.assertEqual(project.amount_left, 150.0)
-        self._create_test_donation_for_project(project, 25.50)
+        self.create_test_donation_for_project(project, 25.50)
         self.assertEqual(project.amount_donated, 75.50)
         self.assertEqual(project.amount_left, 124.50)
         self.assertEqual(project.rounded_amount_left, 124.00)
 
     def test_partial_completeness(self):
         """Test that project.partial_completeness works."""
-        project = self._create_test_project(funding_goal=100.0)
+        project = self.create_test_project(funding_goal=100.0)
         self.assertEqual(project.partial_completeness, 0.0)
         self.assertEqual(project.partial_completeness_as_js(), "0.0")
-        self._create_test_donation_for_project(project, 50.0)
+        self.create_test_donation_for_project(project, 50.0)
         self.assertEqual(project.partial_completeness, 0.5)
-        self._create_test_donation_for_project(project, 25.0)
+        self.create_test_donation_for_project(project, 25.0)
         self.assertEqual(project.partial_completeness, 0.75)
         self.assertEqual(project.partial_completeness_as_js(), "0.75")
-        self._create_test_donation_for_project(project, 25.0)
+        self.create_test_donation_for_project(project, 25.0)
         self.assertEqual(project.partial_completeness, 1.0)
         self.assertEqual(project.partial_completeness_as_js(), "1.0")
-        self._create_test_donation_for_project(project, 25.0)
+        self.create_test_donation_for_project(project, 25.0)
         self.assertEqual(project.partial_completeness, 1.0)
 
     def test_days_remaining(self):
@@ -131,16 +131,16 @@ class ProjectTests(TestCase):
         Test that the functions related to the amount of time remaning in
         the project work correctly.
         """
-        project = self._create_test_project(end_date=datetime.date.today() - datetime.timedelta(days=10))
+        project = self.create_test_project(end_date=datetime.date.today() - datetime.timedelta(days=10))
         self.assertEqual(project.days_left, 10)
         self.assertEqual(project.formatted_days_left(), "10 days left")
-        project = self._create_test_project(end_date=datetime.date.today() - datetime.timedelta(days=1))
+        project = self.create_test_project(end_date=datetime.date.today() - datetime.timedelta(days=1))
         self.assertEqual(project.days_left, 1)
         self.assertEqual(project.formatted_days_left(), "1 day left")
-        project = self._create_test_project(end_date=datetime.date.today() - datetime.timedelta(minutes=10, days=0))
+        project = self.create_test_project(end_date=datetime.date.today() - datetime.timedelta(minutes=10, days=0))
         self.assertEqual(project.days_left, 0)
         self.assertEqual(project.formatted_days_left(), Project.LESS_THAN_ONE_DAY_LEFT_STATEMENT)
-        project = self._create_test_project(end_date=datetime.date.today() + datetime.timedelta(days=1))
+        project = self.create_test_project(end_date=datetime.date.today() + datetime.timedelta(days=1))
         self.assertEqual(project.days_left, 0)
         self.assertEqual(project.formatted_days_left(), Project.NO_DAYS_LEFT_STATEMENT)
 
@@ -182,6 +182,13 @@ class ProjectManagerTests(TestCase):
         context = Project.objects.get_drafted()
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Fire Emblem")
+
+
+class RequestTest(TestCase):
+    """Test that all is well with the project pages."""
+
+    def test_project_page(self):
+        pass
 
 
 class ScrapeTest(TestCase):
