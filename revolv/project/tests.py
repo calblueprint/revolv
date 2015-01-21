@@ -184,11 +184,21 @@ class ProjectManagerTests(TestCase):
         self.assertEqual(context[0].org_name, "Fire Emblem")
 
 
-class RequestTest(TestCase):
+class RequestTest(CreateTestProjectMixin, TestCase):
     """Test that all is well with the project pages."""
 
+    def _assert_project_page_works(self, project):
+        resp = self.client.get(project.get_absolute_url())
+        self.assertNotEqual(resp.status_code, 500)
+
     def test_project_page(self):
-        pass
+        project = self.create_test_project()
+
+        for status_choice in Project.PROJECT_STATUS_CHOICES:
+            status = status_choice[0]
+            project.project_status = status
+            project.save()
+            self._assert_project_page_works(project)
 
 
 class ScrapeTest(TestCase):

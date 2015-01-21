@@ -1,6 +1,7 @@
 import datetime
 from itertools import chain
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -275,6 +276,9 @@ class Project(models.Model):
         self.project_status = Project.COMPLETED
         self.save()
         return self
+
+    def get_absolute_url(self):
+        return reverse("project:view", kwargs={"pk": str(self.pk)})
 
     @property
     def amount_donated(self):
