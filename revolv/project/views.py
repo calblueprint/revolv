@@ -118,10 +118,12 @@ class ProjectView(UserDataMixin, DetailView):
     template_name = 'project/project.html'
 
     def dispatch(self, request, *args, **kwargs):
+        # always populate self.user, etc
+        super_response = super(ProjectView, self).dispatch(request, *args, **kwargs)
         project = self.get_object()
         if (project.is_active or project.is_completed or
                 (self.user.is_authenticated() and (project.has_owner(self.user_profile) or self.is_administrator))):
-            return super(ProjectView, self).dispatch(request, *args, **kwargs)
+            return super_response
         else:
             return self.deny_access()
 
