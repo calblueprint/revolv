@@ -1,0 +1,72 @@
+[
+{
+    "fields": {
+        "amount": 50,
+        "payment_instrument_type": 1,
+        "user": 1,
+        "entrant": 1,
+        "project": 1,
+        "created_at": "2014-11-01T23:56:22.709Z"
+    },
+    "model": "payments.payment",
+    "pk": 1
+},
+{
+    "fields": {
+        "amount": 50,
+        "payment_instrument_type": 4,
+        "entrant": 2,
+        "project": 2,
+        "created_at": "2014-11-01T23:56:22.709Z"
+    },
+    "model": "payments.payment",
+    "pk": 2
+},
+{
+    "fields": {
+        "amount": 50,
+        "payment_instrument_type": 3,
+        "user": 1,
+        "entrant": 2,
+        "project": 1,
+        "created_at": "2014-11-01T23:56:22.709Z"
+    },
+    "model": "payments.payment",
+    "pk": 3
+},
+{
+    "fields": {
+        "amount": 50,
+        "payment_instrument_type": 3,
+        "entrant": 1,
+        "project": 2,
+        "created_at": "2014-11-01T23:56:22.709Z"
+    },
+    "model": "payments.payment",
+    "pk": 4
+},
+{
+    "fields": {
+        "amount": 50,
+        "payment_instrument_type": 2,
+        "user": 1,
+        "entrant": 1,
+        "project": 2,
+        "created_at": "2014-11-01T23:56:22.709Z"
+    },
+    "model": "payments.payment",
+    "pk": 5
+},
+{
+    "fields": {
+        "amount": 50,
+        "payment_instrument_type": 2,
+        "user": 3,
+        "entrant": 1,
+        "project": 1,
+        "created_at": "2014-11-01T23:56:22.709Z"
+    },
+    "model": "payments.payment",
+    "pk": 6
+}
+]

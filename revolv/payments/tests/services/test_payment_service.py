@@ -1,20 +1,23 @@
 import mock
-from django.contrib.auth.models import User
+from django.core.management import call_command
+from django.db.models.signals import post_save
 from django.test import TestCase
+from django_facebook.utils import get_user_model
+from revolv.base.models import RevolvUserProfile
+from revolv.base.signals import create_profile_of_user
 from revolv.payments.models import PaymentInstrumentType
-from revolv.payments.services import PaymentService
+from revolv.payments.services import PaymentService, PaymentServiceException
+from revolv.project.models import Project
 
 
 class PaymentServiceTest(TestCase):
 
-    fixtures = ['supported_instruments.json']
-
     def setUp(self):
-        self.user = User(username='billnye')
-        self.user.save()
+        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
+        call_command('loaddata', 'user', 'revolvuserprofile', 'project')
 
     def tearDown(self):
-        self.user.delete()
+        post_save.connect(create_profile_of_user, sender=get_user_model())
 
     @mock.patch('revolv.payments.services.PaymentService.check_valid_amount')
     @mock.patch('revolv.payments.services.PaymentService.check_valid_payment_instrument')
@@ -30,16 +33,34 @@ class PaymentServiceTest(TestCase):
         )
         payment_instrument = mock.Mock()
         type(payment_instrument).type = instrument_type
+        project = Project.objects.get(id=1)
+        user = RevolvUserProfile.objects.get(id=1)
 
         # Make the payment
         PaymentService.create_payment(
-            self.user,
+            user,
+            user,
             10.00,
+            project,
             payment_instrument,
         )
 
         # Check that the charge was actually made
         payment_instrument.charge.assert_called_once()
+
+        failed = False
+        try:
+            PaymentService.create_payment(
+                user,
+                None,
+                10.00,
+                project,
+                payment_instrument,
+            )
+        except PaymentServiceException:
+            failed = True
+
+        self.assertEquals(True, failed)
 
     def test_check_valid_payment_instrument(self):
         """Verify that we can get a valid payment instrument type."""

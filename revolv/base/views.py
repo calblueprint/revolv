@@ -8,7 +8,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
-from revolv.payments.models import PaymentTransaction
+from revolv.payments.models import Payment
 from revolv.project.models import Project
 
 
@@ -23,7 +23,7 @@ class HomePageView(UserDataMixin, TemplateView):
         context["featured_projects"] = Project.objects.get_featured(
             HomePageView.NUM_PROJECTS_SHOWN)
         context["completed_projects_count"] = Project.objects.get_completed().count()
-        context["total_donors_count"] = PaymentTransaction.objects.total_distinct_donors()
+        context["total_donors_count"] = Payment.objects.total_distinct_donors()
         return context
 
 

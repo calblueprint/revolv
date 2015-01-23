@@ -283,3 +283,5 @@ MIGRATION_MODULES = {
 LANGUAGES = [
     ('en-us', 'English'),
 ]
+
+CHARGE_INSTRUMENT = False

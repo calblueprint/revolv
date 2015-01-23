@@ -1,11 +1,13 @@
+from decimal import Decimal
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
-
 from revolv.base.users import UserDataMixin
 from revolv.payments.forms import CreditCardDonationForm
+from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Project
 
@@ -59,7 +61,7 @@ class UpdateProjectView(UpdateView):
         return context
 
 
-class ReviewProjectView(UpdateView):
+class ReviewProjectView(UserDataMixin, UpdateView):
     """
     The view to review a project. Shows the same view as ProjectView, but at
     the top, has a button group through which an ambassador or admin can
@@ -72,7 +74,10 @@ class ReviewProjectView(UpdateView):
     form_class = forms.ProjectStatusForm
 
     def get_success_url(self):
-        return reverse('project:view', kwargs={'pk': self.get_object().id})
+        if self.is_administrator:
+            return "%s?active_project=%d" % (reverse('administrator:dashboard'), self.get_object().id)
+        else:
+            return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     # Checks the post request and updates the project_status
     def form_valid(self, form):
@@ -89,6 +94,11 @@ class ReviewProjectView(UpdateView):
         elif '_complete' in self.request.POST:
             messages.success(self.request, project.title + ' has been completed')
             project.complete_project()
+        elif '_repayment' in self.request.POST:
+            repayment_amount = Decimal(self.request.POST['_repayment_amount'])
+            repayment = PaymentService.create_repayment(self.user_profile, repayment_amount, project)
+            repayment.save()
+            messages.success(self.request, '$' + str(repayment_amount) + ' repaid by ' + project.org_name)
         return redirect(self.get_success_url())
 
 
@@ -132,6 +142,11 @@ class CreateProjectDonationView(UserDataMixin, FormView):
     model = Project
     template_name = 'project/donate.html'
     form_class = CreditCardDonationForm
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateProjectDonationView, self).get_context_data(**kwargs)
+        context['project'] = Project.objects.get(pk=self.kwargs.get('pk'))
+        return context
 
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
