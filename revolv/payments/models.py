@@ -1,6 +1,5 @@
 from django.db import models
 from revolv.base.models import RevolvUserProfile
-from revolv.project.models import Project
 
 INSTRUMENT_PAYPAL = 'paypal'
 INSTRUMENT_CHECK = 'check'
@@ -104,12 +103,12 @@ class PaymentManager(models.Manager):
 
 class Payment(models.Model):
     """
-        Abstraction indicating on particular payment.
+        Abstraction indicating one particular payment.
     """
     user = models.ForeignKey(RevolvUserProfile, null=True)
     entrant = models.ForeignKey(RevolvUserProfile, related_name='entrant')
     amount = models.FloatField()
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey("project.Project")
     payment_instrument_type = models.ForeignKey(PaymentInstrumentType)
     created_at = models.DateTimeField(auto_now_add=True)
 

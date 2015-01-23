@@ -6,6 +6,7 @@ from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
+from revolv.payments.models import Payment
 
 
 class ProjectManager(models.Manager):
@@ -229,11 +230,6 @@ class Project(models.Model):
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)
-    amount_repaid = models.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        default=0.0
-    )
     internal_rate_return = models.DecimalField(
         'Internal Rate of Return',
         max_digits=6,
@@ -303,6 +299,16 @@ class Project(models.Model):
         if amt_left < 0:
             return 0.0
         return amt_left
+
+    @property
+    def amount_repaid(self):
+        """
+        :return: the current amount of money repaid by the project to RE-volv.
+        """
+        amount_repaid = Payment.objects.repayments(self).aggregate(models.Sum('amount'))["amount__sum"]
+        if amount_repaid is None:
+            return 0.0
+        return amount_repaid
 
     @property
     def rounded_amount_left(self):

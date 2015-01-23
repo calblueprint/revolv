@@ -1,6 +1,5 @@
 from revolv.base.models import RevolvUserProfile
-from revolv.payments.models import (INSTRUMENT_PAYPAL, INSTRUMENT_REPAYMENT,
-                                    Payment, PaymentInstrumentType)
+from revolv.payments.models import Payment, PaymentInstrumentType, INSTRUMENT_PAYPAL, INSTRUMENT_REPAYMENT
 from revolv.settings import CHARGE_INSTRUMENT
 
 
@@ -44,6 +43,30 @@ class PaymentService(object):
         )
         payment.save()
         return payment
+
+    @classmethod
+    def create_repayment(cls, entrant, amount, project):
+        repayment = Payment(
+            user=None,
+            entrant=entrant,
+            amount=float(amount),
+            project=project,
+            payment_instrument_type=PaymentInstrumentType.objects.get_repayment()
+        )
+        repayment.save()
+        return repayment
+
+    @classmethod
+    def create_check(cls, user, entrant, amount, project):
+        check = Payment(
+            user=user,
+            entrant=entrant,
+            amount=float(amount),
+            project=project,
+            payment_instrument_type=PaymentInstrumentType.objects.get_check()
+        )
+        check.save()
+        return check
 
     @classmethod
     def check_valid_payment_instrument(cls, payment_instrument_type):
