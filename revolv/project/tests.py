@@ -91,6 +91,13 @@ class CreateTestProjectMixin(object):
 class ProjectTests(CreateTestProjectMixin, TestCase):
     """Project model tests."""
 
+    def setUp(self):
+        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
+        call_command('loaddata', 'user', 'revolvuserprofile', 'project')
+
+    def tearDown(self):
+        post_save.connect(create_profile_of_user, sender=get_user_model())
+
     def test_construct(self):
         self.create_test_project()
         testProject = Project.objects.get(title="Hello")
@@ -121,7 +128,7 @@ class ProjectTests(CreateTestProjectMixin, TestCase):
         self.assertEqual(project.rounded_amount_left, 124.00)
 
     def test_amount_repaid(self):
-        project = self._create_test_project(funding_goal=200.0)
+        project = self.create_test_project(funding_goal=200.0)
         self.assertEqual(project.amount_repaid, 0.0)
         self._create_test_repayment_for_project(project, 50)
         self.assertEqual(project.amount_repaid, 50.0)
