@@ -2,16 +2,23 @@
 @import "utils";
 
 .component-row {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    &.login {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+    &.signup {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 }
 
-.component-container {
+.component-row {
     h1 {
         color: $revolv-blue;
         font-weight: 100;
 
         @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-blue, $bg-color: $revolv-gray-bg);
+        margin-bottom: 1.5em; // override
     }
 }
 

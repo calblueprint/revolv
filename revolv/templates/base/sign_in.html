@@ -9,8 +9,12 @@
 
 {% block body %}
 
-<div class='row component-row'>
+<div class='row component-row login'  style="display: none">
     <div class='component-container small-offset-2 small-4 columns'>
+        <h1>Welcome back!</h1>
+        <p>Log in to see the impact you've had on communities that use renewable solar energy.</p>
+    </div>
+    <div class='component-container small-4 columns end'>
         <form action="/login/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in login_form.non_field_errors %}
@@ -24,6 +28,12 @@
             {% endif %}
             <button class="submit-button medium" type="submit" value="Log in">Log in</button>
         </form>
+    </div>
+</div>
+<div class='row component-row signup'>
+    <div class='component-container small-offset-2 small-4 columns'>
+        <h1>Welcome!</h1>
+        <p>Start investing in renewable solar energy by signing up for an account.</p>
     </div>
     <div class="component-container small-4 columns end">
         <form action="/signup/" method="post" id="login_form">
