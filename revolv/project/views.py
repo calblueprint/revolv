@@ -84,13 +84,13 @@ class ReviewProjectView(UpdateView):
             messages.success(self.request, project.title + ' is now pending approval')
             project.propose_project()
         elif '_deny' in self.request.POST:
-            messages.error(self.request, project.title + ' has been denied')
+            messages.info(self.request, project.title + ' has been denied')
             project.deny_project()
         elif '_complete' in self.request.POST:
             messages.success(self.request, project.title + ' has been completed')
             project.complete_project()
         elif '_incomplete' in self.request.POST:
-            messages.error(self.request, project.title + ' has been marked as incomplete')
+            messages.info(self.request, project.title + ' has been marked as incomplete')
             project.mark_as_incomplete_project()
         return redirect(self.get_success_url())
 
