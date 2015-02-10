@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+
+<label class="placeholder-field-label">
+    {% if field.help_text %}
+        <span has-tooltip for="{{ field.id_for_label }}" data-tooltip class="placeholder-tooltip-entry has-tip tip-top tip-thin" title="{{ field.help_text }}">(?)</span>
+    {% endif %}
+    {% if field.errors %}
+        {{ field|add_class:"error" }}
+    {% else %}
+        {% with val=field.label|safe %}
+            {% with to_append="placeholder:"|add:val %}
+                {{ field|attr:to_append }}
+            {% endwith %}
+        {% endwith %}
+    {% endif %}
+</label>
+{% for error in field.errors %}
+  <small class="error">{{ error }}</small>
+{% endfor %}

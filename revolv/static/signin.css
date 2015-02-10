@@ -1,0 +1,33 @@
+.component-container h1 {
+  color: #11ade5;
+  font-weight: 100;
+  display: block;
+  height: 0.5em;
+  line-height: 1em;
+  border: none;
+  border-bottom: 1px solid #11ade5;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-size: 22px; }
+  .component-container h1:first-line {
+    background-color: #f9f9fa; }
+  .component-container h1:before {
+    display: inline;
+    content: "\a0\a0\a0"; }
+  .component-container h1:after {
+    display: inline;
+    content: "\a0\a0\a0"; }
+
+.placeholder-tooltip-entry {
+  position: absolute;
+  right: -6px;
+  top: -7px;
+  background-color: white;
+  padding: 2px 4px;
+  border-radius: 5px;
+  border: 1px solid #bbbbbb;
+  text-decoration: none;
+  font-size: 10px; }
+
+.placeholder-field-label {
+  position: relative; }

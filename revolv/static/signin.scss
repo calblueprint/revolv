@@ -1,0 +1,29 @@
+@import "revolv-settings";
+@import "utils";
+
+.component-container {
+    h1 {
+        color: $revolv-blue;
+        font-weight: 100;
+
+        @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-blue, $bg-color: $revolv-gray-bg);
+    }
+}
+
+.placeholder-tooltip-entry {
+    position: absolute;
+    right: -6px;
+    top: -7px;
+    background-color: white;
+    padding: 2px 4px;
+    border-radius: 5px;
+    border: 1px solid #bbb;
+    text-decoration: none;
+    font-size: 10px;
+}
+
+.placeholder-field-label {
+    position: relative;
+
+
+}
