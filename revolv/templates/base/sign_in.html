@@ -22,12 +22,12 @@
 {% block body %}
 
 <div class='row component-row login' {% if referring_endpoint == "signup" or referring_endpoint == "" %}style="display: none"{% endif %}>
-    <div class='component-container small-offset-2 small-4 columns'>
+    <div class='component-container medium-offset-2 medium-4 small-12 columns'>
         <h1>Welcome back!</h1>
         <p>Log in to see the impact you've had on communities that use renewable solar energy.</p>
         <p>If you're new here, please <a class="component-link" data-component="signup">create an account</a>.</p>
     </div>
-    <div class='component-container small-4 columns end'>
+    <div class='component-container medium-4 small-12 columns end'>
         <form action="/login/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in login_form.non_field_errors %}
@@ -44,12 +44,12 @@
     </div>
 </div>
 <div class='row component-row signup' {% if referring_endpoint == "login" or referring_endpoint == "" %}style="display: none"{% endif %}>
-    <div class='component-container small-offset-2 small-4 columns'>
+    <div class='component-container medium-offset-2 medium-4 small-12 columns'>
         <h1>Welcome!</h1>
         <p>Start investing in renewable solar energy by signing up for an account.</p>
         <p>Already have an account? Log in <a class="component-link" data-component="login">here</a>.</p>
     </div>
-    <div class="component-container small-4 columns end">
+    <div class="component-container medium-4 small-12 columns end">
         <form action="/signup/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in signup_form.non_field_errors %}
