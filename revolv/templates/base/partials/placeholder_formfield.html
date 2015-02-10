@@ -15,5 +15,5 @@
     {% endif %}
 </label>
 {% for error in field.errors %}
-  <small class="field-error error">{{ error }}</small>
+  <small class="field-error error">{{field.label}}: {{ error }}</small>
 {% endfor %}

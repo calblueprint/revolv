@@ -7,18 +7,31 @@
     <link rel="stylesheet" type="text/css" href="{% static "signin.css" %}">
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/signin.js" %}"></script>
+    <script type="text/javascript">
+        {% if referring_endpoint %}
+            window.SHOULD_AUTOSHOW_COMPONENT = false;
+        {% else %}
+            window.SHOULD_AUTOSHOW_COMPONENT = true;
+        {% endif %}
+    </script>
+{% endblock %}
+
 {% block body %}
 
-<div class='row component-row login'  style="display: none">
+<div class='row component-row login' {% if referring_endpoint == "signup" or referring_endpoint == "" %}style="display: none"{% endif %}>
     <div class='component-container small-offset-2 small-4 columns'>
         <h1>Welcome back!</h1>
         <p>Log in to see the impact you've had on communities that use renewable solar energy.</p>
+        <p>If you're new here, please <a class="component-link" data-component="signup">create an account</a>.</p>
     </div>
     <div class='component-container small-4 columns end'>
         <form action="/login/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in login_form.non_field_errors %}
-              <small class="error">{{ error }}</small>
+              <small class="error non-field-error">{{ error }}</small>
             {% endfor %}
             {% for login_field in login_form %}
                 {% include "base/partials/placeholder_formfield.html" with field=login_field %}
@@ -30,16 +43,17 @@
         </form>
     </div>
 </div>
-<div class='row component-row signup'>
+<div class='row component-row signup' {% if referring_endpoint == "login" or referring_endpoint == "" %}style="display: none"{% endif %}>
     <div class='component-container small-offset-2 small-4 columns'>
         <h1>Welcome!</h1>
         <p>Start investing in renewable solar energy by signing up for an account.</p>
+        <p>Already have an account? Log in <a class="component-link" data-component="login">here</a>.</p>
     </div>
     <div class="component-container small-4 columns end">
         <form action="/signup/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in signup_form.non_field_errors %}
-              <small class="error">{{ error }}</small>
+              <small class="error non-field-error">{{ error }}</small>
             {% endfor %}
             {% for signup_field in signup_form %}
                 {% include "base/partials/placeholder_formfield.html" with field=signup_field %}

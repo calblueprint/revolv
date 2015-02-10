@@ -38,13 +38,17 @@
     position: relative;
 
     &.has-errors input {
-        background-color: #F46B7B;
+        background-color: $revolv-error-color;
     }
+}
+
+small.non-field-error {
+    background-color: $revolv-error-color;
 }
 
 small.field-error { // extra qualifiers to override foundation
     background-color: transparent;
-    color: #F46B7B;
+    color: $revolv-error-color;
 }
 
 .submit-button {

@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -61,6 +62,7 @@ class SignInView(TemplateView):
         context["signup_form"] = signup_form
         context["login_form"] = login_form
         context["login_redirect_url"] = self.request.GET.get("next")
+        context["referring_endpoint"] = ""
         return context
 
 
@@ -89,6 +91,21 @@ class RedirectToSigninOrHomeMixin(object):
         )
 
 
+class RedirectToViewOnInvalidFormMixin(object):
+    """
+    A mixin for FormView which redirects to a given url, self.redirect_view
+    when the form is invalid. Optionally can define a self.url_append.
+
+    For example:
+    a RedirectToViewOnInvalidFormMixin with redirect_view='home' and url_append='#a'
+    would return redirect(reverse('home') + '#a').
+    """
+    url_append = ""
+
+    def form_invalid(self, form):
+        return redirect(reverse(self.redirect_view) + self.url_append)
+
+
 class LoginView(RedirectToSigninOrHomeMixin, FormView):
     """
     Login endpoint: checks the data from the received request against
@@ -103,6 +120,8 @@ class LoginView(RedirectToSigninOrHomeMixin, FormView):
     """
     form_class = AuthenticationForm
     template_name = 'base/sign_in.html'
+    url_append = "#login"
+    redirect_view = "signin"
 
     @method_decorator(sensitive_post_parameters('password'))
     def dispatch(self, request, *args, **kwargs):
@@ -119,6 +138,7 @@ class LoginView(RedirectToSigninOrHomeMixin, FormView):
         context = super(LoginView, self).get_context_data(*args, **kwargs)
         context["signup_form"] = SignupForm()
         context["login_form"] = self.get_form(self.form_class)
+        context["referring_endpoint"] = "login"
         return context
 
 
@@ -135,6 +155,8 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
     """
     form_class = SignupForm
     template_name = "base/sign_in.html"
+    url_append = "#signup"
+    redirect_view = "signin"
 
     def form_valid(self, form):
         form.save()
@@ -147,6 +169,7 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
         context = super(SignupView, self).get_context_data(**kwargs)
         context["signup_form"] = self.get_form(self.form_class)
         context["login_form"] = AuthenticationForm()
+        context["referring_endpoint"] = "signup"
         return context
 
 

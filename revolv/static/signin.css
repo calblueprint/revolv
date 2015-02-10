@@ -42,6 +42,9 @@
   .placeholder-field-label.has-errors input {
     background-color: #f46b7b; }
 
+small.non-field-error {
+  background-color: #f46b7b; }
+
 small.field-error {
   background-color: transparent;
   color: #f46b7b; }
