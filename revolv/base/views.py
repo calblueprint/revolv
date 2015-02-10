@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -89,21 +88,6 @@ class RedirectToSigninOrHomeMixin(object):
         return super(RedirectToSigninOrHomeMixin, self).dispatch(
             request, *args, **kwargs
         )
-
-
-class RedirectToViewOnInvalidFormMixin(object):
-    """
-    A mixin for FormView which redirects to a given url, self.redirect_view
-    when the form is invalid. Optionally can define a self.url_append.
-
-    For example:
-    a RedirectToViewOnInvalidFormMixin with redirect_view='home' and url_append='#a'
-    would return redirect(reverse('home') + '#a').
-    """
-    url_append = ""
-
-    def form_invalid(self, form):
-        return redirect(reverse(self.redirect_view) + self.url_append)
 
 
 class LoginView(RedirectToSigninOrHomeMixin, FormView):
