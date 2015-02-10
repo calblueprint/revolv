@@ -24,7 +24,7 @@
         <img src="{{project.cover_photo.url}}"></img>
         <p>Mission Statement : {{ project.mission_statement }}</p>
         {% if project.video_url %}
-        <iframe width="420" height="315" src="{{ project.video_url }}">
+        <iframe width="420" height="315" id="project_video">
 		</iframe>
         {% endif %}
         {% if project.is_completed or project.is_active and project.post_funding_updates %}
@@ -40,6 +40,33 @@
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE">
 </script>
+
+{% if project.video_url %}
+<script type="text/javascript">
+// function to extract the associated iframe embed url from the video url
+// from http://stackoverflow.com/questions/21607808/convert-a-youtube-video-url-to-embed-code
+function getEmbedUrl(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+        var video_id = match[2];
+        return "http://www.youtube.com/embed/" + video_id;
+    } else {
+        return "error";
+    }
+}
+
+// updates the iframe src url if youtube url is valid, otherwise hides it
+var embedUrl = getEmbedUrl("{{project.video_url}}");
+if (embedUrl === "error") {
+    $("#project_video").remove();
+} else {
+    $("#project_video").attr("src", embedUrl);
+}
+</script>
+{% endif %}
+
 <script type="text/javascript">
     // initializes the map based on the projects latitude and longitude, and adds the marker
     function initialize() {
