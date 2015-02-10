@@ -21,7 +21,7 @@ class CreateProjectView(CreateView):
     form_class = forms.ProjectForm
 
     def get_success_url(self):
-        return reverse('home')
+        return reverse('ambassador:dashboard')
 
     def form_valid(self, form):
         new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
