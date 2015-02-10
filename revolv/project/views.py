@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
-
 from revolv.base.users import UserDataMixin
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.project import forms
@@ -89,6 +88,9 @@ class ReviewProjectView(UpdateView):
         elif '_complete' in self.request.POST:
             messages.success(self.request, project.title + ' has been completed')
             project.complete_project()
+        elif '_incomplete' in self.request.POST:
+            messages.error(self.request, project.title + ' has been marked as incomplete')
+            project.mark_as_incomplete_project()
         return redirect(self.get_success_url())
 
 

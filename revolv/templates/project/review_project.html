@@ -24,6 +24,9 @@
             {% if project.is_completed or project.is_active %}
             <li><a class="small button success radius" href="{% url "project:update" pk=project.id %}">Post Project Updates</a></li>
             {% endif %}
+            {% if project.is_completed %}
+                <li><input id="incomplete_project" class="small button alert radius" name="_incomplete" type="submit" value="Mark Project as Incomplete"></input></li>
+            {% endif %}
             <li><a class="small button info radius" href="{% url "project:edit" pk=project.id %}">Edit Project</a></li>
         {% elif user.revolvuserprofile.is_ambassador %}
             {% if project.is_drafted %}
