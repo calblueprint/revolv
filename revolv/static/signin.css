@@ -35,6 +35,12 @@
 
 .placeholder-field-label {
   position: relative; }
+  .placeholder-field-label.has-errors input {
+    background-color: #f46b7b; }
+
+small.field-error {
+  background-color: transparent;
+  color: #f46b7b; }
 
 .submit-button {
   width: 100%;

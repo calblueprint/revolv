@@ -29,6 +29,15 @@
 
 .placeholder-field-label {
     position: relative;
+
+    &.has-errors input {
+        background-color: #F46B7B;
+    }
+}
+
+small.field-error { // extra qualifiers to override foundation
+    background-color: transparent;
+    color: #F46B7B;
 }
 
 .submit-button {
