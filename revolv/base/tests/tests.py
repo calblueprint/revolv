@@ -231,3 +231,28 @@ class LoginSignupPageTestCase(TestCase):
         """Test that we can actually render a page."""
         response = self.client.get("/signin/")
         self.assertEqual(response.status_code, 200)
+
+
+class DashboardTestCase(TestUserMixin, TestCase):
+    DASH_BASE = "/dashboard/"
+    ADMIN_DASH = "/dashboard/admin/"
+    AMBAS_DASH = "/dashboard/ambassador/"
+    DONOR_DASH = "/dashboard/donor/"
+    HOME_URL = "/"
+
+    def test_dash_redirects(self):
+        response = self.client.get(self.DASH_BASE, follow=True)
+        self.assertRedirects(response, self.HOME_URL)
+
+        self._send_test_user_login_request()
+        self.test_user.revolvuserprofile.make_administrator()
+        response = self.client.get(self.DASH_BASE, follow=True)
+        self.assertRedirects(response, self.ADMIN_DASH)
+
+        self.test_user.revolvuserprofile.make_ambassador()
+        response = self.client.get(self.DASH_BASE, follow=True)
+        self.assertRedirects(response, self.AMBAS_DASH)
+
+        self.test_user.revolvuserprofile.make_donor()
+        response = self.client.get(self.DASH_BASE, follow=True)
+        self.assertRedirects(response, self.DONOR_DASH)
