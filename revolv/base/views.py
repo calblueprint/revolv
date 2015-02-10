@@ -160,3 +160,21 @@ class LogoutView(UserDataMixin, View):
         auth_logout(request)
         messages.success(self.request, 'Logged out successfully')
         return redirect('home')
+
+
+class DashboardRedirect(UserDataMixin, View):
+    """
+    Redirects user to appropriate dashboard. (e.g. Administrators automagically
+    go to the /dashboard/admin endpoint)
+
+    Redirects to home page if not authenticated.
+    """
+
+    def get(self, request, *args, **kwargs):
+        if not self.is_authenticated:
+            return redirect('home')
+        if self.is_administrator:
+            return redirect('administrator:dashboard')
+        if self.is_ambassador:
+            return redirect('ambassador:dashboard')
+        return redirect('donor:dashboard')
