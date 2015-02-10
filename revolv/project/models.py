@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
