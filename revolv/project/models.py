@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -274,6 +275,11 @@ class Project(models.Model):
 
     def complete_project(self):
         self.project_status = Project.COMPLETED
+        self.save()
+        return self
+
+    def mark_as_incomplete_project(self):
+        self.project_status = Project.ACTIVE
         self.save()
         return self
 
