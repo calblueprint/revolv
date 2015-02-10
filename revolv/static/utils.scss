@@ -1,0 +1,21 @@
+@mixin text-with-divider($font-size, $divider-color: #bbb, $divider-width: 1px, $bg-color: white) {
+    display: block;
+    height: 0.5em;
+    line-height: 1em;
+    border: none;
+    border-bottom: $divider-width solid $divider-color;
+    margin-bottom: 0.5em;
+    text-align: center;
+    font-size: $font-size;
+    &:first-line {
+        background-color: $bg-color;
+    }
+    &:before {
+        display: inline;
+        content: "\a0\a0\a0";
+    }
+    &:after {
+        display: inline;
+        content: "\a0\a0\a0";
+    }
+}

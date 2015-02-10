@@ -32,10 +32,10 @@
                </li>
                {% else %}
                <li>
-                   <a href="{% url "signin" %}">Sign Up</a>
+                   <a class="component-link" data-component="signup" href="{% url "signin" %}#signup">Sign Up</a>
                </li>
                <li>
-                   <a href="{% url "signin" %}">Sign In</a>
+                   <a class="component-link" data-component="login" href="{% url "signin" %}#login">Sign In</a>
                </li>
                {% endif %}
            </ul>

@@ -5642,6 +5642,7 @@ th.hide-for-touch {
   border-bottom: 1px solid #dddddd;
   margin-bottom: 0.5em;
   text-align: center;
+  font-size: 14px;
   color: #11ade5;
   height: 0.6em;
   font-weight: 100; }
