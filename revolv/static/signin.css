@@ -40,7 +40,7 @@
 .placeholder-field-label {
   position: relative; }
   .placeholder-field-label.has-errors input {
-    background-color: #f46b7b; }
+    border-color: #f46b7b; }
 
 small.non-field-error {
   background-color: #f46b7b; }

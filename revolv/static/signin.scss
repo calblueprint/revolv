@@ -38,7 +38,7 @@
     position: relative;
 
     &.has-errors input {
-        background-color: $revolv-error-color;
+        border-color: $revolv-error-color;
     }
 }
 
