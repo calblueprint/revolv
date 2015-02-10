@@ -9,9 +9,8 @@
 
 {% block body %}
 
-<div class='row'>
+<div class='row component-row'>
     <div class='component-container small-offset-2 small-4 columns'>
-        <h1>Log in</h1>
         <form action="/login/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in login_form.non_field_errors %}
@@ -23,11 +22,10 @@
             {% if login_redirect_url %}
                 <input type="hidden" name="next" value="{{ login_redirect_url }}">
             {% endif %}
-            <button class="medium" type="submit" value="Log in">Log in</button>
+            <button class="submit-button medium" type="submit" value="Log in">Log in</button>
         </form>
     </div>
     <div class="component-container small-4 columns end">
-        <h1>Sign Up</h1>
         <form action="/signup/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in signup_form.non_field_errors %}
@@ -36,7 +34,7 @@
             {% for signup_field in signup_form %}
                 {% include "base/partials/placeholder_formfield.html" with field=signup_field %}
             {% endfor %}
-            <button class="medium" type="submit" value="Log in">Sign up</button>
+            <button class="submit-button medium" type="submit" value="Log in">Sign up</button>
         </form>
     </div>
 </div>

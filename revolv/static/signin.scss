@@ -1,6 +1,11 @@
 @import "revolv-settings";
 @import "utils";
 
+.component-row {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .component-container {
     h1 {
         color: $revolv-blue;
@@ -24,6 +29,22 @@
 
 .placeholder-field-label {
     position: relative;
+}
 
+.submit-button {
+    width: 100%;
+    height: 37px;
+    line-height: 0px; // this is a little weird, but it's because the buttons are entirely composed of padding by foundation
+    background-color: transparent;
+    color: $revolv-blue;
+    border: 1px solid $revolv-blue;
 
+    &:hover {
+        background-color: $revolv-blue;
+        color: white;
+        transition: background-color 0.2s;
+        transition: color 0.1s;
+        -webkit-transition: background-color 0.2s;
+        -webkit-transition: color 0.1s;
+    }
 }
