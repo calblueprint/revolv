@@ -80,9 +80,16 @@ class CreateTestProjectMixin(object):
         user1 = RevolvUserProfile.objects.get(id=1)
         user2 = RevolvUserProfile.objects.get(id=2)
         payment = Payment.objects.create(
-            amount=amount,
+            amount=amount / 2,
             payment_instrument_type=PaymentInstrumentType.objects.get_repayment(),
             user=user1,
+            entrant=user2,
+            project=project
+        )
+        payment = Payment.objects.create(
+            amount=amount / 2,
+            payment_instrument_type=PaymentInstrumentType.objects.get_repayment(),
+            user=user2,
             entrant=user2,
             project=project
         )

@@ -60,6 +60,16 @@ class PaymentManager(models.Manager):
         donations = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT).filter(user=user)
         return donations
 
+    def donations_project(self, project, queryset=None):
+        """
+        :return: Returns all payments that are not repayments or reinvestments
+                 associated with this user.
+        """
+        if queryset is None:
+            queryset = super(PaymentManager, self).get_queryset()
+        donations = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT).filter(project=project)
+        return donations
+
     def reinvestments(self, user, project=None, queryset=None):
         """
         :return: Returns all reinvestment payments that are associated with
@@ -78,6 +88,16 @@ class PaymentManager(models.Manager):
         if queryset is None:
             queryset = super(PaymentManager, self).get_queryset()
         repayments = queryset.filter(user=user, payment_instrument_type__name=INSTRUMENT_REPAYMENT)
+        return repayments
+
+    def repayments_project(self, project, queryset=None):
+        """
+        :return: Returns all the repayments that are associated with this
+                 user.
+        """
+        if queryset is None:
+            queryset = super(PaymentManager, self).get_queryset()
+        repayments = queryset.filter(project=project, payment_instrument_type__name=INSTRUMENT_REPAYMENT)
         return repayments
 
     def all_donations(self, queryset=None):

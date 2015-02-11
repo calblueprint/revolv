@@ -282,7 +282,10 @@ class Project(models.Model):
         :return: the current total amount that has been donated to this project,
             as a float
         """
-        result = self.payment_set.aggregate(
+        #result = self.payment_set.aggregate(
+        #    models.Sum('amount')
+        #)["amount__sum"]
+        result = Payment.objects.donations_project(self).aggregate(
             models.Sum('amount')
         )["amount__sum"]
         if result is None:
@@ -305,7 +308,7 @@ class Project(models.Model):
         """
         :return: the current amount of money repaid by the project to RE-volv.
         """
-        amount_repaid = Payment.objects.repayments(self).aggregate(models.Sum('amount'))["amount__sum"]
+        amount_repaid = Payment.objects.repayments_project(self).aggregate(models.Sum('amount'))["amount__sum"]
         if amount_repaid is None:
             return 0.0
         return amount_repaid

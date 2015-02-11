@@ -1,6 +1,6 @@
 from revolv.base.models import RevolvUserProfile
-from revolv.payments.models import (INSTRUMENT_PAYPAL,
-                                    Payment, PaymentInstrumentType)
+from revolv.payments.models import (INSTRUMENT_PAYPAL, Payment,
+                                    PaymentInstrumentType)
 from revolv.settings import CHARGE_INSTRUMENT
 
 
@@ -47,13 +47,15 @@ class PaymentService(object):
 
     @classmethod
     def create_repayment(cls, entrant, amount, project):
-        donors = Payment.objects.all_donations().filter(project=project).values("user")
-        num_donors = len(donors)
-        for donor in donors:
+        donations = Payment.objects.all_donations().filter(project=project)
+        total = project.amount_donated
+        for donation in donations:
+            print "*******************"
+            print donation.user
             repayment = Payment(
-                user=RevolvUserProfile.objects.get(pk=donor['user']),
+                user=donation.user,
                 entrant=entrant,
-                amount=float(amount) / num_donors,
+                amount=float(amount) * (donation.amount / total),
                 project=project,
                 payment_instrument_type=PaymentInstrumentType.objects.get_repayment()
             )
