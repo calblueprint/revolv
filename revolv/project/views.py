@@ -96,8 +96,7 @@ class ReviewProjectView(UserDataMixin, UpdateView):
             project.complete_project()
         elif '_repayment' in self.request.POST:
             repayment_amount = Decimal(self.request.POST['_repayment_amount'])
-            repayment = PaymentService.create_repayment(self.user_profile, repayment_amount, project)
-            repayment.save()
+            PaymentService.create_repayment(self.user_profile, repayment_amount, project)
             messages.success(self.request, '$' + str(repayment_amount) + ' repaid by ' + project.org_name)
         return redirect(self.get_success_url())
 

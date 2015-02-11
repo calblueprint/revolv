@@ -41,7 +41,7 @@ class PaymentManager(models.Manager):
         Simple manager for the Payment model.
     """
 
-    def payments(self, user, queryset=None):
+    def payments(self, user, project=None, queryset=None):
         """
         :return: Payments associated with this user
         """
@@ -50,7 +50,7 @@ class PaymentManager(models.Manager):
         payments = queryset.filter(user=user).order_by('created_at')
         return payments
 
-    def donations(self, user, queryset=None):
+    def donations(self, user, project=None, queryset=None):
         """
         :return: Returns all payments that are not repayments or reinvestments
                  associated with this user.
@@ -60,7 +60,7 @@ class PaymentManager(models.Manager):
         donations = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT).filter(user=user)
         return donations
 
-    def reinvestments(self, user, queryset=None):
+    def reinvestments(self, user, project=None, queryset=None):
         """
         :return: Returns all reinvestment payments that are associated with
                  this user.
@@ -70,14 +70,14 @@ class PaymentManager(models.Manager):
         reinvestments = queryset.filter(user=user, payment_instrument_type__name=INSTRUMENT_REINVESTMENT)
         return reinvestments
 
-    def repayments(self, project, queryset=None):
+    def repayments(self, user, project=None, queryset=None):
         """
         :return: Returns all the repayments that are associated with this
-                 project.
+                 user.
         """
         if queryset is None:
             queryset = super(PaymentManager, self).get_queryset()
-        repayments = queryset.filter(project=project, payment_instrument_type__name=INSTRUMENT_REPAYMENT)
+        repayments = queryset.filter(user=user, payment_instrument_type__name=INSTRUMENT_REPAYMENT)
         return repayments
 
     def all_donations(self, queryset=None):
@@ -97,7 +97,7 @@ class PaymentManager(models.Manager):
         """
         if queryset is None:
             queryset = self.all_donations()
-        num_users = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT).values("user").distinct().count()
+        num_users = queryset.values("user").distinct().count()
         return num_users
 
 
@@ -105,7 +105,7 @@ class Payment(models.Model):
     """
         Abstraction indicating one particular payment.
     """
-    user = models.ForeignKey(RevolvUserProfile, null=True)
+    user = models.ForeignKey(RevolvUserProfile)
     entrant = models.ForeignKey(RevolvUserProfile, related_name='entrant')
     amount = models.FloatField()
     project = models.ForeignKey("project.Project")

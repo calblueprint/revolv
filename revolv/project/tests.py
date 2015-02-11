@@ -70,22 +70,23 @@ class CreateTestProjectMixin(object):
         )
         return payment, user
 
-    def _create_test_repayment_for_project(self, project, amount):
+    def create_test_repayment_for_project(self, project, amount):
         """
         Create a repayment to a given project of the given amount, entered by
         a dummy user.
 
         :return: the repayment and the user
         """
-        user = RevolvUserProfile.objects.get(id=1)
+        user1 = RevolvUserProfile.objects.get(id=1)
+        user2 = RevolvUserProfile.objects.get(id=2)
         payment = Payment.objects.create(
             amount=amount,
             payment_instrument_type=PaymentInstrumentType.objects.get_repayment(),
-            user=None,
-            entrant=user,
+            user=user1,
+            entrant=user2,
             project=project
         )
-        return payment, user
+        return payment, user1, user2
 
 
 class ProjectTests(CreateTestProjectMixin, TestCase):
@@ -130,9 +131,9 @@ class ProjectTests(CreateTestProjectMixin, TestCase):
     def test_amount_repaid(self):
         project = self.create_test_project(funding_goal=200.0)
         self.assertEqual(project.amount_repaid, 0.0)
-        self._create_test_repayment_for_project(project, 50)
+        self.create_test_repayment_for_project(project, 50)
         self.assertEqual(project.amount_repaid, 50.0)
-        self._create_test_repayment_for_project(project, 60)
+        self.create_test_repayment_for_project(project, 60)
         self.assertEqual(project.amount_repaid, 110.0)
 
     def test_partial_completeness(self):

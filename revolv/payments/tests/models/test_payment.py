@@ -97,4 +97,5 @@ class PaymentTest(TestCase):
 
         self._create_payment(user2, instrument_type=PaymentInstrumentType.objects.get_repayment(), project=project).save()
 
-        self.assertEquals(Payment.objects.repayments(project).count(), 2)
+        self.assertEquals(Payment.objects.repayments(user1).count(), 1)
+        self.assertEquals(Payment.objects.repayments(user2).count(), 1)

@@ -1,5 +1,5 @@
 from revolv.base.models import RevolvUserProfile
-from revolv.payments.models import (INSTRUMENT_PAYPAL, INSTRUMENT_REPAYMENT,
+from revolv.payments.models import (INSTRUMENT_PAYPAL,
                                     Payment, PaymentInstrumentType)
 from revolv.settings import CHARGE_INSTRUMENT
 
@@ -47,15 +47,18 @@ class PaymentService(object):
 
     @classmethod
     def create_repayment(cls, entrant, amount, project):
-        repayment = Payment(
-            user=None,
-            entrant=entrant,
-            amount=float(amount),
-            project=project,
-            payment_instrument_type=PaymentInstrumentType.objects.get_repayment()
-        )
-        repayment.save()
-        return repayment
+        donors = Payment.objects.all_donations().filter(project=project).values("user")
+        num_donors = len(donors)
+        for donor in donors:
+            repayment = Payment(
+                user=RevolvUserProfile.objects.get(pk=donor['user']),
+                entrant=entrant,
+                amount=float(amount) / num_donors,
+                project=project,
+                payment_instrument_type=PaymentInstrumentType.objects.get_repayment()
+            )
+            repayment.save()
+        return
 
     @classmethod
     def create_check(cls, user, entrant, amount, project):
@@ -91,8 +94,8 @@ class PaymentService(object):
     def check_valid_user_entrant(cls, user, entrant, payment_instrument_type):
         if not isinstance(entrant, RevolvUserProfile):
             return False
-        if payment_instrument_type.name == INSTRUMENT_PAYPAL and user != entrant:
+        if not isinstance(user, RevolvUserProfile):
             return False
-        if payment_instrument_type.name == INSTRUMENT_REPAYMENT and isinstance(user, RevolvUserProfile):
+        if payment_instrument_type.name == INSTRUMENT_PAYPAL and user != entrant:
             return False
         return True
