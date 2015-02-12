@@ -63,6 +63,7 @@ class PaymentTest(TestCase):
     def test_donations(self):
         user1 = RevolvUserProfile.objects.get(id=1)
         user2 = RevolvUserProfile.objects.get(id=2)
+        project2 = Project.objects.get(id=2)
 
         self._create_payment(user1).save()
         self._create_payment(user1, instrument_type=PaymentInstrumentType.objects.get_reinvestment()).save()
@@ -71,6 +72,11 @@ class PaymentTest(TestCase):
         self._create_payment(user2, instrument_type=PaymentInstrumentType.objects.get_repayment()).save()
 
         self.assertEquals(Payment.objects.donations(user1).count(), 1)
+        self.assertEquals(Payment.objects.donations(user1, project2).count(), 0)
+
+        self._create_payment(user1, project2).save()
+        self.assertEquals(Payment.objects.donations(user1, project2).count(), 1)
+
         self.assertEquals(Payment.objects.donations(user2).count(), 0)
 
     def test_reinvestments(self):
@@ -90,6 +96,7 @@ class PaymentTest(TestCase):
         user1 = RevolvUserProfile.objects.get(id=1)
         user2 = RevolvUserProfile.objects.get(id=2)
         project = Project.objects.get(id=1)
+        project2 = Project.objects.get(id=2)
 
         self._create_payment(user1, project=project).save()
         self._create_payment(user1, instrument_type=PaymentInstrumentType.objects.get_reinvestment(), project=project).save()
@@ -99,3 +106,7 @@ class PaymentTest(TestCase):
 
         self.assertEquals(Payment.objects.repayments(user1).count(), 1)
         self.assertEquals(Payment.objects.repayments(user2).count(), 1)
+        self.assertEquals(Payment.objects.repayments(user1, project2).count(), 0)
+
+        self._create_payment(user1, project2, instrument_type=PaymentInstrumentType.objects.get_repayment()).save()
+        self.assertEquals(Payment.objects.repayments(user1, project2).count(), 1)

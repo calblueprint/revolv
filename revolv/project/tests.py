@@ -131,6 +131,7 @@ class ProjectTests(CreateTestProjectMixin, TestCase):
         self.assertEqual(project.amount_donated, 50.0)
         self.assertEqual(project.amount_left, 150.0)
         self.create_test_donation_for_project(project, 25.50)
+        self.create_test_repayment_for_project(project, 50)
         self.assertEqual(project.amount_donated, 75.50)
         self.assertEqual(project.amount_left, 124.50)
         self.assertEqual(project.rounded_amount_left, 124.00)

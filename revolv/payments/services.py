@@ -50,8 +50,6 @@ class PaymentService(object):
         donations = Payment.objects.all_donations().filter(project=project)
         total = project.amount_donated
         for donation in donations:
-            print "*******************"
-            print donation.user
             repayment = Payment(
                 user=donation.user,
                 entrant=entrant,
