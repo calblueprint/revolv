@@ -1,0 +1,11 @@
+{
+  "name": "revolv",
+  "version": "1.0.0",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "foundation": "~5.4"
+  }
+}
