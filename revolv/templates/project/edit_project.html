@@ -124,7 +124,6 @@
 
         $("#project_form").on('submit', function(e) {
             if (!$('#id_location_latitude').val() || !$('#id_location_longitude').val()) {
-                toastr.options.closeButton = true;
                 toastr.options.positionClass = "toast-bottom-right";
                 toastr.error("Please enter a valid address");
                 e.preventDefault();
