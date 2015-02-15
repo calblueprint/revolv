@@ -46,7 +46,9 @@ fi
 
 # Node.js, CoffeeScript and LESS
 if ! command -v npm; then
-    sudo apt-get install -y node npm
+    sudo apt-get --purge remove node
+    sudo apt-get autoremove
+    sudo apt-get install -y nodejs-legacy npm
 fi
 
 sudo apt-get install rubygems-integration
