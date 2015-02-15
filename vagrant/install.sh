@@ -68,5 +68,5 @@ sudo npm install -g grunt-cli
 cd /vagrant && npm install
 
 sudo npm install -g bower
-cd /vagrant/revolv/static/ && bower install foundation
+cd /vagrant && bower install --allow-root
 cd /vagrant && grunt sass
