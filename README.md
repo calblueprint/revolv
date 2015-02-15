@@ -14,6 +14,10 @@ Who We Are
 Installation
 ------------
 
+You can choose to use [vagrant](http://vagrantup.com) or not.
+
+If *not* using vagrant:
+
     $ ./bootstrap.sh
     $ python manage.py migrate
     $ npm install -g grunt-cli
@@ -21,3 +25,17 @@ Installation
     $ npm install -g bower
     $ cd revolv/static/ && bower install foundation && cd ../../
     $ grunt sass
+    $ python manage.py migrate
+    $ python manage.py runserver
+
+If *using* vagrant:
+
+1. Install Virtualbox
+2. Install vagrant
+3. `vagrant up --provision`
+4. python vmanage.py migrate
+5. python vmanage.py runserver
+
+Development
+-----------
+1. Running `grunt watch` will start a process which will watch for changes to specific SCSS files (defined in `Gruntfile`) and will autocompile them to CSS.
