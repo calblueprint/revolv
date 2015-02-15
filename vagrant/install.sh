@@ -60,6 +60,11 @@ sudo -u postgres psql -c "alter user $DATABASE_USERNAME createdb;"
 virtualenv venv
 source venv/bin/activate
 pip install -r /vagrant/requirements.txt
+pre-commit install
 
 sudo npm install -g grunt-cli
 cd /vagrant && npm install
+
+sudo npm install -g bower
+cd /vagrant/revolv/static/ && bower install foundation
+cd /vagrant && grunt sass
