@@ -178,6 +178,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+USE_THOUSAND_SEPARATOR = True
+
 
 # Login settings
 LOGIN_URL = '/signin'

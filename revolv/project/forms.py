@@ -9,6 +9,9 @@ class ProjectForm(forms.ModelForm):
     the user can access and their basic appearance to the user.
     """
 
+    # for allowing numbers to use commas for thousands separators
+    funding_goal = forms.DecimalField(min_value=0, decimal_places=2, localize=True)
+    impact_power = forms.FloatField(localize=True)
     # sets the lat and long fields to hidden (clicking on the map updates them)
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
