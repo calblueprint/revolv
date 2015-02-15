@@ -68,7 +68,7 @@
 {% block javascripts %}
 <!-- Initializes the Google Map / Location Selection Typeahead -->
 <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE&libraries=places">
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}&libraries=places">
 </script>
 <script src="{% static 'typeahead/typeahead.bundle.js' %}"></script>
 <script src="{% static 'typeahead/typeahead-addresspicker.js' %}"></script>

@@ -1,9 +1,9 @@
+from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
-
 from revolv.base.users import UserDataMixin
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.project import forms
@@ -32,6 +32,7 @@ class CreateProjectView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['action'] = reverse('project:new')
+        context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
 
@@ -129,6 +130,12 @@ class ProjectView(UserDataMixin, DetailView):
             return super_response
         else:
             return self.deny_access()
+
+    # passes in the Maps API Key
+    def get_context_data(self, **kwargs):
+        context = super(ProjectView, self).get_context_data(**kwargs)
+        context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        return context
 
 
 class CreateProjectDonationView(UserDataMixin, FormView):
