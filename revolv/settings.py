@@ -269,6 +269,8 @@ CELERYBEAT_SCHEDULE = {
     },
 }
 
+GOOGLEMAPS_API_KEY = "AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE"
+
 # django-cms
 MIGRATION_MODULES = {
     'cms': 'cms.migrations_django',

@@ -16,7 +16,11 @@
 
 <div class='row'>
     <div class='large-12 columns'>
+        {% if project.id %}
+        <h1>Edit Project</h1>
+        {% else %}
         <h1>Create Project</h1>
+        {% endif %}
     </div>
 </div>
 <div class="row white-section">
@@ -64,7 +68,7 @@
 {% block javascripts %}
 <!-- Initializes the Google Map / Location Selection Typeahead -->
 <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE&libraries=places">
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}&libraries=places">
 </script>
 <script src="{% static 'typeahead/typeahead.bundle.js' %}"></script>
 <script src="{% static 'typeahead/typeahead-addresspicker.js' %}"></script>
