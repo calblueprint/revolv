@@ -1,0 +1,9 @@
+.reveal-modal {
+    position: fixed;
+    transform: translateY(10%);
+    transition: all .3s;
+
+    &.open {
+        transform: translateY(0);
+    }
+}

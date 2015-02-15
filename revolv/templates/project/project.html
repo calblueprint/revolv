@@ -12,9 +12,21 @@
 
 {% block body %}
 
+<div id="donate-modal" class="reveal-modal payment-modal" data-reveal>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <button class="large right" id="save_project" type="submit">Donate</button>
+    </form>
+</div>
 <div class="row">
     <div class="large-12 columns">
         <h1><strong>{{ project.title }}</strong></h1>
+        <ul class="button-group nav-tab-button-group">
+            {% if project.is_active %}
+            <li><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
+            {% endif %}
+        </ul>
         <h3>Funding Goal : {{ project.funding_goal }}</h3>
         <h3>End Date : {{ project.end_date }}</h3>
         <h5>Location : {{ project.location}}</h5>
