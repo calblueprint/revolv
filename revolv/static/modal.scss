@@ -30,6 +30,12 @@
     border-radius: 3px;
     background-color: white;
 
+    @media #{$small-only} {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: none !important;
+    }
+
     .modal-header {
         background-color: $revolv-light-blue-bg;
         height: $revolv-header-height * (5/6);
