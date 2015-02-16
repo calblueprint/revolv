@@ -12,13 +12,7 @@
 
 {% block body %}
 
-<div id="donate-modal" class="reveal-modal payment-modal" data-reveal>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_ul }}
-        <button class="large right" id="save_project" type="submit">Donate</button>
-    </form>
-</div>
+{% include "project/partials/payment_modal.html" with form=form %}
 <div class="row">
     <div class="large-12 columns">
         <h1><strong>{{ project.title }}</strong></h1>

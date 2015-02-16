@@ -1,9 +1,17 @@
-.reveal-modal {
-    position: fixed;
-    transform: translateY(10%);
-    transition: all .3s;
+@import "signin";
 
-    &.open {
-        transform: translateY(0);
+.payment-modal-content {
+    width: 60%;
+
+    .expire-column > .columns {
+        padding-left: $column-gutter / 4;
+        padding-right: $column-gutter / 4;
+
+        &:first-child {
+            padding-left: 0;
+        }
+        &:last-child {
+            padding-right: 0;
+        }
     }
 }
