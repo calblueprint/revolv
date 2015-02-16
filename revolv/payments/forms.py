@@ -26,7 +26,7 @@ class CreditCardDonationForm(DonationForm):
     ]
     type = forms.ChoiceField(choices=cardtype_choices)
 
-    month_choices = [(None, 'mm')] + [(n, n) for n in range(1, 12 + 1)]
+    month_choices = [(None, 'mm')] + [(n, '{:02d}'.format(n)) for n in range(1, 12 + 1)]
     expire_month = forms.ChoiceField(choices=month_choices)
 
     this_year = date.today().year
