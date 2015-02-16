@@ -1,7 +1,32 @@
 @import "revolv-settings";
 
+@import "utils";
+@import "foundation-settings";
+@import "bower_components/foundation/scss/foundation";
+@import "revolv-settings";
+
+// #temp {
+//     height: 20px;
+//     width: 20px;
+//     background-color:black;
+//     z-index: -1;
+// }
+
+#project-menu {
+    background-color: orange;
+}
+
+$divider-font-size: 14px;
+.homepage-divider {
+    @include text-with-divider($divider-font-size, #ddd);
+    color: $revolv-blue;
+    height: 0.6em; // adjustment for helvetica neue
+    font-weight: 100;
+}
+
 .dash-box {
     background-color: $revolv-light-blue-bg;
+    //background-color: red;
     padding: 0px 0px;
     border: solid $revolv-header-color;
     border-width: 1px;
