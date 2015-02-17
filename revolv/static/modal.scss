@@ -33,7 +33,7 @@
     @media #{$small-only} {
         width: 100% !important;
         height: 100% !important;
-        border-radius: none !important;
+        border-radius: initial !important;
     }
 
     .modal-header {
