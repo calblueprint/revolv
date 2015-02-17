@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
     <style type="text/css">
         #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
         #map-canvas img {max-width: none;}
@@ -12,9 +13,15 @@
 
 {% block body %}
 
+{% include "project/partials/payment_modal.html" with form=form %}
 <div class="row">
     <div class="large-12 columns">
         <h1><strong>{{ project.title }}</strong></h1>
+        <ul class="button-group nav-tab-button-group">
+            {% if project.is_active %}
+            <li><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
+            {% endif %}
+        </ul>
         <h3>Funding Goal : {{ project.funding_goal }}</h3>
         <h3>End Date : {{ project.end_date }}</h3>
         <h5>Location : {{ project.location}}</h5>
