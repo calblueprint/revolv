@@ -67,6 +67,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'djangobower',
     'django.contrib.humanize',
+    'django_extensions',
 
     # revolv apps
     'revolv.base',
