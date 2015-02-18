@@ -47,7 +47,6 @@
 
     {% if messages %}
         <script>
-            toastr.options.closeButton = true;
             toastr.options.positionClass = "toast-bottom-right";
         </script>
         {% for message in messages %}
@@ -58,7 +57,12 @@
     {% endif %}
 
     <script>
-      $(document).foundation();
+      $(document).foundation({
+          reveal: {
+              animation: 'fade',
+              dismiss_modal_class: 'close-revolv-reveal-modal',
+          }
+      });
     </script>
 
     {% render_block "js" %}

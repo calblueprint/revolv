@@ -71,6 +71,9 @@
                         <a href="{% url "project:review" project.pk %}">
                             <img src="{{ project.preview_photo.url }}"></img>
                         </a>
+                        {% if project in active_projects or project in completed_projects %}
+                        <a class="small button success radius" href="{% url "project:update" pk=project.id %}">Post Project Update</a>
+                        {% endif %}
                     </div>
                     <br/>
                 </div>

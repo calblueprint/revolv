@@ -11,12 +11,14 @@ class CreditCardDonationFormTestCase(TestCase):
             'type': 'visa',
             'first_name': 'William',
             'last_name': 'Taft',
-            'expire_month': '06',
-            'expire_year': '14',
+            'expire_month': 6,
+            'expire_year': 2020,
             'cvv2': '00',
             'number': '1234123412341234',
             'amount': '10.00',
         })
+        if not cc_form.is_valid():
+            print cc_form.errors
         self.assertTrue(cc_form.is_valid())
 
     @mock.patch('revolv.payments.forms.PaymentService')
@@ -30,8 +32,8 @@ class CreditCardDonationFormTestCase(TestCase):
             'type': 'visa',
             'first_name': 'William',
             'last_name': 'Taft',
-            'expire_month': '06',
-            'expire_year': '14',
+            'expire_month': 6,
+            'expire_year': 2020,
             'cvv2': '00',
             'number': '1234123412341234',
             'amount': '10.00',

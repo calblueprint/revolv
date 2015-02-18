@@ -52,7 +52,8 @@ class UserDataMixin(object):
         is logged in, self.user is a django.contrib.auth.models.User.
         """
         self.user = request.user
-        if self.user.is_authenticated():
+        self.is_authenticated = self.user.is_authenticated()
+        if self.is_authenticated:
             self.user_profile = RevolvUserProfile.objects.get(user=self.user)
             self.is_donor = self.user_profile.is_donor()
             self.is_ambassador = self.user_profile.is_ambassador()

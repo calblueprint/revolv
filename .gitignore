@@ -66,6 +66,7 @@ raw_templates/bower_components/
 revolv/static/bower_components/
 node_modules/
 .revolv_bash_profile
+.vagrant
 
 # IDEA
 .idea

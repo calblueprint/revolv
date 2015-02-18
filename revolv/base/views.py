@@ -61,6 +61,7 @@ class SignInView(TemplateView):
         context["signup_form"] = signup_form
         context["login_form"] = login_form
         context["login_redirect_url"] = self.request.GET.get("next")
+        context["referring_endpoint"] = ""
         return context
 
 
@@ -103,6 +104,8 @@ class LoginView(RedirectToSigninOrHomeMixin, FormView):
     """
     form_class = AuthenticationForm
     template_name = 'base/sign_in.html'
+    url_append = "#login"
+    redirect_view = "signin"
 
     @method_decorator(sensitive_post_parameters('password'))
     def dispatch(self, request, *args, **kwargs):
@@ -119,6 +122,7 @@ class LoginView(RedirectToSigninOrHomeMixin, FormView):
         context = super(LoginView, self).get_context_data(*args, **kwargs)
         context["signup_form"] = SignupForm()
         context["login_form"] = self.get_form(self.form_class)
+        context["referring_endpoint"] = "login"
         return context
 
 
@@ -135,6 +139,8 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
     """
     form_class = SignupForm
     template_name = "base/sign_in.html"
+    url_append = "#signup"
+    redirect_view = "signin"
 
     def form_valid(self, form):
         form.save()
@@ -147,6 +153,7 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
         context = super(SignupView, self).get_context_data(**kwargs)
         context["signup_form"] = self.get_form(self.form_class)
         context["login_form"] = AuthenticationForm()
+        context["referring_endpoint"] = "signup"
         return context
 
 
@@ -160,3 +167,21 @@ class LogoutView(UserDataMixin, View):
         auth_logout(request)
         messages.success(self.request, 'Logged out successfully')
         return redirect('home')
+
+
+class DashboardRedirect(UserDataMixin, View):
+    """
+    Redirects user to appropriate dashboard. (e.g. Administrators automagically
+    go to the /dashboard/admin endpoint)
+
+    Redirects to home page if not authenticated.
+    """
+
+    def get(self, request, *args, **kwargs):
+        if not self.is_authenticated:
+            return redirect('home')
+        if self.is_administrator:
+            return redirect('administrator:dashboard')
+        if self.is_ambassador:
+            return redirect('ambassador:dashboard')
+        return redirect('donor:dashboard')

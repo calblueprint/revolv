@@ -178,6 +178,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+USE_THOUSAND_SEPARATOR = True
+
 
 # Login settings
 LOGIN_URL = '/signin'
@@ -268,6 +270,8 @@ CELERYBEAT_SCHEDULE = {
         "args": (2, 4),
     },
 }
+
+GOOGLEMAPS_API_KEY = "AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE"
 
 # django-cms
 MIGRATION_MODULES = {

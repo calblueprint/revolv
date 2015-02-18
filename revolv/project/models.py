@@ -273,6 +273,11 @@ class Project(models.Model):
         self.save()
         return self
 
+    def mark_as_incomplete_project(self):
+        self.project_status = Project.ACTIVE
+        self.save()
+        return self
+
     def get_absolute_url(self):
         return reverse("project:view", kwargs={"pk": str(self.pk)})
 
