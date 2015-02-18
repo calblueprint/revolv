@@ -20,9 +20,20 @@
           <div class='active-project-container'>
             {% for project in proposed_projects %}
                 {% if project == proposed_projects.first %}
-                    <img src="{{project.cover_photo}}" alt='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
-                    <p>{{project.title}}</p>
-                    <div class="status-bar"></div>
+                    <!-- <img src="{{project.cover_photo}}" alt='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/> -->
+                    <div class='row'>
+                      <div class='large-12 columns'>
+                        <img src='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
+                        <p>{{project.title}}</p>
+                        <div class="status-bar"></div>
+                      </div>
+                    </div>  
+                {% else %}
+                  <div class='large-3 columns'>
+                      <img src='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
+                      <p>{{project.title}}</p>
+                      <div class="status-bar"></div>
+                  </div>
                 {% endif %}
             {% endfor %}
          </div>
@@ -43,9 +54,13 @@
          <div class="large-3 pull-9 columns">
             
           <ul class="side-nav">
-            <li><a href="#">PROJECTS</a></li>
+            <!-- <li><a href="#">PROJECTS</a></li> -->
             {% for project in proposed_projects %}
-                <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                {% if project == proposed_projects.first %}
+                  <li class='active'><a href="project/{{project.id}}">{{project.title}}</a></li>
+                {% else %}
+                  <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                {% endif %}
             {% endfor %}
           </ul>
             
