@@ -57,7 +57,12 @@
     {% endif %}
 
     <script>
-      $(document).foundation();
+      $(document).foundation({
+          reveal: {
+              animation: 'fade',
+              dismiss_modal_class: 'close-revolv-reveal-modal',
+          }
+      });
     </script>
 
     {% render_block "js" %}

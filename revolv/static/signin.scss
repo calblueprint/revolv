@@ -52,12 +52,22 @@ small.field-error { // extra qualifiers to override foundation
 }
 
 .submit-button {
+    margin: 0;
     width: 100%;
     height: 37px;
     line-height: 0px; // this is a little weird, but it's because the buttons are entirely composed of padding by foundation
     background-color: transparent;
     color: $revolv-blue;
     border: 1px solid $revolv-blue;
+
+    &.gray {
+        color: darken($revolv-gray-bg, 25%);
+        border: 1px solid darken($revolv-gray-bg, 25%);
+
+        &:hover {
+            background-color: darken($revolv-gray-bg, 25%);
+        }
+    }
 
     &:hover {
         background-color: $revolv-blue;
