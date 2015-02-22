@@ -1,8 +1,15 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static "dashboard.css" %}" />
 
 {% block title %}Home{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript" src="{% static "js/base/dashboard.js" %}"></script>
+{% endblock %}
 
 {% block body %}
 
@@ -11,62 +18,136 @@
       <div class="row">    
           
         <div class="large-9 push-3 columns">
-          
-          <!-- <h3>Page Title <small>Page subtitle</small></h3> -->
           <div class="row homepage-divider">active projects</div><br>
-          
-          <p>put content in this div</p>
-          
-          <div class='active-project-container'>
-            {% for project in proposed_projects %}
-                {% if project == proposed_projects.first %}
-                    <!-- <img src="{{project.cover_photo}}" alt='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/> -->
-                    <div class='row'>
-                      <div class='large-12 columns'>
+          <div class='project-container active row' id="active-project-container">
+            {% for project in active_projects %}
+                {% if project == active_projects.first %}
+                      <div class='large-12 pull-0 columns'>
                         <img src='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
-                        <p>{{project.title}}</p>
-                        <div class="status-bar"></div>
+                        <p class="project-title">{{project.title}}</p>
+                        <div class="status-bar">
+                          <p class="status-bar-menu-text"><a href="#">menu ></a></p>
+                          <div class="progress-bar-scale"></div>
+                        </div>
                       </div>
-                    </div>  
-                {% else %}
-                  <div class='large-3 columns'>
-                      <img src='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
-                      <p>{{project.title}}</p>
-                      <div class="status-bar"></div>
-                  </div>
                 {% endif %}
             {% endfor %}
          </div>
-
-    {% for project in proposed_projects %}
-        {% if project != proposed_projects.first %}
-            <div class="project-container">
-                <img src="{{project.cover_photo}}" alt='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
+         <br></br>
+         <div class="row homepage-divider">other projects</div><br>
+         <div id="other-project-container row">
+          {% for project in proposed_projects %}
+            <div class="project-container large-4 columns">
+              <img src='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
+              <p class="project-title">{{project.title}}</p>
+              <div class="status-bar">
+                <p class="status-bar-menu-text"><a href="#">menu ></a></p>
+                <div class="progress-bar-scale"></div>
+              </div>
             </div>
-            <p>{{project.title}}</p>
-            <div class="status-bar"></div>
-        {% endif %}
-    {% endfor %}
-
-                
+          {% endfor %}
+          {% for project in drafted_projects %}
+            <div class="project-container large-4 columns">
+              <img src='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
+              <p class="project-title">{{project.title}}</p>
+              <div class="status-bar">
+                <p class="status-bar-menu-text"><a href="#">menu ></a></p>
+                <div class="progress-bar-scale"></div>
+              </div>
+            </div>
+          {% endfor %}
+          {% for project in completed_projects %}
+            <div class="project-container large-4 columns">
+              <img src='http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'/>
+              <p class="project-title">{{project.title}}</p>
+              <div class="status-bar">
+                <p class="status-bar-menu-text"><a href="#">menu ></a></p>
+                <div class="progress-bar-scale"></div>
+              </div>
+            </div>
+          {% endfor %}
+         </div>        
         </div>
-
-         <div class="large-3 pull-9 columns">
+         <div class="large-3 pull-9 columns>">
+          <br></br>
+          <div class="large-10 pull--1 columns>">
+          <ul class="accordion" data-accordion>
+            <li class="accordion-navigation">
+              <a href="#panel1">Active Projects</a>
+              <div id="panel1" class="content">
+                <ul class="side-nav">
+                  {% for project in active_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel2">Proposed Projects</a>
+              <div id="panel2" class="content">
+                <ul class="side-nav">
+                  {% for project in proposed_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel3">Drafted Projects</a>
+              <div id="panel3" class="content">
+                <ul class="side-nav">
+                  {% for project in drafted_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel4">Completed Projects</a>
+              <div id="panel4" class="content">
+                <ul class="side-nav">
+                  {% for project in completed_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+          </ul>
+         </div>
+         <br></br>
+        </div>
+         <!-- <div class="large-3 pull-9 columns">
             
           <ul class="side-nav">
-            <!-- <li><a href="#">PROJECTS</a></li> -->
+            <li><a href="#">PROJECTS</a></li>
+            
+            <div class="large-12 colums" id="active-project-nav">
+              <li><a href="#">Active Projects</a></li>
+              {% for project in active_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+              {% endfor %}
+            </div>
+
+            <li><a href="#">Proposed Projects</a></li>
             {% for project in proposed_projects %}
-                {% if project == proposed_projects.first %}
-                  <li class='active'><a href="project/{{project.id}}">{{project.title}}</a></li>
-                {% else %}
                   <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-                {% endif %}
+            {% endfor %}
+
+            <li><a href="#">Drafted Projects</a></li>
+            {% for project in drafted_projects %}
+                  <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+            {% endfor %}
+
+            <li><a href="#">Completed Projects</a></li>
+            {% for project in completed_projects %}
+                  <li><a href="project/{{project.id}}">{{project.title}}</a></li>
             {% endfor %}
           </ul>
             
-        </div>
+        </div> -->
         
       </div>
+      <br></br>
 </div>
 
 {% endblock %}
