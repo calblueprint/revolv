@@ -61,7 +61,7 @@
             {% include "base/partials/placeholder_formfield.html" with field=signup_form.first_name %}
             {% include "base/partials/placeholder_formfield.html" with field=signup_form.last_name %}
             {% include "base/partials/placeholder_formfield.html" with field=signup_form.email %}
-            <label style="text-align:center">
+            <label class="checkbox-field-label">
             {{ signup_form.subscribed_to_newsletter }}   {{signup_form.subscribed_to_newsletter.label}}
             </label>
             <button class="submit-button medium" type="submit" value="Log in">Sign up</button>
