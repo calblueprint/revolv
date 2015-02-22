@@ -101,7 +101,8 @@ class UserAuthTestCase(TestUserMixin, TestCase):
             "password2": "doe_password_1",
             "first_name": "John",
             "last_name": "Doe",
-            "email": "john@example.com"
+            "email": "john@example.com",
+            "subscribed_to_newsletter": True
         }
 
         no_name_data = valid_data.copy()
