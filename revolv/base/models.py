@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+
 from django_facebook.models import FacebookModel
 from revolv.base.utils import get_group_by_name, get_profile
 
