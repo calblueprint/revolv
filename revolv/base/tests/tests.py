@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
+
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_group_by_name, get_profile
 
