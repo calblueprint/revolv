@@ -43,8 +43,7 @@
     border-color: #f46b7b; }
 
 label.checkbox-field-label {
-    text-align: center;
-}
+  text-align: center; }
 
 small.non-field-error {
   background-color: #f46b7b; }
