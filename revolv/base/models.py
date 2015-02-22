@@ -46,6 +46,7 @@ class RevolvUserProfile(FacebookModel):
     ADMIN_GROUP = "administrators"
 
     user = models.OneToOneField(User)
+    subscribed_to_newsletter = models.BooleanField(default=False)
 
     def is_donor(self):
         """Return whether the associated user can donate."""

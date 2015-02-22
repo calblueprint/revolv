@@ -55,9 +55,15 @@
             {% for error in signup_form.non_field_errors %}
               <small class="error non-field-error">{{ error }}</small>
             {% endfor %}
-            {% for signup_field in signup_form %}
-                {% include "base/partials/placeholder_formfield.html" with field=signup_field %}
-            {% endfor %}
+            {% include "base/partials/placeholder_formfield.html" with field=signup_form.username %}
+            {% include "base/partials/placeholder_formfield.html" with field=signup_form.password1 %}
+            {% include "base/partials/placeholder_formfield.html" with field=signup_form.password2 %}
+            {% include "base/partials/placeholder_formfield.html" with field=signup_form.first_name %}
+            {% include "base/partials/placeholder_formfield.html" with field=signup_form.last_name %}
+            {% include "base/partials/placeholder_formfield.html" with field=signup_form.email %}
+            <label style="text-align:center">
+            {{ signup_form.subscribed_to_newsletter }}   {{signup_form.subscribed_to_newsletter.label}}
+            </label>
             <button class="submit-button medium" type="submit" value="Log in">Sign up</button>
         </form>
     </div>
