@@ -217,21 +217,25 @@ MEDIA_DIRECTORY = '/media/'
 MEDIA_URL = S3_URL + MEDIA_DIRECTORY
 
 # email settings
-
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
+# see http://stackoverflow.com/questions/9723494/setting-up-email-with-sendgrid-in-heroku-for-a-django-app
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
-EMAIL_HOST_USER = os.environ.get(
-    'EMAIL_HOST_USER',
-    'administration@revolv.org'
-)
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
+if IS_HEROKU:
+    EMAIL_HOST = "smtp.sendgrid.net"
+    EMAIL_HOST_USER = os.environ["SENDGRID_USERNAME"]
+    EMAIL_HOST_PASSWORD = os.environ["SENDGRID_PASSWORD"]
+else:
+    EMAIL_HOST = "localhost"
+    EMAIL_HOST_USER = "revolv@localhost.org"  # doesn't matter on local
+    EMAIL_HOST_PASSWORD = ""
+
 EMAIL_TEMPLATES_PATH = os.path.join(
     SETTINGS_PATH,
     'templates',
     'emails',
     'emails.yml'
 )
+
 # Hard-coded urls: kind of ugly but we need these for when we
 # want to send links in emails
 SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
