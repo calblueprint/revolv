@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	
 	$('.accordion-navigation').click(function(){
 		console.log("clicked");
 		var active = $(this).find("div").hasClass("active");
@@ -11,13 +10,22 @@ $(document).ready(function(){
 		}
 	});
 
-	fillInProgressBars();
 });
 
 function fillInProgressBars(){
-	//first
-	
-	//second
-	//third
-	//fourth
+	//handle getting percentages
+	console.log('hi')
+	var first = 70;
+	var second = 30;
+	var third = 10;
+	var fourth = 100;
+	var arr = [first, second, third, fourth]
+
+	var greenBars = document.getElementByClassName('.green-bar');
+
+	for (var i = 0; i < arr.length; i+=1){
+		greenBars[i].css("width", arr[i]+"%");
+	}
 }
+
+fillInProgressBars();

@@ -12,10 +12,6 @@
 //     z-index: -1;
 // }
 
-.accordion li .content {
-    background-color: blue;
-}
-
 #project-menu {
     background-color: orange;
 }
@@ -108,7 +104,13 @@ $divider-font-size: 14px;
             background-color: white;
             position: absolute;
             top: 50%;
-            left: 10%
+            left: 10%;
+
+            .green-bar {
+                width: 90%;
+                height: 100%;
+                background-color: green;
+            }
 
         }
     }
@@ -142,5 +144,19 @@ $divider-font-size: 14px;
     .project-title {
         font-size: 24px;
         width: 40%;
+    }
+}
+
+.accordion {
+    top: 0;
+    
+    // li .content {
+    // background-color: blue;
+    // }
+    .accordion-navigation {
+        
+        #new-project-button {
+            background-color: green;
+        }
     }
 }
