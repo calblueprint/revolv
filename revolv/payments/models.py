@@ -15,7 +15,7 @@ class PaymentInstrumentTypeManager(models.Manager):
         return queryset.get(name=INSTRUMENT_PAYPAL)
 
     def get_reinvestment(self, queryset=None):
-        """Return the PaymentInstrumentTypeManager for paypal payments."""
+        """Return the PaymentInstrumentTypeManager for reinvestment payments."""
         if queryset is None:
             queryset = super(PaymentInstrumentTypeManager, self).get_queryset()
         return queryset.get(name=INSTRUMENT_REINVESTMENT)
@@ -43,64 +43,43 @@ class PaymentManager(models.Manager):
 
     def payments(self, user=None, project=None, queryset=None):
         """
-        :return: Payments associated with this user
+        :return: Payments associated with this user and project
         """
         if queryset is None:
             queryset = super(PaymentManager, self).get_queryset()
-        payments = queryset.filter(user=user).order_by('created_at')
-        return payments
+        if user:
+            queryset = queryset.filter(user=user).order_by('created_at')
+        if project:
+            queryset = queryset.filter(project=project).order_by('created_at')
+        return queryset
 
     def donations(self, user=None, project=None, queryset=None):
         """
         :return: Returns all payments that are not repayments or reinvestments
                  associated with this user.
         """
-        if queryset is None:
-            queryset = super(PaymentManager, self).get_queryset()
-        donations = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT)
-        if user:
-            donations = donations.filter(user=user)
-        if project:
-            donations = donations.filter(project=project)
-        return donations
+        return self.payments(user, project, queryset).exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT)
 
     def reinvestments(self, user=None, project=None, queryset=None):
         """
         :return: Returns all reinvestment payments that are associated with
                  this user.
         """
-        if queryset is None:
-            queryset = super(PaymentManager, self).get_queryset()
-        reinvestments = queryset.filter(payment_instrument_type__name=INSTRUMENT_REINVESTMENT)
-        if user:
-            reinvestments = reinvestments.filter(user=user)
-        if project:
-            reinvestments = reinvestments.filter(project=project)
-        return reinvestments
+        return self.payments(user, project, queryset).filter(payment_instrument_type__name=INSTRUMENT_REINVESTMENT)
 
     def repayments(self, user=None, project=None, queryset=None):
         """
         :return: Returns all the repayments that are associated with this
                  user.
         """
-        if queryset is None:
-            queryset = super(PaymentManager, self).get_queryset()
-        repayments = queryset.filter(payment_instrument_type__name=INSTRUMENT_REPAYMENT)
-        if user:
-            repayments = repayments.filter(user=user)
-        if project:
-            repayments = repayments.filter(project=project)
-        return repayments
+        return self.payments(user, project, queryset).filter(payment_instrument_type__name=INSTRUMENT_REPAYMENT)
 
     def all_donations(self, queryset=None):
         """
         :return: Returns all the donations made on the application. Useful helper for distinct
                  donors.
         """
-        if queryset is None:
-            queryset = super(PaymentManager, self).get_queryset()
-        donations = queryset.exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT)
-        return donations
+        return self.payments(queryset=queryset).exclude(payment_instrument_type__name=INSTRUMENT_REINVESTMENT).exclude(payment_instrument_type__name=INSTRUMENT_REPAYMENT)
 
     def total_distinct_donors(self, queryset=None):
         """

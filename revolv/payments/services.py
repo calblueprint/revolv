@@ -20,7 +20,7 @@ class PaymentService(object):
         Create a payment based on a configured payment_instrument.
 
         :user: a User making the payment
-        :entrant: a User entering the payment
+        :entrant: a User entering the payment. if user==entrant then organic payment.
         :amount: float amount in USD
         :project: Project associated with payment
         :payment_instrument: a PaymentInstrument object (see PayPalCreditCardInstrument)

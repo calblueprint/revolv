@@ -310,10 +310,7 @@ class Project(models.Model):
         """
         :return: the current amount of money repaid by the project to RE-volv.
         """
-        amount_repaid = Payment.objects.repayments(project=self).aggregate(models.Sum('amount'))["amount__sum"]
-        if amount_repaid is None:
-            return 0.0
-        return amount_repaid
+        return Payment.objects.repayments(project=self).aggregate(models.Sum('amount'))["amount__sum"] or 0.0
 
     @property
     def rounded_amount_left(self):
