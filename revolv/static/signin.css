@@ -58,10 +58,10 @@ small.field-error {
   color: #11ade5;
   border: 1px solid #11ade5; }
   .submit-button.gray {
-    color: #b3b3c0;
-    border: 1px solid #b3b3c0; }
+    color: #b3b4c0;
+    border: 1px solid #b3b4c0; }
     .submit-button.gray:hover {
-      background-color: #b3b3c0; }
+      background-color: #b3b4c0; }
   .submit-button:hover {
     background-color: #11ade5;
     color: white;
