@@ -38,10 +38,38 @@
 
     .modal-header {
         background-color: $revolv-light-blue-bg;
-        height: $revolv-header-height * (5/6);
-        line-height: $revolv-header-height * (5/6);
-        padding: 0 ($column-gutter / 2);
+        min-height: $revolv-header-height * (5/6);
         margin-bottom: ($column-gutter / 2);
+
+        > div, > span {
+            padding: 0 ($column-gutter / 2);
+        }
+
+        > .modal-title {
+            display: block;
+            height: $revolv-header-height * (5/6);
+            line-height: $revolv-header-height * (5/6);
+        }
+
+        > .modal-errors {
+            display: none;
+            visibility: hidden;
+            background-color: darken($revolv-gray-bg, 10%);
+            min-height: $revolv-header-height * (5/6);
+            padding-top: ($column-gutter / 2);
+            padding-bottom: ($column-gutter / 2);
+
+            .error-list {
+                padding: 0;
+                margin: 0;
+                margin-left: $column-gutter;
+            }
+
+            &.error {
+                display: block;
+                visibility: visible;
+            }
+        }
     }
 
     .modal-footer {

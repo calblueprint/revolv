@@ -2,24 +2,29 @@
     <div class="modal-cell">
         <div class="modal-content payment-modal-content">
             <div class="modal-header">
-                Donate to Project
+                <span class="modal-title">Donate to Project</span>
+                <div class="modal-errors">
+                    <span>Please correct the following fields:</span>
+                    <ul class="error-list">
+                    </ul>
+                </div>
             </div>
-            <form method="POST" enctype="multipart/form-data">
+            <form name="donate-form" id="donate-form" method="POST" action="validate_payment">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="medium-6 columns">Card type {{ form.type }}</div>
-                    <div class="medium-6 columns">Card number {{ form.number }}</div>
+                    <div class="medium-6 columns"><label>Card type</label>{{ form.type }}</div>
+                    <div class="medium-6 columns"><label>Card number</label>{{ form.number }}</div>
                 </div>
                 <div class="row">
                     <div class="medium-6 columns">
-                        <div>Expires on</div>
+                        <label>Expires on</label>
                         <div class="expire-column">
                             <div class="small-6 columns">{{ form.expire_month }}</div>
                             <div class="small-6 columns">{{ form.expire_year }}</div>
                         </div>
                     </div>
                     <div class="medium-6 columns">
-                        <div>Security code</div>
+                        <label>Security code</label>
                         <div class="expire-column">
                             <div class="small-6 columns">{{ form.cvv2 }}</div>
                             {# TODO: add (?) tooltip for CVV #}
@@ -27,8 +32,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="medium-6 columns">First name {{ form.first_name }}</div>
-                    <div class="medium-6 columns">Last name {{ form.last_name }}</div>
+                    <div class="medium-6 columns"><label>First name</label>{{ form.first_name }}</div>
+                    <div class="medium-6 columns"><label>Last name</label>{{ form.last_name }}</div>
+                </div>
+                <div class="row">
+                    <div class="medium-12 columns"><label>Amount</label>{{ form.amount }}</div>
                 </div>
                 <div class="modal-footer">
                     <ul class="modal-footer-button-group right">

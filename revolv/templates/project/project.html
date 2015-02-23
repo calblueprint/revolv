@@ -91,4 +91,50 @@ if (embedUrl === "error") {
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
+<script type="text/javascript">
+$(function() {
+    var prettyName = function(name) {
+        return name.replace(/_/g, ' ')
+                .replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
+    };
+    var ffNames = {{ form.fields.keys | safe }}; // TODO: probably not okay, #yolo
+    $('#donate-form').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var formURL = form.attr('action');
+        var formData = form.serializeArray();
+        $.ajax({
+            url: '{{ request.get_full_path }}' + formURL,
+            data: formData,
+            type: 'POST',
+            success: function(data) {
+                var $error_list = $('.error-list');
+                $error_list.empty();
+                var errors = data.errors;
+                for (var i = 0; i < ffNames.length; i++) {
+                    var ffName = ffNames[i];
+                    var ff = $('#id_' + ffName);
+                    var error = errors[ffName];
+                    if (error !== undefined) {
+                        ff.addClass('error');
+                        var error = $('<li/>')
+                            .text(prettyName(ffName) + ': ' + error);
+                        $error_list.append(error);
+                    } else {
+                        ff.removeClass('error');
+                    }
+                }
+                if (!data.valid) {
+                    $error_list.parents('.modal-errors').addClass('error');
+                } else {
+                    $error_list.parents('.modal-errors').removeClass('error');
+                }
+            },
+        });
+    });
+});
+</script>
 {% endblock %}

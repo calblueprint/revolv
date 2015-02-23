@@ -16,4 +16,12 @@ p, h2, h3, h4 {
     font-family: $body-font-family;
 }
 
+// TODO: make this less hacky
+input, select, textarea {
+    &.error {
+        margin-bottom: 1rem !important;
+        border-color: $revolv-error-color !important;
+    }
+}
+
 @import "footer";

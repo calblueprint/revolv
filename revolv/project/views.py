@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import FormView
@@ -156,6 +157,15 @@ class ProjectView(UserDataMixin, FormView):
     @property
     def success_url(self):
         return '/project/{0}'.format(self.kwargs.get('pk'))
+
+
+def validate_payment(request, *args, **kwargs):
+    form = CreditCardDonationForm(request.POST)
+    errors = form.errors
+    return JsonResponse({
+        'valid': not errors,
+        'errors': errors,
+    })
 
 
 class CreateProjectDonationView(UserDataMixin, FormView):
