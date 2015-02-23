@@ -5611,6 +5611,9 @@ th.hide-for-touch {
 label.checkbox-field-label {
   text-align: center; }
 
+label.checkbox-field-label span {
+  margin-left: 8px; }
+
 small.non-field-error {
   background-color: #f46b7b; }
 
