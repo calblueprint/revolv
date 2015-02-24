@@ -12,6 +12,8 @@ from revolv.base.signals import create_profile_of_user
 from revolv.base.tests.tests import TestUserMixin
 from revolv.payments.models import (Donation, PaymentInstrumentType,
                                     PaymentTransaction)
+from revolv.project.models import Project
+from revolv.project.tasks import scrape
 
 
 # Create your tests here.
