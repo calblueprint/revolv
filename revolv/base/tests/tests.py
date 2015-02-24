@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
 from django.core.management import call_command
-from revolv.base.signals import create_profile_of_user
-from django_facebook.utils import get_user_model
 from django.db.models.signals import post_save
 from django.test import TestCase
 
+from django_facebook.utils import get_user_model
 from revolv.base.models import RevolvUserProfile
+from revolv.base.signals import create_profile_of_user
 from revolv.base.utils import get_group_by_name, get_profile
 
 
