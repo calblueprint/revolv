@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 
-from revolv.base.users import UserDataMixin
 from revolv.base.models import RevolvUserProfile
+from revolv.base.users import UserDataMixin
 from revolv.project.models import Project
 
 

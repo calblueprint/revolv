@@ -1,4 +1,8 @@
 from django.contrib.auth.models import User
+from django.core.management import call_command
+from revolv.base.signals import create_profile_of_user
+from django_facebook.utils import get_user_model
+from django.db.models.signals import post_save
 from django.test import TestCase
 
 from revolv.base.models import RevolvUserProfile
@@ -130,6 +134,22 @@ class UserAuthTestCase(TestUserMixin, TestCase):
         # make sure the user was actually saved
         test_user = User.objects.get(username="john123")
         RevolvUserProfile.objects.get(user=test_user)
+
+
+class RevolvUserProfileManagerTestCase(TestCase):
+    """Tests for the RevolvUserProfileManager"""
+
+    def setUp(self):
+        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
+        call_command('loaddata', 'user', 'revolvuserprofile', 'donation', 'payment_transaction', 'project')
+
+    def tearDown(self):
+        post_save.connect(create_profile_of_user, sender=get_user_model())
+
+    def test_get_subscribed_to_newsletter(self):
+        context = RevolvUserProfile.objects.get_subscribed_to_newsletter()
+        self.assertEqual(len(context), 2)
+        self.assertEqual(context[0], "revolv@gmail.com")
 
 
 class UserPermissionsTestCase(TestCase):
