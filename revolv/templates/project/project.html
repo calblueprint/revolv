@@ -137,58 +137,55 @@ $(function() {
         var form = $(this);
         var formURL = form.attr('action');
         var formData = form.serializeArray();
-        $.ajax({
-            url: '{{ request.get_full_path }}' + formURL,
-            data: formData,
-            type: 'POST',
-            success: function(data) {
-                var $error_list = $('.error-list');
-                $error_list.empty();
-                var errors = data.errors;
-                for (var i = 0; i < ffNames.length; i++) {
-                    var ffName = ffNames[i];
-                    var ff = $('#id_' + ffName);
-                    var error = errors[ffName];
-                    if (error !== undefined) {
-                        ff.addClass('error');
-                        var error = $('<li/>')
-                            .text(prettyName(ffName) + ': ' + error);
-                        $error_list.append(error);
-                    } else {
-                        ff.removeClass('error');
-                    }
-                }
-                if (!data.valid) {
-                    $error_list.parents('.modal-errors').addClass('error');
+        $.post(
+            '{{ request.get_full_path }}' + formURL,
+            formData
+        ).done(function(data) {
+            var $error_list = $('.error-list');
+            $error_list.empty();
+            var errors = data.errors;
+            for (var i = 0; i < ffNames.length; i++) {
+                var ffName = ffNames[i];
+                var ff = $('#id_' + ffName);
+                var error = errors[ffName];
+                if (error !== undefined) {
+                    ff.addClass('error');
+                    var error = $('<li/>')
+                        .text(prettyName(ffName) + ': ' + error);
+                    $error_list.append(error);
                 } else {
-                    $error_list.parents('.modal-errors').removeClass('error');
-
-                    $confirm_info_card = $('#confirm-info-card');
-                    $confirm_info_card.empty();
-                    $confirm_info_card.append(cardInfoBlock(data.confirm));
-
-                    $('#confirm-info-amount').text('${0} USD'.format(
-                        (new Number(data.confirm.amount)).toFixed(2)));
-
-                    // HACK: serializing data.confirm, not sure if best approach
-                    var confirm_data = [];
-                    for (key in data.confirm) {
-                        if (!data.confirm.hasOwnProperty(key)) {
-                            continue;
-                        }
-                        confirm_data.push({
-                            name: key,
-                            value: data.confirm[key]
-                        });
-                    }
-                    extra_confirm_data = confirm_data
-
-                    $('#confirm-modal').foundation('reveal', 'open');
+                    ff.removeClass('error');
                 }
-            },
-            error: function(jqXHR) {
-                // TODO
-            },
+            }
+            if (!data.valid) {
+                $error_list.parents('.modal-errors').addClass('error');
+            } else {
+                $error_list.parents('.modal-errors').removeClass('error');
+
+                $confirm_info_card = $('#confirm-info-card');
+                $confirm_info_card.empty();
+                $confirm_info_card.append(cardInfoBlock(data.confirm));
+
+                $('#confirm-info-amount').text('${0} USD'.format(
+                    (new Number(data.confirm.amount)).toFixed(2)));
+
+                // HACK: serializing data.confirm, not sure if best approach
+                var confirm_data = [];
+                for (key in data.confirm) {
+                    if (!data.confirm.hasOwnProperty(key)) {
+                        continue;
+                    }
+                    confirm_data.push({
+                        name: key,
+                        value: data.confirm[key]
+                    });
+                }
+                extra_confirm_data = confirm_data
+
+                $('#confirm-modal').foundation('reveal', 'open');
+            }
+        }).fail(function(jqXHR) {
+              // TODO
         });
     });
 
@@ -204,20 +201,17 @@ $(function() {
         var formData = form.serializeArray();
         formData.push.apply(formData, extra_confirm_data);
         var formURL = form.attr('action');
-        $.ajax({
-            url: '{{ request.get_full_path }}' + formURL,
-            data: formData,
-            type: 'POST',
-            success: function(data) {
-                if (data.success) {
-                    $('#amount-donated').text('${0}'.format(
-                        (new Number(data.amount)).toFixed(2)));
-                    $('#success-modal').foundation('reveal', 'open');
-                }
-            },
-            error: function(jqXHR) {
-                // TODO
-            },
+        $.post(
+            '{{ request.get_full_path }}' + formURL,
+            formData
+        ).done(function(data) {
+            if (data.success) {
+                $('#amount-donated').text('${0}'.format(
+                    (new Number(data.amount)).toFixed(2)));
+                $('#success-modal').foundation('reveal', 'open');
+            }
+        }).fail(function(jqXHR) {
+            // TODO
         });
     });
 });
