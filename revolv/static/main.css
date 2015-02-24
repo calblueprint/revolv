@@ -5623,9 +5623,11 @@ th.hide-for-touch {
     padding: 0 0.9375rem;
     padding-top: 0.9375rem;
     border-top: 1px solid #dddde3; }
-    .modal-content .modal-footer > ul.modal-footer-button-group {
-      list-style: none; }
-      .modal-content .modal-footer > ul.modal-footer-button-group > li {
+    .modal-content .modal-footer > .modal-footer-button-group {
+      list-style: none;
+      margin: 0;
+      margin-bottom: 0.9375rem; }
+      .modal-content .modal-footer > .modal-footer-button-group > li {
         display: inline-block; }
 
 .header-small-text {
@@ -5717,6 +5719,13 @@ p, h2, h3, h4 {
 input.error, select.error, textarea.error {
   margin-bottom: 1rem !important;
   border-color: #f46b7b !important; }
+
+.table {
+  display: table; }
+
+.table-cell-middle {
+  display: table-cell;
+  vertical-align: middle; }
 
 .footer .divider {
   display: block;

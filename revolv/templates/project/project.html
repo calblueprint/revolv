@@ -14,6 +14,8 @@
 {% block body %}
 
 {% include "project/partials/payment_modal.html" with form=form %}
+{% include "project/partials/confirm_modal.html" %}
+{% include "project/partials/success_modal.html" with project=project %}
 <div class="row">
     <div class="large-12 columns">
         <h1><strong>{{ project.title }}</strong></h1>
@@ -94,12 +96,41 @@ if (embedUrl === "error") {
 
 <script type="text/javascript">
 $(function() {
+    // http://stackoverflow.com/questions/610406
+    if (!String.prototype.format) {
+        String.prototype.format = function() {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function(match, number) { 
+                return typeof args[number] != 'undefined' ? args[number] : match;
+            });
+        };
+    }
+
     var prettyName = function(name) {
         return name.replace(/_/g, ' ')
                 .replace(/\w\S*/g, function(txt) {
                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                 });
     };
+
+    var cardInfoBlock = function(info) {
+        // TODO: style block
+        var block = $('<ul/>').addClass('confirm-info-card');
+        block.append($('<li/>')
+            .text('{0} ending in {1}'.format(
+                prettyName(info.type), info.number.substr(-4)
+            )));
+        block.append($('<li/>')
+            .text('Expires: {0}/{1}'.format(
+                info.expire_month, info.expire_year
+            )));
+        block.append($('<li/>')
+            .text('Name on card: {0} {1}'.format(
+                info.first_name, info.last_name
+            )));
+        return block;
+    };
+
     var ffNames = {{ form.fields.keys | safe }}; // TODO: probably not okay, #yolo
     $('#donate-form').submit(function(e) {
         e.preventDefault();
@@ -131,7 +162,61 @@ $(function() {
                     $error_list.parents('.modal-errors').addClass('error');
                 } else {
                     $error_list.parents('.modal-errors').removeClass('error');
+
+                    $confirm_info_card = $('#confirm-info-card');
+                    $confirm_info_card.empty();
+                    $confirm_info_card.append(cardInfoBlock(data.confirm));
+
+                    $('#confirm-info-amount').text('${0} USD'.format(
+                        (new Number(data.confirm.amount)).toFixed(2)));
+
+                    // HACK: serializing data.confirm, not sure if best approach
+                    var confirm_data = [];
+                    for (key in data.confirm) {
+                        if (!data.confirm.hasOwnProperty(key)) {
+                            continue;
+                        }
+                        confirm_data.push({
+                            name: key,
+                            value: data.confirm[key]
+                        });
+                    }
+                    extra_confirm_data = confirm_data
+
+                    $('#confirm-modal').foundation('reveal', 'open');
                 }
+            },
+            error: function(jqXHR) {
+                // TODO
+            },
+        });
+    });
+
+    $('#change-donation-button').click(function(e) {
+        e.preventDefault();
+        $('#donate-modal').foundation('reveal', 'open');
+    });
+
+    var extra_confirm_data = [];
+    $('#confirm-form').submit(function (e) {
+        e.preventDefault();
+        var form = $(this);
+        var formData = form.serializeArray();
+        formData.push.apply(formData, extra_confirm_data);
+        var formURL = form.attr('action');
+        $.ajax({
+            url: '{{ request.get_full_path }}' + formURL,
+            data: formData,
+            type: 'POST',
+            success: function(data) {
+                if (data.success) {
+                    $('#amount-donated').text('${0}'.format(
+                        (new Number(data.amount)).toFixed(2)));
+                    $('#success-modal').foundation('reveal', 'open');
+                }
+            },
+            error: function(jqXHR) {
+                // TODO
             },
         });
     });

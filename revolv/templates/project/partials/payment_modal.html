@@ -9,7 +9,7 @@
                     </ul>
                 </div>
             </div>
-            <form name="donate-form" id="donate-form" method="POST" action="validate_payment">
+            <form name="donate-form" id="donate-form" method="POST" action="payment/validate">
                 {% csrf_token %}
                 <div class="row">
                     <div class="medium-6 columns"><label>Card type</label>{{ form.type }}</div>
@@ -35,13 +35,15 @@
                     <div class="medium-6 columns"><label>First name</label>{{ form.first_name }}</div>
                     <div class="medium-6 columns"><label>Last name</label>{{ form.last_name }}</div>
                 </div>
-                <div class="row">
-                    <div class="medium-12 columns"><label>Amount</label>{{ form.amount }}</div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="small-centered medium-4 columns"><label>Amount</label>{{ form.amount }}</div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <ul class="modal-footer-button-group right">
                         <li><button class="close-revolv-reveal-modal submit-button gray">Cancel</button></li>
-                        <li><button class="submit-button" type="submit">Donate</button></li>
+                        <li><button class="submit-button" type="submit">Continue</button></li>
                     </ul>
                 </div>
             </form>

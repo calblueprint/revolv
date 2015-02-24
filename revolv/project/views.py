@@ -162,9 +162,24 @@ class ProjectView(UserDataMixin, FormView):
 def validate_payment(request, *args, **kwargs):
     form = CreditCardDonationForm(request.POST)
     errors = form.errors
+    confirm = None
+    if not errors:
+        data = form.data.dict()
+        del data['csrfmiddlewaretoken']
+        confirm = data
     return JsonResponse({
         'valid': not errors,
         'errors': errors,
+        'confirm': confirm,
+    })
+
+
+def submit_payment(request, *args, **kwargs):
+    # TODO: actual payment isn't happening, obvi
+    form = CreditCardDonationForm(request.POST)
+    return JsonResponse({
+        'amount': form.data['amount'],
+        'success': True
     })
 
 

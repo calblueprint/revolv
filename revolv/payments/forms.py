@@ -8,7 +8,8 @@ from revolv.payments.services import PaymentService
 
 
 class DonationForm(forms.Form):
-    amount = forms.DecimalField()
+    amount = forms.DecimalField(widget=forms.TextInput(
+        attrs={'placeholder': '$ USD'}))
 
 
 class CreditCardDonationForm(DonationForm):
@@ -26,15 +27,17 @@ class CreditCardDonationForm(DonationForm):
     ]
     type = forms.ChoiceField(choices=cardtype_choices)
 
-    month_choices = [(None, 'mm')] + [(n, '{:02d}'.format(n)) for n in range(1, 12 + 1)]
+    month_choices = [(None, 'mm')] + \
+        [(n, '{:02d}'.format(n)) for n in range(1, 12 + 1)]
     expire_month = forms.ChoiceField(choices=month_choices)
 
     this_year = date.today().year
-    year_choices = [(None, 'yyyy')] + [(n, n) for n in range(this_year, this_year + 10 + 1)]
+    year_choices = [(None, 'yyyy')] + \
+        [(n, n) for n in range(this_year, this_year + 10 + 1)]
     expire_year = forms.ChoiceField(choices=year_choices)
 
-    cvv2 = forms.CharField()
-    number = forms.CharField()
+    cvv2 = forms.IntegerField(widget=forms.TextInput())
+    number = forms.IntegerField(widget=forms.TextInput())
 
     def process_payment(self, project, user):
         """
