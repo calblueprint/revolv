@@ -12,7 +12,7 @@ $(document).ready(function(){
 
 });
 
-function fillInProgressBars(){
+var fillInProgressBars = function(){
 	//handle getting percentages
 	console.log('hi')
 	var first = 70;
@@ -21,11 +21,11 @@ function fillInProgressBars(){
 	var fourth = 100;
 	var arr = [first, second, third, fourth]
 
-	var greenBars = document.getElementByClassName('.green-bar');
+	// //var greenBars = document.getElementByClassName('.green-bar');
 
-	for (var i = 0; i < arr.length; i+=1){
-		greenBars[i].css("width", arr[i]+"%");
-	}
+	// for (var i = 0; i < arr.length; i+=1){
+	// 	greenBars[i].css("width", arr[i]+"%");
+	// }
 }
 
 fillInProgressBars();

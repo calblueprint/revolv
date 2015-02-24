@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
     <style type="text/css">
         #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
@@ -14,7 +15,103 @@
 {% block body %}
 
 {% include "project/partials/payment_modal.html" with form=form %}
+
 <div class="row">
+    <div class="row">
+        <div class="large-9 push-3 columns">
+            <div class="large-4 push-8 columns" id="impact-and-donate">
+                <!-- <p>other thing</p> -->
+                <div class='large-12 columns' id="donate-or-admin-panel-container">
+                    <!-- <p> hi the donate box goes here</p> -->
+                    <div id="donate-box">
+                        <h5># donated</h5>
+                        <p>of {{ project.funding_goal }}</p>
+                        <div id="progress-bar"></div>
+                        <p>Help us reach our goal!</p>
+                        <div id="donate-button"><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></div>
+                    </div>
+                    <div id="impact-box">
+                        <h5>Impact</h5>
+                        <p>of {{ project.funding_goal }}</p>
+                        <div id="progress-bar"></div>
+                        <p>Help us reach our goal!</p>
+                        <div id="donate-button"><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></div>
+                    </div>
+                </div>
+                <div class="large-12 columns" id="impact-stats">
+                    <p> hi the impact statistics goes here</p>
+                </div>
+            </div>
+            <div class="large-8 pull-4 columns" id="main-project-info">
+                <br></br>
+                {% if project.video_url %}
+                    <iframe width="420" height="275"id="project_video">
+                    </iframe>
+                {% endif %}
+
+                <h3>{{ project.title }}</h3>
+                <p>Funding Goal: {{ project.funding_goal }}</p>
+                <p>End Date: {{ project.end_date }}</p>
+                <p>Location: {{ project.location}}</p>
+                <p>Organization : {{project.org_name}}</p>
+                <p>About {{project.org_name}} : {{project.org_about}}</p>
+                <p>Mission Statement : {{ project.mission_statement }}</p>
+            </div>
+        </div> 
+        <div class="large-3 pull-9 columns>">
+          <br></br>
+          <div class="large-10 pull--1 columns>">
+          <ul class="accordion" data-accordion>
+            <li class="accordion-navigation active">
+              <a href="{% url "project:new" %}">Create New Project</a>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel1">Active Projects</a>
+              <div id="panel1" class="content">
+                <ul class="side-nav">
+                  {% for project in active_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel2">Proposed Projects</a>
+              <div id="panel2" class="content">
+                <ul class="side-nav">
+                  {% for project in proposed_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel3">Drafted Projects</a>
+              <div id="panel3" class="content">
+                <ul class="side-nav">
+                  {% for project in drafted_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel4">Completed Projects</a>
+              <div id="panel4" class="content">
+                <ul class="side-nav">
+                  {% for project in completed_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+          </ul>
+         </div>
+         <br></br>
+        </div>
+    </div>
+</div>
+<!-- <div class="row">
     <div class="large-12 columns">
         <h1><strong>{{ project.title }}</strong></h1>
         <ul class="button-group nav-tab-button-group">
@@ -39,11 +136,31 @@
         <p>{{ project.post_funding_updates}}</p>
         {% endif %}
     </div>
-</div>
+</div> -->
 
 {% endblock %}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% block javascripts %}
+<script type="text/javascript" src="{% static "js/base/dashboard.js" %}"></script>
+
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>
