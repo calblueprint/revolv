@@ -1,14 +1,17 @@
 import datetime
+import json
 
 from django.core.management import call_command
 from django.db.models.signals import post_save
 from django.test import TestCase
 from django_facebook.utils import get_user_model
-from models import Project
 from revolv.base.models import RevolvUserProfile
+from revolv.project.models import Project
+from revolv.project.tasks import scrape
 from revolv.base.signals import create_profile_of_user
-from revolv.payments.models import Payment, PaymentInstrumentType
-from tasks import scrape
+from revolv.base.tests.tests import TestUserMixin
+from revolv.payments.models import (Donation, PaymentInstrumentType,
+                                    PaymentTransaction)
 
 
 # Create your tests here.
@@ -242,3 +245,92 @@ class ScrapeTest(TestCase):
     def test_scrape(self):
         result = scrape.delay()
         self.assertTrue(result.successful())
+
+
+class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
+    VALIDATE = 'payment/validate'
+    SUBMIT = 'payment/submit'
+
+    def setUp(self):
+        TestUserMixin.setUp(self)
+        self._send_test_user_login_request()
+        self.project = self.create_test_project()
+        self.project.project_status = Project.ACTIVE
+        self.project.save()
+
+    def _make_valid_payment(self):
+        valid_payment = {
+            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
+            'type': 'visa',
+            'first_name': 'William',
+            'last_name': 'Taft',
+            'expire_month': 6,
+            'expire_year': 2020,
+            'cvv2': '00',
+            'number': '1234123412341234',
+            'amount': '10.00',
+        }
+        resp = self.client.post(
+            self.project.get_absolute_url() + self.VALIDATE,
+            data=valid_payment,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        return resp
+
+    def test_payment_validation_ajax(self):
+        resp = self._make_valid_payment()
+        self.assertEqual(resp.status_code, 200)
+        content = json.loads(resp.content)
+        self.assertTrue(content['valid'])
+
+    def test_invalid_payment_ajax(self):
+        invalid_payment = {
+            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
+            'type': 'visa',
+            # 'first_name': '',
+            'last_name': 'Taft',
+            'expire_month': 6,
+            'expire_year': 2020,
+            'cvv2': '00',
+            'number': 'not a number',
+            'amount': '10.00',
+        }
+        resp = self.client.post(
+            self.project.get_absolute_url() + self.VALIDATE,
+            data=invalid_payment,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        content = json.loads(resp.content)
+        self.assertFalse(content['valid'])
+
+    def test_valid_confirm_ajax(self):
+        confirm = json.loads(self._make_valid_payment().content)['confirm']
+        self.assertNotEqual(confirm, {})
+
+        confirm['csrfmiddlewaretoken'] = self.client.cookies['csrftoken'].value
+        resp = self.client.post(
+            self.project.get_absolute_url() + self.SUBMIT,
+            data=confirm,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertTrue(resp.status_code, 200)
+        content = json.loads(resp.content)
+
+        self.assertTrue(content['success'])
+        self.assertEqual(confirm['amount'], content['amount'])
+
+    def test_invalid_confirm_ajax(self):
+        confirm = json.loads(self._make_valid_payment().content)['confirm']
+        self.assertNotEqual(confirm, {})
+
+        del confirm['amount']
+        confirm['csrfmiddlewaretoken'] = self.client.cookies['csrftoken'].value
+        resp = self.client.post(
+            self.project.get_absolute_url() + self.SUBMIT,
+            data=confirm,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertTrue(resp.status_code, 200)
+        content = json.loads(resp.content)
+
+        self.assertFalse(content['success'])

@@ -177,9 +177,10 @@ def validate_payment(request, *args, **kwargs):
 def submit_payment(request, *args, **kwargs):
     # TODO: actual payment isn't happening, obvi
     form = CreditCardDonationForm(request.POST)
+    errors = form.errors
     return JsonResponse({
-        'amount': form.data['amount'],
-        'success': True
+        'amount': form.data['amount'] if not errors else None,
+        'success': not errors,
     })
 
 
