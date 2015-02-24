@@ -4,7 +4,7 @@ from datetime import date
 from django import forms
 from revolv.payments.lib.instruments import (CreditCard,
                                              PayPalCreditCardInstrument)
-from revolv.payments.services import DonationService, PaymentService
+from revolv.payments.services import PaymentService
 
 
 class DonationForm(forms.Form):
@@ -57,19 +57,15 @@ class CreditCardDonationForm(DonationForm):
 
         # TODO: error handling
         # Make the payment
-        payment_transaction = PaymentService.create_payment(
-            user,
+        payment = PaymentService.create_payment(
+            user.revolvuserprofile,
+            user.revolvuserprofile,
             self.cleaned_data.get('amount'),
-            instrument
-        )
-
-        # Link the payment to a donation
-        donation = DonationService.link_donation(
             project,
-            payment_transaction
+            instrument
         )
 
         # Add RevolvUserProfile to donors field of Project
         project.donors.add(user.revolvuserprofile)
 
-        return donation
+        return payment

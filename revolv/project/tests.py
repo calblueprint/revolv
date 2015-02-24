@@ -1,14 +1,13 @@
 import datetime
 
-from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.db.models.signals import post_save
 from django.test import TestCase
 from django_facebook.utils import get_user_model
 from models import Project
+from revolv.base.models import RevolvUserProfile
 from revolv.base.signals import create_profile_of_user
-from revolv.payments.models import (Donation, PaymentInstrumentType,
-                                    PaymentTransaction)
+from revolv.payments.models import Payment, PaymentInstrumentType
 from tasks import scrape
 
 
@@ -56,30 +55,56 @@ class CreateTestProjectMixin(object):
 
     def create_test_donation_for_project(self, project, amount):
         """
-        Create a donation to the given project of the given amount, made by a
+        Create a payment to the given project of the given amount, made by a
         dummy user via paypal.
 
-        :return: the donation, the transaction, and the user
+        :return: the payment and the user
         """
-        user, is_new = User.objects.get_or_create(
-            username="aggregateDonationsTestUser",
-            email="john@example.com",
-            password="permission_test_user_password"
-        )
-        transaction = PaymentTransaction.objects.create(
+        user = RevolvUserProfile.objects.get(id=1)
+        payment = Payment.objects.create(
             amount=amount,
             payment_instrument_type=PaymentInstrumentType.objects.get_paypal(),
-            user=user
-        )
-        donation = Donation.objects.create(
-            payment_transaction=transaction,
+            user=user,
+            entrant=user,
             project=project
         )
-        return donation, transaction, user
+        return payment, user
+
+    def create_test_repayment_for_project(self, project, amount):
+        """
+        Create a repayment to a given project of the given amount, entered by
+        a dummy user.
+
+        :return: the repayment and the user
+        """
+        user1 = RevolvUserProfile.objects.get(id=1)
+        user2 = RevolvUserProfile.objects.get(id=2)
+        payment = Payment.objects.create(
+            amount=amount / 2,
+            payment_instrument_type=PaymentInstrumentType.objects.get_repayment(),
+            user=user1,
+            entrant=user2,
+            project=project
+        )
+        payment = Payment.objects.create(
+            amount=amount / 2,
+            payment_instrument_type=PaymentInstrumentType.objects.get_repayment(),
+            user=user2,
+            entrant=user2,
+            project=project
+        )
+        return payment, user1, user2
 
 
 class ProjectTests(CreateTestProjectMixin, TestCase):
     """Project model tests."""
+
+    def setUp(self):
+        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
+        call_command('loaddata', 'user', 'revolvuserprofile', 'project')
+
+    def tearDown(self):
+        post_save.connect(create_profile_of_user, sender=get_user_model())
 
     def test_construct(self):
         self.create_test_project()
@@ -106,9 +131,18 @@ class ProjectTests(CreateTestProjectMixin, TestCase):
         self.assertEqual(project.amount_donated, 50.0)
         self.assertEqual(project.amount_left, 150.0)
         self.create_test_donation_for_project(project, 25.50)
+        self.create_test_repayment_for_project(project, 50)
         self.assertEqual(project.amount_donated, 75.50)
         self.assertEqual(project.amount_left, 124.50)
         self.assertEqual(project.rounded_amount_left, 124.00)
+
+    def test_amount_repaid(self):
+        project = self.create_test_project(funding_goal=200.0)
+        self.assertEqual(project.amount_repaid, 0.0)
+        self.create_test_repayment_for_project(project, 50)
+        self.assertEqual(project.amount_repaid, 50.0)
+        self.create_test_repayment_for_project(project, 60)
+        self.assertEqual(project.amount_repaid, 110.0)
 
     def test_partial_completeness(self):
         """Test that project.partial_completeness works."""
@@ -150,7 +184,7 @@ class ProjectManagerTests(TestCase):
 
     def setUp(self):
         post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
-        call_command('loaddata', 'user', 'revolvuserprofile', 'donation', 'payment_transaction', 'project')
+        call_command('loaddata', 'user', 'revolvuserprofile', 'payment', 'project')
 
     def tearDown(self):
         post_save.connect(create_profile_of_user, sender=get_user_model())
