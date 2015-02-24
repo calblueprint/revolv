@@ -22,6 +22,22 @@
     }
 }
 
+.administrator-button {
+    width: 24%;
+    color: black;
+    background-color: $revolv-gray-bg;
+    border-width: 2px;
+    border-color: $revolv-header-color;
+    font-weight: 300;
+    font-family: $body-font-family;
+    transition: border-color 200ms linear;
+    &.active, &:focus, &:hover {
+        color: black;
+        background-color: $revolv-gray-bg;
+        border-color: #007295;
+    }
+}
+
 .dashboard-button {
     width: 33%;
     color: black;

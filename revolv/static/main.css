@@ -5660,6 +5660,20 @@ div.nav-bg-wrap {
     margin: 0px 0px;
     background-color: #c0e7f6; }
 
+.administrator-button {
+  width: 24%;
+  color: black;
+  background-color: #f9f9fa;
+  border-width: 2px;
+  border-color: #c0e7f6;
+  font-weight: 300;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  transition: border-color 200ms linear; }
+  .administrator-button.active, .administrator-button:focus, .administrator-button:hover {
+    color: black;
+    background-color: #f9f9fa;
+    border-color: #007295; }
+
 .dashboard-button {
   width: 33%;
   color: black;
