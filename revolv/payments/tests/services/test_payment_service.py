@@ -48,8 +48,7 @@ class PaymentServiceTest(TestCase):
         # Check that the charge was actually made
         payment_instrument.charge.assert_called_once()
 
-        failed = False
-        try:
+        with self.assertRaises(PaymentServiceException):
             PaymentService.create_payment(
                 user,
                 None,
@@ -57,10 +56,6 @@ class PaymentServiceTest(TestCase):
                 project,
                 payment_instrument,
             )
-        except PaymentServiceException:
-            failed = True
-
-        self.assertEquals(True, failed)
 
     def test_check_valid_payment_instrument(self):
         """Verify that we can get a valid payment instrument type."""
