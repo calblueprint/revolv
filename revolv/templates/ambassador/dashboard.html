@@ -39,7 +39,7 @@
                 {% else %}
                     <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
                 {% endif %}
-                {% if project in active_projects and project == active_projects.first %}
+                {% if project in active_projects %}
                     <div class="progress large-# success">
                         <span class="meter" style="width: {{ project.partial_completeness }}%"></span>
                     </div>
