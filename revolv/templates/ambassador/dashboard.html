@@ -39,6 +39,11 @@
                 {% else %}
                     <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
                 {% endif %}
+                {% if project in active_projects %}
+                    <div class="progress large-# success">
+                        <span class="meter" style="width: {{ project.partial_completeness }}%"></span>
+                    </div>
+                {% endif %}
             {% endfor %}
         </dl>
     </div>
@@ -66,6 +71,19 @@
                                 <p> {{ project.mission_statement }} </p>
                             </div>
                         </div>
+                        {% if project in active_projects %}
+                        <h4>Funding Progress</h4>
+                        <div class="row">
+                            <div class="progress small-# success">
+                                <span class="meter" style="width: {{ project.partial_completeness }}%"></span>
+                                <ul class="inline-list">
+                                    <li><h6>{{ project.partial_completeness | floatformat }}% funded</h6></li>
+                                    <li><h6>${{ project.amount_donated | floatformat }} donated</h6></li>
+                                    <li><h6>{{ project.days_left }} days to go</h6></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="small-3 columns">
                         <a href="{% url "project:review" project.pk %}">

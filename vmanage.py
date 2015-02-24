@@ -1,7 +1,7 @@
 import os
 import sys
 
-other_commands = ""
+other_commands = "source /vagrant/.revolv_bash_profile;"
 manage_py_path = "/vagrant"
 
 BASE_COMMAND = "vagrant ssh -c \"source ~/venv/bin/activate; " + other_commands + " cd " + manage_py_path + " && %s\""
