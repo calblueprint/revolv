@@ -33,8 +33,8 @@ If *using* vagrant:
 1. Install Virtualbox
 2. Install vagrant
 3. `vagrant up --provision`
-4. python vmanage.py migrate
-5. python vmanage.py runserver
+4. `python vmanage.py migrate`
+5. `python vmanage.py runserver`
 
 Development
 -----------

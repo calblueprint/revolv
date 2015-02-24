@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+
 from django_facebook.models import FacebookModel
 from revolv.base.utils import get_group_by_name, get_profile
 
@@ -46,6 +47,7 @@ class RevolvUserProfile(FacebookModel):
     ADMIN_GROUP = "administrators"
 
     user = models.OneToOneField(User)
+    subscribed_to_newsletter = models.BooleanField(default=False)
 
     def is_donor(self):
         """Return whether the associated user can donate."""

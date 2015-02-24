@@ -13,6 +13,7 @@ class SignupForm(UserCreationForm):
     email = forms.EmailField(label="Email")
     first_name = forms.CharField(label="First name")
     last_name = forms.CharField(label="Last name")
+    subscribed_to_newsletter = forms.BooleanField(initial=True, label="Subscribe me to the Re-volv Newsletter.", help_text="Subscribe me to the Revolv Newsletter")
 
     def save(self, commit=True):
         """
@@ -25,6 +26,8 @@ class SignupForm(UserCreationForm):
         user.email = self.cleaned_data["email"]
         if commit:
             user.save()
+            user.revolvuserprofile.subscribed_to_newsletter = self.cleaned_data["subscribed_to_newsletter"]
+            user.revolvuserprofile.save()
         return user
 
     def ensure_authenticated_user(self):
