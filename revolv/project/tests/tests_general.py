@@ -247,6 +247,9 @@ class ScrapeTest(TestCase):
 
 
 class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
+    """
+    Test suite for AJAX payment donations for projects.
+    """
     VALIDATE = 'payment/validate'
     SUBMIT = 'payment/submit'
 
@@ -258,6 +261,10 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         self.project.save()
 
     def _make_valid_payment(self):
+        """
+        Makes valid payment via AJAX to /project/<pk>/payment/validate.
+        Returns response from AJAX request.
+        """
         valid_payment = {
             'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
             'type': 'visa',
@@ -277,12 +284,20 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         return resp
 
     def test_payment_validation_ajax(self):
+        """
+        Tests that valid payment validates successfully on /payment/validate
+        endpoint.
+        """
         resp = self._make_valid_payment()
         self.assertEqual(resp.status_code, 200)
         content = json.loads(resp.content)
         self.assertTrue(content['valid'])
 
     def test_invalid_payment_ajax(self):
+        """
+        Tests that invalid payment appropriately errors with on
+        /payment/validate endpoint.
+        """
         invalid_payment = {
             'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
             'type': 'visa',
@@ -303,6 +318,10 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         self.assertFalse(content['valid'])
 
     def test_valid_confirm_ajax(self):
+        """
+        Tests that valid payment submits successfully on /payment/submit
+        endpoint. (Every payment must be validated and then confirmed.)
+        """
         confirm = json.loads(self._make_valid_payment().content)['confirm']
         self.assertNotEqual(confirm, {})
 
@@ -319,6 +338,10 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         self.assertEqual(confirm['amount'], content['amount'])
 
     def test_invalid_confirm_ajax(self):
+        """
+        Tests that invalid payment appropriately errors on /payment/submit
+        endpoint. (Every payment must be validated and then confirmed.)
+        """
         confirm = json.loads(self._make_valid_payment().content)['confirm']
         self.assertNotEqual(confirm, {})
 

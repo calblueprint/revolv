@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, url
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from revolv.base.users import is_ambassador
 from revolv.project.views import (CreateProjectView, PostFundingUpdateView,
                                   ProjectView, ReviewProjectView,
-                                  UpdateProjectView, submit_payment,
-                                  validate_payment)
+                                  SubmitPaymentView, UpdateProjectView,
+                                  ValidatePaymentView)
 
 urlpatterns = patterns(
     '',
@@ -12,7 +12,7 @@ urlpatterns = patterns(
     url(r'^(?P<pk>\d+)/edit$', is_ambassador(UpdateProjectView.as_view()), name='edit'),
     url(r'^(?P<pk>\d+)/review$', is_ambassador(ReviewProjectView.as_view()), name='review'),
     url(r'^(?P<pk>\d+)/$', ProjectView.as_view(), name='view'),
-    url(r'^(?P<pk>\d+)/payment/validate$', validate_payment),
-    url(r'^(?P<pk>\d+)/payment/submit$', submit_payment),
+    url(r'^(?P<pk>\d+)/payment/validate$', ValidatePaymentView.as_view(), name="validate_payment"),
+    url(r'^(?P<pk>\d+)/payment/submit$', SubmitPaymentView.as_view(), name="submit_payment"),
     url(r'^(?P<pk>\d+)/update$', is_ambassador(PostFundingUpdateView.as_view()), name='update'),
 )

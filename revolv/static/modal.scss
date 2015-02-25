@@ -41,17 +41,16 @@
         min-height: $revolv-header-height * (5/6);
         margin-bottom: ($column-gutter / 2);
 
-        > div, > span {
-            padding: 0 ($column-gutter / 2);
-        }
 
         > .modal-title {
+            padding: 0 ($column-gutter / 2);
             display: block;
             height: $revolv-header-height * (5/6);
             line-height: $revolv-header-height * (5/6);
         }
 
         > .modal-errors {
+            padding: 0 ($column-gutter / 2);
             display: none;
             visibility: hidden;
             background-color: darken($revolv-gray-bg, 10%);

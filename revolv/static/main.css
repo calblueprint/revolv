@@ -5598,13 +5598,13 @@ th.hide-for-touch {
     background-color: #e9f6fc;
     min-height: 50px;
     margin-bottom: 0.9375rem; }
-    .modal-content .modal-header > div, .modal-content .modal-header > span {
-      padding: 0 0.9375rem; }
     .modal-content .modal-header > .modal-title {
+      padding: 0 0.9375rem;
       display: block;
       height: 50px;
       line-height: 50px; }
     .modal-content .modal-header > .modal-errors {
+      padding: 0 0.9375rem;
       display: none;
       visibility: hidden;
       background-color: #dddde3;
