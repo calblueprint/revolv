@@ -291,7 +291,7 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         resp = self._make_valid_payment()
         self.assertEqual(resp.status_code, 200)
         content = json.loads(resp.content)
-        self.assertTrue(content['valid'])
+        self.assertIsNone(content.get('error'))
 
     def test_invalid_payment_ajax(self):
         """
@@ -315,7 +315,8 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         content = json.loads(resp.content)
-        self.assertFalse(content['valid'])
+        self.assertEquals(resp.status_code, 400)
+        self.assertIsNotNone(content['error'])
 
     def test_valid_confirm_ajax(self):
         """
@@ -334,7 +335,6 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         self.assertTrue(resp.status_code, 200)
         content = json.loads(resp.content)
 
-        self.assertTrue(content['success'])
         self.assertEqual(confirm['amount'], content['amount'])
 
     def test_invalid_confirm_ajax(self):
@@ -352,7 +352,7 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
             data=confirm,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
-        self.assertTrue(resp.status_code, 200)
+        self.assertTrue(resp.status_code, 400)
         content = json.loads(resp.content)
 
-        self.assertFalse(content['success'])
+        self.assertIsNotNone(content['error'])
