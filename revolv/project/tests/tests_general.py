@@ -254,7 +254,7 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
     SUBMIT = 'payment/submit'
 
     def setUp(self):
-        TestUserMixin.setUp(self)
+        super(DonationAjaxTestCase, self).setUp()
         self._send_test_user_login_request()
         self.project = self.create_test_project()
         self.project.project_status = Project.ACTIVE
