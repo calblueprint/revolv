@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from revolv.payments.models import PaymentInstrumentType
 from revolv.payments.services import PaymentService, PaymentServiceException
-from revolv.project.tests.tests import CreateTestProjectMixin
+from revolv.project.tests.tests_general import CreateTestProjectMixin
 
 
 class PaymentServiceTest(TestCase, CreateTestProjectMixin):
