@@ -3,17 +3,38 @@
 @import "signin";
 
 .payment-modal-content {
-    width: 560px;
+    width: 300px;
 
-    .expire-column > .columns {
+}
+
+.condense {
+    > .columns {
         padding-left: $column-gutter / 4;
         padding-right: $column-gutter / 4;
 
         &:first-child {
-            padding-left: 0;
+            padding-left: $column-gutter / 2;
         }
         &:last-child {
-            padding-right: 0;
+            padding-right: $column-gutter / 2;
+        }
+    }
+}
+
+.cc-type-list {
+    list-style: none;
+    margin: 0;
+
+    > li {
+        display: inline-block;
+    }
+
+    [class^="cc-type-"] {
+        opacity: 0.5;
+        transition: all 0.3s;
+
+        &.active {
+            opacity: 1;
         }
     }
 }

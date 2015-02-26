@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <div id="donate-modal" class="revolv-reveal-modal-table" data-reveal>
     <div class="modal-cell">
         <div class="modal-content payment-modal-content">
@@ -9,42 +10,57 @@
                     </ul>
                 </div>
             </div>
-            <form name="donate-form" id="donate-form" method="POST" action="payment/validate">
+            <form name="donate-form" 
+                id="donate-form" 
+                method="POST" 
+                action="payment/validate" 
+                autocomplete="on">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="medium-6 columns"><label>Card type</label>{{ form.type }}</div>
-                    <div class="medium-6 columns"><label>Card number</label>{{ form.number }}</div>
-                </div>
-                <div class="row">
-                    <div class="medium-6 columns">
-                        <label>Expires on</label>
-                        <div class="expire-column">
-                            <div class="small-6 columns">{{ form.expire_month }}</div>
-                            <div class="small-6 columns">{{ form.expire_year }}</div>
-                        </div>
-                    </div>
-                    <div class="medium-6 columns">
-                        <label>Security code</label>
-                        <div class="expire-column">
-                            <div class="small-6 columns">{{ form.cvv2 }}</div>
-                            {# TODO: add (?) tooltip for CVV #}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="medium-6 columns"><label>First name</label>{{ form.first_name }}</div>
-                    <div class="medium-6 columns"><label>Last name</label>{{ form.last_name }}</div>
-                </div>
-                <div class="modal-footer">
+                <div class="modal-section">
                     <div class="row">
-                        <div class="small-centered medium-4 columns"><label>Amount</label>{{ form.amount }}</div>
+                        <div class="medium-12 columns">
+                            <ul class="cc-type-list">
+                                <li><img class="cc-type-visa" src="{% static 'images/cc_icons/visa_32.png' %}"></li>
+                                <li><img class="cc-type-mastercard" src="{% static 'images/cc_icons/mastercard_32.png' %}"></li>
+                                <li><img class="cc-type-discover" src="{% static 'images/cc_icons/discover_32.png' %}"></li>
+                                <li><img class="cc-type-amex" src="{% static 'images/cc_icons/amex_32.png' %}"></li>
+                            </ul>
+                            <label>Card number</label>
+                            <input name="cc-number" class="cc-number" type="tel">
+                        </div>
+                    </div>
+                    <div class="row condense">
+                        <div class="small-6 columns">
+                            <label>Expires on</label>
+                            <input name="cc-expiry" class="cc-expiry" type="tel" placeholder="MM / YYYY">
+                        </div>
+                        <div class="small-6 columns">
+                            <label>Security code</label>
+                            <input autocomplete="off" name="cc-cvc" class="cc-cvc" type="tel">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <label>Name on card</label>
+                            <input name="cc-name" class="cc-name" type="text">
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <ul class="modal-footer-button-group right">
-                        <li><button class="close-revolv-reveal-modal submit-button gray">Cancel</button></li>
-                        <li><button class="submit-button" type="submit">Continue</button></li>
-                    </ul>
+                <div class="modal-section">
+                    <div class="row">
+                        <div class="medium-12 columns">
+                          <label>Amount ($ USD)</label>
+                            <input name="donation-amount" class="donation-amount" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <div class="small-12 columns">
+                        <ul class="modal-footer-button-group right">
+                            <li><button class="close-revolv-reveal-modal submit-button gray">Cancel</button></li>
+                            <li><button class="submit-button" type="submit">Continue</button></li>
+                        </ul>
+                    </div>
                 </div>
             </form>
         </div>

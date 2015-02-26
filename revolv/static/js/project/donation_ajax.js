@@ -67,8 +67,13 @@ $(function() {
     $('#donate-form').submit(function(e) {
         e.preventDefault();
         var form = $(this);
+        var formValues = {};
+        $.each(form.serializeArray(), function(i, field) {
+            formValues[field.name] = field.value;
+        });
+        debugger;
+        return;
         var formURL = form.attr('action');
-        var formData = form.serializeArray();
         $.post(
             projectURL + formURL,
             formData

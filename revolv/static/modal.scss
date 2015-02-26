@@ -39,8 +39,6 @@
     .modal-header {
         background-color: $revolv-light-blue-bg;
         min-height: $revolv-header-height * (5/6);
-        margin-bottom: ($column-gutter / 2);
-
 
         > .modal-title {
             padding: 0 ($column-gutter / 2);
@@ -68,6 +66,30 @@
                 display: block;
                 visibility: visible;
             }
+        }
+    }
+
+    .modal-section {
+        @include clearfix;
+        width: 100%;
+        border-top: 1px solid darken($revolv-gray-bg, 10%);
+        padding-top: ($column-gutter / 2);
+
+        &:first-of-type {
+            border-top: none;
+        }
+
+        &:last-of-type {
+            padding-bottom: ($column-gutter / 2);
+        }
+    }
+
+    .modal-footer-button-group {
+        list-style: none;
+        margin: 0;
+
+        > li {
+            display: inline-block;
         }
     }
 

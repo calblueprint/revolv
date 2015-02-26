@@ -5643,14 +5643,26 @@ small.field-error {
     -webkit-transition: color 0.1s; }
 
 .payment-modal-content {
-  width: 560px; }
-  .payment-modal-content .expire-column > .columns {
-    padding-left: 0.46875rem;
-    padding-right: 0.46875rem; }
-    .payment-modal-content .expire-column > .columns:first-child {
-      padding-left: 0; }
-    .payment-modal-content .expire-column > .columns:last-child {
-      padding-right: 0; }
+  width: 300px; }
+
+.condense > .columns {
+  padding-left: 0.46875rem;
+  padding-right: 0.46875rem; }
+  .condense > .columns:first-child {
+    padding-left: 0.9375rem; }
+  .condense > .columns:last-child {
+    padding-right: 0.9375rem; }
+
+.cc-type-list {
+  list-style: none;
+  margin: 0; }
+  .cc-type-list > li {
+    display: inline-block; }
+  .cc-type-list [class^="cc-type-"] {
+    opacity: 0.5;
+    transition: all 0.3s; }
+    .cc-type-list [class^="cc-type-"].active {
+      opacity: 1; }
 
 .confirm-column .table {
   width: 100%; }

@@ -51,6 +51,208 @@
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>
 
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.2/jquery.payment.min.js">
+</script>
+<script type="text/javascript">
+    /**
+     * Adds class 'error' to inputEle if validFunc returns false on
+     * varArgs.
+     *
+     * @param {jQuery Element} inputEle - Element to apply class to
+     * @param {function} validFunc - Function that operates on varArgs
+     * @param {anything} varArgs - Arbitrary arguments to pass to validFunc
+     */
+    var validOrApplyErrorClass = function(inputEle, validFunc, varArgs) {
+        inputEle.toggleClass(
+            'error',
+            !validFunc.apply(this, Array.prototype.slice.call(arguments, 2))
+        );
+    };
+
+    $ccNumber = $('input.cc-number');
+    $ccNumber.payment('formatCardNumber');
+
+    var activeCardType = null;
+    var $activeTypeEle = null;
+    $ccNumber.keyup(function() {
+        var cardType = $.payment.cardType(this.value);
+        if (cardType != null) {
+            if (activeCardType != cardType && $activeTypeEle != null) {
+                $activeTypeEle.removeClass('active');
+            }
+            $activeTypeEle = $('img.cc-type-' + cardType).addClass('active');
+        } else if ($activeTypeEle != null) {
+            $activeTypeEle.removeClass('active');
+            $activeTypeEle = null;
+        }
+        activeCardType = cardType;
+    });
+    $ccNumber.blur(function() {
+        validOrApplyErrorClass(
+            $ccNumber,
+            $.payment.validateCardNumber,
+            this.value
+        );
+    });
+
+    $ccExpiry = $('input.cc-expiry');
+    $ccExpiry.payment('formatCardExpiry');
+    $ccExpiry.blur(function() {
+        var expiryVal = $.payment.cardExpiryVal(this.value);
+        validOrApplyErrorClass(
+            $ccExpiry,
+            $.payment.validateCardExpiry, 
+            expiryVal.month,
+            expiryVal.year
+        );
+    });
+
+    $ccCVC = $('input.cc-cvc');
+    $ccCVC.payment('formatCardCVC');
+    $ccCVC.blur(function() {
+        validOrApplyErrorClass(
+            $ccCVC,
+            $.payment.validateCardCVC,
+            this.value,
+            activeCardType
+        );
+    });
+
+    $ccName = $('input.cc-name');
+    $ccName.blur(function() {
+        var verifyFirstLast = function(fullName) {
+            var split = fullName.split(' ');
+            if (split.length != 2) { return false; }
+            var e;
+            for (var i = 0; i < split.length; i++) {
+                e = split[i];
+                if (e == null || e.length == 0) { return false; }
+            }
+            return true;
+        };
+        validOrApplyErrorClass(
+            $ccName,
+            verifyFirstLast,
+            this.value
+        );
+    });
+
+    $donationAmount = $('input.donation-amount');
+
+    /**
+     * Ripped and modified from Stripe jQuery.payment source. Formats
+     * the input field to always be of the form "$ 20" or "$ 20.00".
+     * (https://github.com/stripe/jquery.payment/blob/master/src/jquery.payment.coffee)
+     */
+    $donationAmount.keypress(function(e) {
+        // Key event is for a browser shortcut
+        if (e.metaKey || e.ctrlKey) {
+            return true;
+        }
+        // If keycode is a space
+        if (e.which == 32) {
+            return false;
+        }
+        // If keycode is a special char (WebKit)
+        if (e.which == 0) {
+            return true;
+        }
+        // If char is a special char (Firefox)
+        if (e.which < 33) {
+            return true;
+        }
+
+        input = String.fromCharCode(e.which);
+        var val = $donationAmount.val();
+        
+        /* debugger; */
+        // If val is empty, make sure first char is a number
+        if (val == '') {
+            var validInput = /[1-9]/.test(input);
+            if (!validInput) {
+                return false;
+            }
+            e.preventDefault();
+            setTimeout(function() {
+                $donationAmount.val('$ ' + input);
+            });
+        } else {
+            // Else, get just the decimal amount and do error checking there
+            var decimalVal = val.slice(2)
+            if (/^\d+\.\d*$/.test(decimalVal) && !/[\d]/.test(input)) {
+                return false;
+            } else if (/^\d+$/.test(decimalVal) && !/[\d\.]/.test(input)) {
+                return false;
+            }
+            e.preventDefault();
+            setTimeout(function() {
+                $donationAmount.val('$ ' + decimalVal + input);
+            });
+        }
+    });
+    /**
+     * Handles backspace logic for decimal dollars value field.
+     * (https://github.com/stripe/jquery.payment/blob/master/src/jquery.payment.coffee)
+     */
+    $donationAmount.keydown(function(e) {
+        var value = $donationAmount.val();
+
+        // Return unless backspacing
+        if (e.which != 8) {
+            return;
+        }
+
+        var selectionStart = $donationAmount.prop('selectionStart');
+        var selectionEnd = $donationAmount.prop('selectionEnd');
+        if (selectionStart != null && selectionEnd != null &&
+            selectionStart < 4) { 
+
+            e.preventDefault();
+            if (value.length == 3) {
+                setTimeout(function() {
+                    $donationAmount.val('');
+                });
+                return;
+            }
+
+            var newVal = value.slice(selectionEnd);
+            if (newVal == '') {
+                setTimeout(function() {
+                    $donationAmount.val('');
+                });
+            } else {
+                if (newVal[0] == '.') {
+                    newVal = newVal.slice(1);
+                }
+                setTimeout(function() {
+                    $donationAmount.val('$ ' + newVal);
+                });
+            }
+        }
+    });
+    /**
+     * Validates decimal dollars value field when user clicks away from input.
+     * (https://github.com/stripe/jquery.payment/blob/master/src/jquery.payment.coffee)
+     */
+    $donationAmount.blur(function() {
+        var validAmount = function(amountStr) {
+            return /^\d+(\.\d{2})?$/.test(amountStr);
+        };
+        validOrApplyErrorClass(
+            $donationAmount,
+            validAmount,
+            this.value.slice(2)
+        );
+    });
+</script>
+<script id="donation-ajax-js"
+        type="text/javascript"
+        src="{% static 'js/project/donation_ajax.js' %}" 
+        data-field-names="{{ form.fields.keys | tojson }}" 
+        data-project-url="{{ request.get_full_path }}">
+</script>
+
 {% if project.video_url %}
 <script type="text/javascript">
 // function to extract the associated iframe embed url from the video url
@@ -95,10 +297,4 @@ if (embedUrl === "error") {
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
-<script id="donation-ajax-js"
-        type="text/javascript"
-        src="{% static 'js/project/donation_ajax.js' %}" 
-        data-field-names="{{ form.fields.keys | tojson }}" 
-        data-project-url="{{ request.get_full_path }}">
-</script>
 {% endblock %}
