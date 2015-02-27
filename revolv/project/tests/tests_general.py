@@ -250,8 +250,7 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
     """
     Test suite for AJAX payment donations for projects.
     """
-    VALIDATE = 'payment/validate'
-    SUBMIT = 'payment/submit'
+    DONATION = 'donation/submit'
 
     def setUp(self):
         super(DonationAjaxTestCase, self).setUp()
@@ -260,12 +259,11 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         self.project.project_status = Project.ACTIVE
         self.project.save()
 
-    def _make_valid_payment(self):
+    def test_valid_donation(self):
         """
-        Makes valid payment via AJAX to /project/<pk>/payment/validate.
-        Returns response from AJAX request.
+        Test valid donation via AJAX to /project/<pk>/donation/submit.
         """
-        valid_payment = {
+        valid_donation = {
             'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
             'type': 'visa',
             'first_name': 'William',
@@ -277,28 +275,21 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
             'amount': '10.00',
         }
         resp = self.client.post(
-            self.project.get_absolute_url() + self.VALIDATE,
-            data=valid_payment,
+            self.project.get_absolute_url() + self.DONATION,
+            data=valid_donation,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
-        return resp
-
-    def test_payment_validation_ajax(self):
-        """
-        Tests that valid payment validates successfully on /payment/validate
-        endpoint.
-        """
-        resp = self._make_valid_payment()
         self.assertEqual(resp.status_code, 200)
         content = json.loads(resp.content)
         self.assertIsNone(content.get('error'))
+        self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
 
-    def test_invalid_payment_ajax(self):
+    def test_invalid_donation_ajax(self):
         """
-        Tests that invalid payment appropriately errors with on
-        /payment/validate endpoint.
+        Tests that invalid donation appropriately errors with on
+        /donation/submit endpoint.
         """
-        invalid_payment = {
+        invalid_donation = {
             'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
             'type': 'visa',
             # 'first_name': '',
@@ -310,49 +301,10 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
             'amount': '10.00',
         }
         resp = self.client.post(
-            self.project.get_absolute_url() + self.VALIDATE,
-            data=invalid_payment,
+            self.project.get_absolute_url() + self.DONATION,
+            data=invalid_donation,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         content = json.loads(resp.content)
         self.assertEquals(resp.status_code, 400)
-        self.assertIsNotNone(content['error'])
-
-    def test_valid_confirm_ajax(self):
-        """
-        Tests that valid payment submits successfully on /payment/submit
-        endpoint. (Every payment must be validated and then confirmed.)
-        """
-        confirm = json.loads(self._make_valid_payment().content)['confirm']
-        self.assertNotEqual(confirm, {})
-
-        confirm['csrfmiddlewaretoken'] = self.client.cookies['csrftoken'].value
-        resp = self.client.post(
-            self.project.get_absolute_url() + self.SUBMIT,
-            data=confirm,
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-        )
-        self.assertTrue(resp.status_code, 200)
-        content = json.loads(resp.content)
-
-        self.assertEqual(confirm['amount'], content['amount'])
-
-    def test_invalid_confirm_ajax(self):
-        """
-        Tests that invalid payment appropriately errors on /payment/submit
-        endpoint. (Every payment must be validated and then confirmed.)
-        """
-        confirm = json.loads(self._make_valid_payment().content)['confirm']
-        self.assertNotEqual(confirm, {})
-
-        del confirm['amount']
-        confirm['csrfmiddlewaretoken'] = self.client.cookies['csrftoken'].value
-        resp = self.client.post(
-            self.project.get_absolute_url() + self.SUBMIT,
-            data=confirm,
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-        )
-        self.assertTrue(resp.status_code, 400)
-        content = json.loads(resp.content)
-
         self.assertIsNotNone(content['error'])
