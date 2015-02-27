@@ -4,7 +4,12 @@
 
 .payment-modal-content {
     width: 300px;
-
+}
+.confirm-modal-content {
+    width: 600px;
+}
+.success-modal-content {
+    width: 440px;
 }
 
 .condense {
@@ -62,10 +67,10 @@
 }
 
 .confirm-text {
-    height: 50px;
-    line-height: 50px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
-    border-top: 1px solid darken($revolv-gray-bg, 10%);
+    padding: ($column-gutter / 2) 0;
 }
 
 .success-check {

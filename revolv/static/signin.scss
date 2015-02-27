@@ -85,4 +85,8 @@ small.field-error { // extra qualifiers to override foundation
         -webkit-transition: background-color 0.2s;
         -webkit-transition: color 0.1s;
     }
+
+    &:disabled {
+        opacity: 0.3;
+    }
 }

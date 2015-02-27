@@ -5641,9 +5641,17 @@ small.field-error {
     transition: color 0.1s;
     -webkit-transition: background-color 0.2s;
     -webkit-transition: color 0.1s; }
+  .submit-button:disabled {
+    opacity: 0.3; }
 
 .payment-modal-content {
   width: 300px; }
+
+.confirm-modal-content {
+  width: 600px; }
+
+.success-modal-content {
+  width: 440px; }
 
 .condense > .columns {
   padding-left: 0.46875rem;
@@ -5678,10 +5686,10 @@ small.field-error {
   margin-left: 1.875rem; }
 
 .confirm-text {
-  height: 50px;
-  line-height: 50px;
+  height: 20px;
+  line-height: 20px;
   text-align: center;
-  border-top: 1px solid #dddde3; }
+  padding: 0.9375rem 0; }
 
 .success-check {
   width: 300px;

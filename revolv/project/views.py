@@ -135,7 +135,6 @@ class ProjectView(UserDataMixin, DetailView):
     # pass in Project and Maps API key
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
-        context['form'] = CreditCardDonationForm
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
@@ -150,27 +149,7 @@ class ProjectView(UserDataMixin, DetailView):
             return self.deny_access()
 
 
-class ValidatePaymentView(FormView):
-    form_class = CreditCardDonationForm
-
-    def form_valid(self, form):
-        confirm = form.data.dict()
-        del confirm['csrfmiddlewaretoken']
-        # HACK: serializing confirm so that we can append its data to the
-        # confirm form; probably not secure, not sure if best approach
-        serialized = [{'name': k, 'value': v} for k, v in confirm.iteritems()]
-        return JsonResponse({
-            'confirm': confirm,
-            'serialized_confirm': serialized
-        })
-
-    def form_invalid(self, form):
-        return JsonResponse({
-            'error': form.errors,
-        }, status=400)
-
-
-class SubmitPaymentView(UserDataMixin, FormView):
+class SubmitDonationView(UserDataMixin, FormView):
     form_class = CreditCardDonationForm
     model = Project
 

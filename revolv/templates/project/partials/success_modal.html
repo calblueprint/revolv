@@ -1,19 +1,23 @@
 {% load staticfiles %}
 <div id="success-modal" class="revolv-reveal-modal-table" data-reveal>
     <div class="modal-cell">
-        <div class="modal-content payment-modal-content">
+        <div class="modal-content success-modal-content">
             <div class="modal-header">
                 <span class="modal-title">Success!</span>
             </div>
-            <div class="row text-center">
+            <div class="modal-section text-center">
                 <img class="success-check" src="{% static 'images/success-check.png' %}">
             </div>
-            <div class="row text-center confirm-text">
-                <span>You've successfully donated <span id="amount-donated"></span> to {{ project.title }}!</span>
+            <div class="modal-section table">
+                <div class="table-cell-middle confirm-text">
+                    <span>Thank you! You've successfully donated <span id="amount-donated"></span> to <br/>{{ project.title }}.</span>
+                </div>
             </div>
-            <div class="modal-footer">
-                <div class="modal-footer-button-group center">
-                    <button class="close-revolv-reveal-modal submit-button">Hooray!</button>
+            <div class="modal-section">
+                <div class="medium-12 columns">
+                    <div class="modal-footer-button-group center">
+                        <button class="close-revolv-reveal-modal submit-button">Hooray!</button>
+                    </div>
                 </div>
             </div>
         </div>

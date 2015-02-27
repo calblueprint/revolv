@@ -18,7 +18,14 @@
         height: 100%;
         width: 100%;
         vertical-align: middle;
+    }
 
+    @media #{$small-only} {
+        display: block;
+
+        > .modal-cell {
+            display: block;
+        }
     }
 }
 
@@ -81,6 +88,10 @@
 
         &:last-of-type {
             padding-bottom: ($column-gutter / 2);
+        }
+
+        &.table {
+            padding: 0;
         }
     }
 

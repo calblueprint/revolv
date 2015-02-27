@@ -5,15 +5,13 @@
             <div class="modal-header">
                 <span class="modal-title">Donate to Project</span>
                 <div class="modal-errors">
-                    <span>Please correct the following fields:</span>
-                    <ul class="error-list">
-                    </ul>
+                    <span class="error-msg"></span>
                 </div>
             </div>
             <form name="donate-form" 
                 id="donate-form" 
                 method="POST" 
-                action="payment/validate" 
+                action="donation/submit" 
                 autocomplete="on">
                 {% csrf_token %}
                 <div class="modal-section">
@@ -55,10 +53,10 @@
                     </div>
                 </div>
                 <div class="modal-section">
-                    <div class="small-12 columns">
+                    <div class="medium-12 columns">
                         <ul class="modal-footer-button-group right">
                             <li><button class="close-revolv-reveal-modal submit-button gray">Cancel</button></li>
-                            <li><button class="submit-button" type="submit">Continue</button></li>
+                            <li><button class="submit-button donation-continue">Continue</button></li>
                         </ul>
                     </div>
                 </div>

@@ -75,3 +75,5 @@ small.field-error {
     transition: color 0.1s;
     -webkit-transition: background-color 0.2s;
     -webkit-transition: color 0.1s; }
+  .submit-button:disabled {
+    opacity: 0.3; }

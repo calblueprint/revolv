@@ -5581,6 +5581,11 @@ th.hide-for-touch {
     height: 100%;
     width: 100%;
     vertical-align: middle; }
+  @media only screen and (max-width: 40em) {
+    .revolv-reveal-modal-table {
+      display: block; }
+      .revolv-reveal-modal-table > .modal-cell {
+        display: block; } }
 
 .modal-content {
   margin: 0 auto;
@@ -5630,6 +5635,8 @@ th.hide-for-touch {
       border-top: none; }
     .modal-content .modal-section:last-of-type {
       padding-bottom: 0.9375rem; }
+    .modal-content .modal-section.table {
+      padding: 0; }
   .modal-content .modal-footer-button-group {
     list-style: none;
     margin: 0; }
