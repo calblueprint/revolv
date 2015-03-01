@@ -23,3 +23,14 @@ class AdministratorDashboardView(UserDataMixin, TemplateView):
             context['active_project'] = int(self.request.GET['active_project']) if 'active_project' in self.request.GET else context['all_projects'][0].id
         context['subscribed_user_emails'] = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         return context
+
+
+class AdministratorEmailView(UserDataMixin, TemplateView):
+    """Basic view for the Administrator dashboard.
+    """
+    template_name = 'administrator/email.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AdministratorEmailView, self).get_context_data(**kwargs)
+        context['subscribed_user_emails'] = RevolvUserProfile.objects.get_subscribed_to_newsletter()
+        return context
