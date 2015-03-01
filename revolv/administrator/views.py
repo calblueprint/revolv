@@ -1,9 +1,10 @@
 from itertools import chain
 
 from django.views.generic import TemplateView
+
+from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
 from revolv.project.models import Project
-from revolv.base.models import RevolvUserProfile
 
 
 class AdministratorDashboardView(UserDataMixin, TemplateView):
