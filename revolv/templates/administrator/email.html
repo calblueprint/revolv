@@ -33,8 +33,10 @@
 </div>
 
 <div class='row'>
-    <h4>User Emails</h4>
-    <textarea rows="30">{% for email in subscribed_user_emails %}{{ email|safe }}&#13;&#10;{% endfor %}</textarea>
+    <div class="small-12 columns">
+        <h4>Newsletter Subscribers</h4>
+        <textarea rows="10">{% for email in subscribed_user_emails %}{{ email|safe }}&#13;&#10;{% endfor %}</textarea>
+    </div>
 </div>
 
 {% endblock %}
