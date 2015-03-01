@@ -64,6 +64,7 @@ docs/_build/
 raw_templates/node_modules/
 raw_templates/bower_components/
 revolv/static/bower_components/
+revolv/static/revolv/static/
 node_modules/
 .revolv_bash_profile
 .vagrant
