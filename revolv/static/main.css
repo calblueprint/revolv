@@ -5661,8 +5661,12 @@ div.nav-bg-wrap {
     background-color: #c0e7f6; }
 
 .administrator-button.small {
-  width: 18%;
+  width: 16%;
   color: black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: #f9f9fa;
   border-width: 2px;
   border-color: #c0e7f6;
