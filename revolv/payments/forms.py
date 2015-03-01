@@ -1,4 +1,5 @@
 from copy import deepcopy
+from datetime import date
 
 from django import forms
 from revolv.payments.lib.instruments import (CreditCard,
@@ -23,10 +24,14 @@ class CreditCardDonationForm(DonationForm):
         ('discover', 'Discover'),
         ('amex', 'American Express')
     ]
-    type = forms.ChoiceField(choices=cardtype_choices)
+    type = forms.ChoiceField()
 
-    expire_month = forms.IntegerField()
-    expire_year = forms.IntegerField()
+    month_choices = [(n, None) for n in range(1, 12 + 1)]
+    expire_month = forms.ChoiceField()
+
+    this_year = date.today().year
+    year_choices = [(n, None) for n in range(this_year, this_year + 10 + 1)]
+    expire_year = forms.ChoiceField(choices=year_choices)
 
     cvv2 = forms.IntegerField()
     number = forms.IntegerField()
