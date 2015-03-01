@@ -20,6 +20,19 @@ class RevolvUserProfileManager(models.Manager):
         profile.make_administrator()
         return profile
 
+    def get_subscribed_to_newsletter(self, queryset=None):
+        """ Gets all the user emails that are currently subscribed to the newsletter
+
+        :queryset: The queryset in which to search for users
+        :return: A list of users
+        """
+        if queryset is None:
+            queryset = super(RevolvUserProfileManager, self).get_queryset()
+            subscribed_users = queryset.filter(
+                subscribed_to_newsletter=True
+            ).values_list('user__email', flat=True)
+        return subscribed_users
+
 
 class RevolvUserProfile(FacebookModel):
     """
