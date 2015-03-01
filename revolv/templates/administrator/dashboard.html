@@ -20,6 +20,18 @@
     </a>
     {% endif %}
 </div>
+
+<div class='row text-center'>
+    <a href="{%url "administrator:dashboard" %}">
+        <div class='small active administrator-button button'>Projects</div>
+    </a>
+    <div class='small primary administrator-button button'>Repayment</div>
+    <div class='small primary administrator-button button'>Ambassadors</div>
+    <a href="{%url "administrator:email" %}">
+        <div class='small primary administrator-button button'>Emails</div>
+    </a>
+</div>
+
 <div class='row'>
     <div class='small-3 columns dash-box'>
         <dl class="tabs vertical-dash" data-tab>
