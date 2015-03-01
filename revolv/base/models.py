@@ -28,9 +28,9 @@ class RevolvUserProfileManager(models.Manager):
         """
         if queryset is None:
             queryset = super(RevolvUserProfileManager, self).get_queryset()
-            subscribed_users = queryset.filter(
-                subscribed_to_newsletter=True
-            ).values_list('user__email', flat=True)
+        subscribed_users = queryset.filter(
+            subscribed_to_newsletter=True
+        ).values_list('user__email', flat=True)
         return subscribed_users
 
 

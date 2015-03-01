@@ -8,7 +8,7 @@ from revolv.project.models import Project
 
 
 class AdministratorDashboardView(UserDataMixin, TemplateView):
-    """Basic view for the Administrator dashboard.
+    """Basic view for the Administrator dashboard. Shows the list of projects.
     """
     template_name = 'administrator/dashboard.html'
 
@@ -21,12 +21,11 @@ class AdministratorDashboardView(UserDataMixin, TemplateView):
                                              context['active_projects'], context['completed_projects']))
         if len(context['all_projects']) > 0:
             context['active_project'] = int(self.request.GET['active_project']) if 'active_project' in self.request.GET else context['all_projects'][0].id
-        context['subscribed_user_emails'] = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         return context
 
 
 class AdministratorEmailView(UserDataMixin, TemplateView):
-    """Basic view for the Administrator dashboard.
+    """View for the list of newsletter subscribers for the dashboard.
     """
     template_name = 'administrator/email.html'
 

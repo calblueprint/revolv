@@ -137,7 +137,9 @@ class UserAuthTestCase(TestUserMixin, TestCase):
 
 
 class RevolvUserProfileManagerTestCase(TestCase):
-    """Tests for the RevolvUserProfileManager"""
+    """Tests for the RevolvUserProfileManager
+        TODO : Update test to create test objects and not load fixtures.
+    """
 
     def setUp(self):
         post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
