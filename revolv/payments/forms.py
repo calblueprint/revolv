@@ -1,5 +1,4 @@
 from copy import deepcopy
-from datetime import date
 
 from django import forms
 from revolv.payments.lib.instruments import (CreditCard,
@@ -8,8 +7,7 @@ from revolv.payments.services import PaymentService
 
 
 class DonationForm(forms.Form):
-    amount = forms.DecimalField(widget=forms.TextInput(
-        attrs={'placeholder': '$ USD'}))
+    amount = forms.DecimalField()
 
 
 class CreditCardDonationForm(DonationForm):
@@ -27,17 +25,11 @@ class CreditCardDonationForm(DonationForm):
     ]
     type = forms.ChoiceField(choices=cardtype_choices)
 
-    month_choices = [(None, 'mm')] + \
-        [(n, '{:02d}'.format(n)) for n in range(1, 12 + 1)]
-    expire_month = forms.ChoiceField(choices=month_choices)
+    expire_month = forms.IntegerField()
+    expire_year = forms.IntegerField()
 
-    this_year = date.today().year
-    year_choices = [(None, 'yyyy')] + \
-        [(n, n) for n in range(this_year, this_year + 10 + 1)]
-    expire_year = forms.ChoiceField(choices=year_choices)
-
-    cvv2 = forms.IntegerField(widget=forms.TextInput())
-    number = forms.IntegerField(widget=forms.TextInput())
+    cvv2 = forms.IntegerField()
+    number = forms.IntegerField()
 
     def process_payment(self, project, user):
         """

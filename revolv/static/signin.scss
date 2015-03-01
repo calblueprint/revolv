@@ -77,6 +77,15 @@ small.field-error { // extra qualifiers to override foundation
         }
     }
 
+    &.yellow {
+        color: lighten($revolv-yellow, 10%);
+        border: 1px solid lighten($revolv-yellow, 10%);
+
+        &:hover {
+            background-color: $revolv-yellow;
+        }
+    }
+
     &:hover {
         background-color: $revolv-blue;
         color: white;

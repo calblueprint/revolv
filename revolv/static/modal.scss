@@ -1,3 +1,5 @@
+@import "mixins";
+
 .revolv-reveal-modal-table {
     position: fixed;
     display: table !important;
@@ -120,4 +122,46 @@
             }
         }
     }
+}
+
+@include keyframes(check) {
+    0% { height: 0; width: 0; }
+    25% { height: 0; width: 30px; }
+    50% { height: 60px; width: 30px; }
+}
+
+label.checkmark {
+    position: relative;
+    display: block;
+    height: 120px;
+    width: 120px;
+    border: 5px solid lighten($revolv-blue, 40%);
+    border-radius: 50%;
+    margin: 0 auto ($column-gutter / 2) auto;
+
+    &:after {
+        @include transform(scaleX(-1) rotate(180deg + -45deg));
+        @include transform-origin(left top);
+
+        // The borders
+        border-right: 5px solid $revolv-blue;
+        border-top: 5px solid $revolv-blue;
+
+        // Positioning and stuff
+        content: '';
+        height: 60px;
+        left: 24px;
+        position: absolute;
+        top: 60px;
+        width: 30px;
+        display: none;
+    }
+
+    &.animate {
+        &:after {
+            display: block;
+            @include animation(check 0.8s);
+        }
+    }
+
 }

@@ -5634,6 +5634,11 @@ small.field-error {
     border: 1px solid #b3b3c0; }
     .submit-button.gray:hover {
       background-color: #b3b3c0; }
+  .submit-button.yellow {
+    color: #f4c27d;
+    border: 1px solid #f4c27d; }
+    .submit-button.yellow:hover {
+      background-color: #f0ad4e; }
   .submit-button:hover {
     background-color: #11ade5;
     color: white;
@@ -5651,7 +5656,7 @@ small.field-error {
   width: 600px; }
 
 .success-modal-content {
-  width: 440px; }
+  width: 400px; }
 
 .condense > .columns {
   padding-left: 0.46875rem;

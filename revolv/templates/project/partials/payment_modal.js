@@ -56,30 +56,35 @@ donationContinueBtnDOM = $('button.donation-continue')[0];
 donationContinueBtnDOM.disabled = true;
 
 /**
- * Adds class 'error' to inputEle if validFunc returns false on
- * varArgs. Updates validObj as well, and will toggle the disabled state
- * on the donation form Continue button as a side-effect.
+ * Adds class 'error' to inputEle if fieldName is not valid in validObj.
  *
  * @param {String} fieldName - Name of field to update in validObj
  * @param {jQuery Element} inputEle - Element to apply class to
- * @param {function} validFunc - Function that operates on varArgs
- * @param {anything} varArgs - Arbitrary arguments to pass to validFunc
  */
-var validOrApplyErrorClass = function(fieldName, inputEle, validFunc, varArgs) {
-    validObj[fieldName] =
-        validFunc.apply(this, Array.prototype.slice.call(arguments, 3));
+var validOrApplyErrorClass = function(fieldName, inputEle) {
     inputEle.toggleClass(
         'error',
         !validObj[fieldName]
     );
+};
+/**
+ * Updates validObj based on validFunc(varArgs). Enables/disables the donation
+ * form Continue button as a side-effect.
+ *
+ * @param {String} fieldName - Name of field to update in validObj
+ * @param {function} validFunc - Function that operates on varArgs
+ * @param {anything} varArgs - Arbitrary arguments to pass to validFunc
+ */
+var validateField = function(fieldName, validFunc, varArgs) {
+    validObj[fieldName] =
+        validFunc.apply(this, Array.prototype.slice.call(arguments, 2));
     donationContinueBtnDOM.disabled = !validForm();
 };
 
-$ccNumber = $('input.cc-number');
-$ccNumber.payment('formatCardNumber');
-
 var activeCardType = null;
 var $activeTypeEle = null;
+$ccNumber = $('input.cc-number');
+$ccNumber.payment('formatCardNumber');
 $ccNumber.keyup(function() {
     var cardType = $.payment.cardType(this.value);
     if (cardType != null) {
@@ -92,43 +97,59 @@ $ccNumber.keyup(function() {
         $activeTypeEle = null;
     }
     activeCardType = cardType;
+    validateField(
+        'cc-number',
+        $.payment.validateCardNumber,
+        this.value
+    );
 });
+$ccNumber.keyup(); // trigger keyup on page load
 $ccNumber.blur(function() {
     validOrApplyErrorClass(
         'cc-number',
-        $ccNumber,
-        $.payment.validateCardNumber,
-        this.value
+        $ccNumber
     );
 });
 
 $ccExpiry = $('input.cc-expiry');
 $ccExpiry.payment('formatCardExpiry');
-$ccExpiry.blur(function() {
+$ccExpiry.keyup(function () {
     var expiryVal = $.payment.cardExpiryVal(this.value);
-    validOrApplyErrorClass(
+    validateField(
         'cc-expiry',
-        $ccExpiry,
         $.payment.validateCardExpiry,
         expiryVal.month,
         expiryVal.year
     );
 });
+$ccExpiry.keyup(); // trigger keyup on page load
+$ccExpiry.blur(function() {
+    validOrApplyErrorClass(
+        'cc-expiry',
+        $ccExpiry
+    );
+});
 
 $ccCVC = $('input.cc-cvc');
 $ccCVC.payment('formatCardCVC');
-$ccCVC.blur(function() {
-    validOrApplyErrorClass(
+$ccCVC.keyup(function () {
+    validateField(
         'cc-cvc',
-        $ccCVC,
         $.payment.validateCardCVC,
         this.value,
         activeCardType
     );
 });
+$ccCVC.keyup(); // trigger keyup on page load
+$ccCVC.blur(function() {
+    validOrApplyErrorClass(
+        'cc-cvc',
+        $ccCVC
+    );
+});
 
 $ccName = $('input.cc-name');
-$ccName.blur(function() {
+$ccName.keyup(function () {
     var verifyFirstLast = function(fullName) {
         var split = fullName.split(' ');
         if (split.length != 2) { return false; }
@@ -139,16 +160,21 @@ $ccName.blur(function() {
         }
         return true;
     };
-    validOrApplyErrorClass(
+    validateField(
         'cc-name',
-        $ccName,
         verifyFirstLast,
         this.value
     );
 });
+$ccName.keyup(); // trigger keyup on page load
+$ccName.blur(function() {
+    validOrApplyErrorClass(
+        'cc-name',
+        $ccName
+    );
+});
 
 $donationAmount = $('input.donation-amount');
-
 /**
  * Ripped and modified from Stripe jQuery.payment source. Formats
  * the input field to always be of the form "$ 20" or "$ 20.00".
@@ -241,18 +267,24 @@ $donationAmount.keydown(function(e) {
 });
 
 /**
- * Validates decimal dollars value field when user clicks away from input.
+ * Validates decimal dollars value field on keyup.
  * (https://github.com/stripe/jquery.payment/blob/master/src/jquery.payment.coffee)
  */
-$donationAmount.blur(function() {
+$donationAmount.keyup(function() {
     var validAmount = function(amountStr) {
         return /^\d+(\.\d{2})?$/.test(amountStr);
     };
-    validOrApplyErrorClass(
+    validateField(
         'donation-amount',
-        $donationAmount,
         validAmount,
         this.value.slice(2)
+    );
+});
+$donationAmount.keyup(); // trigger keyup on page load
+$donationAmount.blur(function() {
+    validOrApplyErrorClass(
+        'donation-amount',
+        $donationAmount
     );
 });
 
@@ -351,5 +383,14 @@ $('#donate-form').submit(function(e) {
 
 });
 
+// Toggle animate class to checkmark on success modal
+$(document).on('opened.fndtn.reveal', '#success-modal', function() {
+    setTimeout(function() {
+        $('#success-modal').find('label.checkmark').addClass('animate');
+    }, 200);
+});
+$(document).on('closed.fndtn.reveal', '#success-modal', function() {
+    $('#success-modal').find('label.checkmark').removeClass('animate');
+});
 
 });
