@@ -24,10 +24,10 @@ class CreditCardDonationForm(DonationForm):
         ('discover', 'Discover'),
         ('amex', 'American Express')
     ]
-    type = forms.ChoiceField()
+    type = forms.ChoiceField(choices=cardtype_choices)
 
     month_choices = [(n, None) for n in range(1, 12 + 1)]
-    expire_month = forms.ChoiceField()
+    expire_month = forms.ChoiceField(choices=month_choices)
 
     this_year = date.today().year
     year_choices = [(n, None) for n in range(this_year, this_year + 10 + 1)]

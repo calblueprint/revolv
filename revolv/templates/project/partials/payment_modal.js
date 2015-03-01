@@ -375,6 +375,7 @@ $('#donate-form').submit(function(e) {
             (new Number(data.amount)).toFixed(2)));
         $('#success-modal').foundation('reveal', 'open');
     }).fail(function(jqXHR) {
+        debugger;
         $donateModalErrors.addClass('error');
         $donateModalErrors.children('.error-msg')
             .text('Your card information is invalid. Please correct it.');
