@@ -250,7 +250,7 @@ $donationAmount.keydown(function(e) {
             return;
         }
 
-        var newVal = value.slice(selectionEnd);
+        var newVal = value.slice(Math.max(2, selectionEnd));
         if (newVal == '') {
             setTimeout(function() {
                 $donationAmount.val('');
