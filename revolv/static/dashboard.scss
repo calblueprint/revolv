@@ -22,14 +22,15 @@
     }
 }
 
-.administrator-button {
-    width: 24%;
+.administrator-button.small {
+    width: 18%;
     color: black;
     background-color: $revolv-gray-bg;
     border-width: 2px;
     border-color: $revolv-header-color;
     font-weight: 300;
     font-family: $body-font-family;
+    font-size: 1em;
     transition: border-color 200ms linear;
     &.active, &:focus, &:hover {
         color: black;
