@@ -157,10 +157,10 @@ class SubmitDonationView(UserDataMixin, FormView):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
         form.process_payment(project, self.user)
         context = {}
-        context['user'] = self.request.user
+        context['user'] = self.user
         send_revolv_email(
             'post_donation',
-            context, [self.request.user.email]
+            context, [self.user.email]
         )
         return JsonResponse({
             'amount': form.data['amount'],
