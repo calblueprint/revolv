@@ -14,3 +14,17 @@ test:
         <p>@{{name}}++</p>
         {% endfor %}
         "
+post_donation:
+    subject: "Post Donation Success!"
+    body:
+        "
+        Re-volv!\n
+        Hi {{user.first_name}}!
+        Your donation was successful!
+        "
+    html:
+        "
+        <h1>Re-volv!</h1>
+        <p>Hi {{user.first_name}}!</p>
+        <p>Your donation was successful!</p>
+        "

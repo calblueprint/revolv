@@ -7,7 +7,9 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
+
 from revolv.base.users import UserDataMixin
+from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.services import PaymentService
 from revolv.project import forms
@@ -109,11 +111,9 @@ class ReviewProjectView(UserDataMixin, UpdateView):
 
 class PostFundingUpdateView(UpdateView):
     """
-    The view to review a project. Shows the same view as ProjectView, but at
-    the top, has a button group through which an ambassador or admin can
-    update the project status.
+    The view to send out post funding updates about a project after it has completed.
 
-    Accessed through /project/review/{project_id}
+    Accessed through /project/{project_id}/update
     """
     model = Project
     template_name = 'project/post_funding_update.html'
@@ -156,11 +156,18 @@ class SubmitDonationView(UserDataMixin, FormView):
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
         form.process_payment(project, self.user)
+        context = {}
+        context['user'] = self.request.user
+        send_revolv_email(
+            'post_donation',
+            context, [self.request.user.email]
+        )
         return JsonResponse({
             'amount': form.data['amount'],
         })
 
     def form_invalid(self, form):
+        print "ERROR"
         return JsonResponse({
             'error': form.errors,
         }, status=400)
