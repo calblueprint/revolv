@@ -20,12 +20,12 @@
             </a>
             {% if user.revolvuserprofile.is_administrator %}
                 <a href="{% url "administrator:dashboard" %}">
-               <div class='medium active dashboard-button button'>Administrator Dashboard</div>
+               <div class='medium dashboard-button button'>Administrator Dashboard</div>
                 </a>
             {% endif %}
             {% if user.revolvuserprofile.is_ambassador %}
                 <a href="{% url "ambassador:dashboard" %}">
-                <div class='medium primary dashboard-button button'>Ambassador Dashboard</div>
+                <div class='medium active primary dashboard-button button'>Ambassador Dashboard</div>
                 </a>
             {% endif %}
           </div>
