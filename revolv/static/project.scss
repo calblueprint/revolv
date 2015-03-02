@@ -18,8 +18,34 @@
     }
 }
 
-#project-video {
-    margin-top: 20px;
+#project_video {
+    margin-top: 30px;
+}
+
+.tabs {
+    margin-left: 4px;
+
+    .tab-item {
+        width: 30%;
+        text-align: center;
+        margin-right: 1%;
+        margin-left: 1%;
+        a {
+            background-color: $revolv-gray-bg;
+            transition: border-color 200ms linear;
+            border-width: 2px;
+            border-style: solid;
+            border-color: $revolv-gray-bg;
+        }
+
+        &.active, &:hover {
+            a {
+                background-color: $revolv-gray-bg;
+                border-color: $revolv-header-color;
+
+            } 
+        }
+    }
 }
 
 #impact-box {
@@ -58,7 +84,7 @@
     border-style: solid;
     height: 250px;
     width: 100%;
-    margin: 45px 0px 15px 0px;
+    margin: 28px 0px 15px 0px;
 
     h5 {
         width: 90%;
@@ -108,5 +134,34 @@
             }
         }
     }
+}
 
+.tabs-content {
+    .tab {
+        display: none;
+
+        &.active {
+            display: inline;
+        }
+    }
+}
+
+#main-project-info {
+    font-family: $body-font-family;
+    font-weight: 300;
+
+    h3 {
+        font-weight: 800;
+        font-family: $body-font-family;
+    }
+
+    p {
+        font-weight: 300;
+        font-family: $body-font-family;
+    }
+}
+
+body {
+    font-family: $body-font-family;
+    font-weight: 300;
 }

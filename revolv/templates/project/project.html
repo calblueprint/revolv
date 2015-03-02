@@ -16,10 +16,17 @@
 
 {% include "project/partials/payment_modal.html" with form=form %}
 
+
 <div class="row">
-    <div class="row">
-        <div class="large-9 push-3 columns">
-            <div class="large-4 push-8 columns" id="impact-and-donate">
+    <div class='row'>
+        <dl class="tabs">
+            <dd class="active tab-item"><a href="#simple1">Story</a></dd>
+            <dd class="tab-item"><a href="#simple2">Updates</a></dd>
+            <dd class="hide-for-small tab-item"><a href="#simple3">Gallery</a></dd>
+        </dl>
+        <ul class="tabs-content">
+            <li class="active tab" id="simple1"> <div class="row">
+            <div class="large-3 push-9 columns" id="impact-and-donate">
                 <!-- <p>other thing</p> -->
                 <div class='large-12 columns' id="donate-or-admin-panel-container">
                     <!-- <p> hi the donate box goes here</p> -->
@@ -41,10 +48,9 @@
                     </div>
                 </div>
             </div>
-            <div class="large-8 pull-4 columns" id="main-project-info">
-                <br></br>
+            <div class="large-9 pull-3 columns" id="main-project-info">
                 {% if project.video_url %}
-                    <iframe width="420" height="275"id="project_video">
+                    <iframe width="700" height="400" id="project_video">
                     </iframe>
                 {% endif %}
 
@@ -55,59 +61,11 @@
                 <p>Organization : {{project.org_name}}</p>
                 <p>About {{project.org_name}} : {{project.org_about}}</p>
                 <p>Mission Statement : {{ project.mission_statement }}</p>
-            </div>
-        </div> 
-        <div class="large-3 pull-9 columns>">
-          <br></br>
-          <div class="large-10 pull--1 columns>">
-          <ul class="accordion" data-accordion>
-            <li class="accordion-navigation active">
-              <a href="{% url "project:new" %}">Create New Project</a>
+            </div> 
             </li>
-            <li class="accordion-navigation">
-              <a href="#panel1">Active Projects</a>
-              <div id="panel1" class="content">
-                <ul class="side-nav">
-                  {% for project in active_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </li>
-            <li class="accordion-navigation">
-              <a href="#panel2">Proposed Projects</a>
-              <div id="panel2" class="content">
-                <ul class="side-nav">
-                  {% for project in proposed_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </li>
-            <li class="accordion-navigation">
-              <a href="#panel3">Drafted Projects</a>
-              <div id="panel3" class="content">
-                <ul class="side-nav">
-                  {% for project in drafted_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </li>
-            <li class="accordion-navigation">
-              <a href="#panel4">Completed Projects</a>
-              <div id="panel4" class="content">
-                <ul class="side-nav">
-                  {% for project in completed_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </li>
-          </ul>
-         </div>
-         <br></br>
-        </div>
+            <li class="tab" id="simple2">Updates go here</li>
+            <li class="tab" id="simple3">Photo gallery!</li>
+        </ul>
     </div>
 </div>
 <!-- <div class="row">
