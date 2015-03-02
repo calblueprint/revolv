@@ -33,9 +33,26 @@
                     <div id="donate-box">
                         <h5><strong>${{ project.amount_donated }}</strong> donated</h5>
                         <p>of ${{ project.funding_goal }}</p>
-                        <div id="progress-bar"></div>
+                        <div id="progress-bar">
+                            <div id="green-bar"></div>
+                            <div class="large-4 columns">
+                                <h5 id = "percentage">65%</p>
+                            </div>
+                            <div class="large-8 columns">
+                                <h5 id="days-left">20 DAYS LEFT</p>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div id="button-container">
+                        {% if user.revolvuserprofile.is_ambassador %}
+                        <div id="approve-button"><a href="#">APPROVE</a></div>
+                        <div id="deny-button"><a href="#">DENY</a></div>
+                        <div id="update-button"><a href="#">UPDATE PROJECT</a></div>
+                        {% else %}
                         <p>Help us reach our goal!</p>
-                        <div id="donate-button"><a href="#donate" data-reveal-id="donate-modal">Donate</a></div>
+                        <div id="donate-button"><a href="#donate" data-reveal-id="donate-modal">DONATE</a></div>
+                        {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="large-12 columns" id="impact-stats">
@@ -63,7 +80,43 @@
                 <p>Mission Statement : {{ project.mission_statement }}</p>
             </div> 
             </li>
-            <li class="tab" id="simple2">Updates go here</li>
+            <li class="tab" id="simple2">
+                <br></br>
+                <div class="row">
+                    <div class="large-3 columns">
+                        <div class="update-box">
+                            <h3>Update #1</h3>
+                            <h5>BY AUTHOR NAME</h5>
+                            <h5>DATE PUBLISHED</h5>
+                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
+                        </div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="update-box">
+                            <h3>Update #2</h3>
+                            <h5>BY AUTHOR NAME</h5>
+                            <h5>DATE PUBLISHED</h5>
+                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
+                        </div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="update-box">
+                            <h3>Update #3</h3>
+                            <h5>BY AUTHOR NAME</h5>
+                            <h5>DATE PUBLISHED</h5>
+                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
+                        </div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="update-box">
+                            <h3>Update #4</h3>
+                            <h5>BY AUTHOR NAME</h5>
+                            <h5>DATE PUBLISHED</h5>
+                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
+                        </div>
+                    </div>
+                </div>
+            </li>
             <li class="tab" id="simple3">Photo gallery!</li>
         </ul>
     </div>
@@ -74,8 +127,8 @@
 
 
 {% block javascripts %}
-<script type="text/javascript" src="{% static "js/base/dashboard.js" %}"></script>
-
+<!-- <script type="text/javascript" src="{% static "js/base/dashboard.js" %}"></script>
+ -->
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>

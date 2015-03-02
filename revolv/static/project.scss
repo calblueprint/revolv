@@ -88,8 +88,8 @@
 
     h5 {
         width: 90%;
-        margin-left: 10%;
-        margin-right: 10%; 
+        margin-left: 5%;
+        margin-right: 5%; 
         margin-top: 10px;
         margin-bottom: 0px;
         font-weight: 300;
@@ -98,13 +98,49 @@
 
     p {
         width: 90%;
-        margin-left: 10%;
-        margin-right: 10%;
+        margin-left: 5%;
+        margin-right: 5%;
         margin-top: 0px;
         margin-bottom: 0px;
         font-weight: 300;
         font-family: $body-font-family;
-        font-size: 14px;
+        font-size: 13px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    #progress-bar {
+        
+        background-color: $revolv-gray-bg;
+        height: 25px;
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+
+        #green-bar {
+            
+            background-color: green;
+            height: 100%;
+            width: 65%;
+        }
+
+        h5 {
+            font-family: $body-font-family;
+            line-height: 70%;
+            color: #7D7D7D;
+        }
+            
+        #percentage {
+            float: left;
+            font-size: 14px;
+            position: absolute;
+        }
+            
+        #days-left {
+            float: right;
+            font-size: 11px;
+            position: absolute;
+        }
     }
 
     #donate-button {
@@ -128,6 +164,96 @@
 
         &.hover {
             background-color: green;
+
+            a {
+                color: white;
+            }
+        }
+    }
+
+    #approve-button {
+        width: 85%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: green;
+        background-color: white;
+        transition: background-color 200ms linear;
+        text-align: center;
+        top: 80%;
+
+        a {
+            color: green;
+            font-weight: 300;
+            font-family: $body-font-family;
+            transition: color 200ms linear;
+        }
+
+        &:hover {
+            background-color: green;
+
+            a {
+                color: white;
+            }
+        }
+    }
+
+    #deny-button {
+        width: 85%;
+        margin-left: auto;
+        margin-right: auto;
+        border-width: 1px;
+        border-style: solid;
+        border-color: red;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: white;
+        transition: background-color 200ms linear;
+        text-align: center;
+        top: 80%;
+
+        a {
+            color: red;
+            font-weight: 300;
+            font-family: $body-font-family;
+            transition: color 200ms linear;
+        }
+
+        &:hover {
+            background-color: red;
+
+            a {
+                color: white;
+            }
+        }
+    }
+
+    #update-button {
+        width: 85%;
+        margin-left: auto;
+        margin-right: auto;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #7D7D7D;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: white;
+        transition: background-color 200ms linear;
+        text-align: center;
+        top: 80%;
+
+        a {
+            color: #7D7D7D;
+            font-weight: 300;
+            font-family: $body-font-family;
+            transition: color 200ms linear;
+        }
+
+        &:hover {
+            background-color: #7D7D7D;
 
             a {
                 color: white;
@@ -158,6 +284,42 @@
     p {
         font-weight: 300;
         font-family: $body-font-family;
+    }
+}
+
+#simple2 {
+    .update-box {
+        border-color: #DCDCDC;
+        border-style: dotted;
+        border-width: 1px;
+        width: 99%;
+        height: 300px;
+        left: auto;
+        right: auto;
+
+        h3 {
+            font-family: $body-font-family;
+            font-weight: 500;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        h5 {
+            margin-left: 15px;
+            margin-right: 15px;
+            font-family: $body-font-family;
+            font-weight: 300;
+            color: #7D7D7D;
+            font-size: 12px;
+            line-height: 70%;
+        }
+
+        p {
+            font-family: $body-font-family;
+            font-weight: 300;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
     }
 }
 
