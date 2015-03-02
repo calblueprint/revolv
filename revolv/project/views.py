@@ -3,8 +3,9 @@ from decimal import Decimal
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import CreateView, UpdateView
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
 from revolv.base.users import UserDataMixin
 from revolv.payments.forms import CreditCardDonationForm
@@ -122,7 +123,7 @@ class PostFundingUpdateView(UpdateView):
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
 
-class ProjectView(UserDataMixin, FormView):
+class ProjectView(UserDataMixin, DetailView):
     """
     The project view. Displays project details and allows for editing.
 
@@ -130,49 +131,36 @@ class ProjectView(UserDataMixin, FormView):
     """
     model = Project
     template_name = 'project/project.html'
-    form_class = CreditCardDonationForm
 
     # pass in Project and Maps API key
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
-        context['project'] = self.project
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
     def dispatch(self, request, *args, **kwargs):
         # always populate self.user, etc
-        self.project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
         super_response = super(ProjectView, self).dispatch(request, *args, **kwargs)
-        if (self.project.is_active or self.project.is_completed or
-                (self.user.is_authenticated() and (self.project.has_owner(self.user_profile) or self.is_administrator))):
+        project = self.get_object()
+        if (project.is_active or project.is_completed or
+                (self.user.is_authenticated() and (project.has_owner(self.user_profile) or self.is_administrator))):
             return super_response
         else:
             return self.deny_access()
 
-    def form_valid(self, form):
-        form.process_payment(self.project, self.user)
-        return super(CreateProjectDonationView, self).form_valid(form)
 
-    @property
-    def success_url(self):
-        return '/project/{0}'.format(self.kwargs.get('pk'))
-
-
-class CreateProjectDonationView(UserDataMixin, FormView):
-    model = Project
-    template_name = 'project/donate.html'
+class SubmitDonationView(UserDataMixin, FormView):
     form_class = CreditCardDonationForm
-
-    def get_context_data(self, **kwargs):
-        context = super(CreateProjectDonationView, self).get_context_data(**kwargs)
-        context['project'] = Project.objects.get(pk=self.kwargs.get('pk'))
-        return context
+    model = Project
 
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
         form.process_payment(project, self.user)
-        return super(CreateProjectDonationView, self).form_valid(form)
+        return JsonResponse({
+            'amount': form.data['amount'],
+        })
 
-    @property
-    def success_url(self):
-        return '/project/{0}'.format(self.kwargs.get('pk'))
+    def form_invalid(self, form):
+        return JsonResponse({
+            'error': form.errors,
+        }, status=400)

@@ -14,8 +14,9 @@
 
 {% block body %}
 
-{% include "project/partials/payment_modal.html" with form=form %}
-
+{% include "project/partials/payment_modal.html" %}
+{% include "project/partials/confirm_modal.html" %}
+{% include "project/partials/success_modal.html" with project=project %}
 
 <div class="row">
     <div class='row'>
@@ -135,6 +136,14 @@
 
 <script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
 
+{# jQuery.payment necessary for sexy card info validation #}
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.2/jquery.payment.min.js">
+</script>
+<script type="text/javascript">
+{% include "project/partials/payment_modal.js" with project=project %}
+</script>
+
 {% if project.video_url %}
 <script type="text/javascript">
 // function to extract the associated iframe embed url from the video url
@@ -178,4 +187,5 @@ if (embedUrl === "error") {
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
 {% endblock %}
