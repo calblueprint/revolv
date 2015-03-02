@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
+
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_group_by_name, get_profile
 
@@ -101,7 +102,8 @@ class UserAuthTestCase(TestUserMixin, TestCase):
             "password2": "doe_password_1",
             "first_name": "John",
             "last_name": "Doe",
-            "email": "john@example.com"
+            "email": "john@example.com",
+            "subscribed_to_newsletter": True
         }
 
         no_name_data = valid_data.copy()

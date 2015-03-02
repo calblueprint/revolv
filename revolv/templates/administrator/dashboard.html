@@ -14,6 +14,21 @@
 {% block body %}
 
 <div class="row">
+      <div class='row'>
+              <a href="{% url "donor:dashboard" %}">
+            <div class='medium primary dashboard-button button'>Donor Dashboard</div>
+            </a>
+            {% if user.revolvuserprofile.is_administrator %}
+                <a href="{% url "administrator:dashboard" %}">
+               <div class='medium active dashboard-button button'>Administrator Dashboard</div>
+                </a>
+            {% endif %}
+            {% if user.revolvuserprofile.is_ambassador %}
+                <a href="{% url "ambassador:dashboard" %}">
+                <div class='medium primary dashboard-button button'>Ambassador Dashboard</div>
+                </a>
+            {% endif %}
+          </div>
 
       <div class="row">    
           
@@ -24,12 +39,13 @@
                 {% if project == active_projects.first %}
                       <div class='large-12 pull-0 columns'>
                         <img src='{{project.cover_photo.url}}'/>
-                        <p class="project-title">{{project.title}}</p>
+                        <div class="overlay"></div>
+                        <!-- <p class="project-title">{{project.title}}</p> -->
                         <div class="status-bar">
-                          <p class="status-bar-menu-text"><a href="#">menu ></a></p>
-                          <div class="progress-bar-scale">
+                          <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+                          <!-- <div class="progress-bar-scale">
                             <div class="green-bar"></div>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                 {% endif %}
@@ -41,41 +57,34 @@
           {% for project in proposed_projects %}
             <div class="project-container large-4 columns">
               <img src='{{project.cover_photo.url}}'/>
-              <p class="project-title">{{project.title}}</p>
+              <div class="overlay"></div>
+              <!-- <p class="project-title">{{project.title}}</p> -->
               <div class="status-bar">
-                <p class="status-bar-menu-text"><a href="#">menu ></a></p>
-                <div class="progress-bar-scale">
-                  <div class="green-bar"></div>
-                </div>
+                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
               </div>
             </div>
           {% endfor %}
           {% for project in drafted_projects %}
             <div class="project-container large-4 columns">
               <img src='{{project.cover_photo.url}}'/>
-              <p class="project-title">{{project.title}}</p>
+              <div class="overlay"></div>
+              <!-- <p class="project-title">{{project.title}}</p> -->
               <div class="status-bar">
-                <p class="status-bar-menu-text"><a href="#">menu ></a></p>
-                <div class="progress-bar-scale">
-                  <div class="green-bar"></div>
-                </div>
+                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
               </div>
             </div>
           {% endfor %}
           {% for project in completed_projects %}
             <div class="project-container large-4 columns">
               <img src='{{project.cover_photo.url}}'/>
-              <p class="project-title">{{project.title}}</p>
+              <div class="overlay"></div>
+              <!-- <p class="project-title">{{project.title}}</p> -->
               <div class="status-bar">
-                <p class="status-bar-menu-text"><a href="#">menu ></a></p>
-                <div class="progress-bar-scale">
-                  <div class="green-bar"></div>
-                </div>
+                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
               </div>
             </div>
           {% endfor %}
-         </div>        
-        </div>
+         </div></div>
          <div class="large-3 pull-9 columns>">
           <br></br>
           <div class="large-10 pull--1 columns>">
@@ -125,39 +134,6 @@
             </li>
           </ul>
          </div>
-         <br></br>
-        </div>
-         <!-- <div class="large-3 pull-9 columns">
-            
-          <ul class="side-nav">
-            <li><a href="#">PROJECTS</a></li>
-            
-            <div class="large-12 colums" id="active-project-nav">
-              <li><a href="#">Active Projects</a></li>
-              {% for project in active_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-              {% endfor %}
-            </div>
-
-            <li><a href="#">Proposed Projects</a></li>
-            {% for project in proposed_projects %}
-                  <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-            {% endfor %}
-
-            <li><a href="#">Drafted Projects</a></li>
-            {% for project in drafted_projects %}
-                  <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-            {% endfor %}
-
-            <li><a href="#">Completed Projects</a></li>
-            {% for project in completed_projects %}
-                  <li><a href="project/{{project.id}}">{{project.title}}</a></li>
-            {% endfor %}
-          </ul>
-            
-        </div> -->
-        
-      </div>
-      <br></br>
-</div>
+        </div> </div></div>
+        <br></br>      
 {% endblock %}

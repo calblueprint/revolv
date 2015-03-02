@@ -22,30 +22,35 @@
 </div>
 <div class='row'>
     <div class='small-3 columns dash-box'>
-		<a href="{% url "project:new" %}" class="large button proj-button">Create Project</a>
+        <a href="{% url "project:new" %}" class="large button proj-button">Create Project</a>
         <dl class="tabs vertical-dash" data-tab>
             {% for project in all_projects %}
-            	{% if project in drafted_projects and project == drafted_projects.first %}
-					<h4 class='subheader text-center'>Drafted Projects</h4>
-            	{% elif project in proposed_projects and project == proposed_projects.first %}
-					<h4 class='subheader text-center'>Proposed Projects</h4>
-            	{% elif project in active_projects and project == active_projects.first %}
-					<h4 class='subheader text-center'>Active Projects</h4>
-            	{% elif project in completed_projects and project == completed_projects.first %}
-					<h4 class='subheader text-center'>Completed Projects</h4>
-            	{% endif %}
+                {% if project in drafted_projects and project == drafted_projects.first %}
+                    <h4 class='subheader text-center'>Drafted Projects</h4>
+                {% elif project in proposed_projects and project == proposed_projects.first %}
+                    <h4 class='subheader text-center'>Proposed Projects</h4>
+                {% elif project in active_projects and project == active_projects.first %}
+                    <h4 class='subheader text-center'>Active Projects</h4>
+                {% elif project in completed_projects and project == completed_projects.first %}
+                    <h4 class='subheader text-center'>Completed Projects</h4>
+                {% endif %}
                 {% if project == all_projects.first %}
                     <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
                 {% else %}
                     <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
                 {% endif %}
+                {% if project in active_projects %}
+                    <div class="progress large-# success">
+                        <span class="meter" style="width: {{ project.partial_completeness }}%"></span>
+                    </div>
+                {% endif %}
             {% endfor %}
         </dl>
     </div>
-	<div class='small-9 columns dash-box right'>
+    <div class='small-9 columns dash-box right'>
         <div class="tabs-content">
             {% for project in all_projects %}
-                {% if project == all_projects.first %}
+                {% if project == all_projects.0 %}
                     <div class="content active" id="proj{{project.id}}">
                 {% else %}
                     <div class="content" id="proj{{project.id}}">
@@ -66,6 +71,19 @@
                                 <p> {{ project.mission_statement }} </p>
                             </div>
                         </div>
+                        {% if project in active_projects %}
+                        <h4>Funding Progress</h4>
+                        <div class="row">
+                            <div class="progress small-# success">
+                                <span class="meter" style="width: {{ project.partial_completeness }}%"></span>
+                                <ul class="inline-list">
+                                    <li><h6>{{ project.partial_completeness | floatformat }}% funded</h6></li>
+                                    <li><h6>${{ project.amount_donated | floatformat }} donated</h6></li>
+                                    <li><h6>{{ project.days_left }} days to go</h6></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="small-3 columns">
                         <a href="{% url "project:review" project.pk %}">
@@ -78,7 +96,7 @@
                     <br/>
                 </div>
             {% empty %}
-                <p> You have not donated to any projects. </p>
+                <p> You have not created any projects. </p>
             {% endfor %}
         </div>
     </div>

@@ -58,6 +58,7 @@ $divider-font-size: 14px;
     border-width: 2px;
     border-color: $revolv-gray-bg;
     transition: border-color 200ms linear;
+    
     &.active, &:focus, &:hover {
         color: black;
         background-color: $revolv-gray-bg;
@@ -84,27 +85,46 @@ $divider-font-size: 14px;
     margin: 0px, 0px, 0px, 0px;
 
     .status-bar {
-    background-color: black;
-    height: 25px;
-    width: 60%;
+    transition: border-color 200ms linear;
+    transition: background-color 200ms linear;
+    height: 40px;
+    width: 80%;
     position: absolute;
-    top: 82%;
-    left: 40%;
+    top: 50%;
+    left: 10%;
+    border-color: white;
+    border-width: 2px;
+    border-style: solid;
 
         .status-bar-menu-text {
-            text-align: right;
+            transition: color 200ms linear;
+            font-family: $body-font-family;
+            text-align: center;
             top: 50%;
             margin-right: 6px;
             color: white;
+            font-weight: 300;
+            z-index: -1;
+        }
+
+        &.active, &:hover {
+            //background-color: $revolv-gray-bg;
+            //border-color: $revolv-header-color;
+            border-width: 2px;
+            border-style: solid; 
+
+            .status-bar-menu-text {
+                color: $revolv-blue;
+            }
         }
 
         .progress-bar-scale {
             height: 10%;
-            width: 40%;
+            width: 100%;
             background-color: white;
             position: absolute;
-            top: 50%;
-            left: 10%;
+            top: 90%;
+            bottom: 10%;
 
             .green-bar {
                 width: 90%;
@@ -128,27 +148,37 @@ $divider-font-size: 14px;
         width: 60%;
         text-shadow: 1px 1px 1px #494949;
     }
+
 }
 
 #active-project-container {
     .status-bar {
-        top: 94%;
-        left: 38%;
+        top: 65%;
+        left: 30%;
+        width: 40%;
+        height: 15%;
 
         .progress-bar-scale {
             width: 75%;
             left: 5%;
         }
+
+        .status-bar-menu-text {
+            height: 50%;
+            top: 25%;
+            bottom: 25%;
+        }
     }
 
     .project-title {
-        font-size: 24px;
-        width: 40%;
+        font-size: 34px;
     }
 }
 
 .accordion {
     top: 0;
+    font-family: $body-font-family;
+    font-weight: 300;
     
     // li .content {
     // background-color: blue;
@@ -160,3 +190,12 @@ $divider-font-size: 14px;
         }
     }
 }
+
+// .overlay {
+//         width: 100%;
+//         height: 100px;
+//         top: 0;
+//         left: 0;
+//         position: absolute;
+//         background: linear-gradient(to bottom, rgba(0, 0, 0, .05),  rgba(0, 0, 0, .2));
+// }

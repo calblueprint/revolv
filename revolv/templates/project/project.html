@@ -24,11 +24,11 @@
                 <div class='large-12 columns' id="donate-or-admin-panel-container">
                     <!-- <p> hi the donate box goes here</p> -->
                     <div id="donate-box">
-                        <h5># donated</h5>
-                        <p>of {{ project.funding_goal }}</p>
+                        <h5><strong>${{ project.amount_donated }}</strong> donated</h5>
+                        <p>of ${{ project.funding_goal }}</p>
                         <div id="progress-bar"></div>
                         <p>Help us reach our goal!</p>
-                        <div id="donate-button"><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></div>
+                        <div id="donate-button"><a href="#donate" data-reveal-id="donate-modal">Donate</a></div>
                     </div>
                 </div>
                 <div class="large-12 columns" id="impact-stats">
@@ -141,28 +141,14 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% block javascripts %}
 <script type="text/javascript" src="{% static "js/base/dashboard.js" %}"></script>
 
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>
+
+<script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
 
 {% if project.video_url %}
 <script type="text/javascript">
