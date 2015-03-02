@@ -1,14 +1,16 @@
 import datetime
+import json
 
 from django.core.management import call_command
 from django.db.models.signals import post_save
 from django.test import TestCase
 from django_facebook.utils import get_user_model
-from models import Project
 from revolv.base.models import RevolvUserProfile
 from revolv.base.signals import create_profile_of_user
+from revolv.base.tests.tests import TestUserMixin
 from revolv.payments.models import Payment, PaymentInstrumentType
-from tasks import scrape
+from revolv.project.models import Project
+from revolv.project.tasks import scrape
 
 
 # Create your tests here.
@@ -242,3 +244,67 @@ class ScrapeTest(TestCase):
     def test_scrape(self):
         result = scrape.delay()
         self.assertTrue(result.successful())
+
+
+class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
+    """
+    Test suite for AJAX payment donations for projects.
+    """
+    DONATION = 'donation/submit'
+
+    def setUp(self):
+        super(DonationAjaxTestCase, self).setUp()
+        self._send_test_user_login_request()
+        self.project = self.create_test_project()
+        self.project.project_status = Project.ACTIVE
+        self.project.save()
+
+    def test_valid_donation(self):
+        """
+        Test valid donation via AJAX to /project/<pk>/donation/submit.
+        """
+        valid_donation = {
+            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
+            'type': 'visa',
+            'first_name': 'William',
+            'last_name': 'Taft',
+            'expire_month': 6,
+            'expire_year': 2020,
+            'cvv2': '00',
+            'number': '1234123412341234',
+            'amount': '10.00',
+        }
+        resp = self.client.post(
+            self.project.get_absolute_url() + self.DONATION,
+            data=valid_donation,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.status_code, 200)
+        content = json.loads(resp.content)
+        self.assertIsNone(content.get('error'))
+        self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
+
+    def test_invalid_donation_ajax(self):
+        """
+        Tests that invalid donation appropriately errors with on
+        /donation/submit endpoint.
+        """
+        invalid_donation = {
+            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
+            'type': 'visa',
+            # 'first_name': '',
+            'last_name': 'Taft',
+            'expire_month': 6,
+            'expire_year': 2020,
+            'cvv2': '00',
+            'number': 'not a number',
+            'amount': '10.00',
+        }
+        resp = self.client.post(
+            self.project.get_absolute_url() + self.DONATION,
+            data=invalid_donation,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        content = json.loads(resp.content)
+        self.assertEquals(resp.status_code, 400)
+        self.assertIsNotNone(content['error'])

@@ -5581,6 +5581,11 @@ th.hide-for-touch {
     height: 100%;
     width: 100%;
     vertical-align: middle; }
+  @media only screen and (max-width: 40em) {
+    .revolv-reveal-modal-table {
+      display: block; }
+      .revolv-reveal-modal-table > .modal-cell {
+        display: block; } }
 
 .modal-content {
   margin: 0 auto;
@@ -5596,19 +5601,145 @@ th.hide-for-touch {
       border-radius: initial !important; } }
   .modal-content .modal-header {
     background-color: #e9f6fc;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 0.9375rem;
-    margin-bottom: 0.9375rem; }
+    min-height: 50px; }
+    .modal-content .modal-header > .modal-title {
+      padding: 0 0.9375rem;
+      display: block;
+      height: 50px;
+      line-height: 50px; }
+    .modal-content .modal-header > .modal-errors {
+      padding: 0 0.9375rem;
+      display: none;
+      visibility: hidden;
+      background-color: #dddde3;
+      min-height: 50px;
+      padding-top: 0.9375rem;
+      padding-bottom: 0.9375rem; }
+      .modal-content .modal-header > .modal-errors .error-list {
+        padding: 0;
+        margin: 0;
+        margin-left: 1.875rem; }
+      .modal-content .modal-header > .modal-errors.error {
+        display: block;
+        visibility: visible; }
+  .modal-content .modal-section {
+    width: 100%;
+    border-top: 1px solid #dddde3;
+    padding-top: 0.9375rem; }
+    .modal-content .modal-section:before, .modal-content .modal-section:after {
+      content: " ";
+      display: table; }
+    .modal-content .modal-section:after {
+      clear: both; }
+    .modal-content .modal-section:first-of-type {
+      border-top: none; }
+    .modal-content .modal-section:last-of-type {
+      padding-bottom: 0.9375rem; }
+    .modal-content .modal-section.table {
+      padding: 0; }
+  .modal-content .modal-footer-button-group {
+    list-style: none;
+    margin: 0; }
+    .modal-content .modal-footer-button-group > li {
+      display: inline-block; }
   .modal-content .modal-footer {
     width: 100%;
     padding: 0 0.9375rem;
     padding-top: 0.9375rem;
     border-top: 1px solid #dddde3; }
-    .modal-content .modal-footer > ul.modal-footer-button-group {
-      list-style: none; }
-      .modal-content .modal-footer > ul.modal-footer-button-group > li {
+    .modal-content .modal-footer > .modal-footer-button-group {
+      list-style: none;
+      margin: 0;
+      margin-bottom: 0.9375rem; }
+      .modal-content .modal-footer > .modal-footer-button-group > li {
         display: inline-block; }
+
+@-webkit-keyframes check {
+  0% {
+    height: 0;
+    width: 0; }
+
+  25% {
+    height: 0;
+    width: 30px; }
+
+  50% {
+    height: 60px;
+    width: 30px; } }
+
+@-moz-keyframes check {
+  0% {
+    height: 0;
+    width: 0; }
+
+  25% {
+    height: 0;
+    width: 30px; }
+
+  50% {
+    height: 60px;
+    width: 30px; } }
+
+@-ms-keyframes check {
+  0% {
+    height: 0;
+    width: 0; }
+
+  25% {
+    height: 0;
+    width: 30px; }
+
+  50% {
+    height: 60px;
+    width: 30px; } }
+
+@keyframes check {
+  0% {
+    height: 0;
+    width: 0; }
+
+  25% {
+    height: 0;
+    width: 30px; }
+
+  50% {
+    height: 60px;
+    width: 30px; } }
+
+label.checkmark {
+  position: relative;
+  display: block;
+  height: 120px;
+  width: 120px;
+  border: 5px solid #c7eefb;
+  border-radius: 50%;
+  margin: 0 auto 0.9375rem auto; }
+  label.checkmark:after {
+    -moz-transform: scaleX(-1) rotate(135deg);
+    -o-transform: scaleX(-1) rotate(135deg);
+    -ms-transform: scaleX(-1) rotate(135deg);
+    -webkit-transform: scaleX(-1) rotate(135deg);
+    transform: scaleX(-1) rotate(135deg);
+    moz-transform-origin: left top;
+    -o-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    border-right: 5px solid #11ade5;
+    border-top: 5px solid #11ade5;
+    content: '';
+    height: 60px;
+    left: 24px;
+    position: absolute;
+    top: 60px;
+    width: 30px;
+    display: none; }
+  label.checkmark.animate:after {
+    display: block;
+    -webkit-animation: check 0.8s;
+    -moz-animation: check 0.8s;
+    -o-animation: check 0.8s;
+    animation: check 0.8s; }
 
 .header-small-text {
   font-size: 14px;
@@ -5714,6 +5845,17 @@ body {
 p, h2, h3, h4 {
   font-weight: 300;
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+
+input.error, select.error, textarea.error {
+  margin-bottom: 1rem !important;
+  border-color: #f46b7b !important; }
+
+.table {
+  display: table; }
+
+.table-cell-middle {
+  display: table-cell;
+  vertical-align: middle; }
 
 .footer .divider {
   display: block;
