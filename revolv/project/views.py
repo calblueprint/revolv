@@ -167,7 +167,6 @@ class SubmitDonationView(UserDataMixin, FormView):
         })
 
     def form_invalid(self, form):
-        print "ERROR"
         return JsonResponse({
             'error': form.errors,
         }, status=400)
