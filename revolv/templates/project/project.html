@@ -68,32 +68,6 @@
         </ul>
     </div>
 </div>
-<!-- <div class="row">
-    <div class="large-12 columns">
-        <h1><strong>{{ project.title }}</strong></h1>
-        <ul class="button-group nav-tab-button-group">
-            {% if project.is_active %}
-            <li><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
-            {% endif %}
-        </ul>
-        <h3>Funding Goal : {{ project.funding_goal }}</h3>
-        <h3>End Date : {{ project.end_date }}</h3>
-        <h5>Location : {{ project.location}}</h5>
-        <div id="map-canvas"></div>
-        <p>Organization : {{project.org_name}}</p>
-        <p>About {{project.org_name}} : {{project.org_about}}</p>
-        <img src="{{project.cover_photo.url}}"></img>
-        <p>Mission Statement : {{ project.mission_statement }}</p>
-        {% if project.video_url %}
-        <iframe width="420" height="315" id="project_video">
-		</iframe>
-        {% endif %}
-        {% if project.is_completed or project.is_active and project.post_funding_updates %}
-        <h5>Post Funding Updates</h5>
-        <p>{{ project.post_funding_updates}}</p>
-        {% endif %}
-    </div>
-</div> -->
 
 {% endblock %}
 
