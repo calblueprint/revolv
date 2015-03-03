@@ -21,65 +21,66 @@
 <div class="row">
     <div class='row'>
         <dl class="tabs">
-            <dd class="active tab-item"><a href="#simple1">Story</a></dd>
-            <dd class="tab-item"><a href="#simple2">Updates</a></dd>
-            <dd class="hide-for-small tab-item"><a href="#simple3">Gallery</a></dd>
+            <dd class="active tab-item"><a href="#story">Story</a></dd>
+            <dd class="tab-item"><a href="#updates">Updates</a></dd>
+            <dd class="hide-for-small tab-item"><a href="#gallery">Gallery</a></dd>
         </dl>
         <ul class="tabs-content">
-            <li class="active tab" id="simple1"> <div class="row">
-            <div class="large-3 push-9 columns" id="impact-and-donate">
-                <div class='large-12 columns' id="donate-or-admin-panel-container">
-                    <div id="donate-box">
-                        <h5><strong>${{ project.amount_donated }}</strong> donated</h5>
-                        <p>of ${{ project.funding_goal }}</p>
-                        <div id="progress-bar">
-                            <div id="green-bar"></div>
-                            <div class="large-4 columns">
-                                <h5 id = "percentage">65%</p>
-                            </div>
-                            <div class="large-8 columns">
-                                <h5 id="days-left">20 DAYS LEFT</p>
+            <li class="active tab story-view" id="story">
+                <div class="row">
+                    <div class="large-3 push-9 columns" id="impact-and-donate">
+                        <div class='large-12 columns donate-admin-panels' id="donate-or-admin-panel-container">
+                            <div class="donate-box">
+                                <h5><strong>${{ project.amount_donated }}</strong> donated</h5>
+                                <p>of ${{ project.funding_goal }}</p>
+                                <div class="progress-bar">
+                                    <div class="green-bar" style="width:{{ project.percent_complete }}%"></div>
+                                    <div class="large-4 columns">
+                                        <h5 class = "percentage">{{ project.percent_complete }}%</p>
+                                    </div>
+                                    <div class="large-8 columns">
+                                        <h5 class="days-left">20 DAYS LEFT</p>
+                                    </div>
+                                </div>
+                                <br></br>
+                                <div id="button-container">
+                                    {% if user.revolvuserprofile.is_ambassador %}
+                                        <div class="approve-button"><a href="#">APPROVE</a></div>
+                                        <div class="deny-button"><a href="#">DENY</a></div>
+                                        <div class="update-button"><a href="#">UPDATE PROJECT</a></div>
+                                    {% else %}
+                                        <p>Help us reach our goal!</p>
+                                        <div classr="donate-button"><a href="#donate" data-reveal-id="donate-modal">DONATE</a></div>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                        <br></br>
-                        <div id="button-container">
-                        {% if user.revolvuserprofile.is_ambassador %}
-                        <div id="approve-button"><a href="#">APPROVE</a></div>
-                        <div id="deny-button"><a href="#">DENY</a></div>
-                        <div id="update-button"><a href="#">UPDATE PROJECT</a></div>
-                        {% else %}
-                        <p>Help us reach our goal!</p>
-                        <div id="donate-button"><a href="#donate" data-reveal-id="donate-modal">DONATE</a></div>
+                        <div class="large-12 columns" id="impact-stats">
+                            <div class="impact-box">
+                                <h5>Impact</h5>
+                                <p>of {{ project.funding_goal }}</p>
+                                <p>impact information</p>
+                                <p>impact information</p>
+                                <p>impact information<p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-9 pull-3 columns project-info" id="main-project-info">
+                        {% if project.video_url %}
+                            <iframe width="700" height="400" id="project_video">
+                            </iframe>
                         {% endif %}
-                        </div>
+                        <h3>{{ project.title }}</h3>
+                        <p>Funding Goal: {{ project.funding_goal }}</p>
+                        <p>End Date: {{ project.end_date }}</p>
+                        <p>Location: {{ project.location}}</p>
+                        <p>Organization : {{project.org_name}}</p>
+                        <p>About {{project.org_name}} : {{project.org_about}}</p>
+                        <p>Mission Statement : {{ project.mission_statement }}</p>
                     </div>
-                </div>
-                <div class="large-12 columns" id="impact-stats">
-                    <div id="impact-box">
-                        <h5>Impact</h5>
-                        <p>of {{ project.funding_goal }}</p>
-                        <p>impact information</p>
-                        <p>impact information</p>
-                        <p>impact information<p>
-                    </div>
-                </div>
-            </div>
-            <div class="large-9 pull-3 columns" id="main-project-info">
-                {% if project.video_url %}
-                    <iframe width="700" height="400" id="project_video">
-                    </iframe>
-                {% endif %}
-
-                <h3>{{ project.title }}</h3>
-                <p>Funding Goal: {{ project.funding_goal }}</p>
-                <p>End Date: {{ project.end_date }}</p>
-                <p>Location: {{ project.location}}</p>
-                <p>Organization : {{project.org_name}}</p>
-                <p>About {{project.org_name}} : {{project.org_about}}</p>
-                <p>Mission Statement : {{ project.mission_statement }}</p>
-            </div> 
+                </div> 
             </li>
-            <li class="tab" id="simple2">
+            <li class="tab update-view" id="updates">
                 <br></br>
                 <div class="row">
                     <div class="large-3 columns">
@@ -116,18 +117,14 @@
                     </div>
                 </div>
             </li>
-            <li class="tab" id="simple3">Photo gallery!</li>
+            <li class="tab" id="gallery">Photo gallery!</li>
         </ul>
     </div>
 </div>
 
 {% endblock %}
 
-
-
 {% block javascripts %}
-<!-- <script type="text/javascript" src="{% static "js/base/dashboard.js" %}"></script>
- -->
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>
@@ -149,7 +146,6 @@
 function getEmbedUrl(url) {
     var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
-
     if (match && match[2].length == 11) {
         var video_id = match[2];
         return "http://www.youtube.com/embed/" + video_id;
@@ -157,7 +153,6 @@ function getEmbedUrl(url) {
         return "error";
     }
 }
-
 // updates the iframe src url if youtube url is valid, otherwise hides it
 var embedUrl = getEmbedUrl("{{project.video_url}}");
 if (embedUrl === "error") {

@@ -52,11 +52,11 @@
           
         <div class="large-9 push-3 columns">
           <div class="row homepage-divider">active projects</div><br>
-          <div class='project-container active row' id="active-project-container">
+          <div class='project-container active row active-project-container'>
             {% for project in active_projects %}
                 {% if project == active_projects.first %}
                       <div class='large-12 pull-0 columns'>
-                        <img src='{{project.cover_photo.url}}'/>
+                        <img class="project-img" src='{{project.cover_photo.url}}'/>
                         <div class="overlay"></div>
                         <div class="status-bar">
                           <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
@@ -70,7 +70,7 @@
          <div id="other-project-container row">
           {% for project in proposed_projects %}
             <div class="project-container large-4 columns">
-              <img src='{{project.cover_photo.url}}'/>
+              <img class="project-img" src='{{project.cover_photo.url}}'/>
               <div class="overlay"></div>
               <div class="status-bar">
                 <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
@@ -79,7 +79,7 @@
           {% endfor %}
           {% for project in drafted_projects %}
             <div class="project-container large-4 columns">
-              <img src='{{project.cover_photo.url}}'/>
+              <img class="project-img" src='{{project.cover_photo.url}}'/>
               <div class="overlay"></div>
               <div class="status-bar">
                 <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
@@ -88,7 +88,7 @@
           {% endfor %}
           {% for project in completed_projects %}
             <div class="project-container large-4 columns">
-              <img src='{{project.cover_photo.url}}'/>
+              <img class="project-img" src='{{project.cover_photo.url}}'/>
               <div class="overlay"></div>
               <div class="status-bar">
                 <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>

@@ -1,6 +1,6 @@
-$(document).ready(function(){
-	$('.accordion-navigation').click(function(){
-		var active = $(this).find("div").hasClass("active");
+$(document).ready(function() {
+	$('.accordion-navigation').click(function() {
+		var active = $(this).find(".content").hasClass("active");
 		$('.accordion li div').removeClass("active")
 		if (!active){
 			var liItem = $(this);
@@ -9,7 +9,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$('.status-bar').hover(function(){
+	$('.status-bar').hover(function() {
 		$(".status-bar").removeClass('active');
 		$(this).addClass('active');
 		$(this).css("background-color", "white");
@@ -24,9 +24,14 @@ $(document).ready(function(){
 
 });
 
-var doOverlay = function(){
-	$(".overlay").each(function(){
-		console.log("overlay");
+var doOverlay = function() {
+	
+	/**
+	* Go through each overlay on top of each project image
+	* and add a transparent top to bottom black gradient to each one.
+	*/
+
+	$(".overlay").each(function() {
 		var item = $(this);
 		item.css("width", "100%");
 		item.css("height", "100%");
