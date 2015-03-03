@@ -1,4 +1,3 @@
-
 var drawD3PartialTriangle = function (destination, classes, radius, padding, partial) {
     var points = 100,
         pointsToDraw = Math.floor(points * partial),
