@@ -193,6 +193,11 @@ $divider-font-size: 14px;
     font-weight: 300;
     
     .accordion-navigation {
+        transition: background-color 200ms linear;
+
+        a {
+            transition: background-color 200ms linear;
+        }
         
         #new-project-button {
             background-color: green;
