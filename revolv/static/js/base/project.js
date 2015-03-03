@@ -1,9 +1,4 @@
 $(document).ready(function(){
-	$("#donate-button").hover(function(){
-		$(this).addClass("hover");
-	}, function(){
-		$(this).removeClass("hover")
-	});
 
 	$("#donate-button").click(function(){
 		$(this).find('a').click();

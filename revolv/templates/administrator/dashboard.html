@@ -59,7 +59,7 @@
                         <img src='{{project.cover_photo.url}}'/>
                         <div class="overlay"></div>
                         <div class="status-bar">
-                          <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+                          <a href="{% url 'project:view' project.id %}"><p class="status-bar-menu-text">{{project.title}}</p></a>
                         </div>
                       </div>
                 {% endif %}
@@ -73,7 +73,7 @@
               <img src='{{project.cover_photo.url}}'/>
               <div class="overlay"></div>
               <div class="status-bar">
-                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+                <a href="{% url 'project:view' project.id %}"><p class="status-bar-menu-text">{{project.title}}</p></a>
               </div>
             </div>
           {% endfor %}
@@ -82,7 +82,7 @@
               <img src='{{project.cover_photo.url}}'/>
               <div class="overlay"></div>
               <div class="status-bar">
-                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+                <a href="{% url 'project:view' project.id %}"><p class="status-bar-menu-text">{{project.title}}</p></a>
               </div>
             </div>
           {% endfor %}
@@ -91,7 +91,7 @@
               <img src='{{project.cover_photo.url}}'/>
               <div class="overlay"></div>
               <div class="status-bar">
-                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+                <a href="{% url 'project:view' project.id %}"><p class="status-bar-menu-text">{{project.title}}</p></a>
               </div>
             </div>
           {% endfor %}

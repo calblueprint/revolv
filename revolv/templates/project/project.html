@@ -33,9 +33,9 @@
                         <h5><strong>${{ project.amount_donated }}</strong> donated</h5>
                         <p>of ${{ project.funding_goal }}</p>
                         <div id="progress-bar">
-                            <div id="green-bar"></div>
+                            <div id="green-bar" style="width:{{ project.percent_complete }}%"></div>
                             <div class="large-4 columns">
-                                <h5 id = "percentage">65%</p>
+                                <h5 id = "percentage">{{ project.int_percent_complete }}%</p>
                             </div>
                             <div class="large-8 columns">
                                 <h5 id="days-left">20 DAYS LEFT</p>

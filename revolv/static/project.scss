@@ -148,7 +148,6 @@
             
             background-color: green;
             height: 100%;
-            width: 65%;
         }
 
         h5 {
@@ -189,7 +188,7 @@
             transition: color 200ms linear;
         }
 
-        &.hover {
+        &:hover {
             background-color: green;
 
             a {
@@ -317,7 +316,7 @@
 #simple2 {
     .update-box {
         border-color: #DCDCDC;
-        border-style: dotted;
+        border-style: solid;
         border-width: 1px;
         width: 99%;
         height: 300px;
