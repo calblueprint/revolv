@@ -15,16 +15,30 @@ test:
         {% endfor %}
         "
 post_donation:
-    subject: "Post Donation Success!"
+    subject: "Thank you from Re-volv"
     body:
         "
-        Re-volv!\n
         Hi {{user.first_name}}!
-        Your donation was successful!
+
+        Thank you for your invaluable donation of ${{amount}} to {{project.title}}! Each contribution is a major step in bringing clean energy to everyone.
+
+        Donations like yours have powered our efforts to provide renewable energy to local communities. Without contributions like yours, we would not be able to support communities as they strive to be self-sufficient. In addition, your contribution will assist not just one community, but many more as your funding \"Re-volvs\" around.
+
+        We hope that you stay involved with our efforts, and that you continue to provide both your input and support in our endeavor to expand solar energy across all communities.
+
+        Thank you,
+        The Re-volv Team
         "
     html:
         "
-        <h1>Re-volv!</h1>
         <p>Hi {{user.first_name}}!</p>
-        <p>Your donation was successful!</p>
+
+        <p>Thank you for your invaluable donation of ${{amount}} to {{project.title}}! Each contribution is a major step in bringing clean energy to everyone.</p>
+
+        <p>Donations like yours have powered our efforts to provide renewable energy to local communities. Without contributions like yours, we would not be able to support communities as they strive to be self-sufficient. In addition, your contribution will assist not just one community, but many more as your funding \"Re-volvs\" around.</p>
+
+        <p>We hope that you stay involved with our efforts, and that you continue to provide both your input and support in our endeavor to expand solar energy across all communities.</p>
+
+        Thank you,
+        The Re-volv Team
         "
