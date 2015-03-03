@@ -1,10 +1,11 @@
 import datetime
 import json
-import mock
 
+import mock
 from django.core.management import call_command
 from django.db.models.signals import post_save
 from django.test import TestCase
+
 from django_facebook.utils import get_user_model
 from revolv.base.models import RevolvUserProfile
 from revolv.base.signals import create_profile_of_user
