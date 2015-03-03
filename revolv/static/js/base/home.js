@@ -1,3 +1,4 @@
+
 var drawD3PartialTriangle = function (destination, classes, radius, padding, partial) {
     var points = 100,
         pointsToDraw = Math.floor(points * partial),
@@ -48,7 +49,7 @@ $(document).ready(function () {
 
         drawD3PartialTriangle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
         var partialCompleteness = data.partialCompleteness;
-        if (partialCompleteness <= 0.01 && partialCompleteness != 0.0) partialCompleteness = 0.02;
+        if (partialCompleteness <= 0.01 && partialCompleteness !== 0.0) partialCompleteness = 0.02;
         drawD3PartialTriangle(partialGrouping, ["project-badge-line"], radius, padding, partialCompleteness);
     });
 

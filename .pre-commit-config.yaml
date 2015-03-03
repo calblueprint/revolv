@@ -18,3 +18,7 @@
     -   id: python-import-sorter
         args:
         - --silent-overwrite
+-   repo: git://github.com/pre-commit/mirrors-jshint
+    sha: c1485735ee68972250b66861f1572b49fb996473
+    hooks:
+    -   id: jshint
