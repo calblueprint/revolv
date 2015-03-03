@@ -108,7 +108,7 @@
               <div id="panel1" class="content">
                 <ul class="side-nav">
                   {% for project in active_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                    <li><a href="{% url 'project:view' project.id %}">{{project.title}}</a></li>
                   {% endfor %}
                 </ul>
               </div>
@@ -118,7 +118,7 @@
               <div id="panel2" class="content">
                 <ul class="side-nav">
                   {% for project in proposed_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                    <li><a href="{% url 'project:view' project.id %}">{{project.title}}</a></li>
                   {% endfor %}
                 </ul>
               </div>
@@ -128,7 +128,7 @@
               <div id="panel3" class="content">
                 <ul class="side-nav">
                   {% for project in drafted_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                    <li><a href="{% url 'project:view' project.id %}">{{project.title}}</a></li>
                   {% endfor %}
                 </ul>
               </div>
@@ -138,7 +138,7 @@
               <div id="panel4" class="content">
                 <ul class="side-nav">
                   {% for project in completed_projects %}
-                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                    <li><a href="{% url 'project:view' project.id %}">{{project.title}}</a></li>
                   {% endfor %}
                 </ul>
               </div>
