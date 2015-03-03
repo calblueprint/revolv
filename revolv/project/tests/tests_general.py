@@ -312,6 +312,9 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         self.assertIsNone(content.get('error'))
         self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
         self.assertTrue(mock_mailer.called)
+        # checks that the email address sent using mock mailer matches the user who donatred
+        args, kwargs = mock_mailer.call_args
+        self.assertEqual(kwargs['to'], ["john@example.com"])
 
     def test_invalid_donation_ajax(self):
         """
