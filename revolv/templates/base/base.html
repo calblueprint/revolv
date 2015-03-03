@@ -61,6 +61,19 @@
           reveal: {
               animation: 'fade',
               dismiss_modal_class: 'close-revolv-reveal-modal',
+              css: {
+                  open: {
+                      'opacity': 0,
+                      'visibility': 'visible',
+                      // NOTE: you should manually change display of your modal
+                      // in the scss
+                  },
+                  close: {
+                      'opacity': 1,
+                      'visibility': 'hidden',
+                      'display': 'none'
+                  }
+              }
           }
       });
     </script>
