@@ -1,5 +1,6 @@
 import datetime
 import json
+import mock
 
 from django.core.management import call_command
 from django.db.models.signals import post_save
@@ -283,6 +284,33 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         content = json.loads(resp.content)
         self.assertIsNone(content.get('error'))
         self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
+
+    @mock.patch('revolv.lib.mailer.EmailMultiAlternatives')
+    def test_post_donation_email(self, mock_mailer):
+        """
+        Tests whether a valid donation will send a revolv email
+        """
+        valid_donation = {
+            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
+            'type': 'visa',
+            'first_name': 'William',
+            'last_name': 'Taft',
+            'expire_month': 6,
+            'expire_year': 2020,
+            'cvv2': '00',
+            'number': '1234123412341234',
+            'amount': '10.00',
+        }
+        resp = self.client.post(
+            self.project.get_absolute_url() + self.DONATION,
+            data=valid_donation,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.status_code, 200)
+        content = json.loads(resp.content)
+        self.assertIsNone(content.get('error'))
+        self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
+        self.assertTrue(mock_mailer.called)
 
     def test_invalid_donation_ajax(self):
         """
