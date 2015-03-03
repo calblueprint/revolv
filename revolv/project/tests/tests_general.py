@@ -1,9 +1,11 @@
 import datetime
 import json
 
+import mock
 from django.core.management import call_command
 from django.db.models.signals import post_save
 from django.test import TestCase
+
 from django_facebook.utils import get_user_model
 from revolv.base.models import RevolvUserProfile
 from revolv.base.signals import create_profile_of_user
@@ -259,9 +261,9 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         self.project.project_status = Project.ACTIVE
         self.project.save()
 
-    def test_valid_donation(self):
+    def perform_valid_donation(self):
         """
-        Test valid donation via AJAX to /project/<pk>/donation/submit.
+        Utility method for performing a valid donation. Returns the response.
         """
         valid_donation = {
             'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
@@ -274,15 +276,36 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
             'number': '1234123412341234',
             'amount': '10.00',
         }
-        resp = self.client.post(
+        return self.client.post(
             self.project.get_absolute_url() + self.DONATION,
             data=valid_donation,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
+
+    def test_valid_donation(self):
+        """
+        Test valid donation via AJAX to /project/<pk>/donation/submit.
+        """
+        resp = self.perform_valid_donation()
         self.assertEqual(resp.status_code, 200)
         content = json.loads(resp.content)
         self.assertIsNone(content.get('error'))
         self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
+
+    @mock.patch('revolv.lib.mailer.EmailMultiAlternatives')
+    def test_post_donation_email(self, mock_mailer):
+        """
+        Tests whether a valid donation will send a revolv email
+        """
+        resp = self.perform_valid_donation()
+        self.assertEqual(resp.status_code, 200)
+        content = json.loads(resp.content)
+        self.assertIsNone(content.get('error'))
+        self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
+        self.assertTrue(mock_mailer.called)
+        # checks that the email address sent using mock mailer matches the user who donatred
+        args, kwargs = mock_mailer.call_args
+        self.assertEqual(kwargs['to'], ["john@example.com"])
 
     def test_invalid_donation_ajax(self):
         """
