@@ -22,3 +22,5 @@
     sha: c1485735ee68972250b66861f1572b49fb996473
     hooks:
     -   id: jshint
+        args:
+        - --verbose
