@@ -261,9 +261,9 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         self.project.project_status = Project.ACTIVE
         self.project.save()
 
-    def test_valid_donation(self):
+    def perform_valid_donation(self):
         """
-        Test valid donation via AJAX to /project/<pk>/donation/submit.
+        Utility method for performing a valid donation. Returns the response.
         """
         valid_donation = {
             'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
@@ -276,11 +276,17 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
             'number': '1234123412341234',
             'amount': '10.00',
         }
-        resp = self.client.post(
+        return self.client.post(
             self.project.get_absolute_url() + self.DONATION,
             data=valid_donation,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
+
+    def test_valid_donation(self):
+        """
+        Test valid donation via AJAX to /project/<pk>/donation/submit.
+        """
+        resp = self.perform_valid_donation()
         self.assertEqual(resp.status_code, 200)
         content = json.loads(resp.content)
         self.assertIsNone(content.get('error'))
@@ -291,22 +297,7 @@ class DonationAjaxTestCase(CreateTestProjectMixin, TestUserMixin, TestCase):
         """
         Tests whether a valid donation will send a revolv email
         """
-        valid_donation = {
-            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
-            'type': 'visa',
-            'first_name': 'William',
-            'last_name': 'Taft',
-            'expire_month': 6,
-            'expire_year': 2020,
-            'cvv2': '00',
-            'number': '1234123412341234',
-            'amount': '10.00',
-        }
-        resp = self.client.post(
-            self.project.get_absolute_url() + self.DONATION,
-            data=valid_donation,
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-        )
+        resp = self.perform_valid_donation()
         self.assertEqual(resp.status_code, 200)
         content = json.loads(resp.content)
         self.assertIsNone(content.get('error'))
