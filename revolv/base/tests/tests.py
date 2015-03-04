@@ -21,6 +21,10 @@ class TestUserMixin(object):
         )
         return response
 
+    def _bust_test_user_cache(self):
+        self.test_user = User.objects.get(username=self.test_user.username)
+        self.test_profile = get_profile(self.test_user)
+
     def setUp(self):
         """Every test in this case has a test user."""
         self.test_user = User.objects.create_user(
@@ -28,6 +32,7 @@ class TestUserMixin(object):
             "john@example.com",
             "test_user_password"
         )
+        self.test_profile = get_profile(self.test_user)
 
 
 class UserAuthTestCase(TestUserMixin, TestCase):
@@ -250,9 +255,28 @@ class UserPermissionsTestCase(TestCase):
         self.assertTrue(self.test_user.is_staff)
 
 
-class UserPermissionsIntegrationTestCase(WebTest):
+class UserPermissionsIntegrationTestCase(TestUserMixin, WebTest):
     def test_only_admins_can_see_django_cms(self):
-        self.fail()
+        resp = self.app.get("/")
+        self.assertNotIn("cms_toolbar", resp.body)
+
+        self.test_profile.make_donor()
+        self._bust_test_user_cache()
+        self._send_test_user_login_request()
+        resp = self.app.get("/")
+        self.assertNotIn("cms_toolbar", resp.body)
+
+        self.test_profile.make_ambassador()
+        self._bust_test_user_cache()
+        self._send_test_user_login_request()
+        resp = self.app.get("/")
+        self.assertNotIn("cms_toolbar", resp.body)
+
+        self.test_user.revolvuserprofile.make_administrator()
+        self._bust_test_user_cache()
+        self._send_test_user_login_request()
+        resp = self.app.get("/")
+        self.assertIn("cms_toolbar", resp.body)
 
 
 class UserDataMixinTestCase(TestUserMixin, TestCase):
