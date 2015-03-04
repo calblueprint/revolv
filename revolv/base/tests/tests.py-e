@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.db.models.signals import post_save
 from django.test import TestCase
+
 from django_facebook.utils import get_user_model
 from revolv.base.models import RevolvUserProfile
 from revolv.base.signals import create_profile_of_user
@@ -219,7 +220,7 @@ class UserPermissionsTestCase(TestCase):
             self.test_user, ambassador=True, admin=False
         )
         self.assertFalse(self.test_user.is_staff)
-
+        
         self.test_user.revolvuserprofile.make_donor()
         self._assert_groups_correct(
             self.test_user, ambassador=False, admin=False
