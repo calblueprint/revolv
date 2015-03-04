@@ -3,6 +3,7 @@ from django.core.management import call_command
 from django.db.models.signals import post_save
 from django.test import TestCase
 from django_facebook.utils import get_user_model
+from django_webtest import WebTest
 from revolv.base.models import RevolvUserProfile
 from revolv.base.signals import create_profile_of_user
 from revolv.base.utils import get_group_by_name, get_profile
@@ -247,6 +248,11 @@ class UserPermissionsTestCase(TestCase):
             admin=True
         )
         self.assertTrue(self.test_user.is_staff)
+
+
+class UserPermissionsIntegrationTestCase(WebTest):
+    def test_only_admins_can_see_django_cms(self):
+        self.fail()
 
 
 class UserDataMixinTestCase(TestUserMixin, TestCase):
