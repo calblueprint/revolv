@@ -157,20 +157,34 @@ class UserPermissionsTestCase(TestCase):
             "permission_test_user_password"
         )
 
-    def _assert_group_relationship(self, user, group_name, relIn):
+    def _assert_group_relationship(self, user, group_name, rel_in):
+        """Assert that a user is or is not in a given group.
+
+        :user: {User} the user to check
+        :group_name: {string} the group name to check
+        :rel_in: {boolean} if true, assert that the user is IN the group.
+                 otherwise, assert that the user is NOT in the group
+        """
         group = get_group_by_name(group_name)
-        if relIn:
+        if rel_in:
             self.assertIn(group, user.groups.all())
         else:
             self.assertNotIn(group, user.groups.all())
 
     def _assert_in_group(self, user, group_name):
+        """Assert that the given User is in the group specified by group_name."""
         return self._assert_group_relationship(user, group_name, True)
 
     def _assert_not_in_group(self, user, group_name):
+        """Assert that the given User is not in the group specified by group_name."""
         return self._assert_group_relationship(user, group_name, False)
 
     def _assert_groups_correct(self, user, ambassador, admin):
+        """
+        Given a User: if ambassador is True, assert that the user is an
+        ambassador. Additionally, if admin is True, also assert that the
+        user is an administrator.
+        """
         if ambassador:
             amb_group_check = self._assert_in_group
         else:
