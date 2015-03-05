@@ -141,7 +141,7 @@ class RevolvUserProfileManagerTestCase(TestCase):
 
     def setUp(self):
         post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
-        call_command('loaddata', 'user', 'revolvuserprofile', 'donation', 'payment_transaction', 'project')
+        call_command('loaddata', 'user', 'revolvuserprofile', 'project')
 
     def tearDown(self):
         post_save.connect(create_profile_of_user, sender=get_user_model())

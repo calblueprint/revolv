@@ -13,7 +13,7 @@ class PaymentTest(TestCase):
     repayment = PaymentInstrumentType.objects.get_repayment()
 
     def setUp(self):
-        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
+        post_save.disconnect(create_profile_of_user, sender=get_user_model())
         call_command('loaddata', 'user', 'revolvuserprofile', 'project')
 
     def tearDown(self):
