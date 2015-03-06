@@ -3,7 +3,7 @@ import importlib
 
 class ImportProxy(object):
     """
-    An ImportProxy is a class which acts as a delegation proxy fo an import.
+    An ImportProxy is a class which acts as a delegation proxy for an import.
     It is sometimes the case that we have to import something from a module
     that would create a circular dependency, but that it shouldn't matter,
     because we do not actually use the dependency immediately.
@@ -12,7 +12,8 @@ class ImportProxy(object):
     import - for example, we could declare a = ImportProxy("b.c.d", "e"): this
     would in general be equivalent to calling `from b.c.d import e; a = e`. If
     there was a circular dependency in which b.c.d imported something from the
-    same module in which a was declared.
+    same module in which a was declared, then the declaration would cause an error,
+    but using an ImportProxy, it does not.
 
     Another example:
 
