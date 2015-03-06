@@ -1,9 +1,8 @@
-import importlib
-
 from django.contrib.auth.models import User
 from django.db import models
 from django_facebook.models import FacebookModel
 from revolv.base.utils import get_group_by_name, get_profile
+from revolv.lib.utils import ImportProxy
 
 
 class RevolvUserProfileManager(models.Manager):
@@ -33,24 +32,6 @@ class RevolvUserProfileManager(models.Manager):
             subscribed_to_newsletter=True
         ).values_list('user__email', flat=True)
         return subscribed_users
-
-
-class ImportProxy(object):
-    def __init__(self, module_name, object_class_name):
-        self.module_name = module_name
-        self.object_class_name = object_class_name
-        self.object_class = None
-        self.has_imported = False
-
-    def import_module(self):
-        if self.object_class is not None:
-            return
-        module = importlib.import_module(self.module_name)
-        self.object_class = getattr(module, self.object_class_name)
-
-    def __getattr__(self, key):
-        self.import_module()
-        return getattr(self.object_class, key)
 
 
 class RevolvUserProfile(FacebookModel):

@@ -4,9 +4,6 @@ from revolv.base.utils import (get_all_administrator_emails,
                                get_all_administrators)
 
 
-# from revolv.base.factories import RevolvUserProfileFactories
-
-
 class AdminUtilsTestCase(TestCase):
     def test_get_admins(self):
         admins_profiles = RevolvUserProfile.factories.admin.create_batch(3)
