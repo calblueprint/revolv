@@ -111,6 +111,22 @@ class PaymentManager(models.Manager):
         return num_users
 
 
+# class PaymentFactory(factory.django.DjangoModelFactory):
+#     class Meta:
+#         model = "revolv.payments.Payment"
+
+#     user = factory.SubFactory("revolv.base.models.RevolvUserProfileFactory")
+#     entrant = factory.SubFactory("revolv.base.models.RevolvUserProfileFactory")
+#     amount = 20.00
+#     project = factory.SubFactory("revolv.project.models.ProjectFactory")
+#     payment_instrument_type = PaymentInstrumentType.objects.get_paypal()
+#     created_at = datetime.datetime.now()
+
+
+# class PaymentFactories(object):
+#     base = PaymentFactory
+
+
 class Payment(models.Model):
     """
         Abstraction indicating one particular payment.
@@ -123,3 +139,4 @@ class Payment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = PaymentManager()
+    # factories = PaymentFactories

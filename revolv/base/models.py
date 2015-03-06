@@ -1,3 +1,5 @@
+import importlib
+
 from django.contrib.auth.models import User
 from django.db import models
 from django_facebook.models import FacebookModel
@@ -33,6 +35,24 @@ class RevolvUserProfileManager(models.Manager):
         return subscribed_users
 
 
+class ImportProxy(object):
+    def __init__(self, module_name, object_class_name):
+        self.module_name = module_name
+        self.object_class_name = object_class_name
+        self.object_class = None
+        self.has_imported = False
+
+    def import_module(self):
+        if self.object_class is not None:
+            return
+        module = importlib.import_module(self.module_name)
+        self.object_class = getattr(module, self.object_class_name)
+
+    def __getattr__(self, key):
+        self.import_module()
+        return getattr(self.object_class, key)
+
+
 class RevolvUserProfile(FacebookModel):
     """
     A simple wrapper around django-facebook's FacebookModel, which contains
@@ -57,6 +77,7 @@ class RevolvUserProfile(FacebookModel):
     in order to see the django-cms toolbar on the homepage.
     """
     objects = RevolvUserProfileManager()
+    factories = ImportProxy("revolv.base.factories", "RevolvUserProfileFactories")
 
     AMBASSADOR_GROUP = "ambassadors"
     ADMIN_GROUP = "administrators"

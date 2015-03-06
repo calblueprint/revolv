@@ -4,33 +4,19 @@ from revolv.base.utils import (get_all_administrator_emails,
                                get_all_administrators)
 
 
-class AdminUtilsTestCase(TestCase):
-    def setUp(self):
-        self.admin1 = RevolvUserProfile.objects.create_user_as_admin(
-            "admin1",
-            "admin1@revolv.org",
-            "admin1pass"
-        )
-        self.admin2 = RevolvUserProfile.objects.create_user_as_admin(
-            "admin2",
-            "admin2@revolv.org",
-            "admin2pass"
-        )
-        self.admin3 = RevolvUserProfile.objects.create_user_as_admin(
-            "admin3",
-            "admin3@revolv.org",
-            "admin3pass"
-        )
+# from revolv.base.factories import RevolvUserProfileFactories
 
+
+class AdminUtilsTestCase(TestCase):
     def test_get_admins(self):
-        admins = get_all_administrators().all()
-        self.assertEquals(len(admins), 3)
-        self.assertIn(self.admin1.user, admins)
-        self.assertIn(self.admin2.user, admins)
-        self.assertIn(self.admin3.user, admins)
+        admins_profiles = RevolvUserProfile.factories.admin.create_batch(3)
+        db_admins = get_all_administrators().all()
+        self.assertEquals(len(db_admins), 3)
+        for admin in admins_profiles:
+            self.assertIn(admin.user, db_admins)
 
     def test_get_admin_emails(self):
+        admins = RevolvUserProfile.factories.admin.create_batch(3)
         emails = get_all_administrator_emails()
-        self.assertIn("admin1@revolv.org", emails)
-        self.assertIn("admin2@revolv.org", emails)
-        self.assertIn("admin3@revolv.org", emails)
+        for admin in admins:
+            self.assertIn(admin.user.email, emails)

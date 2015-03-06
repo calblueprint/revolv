@@ -1,9 +1,5 @@
-from django.core.management import call_command
-from django.db.models.signals import post_save
 from django.test import TestCase
-from django_facebook.utils import get_user_model
 from revolv.base.models import RevolvUserProfile
-from revolv.base.signals import create_profile_of_user
 from revolv.payments.models import Payment, PaymentInstrumentType
 from revolv.project.models import Project
 
@@ -12,29 +8,21 @@ class PaymentTest(TestCase):
     reinvestment = PaymentInstrumentType.objects.get_reinvestment()
     repayment = PaymentInstrumentType.objects.get_repayment()
 
-    def setUp(self):
-        post_save.disconnect(create_profile_of_user, sender=get_user_model())
-        call_command('loaddata', 'user', 'revolvuserprofile', 'project')
-
-    def tearDown(self):
-        post_save.connect(create_profile_of_user, sender=get_user_model())
-
     def _create_payment(self, user, project=None, instrument_type=None):
         if project is None:
-            project = Project.objects.get(id=1)
+            project = Project.factories.base.build()
         if instrument_type is None:
             instrument_type = PaymentInstrumentType.objects.get_paypal()
         return Payment(amount=10.00, user=user, entrant=user, payment_instrument_type=instrument_type, project=project)
 
     def test_payment_create(self):
         """Verify that the payment can be created."""
-        user = RevolvUserProfile.objects.get(id=1)
-        self._create_payment(user).save()
+        user = RevolvUserProfile.factories.base.build()
+        Payment.factories.create(user=user, entrant=user)
 
     def test_total_distinct_donors(self):
-        user1 = RevolvUserProfile.objects.get(id=1)
-        user2 = RevolvUserProfile.objects.get(id=2)
-        user3 = RevolvUserProfile.objects.get(id=3)
+        """Verify that we can correctly get the total number of distinct donors to any project."""
+        user1, user2, user3 = RevolvUserProfile.factories.create_batch(3)
 
         self.assertEquals(Payment.objects.total_distinct_donors(), 0)
         self._create_payment(user1).save()
@@ -49,6 +37,7 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.total_distinct_donors(), 3)
 
     def test_payments(self):
+        """Verify that we can create payments of any type and associate them to users."""
         user1 = RevolvUserProfile.objects.get(id=1)
         user2 = RevolvUserProfile.objects.get(id=2)
 
