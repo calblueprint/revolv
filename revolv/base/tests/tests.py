@@ -1,10 +1,6 @@
 from django.contrib.auth.models import User
-from django.core.management import call_command
-from django.db.models.signals import post_save
 from django.test import TestCase
-from django_facebook.utils import get_user_model
 from revolv.base.models import RevolvUserProfile
-from revolv.base.signals import create_profile_of_user
 from revolv.base.utils import get_group_by_name, get_profile
 
 
@@ -135,18 +131,12 @@ class UserAuthTestCase(TestUserMixin, TestCase):
 
 
 class RevolvUserProfileManagerTestCase(TestCase):
-    """Tests for the RevolvUserProfileManager
-        TODO : Update test to create test objects and not load fixtures.
-    """
-
-    def setUp(self):
-        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
-        call_command('loaddata', 'user', 'revolvuserprofile', 'project')
-
-    def tearDown(self):
-        post_save.connect(create_profile_of_user, sender=get_user_model())
+    """Tests for the RevolvUserProfileManager."""
 
     def test_get_subscribed_to_newsletter(self):
+        """Test that we can correctly query users that are subscribed to the newsletter."""
+        RevolvUserProfile.factories.base.create_batch(2, subscribed_to_newsletter=False)
+        RevolvUserProfile.factories.base.create_batch(2, subscribed_to_newsletter=True, user__email="revolv@gmail.com")
         context = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         self.assertEqual(len(context), 2)
         self.assertEqual(context[0], "revolv@gmail.com")

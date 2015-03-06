@@ -10,15 +10,15 @@ class PaymentTest(TestCase):
 
     def _create_payment(self, user, project=None, instrument_type=None):
         if project is None:
-            project = Project.factories.base.build()
+            project = Project.factories.base.create()
         if instrument_type is None:
             instrument_type = PaymentInstrumentType.objects.get_paypal()
         return Payment(amount=10.00, user=user, entrant=user, payment_instrument_type=instrument_type, project=project)
 
     def test_payment_create(self):
         """Verify that the payment can be created."""
-        user = RevolvUserProfile.factories.base.build()
-        Payment.factories.create(user=user, entrant=user)
+        user = RevolvUserProfile.factories.base.create()
+        Payment.factories.base.create(user=user, entrant=user)
 
     def test_total_distinct_donors(self):
         """Verify that we can correctly get the total number of distinct donors to any project."""
@@ -51,9 +51,9 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.payments(user2).count(), 2)
 
     def test_donations(self):
-        user1 = RevolvUserProfile.objects.get(id=1)
-        user2 = RevolvUserProfile.objects.get(id=2)
-        project2 = Project.objects.get(id=2)
+        """Test that we can bookkeep organic donation information."""
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
+        project2 = Project.factories.base.create()
 
         self._create_payment(user1).save()
         self._create_payment(user1, instrument_type=self.reinvestment).save()
@@ -70,8 +70,8 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.donations(user2).count(), 0)
 
     def test_reinvestments(self):
-        user1 = RevolvUserProfile.objects.get(id=1)
-        user2 = RevolvUserProfile.objects.get(id=2)
+        """Test that we can bookkeep reinvestment information."""
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
 
         self._create_payment(user1).save()
         self._create_payment(user1, instrument_type=self.reinvestment).save()
@@ -83,10 +83,9 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.reinvestments(user2).count(), 0)
 
     def test_repayments(self):
-        user1 = RevolvUserProfile.objects.get(id=1)
-        user2 = RevolvUserProfile.objects.get(id=2)
-        project = Project.objects.get(id=1)
-        project2 = Project.objects.get(id=2)
+        """Test that we can bookkeep repayment information."""
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
+        project, project2 = Project.factories.base.create_batch(2)
 
         self._create_payment(user1, project=project).save()
         self._create_payment(user1, instrument_type=self.reinvestment, project=project).save()

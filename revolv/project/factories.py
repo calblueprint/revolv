@@ -1,11 +1,12 @@
 import datetime
 
 import factory
+from revolv.project.models import Project
 
 
 class ProjectFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = "revolv.project.Project"
+        model = Project
 
     funding_goal = 50.0
     title = "Hello"
@@ -18,6 +19,7 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     org_start_date = datetime.date.today() + datetime.timedelta(days=1)  # today
     actual_energy = 25.5
     amount_repaid = 29.25
+    ambassador = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
 
 
 class ProjectFactories(object):
