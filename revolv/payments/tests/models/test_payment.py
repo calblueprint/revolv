@@ -22,7 +22,7 @@ class PaymentTest(TestCase):
 
     def test_total_distinct_donors(self):
         """Verify that we can correctly get the total number of distinct donors to any project."""
-        user1, user2, user3 = RevolvUserProfile.factories.create_batch(3)
+        user1, user2, user3 = RevolvUserProfile.factories.base.create_batch(3)
 
         self.assertEquals(Payment.objects.total_distinct_donors(), 0)
         self._create_payment(user1).save()
@@ -38,8 +38,7 @@ class PaymentTest(TestCase):
 
     def test_payments(self):
         """Verify that we can create payments of any type and associate them to users."""
-        user1 = RevolvUserProfile.objects.get(id=1)
-        user2 = RevolvUserProfile.objects.get(id=2)
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
 
         self._create_payment(user1).save()
         self._create_payment(user1, instrument_type=self.reinvestment).save()
