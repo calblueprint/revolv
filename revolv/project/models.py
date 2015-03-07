@@ -6,6 +6,7 @@ from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
+from revolv.lib.utils import ImportProxy
 from revolv.payments.models import Payment
 
 
@@ -249,6 +250,7 @@ class Project(models.Model):
     annual_solar_data = models.FileField(null=True, upload_to="projects/annual/")
 
     objects = ProjectManager()
+    factories = ImportProxy("revolv.project.factories", "ProjectFactories")
 
     def has_owner(self, ambassador):
         return self.ambassador == ambassador

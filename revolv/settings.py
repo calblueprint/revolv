@@ -133,6 +133,8 @@ TEMPLATE_DIRS = (
 CMS_TEMPLATES = (
     ('base/cms_templates/template_1.html', 'Template One'),
 )
+CMS_PERMISSION = True
+CMS_PUBLIC_FOR = "staff"
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",

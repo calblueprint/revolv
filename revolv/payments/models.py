@@ -1,5 +1,6 @@
 from django.db import models
 from revolv.base.models import RevolvUserProfile
+from revolv.lib.utils import ImportProxy
 
 INSTRUMENT_PAYPAL = 'paypal'
 INSTRUMENT_CHECK = 'check'
@@ -123,3 +124,4 @@ class Payment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = PaymentManager()
+    factories = ImportProxy("revolv.payments.factories", "PaymentFactories")
