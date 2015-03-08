@@ -386,6 +386,10 @@ class Project(models.Model):
     def is_completed(self):
         return self.project_status == Project.COMPLETED
 
+    @property
+    def categories(self):
+        return [str(category.title) for category in self.category_set.all()]
+
 
 class Category(models.Model):
     HEALTH = 'Health'

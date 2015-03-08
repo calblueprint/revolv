@@ -68,7 +68,6 @@ class UpdateProjectView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
         context['categories'] = Category.valid_categories
-        context['current_categories'] = [str(category.title) for category in self.get_object().category_set.all()]
         return context
 
 
@@ -118,7 +117,6 @@ class ReviewProjectView(UserDataMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(ReviewProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
-        context['categories'] = [str(category.title) for category in self.get_object().category_set.all()]
         return context
 
 
@@ -149,7 +147,6 @@ class ProjectView(UserDataMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
-        context['categories'] = [str(category.title) for category in self.get_object().category_set.all()]
         return context
 
     def dispatch(self, request, *args, **kwargs):
