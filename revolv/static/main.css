@@ -5566,7 +5566,7 @@ th.hide-for-touch {
 
 .revolv-reveal-modal-table {
   position: fixed;
-  display: table !important;
+  display: none;
   opacity: 0;
   table-layout: fixed;
   top: 0;
@@ -5575,7 +5575,8 @@ th.hide-for-touch {
   height: 100%; }
   .revolv-reveal-modal-table.open {
     opacity: 1;
-    z-index: 1005; }
+    z-index: 1005;
+    display: table !important; }
   .revolv-reveal-modal-table > .modal-cell {
     display: table-cell;
     height: 100%;
