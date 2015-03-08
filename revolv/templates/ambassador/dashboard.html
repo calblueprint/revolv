@@ -3,103 +3,130 @@
 
 {% block title %}Home{% endblock %}
 
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript" src="{% static "js/base/dashboard.js" %}"></script>
+{% endblock %}
+
 {% block body %}
 
-<div class='row'>
-    <a href="{% url "donor:dashboard" %}">
-        <div class='medium primary dashboard-button button'>Donor Dashboard</div>
-    </a>
-    {% if user.revolvuserprofile.is_administrator %}
-    <a href="{% url "administrator:dashboard" %}">
-        <div class='medium primary dashboard-button button'>Administrator Dashboard</div>
-    </a>
-    {% endif %}
-    {% if user.revolvuserprofile.is_ambassador %}
-    <a href="{% url "ambassador:dashboard" %}">
-        <div class='medium active dashboard-button button'>Ambassador Dashboard</div>
-    </a>
-    {% endif %}
-</div>
-<div class='row'>
-    <div class='small-3 columns dash-box'>
-        <a href="{% url "project:new" %}" class="large button proj-button">Create Project</a>
-        <dl class="tabs vertical-dash" data-tab>
-            {% for project in all_projects %}
-                {% if project in drafted_projects and project == drafted_projects.first %}
-                    <h4 class='subheader text-center'>Drafted Projects</h4>
-                {% elif project in proposed_projects and project == proposed_projects.first %}
-                    <h4 class='subheader text-center'>Proposed Projects</h4>
-                {% elif project in active_projects and project == active_projects.first %}
-                    <h4 class='subheader text-center'>Active Projects</h4>
-                {% elif project in completed_projects and project == completed_projects.first %}
-                    <h4 class='subheader text-center'>Completed Projects</h4>
-                {% endif %}
-                {% if project == all_projects.first %}
-                    <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
-                {% else %}
-                    <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
-                {% endif %}
-                {% if project in active_projects %}
-                    <div class="progress large-# success">
-                        <span class="meter" style="width: {{ project.partial_completeness }}%"></span>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </dl>
-    </div>
-    <div class='small-9 columns dash-box right'>
-        <div class="tabs-content">
-            {% for project in all_projects %}
-                {% if project == all_projects.0 %}
-                    <div class="content active" id="proj{{project.id}}">
-                {% else %}
-                    <div class="content" id="proj{{project.id}}">
-                {% endif %}
-                    <div class="small-9 columns">
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <h4>{{ project.org_name }}</h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <p> {{ project.mission_statement }} </p>
-                            </div>
-                        </div>
-                        {% if project in active_projects %}
-                        <h4>Funding Progress</h4>
-                        <div class="row">
-                            <div class="progress small-# success">
-                                <span class="meter" style="width: {{ project.partial_completeness }}%"></span>
-                                <ul class="inline-list">
-                                    <li><h6>{{ project.partial_completeness | floatformat }}% funded</h6></li>
-                                    <li><h6>${{ project.amount_donated | floatformat }} donated</h6></li>
-                                    <li><h6>{{ project.days_left }} days to go</h6></li>
-                                </ul>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                    <div class="small-3 columns">
-                        <a href="{% url "project:review" project.pk %}">
-                            <img src="{{ project.preview_photo.url }}"></img>
-                        </a>
-                        {% if project in active_projects or project in completed_projects %}
-                        <a class="small button success radius" href="{% url "project:update" pk=project.id %}">Post Project Update</a>
-                        {% endif %}
-                    </div>
-                    <br/>
-                </div>
-            {% empty %}
-                <p> You have not created any projects. </p>
-            {% endfor %}
-        </div>
-    </div>
-</div>
+<div class="row">
+      <div class='row'>
+              <a href="{% url "donor:dashboard" %}">
+            <div class='medium primary dashboard-button button'>Donor Dashboard</div>
+            </a>
+            {% if user.revolvuserprofile.is_administrator %}
+                <a href="{% url "administrator:dashboard" %}">
+               <div class='medium dashboard-button button'>Administrator Dashboard</div>
+                </a>
+            {% endif %}
+            {% if user.revolvuserprofile.is_ambassador %}
+                <a href="{% url "ambassador:dashboard" %}">
+                <div class='medium active primary dashboard-button button'>Ambassador Dashboard</div>
+                </a>
+            {% endif %}
+          </div>
 
+      <div class="row">    
+          
+        <div class="large-9 push-3 columns">
+          <div class="row homepage-divider">active projects</div><br>
+          <div class='project-container active row' id="active-project-container">
+            {% for project in active_projects %}
+                {% if project == active_projects.first %}
+                      <div class='large-12 pull-0 columns'>
+                        <img src='{{project.cover_photo.url}}'/>
+                        <div class="overlay"></div>
+                        <div class="status-bar">
+                          <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+                        </div>
+                      </div>
+                {% endif %}
+            {% endfor %}
+         </div>
+         <br></br>
+         <div class="row homepage-divider">other projects</div><br>
+         <div id="other-project-container row">
+          {% for project in proposed_projects %}
+            <div class="project-container large-4 columns">
+              <img src='{{project.cover_photo.url}}'/>
+              <div class="overlay"></div>
+              <div class="status-bar">
+                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+              </div>
+            </div>
+          {% endfor %}
+          {% for project in drafted_projects %}
+            <div class="project-container large-4 columns">
+              <img src='{{project.cover_photo.url}}'/>
+              <div class="overlay"></div>
+              <div class="status-bar">
+                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+              </div>
+            </div>
+          {% endfor %}
+          {% for project in completed_projects %}
+            <div class="project-container large-4 columns">
+              <img src='{{project.cover_photo.url}}'/>
+              <div class="overlay"></div>
+              <div class="status-bar">
+                <a href="#"><p class="status-bar-menu-text">{{project.title}}</p></a>
+              </div>
+            </div>
+          {% endfor %}
+         </div></div>
+         <div class="large-3 pull-9 columns>">
+          <br></br>
+          <div class="large-10 pull--1 columns>">
+          <ul class="accordion" data-accordion>
+            <li class="accordion-navigation active">
+              <a href="{% url "project:new" %}">Create New Project</a>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel1">Active Projects</a>
+              <div id="panel1" class="content">
+                <ul class="side-nav">
+                  {% for project in active_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel2">Proposed Projects</a>
+              <div id="panel2" class="content">
+                <ul class="side-nav">
+                  {% for project in proposed_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel3">Drafted Projects</a>
+              <div id="panel3" class="content">
+                <ul class="side-nav">
+                  {% for project in drafted_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            <li class="accordion-navigation">
+              <a href="#panel4">Completed Projects</a>
+              <div id="panel4" class="content">
+                <ul class="side-nav">
+                  {% for project in completed_projects %}
+                    <li><a href="project/{{project.id}}">{{project.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+          </ul>
+         </div>
+        </div> </div></div>
+        <br></br>      
 {% endblock %}
