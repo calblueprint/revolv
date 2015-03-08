@@ -3,6 +3,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static "typeahead/typeahead.css" %}" />
+<link rel="stylesheet" href="{% static "chosen/chosen.css" %}" />
 <style type="text/css">
     #map-canvas { width: 100%; height: 500px; margin: 0; padding: 0;}
     #map-canvas img {max-width: none;}
@@ -36,6 +37,13 @@
 
             <div class="row">
                 <div class="medium-12 columns">
+                            <select data-placeholder="Choose a Country..." class="chosen-select" multiple tabindex="4">
+                                <option value=""></option>
+                                <option value="Western Sahara">Western Sahara</option>
+                                <option value="Yemen">Yemen</option>
+                                <option value="Zambia">Zambia</option>
+                                <option value="Zimbabwe">Zimbabwe</option>
+                            </select>
                     {% include "base/partials/tooltip_formfield.html" with field=form.title %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
@@ -132,4 +140,12 @@
         });
     });
 </script>
+<script src="{% static 'chosen/chosen.jquery.js' %}"></script>
+<script src="{% static 'chosen/docsupport/prism.js' %}" type="text/javascript" charset="utf-8"></script>
+<script>
+    $( document ).ready(function() {
+        $(".chosen-select").chosen();
+    });
+</script>
+
 {% endblock %}
