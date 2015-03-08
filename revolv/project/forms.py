@@ -42,7 +42,7 @@ class ProjectForm(forms.ModelForm):
         categories_list = data.split(',')
         for category in categories_list:
             if category not in Category.valid_categories:
-                raise forms.ValidationError("You have forgotten about Fred!")
+                raise forms.ValidationError("You have entered an invalid category.")
         # Always return the cleaned data, whether you have changed it or
         # not.
         print categories_list

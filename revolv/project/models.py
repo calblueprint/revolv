@@ -399,3 +399,6 @@ class Category(models.Model):
 
     title = models.CharField(max_length=50, unique=True)
     projects = models.ManyToManyField(Project)
+
+    def __unicode__(self):
+        return self.title

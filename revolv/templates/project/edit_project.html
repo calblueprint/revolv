@@ -18,6 +18,7 @@
 <div class='row'>
     <div class='large-12 columns'>
         {% if project.id %}
+        {{ current_categories }}
         <h1>Edit Project</h1>
         {% else %}
         <h1>Create Project</h1>
@@ -42,7 +43,11 @@
                     <select data-placeholder="Choose some categories..." class="chosen-select" multiple tabindex="4">
                         <option value=""></option>
                         {% for category in categories %}
-                        <option value="{{category}}">{{category}}</option>
+                            {% if category in current_categories %}
+                                <option value="{{category}}" selected>{{category}}</option>
+                            {% else %}
+                                <option value="{{category}}">{{category}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
@@ -146,6 +151,13 @@
 <script>
     $( document ).ready(function() {
         $(".chosen-select").chosen();
+        var current_categories = "{{current_categories}}";
+        current_categories = current_categories.split("&#39;").join("");
+        current_categories = current_categories.split(" ").join("");
+        current_categories = current_categories.substring(1, current_categories.length - 1);
+        console.log(current_categories);
+        $('#id_categories_list').val(current_categories);
+        // console.log(current_categories);
         $('.chosen-select').on('change', function(evt, params) {
             categories_list = $(".chosen-select").chosen().val();
             console.log(categories_list);

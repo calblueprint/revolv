@@ -65,6 +65,7 @@ class UpdateProjectView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
         context['categories'] = Category.valid_categories
+        context['current_categories'] = [str(category.title) for category in self.get_object().category_set.all()]
         context['action'] = reverse('project:edit',
                                     kwargs={'pk': self.get_object().id})
         return context
