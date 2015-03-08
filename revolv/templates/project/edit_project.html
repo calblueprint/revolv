@@ -41,7 +41,7 @@
                     <span>Categories</span>
                     <select data-placeholder="Choose some categories..." class="chosen-select" multiple tabindex="4">
                         <option value=""></option>
-                        {% for category in categories %}
+                        {% for category in valid_categories %}
                             {% if project.id and category in project.categories %}
                                 <option value="{{category}}" selected>{{category}}</option>
                             {% else %}

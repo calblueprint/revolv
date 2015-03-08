@@ -38,7 +38,7 @@ class CreateProjectView(CreateView):
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
-        context['categories'] = Category.valid_categories
+        context['valid_categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
@@ -67,7 +67,7 @@ class UpdateProjectView(UpdateView):
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
-        context['categories'] = Category.valid_categories
+        context['valid_categories'] = Category.valid_categories
         return context
 
 
