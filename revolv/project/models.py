@@ -336,12 +336,11 @@ class Project(models.Model):
     @property
     def percent_complete(self):
         """
-        :return: a float between 0 and 1, representing the completeness of this
-            project with respect to its goal (1 if exactly the goal amount, or
+        :return: an int between 0 and 100, representing the completeness of this
+            project with respect to its goal (100 if exactly the goal amount, or
             more, has been donated, 0 if nothing has been donated).
         """
-        ratio = self.amount_donated / float(self.funding_goal)
-        return int(min(ratio, 1.0)*100)
+        return int(self.partial_completeness() * 100)
 
     def partial_completeness_as_js(self):
         return unicode(self.partial_completeness)

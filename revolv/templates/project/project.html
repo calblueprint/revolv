@@ -18,6 +18,13 @@
 {% include "project/partials/confirm_modal.html" %}
 {% include "project/partials/success_modal.html" with project=project %}
 
+
+<!-- <div class="row">
+    <div class = "large-12 header-img-div">
+        <img class="project-img" style ="width:100%" src='{{project.cover_photo.url}}'/>
+        <div class="overlay"></div>
+    </div>
+</div> -->
 <div class="row">
     <div class='row'>
         <dl class="tabs">
@@ -30,7 +37,7 @@
                 <div class="row">
                     <div class="large-3 push-9 columns" id="impact-and-donate">
                         <div class='large-12 columns donate-admin-panels' id="donate-or-admin-panel-container">
-                            <div class="donate-box">
+                            <div id="donate-box">
                                 <h5><strong>${{ project.amount_donated }}</strong> donated</h5>
                                 <p>of ${{ project.funding_goal }}</p>
                                 <div class="progress-bar">
@@ -54,14 +61,14 @@
                                     {% endif %}
                                 </div>
                             </div>
-                        </div>
-                        <div class="large-12 columns" id="impact-stats">
-                            <div class="impact-box">
-                                <h5>Impact</h5>
-                                <p>of {{ project.funding_goal }}</p>
-                                <p>impact information</p>
-                                <p>impact information</p>
-                                <p>impact information<p>
+                            <div class="large-12 columns" id="impact-stats">
+                                <div id="impact-box">
+                                    <h5>Impact</h5>
+                                    <p>of {{ project.funding_goal }}</p>
+                                    <p>impact information</p>
+                                    <p>impact information</p>
+                                    <p>impact information<p>
+                                </div>
                             </div>
                         </div>
                     </div>
