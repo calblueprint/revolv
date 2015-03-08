@@ -66,7 +66,9 @@
                       'opacity': 0,
                       'visibility': 'visible',
                       // NOTE: you should manually change display of your modal
-                      // in the scss
+                      // in the scss, because the "open" action will make it display:
+                      // block by default, and this will interfere if you want it to
+                      // be display: table (or anything else) instead.
                   },
                   close: {
                       'opacity': 1,
