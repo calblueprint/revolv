@@ -15,6 +15,7 @@ class ProjectForm(forms.ModelForm):
     # sets the lat and long fields to hidden (clicking on the map updates them)
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
+    # sets the categories list to be hidden and not required (using chosen.js updates it)
     categories_list = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
@@ -38,19 +39,18 @@ class ProjectForm(forms.ModelForm):
         )
 
     def clean_categories_list(self):
-        print "CLEANED DATA"
-        print self.cleaned_data
+        """ This method processes the input from the hidden categories list field, which
+        is a string of the comma separated values. It parses it and insures all the categories
+        are valid, then converts it into an actual list.
+        """
         data = self.cleaned_data['categories_list']
-        print data
+        # splits the list and filters out any empty strings
         categories_list = data.strip().split(',')
-        categories_list = filter(None, categories_list)  # filters out any empty strings
-        print categories_list
+        categories_list = filter(None, categories_list)
+        # checks if all the categories in it are valid
         for category in categories_list:
             if category not in Category.valid_categories:
                 raise forms.ValidationError("You have entered an invalid category.")
-        # Always return the cleaned data, whether you have changed it or
-        # not.
-        print categories_list
         return categories_list
 
 

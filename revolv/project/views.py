@@ -31,7 +31,6 @@ class CreateProjectView(CreateView):
 
     def form_valid(self, form):
         new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
-        print form.cleaned_data
         new_project.update_categories(form.cleaned_data['categories_list'])
         messages.success(self.request, new_project.title + ' has been created!')
         return super(CreateProjectView, self).form_valid(form)

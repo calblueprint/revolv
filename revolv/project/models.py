@@ -286,7 +286,7 @@ class Project(models.Model):
 
         :category_list The list of categories in the submitted form
         """
-        # Deletes all the existing categories
+        # Clears all the existing categories
         self.category_set.clear()
 
         # Adds the list of categories to the project

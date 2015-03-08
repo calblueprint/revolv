@@ -18,7 +18,6 @@
 <div class='row'>
     <div class='large-12 columns'>
         {% if project.id %}
-        {{ current_categories }}
         <h1>Edit Project</h1>
         {% else %}
         <h1>Create Project</h1>
@@ -146,23 +145,26 @@
         });
     });
 </script>
+<!-- Initializes the category selection tool -->
 <script src="{% static 'chosen/chosen.jquery.js' %}"></script>
 <script src="{% static 'chosen/docsupport/prism.js' %}" type="text/javascript" charset="utf-8"></script>
 <script>
     $( document ).ready(function() {
-        $(".chosen-select").chosen();
+        // populates the currently selected categories if none of them have been selected
+        {% if project.id %}
         var current_categories = "{{current_categories}}";
         current_categories = current_categories.split("&#39;").join("");
         current_categories = current_categories.split(" ").join("");
         current_categories = current_categories.substring(1, current_categories.length - 1);
-        console.log(current_categories);
         $('#id_categories_list').val(current_categories);
-        // console.log(current_categories);
+        {% endif %}
+
+        // initializes chosen
+        $(".chosen-select").chosen();
+        // sets the on change listener to update the hidden input field whenever categories are updated
         $('.chosen-select').on('change', function(evt, params) {
             categories_list = $(".chosen-select").chosen().val();
-            console.log(categories_list);
             $('#id_categories_list').val(categories_list);
-            console.log($('#id_categories_list').val());
         });
     });
 </script>
