@@ -374,5 +374,14 @@ class Project(models.Model):
 
 
 class Category(models.Model):
+    HEALTH = 'Health'
+    ARTS = 'Arts'
+    FAITH = 'Faith'
+    EDUCATION = 'Education'
+    COMMUNITY = 'Community'
+    GEOGRAPHIC = 'Geographic'
+
+    category_list = [HEALTH, ARTS, FAITH, EDUCATION, COMMUNITY, GEOGRAPHIC]
+
     title = models.CharField(max_length=50, unique=True)
     projects = models.ManyToManyField(Project)

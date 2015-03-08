@@ -13,7 +13,7 @@ from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.services import PaymentService
 from revolv.project import forms
-from revolv.project.models import Project
+from revolv.project.models import Category, Project
 
 
 class CreateProjectView(CreateView):
@@ -38,6 +38,7 @@ class CreateProjectView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['action'] = reverse('project:new')
+        context['categories'] = Category.category_list
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
@@ -61,6 +62,7 @@ class UpdateProjectView(UpdateView):
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
+        context['categories'] = Category.category_list
         context['action'] = reverse('project:edit',
                                     kwargs={'pk': self.get_object().id})
         return context

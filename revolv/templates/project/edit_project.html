@@ -37,14 +37,14 @@
 
             <div class="row">
                 <div class="medium-12 columns">
-                            <select data-placeholder="Choose a Country..." class="chosen-select" multiple tabindex="4">
-                                <option value=""></option>
-                                <option value="Western Sahara">Western Sahara</option>
-                                <option value="Yemen">Yemen</option>
-                                <option value="Zambia">Zambia</option>
-                                <option value="Zimbabwe">Zimbabwe</option>
-                            </select>
                     {% include "base/partials/tooltip_formfield.html" with field=form.title %}
+                    <span>Categories</span>
+                    <select data-placeholder="Choose some categories..." class="chosen-select" multiple tabindex="4">
+                        <option value=""></option>
+                        {% for category in categories %}
+                        <option value="{{category}}">{{category}}</option>
+                        {% endfor %}
+                    </select>
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
