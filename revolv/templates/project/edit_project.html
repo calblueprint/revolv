@@ -58,6 +58,7 @@
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.internal_rate_return %}
                     <div class="hide">
+                        {% include "base/partials/tooltip_formfield.html" with field=form.categories_list %}
                         {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
                         {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
                     </div>
@@ -145,6 +146,12 @@
 <script>
     $( document ).ready(function() {
         $(".chosen-select").chosen();
+        $('.chosen-select').on('change', function(evt, params) {
+            categories_list = $(".chosen-select").chosen().val();
+            console.log(categories_list);
+            $('#id_categories_list').val(categories_list);
+            console.log($('#id_categories_list').val());
+        });
     });
 </script>
 

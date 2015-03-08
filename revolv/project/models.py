@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -280,6 +281,19 @@ class Project(models.Model):
         self.save()
         return self
 
+    def update_categories(self, category_list):
+        """ Updates the categories list for the project.
+
+        :category_list The list of categories in the submitted form
+        """
+        # Deletes all the existing categories
+        self.category_set.clear()
+
+        # Adds the list of categories to the project
+        for category in category_list:
+            category_object = Category.objects.get(title=category)
+            self.category_set.add(category_object)
+
     def get_absolute_url(self):
         return reverse("project:view", kwargs={"pk": str(self.pk)})
 
@@ -381,7 +395,7 @@ class Category(models.Model):
     COMMUNITY = 'Community'
     GEOGRAPHIC = 'Geographic'
 
-    category_list = [HEALTH, ARTS, FAITH, EDUCATION, COMMUNITY, GEOGRAPHIC]
+    valid_categories = [HEALTH, ARTS, FAITH, EDUCATION, COMMUNITY, GEOGRAPHIC]
 
     title = models.CharField(max_length=50, unique=True)
     projects = models.ManyToManyField(Project)

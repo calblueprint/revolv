@@ -31,6 +31,8 @@ class CreateProjectView(CreateView):
 
     def form_valid(self, form):
         new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+        print form.cleaned_data
+        new_project.update_categories(form.cleaned_data['categories_list'])
         messages.success(self.request, new_project.title + ' has been created!')
         return super(CreateProjectView, self).form_valid(form)
 
@@ -38,7 +40,7 @@ class CreateProjectView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['action'] = reverse('project:new')
-        context['categories'] = Category.category_list
+        context['categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
@@ -62,7 +64,7 @@ class UpdateProjectView(UpdateView):
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
-        context['categories'] = Category.category_list
+        context['categories'] = Category.valid_categories
         context['action'] = reverse('project:edit',
                                     kwargs={'pk': self.get_object().id})
         return context
