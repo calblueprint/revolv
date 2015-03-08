@@ -39,7 +39,6 @@ class CreateProjectView(CreateView):
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
-        context['action'] = reverse('project:new')
         context['categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
@@ -61,13 +60,16 @@ class UpdateProjectView(UpdateView):
         messages.success(self.request, 'Project details updated')
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
+    def form_valid(self, form):
+        project = self.get_object()
+        project.update_categories(form.cleaned_data['categories_list'])
+        return super(UpdateProjectView, self).form_valid(form)
+
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
         context['categories'] = Category.valid_categories
         context['current_categories'] = [str(category.title) for category in self.get_object().category_set.all()]
-        context['action'] = reverse('project:edit',
-                                    kwargs={'pk': self.get_object().id})
         return context
 
 

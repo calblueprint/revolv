@@ -15,7 +15,7 @@ class ProjectForm(forms.ModelForm):
     # sets the lat and long fields to hidden (clicking on the map updates them)
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
-    categories_list = forms.CharField(widget=forms.HiddenInput())
+    categories_list = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Project
@@ -38,8 +38,13 @@ class ProjectForm(forms.ModelForm):
         )
 
     def clean_categories_list(self):
+        print "CLEANED DATA"
+        print self.cleaned_data
         data = self.cleaned_data['categories_list']
-        categories_list = data.split(',')
+        print data
+        categories_list = data.strip().split(',')
+        categories_list = filter(None, categories_list)  # filters out any empty strings
+        print categories_list
         for category in categories_list:
             if category not in Category.valid_categories:
                 raise forms.ValidationError("You have entered an invalid category.")
