@@ -114,6 +114,13 @@ class ReviewProjectView(UserDataMixin, UpdateView):
             messages.success(self.request, '$' + str(repayment_amount) + ' repaid by ' + project.org_name)
         return redirect(self.get_success_url())
 
+    # pass in Project Categories and Maps API key
+    def get_context_data(self, **kwargs):
+        context = super(ReviewProjectView, self).get_context_data(**kwargs)
+        context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        context['categories'] = [str(category.title) for category in self.get_object().category_set.all()]
+        return context
+
 
 class PostFundingUpdateView(UpdateView):
     """
@@ -138,10 +145,11 @@ class ProjectView(UserDataMixin, DetailView):
     model = Project
     template_name = 'project/project.html'
 
-    # pass in Project and Maps API key
+    # pass in Project Categories and Maps API key
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        context['categories'] = [str(category.title) for category in self.get_object().category_set.all()]
         return context
 
     def dispatch(self, request, *args, **kwargs):
