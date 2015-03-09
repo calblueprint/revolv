@@ -16,7 +16,8 @@ class ProjectForm(forms.ModelForm):
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
     # sets the categories list to be hidden and not required (using chosen.js updates it)
-    categories_list = forms.CharField(required=False, widget=forms.HiddenInput())
+    options = [(category, category) for category in Category.valid_categories]
+    categories_select = forms.MultipleChoiceField(choices=options)
 
     class Meta:
         model = Project
@@ -35,23 +36,21 @@ class ProjectForm(forms.ModelForm):
             'location',
             'location_latitude',
             'location_longitude',
-            'categories_list'
+            'categories_select'
         )
 
-    def clean_categories_list(self):
+    def clean_categories_select(self):
         """ This method processes the input from the hidden categories list field, which
         is a string of the comma separated values. It parses it and insures all the categories
         are valid, then converts it into an actual list.
         """
-        data = self.cleaned_data['categories_list']
-        # splits the list and filters out any empty strings
-        categories_list = data.strip().split(',')
-        categories_list = filter(None, categories_list)
-        # checks if all the categories in it are valid
-        for category in categories_list:
+        data = self.cleaned_data['categories_select']
+        categories_select = filter(None, data)
+        # checks if a/ll the categories in it are valid
+        for category in categories_select:
             if category not in Category.valid_categories:
                 raise forms.ValidationError("You have entered an invalid category.")
-        return categories_list
+        return categories_select
 
 
 class ProjectStatusForm(forms.ModelForm):

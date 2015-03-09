@@ -388,7 +388,7 @@ class Project(models.Model):
 
     @property
     def categories(self):
-        return [str(category.title) for category in self.category_set.all()]
+        return [category.title for category in self.category_set.all()]
 
 
 class Category(models.Model):

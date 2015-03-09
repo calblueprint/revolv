@@ -31,7 +31,7 @@ class CreateProjectView(CreateView):
 
     def form_valid(self, form):
         new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
-        new_project.update_categories(form.cleaned_data['categories_list'])
+        new_project.update_categories(form.cleaned_data['categories_select'])
         messages.success(self.request, new_project.title + ' has been created!')
         return super(CreateProjectView, self).form_valid(form)
 
@@ -55,13 +55,17 @@ class UpdateProjectView(UpdateView):
     template_name = 'project/edit_project.html'
     form_class = forms.ProjectForm
 
+    # initializes the already selected categories for a given project
+    def get_initial(self):
+        return {'categories_select': self.get_object().categories}
+
     def get_success_url(self):
         messages.success(self.request, 'Project details updated')
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     def form_valid(self, form):
         project = self.get_object()
-        project.update_categories(form.cleaned_data['categories_list'])
+        project.update_categories(form.cleaned_data['categories_select'])
         return super(UpdateProjectView, self).form_valid(form)
 
     # sets context to be the edit view by providing in the model id

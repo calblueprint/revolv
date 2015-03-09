@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static "typeahead/typeahead.css" %}" />
@@ -39,16 +40,7 @@
                 <div class="medium-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.title %}
                     <span>Categories</span>
-                    <select data-placeholder="Choose some categories..." class="chosen-select" multiple tabindex="4">
-                        <option value=""></option>
-                        {% for category in valid_categories %}
-                            {% if project.id and category in project.categories %}
-                                <option value="{{category}}" selected>{{category}}</option>
-                            {% else %}
-                                <option value="{{category}}">{{category}}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
+                    {{ form.categories_select|add_class:"chosen-select" }}
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
@@ -62,7 +54,6 @@
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.internal_rate_return %}
                     <div class="hide">
-                        {% include "base/partials/tooltip_formfield.html" with field=form.categories_list %}
                         {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
                         {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
                     </div>
@@ -150,22 +141,8 @@
 <script src="{% static 'chosen/docsupport/prism.js' %}" type="text/javascript" charset="utf-8"></script>
 <script>
     $( document ).ready(function() {
-        // populates the currently selected categories if some of them have been selected already
-        {% if project.id %}
-        var current_categories = "{{project.categories}}";
-        current_categories = current_categories.split("&#39;").join("");
-        current_categories = current_categories.split(" ").join("");
-        current_categories = current_categories.substring(1, current_categories.length - 1);
-        $('#id_categories_list').val(current_categories);
-        {% endif %}
-
         // initializes chosen
         $(".chosen-select").chosen();
-        // sets the on change listener to update the hidden input field whenever categories are updated
-        $('.chosen-select').on('change', function(evt, params) {
-            categories_list = $(".chosen-select").chosen().val();
-            $('#id_categories_list').val(categories_list);
-        });
     });
 </script>
 
