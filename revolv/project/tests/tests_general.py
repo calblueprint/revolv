@@ -134,10 +134,9 @@ class CategoryTest(TestCase):
     """Tests that category selection and updating work with projects."""
 
     def test_update_category(self):
-        """ Tests that updating a single projects category works """
-        project = Project.factories.base.create(funding_goal=200.0, amount_donated=0.0, amount_left=200.0)
-        category1 = Category.factories.base.create()
-        category2 = Category.factories.base.create()
+        """ Test that updating a single projects category works """
+        project = Project.factories.base.create()
+        category1, category2 = Category.factories.base.create_batch(2)
         # tests that associating two categories with the project works
         project.update_categories(Category.valid_categories[:2])
         self.assertEqual(len(project.category_set.all()), 2)
@@ -147,15 +146,12 @@ class CategoryTest(TestCase):
         self.assertEqual(len(project.category_set.all()), 0)
 
     def test_update_category_multiple_projects(self):
-        """ Tests that removing categories from a project does not affect other projects """
+        """ Test that removing categories from a project does not affect other projects """
         # creates 2 projects
-        project1 = Project.factories.base.create(funding_goal=200.0, amount_donated=0.0, amount_left=200.0)
-        project2 = Project.factories.base.create(funding_goal=200.0, amount_donated=10.0, amount_left=190.0)
+        project1, project2 = Project.factories.base.create_batch(2)
         # resets the category factory and makes three categories
         Category.factories.base.title.reset()
-        category1 = Category.factories.base.create()
-        category2 = Category.factories.base.create()
-        category3 = Category.factories.base.create()
+        category1, category2, category3 = Category.factories.base.create_batch(3)
         # adds categories 1 and 2 to project 1
         project1.update_categories(Category.valid_categories[:2])
         self.assertEqual(len(project1.category_set.all()), 2)

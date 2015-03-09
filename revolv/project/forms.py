@@ -15,7 +15,7 @@ class ProjectForm(forms.ModelForm):
     # sets the lat and long fields to hidden (clicking on the map updates them)
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
-    # sets the categories list to be hidden and not required (using chosen.js updates it)
+    # generates options of categories and populates Multiple Choice field with options.
     options = [(category, category) for category in Category.valid_categories]
     categories_select = forms.MultipleChoiceField(choices=options)
 
