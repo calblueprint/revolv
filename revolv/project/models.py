@@ -401,6 +401,8 @@ class Category(models.Model):
 
     valid_categories = [HEALTH, ARTS, FAITH, EDUCATION, COMMUNITY, GEOGRAPHIC]
 
+    factories = ImportProxy("revolv.project.factories", "CategoryFactories")
+
     title = models.CharField(max_length=50, unique=True)
     projects = models.ManyToManyField(Project)
 

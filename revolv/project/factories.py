@@ -1,7 +1,7 @@
 import datetime
 
 import factory
-from revolv.project.models import Project
+from revolv.project.models import Category, Project
 
 
 class ProjectFactory(factory.django.DjangoModelFactory):
@@ -24,3 +24,14 @@ class ProjectFactory(factory.django.DjangoModelFactory):
 
 class ProjectFactories(object):
     base = ProjectFactory
+
+
+class CategoryFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Category
+
+    title = factory.Iterator(Category.valid_categories)
+
+
+class CategoryFactories(object):
+    base = CategoryFactory

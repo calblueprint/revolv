@@ -3,9 +3,10 @@ import json
 
 import mock
 from django.test import TestCase
+
 from revolv.base.tests.tests import TestUserMixin
 from revolv.payments.models import Payment
-from revolv.project.models import Project
+from revolv.project.models import Category, Project
 from revolv.project.tasks import scrape
 
 
@@ -127,6 +128,31 @@ class ProjectManagerTests(TestCase):
         context = Project.objects.get_drafted()
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Fire Emblem")
+
+
+class CategoryTest(TestCase):
+    """Tests that category selection and updating work with projects."""
+
+    def test_update_category(self):
+        project = Project.factories.base.create(funding_goal=200.0, amount_donated=0.0, amount_left=200.0)
+        category1 = Category.factories.base.create()
+        category2 = Category.factories.base.create()
+        # tests that associating two categories with the project works
+        project.update_categories(Category.valid_categories[:2])
+        self.assertEqual(len(project.category_set.all()), 2)
+        self.assertItemsEqual(project.category_set.all(), [category1, category2])
+        # tests that associating a new third category with the project works
+        category3 = Category.factories.base.create()
+        project.update_categories(Category.valid_categories[:3])
+        self.assertEqual(len(project.category_set.all()), 3)
+        self.assertItemsEqual(project.category_set.all(), [category1, category2, category3])
+        # tests that having only one category with the project works
+        project.update_categories(Category.valid_categories[:1])
+        self.assertEqual(len(project.category_set.all()), 1)
+        self.assertItemsEqual(project.category_set.all(), [category1])
+        # tests that having no categories with the project works
+        project.update_categories([])
+        self.assertEqual(len(project.category_set.all()), 0)
 
 
 class RequestTest(TestCase):
