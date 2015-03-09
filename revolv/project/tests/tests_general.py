@@ -134,6 +134,7 @@ class CategoryTest(TestCase):
     """Tests that category selection and updating work with projects."""
 
     def test_update_category(self):
+        """ Tests that updating a single projects category works """
         project = Project.factories.base.create(funding_goal=200.0, amount_donated=0.0, amount_left=200.0)
         category1 = Category.factories.base.create()
         category2 = Category.factories.base.create()
@@ -141,18 +142,34 @@ class CategoryTest(TestCase):
         project.update_categories(Category.valid_categories[:2])
         self.assertEqual(len(project.category_set.all()), 2)
         self.assertItemsEqual(project.category_set.all(), [category1, category2])
-        # tests that associating a new third category with the project works
-        category3 = Category.factories.base.create()
-        project.update_categories(Category.valid_categories[:3])
-        self.assertEqual(len(project.category_set.all()), 3)
-        self.assertItemsEqual(project.category_set.all(), [category1, category2, category3])
-        # tests that having only one category with the project works
-        project.update_categories(Category.valid_categories[:1])
-        self.assertEqual(len(project.category_set.all()), 1)
-        self.assertItemsEqual(project.category_set.all(), [category1])
         # tests that having no categories with the project works
         project.update_categories([])
         self.assertEqual(len(project.category_set.all()), 0)
+
+    def test_update_category_multiple_projects(self):
+        """ Tests that removing categories from a project does not affect other projects """
+        # creates 2 projects
+        project1 = Project.factories.base.create(funding_goal=200.0, amount_donated=0.0, amount_left=200.0)
+        project2 = Project.factories.base.create(funding_goal=200.0, amount_donated=10.0, amount_left=190.0)
+        # resets the category factory and makes three categories
+        Category.factories.base.title.reset()
+        category1 = Category.factories.base.create()
+        category2 = Category.factories.base.create()
+        category3 = Category.factories.base.create()
+        # adds categories 1 and 2 to project 1
+        project1.update_categories(Category.valid_categories[:2])
+        self.assertEqual(len(project1.category_set.all()), 2)
+        self.assertItemsEqual(project1.category_set.all(), [category1, category2])
+        # adds categories 2 and 3 to project 1
+        project2.update_categories(Category.valid_categories[1:3])
+        self.assertEqual(len(project2.category_set.all()), 2)
+        self.assertItemsEqual(project2.category_set.all(), [category2, category3])
+        # removes category 2 from project 1
+        project1.update_categories(Category.valid_categories[1:2])
+        self.assertEqual(len(project1.category_set.all()), 1)
+        self.assertItemsEqual(project1.category_set.all(), [category2])
+        # tests that deleting category 2 from project 1 does not affect project 2
+        self.assertItemsEqual(project2.category_set.all(), [category2, category3])
 
 
 class RequestTest(TestCase):
