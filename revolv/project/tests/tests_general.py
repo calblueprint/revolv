@@ -3,6 +3,7 @@ import json
 
 import mock
 from django.test import TestCase
+from django_webtest import WebTest
 from revolv.base.tests.tests import TestUserMixin
 from revolv.payments.models import Payment
 from revolv.project.models import Project
@@ -144,6 +145,21 @@ class RequestTest(TestCase):
             project.project_status = status
             project.save()
             self._assert_project_page_works(project)
+
+
+class ProjectIntegrationTest(WebTest):
+    def test_only_donate_when_logged_in(self):
+        """
+        Test that a not logged in user gets redirected to the
+        login page instead of being able to donate.
+        """
+        project = Project.factories.active.create()
+        resp = self.app.get("/project/%d/" % project.pk)
+        # resp = resp.maybe_follow()
+        print resp
+        self.assertEqual(resp.status_code, 200)
+        resp = resp.click(linkid="donate", verbose=True)
+        resp.assertTemplateUsed(resp, "sign_in.html")
 
 
 class ScrapeTest(TestCase):
