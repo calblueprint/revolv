@@ -7,7 +7,6 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
-
 from revolv.base.users import UserDataMixin
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm

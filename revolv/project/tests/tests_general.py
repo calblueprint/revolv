@@ -3,7 +3,6 @@ import json
 
 import mock
 from django.test import TestCase
-
 from revolv.base.tests.tests import TestUserMixin
 from revolv.payments.models import Payment
 from revolv.project.models import Category, Project

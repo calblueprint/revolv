@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
+from django.http import Http404
 from django.shortcuts import redirect
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_profile
-from django.http import Http404
 
 
 def is_ambassador(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
