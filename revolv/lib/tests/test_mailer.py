@@ -1,3 +1,4 @@
+import mock
 from django.core import mail
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
@@ -12,11 +13,12 @@ class MailerTestCase(TestCase):
 
     def test_send_email(self):
         """Test that we can send email correctly."""
-        send_revolv_email(
+        success = send_revolv_email(
             self.email_template_name,
             self.email_template_context,
             ["me@example.com"]
         )
+        self.assertEqual(success, 1)
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(
             mail.outbox[0].subject,
@@ -24,6 +26,25 @@ class MailerTestCase(TestCase):
         )
         self.assertEqual(len(mail.outbox[0].to), 1)
         self.assertEqual(mail.outbox[0].to[0], "me@example.com")
+
+    def test_fails_silently(self):
+        """Test that invalid email parameters raise an error if we tell them to."""
+        send_revolv_email(
+            self.email_template_name,
+            self.email_template_context,
+            ["mejksldafs"],
+            from_email="INVALID##&^%%%^*!  #Y* #$H*",
+            fail_silently=True
+        )
+        with mock.patch("revolv.lib.mailer.EmailMultiAlternatives.send", side_effect=Exception):
+            with self.assertRaises(Exception):
+                send_revolv_email(
+                    self.email_template_name,
+                    self.email_template_context,
+                    ["mejksldafs"],
+                    from_email="INVALID##&^%%%^*!  #Y* #$H*",
+                    fail_silently=False
+                )
 
     def test_cc_admins(self):
         """

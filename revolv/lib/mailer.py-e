@@ -34,7 +34,7 @@ def send_revolv_email(
     On the other hand, 'from_address' is just one email address string, which
     defaults to the string set in the settings file.
 
-    :param: fail_silently will be passed into EmailMultiAlternatives.send() -
+    :param: fail_silently will be passed into EmailMultiAlternatives.send() - 
             if True, will raise an exception on error.
     :return: the return status of EmailMultiAlternatives.send()
     """
