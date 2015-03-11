@@ -21,8 +21,11 @@
         <h1><strong>{{ project.title }}</strong></h1>
         <ul class="button-group nav-tab-button-group">
             {% if project.is_active %}
-            <li>
-                <a id="donate-button" class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
+                {% if user.is_authenticated %}
+                    <li><a id="donate-button" class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
+                {% else %}
+                    <li><a id="donate-button" class="small button success radius" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login">Donate</a></li>
+                {% endif %}
             {% endif %}
         </ul>
         <h3>Funding Goal : {{ project.funding_goal }}</h3>
