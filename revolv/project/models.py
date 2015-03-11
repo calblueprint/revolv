@@ -146,6 +146,12 @@ class Project(models.Model):
         max_length=255,
         help_text='How would you like to title this project?'
     )
+    tagline = models.CharField(
+        max_length=100,
+        null=True,
+        blank=False,
+        help_text='Select a short tag line that describes this project. (No more than 100 characters.)'
+    )
     video_url = models.URLField(
         'Video URL',
         max_length=255,

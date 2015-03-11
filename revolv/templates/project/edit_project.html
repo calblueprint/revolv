@@ -39,6 +39,7 @@
             <div class="row">
                 <div class="medium-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.title %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.tagline %}
                     <span>Categories</span>
                     {{ form.categories_select|add_class:"chosen-select" }}
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}

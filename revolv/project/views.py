@@ -48,7 +48,7 @@ class UpdateProjectView(UpdateView):
     project, though it prepopulates the existing field and passes in the
     project id. Redirects to the project page upon success.
 
-    Accessed through /project/edit/{project_id}
+    Accessed through /project/{project_id}/edit
     """
     model = Project
     template_name = 'project/edit_project.html'
@@ -80,7 +80,7 @@ class ReviewProjectView(UserDataMixin, UpdateView):
     the top, has a button group through which an ambassador or admin can
     update the project status.
 
-    Accessed through /project/review/{project_id}
+    Accessed through /project/{project_id}/review
     """
     model = Project
     template_name = 'project/review_project.html'
