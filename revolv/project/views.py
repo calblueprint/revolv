@@ -161,7 +161,7 @@ class ProjectView(UserDataMixin, DetailView):
                 (self.user.is_authenticated() and (project.has_owner(self.user_profile) or self.is_administrator))):
             return super_response
         else:
-            return self.deny_access()
+            return self.deny_access_via_404("Requested project not found.")
 
 
 class SubmitDonationView(UserDataMixin, FormView):

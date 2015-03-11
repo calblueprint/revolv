@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_profile
+from django.http import Http404
 
 
 def is_ambassador(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
@@ -44,6 +45,10 @@ class UserDataMixin(object):
             'Oops! You do not have permission to access this page.'
         )
         return redirect('home')
+
+    def deny_access_via_404(self, message):
+        """Raise a 404 Not Found."""
+        raise Http404(message)
 
     def dispatch(self, request, *args, **kwargs):
         """ dispatch() gets request.user and populates the view with relevant

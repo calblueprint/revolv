@@ -184,6 +184,12 @@ class RequestTest(TestCase):
             project.save()
             self._assert_project_page_works(project)
 
+    def test_drafted_projects_404(self):
+        """Test that the response is 404 when trying to request the page of a drafted project."""
+        project = Project.factories.base.create(project_status=Project.DRAFTED)
+        resp = self.client.get(project.get_absolute_url())
+        self.assertEqual(resp.status_code, 404)
+
 
 class ScrapeTest(TestCase):
     """Test that the scrape task runs with no errors,
