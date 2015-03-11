@@ -6,7 +6,7 @@ from django.test import TestCase
 from django_webtest import WebTest
 from revolv.base.tests.tests import TestUserMixin
 from revolv.payments.models import Payment
-from revolv.project.models import Project
+from revolv.project.models import Category, Project
 from revolv.project.tasks import scrape
 
 
@@ -128,6 +128,44 @@ class ProjectManagerTests(TestCase):
         context = Project.objects.get_drafted()
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Fire Emblem")
+
+
+class CategoryTest(TestCase):
+    """Tests that category selection and updating work with projects."""
+
+    def test_update_category(self):
+        """ Test that updating a single projects category works """
+        project = Project.factories.base.create()
+        category1, category2 = Category.factories.base.create_batch(2)
+        # tests that associating two categories with the project works
+        project.update_categories(Category.valid_categories[:2])
+        self.assertEqual(len(project.category_set.all()), 2)
+        self.assertItemsEqual(project.category_set.all(), [category1, category2])
+        # tests that having no categories with the project works
+        project.update_categories([])
+        self.assertEqual(len(project.category_set.all()), 0)
+
+    def test_update_category_multiple_projects(self):
+        """ Test that removing categories from a project does not affect other projects """
+        # creates 2 projects
+        project1, project2 = Project.factories.base.create_batch(2)
+        # resets the category factory and makes three categories
+        Category.factories.base.title.reset()
+        category1, category2, category3 = Category.factories.base.create_batch(3)
+        # adds categories 1 and 2 to project 1
+        project1.update_categories(Category.valid_categories[:2])
+        self.assertEqual(len(project1.category_set.all()), 2)
+        self.assertItemsEqual(project1.category_set.all(), [category1, category2])
+        # adds categories 2 and 3 to project 1
+        project2.update_categories(Category.valid_categories[1:3])
+        self.assertEqual(len(project2.category_set.all()), 2)
+        self.assertItemsEqual(project2.category_set.all(), [category2, category3])
+        # removes category 2 from project 1
+        project1.update_categories(Category.valid_categories[1:2])
+        self.assertEqual(len(project1.category_set.all()), 1)
+        self.assertItemsEqual(project1.category_set.all(), [category2])
+        # tests that deleting category 2 from project 1 does not affect project 2
+        self.assertItemsEqual(project2.category_set.all(), [category2, category3])
 
 
 class RequestTest(TestCase):

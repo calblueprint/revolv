@@ -1,0 +1,44 @@
+[
+{
+    "fields": {
+        "title":"Health"
+    },
+    "model": "project.category",
+    "pk": 1
+},
+{
+    "fields": {
+        "title":"Arts"
+    },
+    "model": "project.category",
+    "pk": 2
+},
+{
+    "fields": {
+        "title":"Faith"
+    },
+    "model": "project.category",
+    "pk": 3
+},
+{
+    "fields": {
+        "title":"Education"
+    },
+    "model": "project.category",
+    "pk": 4
+},
+{
+    "fields": {
+        "title":"Community"
+    },
+    "model": "project.category",
+    "pk": 5
+},
+{
+    "fields": {
+        "title":"Geographic"
+    },
+    "model": "project.category",
+    "pk": 6
+}
+]
