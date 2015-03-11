@@ -155,11 +155,9 @@ class ProjectIntegrationTest(WebTest):
         """
         project = Project.factories.active.create()
         resp = self.app.get("/project/%d/" % project.pk)
-        # resp = resp.maybe_follow()
-        print resp
         self.assertEqual(resp.status_code, 200)
-        resp = resp.click(linkid="donate", verbose=True)
-        resp.assertTemplateUsed(resp, "sign_in.html")
+        resp = resp.click(linkid="donate-button", verbose=True)
+        self.assertTemplateUsed(resp, "sign_in.html")
 
 
 class ScrapeTest(TestCase):
