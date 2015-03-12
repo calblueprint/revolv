@@ -1,0 +1,258 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
+    <style type="text/css">
+        #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
+        #map-canvas img {max-width: none;}
+    </style>
+{% endblock %}
+
+{% block title %}Project{% endblock %}
+
+{% block body %}
+
+{% include "project/partials/payment_modal.html" %}
+{% include "project/partials/confirm_modal.html" %}
+{% include "project/partials/success_modal.html" with project=project %}
+<<<<<<< HEAD
+
+
+<div class="header row">
+    <div class = "large-12 header-img-div" style='background-image: url("{{project.cover_photo.url}}")'>
+        <div class="overlay">
+            <div class="donate-button-header">
+                <p>DONATE</p>
+            </div>
+            <p class ="project-title" >{{ project.title }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row about">
+    <div class="header-text">
+        <p class="header">Promoting healthy business, healthy people, and a healthy planet</p>
+    </div>
+    <div class="gray-bar"></div>
+    <div class="row categories">
+        <div class="category-text"><p>CATEGORIES:</p></div>
+        <div class="category1"><p>ARTS</p></div>
+        <div class="category2"><p>HEALTH</p></div>
+    </div>
+    {% if project.video_url %}
+        <iframe width="100%" height="800" class="project_video">
+        </iframe>
+    {% endif %}
+
+    <div class="about-text"><p>{{ project.org_about }}</p>
+    </div>
+</div>
+
+<div class="row project-updates">
+    <div class="header-text">
+        <p class="header">Project Updates</p>
+    </div>
+    <div class = "large-2 columns date">
+=======
+<div class="row">
+    <div class="large-12 columns">
+        <h1><strong>{{ project.title }}</strong></h1>
+        <ul class="button-group nav-tab-button-group">
+            {% if project.is_active %}
+                <li><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
+            {% endif %}
+        </ul>
+        <h3>Funding Goal : {{ project.funding_goal }}</h3>
+        <h3>End Date : {{ project.end_date }}</h3>
+        <h5>Location : {{ project.location}}</h5>
+        <div id="map-canvas"></div>
+        <p>Organization : {{project.org_name}}</p>
+        <p>About {{project.org_name}} : {{project.org_about}}</p>
+        <img src="{{project.cover_photo.url}}"></img>
+        <p>Mission Statement : {{ project.mission_statement }}</p>
+        {% if project.video_url %}
+            <iframe width="420" height="315" id="project_video"></iframe>
+        {% endif %}
+        {% if project.categories|length > 0 %}
+            <h5>Categories</h5>
+            {{ project.categories }}
+        {% endif %}
+        {% if project.is_completed or project.is_active and project.post_funding_updates %}
+            <h5>Post Funding Updates</h5>
+            <p>{{ project.post_funding_updates}}</p>
+        {% endif %}
+>>>>>>> 9528c281d4c2b9f8cfe0d72d36c178a8a7e43f72
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class='row'>
+        <dl class="tabs">
+            <dd class="active tab-item"><a href="#story">Story</a></dd>
+            <dd class="tab-item"><a href="#updates">Updates</a></dd>
+            <dd class="hide-for-small tab-item"><a href="#gallery">Gallery</a></dd>
+        </dl>
+        <ul class="tabs-content">
+            <li class="active tab story-view" id="story">
+                <div class="row">
+                    <div class="large-3 push-9 columns" id="impact-and-donate">
+                        <div class='large-12 columns donate-admin-panels' id="donate-or-admin-panel-container">
+                            <div id="donate-box">
+                                <h5><strong>${{ project.amount_donated }}</strong> donated</h5>
+                                <p>of ${{ project.funding_goal }}</p>
+                                <div class="progress-bar">
+                                    <div class="green-bar" style="width:{{ project.percent_complete }}%"></div>
+                                    <div class="large-4 columns">
+                                        <h5 class = "percentage">{{ project.percent_complete }}%</p>
+                                    </div>
+                                    <div class="large-8 columns">
+                                        <h5 class="days-left">20 DAYS LEFT</p>
+                                    </div>
+                                </div>
+                                <br></br>
+                                <div id="button-container">
+                                    {% if user.revolvuserprofile.is_ambassador %}
+                                        <div class="approve-button"><a href="#">APPROVE</a></div>
+                                        <div class="deny-button"><a href="#">DENY</a></div>
+                                        <div class="update-button"><a href="#">UPDATE PROJECT</a></div>
+                                    {% else %}
+                                        <p>Help us reach our goal!</p>
+                                        <div classr="donate-button"><a href="#donate" data-reveal-id="donate-modal">DONATE</a></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="large-12 columns" id="impact-stats">
+                                <div id="impact-box">
+                                    <h5>Impact</h5>
+                                    <p>of {{ project.funding_goal }}</p>
+                                    <p>impact information</p>
+                                    <p>impact information</p>
+                                    <p>impact information<p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-9 pull-3 columns project-info" id="main-project-info">
+                        {% if project.video_url %}
+                            <iframe width="700" height="400" id="project_video">
+                            </iframe>
+                        {% endif %}
+                        <h3>{{ project.title }}</h3>
+                        <p>Funding Goal: {{ project.funding_goal }}</p>
+                        <p>End Date: {{ project.end_date }}</p>
+                        <p>Location: {{ project.location}}</p>
+                        <p>Organization : {{project.org_name}}</p>
+                        <p>About {{project.org_name}} : {{project.org_about}}</p>
+                        <p>Mission Statement : {{ project.mission_statement }}</p>
+                    </div>
+                </div> 
+            </li>
+            <li class="tab update-view" id="updates">
+                <br></br>
+                <div class="row">
+                    <div class="large-3 columns">
+                        <div class="update-box">
+                            <h3>Update #1</h3>
+                            <h5>BY AUTHOR NAME</h5>
+                            <h5>DATE PUBLISHED</h5>
+                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
+                        </div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="update-box">
+                            <h3>Update #2</h3>
+                            <h5>BY AUTHOR NAME</h5>
+                            <h5>DATE PUBLISHED</h5>
+                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
+                        </div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="update-box">
+                            <h3>Update #3</h3>
+                            <h5>BY AUTHOR NAME</h5>
+                            <h5>DATE PUBLISHED</h5>
+                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
+                        </div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="update-box">
+                            <h3>Update #4</h3>
+                            <h5>BY AUTHOR NAME</h5>
+                            <h5>DATE PUBLISHED</h5>
+                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="tab" id="gallery">Photo gallery!</li>
+        </ul>
+    </div>
+</div> -->
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    // initialize constants for use in payment_modal.js
+    window.PROJECT_ID = {{project.pk}};
+</script>
+
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
+</script>
+
+<script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
+
+{# jQuery.payment necessary for sexy card info validation #}
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.2/jquery.payment.min.js">
+</script>
+<script type="text/javascript">
+{% include "project/partials/payment_modal.js" with project=project %}
+</script>
+
+{% if project.video_url %}
+<script type="text/javascript">
+// function to extract the associated iframe embed url from the video url
+// from http://stackoverflow.com/questions/21607808/convert-a-youtube-video-url-to-embed-code
+function getEmbedUrl(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if (match && match[2].length == 11) {
+        var video_id = match[2];
+        return "http://www.youtube.com/embed/" + video_id;
+    } else {
+        return "error";
+    }
+}
+// updates the iframe src url if youtube url is valid, otherwise hides it
+var embedUrl = getEmbedUrl("{{project.video_url}}");
+if (embedUrl === "error") {
+    $("#project_video").remove();
+} else {
+    $("#project_video").attr("src", embedUrl);
+}
+</script>
+{% endif %}
+
+<script type="text/javascript">
+    // initializes the map based on the projects latitude and longitude, and adds the marker
+    function initialize() {
+        var location = { lat: {{project.location_latitude}}, lng: {{project.location_longitude}} }
+        var mapOptions = {
+            center: location,
+            zoom: 18
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+{% endblock %}
