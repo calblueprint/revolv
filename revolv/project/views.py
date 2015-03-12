@@ -122,6 +122,20 @@ class PostFundingUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
+class PostProjectUpdateView(CreateView):
+    model = Project
+    template_name = 'project/post_project_update.html'
+    form_class = forms.PostProjectUpdateForm
+    #form_solar_log = forms.SolarLogUpdateForm(instance=Project.objects.get(pk=1))
+    #self.object.project_id = self.get_object().id
+    def get_success_url(self):
+        #self.object.project_id = self.get_object().id
+        return reverse('project:view', kwargs={'pk': self.get_object().id})
+
+    # def form_valid(self, form):
+    #     #make an attach that instance here
+    #     #project_update = self.object
+    #     return reverse('project:view', kwargs={'pk': self.get_object().id})
 
 class ProjectView(UserDataMixin, DetailView):
     """

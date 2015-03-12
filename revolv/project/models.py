@@ -116,7 +116,6 @@ class ProjectManager(models.Manager):
         project.save()
         return project
 
-
 class Project(models.Model):
     """
     Project model. Stores basic metadata, information about the project,
@@ -237,6 +236,9 @@ class Project(models.Model):
         default=0.0,
         help_text='The internal rate of return for this project.'
     )
+    
+    #TAKE NOTICE AND GET RID OF THIS LATER
+    #should get rid of this but it causes an error somewhere
     post_funding_updates = models.TextField(
         'Updates After Completion',
         help_text='Add any post project completion updates you want to let your backers know about.',
@@ -379,6 +381,22 @@ class Project(models.Model):
     def is_completed(self):
         return self.project_status == Project.COMPLETED
 
+class ProjectUpdate(models.Model):
+    update_text = models.TextField(
+        'Update text',
+        help_text = "What should the update say?"
+    )
+    
+    date = models.DateField(
+        'Date of update creation',
+        help_text = "What time was your update created?",
+        auto_now_add = True
+    )
+    
+    project = models.ForeignKey(
+        Project,
+        related_name="update"
+    )
 
 class Category(models.Model):
     title = models.CharField(max_length=50, unique=True)
