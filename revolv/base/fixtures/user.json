@@ -21,7 +21,7 @@
         "first_name":"ambas",
         "last_name":"sador",
         "email":"revolv@gmail.com",
-        "is_staff": "True",
+        "is_staff": "False",
         "is_active": "True",
         "password":"pbkdf2_sha256$12000$wElSur69dDGI$seGQ9L3n+DcckBnCcgHjMnYK3dhLuKjNjbrWeRx+U2Q=",
         "groups":[2]

@@ -1,5 +1,3 @@
-{% load tojson %}
-
 $(function() {
 
 
@@ -28,7 +26,7 @@ if (!String.prototype.capitalize) {
             .replace(/\w\S*/g, function(txt) {
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             });
-    }
+    };
 }
 
 var validObj = {
@@ -37,7 +35,7 @@ var validObj = {
     'cc-cvc': false,
     'cc-name': false,
     'donation-amount': false
-}
+};
 var validForm = function() {
     var validForm = true;
     $.each(validObj, function(k, v) {
@@ -51,7 +49,7 @@ var getDonateFormValues = function() {
         formValues[field.name] = field.value;
     });
     return formValues;
-}
+};
 donationContinueBtnDOM = $('button.donation-continue')[0];
 donationContinueBtnDOM.disabled = true;
 
@@ -87,12 +85,12 @@ $ccNumber = $('input.cc-number');
 $ccNumber.payment('formatCardNumber');
 $ccNumber.keyup(function() {
     var cardType = $.payment.cardType(this.value);
-    if (cardType != null) {
-        if (activeCardType != cardType && $activeTypeEle != null) {
+    if (cardType !== null) {
+        if (activeCardType !== cardType && $activeTypeEle !== null) {
             $activeTypeEle.removeClass('active');
         }
         $activeTypeEle = $('img.cc-type-{0}'.format(cardType)).addClass('active');
-    } else if ($activeTypeEle != null) {
+    } else if ($activeTypeEle !== null) {
         $activeTypeEle.removeClass('active');
         $activeTypeEle = null;
     }
@@ -156,7 +154,7 @@ $ccName.keyup(function () {
         var e;
         for (var i = 0; i < split.length; i++) {
             e = split[i];
-            if (e == null || e.length == 0) { return false; }
+            if (e === null || e.length === 0) { return false; }
         }
         return true;
     };
@@ -190,7 +188,7 @@ $donationAmount.keypress(function(e) {
         return false;
     }
     // If keycode is a special char (WebKit)
-    if (e.which == 0) {
+    if (e.which === 0) {
         return true;
     }
     // If char is a special char (Firefox)
@@ -202,7 +200,7 @@ $donationAmount.keypress(function(e) {
     var val = $donationAmount.val();
 
     // If val is empty, make sure first char is a number
-    if (val == '') {
+    if (val === '') {
         var validInput = /[1-9]/.test(input);
         if (!validInput) {
             return false;
@@ -213,7 +211,7 @@ $donationAmount.keypress(function(e) {
         });
     } else {
         // Else, get just the decimal amount and do error checking there
-        var decimalVal = val.slice(2)
+        var decimalVal = val.slice(2);
         if (/^\d+\.\d*$/.test(decimalVal) && !/[\d]/.test(input)) {
             return false;
         } else if (/^\d+$/.test(decimalVal) && !/[\d\.]/.test(input)) {
@@ -239,7 +237,7 @@ $donationAmount.keydown(function(e) {
 
     var selectionStart = $donationAmount.prop('selectionStart');
     var selectionEnd = $donationAmount.prop('selectionEnd');
-    if (selectionStart != null && selectionEnd != null &&
+    if (selectionStart !== null && selectionEnd !== null &&
         selectionStart < 4) {
 
         e.preventDefault();
@@ -251,7 +249,7 @@ $donationAmount.keydown(function(e) {
         }
 
         var newVal = value.slice(Math.max(2, selectionEnd));
-        if (newVal == '') {
+        if (newVal === '') {
             setTimeout(function() {
                 $donationAmount.val('');
             });
@@ -367,11 +365,12 @@ $('#donate-form').submit(function(e) {
     var formURL = form.attr('action');
 
     $.post(
-        '/project/{{ project.pk }}/' + formURL,
+        '/project/{0}/'.format(window.PROJECT_ID) + formURL,
         creditCardDonationFormData
     ).done(function(data) {
         $donateModalErrors.removeClass('error');
         $('#amount-donated').text('${0}'.format(
+            /*jshint -W053 */
             (new Number(data.amount)).toFixed(2)));
         $('#success-modal').foundation('reveal', 'open');
     }).fail(function(jqXHR) {

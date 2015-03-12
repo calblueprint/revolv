@@ -7,11 +7,13 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
+
 from revolv.base.users import UserDataMixin
+from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.services import PaymentService
 from revolv.project import forms
-from revolv.project.models import Project
+from revolv.project.models import Category, Project
 
 
 class CreateProjectView(CreateView):
@@ -29,13 +31,14 @@ class CreateProjectView(CreateView):
 
     def form_valid(self, form):
         new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+        new_project.update_categories(form.cleaned_data['categories_select'])
         messages.success(self.request, new_project.title + ' has been created!')
         return super(CreateProjectView, self).form_valid(form)
 
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
-        context['action'] = reverse('project:new')
+        context['valid_categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
@@ -52,15 +55,23 @@ class UpdateProjectView(UpdateView):
     template_name = 'project/edit_project.html'
     form_class = forms.ProjectForm
 
+    # initializes the already selected categories for a given project
+    def get_initial(self):
+        return {'categories_select': self.get_object().categories}
+
     def get_success_url(self):
         messages.success(self.request, 'Project details updated')
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
+    def form_valid(self, form):
+        project = self.get_object()
+        project.update_categories(form.cleaned_data['categories_select'])
+        return super(UpdateProjectView, self).form_valid(form)
+
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
-        context['action'] = reverse('project:edit',
-                                    kwargs={'pk': self.get_object().id})
+        context['valid_categories'] = Category.valid_categories
         return context
 
 
@@ -106,14 +117,18 @@ class ReviewProjectView(UserDataMixin, UpdateView):
             messages.success(self.request, '$' + str(repayment_amount) + ' repaid by ' + project.org_name)
         return redirect(self.get_success_url())
 
+    # pass in Project Categories and Maps API key
+    def get_context_data(self, **kwargs):
+        context = super(ReviewProjectView, self).get_context_data(**kwargs)
+        context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        return context
+
 
 class PostFundingUpdateView(UpdateView):
     """
-    The view to review a project. Shows the same view as ProjectView, but at
-    the top, has a button group through which an ambassador or admin can
-    update the project status.
+    The view to send out post funding updates about a project after it has completed.
 
-    Accessed through /project/review/{project_id}
+    Accessed through /project/{project_id}/update
     """
     model = Project
     template_name = 'project/post_funding_update.html'
@@ -146,7 +161,7 @@ class ProjectView(UserDataMixin, DetailView):
     model = Project
     template_name = 'project/project.html'
 
-    # pass in Project and Maps API key
+    # pass in Project Categories and Maps API key
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
@@ -170,6 +185,14 @@ class SubmitDonationView(UserDataMixin, FormView):
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
         form.process_payment(project, self.user)
+        context = {}
+        context['user'] = self.user
+        context['project'] = project
+        context['amount'] = form.cleaned_data.get('amount')
+        send_revolv_email(
+            'post_donation',
+            context, [self.user.email]
+        )
         return JsonResponse({
             'amount': form.data['amount'],
         })

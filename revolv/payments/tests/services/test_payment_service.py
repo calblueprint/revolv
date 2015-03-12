@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from revolv.payments.models import PaymentInstrumentType
 from revolv.payments.services import PaymentService, PaymentServiceException
-from revolv.project.tests.tests_general import CreateTestProjectMixin
+from revolv.project.models import Project
 
 
-class PaymentServiceTest(TestCase, CreateTestProjectMixin):
+class PaymentServiceTest(TestCase):
 
     @mock.patch('revolv.payments.services.PaymentService.check_valid_amount')
     @mock.patch('revolv.payments.services.PaymentService.check_valid_payment_instrument')
@@ -22,7 +22,7 @@ class PaymentServiceTest(TestCase, CreateTestProjectMixin):
         )
         payment_instrument = mock.Mock()
         type(payment_instrument).type = instrument_type
-        project = self.create_test_project()
+        project = Project.factories.base.create()
         user = (User.objects.create_user(username="john", password="doe")).revolvuserprofile
 
         # Make the payment

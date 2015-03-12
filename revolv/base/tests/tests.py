@@ -1,18 +1,7 @@
 from django.contrib.auth.models import User
-from django.core.management import call_command
-from django.db.models.signals import post_save
 from django.test import TestCase
-
-from django_facebook.utils import get_user_model
 from revolv.base.models import RevolvUserProfile
-from revolv.base.signals import create_profile_of_user
 from revolv.base.utils import get_group_by_name, get_profile
-
-
-class SmokeTestCase(TestCase):
-    def test_works(self):
-        """Test that the test framework works."""
-        self.assertEqual(1, 1)
 
 
 class TestUserMixin(object):
@@ -27,6 +16,10 @@ class TestUserMixin(object):
         )
         return response
 
+    def _bust_test_user_cache(self):
+        self.test_user = User.objects.get(username=self.test_user.username)
+        self.test_profile = get_profile(self.test_user)
+
     def setUp(self):
         """Every test in this case has a test user."""
         self.test_user = User.objects.create_user(
@@ -34,6 +27,7 @@ class TestUserMixin(object):
             "john@example.com",
             "test_user_password"
         )
+        self.test_profile = get_profile(self.test_user)
 
 
 class UserAuthTestCase(TestUserMixin, TestCase):
@@ -137,18 +131,12 @@ class UserAuthTestCase(TestUserMixin, TestCase):
 
 
 class RevolvUserProfileManagerTestCase(TestCase):
-    """Tests for the RevolvUserProfileManager
-        TODO : Update test to create test objects and not load fixtures.
-    """
-
-    def setUp(self):
-        post_save.disconnect(receiver=create_profile_of_user, sender=get_user_model())
-        call_command('loaddata', 'user', 'revolvuserprofile', 'donation', 'payment_transaction', 'project')
-
-    def tearDown(self):
-        post_save.connect(create_profile_of_user, sender=get_user_model())
+    """Tests for the RevolvUserProfileManager."""
 
     def test_get_subscribed_to_newsletter(self):
+        """Test that we can correctly query users that are subscribed to the newsletter."""
+        RevolvUserProfile.factories.base.create_batch(2, subscribed_to_newsletter=False)
+        RevolvUserProfile.factories.base.create_batch(2, subscribed_to_newsletter=True, user__email="revolv@gmail.com")
         context = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         self.assertEqual(len(context), 2)
         self.assertEqual(context[0], "revolv@gmail.com")
@@ -164,20 +152,34 @@ class UserPermissionsTestCase(TestCase):
             "permission_test_user_password"
         )
 
-    def _assert_group_relationship(self, user, group_name, relIn):
+    def _assert_group_relationship(self, user, group_name, rel_in):
+        """Assert that a user is or is not in a given group.
+
+        :user: {User} the user to check
+        :group_name: {string} the group name to check
+        :rel_in: {boolean} if true, assert that the user is IN the group.
+                 otherwise, assert that the user is NOT in the group
+        """
         group = get_group_by_name(group_name)
-        if relIn:
+        if rel_in:
             self.assertIn(group, user.groups.all())
         else:
             self.assertNotIn(group, user.groups.all())
 
     def _assert_in_group(self, user, group_name):
+        """Assert that the given User is in the group specified by group_name."""
         return self._assert_group_relationship(user, group_name, True)
 
     def _assert_not_in_group(self, user, group_name):
+        """Assert that the given User is not in the group specified by group_name."""
         return self._assert_group_relationship(user, group_name, False)
 
     def _assert_groups_correct(self, user, ambassador, admin):
+        """
+        Given a User: if ambassador is True, assert that the user is an
+        ambassador. Additionally, if admin is True, also assert that the
+        user is an administrator.
+        """
         if ambassador:
             amb_group_check = self._assert_in_group
         else:
@@ -204,11 +206,13 @@ class UserPermissionsTestCase(TestCase):
         self._assert_groups_correct(
             self.test_user, ambassador=True, admin=False
         )
+        self.assertFalse(self.test_user.is_staff)
 
         self.test_user.revolvuserprofile.make_donor()
         self._assert_groups_correct(
             self.test_user, ambassador=False, admin=False
         )
+        self.assertFalse(self.test_user.is_staff)
 
     def test_admins(self):
         self.test_user.revolvuserprofile.make_administrator()
@@ -217,15 +221,27 @@ class UserPermissionsTestCase(TestCase):
             ambassador=True,
             admin=True
         )
+        self.assertTrue(self.test_user.is_staff)
 
         self.test_user.revolvuserprofile.make_ambassador()
         self._assert_groups_correct(
             self.test_user, ambassador=True, admin=False
         )
+        self.assertFalse(self.test_user.is_staff)
+
         self.test_user.revolvuserprofile.make_donor()
         self._assert_groups_correct(
             self.test_user, ambassador=False, admin=False
         )
+        self.assertFalse(self.test_user.is_staff)
+
+        self.test_user.revolvuserprofile.make_administrator()
+        self._assert_groups_correct(
+            self.test_user,
+            ambassador=True,
+            admin=True
+        )
+        self.assertTrue(self.test_user.is_staff)
 
 
 class UserDataMixinTestCase(TestUserMixin, TestCase):
