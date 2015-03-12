@@ -7,7 +7,6 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
-
 from revolv.base.users import UserDataMixin
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
@@ -49,7 +48,7 @@ class UpdateProjectView(UpdateView):
     project, though it prepopulates the existing field and passes in the
     project id. Redirects to the project page upon success.
 
-    Accessed through /project/edit/{project_id}
+    Accessed through /project/{project_id}/edit
     """
     model = Project
     template_name = 'project/edit_project.html'
@@ -81,7 +80,7 @@ class ReviewProjectView(UserDataMixin, UpdateView):
     the top, has a button group through which an ambassador or admin can
     update the project status.
 
-    Accessed through /project/review/{project_id}
+    Accessed through /project/{project_id}/review
     """
     model = Project
     template_name = 'project/review_project.html'
@@ -161,7 +160,7 @@ class ProjectView(UserDataMixin, DetailView):
                 (self.user.is_authenticated() and (project.has_owner(self.user_profile) or self.is_administrator))):
             return super_response
         else:
-            return self.deny_access()
+            return self.deny_access_via_404("Requested project not found.")
 
 
 class SubmitDonationView(UserDataMixin, FormView):
