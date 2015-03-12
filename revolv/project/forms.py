@@ -1,6 +1,7 @@
 from django import forms
 
 from models import Project
+from models import ProjectUpdate
 
 
 class ProjectForm(forms.ModelForm):
@@ -56,4 +57,25 @@ class PostFundingUpdateForm(forms.ModelForm):
         fields = (
             'post_funding_updates',
             'solar_url',
+        )
+
+# class SolarLogUpdateForm(forms.ModelForm):
+#     """
+#     A form for updating the solar log url of a project
+#     """
+#     class Meta:
+#         model = Project
+#         fields = (
+#             'solar_url',
+#         )
+
+class PostProjectUpdateForm(forms.ModelForm):
+    """
+    A form used to create updates about a project
+    """
+    class Meta:
+        model = ProjectUpdate
+        fields = (
+            'update_text',
+            'project',
         )
