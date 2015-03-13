@@ -1,9 +1,9 @@
+from bs4 import BeautifulSoup
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
 from django_webtest import WebTest
-from bs4 import BeautifulSoup
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_group_by_name, get_profile
 
@@ -245,10 +245,10 @@ class UserPermissionsTestCase(TestCase):
         self.assertTrue(self.test_user.is_staff)
 
 
-class AuthIntegrationTest(WebTest, TestUserMixin):
+class AuthIntegrationTest(TestUserMixin, WebTest):
     def test_forgot_password_flow(self):
         """Test that the entire forgot password flow works."""
-        response = self.app.get("/login/", auto_follow=True)
+        response = self.app.get("/login/").maybe_follow()
         reset_page_response = response.click(linkid="reset")
         reset_page_response.maybe_follow()
         form = reset_page_response.forms["password_reset_form"]
@@ -256,14 +256,12 @@ class AuthIntegrationTest(WebTest, TestUserMixin):
 
         # email should not be sent if we don't have a user with that email
         form["email"] = "something@idontexist.com"
-        unregistered_email_response = form.submit()
-        unregistered_email_response.maybe_follow()
+        unregistered_email_response = form.submit().maybe_follow()
         self.assertTemplateUsed(unregistered_email_response, "base/auth/forgot_password_done.html")
         self.assertEqual(len(mail.outbox), 0)
 
         form["email"] = self.test_user.email
-        registered_email_response = form.submit()
-        registered_email_response.maybe_follow()
+        registered_email_response = form.submit().maybe_follow()
         self.assertTemplateUsed(registered_email_response, "base/auth/forgot_password_done.html")
         self.assertEqual(len(mail.outbox), 1)
 
@@ -272,14 +270,13 @@ class AuthIntegrationTest(WebTest, TestUserMixin):
         self.assertTrue(len(links) >= 1)
 
         confirm_url = query.find(id="reset_password_link")["href"]
-        confirm_response = self.app.get(confirm_url)
-        confirm_response.maybe_follow()
+        confirm_response = self.app.get(confirm_url).maybe_follow()
         self.assertEqual(confirm_response.context["validlink"], True)
 
         form = confirm_response.forms["password_reset_confirm_form"]
         form["new_password1"] = "test_new_password"
         form["new_password2"] = "test_new_password"
-        success_response = form.submit()
+        success_response = form.submit().maybe_follow()
         self.assertEqual(success_response.status_code, 200)
         self._bust_test_user_cache()
         result = authenticate(username=self.test_user.username, password="test_new_password")
