@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
 from django_webtest import WebTest
-from pyquery import PyQuery
+from bs4 import BeautifulSoup
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_group_by_name, get_profile
 
@@ -252,22 +252,28 @@ class AuthIntegrationTest(WebTest, TestUserMixin):
         reset_page_response = response.click(linkid="reset")
         reset_page_response.maybe_follow()
         form = reset_page_response.forms["password_reset_form"]
-        self.assertEqual(form.method, "POST")
+        self.assertEqual(form.method, "post")
 
         # email should not be sent if we don't have a user with that email
         form["email"] = "something@idontexist.com"
         unregistered_email_response = form.submit()
+        unregistered_email_response.maybe_follow()
         self.assertTemplateUsed(unregistered_email_response, "base/auth/forgot_password_done.html")
         self.assertEqual(len(mail.outbox), 0)
 
         form["email"] = self.test_user.email
         registered_email_response = form.submit()
+        registered_email_response.maybe_follow()
         self.assertTemplateUsed(registered_email_response, "base/auth/forgot_password_done.html")
         self.assertEqual(len(mail.outbox), 1)
 
-        query = PyQuery(mail.outbox[0].body)
-        confirm_url = query("#reset_password_link").attr("href")
+        query = BeautifulSoup(mail.outbox[0].body)
+        links = query.find_all("a")
+        self.assertTrue(len(links) >= 1)
+
+        confirm_url = query.find(id="reset_password_link")["href"]
         confirm_response = self.app.get(confirm_url)
+        confirm_response.maybe_follow()
         self.assertEqual(confirm_response.context["validlink"], True)
 
         form = confirm_response.forms["password_reset_confirm_form"]
