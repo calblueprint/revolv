@@ -19,6 +19,9 @@
 <div class="row">
     <div class="large-12 columns">
         <h1><strong>{{ project.title }}</strong></h1>
+        {% if project.tagline %}
+            <h3>{{project.tagline}}</h3>
+        {% endif %}
         <ul class="button-group nav-tab-button-group">
             {% if project.is_active %}
                 {% if user.is_authenticated %}

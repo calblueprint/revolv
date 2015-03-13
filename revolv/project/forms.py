@@ -1,5 +1,4 @@
 from django import forms
-
 from models import Category, Project
 
 
@@ -24,6 +23,7 @@ class ProjectForm(forms.ModelForm):
         # fields that need to be filled out
         fields = (
             'title',
+            'tagline',
             'mission_statement',
             'funding_goal',
             'impact_power',

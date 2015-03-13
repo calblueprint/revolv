@@ -14,10 +14,15 @@ class ProjectTests(TestCase):
     """Project model tests."""
 
     def test_construct(self):
-        """Test that we can create a project."""
-        test_project = Project.factories.base.build(mission_statement="We do solar!", impact_power=50.5)
+        """Test that we can create a project via factories."""
+        test_project = Project.factories.base.build(
+            mission_statement="We do solar!",
+            impact_power=50.5,
+            tagline="Solar is great"
+        )
         self.assertEqual(test_project.mission_statement, "We do solar!")
         self.assertEqual(test_project.impact_power, 50.5)
+        self.assertEqual(test_project.tagline, "Solar is great")
 
     def test_save_and_query(self):
         """Test that we can save and then query a project."""
@@ -183,6 +188,12 @@ class RequestTest(TestCase):
             project.project_status = status
             project.save()
             self._assert_project_page_works(project)
+
+    def test_drafted_projects_404(self):
+        """Test that the response is 404 when trying to request the page of a drafted project."""
+        project = Project.factories.base.create(project_status=Project.DRAFTED)
+        resp = self.client.get(project.get_absolute_url())
+        self.assertEqual(resp.status_code, 404)
 
 
 class ProjectIntegrationTest(WebTest):
