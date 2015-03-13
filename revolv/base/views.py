@@ -186,7 +186,7 @@ class DashboardRedirect(UserDataMixin, View):
         return redirect('donor:dashboard')
 
 
-# password reset views: thin wrappers around django's build in password
+# password reset views: thin wrappers around django's built in password
 # reset views, but with our own templates
 def password_reset_initial(request):
     return auth_views.password_reset(

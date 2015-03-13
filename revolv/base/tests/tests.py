@@ -110,21 +110,18 @@ class UserAuthTestCase(TestUserMixin, TestCase):
         no_email_data = valid_data.copy()
         no_email_data["email"] = ""
 
-        response = self.client.post(self.SIGNUP_URL, no_name_data, follow=True)
+        response = self.client.post(self.SIGNUP_URL, no_name_data, follow=True)  # maybe SIGNIN_URL instead?
         self.assertTemplateUsed(response, "base/sign_in.html")
         self._assert_no_user_authed(response)
 
-        response = self.client.post(
-            self.SIGNUP_URL,
-            no_email_data,
-            follow=True
-        )
+        response = self.client.post(self.SIGNUP_URL, no_email_data, follow=True)
         self.assertTemplateUsed(response, "base/sign_in.html")
         self._assert_no_user_authed(response)
 
         response = self.client.post(self.SIGNUP_URL, valid_data, follow=True)
         self.assertRedirects(response, self.HOME_URL)
         self._assert_user_authed(response)
+
         # make sure the user was actually saved
         test_user = User.objects.get(username="john123")
         RevolvUserProfile.objects.get(user=test_user)
