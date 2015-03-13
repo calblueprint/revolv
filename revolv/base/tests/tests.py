@@ -1,5 +1,9 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.core import mail
 from django.test import TestCase
+from django_webtest import WebTest
+from pyquery import PyQuery
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_group_by_name, get_profile
 
@@ -239,6 +243,41 @@ class UserPermissionsTestCase(TestCase):
             admin=True
         )
         self.assertTrue(self.test_user.is_staff)
+
+
+class AuthIntegrationTest(WebTest, TestUserMixin):
+    def test_forgot_password_flow(self):
+        """Test that the entire forgot password flow works."""
+        response = self.app.get("/login/", auto_follow=True)
+        reset_page_response = response.click(linkid="reset")
+        reset_page_response.maybe_follow()
+        form = reset_page_response.forms["password_reset_form"]
+        self.assertEqual(form.method, "POST")
+
+        # email should not be sent if we don't have a user with that email
+        form["email"] = "something@idontexist.com"
+        unregistered_email_response = form.submit()
+        self.assertTemplateUsed(unregistered_email_response, "base/auth/forgot_password_done.html")
+        self.assertEqual(len(mail.outbox), 0)
+
+        form["email"] = self.test_user.email
+        registered_email_response = form.submit()
+        self.assertTemplateUsed(registered_email_response, "base/auth/forgot_password_done.html")
+        self.assertEqual(len(mail.outbox), 1)
+
+        query = PyQuery(mail.outbox[0].body)
+        confirm_url = query("#reset_password_link").attr("href")
+        confirm_response = self.app.get(confirm_url)
+        self.assertEqual(confirm_response.context["validlink"], True)
+
+        form = confirm_response.forms["password_reset_confirm_form"]
+        form["new_password1"] = "test_new_password"
+        form["new_password2"] = "test_new_password"
+        success_response = form.submit()
+        self.assertEqual(success_response.status_code, 200)
+        self._bust_test_user_cache()
+        result = authenticate(username=self.test_user.username, password="test_new_password")
+        self.assertEqual(result, self.test_user)
 
 
 class UserDataMixinTestCase(TestUserMixin, TestCase):

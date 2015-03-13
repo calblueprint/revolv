@@ -1,7 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth import views as auth_views
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
