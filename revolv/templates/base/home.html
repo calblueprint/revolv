@@ -32,17 +32,45 @@
 
 {% block body %}
 {% spaceless %}
-<div class='row cover-image-row'>
-    <div class="cover-image">
-        <div class="shade"></div>
-        <div class="cover-inset">
-            <h1 class="title-header title-header-about">About RE-volv</h1>
-            <h1 class="title-header title-header-tagline">People Funded Renewable Energy</h1>
-            <p>When you donate to revolv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
-        </div>
+
+<div class="cover-image">
+    <div class="shade"></div>
+    <div class="cover-inset">
+        <p class="title-header">WE'RE SAVING TOMORROW</p>
+        <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
     </div>
 </div>
-<div class="row icons-container">
+
+<div class="row about">
+    <div class="nav-spine sticky">
+        <div class="first nav-spine-item">1</div>
+            <figure>
+                <figcaption>FUNDRAISE</figcaption>
+                RE-volv raises money through crowdfunding from amazing people like you.
+            </figure>
+        <div class="second nav-spine-item second">2</div>
+            <figure>
+                <figcaption>INVEST</figcaption>
+                We then invest in community-based solar energy projects.
+            </figure>
+        <div class="third nav-spine-item third">3</div>
+            <figure>
+                <figcaption>PAY IT FORWARD</figcaption>
+                Finally, we reinvest the money saved to fund more worthy solar energy projects.
+            </figure>
+    </div>
+    <div class="about-inset">
+        <p>Climate change is among the most alarming environmental issues the world faces today.</p>
+        <p class="title-header">How would your donation to RE-volv help?</p>
+
+        <!-- Man and Woman -->
+        <img class="about-figure" src="{% static "images/man.svg" %}" />
+        <div class="coin">$</div>
+        <img class="about-figure" src="{% static "images/woman.svg" %}" />
+    </div>
+</div>
+
+<!-- <div class="row icons-container">
     <div class="small-3 columns icon-container">
         <svg role="img" title="adult" class="revolv-icon icon-frontal"><use xlink:href="{% static "images/frontal7.svg" %}#entry"></use></svg>
         <div class="stats-container">
@@ -71,30 +99,12 @@
             <div class="stat-description">citizens impacted</div>
         </div>
     </div>
-</div>
-<div class="row homepage-divider">our currently active solar projects</div>
-<div class="row project-badges-container">
-    {% for project in featured_projects %}
-        <div class="project-badge-container small-12 medium-6 large-4 columns {% if forloop.last %}end{% endif %}">
-            <a href="{% url "project:view" project.pk %}">
-                <div class="project-badge project-id-{{ project.pk }}">
-                    <!-- the svg for the partial circles will go here -->
-                    <div class="project-badge-detail-container">
-                        <p class="project-title">{{ project.title }}</p>
-                        <p class="project-organization">{{ project.org_name }}</p>
-                        <p class="project-amount-left">${{ project.rounded_amount_left|intcomma }} left</p>
-                        <p class="project-days-left">{{ project.formatted_days_left }}</p>
-                    </div>
-                    <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
-                </div>
-            </a>
-        </div>
-    {% endfor %}
-</div>
-<div class="row nonmobile-learn homepage-divider">learn about how RE-volv works</div>
+</div> -->
+
 <div class="row mobile-learn-container">
     <div class="mobile-learn-button"><a href="/about/">learn about how RE-volv works</a></div>
 </div>
 <div class="row infographic"><img src="{% static "images/infographic.jpg" %}"></div>
+
 {% endspaceless %}
 {% endblock %}

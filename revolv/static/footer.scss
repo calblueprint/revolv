@@ -1,15 +1,9 @@
 @import "revolv-settings";
 
-$footer-divider-height: 2px;
 .footer {
-    .divider {
-        display: block;
-        height: $footer-divider-height;
-        width: 100%;
-        background-color: $revolv-blue;
-    }
-
     section {
+        padding: 20px;
+
         .right-aligned-text {
             text-align: right;
         }
@@ -17,7 +11,8 @@ $footer-divider-height: 2px;
         h3 {
             font-size: $revolv-footer-heading-font-size;
             font-weight: 300;
-            margin: 20px 0 20px 0;
+            margin: 20px 0 10px 0;
+            color: white;
         }
 
         ul {
@@ -47,6 +42,11 @@ $footer-divider-height: 2px;
             }
         }
     }
+}
+
+#footer {
+    background-color: $revolv-header-color;
+    opacity: 0.75;
 }
 
 @media #{$small-only} {

@@ -46,7 +46,7 @@ body {
   color: #222222;
   padding: 0;
   margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
   font-style: normal;
   line-height: 1.5;
@@ -874,7 +874,7 @@ select {
       color: #222222;
       padding: 1rem;
       display: block;
-      font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+      font-family: "Lato", sans-serif;
       font-size: 1rem; }
       .accordion .accordion-navigation > a:hover, .accordion dd > a:hover {
         background: #e3e3e3; }
@@ -1267,7 +1267,7 @@ button, .button {
   border-style: solid;
   border-width: 0px;
   cursor: pointer;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
   line-height: normal;
   margin: 0 0 1.25rem;
@@ -2493,7 +2493,7 @@ select {
   border-color: #cccccc;
   padding: 0.5rem;
   font-size: 0.875rem;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
   color: rgba(0, 0, 0, 0.75);
   line-height: normal;
   border-radius: 0;
@@ -2901,7 +2901,7 @@ label.error {
 
 .label {
   font-weight: normal;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
   text-align: center;
   text-decoration: none;
   line-height: 1;
@@ -3281,7 +3281,7 @@ ul.pagination {
     color: #eeeeee;
     font-weight: normal;
     font-size: 1rem;
-    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+    font-family: "Lato", sans-serif; }
   .pricing-table .price {
     background-color: #f6f6f6;
     padding: 0.9375rem 1.25rem;
@@ -3289,7 +3289,7 @@ ul.pagination {
     color: #333333;
     font-weight: normal;
     font-size: 2rem;
-    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+    font-family: "Lato", sans-serif; }
   .pricing-table .description {
     background-color: white;
     padding: 0.9375rem;
@@ -3561,7 +3561,7 @@ dialog {
   padding: 0.875rem 0;
   list-style-type: none;
   list-style-position: outside;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+  font-family: "Lato", sans-serif; }
   .side-nav li {
     margin: 0 0 0.4375rem 0;
     font-size: 0.875rem;
@@ -3577,7 +3577,7 @@ dialog {
     .side-nav li.active > a:first-child:not(.button) {
       color: #1ccaff;
       font-weight: normal;
-      font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+      font-family: "Lato", sans-serif; }
     .side-nav li.divider {
       border-top: 1px solid;
       height: 0;
@@ -3685,7 +3685,7 @@ dialog {
     display: inline;
     margin-left: 1rem;
     margin-bottom: 0;
-    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-family: "Lato", sans-serif;
     font-weight: normal;
     font-size: 0.875rem;
     color: #999999; }
@@ -3856,7 +3856,7 @@ table {
       background-color: #e9f6fc;
       color: #222222;
       padding: 1rem 2rem;
-      font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+      font-family: "Lato", sans-serif;
       font-size: 1rem; }
       .tabs dd > a:hover, .tabs .tab-title > a:hover {
         background-color: #cfecf9; }
@@ -4016,7 +4016,7 @@ meta.foundation-mq-topbar {
 /* Wrapped around .top-bar to contain to grid width */
 .contain-to-grid {
   width: 100%;
-  background: #c0e7f6; }
+  background: #044e7e; }
   .contain-to-grid .top-bar {
     margin-bottom: 10px; }
 
@@ -4044,7 +4044,7 @@ meta.foundation-mq-topbar {
   height: 60px;
   line-height: 60px;
   position: relative;
-  background: #c0e7f6;
+  background: #044e7e;
   margin-bottom: 10px; }
   .top-bar ul {
     margin-bottom: 0;
@@ -4123,7 +4123,7 @@ meta.foundation-mq-topbar {
     height: auto;
     background: transparent; }
     .top-bar.expanded .title-area {
-      background: #c0e7f6; }
+      background: #044e7e; }
     .top-bar.expanded .toggle-topbar a {
       color: #888888; }
       .top-bar.expanded .toggle-topbar a span::after {
@@ -4142,19 +4142,19 @@ meta.foundation-mq-topbar {
     font-size: 16px;
     margin: 0; }
   .top-bar-section .divider, .top-bar-section [role="separator"] {
-    border-top: solid 1px #1b94c0;
+    border-top: solid 1px #02283f;
     clear: both;
     height: 1px;
     width: 100%; }
   .top-bar-section ul li {
-    background: #c0e7f6; }
+    background: #044e7e; }
     .top-bar-section ul li > a {
       display: block;
       width: 100%;
       color: #2c398c;
       padding: 12px 0 12px 0;
       padding-left: 20px;
-      font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+      font-family: "Lato", sans-serif;
       font-size: 0.9rem;
       font-weight: normal;
       text-transform: none; }
@@ -4246,7 +4246,7 @@ meta.foundation-mq-topbar {
           color: white; }
     .top-bar-section ul li:hover:not(.has-form) > a {
       background-color: #555555;
-      background: #93d7f0;
+      background: #02304d;
       color: white; }
     .top-bar-section ul li.active > a {
       background: #008cba;
@@ -4321,7 +4321,7 @@ meta.foundation-mq-topbar {
       padding: 8px 20px 2px;
       margin-bottom: 0;
       text-transform: uppercase;
-      color: #c0e7f6;
+      color: #044e7e;
       font-weight: bold;
       font-size: 0.625rem; }
 
@@ -4330,7 +4330,7 @@ meta.foundation-mq-topbar {
 
 @media only screen and (min-width:40.063em) {
   .top-bar {
-    background: #c0e7f6;
+    background: #044e7e;
     overflow: visible; }
     .top-bar:before, .top-bar:after {
       content: " ";
@@ -4348,7 +4348,7 @@ meta.foundation-mq-topbar {
       position: relative;
       top: 7px; }
     .top-bar.expanded {
-      background: #c0e7f6; }
+      background: #044e7e; }
   .contain-to-grid .top-bar {
     max-width: 62.5rem;
     margin: 0 auto;
@@ -4366,15 +4366,15 @@ meta.foundation-mq-topbar {
           display: none; }
     .top-bar-section li.hover > a:not(.button) {
       background-color: #555555;
-      background: #93d7f0;
+      background: #02304d;
       color: white; }
     .top-bar-section li:not(.has-form) a:not(.button) {
       padding: 0 20px;
       line-height: 60px;
-      background: #c0e7f6; }
+      background: #044e7e; }
       .top-bar-section li:not(.has-form) a:not(.button):hover {
         background-color: #555555;
-        background: #93d7f0; }
+        background: #02304d; }
     .top-bar-section li.active:not(.has-form) a:not(.button) {
       padding: 0 20px;
       line-height: 60px;
@@ -4437,29 +4437,29 @@ meta.foundation-mq-topbar {
         line-height: 60px;
         white-space: nowrap;
         padding: 12px 20px;
-        background: #c0e7f6; }
+        background: #044e7e; }
       .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
         color: #2c398c;
-        background: #c0e7f6; }
+        background: #044e7e; }
       .top-bar-section .dropdown li:not(.has-form):not(.active):hover > a:not(.button) {
         color: white;
         background-color: #555555;
-        background: #93d7f0; }
+        background: #02304d; }
       .top-bar-section .dropdown li label {
         white-space: nowrap;
-        background: #c0e7f6; }
+        background: #044e7e; }
       .top-bar-section .dropdown li .dropdown {
         left: 100%;
         top: 0; }
     .top-bar-section > ul > .divider, .top-bar-section > ul > [role="separator"] {
       border-bottom: none;
       border-top: none;
-      border-right: solid 1px #c8ebf7;
+      border-right: solid 1px #066dae;
       clear: none;
       height: 60px;
       width: 0; }
     .top-bar-section .has-form {
-      background: #c0e7f6;
+      background: #044e7e;
       padding: 0 20px;
       height: 60px; }
     .top-bar-section .right li .dropdown {
@@ -4474,7 +4474,7 @@ meta.foundation-mq-topbar {
         left: 100%; }
   .no-js .top-bar-section ul li:hover > a {
     background-color: #555555;
-    background: #93d7f0;
+    background: #02304d;
     color: white; }
   .no-js .top-bar-section ul li:active > a {
     background: #008cba;
@@ -4641,7 +4641,7 @@ p {
 
 /* Default header styles */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
   font-style: normal;
   color: #222222;
@@ -5612,7 +5612,8 @@ th.hide-for-touch {
 
 .header-small-text {
   font-size: 14px;
-  line-height: 60px; }
+  line-height: 60px;
+  color: white; }
 
 nav.header {
   /**
@@ -5628,23 +5629,30 @@ nav.header {
       width: 60px;
       margin: 0 10px 0 0; }
     nav.header .logo-container .tagline {
-      color: #2c398c;
-      font-size: 1rem;
+      color: white;
+      font-size: 12px;
       font-weight: 300; }
   nav.header .user-controls > .dropdown a.js-generated {
     display: none; }
+
+.top-bar-section li {
+  padding-left: 20px; }
+
+.top-bar-section a:visited {
+  color: white; }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
   nav.header .tagline {
     display: none !important; } }
 
 div.nav-bg-wrap {
-  background-color: #c0e7f6; }
+  background-color: #044e7e;
+  opacity: 0.75; }
 
 .dash-box {
   background-color: #e9f6fc;
   padding: 0px 0px;
-  border: solid #c0e7f6;
+  border: solid #044e7e;
   border-width: 1px;
   margin-bottom: 20px; }
   .dash-box.right {
@@ -5652,13 +5660,13 @@ div.nav-bg-wrap {
     padding: 10px 10px; }
   .dash-box .subheader {
     font-weight: 300;
-    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-family: "Lato", sans-serif;
     font-size: 1.4375rem;
     color: #222222;
     padding-top: 10px;
     padding-bottom: 10px;
     margin: 0px 0px;
-    background-color: #c0e7f6; }
+    background-color: #044e7e; }
 
 .dashboard-button {
   width: 33%;
@@ -5667,14 +5675,14 @@ div.nav-bg-wrap {
   margin-bottom: 15px;
   background-color: #f9f9fa;
   font-weight: 300;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
   border-width: 2px;
   border-color: #f9f9fa;
   transition: border-color 200ms linear; }
   .dashboard-button.active, .dashboard-button:focus, .dashboard-button:hover {
     color: black;
     background-color: #f9f9fa;
-    border-color: #c0e7f6; }
+    border-color: #044e7e; }
 
 .proj-button {
   width: 100%;
@@ -5687,43 +5695,45 @@ div.nav-bg-wrap {
   float: left; }
 
 body {
-  background-color: #f9f9fa;
+  background-color: #ebece7;
   font-weight: 300;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 1rem; }
 
 p, h2, h3, h4 {
   font-weight: 300;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+  font-family: "Lato", sans-serif; }
 
-.footer .divider {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background-color: #11ade5; }
-.footer section .right-aligned-text {
-  text-align: right; }
-.footer section h3 {
-  font-size: 16px;
-  font-weight: 300;
-  margin: 20px 0 20px 0; }
-.footer section ul {
-  list-style-type: none;
-  margin: 0; }
-.footer section li, .footer section p {
-  font-size: 16px;
-  line-height: 23px;
-  color: #a8aaaa;
-  font-weight: 100;
-  margin-top: 0;
-  margin-bottom: 0; }
-  .footer section li a, .footer section li a:active, .footer section li a:visited, .footer section p a, .footer section p a:active, .footer section p a:visited {
-    color: inherit; }
-  .footer section li a:hover, .footer section li a.underline, .footer section p a:hover, .footer section p a.underline {
-    text-decoration: underline; }
-  .footer section li .logo, .footer section p .logo {
-    display: inline-block;
-    width: 120px; }
+.footer section {
+  padding: 20px; }
+  .footer section .right-aligned-text {
+    text-align: right; }
+  .footer section h3 {
+    font-size: 16px;
+    font-weight: 300;
+    margin: 20px 0 10px 0;
+    color: white; }
+  .footer section ul {
+    list-style-type: none;
+    margin: 0; }
+  .footer section li, .footer section p {
+    font-size: 16px;
+    line-height: 23px;
+    color: #eeeeee;
+    font-weight: 100;
+    margin-top: 0;
+    margin-bottom: 0; }
+    .footer section li a, .footer section li a:active, .footer section li a:visited, .footer section p a, .footer section p a:active, .footer section p a:visited {
+      color: inherit; }
+    .footer section li a:hover, .footer section li a.underline, .footer section p a:hover, .footer section p a.underline {
+      text-decoration: underline; }
+    .footer section li .logo, .footer section p .logo {
+      display: inline-block;
+      width: 120px; }
+
+#footer {
+  background-color: #044e7e;
+  opacity: 0.75; }
 
 @media only screen and (max-width: 40em) {
   .footer section h3, .footer section li, .footer section p {

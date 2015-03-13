@@ -6,12 +6,12 @@
 {% load staticfiles %}
 {% load menu_tags %}
 {% spaceless %}
-<div class="nav-bg-wrap">
+<div class="nav-bg-wrap sticky">
    <nav class="row header top-bar" data-topbar role="navigation">
        <ul class="title-area">
            <li class="logo-container name">
-               <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo.png' %}"></a>
-               <span class="tagline">People Funded Renewable Energy</span>
+               <a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo-white.png' %}"></a>
+               <span class="tagline">People-Funded Renewable Energy</span>
            </li>
            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
            <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
@@ -21,7 +21,13 @@
                {% show_menu 0 100 100 100 "base/partials/menu.html" %}
            </ul>
 
-           <ul class="right">
+           <ul class="right header-small-text">
+
+               <li>About</li>
+               <li>Projects</li>
+               <li>Contact</li>
+               <li>Blog</li>
+
                {% if request.user.is_authenticated %}
                <li class="user-controls has-dropdown">
                    <a href="#">{{user.username}}</a>
@@ -33,6 +39,10 @@
                {% else %}
                <li>
                    <a class="component-link" data-component="signup" href="{% url "signin" %}#signup">Sign Up</a>
+
+                   <!-- TODO: Create a reusable donate button! -->
+                  <!-- TODO: Move sign in to footer! -->
+
                </li>
                <li>
                    <a class="component-link" data-component="login" href="{% url "signin" %}#login">Sign In</a>

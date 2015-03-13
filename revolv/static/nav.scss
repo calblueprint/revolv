@@ -5,6 +5,7 @@ $header-height: $revolv-header-height;
 .header-small-text {
     font-size: 14px;
     line-height: $header-height;
+    color: white;
 }
 
 $header-page-padding: 20px;
@@ -23,8 +24,8 @@ nav.header {
         }
 
         .tagline {
-            color: $revolv-logo-color-dark;
-            font-size: 1rem;
+            color: white;
+            font-size: 12px;
             font-weight: 300;
         }
     }
@@ -39,6 +40,14 @@ nav.header {
     }
 }
 
+.top-bar-section li {
+    padding-left: 20px;
+}
+
+.top-bar-section a:visited {
+    color: white;
+}
+
 @media #{$small-only} and (orientation: portrait) {
     nav.header .tagline {
         display: none !important;
@@ -47,4 +56,5 @@ nav.header {
 
 div.nav-bg-wrap {
   background-color: $revolv-header-color;
+  opacity: 0.75;
 }

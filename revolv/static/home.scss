@@ -14,6 +14,12 @@
     vertical-align: middle;
 }
 
+@mixin vertically-centered-block() {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 @mixin vertically-centered-parent() {
     &:before {
         content: '';
@@ -44,12 +50,20 @@
     color: rgba(0, 0, 0, 0.8);
 }
 
-.cover-image-row {
-    margin-bottom: 0;
+body {
+    background-color: $revolv-tan-bg;
 }
 
+// --- Top Bar Styles --------------------------------------------------------------------
+
+.top-bar {
+    margin-bottom: 0px;
+}
+
+// --- Cover Image Styles ----------------------------------------------------------------
+
 .cover-image {
-    background: url(/static/images/solar-worker-stockphoto.jpg);
+    background: url(/static/images/revolv_kids.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -57,50 +71,123 @@
     display: block;
     width: 100%;
     height: $revolv-cover-photo-height;
+    // min-height: 100%;
     margin-bottom: 0;
 
     position: relative;
 
     .shade {
-        @include dark-shade(0.2);
+        @include dark-shade(0.3);
     }
 
     .cover-inset {
-        position: absolute;
-        top: $revolv-cover-inset-top-offset;
-        right: $revolv-cover-inset-right-offset;
+        @include vertically-centered-block();
 
-        background-color: rgba(255, 255, 255, $revolv-cover-inset-opacity);
-        padding: 25px;
-
+        text-align: center;
+        margin: 0 auto;
         min-width: $revolv-cover-inset-min-width;
         max-width: $revolv-cover-inset-max-width;
-
         z-index: $revolv-shade-z-index + 10;
 
         .title-header {
             font-size: $revolv-cover-inset-title-size;
             line-height: $revolv-cover-inset-title-size;
-            @include soft-header-text(23px);
-
-            margin: 0;
-            margin-bottom: 10px;
+            color: white;
         }
-
-        .title-header-tagline {
-            display: none;
+        h1 {
+            color: white;
         }
-
         p {
             font-size: $revolv-cover-inset-paragraph-size;
             line-height: $revolv-cover-inset-paragraph-size + 6px;
             font-weight: 200;
-            color: rgba(0, 0, 0, 0.8);
+            color: white;
 
             margin: 0;
         }
     }
 }
+
+// --- About RE-volv Styles --------------------------------------------------------------
+
+.about {
+    .about-inset {
+        width: 600px;
+        margin: 0 auto;
+        padding: 30px;
+        text-align: center;
+        color: $revolv-about-font-color;
+
+        .title-header {
+            font-size: $revolv-about-inset-title-size;
+            line-height: $revolv-about-inset-title-size;
+        }
+
+        p {
+            font-size: $revolv-about-inset-paragraph-size;
+        }
+    }
+
+    .about-figure {
+        height: 200px;
+        float: left;
+    }
+
+    .coin { // this is probably the wrong thing to do
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 50%;
+        background-color: black;
+        color: white;
+        display: block;
+        float: left;
+    }
+
+    .nav-spine {
+        width: 5px;
+        height: 450px;
+        margin-left: 100px;
+        margin-top: 100px;
+        background-color: $revolv-about-font-color;
+    
+        .nav-spine-item {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            background-color: $revolv-about-font-color;
+            color: white;
+            left: -18px;
+            text-align: center;
+        }
+
+        .first {
+            top: 0px;
+        }
+
+        .second {
+            top: 220px;
+            background-color: $revolv-header-color;
+        }
+
+        .third {
+            top: 440px;
+        }
+
+        figure {
+            height: 200px;
+            width: 200px;
+        }
+
+        figcaption {
+            color: $revolv-header-color;
+        }
+    }
+}
+
+// --- Mobile Responsiveness Styles ------------------------------------------------------
 
 @media #{$small-only} {
     html .top-bar {
