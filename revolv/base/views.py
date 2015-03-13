@@ -1,5 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import views as auth_views
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
@@ -113,7 +115,7 @@ class LoginView(RedirectToSigninOrHomeMixin, FormView):
 
     def form_valid(self, form):
         """Log the user in and redirect them to the supplied next page."""
-        auth_views.login(self.request, form.get_user())
+        auth_login(self.request, form.get_user())
         messages.success(self.request, 'Logged in as ' + self.request.POST.get('username'))
         return redirect(self.next_url)
 
@@ -144,7 +146,7 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
     def form_valid(self, form):
         form.save()
         # log in the newly created user model. if there is a problem, error
-        auth_views.login(self.request, form.ensure_authenticated_user())
+        auth_login(self.request, form.ensure_authenticated_user())
         messages.success(self.request, 'Signed up successfully!')
         return redirect("home")
 
@@ -163,7 +165,7 @@ class LogoutView(UserDataMixin, View):
     """
 
     def get(self, request, *args, **kwargs):
-        auth_views.logout(request)
+        auth_logout(request)
         messages.success(self.request, 'Logged out successfully')
         return redirect('home')
 
