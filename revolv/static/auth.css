@@ -25,6 +25,25 @@
   .component-row h1:after {
     display: inline;
     content: "\a0\a0\a0"; }
+  .component-row h1.heading-error {
+    color: #e83d3d;
+    display: block;
+    height: 0.5em;
+    line-height: 1em;
+    border: none;
+    border-bottom: 1px solid #e83d3d;
+    margin-bottom: 0.5em;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 1.5em; }
+    .component-row h1.heading-error:first-line {
+      background-color: #f9f9fa; }
+    .component-row h1.heading-error:before {
+      display: inline;
+      content: "\a0\a0\a0"; }
+    .component-row h1.heading-error:after {
+      display: inline;
+      content: "\a0\a0\a0"; }
 
 .placeholder-tooltip-entry {
   position: absolute;
