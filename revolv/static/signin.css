@@ -1,4 +1,4 @@
-.component-row.login {
+.component-row.login, .component-row.password-reset, .component-row.password-reset-done, .component-row.password-reset-confirm, .component-row.password-reset-complete {
   margin-top: 100px;
   margin-bottom: 100px; }
 .component-row.signup {

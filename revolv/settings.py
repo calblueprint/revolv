@@ -222,6 +222,7 @@ MEDIA_URL = S3_URL + MEDIA_DIRECTORY
 # see http://stackoverflow.com/questions/9723494/setting-up-email-with-sendgrid-in-heroku-for-a-django-app
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "team@re-volv.org"
 if IS_HEROKU:
     EMAIL_HOST = "smtp.sendgrid.net"
     EMAIL_HOST_USER = os.environ["SENDGRID_USERNAME"]
