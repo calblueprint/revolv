@@ -54,10 +54,11 @@ class AuthIntegrationTest(TestUserMixin, WebTest):
         self.assertEqual(len(mail.outbox), 1)
 
         query = BeautifulSoup(mail.outbox[0].body)
-        links = query.find_all("a")
-        self.assertTrue(len(links) >= 1)
+        # we want to make sure that there is a password reset link (not just a url) in the email
+        link = query.find(id="reset_password_link")
+        self.assertIsNotNone(link)
 
-        confirm_url = query.find(id="reset_password_link")["href"]
+        confirm_url = link["href"]
         confirm_response = self.app.get(confirm_url).maybe_follow()
         self.assertEqual(confirm_response.context["validlink"], True)
 
