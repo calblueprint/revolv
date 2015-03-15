@@ -41,24 +41,46 @@
     </div>
 </div>
 
+<div 
+    data-400="margin-left: -50px;" 
+    data-500="margin-left: 50px;" 
+    class="nav-spine">
+    <div 
+        data-500="background-color[begin]: #044E7E;"
+        data-700="background-color[end]: #ADADA9;"
+        class="first nav-spine-item">1</div>
+        <figure
+            data-500="opacity[sqrt]: 0;" 
+            data-600="opacity[sqrt]: 1;"
+            data-700="opacity[sqrt]: 0;">
+            <figcaption>FUNDRAISE</figcaption>
+            RE-volv raises money through crowdfunding from amazing people like you.
+        </figure>
+    <div
+        data-700="background-color[begin]: #044E7E;"
+        data-900="background-color[end]: #ADADA9;"
+        class="second nav-spine-item second">2</div>
+        <figure
+            data-700="opacity[sqrt]: 0;" 
+            data-800="opacity[sqrt]: 1;"
+            data-900="opacity[sqrt]: 0;">
+            <figcaption>INVEST</figcaption>
+            We then invest in community-based solar energy projects.
+        </figure>
+    <div 
+        data-900="background-color[begin]: #044E7E;"
+        data-1100="background-color[end]: #ADADA9;"
+        class="third nav-spine-item third">3</div>
+        <figure
+            data-900="opacity[sqrt]: 0;" 
+            data-1000="opacity[sqrt]: 1;"
+            data-1100="opacity[sqrt]: 0;">
+            <figcaption>PAY IT FORWARD</figcaption>
+            Finally, we reinvest the money saved to fund more worthy solar energy projects.
+        </figure>
+</div>
+
 <div class="row about">
-    <div class="nav-spine sticky">
-        <div class="first nav-spine-item">1</div>
-            <figure>
-                <figcaption>FUNDRAISE</figcaption>
-                RE-volv raises money through crowdfunding from amazing people like you.
-            </figure>
-        <div class="second nav-spine-item second">2</div>
-            <figure>
-                <figcaption>INVEST</figcaption>
-                We then invest in community-based solar energy projects.
-            </figure>
-        <div class="third nav-spine-item third">3</div>
-            <figure>
-                <figcaption>PAY IT FORWARD</figcaption>
-                Finally, we reinvest the money saved to fund more worthy solar energy projects.
-            </figure>
-    </div>
     <div class="about-inset">
         <p>Climate change is among the most alarming environmental issues the world faces today.</p>
         <p class="title-header">How would your donation to RE-volv help?</p>
@@ -105,6 +127,12 @@
     <div class="mobile-learn-button"><a href="/about/">learn about how RE-volv works</a></div>
 </div>
 <div class="row infographic"><img src="{% static "images/infographic.jpg" %}"></div>
+
+<script type="text/javascript" src="{% static "js/vendor/skroll-colors.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/skrollr.min.js" %}"></script>
+<script type="text/javascript">
+    var s = skrollr.init();
+</script>
 
 {% endspaceless %}
 {% endblock %}

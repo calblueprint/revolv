@@ -5571,7 +5571,7 @@ body {
   margin-bottom: 0px; }
 
 .cover-image {
-  background: url(/static/images/revolv_kids.jpg);
+  background: url(/static/images/revolv_cover.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -5606,7 +5606,39 @@ body {
       line-height: 26px;
       font-weight: 200;
       color: white;
+      padding-top: 30px;
+      line-height: 30px;
       margin: 0; }
+
+.nav-spine {
+  position: fixed;
+  top: 0px;
+  width: 5px;
+  height: 450px;
+  margin-left: 50px;
+  margin-top: 100px;
+  background-color: #adada9; }
+  .nav-spine .nav-spine-item {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    background-color: #adada9;
+    color: white;
+    left: -18px;
+    text-align: center; }
+  .nav-spine .first {
+    top: 0px; }
+  .nav-spine .second {
+    top: 220px; }
+  .nav-spine .third {
+    top: 440px; }
+  .nav-spine figure {
+    height: 200px;
+    width: 200px; }
+  .nav-spine figcaption {
+    color: #044e7e; }
 
 .about .about-inset {
   width: 600px;
@@ -5631,34 +5663,6 @@ body {
   color: white;
   display: block;
   float: left; }
-.about .nav-spine {
-  width: 5px;
-  height: 450px;
-  margin-left: 100px;
-  margin-top: 100px;
-  background-color: #adada9; }
-  .about .nav-spine .nav-spine-item {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 50%;
-    background-color: #adada9;
-    color: white;
-    left: -18px;
-    text-align: center; }
-  .about .nav-spine .first {
-    top: 0px; }
-  .about .nav-spine .second {
-    top: 220px;
-    background-color: #044e7e; }
-  .about .nav-spine .third {
-    top: 440px; }
-  .about .nav-spine figure {
-    height: 200px;
-    width: 200px; }
-  .about .nav-spine figcaption {
-    color: #044e7e; }
 
 @media only screen and (max-width: 40em) {
   html .top-bar {

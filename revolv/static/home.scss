@@ -63,7 +63,7 @@ body {
 // --- Cover Image Styles ----------------------------------------------------------------
 
 .cover-image {
-    background: url(/static/images/revolv_kids.jpg);
+    background: url(/static/images/revolv_cover.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -102,13 +102,57 @@ body {
             line-height: $revolv-cover-inset-paragraph-size + 6px;
             font-weight: 200;
             color: white;
-
+            padding-top: 30px;
+            line-height: 30px;
             margin: 0;
         }
     }
 }
 
 // --- About RE-volv Styles --------------------------------------------------------------
+
+.nav-spine {
+    position: fixed;
+    top: 0px;
+    width: 5px;
+    height: 450px;
+    margin-left: 50px;
+    margin-top: 100px;
+    background-color: $revolv-about-font-color;
+
+    .nav-spine-item {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        background-color: $revolv-about-font-color;
+        color: white;
+        left: -18px;
+        text-align: center;
+    }
+
+    .first {
+        top: 0px;
+    }
+
+    .second {
+        top: 220px;
+    }
+
+    .third {
+        top: 440px;
+    }
+
+    figure {
+        height: 200px;
+        width: 200px;
+    }
+
+    figcaption {
+        color: $revolv-header-color;
+    }
+}
 
 .about {
     .about-inset {
@@ -142,48 +186,6 @@ body {
         color: white;
         display: block;
         float: left;
-    }
-
-    .nav-spine {
-        width: 5px;
-        height: 450px;
-        margin-left: 100px;
-        margin-top: 100px;
-        background-color: $revolv-about-font-color;
-    
-        .nav-spine-item {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            border-radius: 50%;
-            background-color: $revolv-about-font-color;
-            color: white;
-            left: -18px;
-            text-align: center;
-        }
-
-        .first {
-            top: 0px;
-        }
-
-        .second {
-            top: 220px;
-            background-color: $revolv-header-color;
-        }
-
-        .third {
-            top: 440px;
-        }
-
-        figure {
-            height: 200px;
-            width: 200px;
-        }
-
-        figcaption {
-            color: $revolv-header-color;
-        }
     }
 }
 

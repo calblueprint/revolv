@@ -5635,12 +5635,6 @@ nav.header {
   nav.header .user-controls > .dropdown a.js-generated {
     display: none; }
 
-.top-bar-section li {
-  padding-left: 20px; }
-
-.top-bar-section a:visited {
-  color: white; }
-
 @media only screen and (max-width: 40em) and (orientation: portrait) {
   nav.header .tagline {
     display: none !important; } }
@@ -5648,6 +5642,8 @@ nav.header {
 div.nav-bg-wrap {
   background-color: #044e7e;
   opacity: 0.75; }
+  div.nav-bg-wrap a:visited {
+    color: white; }
 
 .dash-box {
   background-color: #e9f6fc;

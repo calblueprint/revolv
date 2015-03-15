@@ -23,10 +23,18 @@
 
            <ul class="right header-small-text">
 
-               <li>About</li>
-               <li>Projects</li>
-               <li>Contact</li>
-               <li>Blog</li>
+               <li>
+                   <a class="component-link">About</a>
+               </li>
+               <li>
+                   <a class="component-link">Projects</a>
+               </li>
+               <li>
+                   <a class="component-link">Contact</a>
+               </li>
+               <li>
+                   <a class="component-link">Blog</a>
+               </li>
 
                {% if request.user.is_authenticated %}
                <li class="user-controls has-dropdown">
@@ -39,10 +47,6 @@
                {% else %}
                <li>
                    <a class="component-link" data-component="signup" href="{% url "signin" %}#signup">Sign Up</a>
-
-                   <!-- TODO: Create a reusable donate button! -->
-                  <!-- TODO: Move sign in to footer! -->
-
                </li>
                <li>
                    <a class="component-link" data-component="login" href="{% url "signin" %}#login">Sign In</a>

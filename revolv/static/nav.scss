@@ -40,14 +40,6 @@ nav.header {
     }
 }
 
-.top-bar-section li {
-    padding-left: 20px;
-}
-
-.top-bar-section a:visited {
-    color: white;
-}
-
 @media #{$small-only} and (orientation: portrait) {
     nav.header .tagline {
         display: none !important;
@@ -55,6 +47,9 @@ nav.header {
 }
 
 div.nav-bg-wrap {
-  background-color: $revolv-header-color;
-  opacity: 0.75;
+    background-color: $revolv-header-color;
+    opacity: 0.75;
+    a:visited {
+        color: white;
+    }
 }
