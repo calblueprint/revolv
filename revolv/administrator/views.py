@@ -1,5 +1,7 @@
+import csv
 from itertools import chain
 
+from django.http import HttpResponse
 from django.views.generic import TemplateView
 
 from revolv.base.models import RevolvUserProfile
@@ -33,3 +35,17 @@ class AdministratorEmailView(UserDataMixin, TemplateView):
         context = super(AdministratorEmailView, self).get_context_data(**kwargs)
         context['subscribed_user_emails'] = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         return context
+
+
+def admin_csv_download(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="emails.csv"'
+
+    # context['subscribed_user_emails'] = RevolvUserProfile.objects.get_subscribed_to_newsletter()
+
+    writer = csv.writer(response)
+    writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
+    writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+
+    return response

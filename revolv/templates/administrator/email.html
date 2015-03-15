@@ -34,6 +34,7 @@
 
 <div class='row'>
     <div class="small-12 columns">
+        <a class="button" href="{% url "administrator:csv" %}">Download as CSV</a>
         <h4>Newsletter Subscribers</h4>
         <textarea rows="15">{% for email in subscribed_user_emails %}{{ email }}&#13;&#10;{% endfor %}</textarea>
     </div>
