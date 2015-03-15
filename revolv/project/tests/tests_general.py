@@ -193,6 +193,21 @@ class RequestTest(TestCase):
         resp = self.client.get(project.get_absolute_url())
         self.assertEqual(resp.status_code, 404)
 
+class ProjectUpdateTest(TestCase):
+    """Tests that check that project updates work with projects"""
+
+    def test_construct(self):
+        project = Project.factories.base.create()
+        update1 = ProjectUpdate(update_text = 'This is update text', project=project)
+        update2 = ProjectUpdate(update_text = 'This is another update', project=project)
+
+        # tests basic construction
+        self.assertEqual('This is update text', update1.update_text)
+        self.assertEqual('This is another update', update2.update_text)
+
+        # tests project relationship
+        self.assertEqual(update1.project_id, update2.project_id)
+        self.assertEqual(update1.project_id, project.id)
 
 class ScrapeTest(TestCase):
     """Test that the scrape task runs with no errors,
