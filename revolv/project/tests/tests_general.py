@@ -4,7 +4,7 @@ import json
 import mock
 from django.test import TestCase
 from django_webtest import WebTest
-from revolv.base.tests.tests import TestUserMixin
+from revolv.lib.testing import TestUserMixin
 from revolv.payments.models import Payment
 from revolv.project.models import Category, Project
 from revolv.project.tasks import scrape
@@ -230,7 +230,7 @@ class DonationAjaxTestCase(TestUserMixin, TestCase):
 
     def setUp(self):
         super(DonationAjaxTestCase, self).setUp()
-        self._send_test_user_login_request()
+        self.send_test_user_login_request()
         self.project = Project.factories.base.create(project_status=Project.ACTIVE)
 
     def perform_valid_donation(self):
