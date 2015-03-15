@@ -167,22 +167,6 @@ class CategoryTest(TestCase):
         # tests that deleting category 2 from project 1 does not affect project 2
         self.assertItemsEqual(project2.category_set.all(), [category2, category3])
 
-class ProjectUpdateTest(TestCase):
-    """Tests that check that project updates work with projects"""
-
-    def test_construct(self):
-        project = Project.factories.base.create()
-        update1 = ProjectUpdate(update_text = 'This is update text', project=project)
-        update2 = ProjectUpdate(update_text = 'This is another update', project=project)
-
-        # tests basic construction
-        self.assertEqual('This is update text', update1.update_text)
-        self.assertEqual('This is another update', update2.update_text)
-
-        # tests project relationship
-        self.assertEqual(update1.project_id, update2.project_id)
-        self.assertEqual(update1.project_id, project.id + 2)
-
 class RequestTest(TestCase):
     """Test that all is well with the project pages."""
 
