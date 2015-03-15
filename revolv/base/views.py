@@ -63,6 +63,7 @@ class SignInView(TemplateView):
         context["login_form"] = login_form
         context["login_redirect_url"] = self.request.GET.get("next")
         context["referring_endpoint"] = ""
+        context["reason"] = self.request.GET.get("reason")
         return context
 
 

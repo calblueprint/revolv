@@ -198,7 +198,7 @@ class Project(models.Model):
         default=DRAFTED
     )
     cover_photo = ProcessedImageField(
-        upload_to='covers',
+        upload_to='covers/',
         processors=[ResizeToFill(1200, 500)],
         format='JPEG',
         options={'quality': 80},

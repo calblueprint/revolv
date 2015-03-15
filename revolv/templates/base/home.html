@@ -85,7 +85,9 @@
                         <p class="project-amount-left">${{ project.rounded_amount_left|intcomma }} left</p>
                         <p class="project-days-left">{{ project.formatted_days_left }}</p>
                     </div>
-                    <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
+                    {% if project.cover_photo %}
+                        <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
+                    {% endif %}
                 </div>
             </a>
         </div>
