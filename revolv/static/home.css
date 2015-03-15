@@ -5615,7 +5615,7 @@ body {
   top: 0px;
   width: 5px;
   height: 450px;
-  margin-left: 50px;
+  margin-left: 100px;
   margin-top: 100px;
   background-color: #adada9; }
   .nav-spine .nav-spine-item {
@@ -5646,23 +5646,37 @@ body {
   padding: 30px;
   text-align: center;
   color: #adada9; }
-  .about .about-inset .title-header {
+  .about .about-inset h1 {
     font-size: 48px;
-    line-height: 48px; }
+    line-height: 48px;
+    color: #adada9;
+    margin-bottom: 30px; }
+  .about .about-inset h2 {
+    font-size: 36px;
+    line-height: 36px;
+    color: #adada9; }
   .about .about-inset p {
     font-size: 20px; }
-.about .about-figure {
-  height: 200px;
-  float: left; }
+.about .person {
+  height: 144px; }
 .about .coin {
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 50%;
-  background-color: black;
+  height: 72px;
+  margin: 0px 12px;
+  margin-bottom: -84px; }
+.about .factory {
+  margin-top: 240px;
+  height: 400px; }
+
+.donate-button {
+  width: 250px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 24px;
   color: white;
-  display: block;
-  float: left; }
+  background-color: #1bb580;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 30px; }
 
 @media only screen and (max-width: 40em) {
   html .top-bar {

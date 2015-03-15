@@ -43,7 +43,7 @@
 
 <div 
     data-400="margin-left: -50px;" 
-    data-500="margin-left: 50px;" 
+    data-500="margin-left: 100px;" 
     class="nav-spine">
     <div 
         data-500="background-color[begin]: #044E7E;"
@@ -83,12 +83,27 @@
 <div class="row about">
     <div class="about-inset">
         <p>Climate change is among the most alarming environmental issues the world faces today.</p>
-        <p class="title-header">How would your donation to RE-volv help?</p>
+        <h1>How would your donation to RE-volv help?</h1>
 
         <!-- Man and Woman -->
-        <img class="about-figure" src="{% static "images/man.svg" %}" />
-        <div class="coin">$</div>
-        <img class="about-figure" src="{% static "images/woman.svg" %}" />
+        <img class="person" src="{% static "images/revolv_man.svg" %}" />
+        <img 
+            data-615="margin-bottom: -84px;"
+            data-732="margin-bottom: -670px;"
+            data-733="opacity[begin]: 1;"
+            data-734="opacity[end]: 0;"
+            class="coin" src="{% static "images/coin.svg" %}" />
+        <img class="person" src="{% static "images/revolv_woman.svg" %}" />
+
+
+        <img class="factory" src="{% static "images/factory.svg" %}" />
+
+
+        <div class="row infographic"><img src="{% static "images/infographic.jpg" %}"></div>        
+
+
+        <h2>Be a part of something great.</h2>
+        <div class="donate-button">DONATE NOW</div>
     </div>
 </div>
 
@@ -122,11 +137,6 @@
         </div>
     </div>
 </div> -->
-
-<div class="row mobile-learn-container">
-    <div class="mobile-learn-button"><a href="/about/">learn about how RE-volv works</a></div>
-</div>
-<div class="row infographic"><img src="{% static "images/infographic.jpg" %}"></div>
 
 <script type="text/javascript" src="{% static "js/vendor/skroll-colors.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/vendor/skrollr.min.js" %}"></script>

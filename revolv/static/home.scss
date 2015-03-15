@@ -116,7 +116,7 @@ body {
     top: 0px;
     width: 5px;
     height: 450px;
-    margin-left: 50px;
+    margin-left: 100px;
     margin-top: 100px;
     background-color: $revolv-about-font-color;
 
@@ -162,9 +162,17 @@ body {
         text-align: center;
         color: $revolv-about-font-color;
 
-        .title-header {
+        h1 {
             font-size: $revolv-about-inset-title-size;
             line-height: $revolv-about-inset-title-size;
+            color: $revolv-about-font-color;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 36px;
+            line-height: 36px;
+            color: $revolv-about-font-color;
         }
 
         p {
@@ -172,21 +180,32 @@ body {
         }
     }
 
-    .about-figure {
-        height: 200px;
-        float: left;
+    .person {
+        height: 144px;
     }
 
-    .coin { // this is probably the wrong thing to do
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
-        border-radius: 50%;
-        background-color: black;
-        color: white;
-        display: block;
-        float: left;
+    .coin { // this is temporary
+        height: 72px;
+        margin: 0px 12px; 
+        margin-bottom: -84px;
     }
+
+    .factory {
+        margin-top: 240px;
+        height: 400px;
+    }
+}
+
+.donate-button { // TODO: Make a reusable, general button
+    width: 250px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 24px;
+    color: white;
+    background-color: #1bb580;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 30px; // probably not the right thing to do
 }
 
 // --- Mobile Responsiveness Styles ------------------------------------------------------
