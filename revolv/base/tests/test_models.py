@@ -14,7 +14,7 @@ class RevolvUserProfileManagerTestCase(TestCase):
         RevolvUserProfile.factories.base.create_batch(2, subscribed_to_newsletter=True, user__email="revolv@gmail.com")
         context = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         self.assertEqual(len(context), 2)
-        self.assertEqual(context[0], "revolv@gmail.com")
+        self.assertEqual(context[0].user.email, "revolv@gmail.com")
 
 
 class UserPermissionsTestCase(TestCase):
