@@ -42,10 +42,12 @@ def admin_csv_download(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="emails.csv"'
 
-    # context['subscribed_user_emails'] = RevolvUserProfile.objects.get_subscribed_to_newsletter()
+    subscribed_to_newsletter_ordered = RevolvUserProfile.objects.get_subscribed_to_newsletter_ordered()
 
     writer = csv.writer(response)
-    writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-    writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+    writer.writerow(['Email', 'DateJoined'])
+
+    for revolvuserprofile in subscribed_to_newsletter_ordered:
+        writer.writerow([revolvuserprofile.user.email, revolvuserprofile.user.date_joined])
 
     return response
