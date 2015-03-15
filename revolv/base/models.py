@@ -27,7 +27,7 @@ class RevolvUserProfileManager(models.Manager):
         by order which the user joined.
 
         :queryset: The queryset in which to search for users
-        :return: A list of users
+        :return: A queryset of RevolvUserProfile objects sorted by date joined
         """
         if queryset is None:
             queryset = super(RevolvUserProfileManager, self).get_queryset()
