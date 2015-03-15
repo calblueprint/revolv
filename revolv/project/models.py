@@ -7,7 +7,7 @@ from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
-from revolv.payments.models import Payment
+from revolv.payments.models import Payment, PaymentType
 
 
 class ProjectManager(models.Manager):
@@ -302,17 +302,46 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse("project:view", kwargs={"pk": str(self.pk)})
 
+    def get_organic_donations(self):
+        return self.payment_set.filter(payment_type=PaymentType.objects.get_paypal())
+
+    def get_donor_pks(self):
+        return self.get_organic_donations().values_list('user', flat=True).distinct()
+
+    def proportion_donated(self, user):
+        user_donation = Payment.objects.donations(
+            user=user,
+            project=self
+        ).aggregate(
+            models.Sum('amount')
+        )['amount__sum'] or 0.0
+        prop = user_donation / self.amount_donated_organically
+        assert 0 <= prop <= 1, "proportion_donated is incorrect!"
+        return prop
+
+    @property
+    def amount_donated_organically(self):
+        """
+        :return: the current total amount that has been organically donated to
+        this project, as a float
+        """
+        organic = self.get_organic_donations().aggregate(
+            models.Sum('amount')
+        )["amount__sum"] or 0.0
+        return organic
+
+    # TODO: broken
     @property
     def amount_donated(self):
         """
         :return: the current total amount that has been donated to this project,
             as a float
         """
-        result = Payment.objects.donations(project=self).aggregate(
+        organic = self.amount_donated_organically
+        reinvestment = self.adminreinvestment_set.aggregate(
             models.Sum('amount')
-        )["amount__sum"]
-        if result is None:
-            return 0.0
+        )["amount__sum"] or 0.0
+        result = organic + reinvestment
         return result
 
     @property
@@ -331,7 +360,7 @@ class Project(models.Model):
         """
         :return: the current amount of money repaid by the project to RE-volv.
         """
-        return Payment.objects.repayments(project=self).aggregate(models.Sum('amount'))["amount__sum"] or 0.0
+        return self.adminrepayment_set.aggregate(models.Sum('amount'))["amount__sum"] or 0.0
 
     @property
     def rounded_amount_left(self):

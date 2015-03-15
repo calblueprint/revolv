@@ -4,8 +4,8 @@ import json
 import mock
 from django.test import TestCase
 from django_webtest import WebTest
-from revolv.lib.testing import TestUserMixin
-from revolv.payments.models import Payment
+from revolv.base.tests.tests import TestUserMixin
+from revolv.payments.models import AdminReinvestment, AdminRepayment, Payment
 from revolv.project.models import Category, Project
 from revolv.project.tasks import scrape
 
@@ -43,18 +43,19 @@ class ProjectTests(TestCase):
         self.assertEqual(project.amount_left, 150.0)
 
         Payment.factories.donation.create(project=project, amount=25.5)
-        Payment.factories.repayment.create(project=project, amount=25.5)
-        self.assertEqual(project.amount_donated, 75.50)
-        self.assertEqual(project.amount_left, 124.50)
-        self.assertEqual(project.rounded_amount_left, 124.00)
+        AdminReinvestment.factories.base.create(project=project, amount=25.0, test_obj=True)
+        AdminReinvestment.factories.base.create(project=project, amount=10.0, test_obj=True)
+        self.assertEqual(project.amount_donated, 110.5)
+        self.assertEqual(project.amount_left, 200.0 - 110.5)
+        self.assertEqual(project.rounded_amount_left, int(200.0 - 110.5))
 
     def test_amount_repaid(self):
         """Test that we calculate the amount repaied on a project correctly."""
         project = Project.factories.base.create(funding_goal=200.0)
         self.assertEqual(project.amount_repaid, 0.0)
-        Payment.factories.repayment.create(project=project, amount=50)
+        AdminRepayment.factories.base.create(project=project, amount=50)
         self.assertEqual(project.amount_repaid, 50.0)
-        Payment.factories.repayment.create(project=project, amount=60)
+        AdminRepayment.factories.base.create(project=project, amount=60)
         self.assertEqual(project.amount_repaid, 110.0)
 
     def test_partial_completeness(self):

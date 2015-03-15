@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from collections import namedtuple
 
 from paypalrestsdk import Payment
-from revolv.payments.models import PaymentInstrumentType
+from revolv.payments.models import PaymentType
 
 
 class PaymentInstrument(object):
@@ -45,7 +45,7 @@ class CreditCard(AbstractCreditCard):
 
 class PayPalCreditCardInstrument(PaymentInstrument):
 
-    type = PaymentInstrumentType.objects.get(name='paypal')
+    type = PaymentType.objects.get(name='paypal')
 
     def __init__(self, credit_card):
         if not isinstance(credit_card, CreditCard):
