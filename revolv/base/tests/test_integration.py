@@ -36,8 +36,9 @@ class AuthIntegrationTest(TestUserMixin, WebTest):
     def test_forgot_password_flow(self):
         """Test that the entire forgot password flow works."""
         response = self.app.get("/login/").maybe_follow()
-        reset_page_response = response.click(linkid="reset")
-        reset_page_response.maybe_follow()
+        reset_page_response = response.click(linkid="reset").maybe_follow()
+        self.assertTemplateUsed(reset_page_response, "base/auth/forgot_password_initial.html")
+
         form = reset_page_response.forms["password_reset_form"]
         self.assertEqual(form.method, "post")
 
