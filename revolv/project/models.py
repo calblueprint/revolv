@@ -406,6 +406,10 @@ class Project(models.Model):
     def categories(self):
         return [category.title for category in self.category_set.all()]
 
+    def add_update(self, text):
+        update = ProjectUpdate(update_text=text, project=self)
+        update.save()
+
 class ProjectUpdate(models.Model):
     update_text = models.TextField(
         'Update text',

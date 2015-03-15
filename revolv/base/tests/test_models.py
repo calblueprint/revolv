@@ -16,7 +16,6 @@ class RevolvUserProfileManagerTestCase(TestCase):
         self.assertEqual(len(context), 2)
         self.assertEqual(context[0], "revolv@gmail.com")
 
-
 class UserPermissionsTestCase(TestCase):
 
     def setUp(self):

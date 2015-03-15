@@ -2,11 +2,8 @@
 {% load staticfiles %}
 
 {% block head %}
-<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
-=======
     <link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
->>>>>>> a7d713ded52b72e7e38b247e36793dcc96a6eaaf
     <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
     <style type="text/css">
         #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
@@ -21,7 +18,6 @@
 {% include "project/partials/payment_modal.html" %}
 {% include "project/partials/confirm_modal.html" %}
 {% include "project/partials/success_modal.html" with project=project %}
-<<<<<<< HEAD
 
 
 <div class="header row">
@@ -59,38 +55,6 @@
         <p class="header">Project Updates</p>
     </div>
     <div class = "large-2 columns date">
-=======
-<div class="row">
-    <div class="large-12 columns">
-        <h1><strong>{{ project.title }}</strong></h1>
-        {% if project.tagline %}
-            <h3>{{project.tagline}}</h3>
-        {% endif %}
-        <ul class="button-group nav-tab-button-group">
-            {% if project.is_active %}
-                <li><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
-            {% endif %}
-        </ul>
-        <h3>Funding Goal : {{ project.funding_goal }}</h3>
-        <h3>End Date : {{ project.end_date }}</h3>
-        <h5>Location : {{ project.location}}</h5>
-        <div id="map-canvas"></div>
-        <p>Organization : {{project.org_name}}</p>
-        <p>About {{project.org_name}} : {{project.org_about}}</p>
-        <img src="{{project.cover_photo.url}}"></img>
-        <p>Mission Statement : {{ project.mission_statement }}</p>
-        {% if project.video_url %}
-            <iframe width="420" height="315" id="project_video"></iframe>
-        {% endif %}
-        {% if project.categories|length > 0 %}
-            <h5>Categories</h5>
-            {{ project.categories }}
-        {% endif %}
-        {% if project.is_completed or project.is_active and project.post_funding_updates %}
-            <h5>Post Funding Updates</h5>
-            <p>{{ project.post_funding_updates}}</p>
-        {% endif %}
->>>>>>> 9528c281d4c2b9f8cfe0d72d36c178a8a7e43f72
     </div>
 </div>
 

@@ -76,15 +76,6 @@ class PostFundingUpdateForm(forms.ModelForm):
             'solar_url',
         )
 
-# class SolarLogUpdateForm(forms.ModelForm):
-#     """
-#     A form for updating the solar log url of a project
-#     """
-#     class Meta:
-#         model = Project
-#         fields = (
-#             'solar_url',
-#         )
 
 class PostProjectUpdateForm(forms.ModelForm):
     """
@@ -94,5 +85,4 @@ class PostProjectUpdateForm(forms.ModelForm):
         model = ProjectUpdate
         fields = (
             'update_text',
-            'project',
         )
