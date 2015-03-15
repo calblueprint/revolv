@@ -22,20 +22,9 @@ class RevolvUserProfileManager(models.Manager):
         return profile
 
     def get_subscribed_to_newsletter(self, queryset=None):
-        """ Gets all the user emails that are currently subscribed to the newsletter
-
-        :queryset: The queryset in which to search for users
-        :return: A list of users
-        """
-        if queryset is None:
-            queryset = super(RevolvUserProfileManager, self).get_queryset()
-        subscribed_users = queryset.filter(
-            subscribed_to_newsletter=True
-        ).values_list('user__email', flat=True)
-        return subscribed_users
-
-    def get_subscribed_to_newsletter_ordered(self, queryset=None):
-        """ Gets all the user emails that are currently subscribed to the newsletter
+        """ Gets all the RevolvUserProfile objects that are
+        currently subscribed to the newsletter. It also orders the queryset
+        by order which the user joined.
 
         :queryset: The queryset in which to search for users
         :return: A list of users
