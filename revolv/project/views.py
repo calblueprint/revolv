@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
@@ -13,6 +13,8 @@ from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Category, Project
+from revolv.base.models import RevolvUserProfile
+
 
 
 class CreateProjectView(CreateView):
@@ -136,11 +138,21 @@ class PostFundingUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
-class PostProjectUpdateView(UpdateView):
+class PostProjectUpdateView(UserDataMixin, UpdateView):
     model = Project
     template_name = 'project/post_project_update.html'
     form_class = forms.PostProjectUpdateForm
 
+    def dispatch(self, request, *args, **kwargs):
+        self.user = request.user
+        self.is_authenticated = self.user.is_authenticated()
+        if self.is_authenticated:
+            self.user_profile = RevolvUserProfile.objects.get(user=self.user)
+            self.is_ambassador = self.user_profile.is_ambassador()
+
+        if not self.is_ambassador:
+            return self.deny_access()
+        return super(PostProjectUpdateView, self).dispatch(request, args, kwargs)
 
     def get_success_url(self):
         return reverse('project:view', kwargs={'pk': self.get_object().id})

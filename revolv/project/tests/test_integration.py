@@ -6,9 +6,12 @@ from revolv.lib.testing import TestUserMixin, UserTestingMixin
 from revolv.project.models import Project, ProjectUpdate
 
 
-class ProjectUpdateFormTest(TestUserMixin, UserTestingMixin, TestCase):
+class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
 
     def test_admin_form_submission(self):
+        """
+        Tests that administrators can create project updates.
+        """
         self.test_profile.make_administrator()
         response = self.send_test_user_login_request()
         self.assertUserAuthed(response)
@@ -19,6 +22,9 @@ class ProjectUpdateFormTest(TestUserMixin, UserTestingMixin, TestCase):
         self.assertEqual(new_updates[0].project, project)
 
     def test_ambassador_form_submission(self):
+        """
+        Tests that ambassadors can create project updates.
+        """
         self.test_profile.make_ambassador()
         response = self.send_test_user_login_request()
         self.assertUserAuthed(response)
@@ -28,7 +34,19 @@ class ProjectUpdateFormTest(TestUserMixin, UserTestingMixin, TestCase):
         self.assertEqual(len(new_updates),1)
         self.assertEqual(new_updates[0].project, project)
 
-    #FINISH THE OTHER TESTS
+    def test_donor_form_submission(self):
+        """
+        Tests that donors can't create project updates.
+        """
+        self.test_profile.make_donor()
+        response = self.send_test_user_login_request()
+        self.assertUserAuthed(response)
+        project = Project.factories.base.create()
+        response = self.client.post('/project/%d/update' % project.pk, {'update_text': 'This is an update'})
+        
+        #the deny_access method is called in the view from the userdatamixin, which returns a redirect to the homepage
+        self.assertEqual(response.status_code, 302)
+        
 
 
 class DonationAjaxTestCase(TestUserMixin, TestCase):
