@@ -34,22 +34,26 @@ class AdministratorEmailView(UserDataMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AdministratorEmailView, self).get_context_data(**kwargs)
 
-        user_emails = [r.user.email for r in RevolvUserProfile.objects.get_subscribed_to_newsletter()]
+        user_emails = RevolvUserProfile.objects.get_subscribed_to_newsletter().values_list("user__email", flat=True)
         context['subscribed_user_emails'] = user_emails
         return context
 
 
 def admin_email_csv_download(request):
+    """View for downloading the list of newsletter subscribers as a csv file.
+    Accessed via AdministratorEmailView.
+    """
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="emails.csv"'
 
+    # gets users who are subscribed to the newsletter ordered by signup date
     subscribed_to_newsletter_ordered = RevolvUserProfile.objects.get_subscribed_to_newsletter()
 
     writer = csv.writer(response)
-    writer.writerow(['Email', 'DateJoined'])
+    writer.writerow(['Email', 'FirstName', 'LastName', 'DateJoined'])
 
     for revolvuserprofile in subscribed_to_newsletter_ordered:
-        writer.writerow([revolvuserprofile.user.email, revolvuserprofile.user.date_joined])
+        writer.writerow([revolvuserprofile.user.email, revolvuserprofile.user.first_name, revolvuserprofile.user.last_name, revolvuserprofile.user.date_joined])
 
     return response
