@@ -2,7 +2,7 @@
 @import "utils";
 
 .component-row {
-    &.login {
+    &.login, &.password-reset, &.password-reset-done, &.password-reset-confirm, &.password-reset-complete {
         margin-top: 100px;
         margin-bottom: 100px;
     }
@@ -18,7 +18,13 @@
         font-weight: 100;
 
         @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-blue, $bg-color: $revolv-gray-bg);
+
         margin-bottom: 1.5em; // override
+        &.heading-error {
+            color: $revolv-red;
+            @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-gray-bg);
+            margin-bottom: 1.5em; // override
+        }
     }
 }
 
