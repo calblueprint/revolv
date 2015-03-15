@@ -2,7 +2,11 @@
 {% load staticfiles %}
 
 {% block head %}
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
+=======
+    <link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
+>>>>>>> a7d713ded52b72e7e38b247e36793dcc96a6eaaf
     <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
     <style type="text/css">
         #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
@@ -59,6 +63,9 @@
 <div class="row">
     <div class="large-12 columns">
         <h1><strong>{{ project.title }}</strong></h1>
+        {% if project.tagline %}
+            <h3>{{project.tagline}}</h3>
+        {% endif %}
         <ul class="button-group nav-tab-button-group">
             {% if project.is_active %}
                 <li><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>

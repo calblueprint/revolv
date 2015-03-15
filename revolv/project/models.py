@@ -3,7 +3,6 @@ from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
-
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -144,6 +143,12 @@ class Project(models.Model):
     title = models.CharField(
         max_length=255,
         help_text='How would you like to title this project?'
+    )
+    tagline = models.CharField(
+        max_length=100,
+        null=True,
+        blank=False,
+        help_text='Select a short tag line that describes this project. (No more than 100 characters.)'
     )
     video_url = models.URLField(
         'Video URL',
