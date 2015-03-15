@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+
 from django_facebook.models import FacebookModel
 from revolv.base.utils import get_group_by_name, get_profile
 from revolv.lib.utils import ImportProxy
@@ -21,16 +22,18 @@ class RevolvUserProfileManager(models.Manager):
         return profile
 
     def get_subscribed_to_newsletter(self, queryset=None):
-        """ Gets all the user emails that are currently subscribed to the newsletter
+        """ Gets all the RevolvUserProfile objects that are
+        currently subscribed to the newsletter. It also orders the queryset
+        by order which the user joined.
 
         :queryset: The queryset in which to search for users
-        :return: A list of users
+        :return: A queryset of RevolvUserProfile objects sorted by date joined
         """
         if queryset is None:
             queryset = super(RevolvUserProfileManager, self).get_queryset()
         subscribed_users = queryset.filter(
             subscribed_to_newsletter=True
-        ).values_list('user__email', flat=True)
+        ).order_by('user__date_joined')
         return subscribed_users
 
 

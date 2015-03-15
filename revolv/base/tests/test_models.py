@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
+
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_group_by_name
 from revolv.lib.testing import TestUserMixin, UserTestingMixin
@@ -14,7 +15,7 @@ class RevolvUserProfileManagerTestCase(TestCase):
         RevolvUserProfile.factories.base.create_batch(2, subscribed_to_newsletter=True, user__email="revolv@gmail.com")
         context = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         self.assertEqual(len(context), 2)
-        self.assertEqual(context[0], "revolv@gmail.com")
+        self.assertEqual(context[0].user.email, "revolv@gmail.com")
 
 
 class UserPermissionsTestCase(TestCase):
