@@ -5664,8 +5664,9 @@ body {
   margin: 0px 12px;
   margin-bottom: -84px; }
 .about .factory {
-  margin-top: 240px;
-  height: 400px; }
+  margin-top: 248px;
+  height: 400px;
+  width: 205px; }
 
 .donate-button {
   width: 250px;

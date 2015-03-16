@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="entry" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="204.892px" height="366.13px" viewBox="0 0 204.892 366.13" enable-background="new 0 0 204.892 366.13"
 	 xml:space="preserve">
 <g>
-	<polygon fill="#FBB041" points="107.237,60.14 97.655,60.14 53.624,9.516 151.268,9.516 	"/>
+	<polygon fill="#FBB041" points="107.237,60.14 97.655,60.14 53.624,9.516 151.268,9.516"/>
 	<ellipse fill="#A8AAAD" cx="102.446" cy="9.11" rx="48.822" ry="9.11"/>
 	<rect x="97.215" y="51.153" fill="#FBB041" width="10.461" height="31.006"/>
 </g>
 <g>
 	<polygon fill="#FBB041" points="94.873,272.207 109.839,272.188 178.703,351.18 26.189,351.354 	"/>
-	
-		<ellipse transform="matrix(-1 0.0011 -0.0011 -1 205.2956 703.6848)" fill="#A8AAAD" cx="102.447" cy="351.901" rx="76.256" ry="14.23"/>
-	
-		<rect x="94.174" y="237.805" transform="matrix(-1 0.0011 -0.0011 -1 204.985 523.9217)" fill="#FBB041" width="16.339" height="48.429"/>
+	<ellipse transform="matrix(-1 0.0011 -0.0011 -1 205.2956 703.6848)" fill="#A8AAAD" cx="102.447" cy="351.901" rx="76.256" ry="14.23"/>
+	<rect x="94.174" y="237.805" transform="matrix(-1 0.0011 -0.0011 -1 204.985 523.9217)" fill="#FBB041" width="16.339" height="48.429"/>
 </g>
 <rect x="29.772" y="95.257" transform="matrix(0.7047 0.7095 -0.7095 0.7047 149.082 -23.2306)" fill="#2C3A8C" width="145.349" height="144.418"/>
 <g>
