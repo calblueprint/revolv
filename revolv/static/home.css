@@ -5681,11 +5681,20 @@ body {
   .about .main-house {
     margin-top: 254px;
     height: 254px; }
+  .about .solar-panel {
+    position: absolute;
+    height: 50px;
+    top: -50px;
+    left: 50px;
+    margin-left: -25px; }
   .about .house {
-    height: 84px;
-    margin-top: 130px;
-    margin-left: 5%;
-    margin-right: 5%; }
+    height: 84px; }
+  .about .grouping {
+    display: inline-block;
+    position: relative;
+    height: 140px;
+    width: 140px;
+    margin: 140px 20px; }
 
 .donate-button {
   width: 250px;
@@ -5696,7 +5705,8 @@ body {
   background-color: #1bb580;
   border-radius: 5px;
   margin: 0 auto;
-  margin-top: 30px; }
+  margin-top: 30px;
+  margin-bottom: 60px; }
 
 @media only screen and (max-width: 40em) {
   html .top-bar {

@@ -43,38 +43,40 @@
 
 <div 
     data-400="margin-left: -50px;" 
-    data-500="margin-left: 100px;" 
+    data-500="margin-left: 100px;"
+    data-1900="margin-left: 100px;"
+    data-2000="margin-left: -50px;"
     class="nav-spine">
     <div 
         data-500="background-color[begin]: #044E7E;"
-        data-700="background-color[end]: #ADADA9;"
+        data-800="background-color[end]: #ADADA9;"
         class="first nav-spine-item">1</div>
         <figure
             data-500="opacity[sqrt]: 0;" 
-            data-600="opacity[sqrt]: 1;"
-            data-700="opacity[sqrt]: 0;">
+            data-775="opacity[sqrt]: 1;"
+            data-800="opacity[sqrt]: 0;">
             <figcaption>FUNDRAISE</figcaption>
             RE-volv raises money through crowdfunding from amazing people like you.
         </figure>
     <div
-        data-700="background-color[begin]: #044E7E;"
-        data-900="background-color[end]: #ADADA9;"
+        data-800="background-color[begin]: #044E7E;"
+        data-1400="background-color[end]: #ADADA9;"
         class="second nav-spine-item second">2</div>
         <figure
-            data-700="opacity[sqrt]: 0;" 
-            data-800="opacity[sqrt]: 1;"
-            data-900="opacity[sqrt]: 0;">
+            data-800="opacity[sqrt]: 0;" 
+            data-1375="opacity[sqrt]: 1;"
+            data-1400="opacity[sqrt]: 0;">
             <figcaption>INVEST</figcaption>
             We then invest in community-based solar energy projects.
         </figure>
     <div 
-        data-900="background-color[begin]: #044E7E;"
-        data-1100="background-color[end]: #ADADA9;"
+        data-1400="background-color[begin]: #044E7E;"
+        data-1800="background-color[end]: #ADADA9;"
         class="third nav-spine-item third">3</div>
         <figure
-            data-900="opacity[sqrt]: 0;" 
-            data-1000="opacity[sqrt]: 1;"
-            data-1100="opacity[sqrt]: 0;">
+            data-1400="opacity[sqrt]: 0;" 
+            data-1775="opacity[sqrt]: 1;"
+            data-1800="opacity[sqrt]: 0;">
             <figcaption>PAY IT FORWARD</figcaption>
             Finally, we reinvest the money saved to fund more worthy solar energy projects.
         </figure>
@@ -183,12 +185,29 @@
 
         <br>
 
-        <img class="first house" src="{% static "images/house.svg" %}">
-        <img class="second house" src="{% static "images/house.svg" %}">
-        <img class="third house" src="{% static "images/house.svg" %}">
+        <div class="grouping">
+            <img 
+                data-1600="opacity: 0;"
+                data-1800="opacity: 1;"
+                class="solar-panel" src="{% static "images/main-panel.svg" %}">
+            <img class="house" src="{% static "images/house.svg" %}">
+        </div>
 
-        <div class="row infographic"><img src="{% static "images/infographic.jpg" %}"></div>        
+        <div class="grouping">
+            <img 
+                data-1600="opacity: 0;"
+                data-1800="opacity: 1;"
+                class="solar-panel" src="{% static "images/main-panel.svg" %}">
+            <img class="house" src="{% static "images/house.svg" %}">
+        </div>
 
+        <div class="grouping">
+            <img
+                data-1600="opacity: 0;"
+                data-1800="opacity: 1;"
+                class="solar-panel" src="{% static "images/main-panel.svg" %}">
+            <img class="house" src="{% static "images/house.svg" %}">
+        </div>
 
         <h2>Be a part of something great.</h2>
         <div class="donate-button">DONATE NOW</div>
