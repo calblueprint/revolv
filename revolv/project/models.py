@@ -330,7 +330,6 @@ class Project(models.Model):
         )["amount__sum"] or 0.0
         return organic
 
-    # TODO: broken
     @property
     def amount_donated(self):
         """
