@@ -5571,7 +5571,7 @@ body {
   margin-bottom: 0px; }
 
 .cover-image {
-  background: url(/static/images/revolv_cover.jpg);
+  background: url(/static/images/solar-worker-stockphoto.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -5640,33 +5640,52 @@ body {
   .nav-spine figcaption {
     color: #044e7e; }
 
-.about .about-inset {
-  width: 600px;
-  margin: 0 auto;
-  padding: 30px;
-  text-align: center;
-  color: #adada9; }
-  .about .about-inset h1 {
-    font-size: 48px;
-    line-height: 48px;
-    color: #adada9;
-    margin-bottom: 30px; }
-  .about .about-inset h2 {
-    font-size: 36px;
-    line-height: 36px;
+.about {
+  position: relative; }
+  .about .about-inset {
+    width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    text-align: center;
     color: #adada9; }
-  .about .about-inset p {
-    font-size: 20px; }
-.about .person {
-  height: 144px; }
-.about .coin {
-  height: 72px;
-  margin: 0px 12px;
-  margin-bottom: -84px; }
-.about .factory {
-  margin-top: 248px;
-  height: 400px;
-  width: 205px; }
+    .about .about-inset h1 {
+      font-size: 48px;
+      line-height: 48px;
+      color: #adada9;
+      margin-bottom: 30px; }
+    .about .about-inset h2 {
+      font-size: 36px;
+      line-height: 36px;
+      color: #adada9; }
+    .about .about-inset p {
+      font-size: 20px; }
+  .about .person {
+    height: 144px; }
+  .about .coin {
+    height: 72px;
+    margin: 0px 12px;
+    margin-bottom: -84px; }
+  .about .factory {
+    margin-top: 248px;
+    height: 400px;
+    width: 205px; }
+  .about .main-panel {
+    position: absolute;
+    height: 100px;
+    width: 190px;
+    top: 890px;
+    left: 50%;
+    margin-left: -95px;
+    z-index: -1;
+    transform: scale(0.2); }
+  .about .main-house {
+    margin-top: 254px;
+    height: 254px; }
+  .about .house {
+    height: 84px;
+    margin-top: 130px;
+    margin-left: 5%;
+    margin-right: 5%; }
 
 .donate-button {
   width: 250px;

@@ -11,7 +11,6 @@ $header-height: $revolv-header-height;
 $header-page-padding: 20px;
 
 nav.header {
-
     $logo-dimension: $header-height;
     .logo-container {
         display: inline-block;
@@ -38,6 +37,12 @@ nav.header {
     .user-controls > .dropdown a.js-generated {
         display: none;
     }
+
+    /* Overriding Foundation colors */
+    .top-bar-section li:not(.has-form) a:not(.button),
+    .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
+        color: white;
+    }
 }
 
 @media #{$small-only} and (orientation: portrait) {
@@ -49,7 +54,4 @@ nav.header {
 div.nav-bg-wrap {
     background-color: $revolv-header-color;
     opacity: 0.75;
-    a:visited {
-        color: white;
-    }
 }

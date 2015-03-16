@@ -63,7 +63,7 @@ body {
 // --- Cover Image Styles ----------------------------------------------------------------
 
 .cover-image {
-    background: url(/static/images/revolv_cover.jpg);
+    background: url(/static/images/solar-worker-stockphoto.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -155,6 +155,8 @@ body {
 }
 
 .about {
+    position: relative;
+
     .about-inset {
         width: 600px;
         margin: 0 auto;
@@ -194,6 +196,30 @@ body {
         margin-top: 248px;
         height: 400px;
         width: 205px
+    }
+
+    .main-panel {
+        position: absolute;
+        height: 100px;
+        width: 190px;
+        top: 890px;
+        // left: 410px;
+        left: 50%;
+        margin-left: -95px;
+        z-index: -1; 
+        transform: scale(0.2);
+    }
+
+    .main-house {
+        margin-top: 254px;
+        height: 254px;
+    }
+
+    .house {
+        height: 84px;
+        margin-top: 130px;
+        margin-left: 5%;
+        margin-right: 5%;
     }
 }
 

@@ -5620,7 +5620,8 @@ nav.header {
      * Foundation will by default show all the menu items on the movile version
      * of the top bar, but we want to prevent it from showing the user's username
      * at the second level, since they've already clicked on it.
-     */ }
+     */
+  /* Overriding Foundation colors */ }
   nav.header .logo-container {
     display: inline-block;
     margin: 0 20px 0 0; }
@@ -5634,6 +5635,8 @@ nav.header {
       font-weight: 300; }
   nav.header .user-controls > .dropdown a.js-generated {
     display: none; }
+  nav.header .top-bar-section li:not(.has-form) a:not(.button), nav.header .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
+    color: white; }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
   nav.header .tagline {
@@ -5642,8 +5645,6 @@ nav.header {
 div.nav-bg-wrap {
   background-color: #044e7e;
   opacity: 0.75; }
-  div.nav-bg-wrap a:visited {
-    color: white; }
 
 .dash-box {
   background-color: #e9f6fc;
