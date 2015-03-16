@@ -1,7 +1,9 @@
 import datetime
 import json
 
+import factory
 import mock
+from django.db.models import signals
 from django.test import TestCase
 from django_webtest import WebTest
 from revolv.base.tests.tests import TestUserMixin
@@ -34,6 +36,7 @@ class ProjectTests(TestCase):
         entry = Project.objects.all().filter(location="San Francisco")[0]
         self.assertEqual(entry.mission_statement, "Blueprint!")
 
+    @factory.django.mute_signals(signals.pre_init, signals.post_save)
     def test_aggregate_donations(self):
         """Test that project.amount_donated works."""
         project = Project.factories.base.create(funding_goal=200.0, amount_donated=0.0, amount_left=200.0)
@@ -43,8 +46,8 @@ class ProjectTests(TestCase):
         self.assertEqual(project.amount_left, 150.0)
 
         Payment.factories.donation.create(project=project, amount=25.5)
-        AdminReinvestment.factories.base.create(project=project, amount=25.0, test_obj=True)
-        AdminReinvestment.factories.base.create(project=project, amount=10.0, test_obj=True)
+        AdminReinvestment.factories.base.create(project=project, amount=25.0)
+        AdminReinvestment.factories.base.create(project=project, amount=10.0)
         self.assertEqual(project.amount_donated, 110.5)
         self.assertEqual(project.amount_left, 200.0 - 110.5)
         self.assertEqual(project.rounded_amount_left, int(200.0 - 110.5))

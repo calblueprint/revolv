@@ -1,4 +1,5 @@
-from django.db.models import Sum
+import factory
+from django.db.models import Sum, signals
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
@@ -21,16 +22,17 @@ class PaymentTest(TestCase):
             project = Project.factories.base.create()
         return AdminRepayment(amount=amount, admin=admin, project=project)
 
-    def _create_admin_reinvestment(self, admin, amount, project=None, test_obj=False):
+    def _create_admin_reinvestment(self, admin, amount, project=None):
         if project is None:
             project = Project.factories.base.create()
-        return AdminReinvestment(amount=amount, admin=admin, project=project, test_obj=test_obj)
+        return AdminReinvestment(amount=amount, admin=admin, project=project)
 
     def test_payment_create(self):
         """Verify that the payment can be created."""
         user = RevolvUserProfile.factories.base.create()
         Payment.factories.base.create(user=user, entrant=user)
 
+    @factory.django.mute_signals(signals.pre_init, signals.post_save)
     def test_total_distinct_organic_donors(self):
         """Verify that we can correctly get the total number of distinct donors to any project."""
         user1, user2, user3, admin = RevolvUserProfile.factories.base.create_batch(4)
@@ -40,7 +42,7 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.total_distinct_organic_donors(), 1)
 
         self._create_payment(user1).save()
-        self._create_admin_reinvestment(admin, 100.00, test_obj=True).save()
+        self._create_admin_reinvestment(admin, 100.00).save()
         self._create_admin_repayment(admin).save()
 
         self.assertEquals(Payment.objects.total_distinct_organic_donors(), 1)

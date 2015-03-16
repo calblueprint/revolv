@@ -37,7 +37,6 @@ class AdminRepayment(models.Model):
     project = models.ForeignKey("project.Project")
 
     created_at = models.DateTimeField(auto_now_add=True)
-    linked_to_users = models.BooleanField(default=False)
 
     objects = AdminRepaymentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminRepaymentFactories")
@@ -84,8 +83,6 @@ class AdminReinvestment(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    test_obj = models.BooleanField(default=False)
-
     objects = AdminReinvestmentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminReinvestmentFactories")
 
@@ -98,8 +95,6 @@ def preInitAdminReinvestment(**kwargs):
     init_kwargs = kwargs.get('kwargs')
     if not init_kwargs:
         raise NotEnoughFundingException()
-    if init_kwargs.get('test_obj'):
-        return
     invest_amount = init_kwargs.get('amount') or 0.0
 
     global_repay_amount = AdminRepayment.objects.aggregate(
@@ -122,8 +117,6 @@ def postSaveAdminReinvestment(**kwargs):
     !!! TODO: prioritize users by preference
     """
     instance = kwargs.get('instance')
-    if instance.test_obj:
-        return
     total_left = instance.amount
     pending_reinvestors = []
     for user in RevolvUserProfile.objects.filter(reinvest_pool__gt=0.0):
