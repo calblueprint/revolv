@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -413,3 +414,12 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class DonationLevel(models.Model):
+    project = models.ForeignKey(Project)
+    description = models.CharField(max_length=200)
+    amount = models.DecimalField(
+        max_digits=15,
+        decimal_places=2
+    )
