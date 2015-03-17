@@ -5615,7 +5615,6 @@ body {
   top: 0px;
   width: 5px;
   height: 450px;
-  margin-left: 100px;
   margin-top: 100px;
   background-color: #adada9; }
   .nav-spine .nav-spine-item {
@@ -5638,7 +5637,8 @@ body {
     height: 200px;
     width: 200px; }
   .nav-spine figcaption {
-    color: #044e7e; }
+    color: #044e7e;
+    font-size: 24px; }
 
 .about {
   position: relative; }
