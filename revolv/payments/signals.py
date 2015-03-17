@@ -3,7 +3,23 @@ from django.dispatch import receiver
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType, Repayment)
-from revolv.payments.utils import NotEnoughFundingException
+from revolv.payments.utils import (NotEnoughFundingException,
+                                   ProjectNotCompleteException)
+
+
+@receiver(signals.pre_init, sender=AdminRepayment)
+def pre_init_admin_repayment(**kwargs):
+    """
+    Make sure that related project is indeed complete, else throw a
+    ProjectNotCompleteException and to disallow instantiation of an invalid
+    AdminRepayment.
+    """
+    init_kwargs = kwargs.get('kwargs')
+    if not init_kwargs:
+        raise NotEnoughFundingException()
+    project = init_kwargs.get('project')
+    if not project.is_completed:
+        raise ProjectNotCompleteException()
 
 
 @receiver(signals.post_save, sender=AdminRepayment)

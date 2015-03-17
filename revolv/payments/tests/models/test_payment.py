@@ -4,6 +4,7 @@ from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType, Repayment)
+from revolv.payments.utils import ProjectNotCompleteException
 from revolv.project.models import Project
 
 
@@ -62,7 +63,7 @@ class PaymentTest(TestCase):
         Verify that we can create payments of any type and associate them to
         users.
         """
-        user1, user2 = RevolvUserProfile.factories.base.create_batch(3)
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
 
         self._create_payment(user1).save()
         self._create_payment(user1, payment_type=self.reinvestment).save()
@@ -112,11 +113,23 @@ class PaymentTest(TestCase):
         self.assertEquals(project.proportion_donated(user2), 10.0 / 40.0)
         self.assertEquals(project.proportion_donated(user1), 30.0 / 40.0)
 
+        project.complete_project()  # must complete project before repayment
+
         self._create_admin_repayment(admin1, 100.00, project).save()
         self._create_admin_reinvestment(admin1, 100.00, project).save()
         self.assertEquals(Payment.objects.donations(project=project).count(), 2)
         self.assertEquals(project.proportion_donated(user2), 10.0 / 40.0)
         self.assertEquals(project.proportion_donated(user1), 30.0 / 40.0)
+
+    def test_bad_repayment(self):
+        """
+        Test that we can't make a repayment on a not-completed project.
+        """
+        project = Project.factories.base.create()
+        admin = RevolvUserProfile.factories.admin.create()
+        self.assertRaises(ProjectNotCompleteException,
+                          self._create_admin_repayment(admin, 100.00, project)
+                          )
 
     def test_repayment(self):
         """

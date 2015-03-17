@@ -42,6 +42,10 @@ class AdminRepayment(models.Model):
     effectively erasing any trace of the repayment.
 
     ::Signals::
+    pre_init
+        Make sure that related project is indeed complete, else throw a
+        ProjectNotCompleteException and to disallow instantiation of an invalid
+        AdminRepayment.
     post_save
         When an AdminRepayment is saved, a Repayment is generated for all
         donors to a project, each weighed by that donor's proportion of the
@@ -260,8 +264,11 @@ class PaymentManager(models.Manager):
 
     def total_distinct_organic_donors(self, queryset=None):
         """
-        :return: The total number of organic donors that have ever donated to a
+        :return:
+            The total number of organic donors that have ever donated to a
             RE-volv project. Useful for displaying stats on the homepage.
+            Organic donors are donors that have made a non-reinvestment type
+            payment to this project.
         """
         if queryset is None:
             queryset = self.donations()
