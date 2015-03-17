@@ -1,0 +1,28 @@
+{% comment %}
+    Dashboard Sidebar
+
+    This is a partial for the sidebar of the RE-volv dashboard design (mockup can be seen at
+    https://cloud.githubusercontent.com/assets/7706852/6608266/b4c8fdd8-c802-11e4-9610-939a5f9f5dd9.png).
+    This partial accepts the following template variables:
+
+    :user: the currently logged in user. The user will always be logged in, since if they're
+           seeing this page then they have bypassed the functionality which redirects to the
+           homepage for unauthenticated users.
+
+    The idea for the sidebar is that there is an area at the top where the user can switch between
+    different user types, if applicable, can see the projects which are relevant to their role, and can also
+    see management pages (for example admin accounting page) below. The point of this template is to
+    conditionally render all of these partials and things based on what type of user the current user is.
+{% endcomment %}
+<div class="medium-2 columns dashboard-sidebar">
+    <div class="role-select">
+        {% if user.revolvuserprofile.is_administrator %}
+            <div class="role-select-inner">administrator</div>
+        {% elif user.revolvuserprofile.is_ambasassador %}
+            <div class="role-select-inner">ambassador</div>
+        {% else %}
+            <div class="role-select-inner">donor</div>
+        {% endif %}
+        <div class="dashboard-sidebar-chevron"><i class="fa fa-chevron-down"></i></div>
+    </div>
+</div>

@@ -17,6 +17,7 @@ module.exports = function(grunt) {
           'revolv/static/home.css': 'revolv/static/home.scss',
           'revolv/static/signin.css': 'revolv/static/signin.scss',
           'revolv/static/project.css': 'revolv/static/project.scss',
+          'revolv/static/dashboard.css': 'revolv/static/dashboard.scss',
         }
       }
     },
@@ -36,4 +37,4 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['sass']);
   grunt.registerTask('default', ['build','watch']);
-}
+};

@@ -1,7 +1,6 @@
 from itertools import chain
 
 from django.views.generic import TemplateView
-
 from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
 from revolv.project.models import Project
@@ -10,7 +9,7 @@ from revolv.project.models import Project
 class AdministratorDashboardView(UserDataMixin, TemplateView):
     """Basic view for the Administrator dashboard. Shows the list of projects.
     """
-    template_name = 'administrator/dashboard.html'
+    template_name = 'base/dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super(AdministratorDashboardView, self).get_context_data(**kwargs)

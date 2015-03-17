@@ -1,0 +1,59 @@
+{% load cms_tags sekizai_tags %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}RE-volv - Dashboard{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta %}
+    {% endblock %}
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static "dashboard.css" %}" />
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    {% render_block "css" %}
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    {% cms_toolbar %}
+
+    <div class='row main-row'>
+        {% include "base/partials/dashboard_sidebar.html" with user=user %}
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+    {% block body-bottom %}
+    {% endblock %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/js/foundation.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+
+    {% if messages %}
+        <script>
+            toastr.options.positionClass = "toast-bottom-right";
+        </script>
+        {% for message in messages %}
+        <script>
+            toastr.{{ message.tags }}('{{ message }}')
+        </script>
+        {% endfor %}
+    {% endif %}
+
+    {% render_block "js" %}
+    {% block javascripts %}
+    {% endblock %}
+</body>
+
+</html>
+
+
