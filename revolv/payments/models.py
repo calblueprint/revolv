@@ -273,6 +273,9 @@ class Payment(models.Model):
     """
     Abstraction indicating one particular payment.
 
+    A Payment represents only money flowing from a user to a project, not the
+    other way around. Repayment is a separate model representing the reverse.
+
     ::Signals::
     post_save
         If the payment is organic, we add this payment's user as a donor

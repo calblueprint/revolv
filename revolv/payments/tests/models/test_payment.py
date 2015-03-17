@@ -28,13 +28,18 @@ class PaymentTest(TestCase):
         return AdminReinvestment(amount=amount, admin=admin, project=project)
 
     def test_payment_create(self):
-        """Verify that the payment can be created."""
+        """
+        Verify that the payment can be created.
+        """
         user = RevolvUserProfile.factories.base.create()
         Payment.factories.base.create(user=user, entrant=user)
 
     @factory.django.mute_signals(signals.pre_init, signals.post_save)
     def test_total_distinct_organic_donors(self):
-        """Verify that we can correctly get the total number of distinct donors to any project."""
+        """
+        Verify that we can correctly get the total number of distinct organic
+        donors to any project.
+        """
         user1, user2, user3, admin = RevolvUserProfile.factories.base.create_batch(4)
 
         self.assertEquals(Payment.objects.total_distinct_organic_donors(), 0)
@@ -53,8 +58,11 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.total_distinct_organic_donors(), 3)
 
     def test_payments(self):
-        """Verify that we can create payments of any type and associate them to users."""
-        user1, user2, admin = RevolvUserProfile.factories.base.create_batch(3)
+        """
+        Verify that we can create payments of any type and associate them to
+        users.
+        """
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(3)
 
         self._create_payment(user1).save()
         self._create_payment(user1, payment_type=self.reinvestment).save()
@@ -65,7 +73,9 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.payments(user2).count(), 1)
 
     def test_donations(self):
-        """Test that we can bookkeep organic donation information."""
+        """
+        Test that we can bookkeep organic donation information.
+        """
         user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
         project2 = Project.factories.base.create()
 
@@ -81,8 +91,14 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.donations(user2).count(), 0)
 
     def test_proportion_donated(self):
-        """Verify that repayment proportions are correct."""
-        user1, user2, admin1 = RevolvUserProfile.factories.base.create_batch(3)
+        """
+        Verify that donation proportions are calculated correctly.
+        For user U, project P the proportion that a user has donated is:
+
+            Sum of U's donations to P / Total organic donation amount to P
+        """
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
+        admin1 = RevolvUserProfile.factories.admin.create()
         project = Project.factories.base.create()
 
         self.assertEquals(Payment.objects.donations(project=project).count(), 0)
@@ -103,12 +119,12 @@ class PaymentTest(TestCase):
         self.assertEquals(project.proportion_donated(user1), 30.0 / 40.0)
 
     def test_repayment(self):
-        """Test repayment bookkeeping."""
-        admin1, admin2 = RevolvUserProfile.factories.base.create_batch(2)
-        admin1.make_administrator()
-        admin2.make_administrator()
-
+        """
+        Test repayment bookkeeping. Lots of moving parts and relations,
+        see docstrings for respective models for info.
+        """
         user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
+        admin1, admin2 = RevolvUserProfile.factories.admin.create_batch(2)
         project1, project2 = Project.factories.base.create_batch(2)
 
         self._create_payment(user1, amount=10.00, project=project1).save()
@@ -177,7 +193,7 @@ class PaymentTest(TestCase):
 
     def test_user_reinvestment(self):
         """
-        Test reinvestment on Payment level.
+        Test reinvestment on single Payment level.
         """
         user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
 
@@ -192,9 +208,11 @@ class PaymentTest(TestCase):
 
     def test_admin_reinvestment(self):
         """
-        Test reinvestment on AdminReinvestment level.
+        Test reinvestment on AdminReinvestment level. Lots of moving parts,
+        see docstrings for respective models for info.
         """
-        user1, user2, admin1 = RevolvUserProfile.factories.base.create_batch(3)
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
+        admin1 = RevolvUserProfile.factories.admin.create()
         project1, project2 = Project.factories.base.create_batch(2)
 
         self._create_payment(user1, amount=25.00, project=project1).save()
