@@ -128,7 +128,8 @@ class PaymentTest(TestCase):
         project = Project.factories.base.create()
         admin = RevolvUserProfile.factories.admin.create()
         self.assertRaises(ProjectNotCompleteException,
-                          self._create_admin_repayment(admin, 100.00, project)
+                          self._create_admin_repayment,
+                          admin, 100.00, project  # *args
                           )
 
     def test_repayment(self):

@@ -89,6 +89,7 @@ class ProjectTests(TestCase):
         """Test that we calculate the amount repaied on a project correctly."""
         project = Project.factories.base.create(funding_goal=200.0)
         self.assertEqual(project.amount_repaid, 0.0)
+        project.complete_project()  # must complete project to make repayments
         AdminRepayment.factories.base.create(project=project, amount=50)
         self.assertEqual(project.amount_repaid, 50.0)
         AdminRepayment.factories.base.create(project=project, amount=60)
