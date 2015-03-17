@@ -29,8 +29,8 @@ class CreateProjectView(CreateView):
     def get_success_url(self):
         return reverse('ambassador:dashboard')
 
+    # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-
         context = self.get_context_data()
         formset = context['formset']
         if formset.is_valid():
@@ -49,6 +49,7 @@ class CreateProjectView(CreateView):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['valid_categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        # Adds the ProjectFormSet for creating donation levels with the project
         if self.request.POST:
             context['formset'] = forms.ProjectFormSet(self.request.POST)
         else:
@@ -76,6 +77,7 @@ class UpdateProjectView(UpdateView):
         messages.success(self.request, 'Project details updated')
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
+    # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
         context = self.get_context_data()
         formset = context['formset']
@@ -92,6 +94,7 @@ class UpdateProjectView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
         context['valid_categories'] = Category.valid_categories
+        # Adds the ProjectFormSet, sets the instance to the current object.
         if self.request.POST:
             context['formset'] = forms.ProjectFormSet(self.request.POST, instance=self.object)
         else:

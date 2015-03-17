@@ -86,4 +86,4 @@ class DonationLevelForm(forms.ModelForm):
     class Meta:
         model = DonationLevel
 
-ProjectFormSet = inlineformset_factory(Project, DonationLevel)
+ProjectFormSet = inlineformset_factory(Project, DonationLevel, extra=2)

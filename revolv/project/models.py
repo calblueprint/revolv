@@ -398,6 +398,10 @@ class Project(models.Model):
 
 
 class Category(models.Model):
+    """
+    Categories that a project is associated with. Categories are predefined,
+    and as of now, loaded through fixtures.
+    """
     HEALTH = 'Health'
     ARTS = 'Arts'
     FAITH = 'Faith'
@@ -417,6 +421,9 @@ class Category(models.Model):
 
 
 class DonationLevel(models.Model):
+    """
+    Model to track donation levels and perks for projects.
+    """
     project = models.ForeignKey(Project)
     description = models.CharField(max_length=200)
     amount = models.DecimalField(
