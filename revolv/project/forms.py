@@ -1,5 +1,7 @@
 from django import forms
-from models import Category, Project
+from django.forms.models import inlineformset_factory
+
+from models import Category, DonationLevel, Project
 
 
 class ProjectForm(forms.ModelForm):
@@ -74,3 +76,14 @@ class PostFundingUpdateForm(forms.ModelForm):
             'post_funding_updates',
             'solar_url',
         )
+
+
+class DonationLevelForm(forms.ModelForm):
+    """
+    A form that is used as part of the formset for creating projects with associated
+    donation levels.
+    """
+    class Meta:
+        model = DonationLevel
+
+ProjectFormSet = inlineformset_factory(Project, DonationLevel)

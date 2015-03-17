@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
+
 from revolv.base.users import UserDataMixin
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
@@ -29,9 +30,18 @@ class CreateProjectView(CreateView):
         return reverse('ambassador:dashboard')
 
     def form_valid(self, form):
-        new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
-        new_project.update_categories(form.cleaned_data['categories_select'])
-        messages.success(self.request, new_project.title + ' has been created!')
+
+        context = self.get_context_data()
+        formset = context['formset']
+        if formset.is_valid():
+            new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+            new_project.update_categories(form.cleaned_data['categories_select'])
+            formset.instance = new_project
+            formset.save()
+            messages.success(self.request, new_project.title + ' has been created!')
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
         return super(CreateProjectView, self).form_valid(form)
 
     # sets context to be the create view, doesn't pass in the id
@@ -39,6 +49,10 @@ class CreateProjectView(CreateView):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['valid_categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        if self.request.POST:
+            context['formset'] = forms.ProjectFormSet(self.request.POST)
+        else:
+            context['formset'] = forms.ProjectFormSet()
         return context
 
 
@@ -63,14 +77,25 @@ class UpdateProjectView(UpdateView):
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     def form_valid(self, form):
-        project = self.get_object()
-        project.update_categories(form.cleaned_data['categories_select'])
+        context = self.get_context_data()
+        formset = context['formset']
+        if formset.is_valid():
+            project = self.get_object()
+            project.update_categories(form.cleaned_data['categories_select'])
+            formset.instance = project
+            formset.save()
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
         return super(UpdateProjectView, self).form_valid(form)
 
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
         context['valid_categories'] = Category.valid_categories
+        if self.request.POST:
+            context['formset'] = forms.ProjectFormSet(self.request.POST, instance=self.object)
+        else:
+            context['formset'] = forms.ProjectFormSet(instance=self.object)
         return context
 
 
