@@ -71,12 +71,9 @@
                             {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.description %}
                             {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.amount %}
                             {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.DELETE %}
-                            <!-- {{ donation_level_form.DELETE }} -->
-                            <!-- {{ donation_level_form }} -->
                             {% for hidden in donation_level_form.hidden_fields %}
                                 {{ hidden }}
                             {% endfor %}
-                            <!-- {{ donation_level_form.id }} -->
                         </div>
                     {% endfor %}
                 </div>
