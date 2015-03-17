@@ -1,16 +1,10 @@
 from django.db import models
-from django.db.models import signals
-from django.dispatch import receiver
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
 
 PAYTYPE_PAYPAL = 'paypal'
 PAYTYPE_CHECK = 'check'
 PAYTYPE_REINVESTMENT = 'reinvestment'
-
-
-class NotEnoughFundingException(Exception):
-    pass
 
 
 class AdminRepaymentManager(models.Manager):
@@ -42,22 +36,6 @@ class AdminRepayment(models.Model):
     factories = ImportProxy("revolv.payments.factories", "AdminRepaymentFactories")
 
 
-@receiver(signals.post_save, sender=AdminRepayment)
-def postSaveAdminRepayment(**kwargs):
-    """
-    When an AdminRepayment is saved, a Repayment is generated for all donors
-    to a project.
-    """
-    instance = kwargs.get('instance')
-    for donor in instance.project.donors.all():
-        repayment = Repayment(user=donor,
-                              project=instance.project,
-                              admin_repayment=instance,
-                              amount=(instance.project.proportion_donated(donor) * instance.amount),
-                              )
-        repayment.save()
-
-
 class AdminReinvestmentManager(models.Manager):
     def reinvestments(self, admin=None, project=None, queryset=None):
         """
@@ -85,55 +63,6 @@ class AdminReinvestment(models.Model):
 
     objects = AdminReinvestmentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminReinvestmentFactories")
-
-
-@receiver(signals.pre_init, sender=AdminReinvestment)
-def preInitAdminReinvestment(**kwargs):
-    """
-    Raises a NotEnoughFundingException if there is not enough money to reinvest
-    """
-    init_kwargs = kwargs.get('kwargs')
-    if not init_kwargs:
-        raise NotEnoughFundingException()
-    invest_amount = init_kwargs.get('amount') or 0.0
-
-    global_repay_amount = AdminRepayment.objects.aggregate(
-        models.Sum('amount')
-    )['amount__sum'] or 0.0
-    global_reinvest_amount = AdminReinvestment.objects.aggregate(
-        models.Sum('amount')
-    )['amount__sum'] or 0.0
-    global_reinvest_pool = global_repay_amount - global_reinvest_amount
-    if global_reinvest_pool - invest_amount < 0.0:
-        raise NotEnoughFundingException()
-
-
-@receiver(signals.post_save, sender=AdminReinvestment)
-def postSaveAdminReinvestment(**kwargs):
-    """
-    When an AdminReinvestment is saved, we pool as many donors as we need to
-    fund the reinvestment
-
-    !!! TODO: prioritize users by preference
-    """
-    instance = kwargs.get('instance')
-    total_left = instance.amount
-    pending_reinvestors = []
-    for user in RevolvUserProfile.objects.filter(reinvest_pool__gt=0.0):
-        total_left -= user.reinvest_pool
-        reinvest_amount = user.reinvest_pool + min(0.0, total_left)
-        pending_reinvestors.append((user, reinvest_amount))
-        if total_left <= 0.0:
-            break
-    for (user, amount) in pending_reinvestors:
-        reinvestment = Payment(user=user,
-                               project=instance.project,
-                               entrant=instance.admin,
-                               payment_type=PaymentType.objects.get_reinvestment(),
-                               admin_reinvestment=instance,
-                               amount=amount
-                               )
-        reinvestment.save()
 
 
 class PaymentTypeManager(models.Manager):
@@ -205,28 +134,6 @@ class Repayment(models.Model):
     factories = ImportProxy("revolv.payments.factories", "RepaymentFactories")
 
 
-@receiver(signals.post_save, sender=Repayment)
-def postSaveRepayment(**kwargs):
-    """
-    When a Repayment is saved, we increment the reinvest_pool in the related
-    user
-    """
-    instance = kwargs.get('instance')
-    instance.user.reinvest_pool += instance.amount
-    instance.user.save()
-
-
-@receiver(signals.pre_delete, sender=Repayment)
-def preDeleteRepayment(**kwargs):
-    """
-    Before a Repayment is deleted, we decrement the reinvest_pool in the related
-    user
-    """
-    instance = kwargs.get('instance')
-    instance.user.reinvest_pool -= instance.amount
-    instance.user.save()
-
-
 class PaymentManager(models.Manager):
     """
     Simple manager for the Payment model.
@@ -293,31 +200,3 @@ class Payment(models.Model):
 
     objects = PaymentManager()
     factories = ImportProxy("revolv.payments.factories", "PaymentFactories")
-
-
-@receiver(signals.post_save, sender=Payment)
-def postSavePayment(**kwargs):
-    """
-    When a Payment is saved, if it is a reinvestment, we decrement the
-    reinvest_pool in the related user
-    """
-    instance = kwargs.get('instance')
-    if instance.payment_type == PaymentType.objects.get_paypal():
-        instance.project.donors.add(instance.user)
-    elif instance.payment_type == PaymentType.objects.get_reinvestment():
-        instance.user.reinvest_pool -= instance.amount
-        instance.user.save()
-
-
-@receiver(signals.pre_delete, sender=Payment)
-def preDeletePayment(**kwargs):
-    """
-    Before a Payment is deleted, if it is a reinvestment, we increment the
-    reinvest_pool in the related user
-    """
-    instance = kwargs.get('instance')
-    if instance.payment_type == PaymentType.objects.get_paypal():
-        instance.project.donors.remove(instance.user)
-    elif instance.payment_type == PaymentType.objects.get_reinvestment():
-        instance.user.reinvest_pool += instance.amount
-        instance.user.save()
