@@ -396,6 +396,10 @@ class Project(models.Model):
     def categories(self):
         return [category.title for category in self.category_set.all()]
 
+    @property
+    def donation_levels(self):
+        return DonationLevel.objects.filter(project_id=self.id).values()
+
 
 class Category(models.Model):
     """
