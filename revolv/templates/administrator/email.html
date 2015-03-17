@@ -1,0 +1,43 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+    <a href="{% url "donor:dashboard" %}">
+        <div class='medium primary dashboard-button button'>Donor Dashboard</div>
+    </a>
+    {% if user.revolvuserprofile.is_administrator %}
+    <a href="{% url "administrator:dashboard" %}">
+        <div class='medium active dashboard-button button'>Administrator Dashboard</div>
+    </a>
+    {% endif %}
+    {% if user.revolvuserprofile.is_ambassador %}
+    <a href="{% url "ambassador:dashboard" %}">
+        <div class='medium primary dashboard-button button'>Ambassador Dashboard</div>
+    </a>
+    {% endif %}
+</div>
+
+<div class='row text-center'>
+    <a href="{%url "administrator:dashboard" %}">
+        <div class='small primary administrator-button button'>Projects</div>
+    </a>
+    <div class='small primary administrator-button button'>Repayment</div>
+    <div class='small primary administrator-button button'>Ambassadors</div>
+    <a href="{%url "administrator:email" %}">
+        <div class='small active administrator-button button'>Emails</div>
+    </a>
+</div>
+
+<div class='row'>
+    <div class="small-12 columns">
+        <a class="button" href="{% url "administrator:emailcsv" %}">Download as CSV</a>
+        <h4>Newsletter Subscribers</h4>
+        <textarea rows="15">{% for email in subscribed_user_emails %}{{ email }}&#13;&#10;{% endfor %}</textarea>
+    </div>
+</div>
+
+{% endblock %}

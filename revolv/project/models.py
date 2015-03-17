@@ -3,10 +3,11 @@ from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
-
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
+from revolv.lib.utils import ImportProxy
+from revolv.payments.models import Payment
 
 
 class ProjectManager(models.Manager):
@@ -144,6 +145,12 @@ class Project(models.Model):
         max_length=255,
         help_text='How would you like to title this project?'
     )
+    tagline = models.CharField(
+        max_length=100,
+        null=True,
+        blank=False,
+        help_text='Select a short tag line that describes this project. (No more than 100 characters.)'
+    )
     video_url = models.URLField(
         'Video URL',
         max_length=255,
@@ -191,7 +198,7 @@ class Project(models.Model):
         default=DRAFTED
     )
     cover_photo = ProcessedImageField(
-        upload_to='covers',
+        upload_to='covers/',
         processors=[ResizeToFill(1200, 500)],
         format='JPEG',
         options={'quality': 80},
@@ -230,11 +237,6 @@ class Project(models.Model):
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)
-    amount_repaid = models.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        default=0.0
-    )
     internal_rate_return = models.DecimalField(
         'Internal Rate of Return',
         max_digits=6,
@@ -254,6 +256,7 @@ class Project(models.Model):
     annual_solar_data = models.FileField(null=True, upload_to="projects/annual/")
 
     objects = ProjectManager()
+    factories = ImportProxy("revolv.project.factories", "ProjectFactories")
 
     def has_owner(self, ambassador):
         return self.ambassador == ambassador
@@ -283,6 +286,19 @@ class Project(models.Model):
         self.save()
         return self
 
+    def update_categories(self, category_list):
+        """ Updates the categories list for the project.
+
+        :category_list The list of categories in the submitted form
+        """
+        # Clears all the existing categories
+        self.category_set.clear()
+
+        # Adds the list of categories to the project
+        for category in category_list:
+            category_object = Category.objects.get(title=category)
+            self.category_set.add(category_object)
+
     def get_absolute_url(self):
         return reverse("project:view", kwargs={"pk": str(self.pk)})
 
@@ -292,9 +308,9 @@ class Project(models.Model):
         :return: the current total amount that has been donated to this project,
             as a float
         """
-        result = self.donation_set.aggregate(
-            models.Sum('payment_transaction__amount')
-        )["payment_transaction__amount__sum"]
+        result = Payment.objects.donations(project=self).aggregate(
+            models.Sum('amount')
+        )["amount__sum"]
         if result is None:
             return 0.0
         return result
@@ -309,6 +325,13 @@ class Project(models.Model):
         if amt_left < 0:
             return 0.0
         return amt_left
+
+    @property
+    def amount_repaid(self):
+        """
+        :return: the current amount of money repaid by the project to RE-volv.
+        """
+        return Payment.objects.repayments(project=self).aggregate(models.Sum('amount'))["amount__sum"] or 0.0
 
     @property
     def rounded_amount_left(self):
@@ -368,7 +391,25 @@ class Project(models.Model):
     def is_completed(self):
         return self.project_status == Project.COMPLETED
 
+    @property
+    def categories(self):
+        return [category.title for category in self.category_set.all()]
+
 
 class Category(models.Model):
+    HEALTH = 'Health'
+    ARTS = 'Arts'
+    FAITH = 'Faith'
+    EDUCATION = 'Education'
+    COMMUNITY = 'Community'
+    GEOGRAPHIC = 'Geographic'
+
+    valid_categories = [HEALTH, ARTS, FAITH, EDUCATION, COMMUNITY, GEOGRAPHIC]
+
+    factories = ImportProxy("revolv.project.factories", "CategoryFactories")
+
     title = models.CharField(max_length=50, unique=True)
     projects = models.ManyToManyField(Project)
+
+    def __unicode__(self):
+        return self.title

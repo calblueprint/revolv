@@ -14,7 +14,8 @@
         "about_me": null,
         "new_token_required": false,
         "raw_data": null,
-        "website_url": null
+        "website_url": null,
+        "subscribed_to_newsletter": "False"
     },
     "model": "base.revolvuserprofile",
     "pk": 1
@@ -34,7 +35,8 @@
         "about_me": null,
         "new_token_required": false,
         "raw_data": null,
-        "website_url": null
+        "website_url": null,
+        "subscribed_to_newsletter": "True"
     },
     "model": "base.revolvuserprofile",
     "pk": 2
@@ -54,7 +56,8 @@
         "about_me": null,
         "new_token_required": false,
         "raw_data": null,
-        "website_url": null
+        "website_url": null,
+        "subscribed_to_newsletter": "True"
     },
     "model": "base.revolvuserprofile",
     "pk": 3

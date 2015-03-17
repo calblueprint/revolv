@@ -22,14 +22,11 @@ class CreditCardDonationFormTestCase(TestCase):
         self.assertTrue(cc_form.is_valid())
 
     @mock.patch('revolv.payments.forms.PaymentService')
-    @mock.patch('revolv.payments.forms.DonationService')
-    def test_form_process_payment(self, mock_donation_service, mock_payment_service):
+    def test_form_process_payment(self, mock_payment_service):
         """Verify that we can process a payment with the form."""
         # Setup mocks
         mock_pt = mock.Mock()
         mock_payment_service.create_payment.return_value = mock_pt
-        mock_donation = mock.Mock()
-        mock_donation_service.link_donation.return_value = mock_donation
 
         cc_form = CreditCardDonationForm({
             'type': 'visa',
@@ -45,9 +42,8 @@ class CreditCardDonationFormTestCase(TestCase):
         # Test the payment
         mock_project = mock.Mock()
         self.assertEquals(
-            mock_donation,
+            mock_pt,
             cc_form.process_payment(mock_project, mock_pt)
         )
 
         self.assertTrue(mock_payment_service.create_payment.called)
-        self.assertTrue(mock_donation_service.link_donation.called)

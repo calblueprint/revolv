@@ -20,41 +20,94 @@
     </a>
     {% endif %}
 </div>
+
+<div class='row text-center'>
+    <a href="{%url "administrator:dashboard" %}">
+        <div class='small active administrator-button button'>Projects</div>
+    </a>
+    <div class='small primary administrator-button button'>Repayment</div>
+    <div class='small primary administrator-button button'>Ambassadors</div>
+    <a href="{%url "administrator:email" %}">
+        <div class='small primary administrator-button button'>Emails</div>
+    </a>
+</div>
+
 <div class='row'>
     <div class='small-3 columns dash-box'>
-        <h4 class='subheader text-center'>Proposed Projects</h4>
         <dl class="tabs vertical-dash" data-tab>
-            {% for project in proposed_projects %}
-                {% if project == proposed_projects.first %}
-                    <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
-                {% else %}
-                    <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
-                {% endif %}
+            {% for project in all_projects %}
+            {% if project in drafted_projects and project == drafted_projects.first %}
+            <h4 class='subheader text-center'>Drafted Projects</h4>
+            {% elif project in proposed_projects and project == proposed_projects.first %}
+            <h4 class='subheader text-center'>Proposed Projects</h4>
+            {% elif project in active_projects and project == active_projects.first %}
+            <h4 class='subheader text-center'>Active Projects</h4>
+            {% elif project in completed_projects and project == completed_projects.first %}
+            <h4 class='subheader text-center'>Completed Projects</h4>
+            {% endif %}
+            {% if project.id == active_project %}
+            <dd class="active proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+            {% else %}
+            <dd class="proj-button"><a href="#proj{{project.id}}">{{ project.title }}</a></dd>
+            {% endif %}
             {% endfor %}
         </dl>
     </div>
     <div class='small-9 columns dash-box right'>
         <div class="tabs-content">
-            {% for project in proposed_projects %}
-                {% if project == proposed_projects.first %}
-                    <div class="content active" id="proj{{project.id}}">
+            {% for project in all_projects %}
+                {% if project.id == active_project %}
+                <div class="content active" id="proj{{project.id}}">
                 {% else %}
-                    <div class="content" id="proj{{project.id}}">
+                <div class="content" id="proj{{project.id}}">
                 {% endif %}
                     <div class="small-9 columns">
                         <div class="row">
                             <div class="small-12 columns">
                                 <h3><a href="{% url "project:review" project.pk %}"> {{ project.title }}</a></h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="small-12 columns">
                                 <h4>{{ project.org_name }}</h4>
                             </div>
                         </div>
                         <div class="row">
+                            <div class="small-6 columns">
+                                <p>
+                                    <strong>Amount Donated:</strong> {{ project.amount_donated }}
+                                    <br>
+                                    <strong>Funding Goal:</strong> {{ project.funding_goal }}
+                                </p>
+                            </div>
+                            <div class="small-6 columns">
+                                <p>
+                                    <strong>Amount Repaid:</strong> {{ project.amount_repaid }}
+                                    <br>
+                                    <strong>IRR:</strong> {{ project.internal_rate_return }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="small-12 columns">
-                                <p> {{ project.mission_statement }} </p>
+                                <form enctype="multipart/form-data" method="POST" action="{% url "project:review" project.pk %}">
+                                    {% csrf_token %}
+                                    <ul class="button-group nav-tab-button-group">
+                                        {% if project.is_drafted %}
+                                        <li><input id="propose_project" class="small button radius" name="_propose" type="submit" value="Propose"></input></li>
+                                        {% endif %}
+                                        {% if project.is_proposed %}
+                                        <li><input id="approve_project" class="small button success radius" name="_approve" type="submit" value="Approve" ></input></li>
+                                        <li><input id="deny_project" class="small button alert radius" name="_deny" type="submit" value="Deny"></input></li>
+                                        {% endif %}
+                                        {% if project.is_active %}
+                                        <li><input id="complete_project" class="small button radius" name="_complete" type="submit" value="Complete"></input></li>
+                                        {% endif %}
+                                        {% if project.is_completed %}
+                                        <li><a class="small button radius" data-reveal-id="repaymentModal{{project.id}}">Repayment</a></li>
+                                        {% endif %}
+                                        {% if project.is_completed or project.is_active %}
+                                        <li><a class="small button success radius" href="{% url "project:update" pk=project.id %}">Post Project Updates</a></li>
+                                        {% endif %}
+                                        <li><a class="small button info radius" href="{% url "project:edit" pk=project.id %}">Edit Project</a></li>
+                                    </ul>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -65,8 +118,25 @@
                     </div>
                     <br/>
                 </div>
-            {% empty %}
-                <p> You have not donated to any projects. </p>
+                <div id="repaymentModal{{project.id}}" class="reveal-modal tiny" data-reveal>
+                    <h2>How much was repaid?</h2>
+                    <p class="lead">{{ project.org_name }} has repaid {{ project.amount_repaid }} so far.</p>
+                    <form enctype="multipart/form-data" method="POST" action="{% url "project:review" project.pk %}">
+                        {% csrf_token %}
+                        <div class="row collapse prefix-radius">
+                            <div class="small-1 columns">
+                                <span class="prefix">$</span>
+                            </div>
+                            <div class="small-11 columns">
+                                <input type="text" placeholder="Value" type="number" name="_repayment_amount" pattern="[0-9]+([\.][0-9]+)?" step="0.01" required>
+                            </div>
+                        </div>
+                        <input id="repayment_project" class="small button radius" name="_repayment" type="submit" value="Submit"></input>
+                    </form>
+                    <a class="close-reveal-modal">&#215;</a>
+                </div>
+                {% empty %}
+                <p> You have not created any projects. </p>
             {% endfor %}
         </div>
     </div>

@@ -2,7 +2,7 @@
 @import "utils";
 
 .component-row {
-    &.login {
+    &.login, &.password-reset, &.password-reset-done, &.password-reset-confirm, &.password-reset-complete {
         margin-top: 100px;
         margin-bottom: 100px;
     }
@@ -18,7 +18,13 @@
         font-weight: 100;
 
         @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-blue, $bg-color: $revolv-gray-bg);
+
         margin-bottom: 1.5em; // override
+        &.heading-error {
+            color: $revolv-red;
+            @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-gray-bg);
+            margin-bottom: 1.5em; // override
+        }
     }
 }
 
@@ -77,6 +83,15 @@ small.field-error { // extra qualifiers to override foundation
         }
     }
 
+    &.yellow {
+        color: lighten($revolv-yellow, 10%);
+        border: 1px solid lighten($revolv-yellow, 10%);
+
+        &:hover {
+            background-color: $revolv-yellow;
+        }
+    }
+
     &:hover {
         background-color: $revolv-blue;
         color: white;
@@ -84,5 +99,9 @@ small.field-error { // extra qualifiers to override foundation
         transition: color 0.1s;
         -webkit-transition: background-color 0.2s;
         -webkit-transition: color 0.1s;
+    }
+
+    &:disabled {
+        opacity: 0.3;
     }
 }

@@ -1,13 +1,18 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import CreateView, UpdateView
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
 from revolv.base.users import UserDataMixin
+from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
+from revolv.payments.services import PaymentService
 from revolv.project import forms
-from revolv.project.models import Project
+from revolv.project.models import Category, Project
 
 
 class CreateProjectView(CreateView):
@@ -25,13 +30,14 @@ class CreateProjectView(CreateView):
 
     def form_valid(self, form):
         new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+        new_project.update_categories(form.cleaned_data['categories_select'])
         messages.success(self.request, new_project.title + ' has been created!')
         return super(CreateProjectView, self).form_valid(form)
 
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
-        context['action'] = reverse('project:new')
+        context['valid_categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
@@ -42,38 +48,49 @@ class UpdateProjectView(UpdateView):
     project, though it prepopulates the existing field and passes in the
     project id. Redirects to the project page upon success.
 
-    Accessed through /project/edit/{project_id}
+    Accessed through /project/{project_id}/edit
     """
     model = Project
     template_name = 'project/edit_project.html'
     form_class = forms.ProjectForm
 
+    # initializes the already selected categories for a given project
+    def get_initial(self):
+        return {'categories_select': self.get_object().categories}
+
     def get_success_url(self):
         messages.success(self.request, 'Project details updated')
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
+    def form_valid(self, form):
+        project = self.get_object()
+        project.update_categories(form.cleaned_data['categories_select'])
+        return super(UpdateProjectView, self).form_valid(form)
+
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
-        context['action'] = reverse('project:edit',
-                                    kwargs={'pk': self.get_object().id})
+        context['valid_categories'] = Category.valid_categories
         return context
 
 
-class ReviewProjectView(UpdateView):
+class ReviewProjectView(UserDataMixin, UpdateView):
     """
     The view to review a project. Shows the same view as ProjectView, but at
     the top, has a button group through which an ambassador or admin can
     update the project status.
 
-    Accessed through /project/review/{project_id}
+    Accessed through /project/{project_id}/review
     """
     model = Project
     template_name = 'project/review_project.html'
     form_class = forms.ProjectStatusForm
 
     def get_success_url(self):
-        return reverse('project:view', kwargs={'pk': self.get_object().id})
+        if self.is_administrator:
+            return "%s?active_project=%d" % (reverse('administrator:dashboard'), self.get_object().id)
+        else:
+            return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     # Checks the post request and updates the project_status
     def form_valid(self, form):
@@ -93,16 +110,24 @@ class ReviewProjectView(UpdateView):
         elif '_incomplete' in self.request.POST:
             messages.info(self.request, project.title + ' has been marked as incomplete')
             project.mark_as_incomplete_project()
+        elif '_repayment' in self.request.POST:
+            repayment_amount = Decimal(self.request.POST['_repayment_amount'])
+            PaymentService.create_repayment(self.user_profile, repayment_amount, project)
+            messages.success(self.request, '$' + str(repayment_amount) + ' repaid by ' + project.org_name)
         return redirect(self.get_success_url())
+
+    # pass in Project Categories and Maps API key
+    def get_context_data(self, **kwargs):
+        context = super(ReviewProjectView, self).get_context_data(**kwargs)
+        context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        return context
 
 
 class PostFundingUpdateView(UpdateView):
     """
-    The view to review a project. Shows the same view as ProjectView, but at
-    the top, has a button group through which an ambassador or admin can
-    update the project status.
+    The view to send out post funding updates about a project after it has completed.
 
-    Accessed through /project/review/{project_id}
+    Accessed through /project/{project_id}/update
     """
     model = Project
     template_name = 'project/post_funding_update.html'
@@ -112,7 +137,7 @@ class PostFundingUpdateView(UpdateView):
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
 
-class ProjectView(UserDataMixin, FormView):
+class ProjectView(UserDataMixin, DetailView):
     """
     The project view. Displays project details and allows for editing.
 
@@ -120,44 +145,44 @@ class ProjectView(UserDataMixin, FormView):
     """
     model = Project
     template_name = 'project/project.html'
-    form_class = CreditCardDonationForm
 
-    # pass in Project and Maps API key
+    # pass in Project Categories and Maps API key
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
-        context['project'] = self.project
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
     def dispatch(self, request, *args, **kwargs):
         # always populate self.user, etc
-        self.project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
         super_response = super(ProjectView, self).dispatch(request, *args, **kwargs)
-        if (self.project.is_active or self.project.is_completed or
-                (self.user.is_authenticated() and (self.project.has_owner(self.user_profile) or self.is_administrator))):
+        project = self.get_object()
+        if (project.is_active or project.is_completed or
+                (self.user.is_authenticated() and (project.has_owner(self.user_profile) or self.is_administrator))):
             return super_response
         else:
-            return self.deny_access()
-
-    def form_valid(self, form):
-        form.process_payment(self.project, self.user)
-        return super(CreateProjectDonationView, self).form_valid(form)
-
-    @property
-    def success_url(self):
-        return '/project/{0}'.format(self.kwargs.get('pk'))
+            return self.deny_access_via_404("Requested project not found.")
 
 
-class CreateProjectDonationView(UserDataMixin, FormView):
-    model = Project
-    template_name = 'project/donate.html'
+class SubmitDonationView(UserDataMixin, FormView):
     form_class = CreditCardDonationForm
+    model = Project
 
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
         form.process_payment(project, self.user)
-        return super(CreateProjectDonationView, self).form_valid(form)
+        context = {}
+        context['user'] = self.user
+        context['project'] = project
+        context['amount'] = form.cleaned_data.get('amount')
+        send_revolv_email(
+            'post_donation',
+            context, [self.user.email]
+        )
+        return JsonResponse({
+            'amount': form.data['amount'],
+        })
 
-    @property
-    def success_url(self):
-        return '/project/{0}'.format(self.kwargs.get('pk'))
+    def form_invalid(self, form):
+        return JsonResponse({
+            'error': form.errors,
+        }, status=400)

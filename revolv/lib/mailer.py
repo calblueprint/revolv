@@ -10,9 +10,12 @@ def send_revolv_email(
     context_dict,
     recipient_list,
     from_email=settings.EMAIL_HOST_USER,
-    cc_admins=False
+    cc_admins=False,
+    fail_silently=True
 ):
     """
+    Send an email rendered from a template.
+
     Templates for email are specified in a specific yaml file, which is
     expected to exist at settings.EMAIL_TEMPLATES_PATH. The argument
     template_name should reference a top level key of the emails yaml file, and
@@ -30,6 +33,10 @@ def send_revolv_email(
 
     On the other hand, 'from_address' is just one email address string, which
     defaults to the string set in the settings file.
+
+    :param: fail_silently will be passed into EmailMultiAlternatives.send() -
+            if True, will raise an exception on error.
+    :return: the return status of EmailMultiAlternatives.send()
     """
     with open(settings.EMAIL_TEMPLATES_PATH, 'r') as template:
         template_data = yaml.load(template)
@@ -60,4 +67,4 @@ def send_revolv_email(
     )
     if html_template:
         email.attach_alternative(html_body, "text/html")
-    email.send(fail_silently=True)
+    return email.send(fail_silently=fail_silently)

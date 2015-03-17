@@ -7,14 +7,21 @@
 
 <div class='row'>
     <div class='large-12 columns'>
-        <h1>Create Project</h1>
+        <h1>Donate to {{ project.title }}</h1>
     </div>
 </div>
 <div class="row white-section">
     <div class="large-12 columns">
         <form method="POST" enctype="multipart/form-data">
-      		{% csrf_token %}
-            {{ form.as_ul }}
+            {% csrf_token %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.amount %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.first_name %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.last_name %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.type %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.expire_month %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.expire_year %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.cvv2 %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.number %}
             <button class="large right" id="save_project" type="submit">Donate</button>
         </form>
     </div>

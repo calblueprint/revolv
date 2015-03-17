@@ -16,4 +16,24 @@ p, h2, h3, h4 {
     font-family: $body-font-family;
 }
 
+input, select, textarea {
+    &.error {
+        // HACK: have to use !important because foundation css files
+        // can be loaded after main.scss in apps (e.g., for project.scss,
+        // foundation files need to be imported at the top, and project.css
+        // gets loaded after main.css)
+        margin-bottom: 1rem !important;
+        border-color: $revolv-error-color !important;
+    }
+}
+
+.table {
+    display: table;
+}
+
+.table-cell-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 @import "footer";

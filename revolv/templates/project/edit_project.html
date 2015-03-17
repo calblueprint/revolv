@@ -1,8 +1,10 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static "typeahead/typeahead.css" %}" />
+<link rel="stylesheet" href="{% static "chosen/chosen.css" %}" />
 <style type="text/css">
     #map-canvas { width: 100%; height: 500px; margin: 0; padding: 0;}
     #map-canvas img {max-width: none;}
@@ -37,6 +39,9 @@
             <div class="row">
                 <div class="medium-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.title %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.tagline %}
+                    <span>Categories</span>
+                    {{ form.categories_select|add_class:"chosen-select" }}
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
@@ -132,4 +137,13 @@
         });
     });
 </script>
+<!-- Initializes the category selection tool -->
+<script src="{% static 'chosen/chosen.jquery.js' %}"></script>
+<script>
+    $( document ).ready(function() {
+        // initializes chosen
+        $(".chosen-select").chosen();
+    });
+</script>
+
 {% endblock %}
