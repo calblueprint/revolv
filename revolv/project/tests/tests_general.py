@@ -7,7 +7,7 @@ from django.db.models import signals
 from django.test import TestCase
 from django_webtest import WebTest
 from revolv.base.models import RevolvUserProfile
-from revolv.base.tests.tests import TestUserMixin
+from revolv.lib.testing import TestUserMixin
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType)
 from revolv.project.models import Category, Project

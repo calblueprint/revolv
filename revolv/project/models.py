@@ -305,9 +305,6 @@ class Project(models.Model):
     def get_organic_donations(self):
         return self.payment_set.filter(payment_type=PaymentType.objects.get_paypal())
 
-    def get_donor_pks(self):
-        return self.get_organic_donations().values_list('user', flat=True).distinct()
-
     def proportion_donated(self, user):
         user_donation = Payment.objects.donations(
             user=user,
