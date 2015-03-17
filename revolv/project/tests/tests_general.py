@@ -6,8 +6,10 @@ import mock
 from django.db.models import signals
 from django.test import TestCase
 from django_webtest import WebTest
+from revolv.base.models import RevolvUserProfile
 from revolv.base.tests.tests import TestUserMixin
-from revolv.payments.models import AdminReinvestment, AdminRepayment, Payment
+from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
+                                    PaymentType)
 from revolv.project.models import Category, Project
 from revolv.project.tasks import scrape
 
@@ -51,6 +53,37 @@ class ProjectTests(TestCase):
         self.assertEqual(project.amount_donated, 110.5)
         self.assertEqual(project.amount_left, 200.0 - 110.5)
         self.assertEqual(project.rounded_amount_left, int(200.0 - 110.5))
+
+    def test_donors_relation(self):
+        """
+        Make sure that a user isn't removed from the donors relation of a
+        project if he has *multiple* donations to that project but only *one* is
+        deleted.
+        """
+        user = RevolvUserProfile.factories.base.create()
+        project = Project.factories.base.create()
+
+        payment1 = Payment.factories.base.create(
+            user=user,
+            entrant=user,
+            payment_type=PaymentType.objects.get_paypal(),
+            project=project
+        )
+        self.assertEquals(project.donors.filter(user=user).count(), 1)
+
+        payment2 = Payment.factories.base.create(
+            user=user,
+            entrant=user,
+            payment_type=PaymentType.objects.get_paypal(),
+            project=project
+        )
+        self.assertEquals(project.donors.filter(user=user).count(), 1)
+
+        payment1.delete()
+        self.assertEquals(project.donors.filter(user=user).count(), 1)
+
+        payment2.delete()
+        self.assertEquals(project.donors.filter(user=user).count(), 0)
 
     def test_amount_repaid(self):
         """Test that we calculate the amount repaied on a project correctly."""

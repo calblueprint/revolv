@@ -8,9 +8,13 @@ PAYTYPE_REINVESTMENT = 'reinvestment'
 
 
 class AdminRepaymentManager(models.Manager):
+    """
+    Manager for AdminRepayment.
+    """
+
     def repayments(self, admin=None, project=None, queryset=None):
         """
-        :return: AdminRepayments associated with this admin and project
+        :return: AdminRepayments associated with this admin and project.
         """
         if queryset is None:
             queryset = super(AdminRepaymentManager, self).get_queryset()
@@ -23,8 +27,25 @@ class AdminRepaymentManager(models.Manager):
 
 class AdminRepayment(models.Model):
     """
-    Repayment from completed project.
-    TODO: more documentation
+    Model representing a single, admin-controlled "contact point" for a
+    repayment from a completed RE-volv project.
+
+    When a RE-volv project makes a repayment, we create a representative
+    AdminRepayment instance in our database. Creating an AdminRepayment
+    automatically generates a Repayment for each RevolvUserProfile who
+    organically donated to the project. Generating a Repayment for a user
+    increases that user's pool of reinvestable money.
+
+    We need a single "contact point" representing a repayment so that admins
+    have the ability to "revoke" a repayment, if it was entered falsely.
+    Deleting an AdminRepayment also deletes any Repayment associated with it,
+    effectively erasing any trace of the repayment.
+
+    ::Signals::
+    post_save
+        When an AdminRepayment is saved, a Repayment is generated for all
+        donors to a project, each weighed by that donor's proportion of the
+        contribution to the project.
     """
     amount = models.FloatField()
     admin = models.ForeignKey(RevolvUserProfile)
@@ -37,9 +58,13 @@ class AdminRepayment(models.Model):
 
 
 class AdminReinvestmentManager(models.Manager):
+    """
+    Manager for AdminReinvestment.
+    """
+
     def reinvestments(self, admin=None, project=None, queryset=None):
         """
-        :return: AdminReinvestment associated with this admin and project
+        :return: AdminReinvestment associated with this admin and project.
         """
         if queryset is None:
             queryset = super(AdminReinvestmentManager, self).get_queryset()
@@ -52,8 +77,36 @@ class AdminReinvestmentManager(models.Manager):
 
 class AdminReinvestment(models.Model):
     """
-    Reinvestment for ongoing project.
-    TODO: more documentation
+    Model representing a single, admin-controlled "contact point" for a
+    reinvestment to an ongoing RE-volv project.
+
+    RE-volv usually only reinvests into a project at its launch, but it is still
+    possible for an admin to put in a reinvestment at any time. Creating an
+    AdminReinvestment automatically pools money from users with a non-zero pool
+    of reinvestable money, prioritizing users that have a preference for the
+    Category of the project being reinvested into. (A user's pool of
+    reinvestable money consists of repayments to that user.) We generate a
+    Payment of type "reinvestment" for each user that we pooled money from with
+    the amount of money that we pooled from that user, and also decrement
+    that user's pool of reinvestable money.
+
+    An AdminReinvestment cannot be created if there are insufficient funds.
+
+    We need a single "contact point" representing a reinvestment so that admins
+    have the ability to "revoke" a reinvestment, if it was entered falsely.
+    Deleting an AdminReinvestment also deletes any reinvestment Payments
+    associated with it, effectively erasing any trace of the reinvestment.
+
+    ::Signals::
+    pre_init
+        Raises a NotEnoughFundingException before __init__ if there are not
+        enough funds for this AdminReinvestment.
+    post_save
+        When an AdminReinvestment is saved, we pool as many donors as we need to
+        fund the reinvestment, prioritizing users that have a preference for the
+        Category of the project begin invested into. We only consider users that
+        have a non-zero pool of investable money.
+        !!! TODO: actually prioritize by Category
     """
     amount = models.FloatField()
     admin = models.ForeignKey(RevolvUserProfile)
@@ -66,6 +119,10 @@ class AdminReinvestment(models.Model):
 
 
 class PaymentTypeManager(models.Manager):
+    """
+    Manager for PaymentType.
+    """
+
     def get_paypal(self, queryset=None):
         """Return the PaymentTypeManager for paypal payments."""
         if queryset is None:
@@ -106,7 +163,16 @@ class PaymentType(models.Model):
 
 
 class RepaymentManager(models.Manager):
+    """
+    Manager for repayments.
+    """
+
     def repayments(self, **kwargs):
+        """
+        :return:
+            Repayments associated with this user, project, and/or
+            AdminRepayment.
+        """
         if kwargs.get('queryset') is None:
             queryset = super(RepaymentManager, self).get_queryset()
         if kwargs.get('user'):
@@ -120,7 +186,27 @@ class RepaymentManager(models.Manager):
 
 class Repayment(models.Model):
     """
-    Abstraction for a repayment.
+    Abstraction for a repayment to a particular RevolvUserProfile.
+
+    A Repayment represents the proportional amount of money that the associated
+    user is repayed for an AdminRepayment to a project. In other words, for user
+    U, project P, and AdminRepayment R, the amount of the Repayment will be:
+
+        ((U's donation to P) / (Total organic donations to P)) * R.amount
+
+    When a Repayment is generated/deleted, we automatically increment/decrement
+    the pool of reinvestable money in the related user.
+
+    Repayments are generated automatically when an AdminRepayment is created.
+    Repayments should never be created manually!
+
+    ::Signals::
+    post_save
+        When a Repayment is saved, we increment the reinvest_pool in the
+        related user.
+    pre_delete
+        Before a Repayment is deleted, we decrement the reinvest_pool in the
+        related user.
     """
     user = models.ForeignKey(RevolvUserProfile)
     project = models.ForeignKey("project.Project")
@@ -186,6 +272,17 @@ class PaymentManager(models.Manager):
 class Payment(models.Model):
     """
     Abstraction indicating one particular payment.
+
+    ::Signals::
+    post_save
+        If the payment is organic, we add this payment's user as a donor
+        to the related project. If the payment is a reinvestment, we decrement
+        the reinvest_pool in the related user.
+    pre_delete
+        If the payment is organic, we remove this payment's user as a donor to
+        the related project if he has no other payments to that project.  If the
+        payment is a reinvestment, we decrement the reinvest_pool in the related
+        user.
     """
     user = models.ForeignKey(RevolvUserProfile)
     project = models.ForeignKey("project.Project")

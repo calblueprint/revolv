@@ -9,8 +9,9 @@ from revolv.payments.utils import NotEnoughFundingException
 @receiver(signals.post_save, sender=AdminRepayment)
 def post_save_admin_repayment(**kwargs):
     """
-    When an AdminRepayment is saved, a Repayment is generated for all donors
-    to a project.
+    When an AdminRepayment is saved, a Repayment is generated for all donors to
+    a project, each weighed by that donor's proportion of the contribution to
+    the project.
     """
     instance = kwargs.get('instance')
     for donor in instance.project.donors.all():
@@ -25,7 +26,8 @@ def post_save_admin_repayment(**kwargs):
 @receiver(signals.pre_init, sender=AdminReinvestment)
 def pre_init_admin_reinvestment(**kwargs):
     """
-    Raises a NotEnoughFundingException if there is not enough money to reinvest
+    Raises a NotEnoughFundingException before __init__ if there are not enough
+    funds for this AdminReinvestment.
     """
     init_kwargs = kwargs.get('kwargs')
     if not init_kwargs:
@@ -47,9 +49,11 @@ def pre_init_admin_reinvestment(**kwargs):
 def post_save_admin_reinvestment(**kwargs):
     """
     When an AdminReinvestment is saved, we pool as many donors as we need to
-    fund the reinvestment
+    fund the reinvestment, prioritizing users that have a preference for the
+    Category of the project begin invested into. We only consider users that
+    have a non-zero pool of investable money.
 
-    !!! TODO: prioritize users by preference
+    !!! TODO: actually prioritize by Category
     """
     instance = kwargs.get('instance')
     total_left = instance.amount
@@ -75,7 +79,7 @@ def post_save_admin_reinvestment(**kwargs):
 def post_save_repayment(**kwargs):
     """
     When a Repayment is saved, we increment the reinvest_pool in the related
-    user
+    user.
     """
     instance = kwargs.get('instance')
     instance.user.reinvest_pool += instance.amount
@@ -86,7 +90,7 @@ def post_save_repayment(**kwargs):
 def pre_delete_repayment(**kwargs):
     """
     Before a Repayment is deleted, we decrement the reinvest_pool in the related
-    user
+    user.
     """
     instance = kwargs.get('instance')
     instance.user.reinvest_pool -= instance.amount
@@ -96,8 +100,9 @@ def pre_delete_repayment(**kwargs):
 @receiver(signals.post_save, sender=Payment)
 def post_save_payment(**kwargs):
     """
-    When a Payment is saved, if it is a reinvestment, we decrement the
-    reinvest_pool in the related user
+    If the payment is organic, we add this payment's user as a donor to the
+    related project. If the payment is a reinvestment, we decrement the
+    reinvest_pool in the related user.
     """
     instance = kwargs.get('instance')
     if instance.payment_type == PaymentType.objects.get_paypal():
@@ -115,7 +120,11 @@ def pre_delete_payment(**kwargs):
     """
     instance = kwargs.get('instance')
     if instance.payment_type == PaymentType.objects.get_paypal():
-        instance.project.donors.remove(instance.user)
+        donation_count = instance.project.payment_set.filter(
+            user=instance.user
+        ).count()
+        if donation_count == 1:
+            instance.project.donors.remove(instance.user)
     elif instance.payment_type == PaymentType.objects.get_reinvestment():
         instance.user.reinvest_pool += instance.amount
         instance.user.save()
