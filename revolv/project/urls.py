@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, url
 from revolv.base.users import is_ambassador
-from revolv.project.views import (CreateProjectView, PostFundingUpdateView,
+from revolv.project.views import (CreateProjectView,
                                   ProjectView, ReviewProjectView,
-                                  SubmitDonationView, UpdateProjectView, PostProjectUpdateView)
+                                  SubmitDonationView, UpdateProjectView,
+                                  PostProjectUpdateView, EditProjectUpdateView)
 
 urlpatterns = patterns(
     '',
@@ -12,4 +13,5 @@ urlpatterns = patterns(
     url(r'^(?P<pk>\d+)/$', ProjectView.as_view(), name='view'),
     url(r'^(?P<pk>\d+)/donation/submit$', SubmitDonationView.as_view(), name="donation_submit"),
     url(r'^(?P<pk>\d+)/update$', is_ambassador(PostProjectUpdateView.as_view()), name='update'),
+	  url(r'^editupdate/(?P<pk>\d+)$', is_ambassador(EditProjectUpdateView.as_view()), name='edit_project_update'),
 )

@@ -427,6 +427,9 @@ class ProjectUpdate(models.Model):
         related_name="update"
     )
 
+    def set_update_text(self, text):
+        self.update_text = text
+
 class Category(models.Model):
     HEALTH = 'Health'
     ARTS = 'Arts'

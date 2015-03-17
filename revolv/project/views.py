@@ -12,7 +12,7 @@ from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.services import PaymentService
 from revolv.project import forms
-from revolv.project.models import Category, Project
+from revolv.project.models import Category, Project, ProjectUpdate
 from revolv.base.models import RevolvUserProfile
 
 
@@ -125,18 +125,18 @@ class ReviewProjectView(UserDataMixin, UpdateView):
         return context
 
 
-class PostFundingUpdateView(UpdateView):
-    """
-    The view to send out post funding updates about a project after it has completed.
+# class PostFundingUpdateView(UpdateView):
+#     """
+#     The view to send out post funding updates about a project after it has completed.
 
-    Accessed through /project/{project_id}/update
-    """
-    model = Project
-    template_name = 'project/post_funding_update.html'
-    form_class = forms.PostFundingUpdateForm
+#     Accessed through /project/{project_id}/update
+#     """
+#     model = Project
+#     template_name = 'project/post_funding_update.html'
+#     form_class = forms.PostFundingUpdateForm
 
-    def get_success_url(self):
-        return reverse('project:view', kwargs={'pk': self.get_object().id})
+#     def get_success_url(self):
+#         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
 class PostProjectUpdateView(UserDataMixin, UpdateView):
     model = Project
@@ -155,13 +155,44 @@ class PostProjectUpdateView(UserDataMixin, UpdateView):
         return super(PostProjectUpdateView, self).dispatch(request, args, kwargs)
 
     def get_success_url(self):
-        return reverse('project:view', kwargs={'pk': self.get_object().id})
+        return reverse('project:review', kwargs={'pk': self.get_object().id})
 
     def form_valid(self, form):
         text = form.cleaned_data['update_text']
         project = self.get_object()
         project.add_update(text)
         return super(PostProjectUpdateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print("oh no", form)
+
+class EditProjectUpdateView(UserDataMixin, UpdateView):
+    
+    model = ProjectUpdate
+
+    #STILL HAVE TO MAKE THIS TEMPLATE AND FORM
+    template_name = 'project/edit_project_update.html'
+    form_class = forms.EditProjectUpdateForm
+
+    def dispatch(self, request, *args, **kwargs):
+        self.user = request.user
+        self.is_authenticated = self.user.is_authenticated()
+        if self.is_authenticated:
+            self.user_profile = RevolvUserProfile.objects.get(user=self.user)
+            self.is_ambassador = self.user_profile.is_ambassador()
+
+        if not self.is_ambassador:
+            return self.deny_access()
+        return super(EditProjectUpdateView, self).dispatch(request, args, kwargs)
+
+    def get_success_url(self):
+        return reverse('project:review', kwargs={'pk': self.get_object().project_id})
+
+    def form_valid(self, form):
+        text = form.cleaned_data['update_text']
+        update = self.get_object()
+        update.set_update_text(text)
+        return super(EditProjectUpdateView, self).form_valid(form)
 
     def form_invalid(self, form):
         print("oh no", form)

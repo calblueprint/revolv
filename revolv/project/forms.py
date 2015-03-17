@@ -65,22 +65,33 @@ class ProjectStatusForm(forms.ModelForm):
         fields = ()
 
 
-class PostFundingUpdateForm(forms.ModelForm):
-    """
-    A form for providing post funding updates about a project
-    """
-    class Meta:
-        model = Project
-        fields = (
-            'post_funding_updates',
-            'solar_url',
-        )
+# class PostFundingUpdateForm(forms.ModelForm):
+#     """
+#     A form for providing post funding updates about a project
+#     """
+#     class Meta:
+#         model = Project
+#         fields = (
+#             'post_funding_updates',
+#             'solar_url',
+#         )
 
 
 class PostProjectUpdateForm(forms.ModelForm):
     """
     A form used to create updates about a project
     """
+    class Meta:
+        model = ProjectUpdate
+        fields = (
+            'update_text',
+        )
+
+class EditProjectUpdateForm(forms.ModelForm):
+    """ 
+    A form used to edit updates about a project
+    """
+    #SET SOME KIND OF DEFAULT VALUE
     class Meta:
         model = ProjectUpdate
         fields = (
