@@ -1,5 +1,5 @@
 from revolv.base.models import RevolvUserProfile
-from revolv.payments.models import PAYTYPE_PAYPAL, Payment, PaymentType
+from revolv.payments.models import Payment, PaymentType
 from revolv.settings import CHARGE_INSTRUMENT
 
 
@@ -95,6 +95,6 @@ class PaymentService(object):
             return False
         if not isinstance(user, RevolvUserProfile):
             return False
-        if payment_type.name == PAYTYPE_PAYPAL and user != entrant:
+        if payment_type.name == PaymentType._PAYPAL and user != entrant:
             return False
         return True

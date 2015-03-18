@@ -3,13 +3,14 @@ from django.db.models import Sum, signals
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
-                                    PaymentType, Repayment)
-from revolv.payments.utils import ProjectNotCompleteException
+                                    PaymentType, RepaymentFragment)
+from revolv.payments.utils import (NotEnoughFundingException,
+                                   ProjectNotCompleteException)
 from revolv.project.models import Project
 
 
 class PaymentTest(TestCase):
-    reinvestment = PaymentType.objects.get_reinvestment()
+    reinvestment = PaymentType.objects.get_reinvestment_fragment()
 
     def _create_payment(self, user, amount=10.00, project=None, payment_type=None):
         if project is None:
@@ -132,6 +133,65 @@ class PaymentTest(TestCase):
                           admin, 100.00, project  # *args
                           )
 
+    def test_repayment_multiple_save(self):
+        """
+        Test that saving a repayment multiple times does not generate
+        extra RepaymentFragments
+        """
+        user = RevolvUserProfile.factories.base.create()
+        admin = RevolvUserProfile.factories.admin.create()
+        project = Project.factories.base.create()
+        self._create_payment(user, project=project).save()
+        project.complete_project()
+
+        repay = self._create_admin_repayment(admin, 100.00, project)
+        repay.save()
+        self.assertEquals(user.repaymentfragment_set.filter(
+            project=project
+        ).count(), 1)
+
+        repay.save()
+        self.assertEquals(user.repaymentfragment_set.filter(
+            project=project
+        ).count(), 1)
+
+    def test_bad_reinvestment(self):
+        """
+        Test that we can't make a reinvestment if we have insufficient
+        funds.
+        """
+        user = RevolvUserProfile.factories.base.create()
+        admin = RevolvUserProfile.factories.admin.create()
+        project = Project.factories.base.create()
+        self._create_payment(user, project=project).save()
+        project.complete_project()
+
+        self._create_admin_repayment(admin, 100.00, project).save()
+        self.assertRaises(NotEnoughFundingException,
+                          self._create_admin_reinvestment,
+                          admin, 200.00, project  # *args
+                          )
+
+    def test_reinvestment_multiple_save(self):
+        """
+        Test that saving a reinvestment multiple times does not generate
+        extra 'reinvestment_fragment'-type Payments
+        """
+        user = RevolvUserProfile.factories.base.create()
+        admin = RevolvUserProfile.factories.admin.create()
+        project1, project2 = Project.factories.base.create_batch(2)
+        self._create_payment(user, project=project1).save()
+        project1.complete_project()
+
+        self._create_admin_repayment(admin, 100.00, project1).save()
+        reinvest1 = self._create_admin_reinvestment(admin, 100.00, project=project2)
+
+        reinvest1.save()
+        self.assertEquals(Payment.objects.reinvestment_fragments(user).count(), 1)
+
+        reinvest1.save()
+        self.assertEquals(Payment.objects.reinvestment_fragments(user).count(), 1)
+
     def test_repayment(self):
         """
         Test repayment bookkeeping. Lots of moving parts and relations,
@@ -148,12 +208,12 @@ class PaymentTest(TestCase):
         repay1 = self._create_admin_repayment(admin1, amount=100.00, project=project1)
         repay1.save()
 
-        self.assertEquals(user1.repayment_set.count(), 1)
-        self.assertEquals(user2.repayment_set.count(), 1)
-        self.assertEquals(Repayment.objects.repayments(user=user1).aggregate(
+        self.assertEquals(user1.repaymentfragment_set.count(), 1)
+        self.assertEquals(user2.repaymentfragment_set.count(), 1)
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user1).aggregate(
             Sum('amount')
         )['amount__sum'], 25.00)
-        self.assertEquals(Repayment.objects.repayments(user=user2).aggregate(
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user2).aggregate(
             Sum('amount')
         )['amount__sum'], 75.00)
         # TODO: is it a good idea to cache this?
@@ -169,18 +229,18 @@ class PaymentTest(TestCase):
 
         self._create_admin_repayment(admin2, amount=200.00, project=project2).save()
 
-        self.assertEquals(user1.repayment_set.count(), 2)
-        self.assertEquals(user2.repayment_set.count(), 2)
-        self.assertEquals(Repayment.objects.repayments(user=user1, project=project2).aggregate(
+        self.assertEquals(user1.repaymentfragment_set.count(), 2)
+        self.assertEquals(user2.repaymentfragment_set.count(), 2)
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user1, project=project2).aggregate(
             Sum('amount')
         )['amount__sum'], 150.00)
-        self.assertEquals(Repayment.objects.repayments(user=user2, project=project2).aggregate(
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user2, project=project2).aggregate(
             Sum('amount')
         )['amount__sum'], 50.00)
-        self.assertEquals(Repayment.objects.repayments(user=user1).aggregate(
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user1).aggregate(
             Sum('amount')
         )['amount__sum'], 175.00)
-        self.assertEquals(Repayment.objects.repayments(user=user2).aggregate(
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user2).aggregate(
             Sum('amount')
         )['amount__sum'], 125.00)
         # must reload to get new reinvest_pool amount
@@ -191,12 +251,12 @@ class PaymentTest(TestCase):
 
         repay1.delete()
 
-        self.assertEquals(user1.repayment_set.filter(project=project1).count(), 0)
-        self.assertEquals(user2.repayment_set.filter(project=project1).count(), 0)
-        self.assertEquals(Repayment.objects.repayments(user=user1).aggregate(
+        self.assertEquals(user1.repaymentfragment_set.filter(project=project1).count(), 0)
+        self.assertEquals(user2.repaymentfragment_set.filter(project=project1).count(), 0)
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user1).aggregate(
             Sum('amount')
         )['amount__sum'], 150.00)
-        self.assertEquals(Repayment.objects.repayments(user=user2).aggregate(
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user2).aggregate(
             Sum('amount')
         )['amount__sum'], 50.00)
         # must reload to get new reinvest_pool amount
@@ -217,8 +277,8 @@ class PaymentTest(TestCase):
 
         self._create_payment(user2).save()
 
-        self.assertEquals(Payment.objects.reinvestments(user1).count(), 1)
-        self.assertEquals(Payment.objects.reinvestments(user2).count(), 0)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2).count(), 0)
 
     def test_admin_reinvestment(self):
         """
@@ -238,12 +298,12 @@ class PaymentTest(TestCase):
         reinvest1.save()
 
         self.assertEquals(project2.amount_donated, 200.00)
-        self.assertEquals(Payment.objects.reinvestments(user1).count(), 1)
-        self.assertEquals(Payment.objects.reinvestments(user1, project2).aggregate(
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
             Sum('amount')
         )['amount__sum'], 50.00)
-        self.assertEquals(Payment.objects.reinvestments(user2, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestments(user2, project2).aggregate(
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
             Sum('amount')
         )['amount__sum'], 150.00)
         # must reload to get new reinvest_pool amount
@@ -255,12 +315,12 @@ class PaymentTest(TestCase):
         reinvest1.delete()
 
         self.assertEquals(project2.amount_donated, 0)
-        self.assertEquals(Payment.objects.reinvestments(user1).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestments(user1, project2).aggregate(
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
+        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
             Sum('amount')
         )['amount__sum'])
-        self.assertEquals(Payment.objects.reinvestments(user2, project2).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestments(user2, project2).aggregate(
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 0)
+        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
             Sum('amount')
         )['amount__sum'])
         # must reload to get new reinvest_pool amount

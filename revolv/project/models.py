@@ -306,6 +306,11 @@ class Project(models.Model):
         return self.payment_set.filter(payment_type=PaymentType.objects.get_paypal())
 
     def proportion_donated(self, user):
+        """
+        :return:
+            The proportion that this user has organically donated to this
+            project as a float in the range [0, 1] (inclusive)
+        """
         user_donation = Payment.objects.donations(
             user=user,
             project=self

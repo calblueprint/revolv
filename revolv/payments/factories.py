@@ -2,7 +2,7 @@ import datetime
 
 import factory
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
-                                    PaymentType, Repayment)
+                                    PaymentType, RepaymentFragment)
 
 
 class PaymentFactory(factory.django.DjangoModelFactory):
@@ -65,9 +65,9 @@ class AdminReinvestmentFactories(object):
     base = AdminReinvestmentFactory
 
 
-class RepaymentFactory(factory.django.DjangoModelFactory):
+class RepaymentFragmentFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = Repayment
+        model = RepaymentFragment
 
     user = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
     project = factory.SubFactory("revolv.project.factories.ProjectFactory")
@@ -76,5 +76,5 @@ class RepaymentFactory(factory.django.DjangoModelFactory):
     created_at = datetime.datetime.now()
 
 
-class RepaymentFactories(object):
-    base = RepaymentFactory
+class RepaymentFragmentFactories(object):
+    base = RepaymentFragmentFactory

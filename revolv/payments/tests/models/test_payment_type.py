@@ -1,12 +1,10 @@
 from django.test import TestCase
-from revolv.payments.models import (PAYTYPE_CHECK, PAYTYPE_PAYPAL,
-                                    PAYTYPE_REINVESTMENT, PaymentType)
+from revolv.payments.models import PaymentType
 
 
 class PaymentTypeTest(TestCase):
-
     def test_get_payment_types(self):
-        self.assertEqual(4, len(PaymentType.objects.all()))
-        self.assertEqual(PAYTYPE_PAYPAL, PaymentType.objects.first().name)
-        self.assertEqual(PAYTYPE_REINVESTMENT, PaymentType.objects.get(id=2).name)
-        self.assertEqual(PAYTYPE_CHECK, PaymentType.objects.get(id=3).name)
+        self.assertEqual(3, len(PaymentType.objects.all()))
+        self.assertEqual(PaymentType._PAYPAL, PaymentType.objects.first().name)
+        self.assertEqual(PaymentType._REINVESTMENT, PaymentType.objects.get(id=1).name)
+        self.assertEqual(PaymentType._CHECK, PaymentType.objects.get(id=2).name)

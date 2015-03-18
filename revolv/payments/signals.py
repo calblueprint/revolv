@@ -2,7 +2,7 @@ from django.db.models import Sum, signals
 from django.dispatch import receiver
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
-                                    PaymentType, Repayment)
+                                    PaymentType, RepaymentFragment)
 from revolv.payments.utils import (NotEnoughFundingException,
                                    ProjectNotCompleteException)
 
@@ -15,9 +15,10 @@ def pre_init_admin_repayment(**kwargs):
     AdminRepayment.
     """
     init_kwargs = kwargs.get('kwargs')
-    if not init_kwargs:
+    # can't initialize admin_repayment without required 'project' kwarg
+    if not init_kwargs or not init_kwargs.get('project'):
         raise NotEnoughFundingException()
-    project = init_kwargs.get('project')
+    project = init_kwargs['project']
     if not project.is_completed:
         raise ProjectNotCompleteException()
 
@@ -25,17 +26,21 @@ def pre_init_admin_repayment(**kwargs):
 @receiver(signals.post_save, sender=AdminRepayment)
 def post_save_admin_repayment(**kwargs):
     """
-    When an AdminRepayment is saved, a Repayment is generated for all donors to
-    a project, each weighed by that donor's proportion of the contribution to
-    the project.
+    When an AdminRepayment is saved, a RepaymentFragment is generated for all
+    donors to a project, each weighed by that donor's proportion of the
+    contribution to the project.
     """
+    if not kwargs.get('created'):
+        return
     instance = kwargs.get('instance')
     for donor in instance.project.donors.all():
-        repayment = Repayment(user=donor,
-                              project=instance.project,
-                              admin_repayment=instance,
-                              amount=(instance.project.proportion_donated(donor) * instance.amount),
-                              )
+        amount = instance.project.proportion_donated(donor) * instance.amount
+        repayment = RepaymentFragment(user=donor,
+                                      project=instance.project,
+                                      admin_repayment=instance,
+                                      amount=amount
+                                      )
+        # user's reinvest_pool will be incremented on save
         repayment.save()
 
 
@@ -46,9 +51,10 @@ def pre_init_admin_reinvestment(**kwargs):
     funds for this AdminReinvestment.
     """
     init_kwargs = kwargs.get('kwargs')
-    if not init_kwargs:
+    # can't initialize admin_repayment without required 'amount' kwarg
+    if not init_kwargs or not init_kwargs.get('amount'):
         raise NotEnoughFundingException()
-    invest_amount = init_kwargs.get('amount') or 0.0
+    invest_amount = init_kwargs['amount']
 
     global_repay_amount = AdminRepayment.objects.aggregate(
         Sum('amount')
@@ -71,6 +77,8 @@ def post_save_admin_reinvestment(**kwargs):
 
     !!! TODO: actually prioritize by Category
     """
+    if not kwargs.get('created'):
+        return
     instance = kwargs.get('instance')
     total_left = instance.amount
     pending_reinvestors = []
@@ -84,29 +92,32 @@ def post_save_admin_reinvestment(**kwargs):
         reinvestment = Payment(user=user,
                                project=instance.project,
                                entrant=instance.admin,
-                               payment_type=PaymentType.objects.get_reinvestment(),
+                               payment_type=PaymentType.objects.get_reinvestment_fragment(),
                                admin_reinvestment=instance,
                                amount=amount
                                )
+        # user's reinvest_pool will be decremented on this Payment's save
         reinvestment.save()
 
 
-@receiver(signals.post_save, sender=Repayment)
-def post_save_repayment(**kwargs):
+@receiver(signals.post_save, sender=RepaymentFragment)
+def post_save_repayment_fragment(**kwargs):
     """
-    When a Repayment is saved, we increment the reinvest_pool in the related
-    user.
+    When a RepaymentFragment is saved, we increment the reinvest_pool in the
+    related user.
     """
+    if not kwargs.get('created'):
+        return
     instance = kwargs.get('instance')
     instance.user.reinvest_pool += instance.amount
     instance.user.save()
 
 
-@receiver(signals.pre_delete, sender=Repayment)
-def pre_delete_repayment(**kwargs):
+@receiver(signals.pre_delete, sender=RepaymentFragment)
+def pre_delete_repayment_fragment(**kwargs):
     """
-    Before a Repayment is deleted, we decrement the reinvest_pool in the related
-    user.
+    Before a RepaymentFragment is deleted, we decrement the reinvest_pool in the
+    related user.
     """
     instance = kwargs.get('instance')
     instance.user.reinvest_pool -= instance.amount
@@ -120,10 +131,12 @@ def post_save_payment(**kwargs):
     related project. If the payment is a reinvestment, we decrement the
     reinvest_pool in the related user.
     """
+    if not kwargs.get('created'):
+        return
     instance = kwargs.get('instance')
-    if instance.payment_type == PaymentType.objects.get_paypal():
+    if instance.is_organic:
         instance.project.donors.add(instance.user)
-    elif instance.payment_type == PaymentType.objects.get_reinvestment():
+    elif instance.payment_type == PaymentType.objects.get_reinvestment_fragment():
         instance.user.reinvest_pool -= instance.amount
         instance.user.save()
 
@@ -135,12 +148,15 @@ def pre_delete_payment(**kwargs):
     reinvest_pool in the related user
     """
     instance = kwargs.get('instance')
-    if instance.payment_type == PaymentType.objects.get_paypal():
+    if instance.is_organic:
         donation_count = instance.project.payment_set.filter(
-            user=instance.user
+            user=instance.user,
+            entrant=instance.user
+        ).exclude(
+            payment_type=PaymentType.objects.get_reinvestment_fragment()
         ).count()
         if donation_count == 1:
             instance.project.donors.remove(instance.user)
-    elif instance.payment_type == PaymentType.objects.get_reinvestment():
+    elif instance.payment_type == PaymentType.objects.get_reinvestment_fragment():
         instance.user.reinvest_pool += instance.amount
         instance.user.save()
