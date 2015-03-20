@@ -1,6 +1,9 @@
 @import "revolv-settings";
 
 .footer {
+    background-color: $revolv-header-color;
+    opacity: 0.75;
+
     section {
         padding: 20px;
 
@@ -42,11 +45,6 @@
             }
         }
     }
-}
-
-#footer {
-    background-color: $revolv-header-color;
-    opacity: 0.75;
 }
 
 @media #{$small-only} {

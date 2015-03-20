@@ -5640,25 +5640,28 @@ body {
     color: #044e7e;
     font-size: 24px; }
 
+.infographic {
+  display: none; }
+
 .about {
-  position: relative; }
-  .about .about-inset {
-    width: 600px;
-    margin: 0 auto;
-    padding: 30px;
-    text-align: center;
+  position: relative;
+  width: 600px;
+  text-align: center;
+  color: #adada9; }
+  .about h1 {
+    font-size: 48px;
+    line-height: 48px;
+    color: #adada9;
+    margin-bottom: 30px; }
+  .about h2 {
+    font-size: 36px;
+    line-height: 36px;
     color: #adada9; }
-    .about .about-inset h1 {
-      font-size: 48px;
-      line-height: 48px;
-      color: #adada9;
-      margin-bottom: 30px; }
-    .about .about-inset h2 {
-      font-size: 36px;
-      line-height: 36px;
-      color: #adada9; }
-    .about .about-inset p {
-      font-size: 20px; }
+  .about p {
+    font-size: 20px; }
+  .about .about-inset {
+    margin: 0 auto;
+    padding: 30px; }
   .about .person {
     height: 144px; }
   .about .coin {
@@ -5726,6 +5729,8 @@ body {
     width: 100%;
     background-color: inherit; }
     html .cover-image .cover-inset .title-header, html .cover-image .cover-inset p {
+      font-size: 40px;
+      line-height: 40px;
       color: white; } }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
@@ -5781,8 +5786,6 @@ body {
   html .mobile-learn-button {
     display: inline-block; }
   html .nonmobile-learn {
-    display: none; }
-  .infographic {
     display: none; } }
 
 .project-badges-container {
@@ -5910,8 +5913,25 @@ body {
 @media only screen and (max-width: 40em) {
   html .icons-container {
     display: none; }
-  .cover-image {
-    margin-bottom: 20px; } }
+  html .cover-image .shade {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); }
+  html .cover-image .cover-inset {
+    top: 80px; }
+  .about {
+    width: 100%; }
+  .about h1, .about h2 {
+    font-size: 28px;
+    line-height: 36px; }
+  .nav-spine, .about-inset {
+    display: none; }
+  .infographic {
+    display: block;
+    margin: 50px 0px;
+    width: 100%; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   .project-badge-container {

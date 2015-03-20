@@ -71,7 +71,6 @@ body {
     display: block;
     width: 100%;
     height: $revolv-cover-photo-height;
-    // min-height: 100%;
     margin-bottom: 0;
 
     position: relative;
@@ -154,32 +153,36 @@ body {
     }
 }
 
+.infographic {
+    display: none;
+}
+
 .about {
     position: relative;
+    width: 600px;
+    text-align: center;
+    color: $revolv-about-font-color;
+
+    h1 {
+        font-size: $revolv-about-inset-title-size;
+        line-height: $revolv-about-inset-title-size;
+        color: $revolv-about-font-color;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        font-size: 36px;
+        line-height: 36px;
+        color: $revolv-about-font-color;
+    }
+
+    p {
+        font-size: $revolv-about-inset-paragraph-size;
+    }
 
     .about-inset {
-        width: 600px;
         margin: 0 auto;
         padding: 30px;
-        text-align: center;
-        color: $revolv-about-font-color;
-
-        h1 {
-            font-size: $revolv-about-inset-title-size;
-            line-height: $revolv-about-inset-title-size;
-            color: $revolv-about-font-color;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            font-size: 36px;
-            line-height: 36px;
-            color: $revolv-about-font-color;
-        }
-
-        p {
-            font-size: $revolv-about-inset-paragraph-size;
-        }
     }
 
     .person {
@@ -203,7 +206,6 @@ body {
         height: 100px;
         width: 190px;
         top: 890px;
-        // left: 410px;
         left: 50%;
         margin-left: -95px;
         z-index: -1; 
@@ -236,7 +238,7 @@ body {
     }
 }
 
-.donate-button { // TODO: Make a reusable, general button
+.donate-button {
     width: 250px;
     height: 48px;
     line-height: 48px;
@@ -272,7 +274,10 @@ body {
         background-color: inherit;
 
         .title-header, p {
+            font-size: $revolv-cover-inset-title-size-mobile;
+            line-height: $revolv-cover-inset-title-size-mobile;
             color: white;
+
         }
     }
 }
@@ -330,10 +335,6 @@ $divider-font-size: 14px;
         display: inline-block;
     }
     html .nonmobile-learn {
-        display: none;
-    }
-
-    .infographic {
         display: none;
     }
 }
@@ -524,8 +525,26 @@ $divider-font-size: 14px;
     html .icons-container {
         display: none;
     }
-    .cover-image {
-        margin-bottom: 20px;
+    html .cover-image .shade {
+        @include dark-shade(0.4);
+    }
+    html .cover-image .cover-inset {
+        top: 80px;
+    }
+    .about {
+        width: 100%;
+    }
+    .about h1, .about h2 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    .nav-spine, .about-inset {
+        display: none;
+    }
+    .infographic {
+        display: block;
+        margin: 50px 0px;
+        width: 100%;
     }
 }
 
