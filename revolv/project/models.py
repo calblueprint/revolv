@@ -398,7 +398,7 @@ class Project(models.Model):
 
     @property
     def donation_levels(self):
-        return DonationLevel.objects.filter(project_id=self.id).values()
+        return self.donationlevel_set.all()
 
 
 class Category(models.Model):
