@@ -6,14 +6,18 @@
     This partial accepts the following template variables:
 
     :user: the currently logged in user. The user will always be logged in, since if they're
-           seeing this page then they have bypassed the functionality which redirects to the
-           homepage for unauthenticated users.
+            seeing this page then they have bypassed the functionality which redirects to the
+            homepage for unauthenticated users.
+
+    :project_dict: a dictionary with keys as project group names, such as "Completed Projects", "Projects",
+            etc, and values as lists of project model objects in the group. The project group names
 
     The idea for the sidebar is that there is an area at the top where the user can switch between
     different user types, if applicable, can see the projects which are relevant to their role, and can also
     see management pages (for example admin accounting page) below. The point of this template is to
     conditionally render all of these partials and things based on what type of user the current user is.
 {% endcomment %}
+{% spaceless %}
 <div class="medium-2 columns dashboard-sidebar">
     <div class="role-select">
         {% if user.revolvuserprofile.is_administrator %}
@@ -23,6 +27,30 @@
         {% else %}
             <div class="role-select-inner">donor</div>
         {% endif %}
-        <div class="dashboard-sidebar-chevron"><i class="fa fa-chevron-down"></i></div>
+        <div class="dashboard-sidebar-chevron" data-state="collapsed"><i class="fa fa-chevron-down"></i></div>
+    </div>
+    <div class="role-select-options">
+        <div class="dashboard-header">View as:</div>
+        {% if user.revolvuserprofile.is_administrator %}
+            <div class="role-select-option">ambassador</div>
+            <div class="role-select-option">donor</div>
+        {% elif user.revolvuserprofile.is_ambasassador %}
+            <div class="role-select-option">donor</div>
+        {% else %}
+            <div class="role-select-option">donor</div>
+        {% endif %}
+    </div>
+    <div class="dashboard-section projects">
+        {% for project_group_name, project_list in project_dict.items %}
+            <div class="dashboard-header">{{ project_group_name.0 }}</div>
+            {% for project in project_list %}
+                <div class="dashboard-sidebar-bullet-point {{project_group_name.1}}"></div>
+                <div class="dashboard-sidebar-project {{project_group_name.1}}">{{project.title}}</div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="dashboard-section manage">
+        <div class="dashboard-header">Manage</div>
     </div>
 </div>
+{% endspaceless %}

@@ -6229,13 +6229,22 @@ html, body, .main-row {
 .dashboard-sidebar {
   padding: 0;
   background-color: #333333;
-  height: 100%; }
+  height: 100%;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+  .dashboard-sidebar .role-select-options, .dashboard-sidebar .dashboard-section {
+    padding: 10px 20px; }
+  .dashboard-sidebar .dashboard-header {
+    font-size: 13px;
+    line-height: 16px;
+    color: #5c5c5c;
+    text-transform: uppercase;
+    margin: 10px auto; }
   .dashboard-sidebar .role-select {
     color: white;
     width: 100%;
     text-align: center;
-    font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-    font-weight: bold; }
+    font-weight: bold;
+    border-bottom: 1px solid #4d4d4d; }
     .dashboard-sidebar .role-select .role-select-inner {
       display: inline-block;
       font-size: 22px;
@@ -6243,7 +6252,45 @@ html, body, .main-row {
     .dashboard-sidebar .role-select .dashboard-sidebar-chevron {
       display: inline-block;
       color: #999999;
-      margin-left: 10px; }
+      margin-left: 10px;
+      cursor: pointer; }
+  .dashboard-sidebar .role-select-options {
+    border-bottom: 1px solid #4d4d4d;
+    display: none; }
+    .dashboard-sidebar .role-select-options .role-select-option {
+      margin-left: 10px;
+      font-size: 15px;
+      line-height: 18px;
+      color: #bbbbbb;
+      text-decoration: underline;
+      cursor: pointer; }
+  .dashboard-sidebar .dashboard-sidebar-bullet-point {
+    display: inline-block;
+    margin-right: 10px; }
+    .dashboard-sidebar .dashboard-sidebar-bullet-point:before {
+      display: inline-block;
+      background-color: red;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      content: ""; }
+    .dashboard-sidebar .dashboard-sidebar-bullet-point.drafted:before {
+      background-color: #e83d3d; }
+    .dashboard-sidebar .dashboard-sidebar-bullet-point.proposed:before {
+      background-color: #f0ad4e; }
+    .dashboard-sidebar .dashboard-sidebar-bullet-point.active:before {
+      background-color: #4cb032; }
+    .dashboard-sidebar .dashboard-sidebar-bullet-point.completed:before {
+      background-color: #11ade5; }
+  .dashboard-sidebar .dashboard-sidebar-project {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 13px;
+    line-height: 16px;
+    max-width: 80%;
+    color: #767676; }
+    .dashboard-sidebar .dashboard-sidebar-project.active {
+      color: #8f8f8f; }
 
 body {
   background-color: #f9f9fa;

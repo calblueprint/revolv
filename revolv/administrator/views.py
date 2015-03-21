@@ -13,11 +13,12 @@ class AdministratorDashboardView(UserDataMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(AdministratorDashboardView, self).get_context_data(**kwargs)
-        context['proposed_projects'] = Project.objects.get_proposed()
-        context['active_projects'] = Project.objects.get_active()
-        context['completed_projects'] = Project.objects.get_completed()
-        context['all_projects'] = list(chain(context['proposed_projects'],
-                                             context['active_projects'], context['completed_projects']))
+        project_dict = {}
+        project_dict[('Proposed Projects', "proposed")] = Project.objects.get_proposed()
+        project_dict[('Active Projects', "active")] = Project.objects.get_active()
+        project_dict[('Completed Projects', "completed")] = Project.objects.get_completed()
+        context["project_dict"] = project_dict
+        context['all_projects'] = list(chain(*(project_dict.values())))
         if len(context['all_projects']) > 0:
             context['active_project'] = int(self.request.GET['active_project']) if 'active_project' in self.request.GET else context['all_projects'][0].id
         return context
