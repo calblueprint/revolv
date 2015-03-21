@@ -5633,6 +5633,16 @@ html, body, .main-row {
     font-size: 13px;
     line-height: 16px;
     max-width: 80%;
-    color: #767676; }
+    color: #767676;
+    margin-bottom: 5px; }
     .dashboard-sidebar .dashboard-sidebar-project.active {
       color: #8f8f8f; }
+  .dashboard-sidebar .dashboard-manage-link {
+    font-size: 13px;
+    line-height: 16px;
+    margin-left: 16px;
+    color: #767676;
+    margin-bottom: 5px; }
+    .dashboard-sidebar .dashboard-manage-link a, .dashboard-sidebar .dashboard-manage-link a:visited, .dashboard-sidebar .dashboard-manage-link a:active, .dashboard-sidebar .dashboard-manage-link a:hover {
+      color: inherit;
+      text-decoration: underline; }

@@ -11,4 +11,10 @@ $(document).ready(function () {
             $this.addClass("fa-rotate-180");
         }
     });
+
+    $(".dashboard-data-link").click(function() {
+        $(".dashboard-data-section-current").removeClass("dashboard-data-current");
+        var sectionToShow = $(".dashboard-data-section-" + $(this).data("section"));
+        sectionToShow.addClass("dashboard-data-section-current");
+    });
 });

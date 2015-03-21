@@ -99,9 +99,23 @@ $sidebar-header-gray: #5c5c5c;
         line-height: 16px;
         max-width: 80%;
         color: lighten($sidebar-header-gray, 10%);
+        margin-bottom: 5px;
 
         &.active {
             color: lighten($sidebar-header-gray, 20%);
+        }
+    }
+
+    .dashboard-manage-link {
+        font-size: 13px;
+        line-height: 16px;
+        margin-left: 16px;
+        color: lighten($sidebar-header-gray, 10%);
+        margin-bottom: 5px;
+
+        a, a:visited, a:active, a:hover {
+            color: inherit;
+            text-decoration: underline;
         }
     }
 }
