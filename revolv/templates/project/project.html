@@ -87,6 +87,17 @@
             <p class="update-text">This is a sample update. I hope you don't read this because this is a pretty crappy set of text to have as update text - you probably should just stop here but I don't have wifi and i don't feel like finding the hipster ipsum whatever so my ramblings can go here instead I guess.</p>
         </div>
     </div>
+    <div class="update-container">
+        <div class="large-2 columns">
+            <div class="date-container">
+                <p class="date-year">03</p>
+                <p class="date-month-day">Jan 2015</p>
+            </div>
+        </div>
+        <div class="large-10 columns">
+            <p class="update-text">This is a sample update. I hope you don't read this because this is a pretty crappy set of text to have as update text - you probably should just stop here but I don't have wifi and i don't feel like finding the hipster ipsum whatever so my ramblings can go here instead I guess.</p>
+        </div>
+    </div>
 </div>
 
 <div class="row map">
@@ -106,110 +117,6 @@
         </div></a>
     </div>
 </div>
-
-<!-- <div class="row">
-    <div class='row'>
-        <dl class="tabs">
-            <dd class="active tab-item"><a href="#story">Story</a></dd>
-            <dd class="tab-item"><a href="#updates">Updates</a></dd>
-            <dd class="hide-for-small tab-item"><a href="#gallery">Gallery</a></dd>
-        </dl>
-        <ul class="tabs-content">
-            <li class="active tab story-view" id="story">
-                <div class="row">
-                    <div class="large-3 push-9 columns" id="impact-and-donate">
-                        <div class='large-12 columns donate-admin-panels' id="donate-or-admin-panel-container">
-                            <div id="donate-box">
-                                <h5><strong>${{ project.amount_donated }}</strong> donated</h5>
-                                <p>of ${{ project.funding_goal }}</p>
-                                <div class="progress-bar">
-                                    <div class="green-bar" style="width:{{ project.percent_complete }}%"></div>
-                                    <div class="large-4 columns">
-                                        <h5 class = "percentage">{{ project.percent_complete }}%</p>
-                                    </div>
-                                    <div class="large-8 columns">
-                                        <h5 class="days-left">20 DAYS LEFT</p>
-                                    </div>
-                                </div>
-                                <br></br>
-                                <div id="button-container">
-                                    {% if user.revolvuserprofile.is_ambassador %}
-                                        <div class="approve-button"><a href="#">APPROVE</a></div>
-                                        <div class="deny-button"><a href="#">DENY</a></div>
-                                        <div class="update-button"><a href="#">UPDATE PROJECT</a></div>
-                                    {% else %}
-                                        <p>Help us reach our goal!</p>
-                                        <div classr="donate-button"><a href="#donate" data-reveal-id="donate-modal">DONATE</a></div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="large-12 columns" id="impact-stats">
-                                <div id="impact-box">
-                                    <h5>Impact</h5>
-                                    <p>of {{ project.funding_goal }}</p>
-                                    <p>impact information</p>
-                                    <p>impact information</p>
-                                    <p>impact information<p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="large-9 pull-3 columns project-info" id="main-project-info">
-                        {% if project.video_url %}
-                            <iframe width="700" height="400" id="project_video">
-                            </iframe>
-                        {% endif %}
-                        <h3>{{ project.title }}</h3>
-                        <p>Funding Goal: {{ project.funding_goal }}</p>
-                        <p>End Date: {{ project.end_date }}</p>
-                        <p>Location: {{ project.location}}</p>
-                        <p>Organization : {{project.org_name}}</p>
-                        <p>About {{project.org_name}} : {{project.org_about}}</p>
-                        <p>Mission Statement : {{ project.mission_statement }}</p>
-                    </div>
-                </div> 
-            </li>
-            <li class="tab update-view" id="updates">
-                <br></br>
-                <div class="row">
-                    <div class="large-3 columns">
-                        <div class="update-box">
-                            <h3>Update #1</h3>
-                            <h5>BY AUTHOR NAME</h5>
-                            <h5>DATE PUBLISHED</h5>
-                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
-                        </div>
-                    </div>
-                    <div class="large-3 columns">
-                        <div class="update-box">
-                            <h3>Update #2</h3>
-                            <h5>BY AUTHOR NAME</h5>
-                            <h5>DATE PUBLISHED</h5>
-                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
-                        </div>
-                    </div>
-                    <div class="large-3 columns">
-                        <div class="update-box">
-                            <h3>Update #3</h3>
-                            <h5>BY AUTHOR NAME</h5>
-                            <h5>DATE PUBLISHED</h5>
-                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
-                        </div>
-                    </div>
-                    <div class="large-3 columns">
-                        <div class="update-box">
-                            <h3>Update #4</h3>
-                            <h5>BY AUTHOR NAME</h5>
-                            <h5>DATE PUBLISHED</h5>
-                            <p>lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text lorem ipsum update text </p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="tab" id="gallery">Photo gallery!</li>
-        </ul>
-    </div>
-</div> -->
 
 {% endblock %}
 
@@ -250,9 +157,9 @@ function getEmbedUrl(url) {
 // updates the iframe src url if youtube url is valid, otherwise hides it
 var embedUrl = getEmbedUrl("{{project.video_url}}");
 if (embedUrl === "error") {
-    $("#project_video").remove();
+    $(".project_video").remove();
 } else {
-    $("#project_video").attr("src", embedUrl);
+    $(".project_video").attr("src", embedUrl);
 }
 </script>
 {% endif %}

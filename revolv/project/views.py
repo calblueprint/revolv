@@ -124,20 +124,6 @@ class ReviewProjectView(UserDataMixin, UpdateView):
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
-
-# class PostFundingUpdateView(UpdateView):
-#     """
-#     The view to send out post funding updates about a project after it has completed.
-
-#     Accessed through /project/{project_id}/update
-#     """
-#     model = Project
-#     template_name = 'project/post_funding_update.html'
-#     form_class = forms.PostFundingUpdateForm
-
-#     def get_success_url(self):
-#         return reverse('project:view', kwargs={'pk': self.get_object().id})
-
 class PostProjectUpdateView(UserDataMixin, UpdateView):
     model = Project
     template_name = 'project/post_project_update.html'
