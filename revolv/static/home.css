@@ -5752,6 +5752,8 @@ body {
   .about h1, .about h2 {
     font-size: 28px;
     line-height: 36px; }
+  .learn-more {
+    margin-top: 15px; }
   .infographic {
     display: block;
     margin: 50px 0px;

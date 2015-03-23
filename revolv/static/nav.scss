@@ -19,7 +19,7 @@ nav.header {
         .logo {
             display: inline-block;
             width: $logo-dimension;
-            margin: 0 10px 0 0;
+            margin: 0 10px 0 10px;
         }
 
         .tagline {
@@ -60,9 +60,6 @@ nav.row.header.top-bar, .top-bar-section ul li {
 @media #{$small-only} and (orientation: portrait) {
     nav.header .tagline {
         display: none !important;
-    }
-    nav.header .logo-container .logo {
-        margin: 0px 10px;
     }
 }
 
