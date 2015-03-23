@@ -43,22 +43,38 @@
     }
 }
 
+body {
+    font-family: Lato;
+}
+
 .row {
     margin-right: 0px;
     margin-left: 0px;
     max-width: 100rem;
 
-    &.about, &.project-updates {
-        margin-right: 10%;
-        margin-left: 10%;
-        max-width: 80%;
+    &.heading {
+        height: 500px;
+    }
+
+    &.about, &.project-updates, &.dashboard {
+        margin-right: 15%;
+        margin-left: 15%;
+        max-width: 70%;
+    }
+
+    &.dashboard {
+        height: 250px;
+    }
+
+    &.categories {
+        max-width: 100%;
     }
 }
 
 .header-img-div {
     width: 100%;
     height: 500px;
-    
+    position: absolute;
     // .container {
     //     height: 100%;
     //     // .project-img {
@@ -86,6 +102,7 @@
         left: 0;
         background: black;
         opacity: 0.5;
+        position: absolute;
         
         .donate-button-header {
             border-color: white;
@@ -94,6 +111,11 @@
             //position: absolute;
             width: 15%;
             height: 10%;
+            top: 410px;
+            left: 80%;
+            z-index: 100;
+            position: absolute;
+            opacity: 1.0;
             // margin-top: 92%;
             // margin-left: 95%;
             // text-align: center;
@@ -101,6 +123,7 @@
 
             p {
                 //display: table-cell;
+                opacity: 1.0;
                 width: 100%;
                 height: 100%;
                 margin: 5% 0px;
@@ -115,30 +138,203 @@
 
                 p {
                     color: black;
+                    font-weight: 500;
                 }
             }
         }
 
         .project-title {
             color: white;
-            font-size: 24px;
+            font-size: 2rem;
+            font-weight: 800;
+            top: 410px;
+            left: 5%;
+            position: absolute;
+            opacity: 1.0;
+
         }
     }
 }
 
-.gray-bar {
-    background-color: #777777;
-    height: 1px;
-    width: 100%;
-}
-
 .about {
+    .header-text {
+        p {
+            font-weight: 800;
+            color: black;
+            font-size: 1.8rem;
+        }
+    }
+    .gray-bar {
+        background-color: #777777;
+        height: 1px;
+        width: 100%;
+    }
 
+    .categories {
+        max-width: 100%;
+        height: 50px;
+
+
+        .category-text {
+            display: inline-block;
+            color: #777777;
+            margin-left: 15px;
+            height: 30px;
+
+            .category-text-inside {
+                line-height: 30px;
+            }
+        }
+
+        .category-holder {
+            display: inline-block;
+            border-color: #777777;
+            border-style: solid;
+            border-width: 1px;
+            width: 15%;
+            height: 30px;
+            margin-top: 10px;
+
+            .category-label {
+                color: #777777;
+                text-align: center;
+                line-height: 30px;
+            }
+        }
+    }
+
+    .about-text {
+        p {
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
+        margin-bottom: 80px;
+    }
 
 }
 
 .project-updates {
-    
+    .header-text {
+        p {
+            font-weight: 800;
+            color: black;
+            font-size: 1.8rem;
+        }
+    }
+    .gray-bar {
+        background-color: #777777;
+        height: 1px;
+        width: 100%;
+    }
+
+    .update-container {
+        margin-top: 10px;
+        margin-bottom: 25px;
+
+        .date-container {
+            height: 50px;
+            width: 100%;
+            text-align: center;
+            color: $revolv-blue;
+            font-weight: 300;
+            line-height: .5;
+
+            .date-year {
+                font-size: 4.5rem;
+                margin-bottom: 0rem;
+                line-height: 1;
+            }
+
+            .date-month-day {
+                font-size: 1.5rem;
+                line-height: 1;
+            }
+        }
+
+        .update-text {
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.map {
+    height: 400px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+    #map-canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .overlay {
+        background-color: black;
+        opacity: 0.5;
+        float: left;
+        height: 400px;
+        width: 40%;
+        position: absolute;
+        margin-top: -400px;
+    }
+
+    .text-container {
+        position: absolute;
+        color: white;
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 25px;
+
+        .title-container {
+            p {
+                font-weight: 500;
+                font-size: 1.5rem;
+            }
+        }
+
+        .address-container {
+            p {
+                font-weight: 500;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .donate-button-header {
+        border-color: white;
+        border-width: 2px;
+        border-style: solid;
+
+        width: 80%;
+        height: 70px;
+        z-index: 100;
+        opacity: 1.0;
+        margin-right: 10%;
+        margin-left: 10%;
+        margin-bottom: 25px;
+        margin-top: 305px;
+
+        p {
+            opacity: 1.0;
+            width: 100%;
+            height: 100%;
+            color: white;
+            text-align: center;
+            line-height: 70px;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        &:hover {
+            background-color: white;
+
+            p {
+                color: black;
+            }
+        }
+    }
 }
 
 
