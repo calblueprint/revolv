@@ -2,6 +2,9 @@ import datetime
 from django.test import TestCase
 from revolv.project.models import Category, Project, ProjectUpdate, Payment
 from revolv.lib.testing import TestUserMixin, UserTestingMixin
+from django_webtest import WebTest
+from revolv.payments.models import Payment
+from revolv.project.tasks import scrape
 
 class ProjectUpdateTest(TestCase):
     """Tests that check that project updates work with projects"""
@@ -27,7 +30,6 @@ class ProjectUpdateTest(TestCase):
         project = Project.factories.base.create()
         project.add_update('Another sample update')
         update3 = ProjectUpdate.objects.get(update_text='Another sample update')
-
         self.assertEqual(project.id, update3.project_id)
 
 class ProjectTests(TestCase):
@@ -191,3 +193,135 @@ class CategoryTest(TestCase):
         self.assertItemsEqual(project1.category_set.all(), [category2])
         # tests that deleting category 2 from project 1 does not affect project 2
         self.assertItemsEqual(project2.category_set.all(), [category2, category3])
+
+
+class RequestTest(TestCase):
+    """Test that all is well with the project pages."""
+
+    def _assert_project_page_works(self, project):
+        resp = self.client.get(project.get_absolute_url())
+        self.assertNotEqual(resp.status_code, 500)
+
+    def test_project_page(self):
+        project = Project.factories.base.create()
+
+        for status_choice in Project.PROJECT_STATUS_CHOICES:
+            status = status_choice[0]
+            project.project_status = status
+            project.save()
+            self._assert_project_page_works(project)
+
+    def test_drafted_projects_404(self):
+        """Test that the response is 404 when trying to request the page of a drafted project."""
+        project = Project.factories.base.create(project_status=Project.DRAFTED)
+        resp = self.client.get(project.get_absolute_url())
+        self.assertEqual(resp.status_code, 404)
+
+
+class ProjectIntegrationTest(WebTest):
+    def test_only_donate_when_logged_in(self):
+        """
+        Test that a not logged in user gets redirected to the
+        login page instead of being able to donate.
+        """
+        project = Project.factories.active.create()
+        resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
+        self.assertEqual(resp.status_code, 200)
+        # note: if the link makes a modal appear, it will be skipped and the
+        # test will fail because it couldn't find the link - this is what
+        # we want to happen in this case, but we may have to change this if
+        # we want a login modal to appear instead.
+        resp = (resp.click(linkid="donate-button")).maybe_follow()
+        self.assertTemplateUsed(resp, "base/sign_in.html")
+
+
+class ScrapeTest(TestCase):
+    """Test that the scrape task runs with no errors,
+        and changes the project's solar data files"""
+
+    def test_scrape(self):
+        result = scrape.delay()
+        self.assertTrue(result.successful())
+
+
+class DonationAjaxTestCase(TestUserMixin, TestCase):
+    """
+    Test suite for AJAX payment donations for projects.
+    """
+    DONATION = 'donation/submit'
+
+    def setUp(self):
+        super(DonationAjaxTestCase, self).setUp()
+        self.send_test_user_login_request()
+        self.project = Project.factories.base.create(project_status=Project.ACTIVE)
+
+    def perform_valid_donation(self):
+        """
+        Utility method for performing a valid donation. Returns the response.
+        """
+        valid_donation = {
+            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
+            'type': 'visa',
+            'first_name': 'William',
+            'last_name': 'Taft',
+            'expire_month': 6,
+            'expire_year': 2020,
+            'cvv2': '00',
+            'number': '1234123412341234',
+            'amount': '10.00',
+        }
+        return self.client.post(
+            self.project.get_absolute_url() + self.DONATION,
+            data=valid_donation,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+    def test_valid_donation(self):
+        """
+        Test valid donation via AJAX to /project/<pk>/donation/submit.
+        """
+        resp = self.perform_valid_donation()
+        self.assertEqual(resp.status_code, 200)
+        content = json.loads(resp.content)
+        self.assertIsNone(content.get('error'))
+        self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
+
+    @mock.patch('revolv.lib.mailer.EmailMultiAlternatives')
+    def test_post_donation_email(self, mock_mailer):
+        """
+        Tests whether a valid donation will send a revolv email
+        """
+        resp = self.perform_valid_donation()
+        self.assertEqual(resp.status_code, 200)
+        content = json.loads(resp.content)
+        self.assertIsNone(content.get('error'))
+        self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
+        self.assertTrue(mock_mailer.called)
+        # checks that the email address sent using mock mailer matches the user who donatred
+        args, kwargs = mock_mailer.call_args
+        self.assertEqual(kwargs['to'], ["john@example.com"])
+
+    def test_invalid_donation_ajax(self):
+        """
+        Tests that invalid donation appropriately errors with on
+        /donation/submit endpoint.
+        """
+        invalid_donation = {
+            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
+            'type': 'visa',
+            # 'first_name': '',
+            'last_name': 'Taft',
+            'expire_month': 6,
+            'expire_year': 2020,
+            'cvv2': '00',
+            'number': 'not a number',
+            'amount': '10.00',
+        }
+        resp = self.client.post(
+            self.project.get_absolute_url() + self.DONATION,
+            data=invalid_donation,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        content = json.loads(resp.content)
+        self.assertEquals(resp.status_code, 400)
+        self.assertIsNotNone(content['error'])
