@@ -1,7 +1,7 @@
 .component-row.login, .component-row.password-reset, .component-row.password-reset-done, .component-row.password-reset-confirm, .component-row.password-reset-complete {
-  margin: 120px 0px; }
+  margin: 120px auto; }
 .component-row.signup {
-  margin: 100px 0px; }
+  margin: 100px auto; }
 
 .component-row h1 {
   color: #11ade5;

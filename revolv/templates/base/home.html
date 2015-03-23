@@ -38,14 +38,14 @@
     <div class="cover-inset">
         <p class="title-header">WE'RE SAVING TOMORROW</p>
         <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
-        <div class="learn-more button">Learn how RE-volv works</div>
+        <a href="#" data-menu-top="490">
+            <div class="learn-more button">Learn how RE-volv works</div>
+        </a>
     </div>
 </div>
 
 {% include "base/animations/nav_spine.html" %}
 
-<!-- TODO: want to remove infographic -->
-<div class="row infographic"><img src="{% static "images/infographic.jpg" %}"></div>
 <div class="row about">
     <div class="about-inset">
         <p>Climate change is among the most alarming environmental issues the world faces today.</p>
@@ -101,8 +101,14 @@
 
 <script type="text/javascript" src="{% static "js/vendor/skroll-colors.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/vendor/skrollr.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/skrollr.menu.min.js" %}"></script>
 <script type="text/javascript">
     var s = skrollr.init();
+
+    skrollr.menu.init(s, {
+        animate: true,
+        easing: 'sqrt'
+    });
 </script>
 {% endspaceless %}
 {% endblock %}

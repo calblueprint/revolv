@@ -5640,9 +5640,6 @@ body {
     color: rgba(4, 78, 126, 0.75);
     font-size: 24px; }
 
-.infographic {
-  display: none; }
-
 .about {
   position: relative;
   width: 600px;
@@ -5706,9 +5703,7 @@ body {
   font-size: 24px;
   color: white;
   border-radius: 5px;
-  margin: 0 auto;
-  margin-top: 30px;
-  margin-bottom: 60px; }
+  margin: 30px auto; }
 
 .learn-more {
   line-height: 16px;
@@ -5754,10 +5749,8 @@ body {
     line-height: 36px; }
   .learn-more {
     margin-top: 15px; }
-  .infographic {
-    display: block;
-    margin: 50px 0px;
-    width: 100%; } }
+  .nav-spine {
+    display: none; } }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
   html .cover-image .cover-inset p {
