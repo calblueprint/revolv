@@ -305,6 +305,15 @@ class Project(models.Model):
         return reverse("project:view", kwargs={"pk": str(self.pk)})
 
     @property
+    def location_street(self):
+        return self.location.split(',')[0]
+
+    @property
+    def location_city_state_zip(self):
+        pieces = self.location.split(',')
+        return pieces[1] + "," + pieces[2]
+
+    @property
     def amount_donated(self):
         """
         :return: the current total amount that has been donated to this project,

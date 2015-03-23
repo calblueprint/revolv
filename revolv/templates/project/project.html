@@ -23,9 +23,9 @@
 <div class="heading row">
     <div class = "large-12 header-img-div" style='background-image: url("{{project.cover_photo.url}}")'>
         <div class="overlay">
-            <div class="donate-button-header">
+            <a href="#donate" data-reveal-id="donate-modal"><div class="donate-button-header">
                 <p>DONATE</p>
-            </div>
+            </div></a>
             <p class ="project-title" >{{ project.title }}</p>
         </div>
     </div>
@@ -97,12 +97,13 @@
                 <p>{{ project.title }}</p>
             </div>
             <div class="address-container">
-                <p>{{ project.location }}</p>
+                <p>{{ project.location_street }}</p>
+                <p>{{ project.location_city_state_zip }}</p>
             </div>
         </div>
-        <div class="donate-button-header">
+        <a href="#donate" data-reveal-id="donate-modal"><div class="donate-button-header">
             <p>DONATE</p>
-        </div>
+        </div></a>
     </div>
 </div>
 

@@ -285,19 +285,22 @@ body {
         width: 80%;
         margin-left: 10%;
         margin-right: 10%;
-        margin-top: 25px;
+        margin-top: 35px;
 
         .title-container {
             p {
                 font-weight: 500;
-                font-size: 1.5rem;
+                font-size: 1.8rem;
+                line-height: 1.8rem;
             }
         }
 
         .address-container {
             p {
                 font-weight: 500;
-                font-size: 1rem;
+                font-size: 1.5rem;
+                margin: 0;
+                line-height: 1.5rem;
             }
         }
     }
