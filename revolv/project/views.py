@@ -226,6 +226,7 @@ class ProjectView(UserDataMixin, DetailView):
 class SubmitDonationView(UserDataMixin, FormView):
     form_class = CreditCardDonationForm
     model = Project
+    http_method_names = [u'post']
 
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))

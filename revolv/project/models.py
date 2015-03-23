@@ -406,6 +406,10 @@ class Project(models.Model):
     def categories(self):
         return [category.title for category in self.category_set.all()]
 
+    @property
+    def updates(self):
+        return self.update_set.all()
+
     def add_update(self, text):
         update = ProjectUpdate(update_text=text, project=self)
         update.save()
@@ -429,6 +433,12 @@ class ProjectUpdate(models.Model):
 
     def set_update_text(self, text):
         self.update_text = text
+
+    @property
+    def month_word(self):
+        month_num = self.date.month
+        month_dict = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"}
+        return month_dict[month_num]
 
 class Category(models.Model):
     HEALTH = 'Health'
