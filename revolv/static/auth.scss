@@ -3,12 +3,10 @@
 
 .component-row {
     &.login, &.password-reset, &.password-reset-done, &.password-reset-confirm, &.password-reset-complete {
-        margin-top: 100px;
-        margin-bottom: 100px;
+        margin: 120px 0px;
     }
     &.signup {
-        margin-top: 50px;
-        margin-bottom: 50px;
+        margin: 100px 0px;
     }
 }
 

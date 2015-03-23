@@ -3,12 +3,6 @@
 @import "bower_components/foundation/scss/foundation";
 @import "revolv-settings";
 
-@mixin vertically-centered($font-size) {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: $font-size;
-}
-
 @mixin vertically-centered() {
     display: inline-block;
     vertical-align: middle;
@@ -16,7 +10,7 @@
 
 @mixin vertically-centered-block() {
     position: relative;
-    top: 50%;
+    top: calc(50% + 40px);
     transform: translateY(-50%);
 }
 
@@ -114,7 +108,7 @@ body {
     position: fixed;
     top: 0px;
     width: 5px;
-    height: 450px;
+    height: 400px;
     margin-top: 100px;
     background-color: $revolv-about-font-color;
 
@@ -135,15 +129,15 @@ body {
     }
 
     .second {
-        top: 220px;
+        top: 180px;
     }
 
     .third {
-        top: 440px;
+        top: 360px;
     }
 
     figure {
-        height: 200px;
+        height: 150px;
         width: 200px;
     }
 
@@ -238,17 +232,35 @@ body {
     }
 }
 
-.donate-button {
+.button {
     width: 250px;
-    height: 48px;
-    line-height: 48px;
+    height: 54px;
+    line-height: 24px;
     font-size: 24px;
     color: white;
-    background-color: #1bb580;
     border-radius: 5px;
     margin: 0 auto;
     margin-top: 30px;
     margin-bottom: 60px;
+}
+
+.learn-more {
+    line-height: 16px;
+    font-size: 16px;
+    border-width: 2px;
+    border-color: white;
+    background: transparent;
+}
+.learn-more:hover {
+    color: white;
+    background: $revolv-header-color
+}
+
+.donate {
+    background-color: #1bb580;
+}
+.donate:hover {
+    background-color: #137F5A;
 }
 
 // --- Mobile Responsiveness Styles ------------------------------------------------------
@@ -258,27 +270,38 @@ body {
         margin-bottom: 0;
     }
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .cover-image {
-        height: $revolv-mobile-cover-photo-height;
-
-        .shade {
-            @include dark-shade(0.6);
-        }
-    }
-
     html .cover-image .cover-inset {
-        top: 0;
+        @include vertically-centered-block();
+
         left: 0;
         height: 100%;
-        width: 100%;
+        width: 75%;
         background-color: inherit;
+        color: white;
 
-        .title-header, p {
+        .title-header {
             font-size: $revolv-cover-inset-title-size-mobile;
             line-height: $revolv-cover-inset-title-size-mobile;
-            color: white;
-
         }
+        p {
+            font-size: 18px;
+            line-height: 18px;
+        }
+    }
+    html .cover-image {
+        height: 100%;
+    }
+    .about {
+        width: 100%;
+    }
+    .about h1, .about h2 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    .infographic {
+        display: block;
+        margin: 50px 0px;
+        width: 100%;
     }
 }
 
@@ -288,302 +311,22 @@ body {
         font-size: $revolv-cover-inset-paragraph-size - 2px;
         line-height: $revolv-cover-inset-paragraph-size + 4px;
     }
-}
-
-$divider-font-size: 14px;
-.homepage-divider {
-    @include text-with-divider($divider-font-size, #ddd);
-    color: $revolv-blue;
-    height: 0.6em; // adjustment for helvetica neue
-    font-weight: 100;
-}
-
-.nonmobile-learn {
-    margin-bottom: $revolv-homepage-sections-margin;
-}
-
-.mobile-learn-button, .mobile-learn-container {
-    display: none;
-}
-
-.mobile-learn-container {
-    text-align: center;
-}
-
-.mobile-learn-button {
-    padding: 15px 20px;
-    line-height: 20px;
-    font-size: 16px;
-    font-weight: 100;
-    min-width: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
-    background-color: #f7f7f7;
-
-    border: 2px solid $revolv-blue;
-    &:before, &:after {
-        content: "";
-    }
-
-    margin-bottom: $revolv-homepage-sections-margin;
-}
-
-@media #{$small-only} and (orientation: portrait) {
-    // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .mobile-learn-container {
-        display: block;
-    }
-    html .mobile-learn-button {
-        display: inline-block;
-    }
-    html .nonmobile-learn {
-        display: none;
-    }
-}
-
-.project-badges-container {
-    margin-top: 20px;
-    margin-bottom: $revolv-homepage-sections-margin;
-
-    a, a:hover, a:visited, a:active {
-        color: inherit;
-        text-decoration: none;
-    }
-}
-
-.project-badge {
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-
-    height: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
-    width: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
-
-    svg, .project-badge-photo {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    svg {
-        z-index: 3;
-    }
-    .project-badge-detail-container {
-        z-index: 2;
-    }
-    .project-badge-photo {
-        z-index: 1;
-    }
-
-    svg:hover + .project-badge-detail-container .project-title {
-        text-decoration: underline;
-    }
-
-    .project-badge-photo {
-        width: 100%;
-        height: 100%;
-
-        // background will be set in html since the photo url is a template variable
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-
-        border-radius: 50%;
-    }
-
-    .project-badge-detail-container {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: $revolv-project-badge-inset-height;
-
-        background-color: rgba(255, 255, 255, 0.8);
-        border-bottom-left-radius: $revolv-project-badge-inset-height 100%;
-        border-bottom-right-radius: $revolv-project-badge-inset-height 100%;
-
-        text-align: center;
-
-        padding: 10px;
-
-        .project-title, .project-organization {
-            display: inline-block;
-            text-align: center;
-        }
-
-        .project-title {
-            line-height: 22px;
-            max-height: 44px;
-            @include soft-header-text(20px);
-            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
-
-            margin: 0;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-
-        $org-line-height: 17px;
-        .project-organization {
-            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2;
-            line-height: $org-line-height;
-            max-height: $org-line-height * 2;
-            @include soft-header-text(14px);
-            margin-bottom: 11px;
-        }
-
-
-        $left-line-height: 22px;
-        .project-amount-left, .project-days-left {
-            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
-            display: inline-block;
-            text-align: center;
-            height: $left-line-height;
-            line-height: $left-line-height;
-            font-size: 16px;
-            margin: 0;
-        }
-    }
-
-    .project-badge-photo {
-        border: 10px solid $revolv-gray-bg;
-    }
-
-    .project-badge-detail-container {
-        border-bottom: 1px solid $revolv-gray-bg;
-        border-left: 1px solid $revolv-gray-bg;
-        border-right: 1px solid $revolv-gray-bg;
-    }
-}
-
-.icons-container {
-    border: 1px solid $revolv-blue;
-    background-color: $revolv-very-light-blue-bg;
-    padding: 10px 0;
-    margin-bottom: $revolv-homepage-sections-margin;
-
-    .revolv-icon {
-        fill: $revolv-icon-blue;
-    }
-
-    .icon-adult {
-        width: 43px;
-        height: 50px;
-    }
-
-    .icon-frontal {
-        width: 21px;
-        height: 53px;
-    }
-
-    .icon-house {
-        width: 43px;
-        height: 44px;
-    }
-
-    .icon-co2 {
-        width: 56px;
-        height: 37px;
-    }
-
-    .revolv-icon, .stats-container {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .stat-number, .stat-description {
-        display: block;
-        color: $revolv-blue;
-        margin-left: 20px;
-        font-weight: 100;
-        font-family: "Helvetica Neue", Helvetica, sans-serif;
-    }
-
-    .stat-number {
-        font-size: $revolv-stat-number-font-size;
-        line-height: $revolv-stat-number-font-size;
-    }
-
-    .stat-description {
-        font-size: $revolv-stat-description-font-size;
-        line-height: $revolv-stat-description-font-size;
+    html .cover-image {
+        // this may differ depending on the chosen background image
+        background-position: left;
     }
 }
 
 @media #{$medium-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .icons-container {
-        display: none;
-    }
     .cover-image {
         margin-bottom: 20px;
-    }
-}
-@media #{$small-only} {
-    // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .icons-container {
-        display: none;
-    }
-    html .cover-image .shade {
-        @include dark-shade(0.4);
-    }
-    html .cover-image .cover-inset {
-        top: 80px;
-    }
-    .about {
-        width: 100%;
-    }
-    .about h1, .about h2 {
-        font-size: 28px;
-        line-height: 36px;
-    }
-    .nav-spine, .about-inset {
-        display: none;
-    }
-    .infographic {
-        display: block;
-        margin: 50px 0px;
-        width: 100%;
     }
 }
 
 @media #{$small-only}, #{$medium-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    .project-badge-container {
-        text-align: center;
-        margin-bottom: 10px;
-    }
     body {
         height: 100% !important;
     }
-}
-
-// --- svg --------------------------------------------------------------------
-
-.project-badge-line, .project-badge-circle {
-  fill: none;
-  stroke-width: $revolv-project-badge-stroke-width;
-}
-
-.project-badge-line {
-  stroke: $revolv-project-badge-fulfilled-color;
-}
-
-.project-badge-circle {
-  stroke: $revolv-project-badge-unfulfilled-color;
-}
-
-// these are all hardcoded to get the icons to look correct
-.icon-adult use {
-    transform: scale(0.4);
-}
-.icon-frontal use {
-    transform: scale(0.9) translate(-21px);
-}
-.icon-house use {
-    transform: scale(2.7);
-}
-.icon-co2 use {
-    transform: scale(0.55) translate(-12px, -30px);
 }

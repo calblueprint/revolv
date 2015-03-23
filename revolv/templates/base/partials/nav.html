@@ -6,7 +6,7 @@
 {% load staticfiles %}
 {% load menu_tags %}
 {% spaceless %}
-<div class="nav-bg-wrap sticky">
+<div class="nav-bg-wrap">
    <nav class="row header top-bar" data-topbar role="navigation">
        <ul class="title-area">
            <li class="logo-container name">
@@ -17,25 +17,11 @@
            <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
        </ul>
        <section class="top-bar-section">
-           <ul class='left'>
+           <ul class="left">
                {% show_menu 0 100 100 100 "base/partials/menu.html" %}
            </ul>
 
            <ul class="right header-small-text">
-
-               <li>
-                   <a class="component-link">About</a>
-               </li>
-               <li>
-                   <a class="component-link">Projects</a>
-               </li>
-               <li>
-                   <a class="component-link">Contact</a>
-               </li>
-               <li>
-                   <a class="component-link">Blog</a>
-               </li>
-
                {% if request.user.is_authenticated %}
                <li class="user-controls has-dropdown">
                    <a href="#">{{user.username}}</a>

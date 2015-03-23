@@ -30,7 +30,7 @@ nav.header {
     }
 
     /**
-     * Foundation will by default show all the menu items on the movile version
+     * Foundation will by default show all the menu items on the mobile version
      * of the top bar, but we want to prevent it from showing the user's username
      * at the second level, since they've already clicked on it.
      */
@@ -38,20 +38,37 @@ nav.header {
         display: none;
     }
 
-    /* Overriding Foundation colors */
+    /**
+     * By default, Foundation will make all the visited menu items a dark purple
+     * color, so we want to change this to white even after links are visited
+     * so they remain visible. One selector gets all first-level links, while 
+     * the other covers dropdown menu items.
+    */
     .top-bar-section li:not(.has-form) a:not(.button),
     .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
         color: white;
+        background: transparent
     }
+
+}
+
+nav.row.header.top-bar, .top-bar-section ul li {
+    background: transparent !important;
+    margin-bottom: 0px;
 }
 
 @media #{$small-only} and (orientation: portrait) {
     nav.header .tagline {
         display: none !important;
     }
+    nav.header .logo-container .logo {
+        margin: 0px 10px;
+    }
 }
 
 div.nav-bg-wrap {
+    position: fixed;
+    width: 100%;
     background-color: $revolv-header-color;
-    opacity: 0.75;
+    z-index: 99;
 }

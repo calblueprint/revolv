@@ -2,7 +2,8 @@
 
 .footer {
     background-color: $revolv-header-color;
-    opacity: 0.75;
+    position: relative;
+    bottom: 0;
 
     section {
         padding: 20px;
