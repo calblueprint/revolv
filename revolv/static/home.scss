@@ -127,13 +127,21 @@ body {
     .first {
         top: 0px;
     }
-
     .second {
         top: 180px;
     }
-
     .third {
         top: 360px;
+    }
+
+    .first-caption {
+        color: $revolv-header-color;
+    }
+    .second-caption {
+        color: #1DB0E6;
+    }
+    .third-caption {
+        color: #FBB041;
     }
 
     figure {
@@ -142,7 +150,6 @@ body {
     }
 
     figcaption {
-        color: $revolv-header-color;
         font-size: 24px;
     }
 }
@@ -213,6 +220,10 @@ body {
         top: -50px;
         left: 50px;
         margin-left: -25px;
+    }
+
+    .step {
+        display: none;
     }
 
     .house {
@@ -376,5 +387,22 @@ body {
     }
     .nav-spine {
         display: none;
+    }
+    .about {
+        .factory {
+            margin-top: 48px;
+        }
+        .main-house {
+            margin-top: 54px;
+        }
+        .step {
+            display: block;
+            height: 150px;
+            width: 375px;
+            margin: 25px auto;
+        }
+        .grouping {
+            margin: 70px 8px 140px;
+        }
     }
 }

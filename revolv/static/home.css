@@ -5633,11 +5633,16 @@ body {
     top: 180px; }
   .nav-spine .third {
     top: 360px; }
+  .nav-spine .first-caption {
+    color: rgba(4, 78, 126, 0.75); }
+  .nav-spine .second-caption {
+    color: #1db0e6; }
+  .nav-spine .third-caption {
+    color: #fbb041; }
   .nav-spine figure {
     height: 150px;
     width: 200px; }
   .nav-spine figcaption {
-    color: rgba(4, 78, 126, 0.75);
     font-size: 24px; }
 
 .about {
@@ -5687,6 +5692,8 @@ body {
     top: -50px;
     left: 50px;
     margin-left: -25px; }
+  .about .step {
+    display: none; }
   .about .house {
     height: 84px; }
   .about .grouping {
@@ -5800,4 +5807,15 @@ body {
   body {
     height: 100% !important; }
   .nav-spine {
-    display: none; } }
+    display: none; }
+  .about .factory {
+    margin-top: 48px; }
+  .about .main-house {
+    margin-top: 54px; }
+  .about .step {
+    display: block;
+    height: 150px;
+    width: 375px;
+    margin: 25px auto; }
+  .about .grouping {
+    margin: 70px 8px 140px; } }
