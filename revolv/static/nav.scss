@@ -47,7 +47,7 @@ nav.header {
     .top-bar-section li:not(.has-form) a:not(.button),
     .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
         color: white;
-        background: transparent
+        background: $revolv-header-color;
     }
 
 }

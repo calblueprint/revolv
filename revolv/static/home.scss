@@ -172,7 +172,7 @@ body {
 
     .about-inset {
         margin: 0 auto;
-        padding: 30px;
+        padding: 75px 30px;
     }
 
     .person {
@@ -181,7 +181,7 @@ body {
 
     .coin {
         height: 72px;
-        margin: 0px 12px; 
+        margin: 0px 10px; 
         margin-bottom: -84px;
     }
 
@@ -287,16 +287,23 @@ body {
     }
     .about {
         width: 100%;
+        h1 {
+            font-size: 28px;
+            line-height: 36px;
+        }
+        h2 {
+            font-size: 20px;
+            line-height: 30px;
+        }
+        .grouping {
+            margin-bottom: 0px;
+        }
     }
-    .about h1, .about h2 {
-        font-size: 28px;
-        line-height: 36px;
+    .button {
+        margin-top: 5px;
     }
     .learn-more {
         margin-top: 15px;
-    }
-    .nav-spine {
-        display: none;
     }
 }
 
@@ -309,6 +316,49 @@ body {
     html .cover-image {
         // this may differ depending on the chosen background image
         background-position: left;
+    }
+    .about {
+        .grouping {
+            height: 70px;
+            width: 70px;
+            margin: 140px 5px;
+        }
+        .person {
+            height: 100px;
+        }
+        .coin {
+            height: 50px;
+        }
+        .main-panel {
+            height: 95px;
+        }
+        .main-house {
+            height: 200px;
+        }
+        .solar-panel {
+            top: -28px;
+            margin-left: -45px;
+        }
+    }
+}
+
+@media #{$small-only} and (orientation: landscape) {
+    .about {
+        .grouping {
+            height: 70px;
+            width: 100px;
+            margin: 140px 10px;
+        }
+        .main-panel {
+            height: 70px;
+        }
+        .main-house {
+            height: 200px;
+        }
+        .solar-panel {
+            top: -46px;
+            margin-left: -45px;
+        }
     }
 }
 
@@ -323,5 +373,8 @@ body {
     // extra qualifiers for more specificity in order to overload non-mobile styles
     body {
         height: 100% !important;
+    }
+    .nav-spine {
+        display: none;
     }
 }

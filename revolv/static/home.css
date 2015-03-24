@@ -5658,12 +5658,12 @@ body {
     font-size: 20px; }
   .about .about-inset {
     margin: 0 auto;
-    padding: 30px; }
+    padding: 75px 30px; }
   .about .person {
     height: 144px; }
   .about .coin {
     height: 72px;
-    margin: 0px 12px;
+    margin: 0px 10px;
     margin-bottom: -84px; }
   .about .factory {
     margin-top: 248px;
@@ -5744,20 +5744,53 @@ body {
     height: 100%; }
   .about {
     width: 100%; }
-  .about h1, .about h2 {
-    font-size: 28px;
-    line-height: 36px; }
+    .about h1 {
+      font-size: 28px;
+      line-height: 36px; }
+    .about h2 {
+      font-size: 20px;
+      line-height: 30px; }
+    .about .grouping {
+      margin-bottom: 0px; }
+  .button {
+    margin-top: 5px; }
   .learn-more {
-    margin-top: 15px; }
-  .nav-spine {
-    display: none; } }
+    margin-top: 15px; } }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
   html .cover-image .cover-inset p {
     font-size: 18px;
     line-height: 24px; }
   html .cover-image {
-    background-position: left; } }
+    background-position: left; }
+  .about .grouping {
+    height: 70px;
+    width: 70px;
+    margin: 140px 5px; }
+  .about .person {
+    height: 100px; }
+  .about .coin {
+    height: 50px; }
+  .about .main-panel {
+    height: 95px; }
+  .about .main-house {
+    height: 200px; }
+  .about .solar-panel {
+    top: -28px;
+    margin-left: -45px; } }
+
+@media only screen and (max-width: 40em) and (orientation: landscape) {
+  .about .grouping {
+    height: 70px;
+    width: 100px;
+    margin: 140px 10px; }
+  .about .main-panel {
+    height: 70px; }
+  .about .main-house {
+    height: 200px; }
+  .about .solar-panel {
+    top: -46px;
+    margin-left: -45px; } }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) {
   .cover-image {
@@ -5765,4 +5798,6 @@ body {
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   body {
-    height: 100% !important; } }
+    height: 100% !important; }
+  .nav-spine {
+    display: none; } }

@@ -52,6 +52,9 @@
     .footer section h3, .footer section li, .footer section p {
         font-size: $revolv-footer-heading-font-size - 2px;
     }
+    .footer section {
+        width: 200px;
+    }
 }
 
 @media #{$small-only} and (orientation: portrait) {

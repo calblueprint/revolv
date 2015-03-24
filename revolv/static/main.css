@@ -5774,7 +5774,7 @@ nav.header {
     display: none; }
   nav.header .top-bar-section li:not(.has-form) a:not(.button), nav.header .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
     color: white;
-    background: transparent; }
+    background: rgba(4, 78, 126, 0.75); }
 
 nav.row.header.top-bar, .top-bar-section ul li {
   background: transparent !important;
@@ -5908,7 +5908,9 @@ input.error, select.error, textarea.error {
 
 @media only screen and (max-width: 40em) {
   .footer section h3, .footer section li, .footer section p {
-    font-size: 14px; } }
+    font-size: 14px; }
+  .footer section {
+    width: 200px; } }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
   .footer section h3, .footer section li, .footer section p {
