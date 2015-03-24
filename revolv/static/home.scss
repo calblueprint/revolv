@@ -48,12 +48,6 @@ body {
     background-color: $revolv-tan-bg;
 }
 
-// --- Top Bar Styles --------------------------------------------------------------------
-
-.top-bar {
-    margin-bottom: 0px;
-}
-
 // --- Cover Image Styles ----------------------------------------------------------------
 
 .cover-image {
@@ -61,12 +55,10 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-
     display: block;
     width: 100%;
     height: $revolv-cover-photo-height;
     margin-bottom: 0;
-
     position: relative;
 
     .shade {
@@ -75,7 +67,6 @@ body {
 
     .cover-inset {
         @include vertically-centered-block();
-
         text-align: center;
         margin: 0 auto;
         min-width: $revolv-cover-inset-min-width;
@@ -138,10 +129,10 @@ body {
         color: $revolv-header-color;
     }
     .second-caption {
-        color: #1DB0E6;
+        color: $revolv-light-blue;
     }
     .third-caption {
-        color: #FBB041;
+        color: $revolv-yellow;
     }
 
     figure {
@@ -271,9 +262,6 @@ body {
 // --- Mobile Responsiveness Styles ------------------------------------------------------
 
 @media #{$small-only} {
-    html .top-bar {
-        margin-bottom: 0;
-    }
     // extra qualifiers for more specificity in order to overload non-mobile styles
     html .cover-image .cover-inset {
         @include vertically-centered-block();
@@ -293,9 +281,11 @@ body {
             line-height: 18px;
         }
     }
+
     html .cover-image {
         height: 100%;
     }
+
     .about {
         width: 100%;
         h1 {
@@ -310,9 +300,11 @@ body {
             margin-bottom: 0px;
         }
     }
+
     .button {
         margin-top: 5px;
     }
+
     .learn-more {
         margin-top: 15px;
     }
@@ -324,10 +316,12 @@ body {
         font-size: $revolv-cover-inset-paragraph-size - 2px;
         line-height: $revolv-cover-inset-paragraph-size + 4px;
     }
+
     html .cover-image {
         // this may differ depending on the chosen background image
         background-position: left;
     }
+
     .about {
         .grouping {
             height: 70px;

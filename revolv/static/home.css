@@ -5567,9 +5567,6 @@ th.hide-for-touch {
 body {
   background-color: #ebece7; }
 
-.top-bar {
-  margin-bottom: 0px; }
-
 .cover-image {
   background: url(/static/images/solar-worker-stockphoto.jpg);
   background-repeat: no-repeat;
@@ -5638,7 +5635,7 @@ body {
   .nav-spine .second-caption {
     color: #1db0e6; }
   .nav-spine .third-caption {
-    color: #fbb041; }
+    color: #f0ad4e; }
   .nav-spine figure {
     height: 150px;
     width: 200px; }
@@ -5730,8 +5727,6 @@ body {
   background-color: #137f5a; }
 
 @media only screen and (max-width: 40em) {
-  html .top-bar {
-    margin-bottom: 0; }
   html .cover-image .cover-inset {
     position: relative;
     top: calc(50% + 40px);
