@@ -45,14 +45,13 @@
             <div class="dashboard-header">{{ project_group_name.0 }}</div>
             {% for project in project_list %}
                 <div class="dashboard-sidebar-bullet-point {{project_group_name.1}}"></div>
-                <div class="dashboard-sidebar-project {{project_group_name.1}}">{{project.title}}</div>
+                <div class="dashboard-sidebar-project {{project_group_name.1}} dashboard-data-link">{{project.title}}</div>
             {% endfor %}
         {% endfor %}
     </div>
     <div class="dashboard-section manage">
         <div class="dashboard-header">Manage</div>
-        <div class="dashboard-manage-link">My Account</div>
-        <div class="dashboard-manage-link">Change Password</div>
+        <div class="dashboard-manage-link dashboard-data-link" data-section="change-password">Change Password</div>
         <div class="dashboard-manage-link"><a href="/logout/">Logout</a></div>
     </div>
 </div>

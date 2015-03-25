@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static "dashboard.css" %}" />
     <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     {% render_block "css" %}
-    
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
     {% block head %}
@@ -26,6 +26,11 @@
 
     <div class='row main-row'>
         {% include "base/partials/dashboard_sidebar.html" with user=user %}
+        {% for project_group_name, project_list in project_dict.items %}
+            {% for project in project_list %}
+                {% include "base/partials/dashboard_project.html" with project=project user=user %}
+            {% endfor %}
+        {% endfor %}
     </div>
 
     {% block body %}
