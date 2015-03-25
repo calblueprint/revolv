@@ -12,12 +12,15 @@ from revolv.project.models import Project
 class PaymentTest(TestCase):
     reinvestment = PaymentType.objects.get_reinvestment_fragment()
 
-    def _create_payment(self, user, amount=10.00, project=None, payment_type=None):
+    def _create_payment(self, user=None, amount=10.00, project=None, payment_type=None, entrant=None):
         if project is None:
             project = Project.factories.base.create()
         if payment_type is None:
             payment_type = PaymentType.objects.get_paypal()
-        return Payment(amount=amount, user=user, entrant=user, payment_type=payment_type, project=project)
+        if entrant is None:
+            entrant = user
+        return Payment(amount=amount, user=user, entrant=entrant,
+                       payment_type=payment_type, project=project)
 
     def _create_admin_repayment(self, admin, amount=10.00, project=None):
         if project is None:
@@ -91,6 +94,93 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.donations(user1, project2).count(), 1)
 
         self.assertEquals(Payment.objects.donations(user2).count(), 0)
+
+    def test_check(self):
+        """
+        Test that checks work and that they don't affect
+        repayments/reinvestments.
+        """
+        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
+        admin = RevolvUserProfile.factories.admin.create()
+        project1, project2 = Project.factories.base.create_batch(2)
+
+        self._create_payment(user=user1,
+                             amount=1000.00,
+                             project=project1,
+                             payment_type=PaymentType.objects.get_check(),
+                             entrant=admin).save()
+
+        self._create_payment(user=user2,
+                             amount=2000.00,
+                             project=project1,
+                             payment_type=PaymentType.objects.get_check(),
+                             entrant=admin).save()
+
+        self._create_payment(amount=3000.00,
+                             project=project1,
+                             payment_type=PaymentType.objects.get_check(),
+                             entrant=admin).save()
+
+        self.assertEquals(Payment.objects.donations(project=project1,
+                                                    organic=True).count(), 0)
+        self.assertEquals(project1.get_organic_donations().count(), 0)
+        self.assertEquals(project1.amount_donated_organically, 0)
+        self.assertEquals(project1.amount_donated, 6000.0)
+        self.assertEquals(Payment.objects.donations(project=project1).count(), 3)
+
+        self._create_payment(user=user1,
+                             amount=30.00,
+                             project=project1,
+                             ).save()
+        self._create_payment(user=user2,
+                             amount=10.00,
+                             project=project1,
+                             ).save()
+        self.assertEquals(Payment.objects.donations(project=project1,
+                                                    organic=True).count(), 2)
+        self.assertEquals(project1.get_organic_donations().count(), 2)
+        self.assertEquals(project1.amount_donated_organically, 40.0)
+        self.assertEquals(project1.amount_donated, 6040.0)
+        self.assertEquals(Payment.objects.donations(project=project1).count(), 5)
+
+        project1.complete_project()
+        self._create_admin_repayment(admin, 100.00, project1).save()
+        self.assertEquals(user1.repaymentfragment_set.count(), 1)
+        self.assertEquals(user2.repaymentfragment_set.count(), 1)
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user1).aggregate(
+            Sum('amount')
+        )['amount__sum'], 75.00)
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user2).aggregate(
+            Sum('amount')
+        )['amount__sum'], 25.00)
+        # must reload to get new reinvest_pool amount
+        user1 = RevolvUserProfile.objects.get(pk=user1.pk)
+        user2 = RevolvUserProfile.objects.get(pk=user2.pk)
+        self.assertEquals(user1.reinvest_pool, 75.00)
+        self.assertEquals(user2.reinvest_pool, 25.00)
+
+        self._create_admin_reinvestment(admin, 100.00, project2).save()
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user1).aggregate(
+            Sum('amount')
+        )['amount__sum'], 75.00)
+        self.assertEquals(RepaymentFragment.objects.repayments(user=user2).aggregate(
+            Sum('amount')
+        )['amount__sum'], 25.00)
+        # must reload to get new reinvest_pool amount
+        user1 = RevolvUserProfile.objects.get(pk=user1.pk)
+        user2 = RevolvUserProfile.objects.get(pk=user2.pk)
+        self.assertEquals(user1.reinvest_pool, 0.0)
+        self.assertEquals(user2.reinvest_pool, 0.0)
+        self.assertEquals(project2.amount_donated_organically, 0)
+        self.assertEquals(project2.amount_donated, 100.0)
+
+        self._create_payment(user=user1,
+                             amount=1000.00,
+                             project=project2,
+                             payment_type=PaymentType.objects.get_check(),
+                             entrant=admin).save()
+        self.assertEquals(project2.amount_donated_organically, 0)
+        self.assertEquals(project2.amount_donated, 1100.0)
 
     def test_proportion_donated(self):
         """

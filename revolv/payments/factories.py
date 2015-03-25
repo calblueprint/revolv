@@ -3,6 +3,7 @@ import datetime
 import factory
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType, RepaymentFragment)
+from revolv.project.models import Project
 
 
 class PaymentFactory(factory.django.DjangoModelFactory):
@@ -16,16 +17,15 @@ class PaymentFactory(factory.django.DjangoModelFactory):
     payment_type = PaymentType.objects.get_paypal()
     created_at = datetime.datetime.now()
 
-
-example_user = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
+# organic_user = RevolvUserProfile.factories.base.create()
 
 
 class DonationPaymentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Payment
 
-    user = example_user
-    entrant = example_user
+    user = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
+    entrant = factory.SelfAttribute('user')
     amount = 20.00
     project = factory.SubFactory("revolv.project.factories.ProjectFactory")
     payment_type = PaymentType.objects.get_paypal()
@@ -65,13 +65,19 @@ class AdminReinvestmentFactories(object):
     base = AdminReinvestmentFactory
 
 
+completed_project = Project.factories.base.create()
+completed_project.complete_project()
+
+
 class RepaymentFragmentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = RepaymentFragment
 
     user = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
     project = factory.SubFactory("revolv.project.factories.ProjectFactory")
-    admin_repayment = factory.SubFactory("revolv.project.factories.AdminRepaymentFactories")
+    admin_repayment = factory.SubFactory(
+        "revolv.payments.factories.AdminRepaymentFactory",
+        project=completed_project)
     amount = 20.00
     created_at = datetime.datetime.now()
 

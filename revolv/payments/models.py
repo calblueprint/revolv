@@ -132,6 +132,12 @@ class PaymentTypeManager(models.Manager):
     Manager for PaymentType.
     """
 
+    def get_check(self, queryset=None):
+        """Return the PaymentTypeManager for check payments."""
+        if queryset is None:
+            queryset = super(PaymentTypeManager, self).get_queryset()
+        return queryset.get(name=PaymentType._CHECK)
+
     def get_paypal(self, queryset=None):
         """Return the PaymentTypeManager for paypal payments."""
         if queryset is None:
@@ -147,8 +153,8 @@ class PaymentTypeManager(models.Manager):
 
 class PaymentType(models.Model):
     """
-    Abstraction for a payment. A payment type is defined as anything that can
-    be used to create a payment (for example, Paypal, check, or any other
+    Abstraction for a payment type. A payment type is defined as anything that
+    can be used to create a payment (for example, Paypal, check, or any other
     payment service). Types of payment that the RE-volv app currently supports
     are as follows:
 
@@ -251,7 +257,7 @@ class PaymentManager(models.Manager):
     Simple manager for the Payment model.
     """
 
-    def payments(self, user=None, project=None, queryset=None):
+    def payments(self, user=None, entrant=None, project=None, queryset=None):
         """
         :return: Payments associated with this user and project
         """
@@ -259,19 +265,34 @@ class PaymentManager(models.Manager):
             queryset = super(PaymentManager, self).get_queryset()
         if user:
             queryset = queryset.filter(user=user).order_by('created_at')
+        if entrant:
+            queryset = queryset.filter(entrant=entrant).order_by('created_at')
         if project:
             queryset = queryset.filter(project=project).order_by('created_at')
         return queryset
 
-    def donations(self, user=None, project=None, queryset=None):
+    def donations(self, user=None, project=None, queryset=None, organic=False):
         """
         :return:
-            Returns all payments that are not repayments or
-            reinvestment_fragments associated with this user.
+            Returns all payments that are not reinvestment_fragments associated
+            with this user.
         """
-        return self.payments(user, project, queryset).exclude(
+        donations = self.payments(
+            user=user,
+            project=project,
+            queryset=queryset
+        ).exclude(
             payment_type__name=PaymentType._REINVESTMENT
         )
+
+        if organic:
+            if user:
+                donations = donations.filter(entrant=user)
+            else:
+                donations = donations.exclude(user__isnull=True).filter(
+                    entrant__pk=models.F('user__pk'))
+
+        return donations
 
     def reinvestment_fragments(self, user=None, project=None, queryset=None):
         """
@@ -279,7 +300,11 @@ class PaymentManager(models.Manager):
             Returns all reinvestment_fragment payments that are associated with
             this user.
         """
-        return self.payments(user, project, queryset).filter(
+        return self.payments(
+            user=user,
+            project=project,
+            queryset=queryset
+        ).filter(
             payment_type__name=PaymentType._REINVESTMENT
         )
 
@@ -328,7 +353,7 @@ class Payment(models.Model):
         user. Reinvestment money originates from repayments made by
         already completed projects.
     """
-    user = models.ForeignKey(RevolvUserProfile)
+    user = models.ForeignKey(RevolvUserProfile, blank=True, null=True)
     project = models.ForeignKey("project.Project")
 
     entrant = models.ForeignKey(RevolvUserProfile, related_name='entrant')

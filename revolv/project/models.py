@@ -7,7 +7,7 @@ from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
-from revolv.payments.models import Payment, PaymentType
+from revolv.payments.models import Payment
 
 
 class ProjectManager(models.Manager):
@@ -303,7 +303,9 @@ class Project(models.Model):
         return reverse("project:view", kwargs={"pk": str(self.pk)})
 
     def get_organic_donations(self):
-        return self.payment_set.filter(payment_type=PaymentType.objects.get_paypal())
+        return self.payment_set.exclude(user__isnull=True).filter(
+            entrant__pk=models.F('user__pk')
+        )
 
     def proportion_donated(self, user):
         """
@@ -312,8 +314,9 @@ class Project(models.Model):
             project as a float in the range [0, 1] (inclusive)
         """
         user_donation = Payment.objects.donations(
+            project=self,
             user=user,
-            project=self
+            organic=True
         ).aggregate(
             models.Sum('amount')
         )['amount__sum'] or 0.0
@@ -327,10 +330,9 @@ class Project(models.Model):
         :return: the current total amount that has been organically donated to
         this project, as a float
         """
-        organic = self.get_organic_donations().aggregate(
+        return self.get_organic_donations().aggregate(
             models.Sum('amount')
         )["amount__sum"] or 0.0
-        return organic
 
     @property
     def amount_donated(self):
@@ -338,12 +340,9 @@ class Project(models.Model):
         :return: the current total amount that has been donated to this project,
             as a float
         """
-        organic = self.amount_donated_organically
-        reinvestment = self.adminreinvestment_set.aggregate(
+        return self.payment_set.aggregate(
             models.Sum('amount')
         )["amount__sum"] or 0.0
-        result = organic + reinvestment
-        return result
 
     @property
     def amount_left(self):
