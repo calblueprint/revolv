@@ -77,13 +77,4 @@ class PostFundingUpdateForm(forms.ModelForm):
             'solar_url',
         )
 
-
-class DonationLevelForm(forms.ModelForm):
-    """
-    A form that is used as part of the formset for creating projects with associated
-    donation levels.
-    """
-    class Meta:
-        model = DonationLevel
-
 ProjectDonationLevelFormSet = inlineformset_factory(Project, DonationLevel, extra=2)
