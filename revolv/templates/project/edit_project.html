@@ -64,8 +64,8 @@
                 </div>
                 <div class="medium-12 columns">
                     <h4>Donation Levels / Perks</h4>
-                    {{ formset.management_form }}
-                    {% for donation_level_form in formset %}
+                    {{ donation_level_formset.management_form }}
+                    {% for donation_level_form in donation_level_formset %}
                         <div id="donation-level-{{ forloop.counter0 }}">
                             Perk {{ forloop.counter0|add:"1" }}:
                             {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.description %}

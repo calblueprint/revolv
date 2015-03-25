@@ -31,8 +31,7 @@ class CreateProjectView(CreateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['formset']
+        formset = self.get_donation_level_formset()
         if formset.is_valid():
             new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
             new_project.update_categories(form.cleaned_data['categories_select'])
@@ -44,17 +43,25 @@ class CreateProjectView(CreateView):
 
         return super(CreateProjectView, self).form_valid(form)
 
+    # retrieves the donation level formset from the post request
+    def get_donation_level_formset(self):
+        context = self.get_context_data()
+        return context['donation_level_formset']
+
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['valid_categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
-        # Adds the ProjectFormSet for creating donation levels with the project
-        if self.request.POST:
-            context['formset'] = forms.ProjectFormSet(self.request.POST)
-        else:
-            context['formset'] = forms.ProjectFormSet()
+        self.add_donation_level_formset(context)
         return context
+
+    # Adds the ProjectFormSet, sets the instance to the current object.
+    def add_donation_level_formset(self, context):
+        if self.request.POST:
+            context['donation_level_formset'] = forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
+        else:
+            context['donation_level_formset'] = forms.ProjectDonationLevelFormSet(instance=self.object)
 
 
 class UpdateProjectView(UpdateView):
@@ -79,8 +86,7 @@ class UpdateProjectView(UpdateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['formset']
+        formset = self.get_donation_level_formset()
         if formset.is_valid():
             project = self.get_object()
             project.update_categories(form.cleaned_data['categories_select'])
@@ -90,16 +96,24 @@ class UpdateProjectView(UpdateView):
             return self.render_to_response(self.get_context_data(form=form))
         return super(UpdateProjectView, self).form_valid(form)
 
+    # retrieves the donation level formset from the post request
+    def get_donation_level_formset(self):
+        context = self.get_context_data()
+        return context['donation_level_formset']
+
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
         context['valid_categories'] = Category.valid_categories
-        # Adds the ProjectFormSet, sets the instance to the current object.
-        if self.request.POST:
-            context['formset'] = forms.ProjectFormSet(self.request.POST, instance=self.object)
-        else:
-            context['formset'] = forms.ProjectFormSet(instance=self.object)
+        self.add_donation_level_formset(context)
         return context
+
+    # Adds the ProjectFormSet, sets the instance to the current object.
+    def add_donation_level_formset(self, context):
+        if self.request.POST:
+            context['donation_level_formset'] = forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
+        else:
+            context['donation_level_formset'] = forms.ProjectDonationLevelFormSet(instance=self.object)
 
 
 class ReviewProjectView(UserDataMixin, UpdateView):
