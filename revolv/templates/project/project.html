@@ -34,7 +34,7 @@
         <div class="bottom-bar">
             <div class="container">
                 <p class ="amount-saved">{{ project.actual_energy }} kwH saved</p>
-                <p class ="num-donors">79 donors</p>
+                <p class ="num-donors">{{ donor_count }} donors</p>
             </div>
         </div>
         <svg class="svg-graphics-container">
@@ -73,11 +73,13 @@
                 <p class="category-label">{{ category }}</p>
             </div>
         {% endfor %}
+
+        <!-- These two are in here for testing and viewing purposes: projects don't have categories right now. -->
         <div class="category-holder"><p class="category-label">ARTS</p></div>
         <div class="category-holder"><p class="category-label">HEALTH</p></div>
     </div>
     {% if project.video_url %}
-        <iframe width="100%" height="800" class="project_video">
+        <iframe width="100%" height="500" class="project_video">
         </iframe>
     {% endif %}
 
@@ -85,6 +87,7 @@
     </div>
 </div>
 
+{% if updates|length > 0 %}
 <div class="row project-updates">
     <div class="header-text">
         <p class="header">Project Updates</p>
@@ -104,6 +107,7 @@
         </div>
     {% endfor %}
 </div>
+{% endif %}
 
 <div class="row map">
     <div id="map-canvas"></div>
