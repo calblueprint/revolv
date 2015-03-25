@@ -196,6 +196,7 @@ class ProjectView(UserDataMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        context['updates'] = self.get_object().update.all()[::-1]
         return context
 
     def dispatch(self, request, *args, **kwargs):

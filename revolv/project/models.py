@@ -372,7 +372,7 @@ class Project(models.Model):
             project with respect to its goal (100 if exactly the goal amount, or
             more, has been donated, 0 if nothing has been donated).
         """
-        return int(self.partial_completeness() * 100)
+        return int(self.partial_completeness * 100)
 
     def partial_completeness_as_js(self):
         return unicode(self.partial_completeness)
@@ -448,6 +448,10 @@ class ProjectUpdate(models.Model):
         month_num = self.date.month
         month_dict = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"}
         return month_dict[month_num]
+
+    @property
+    def year_word(self):
+        return str(self.date.year)
 
 class Category(models.Model):
     HEALTH = 'Health'
