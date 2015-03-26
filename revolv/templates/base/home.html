@@ -32,71 +32,98 @@
 
 {% block body %}
 {% spaceless %}
-<div class='row cover-image-row'>
-    <div class="cover-image">
-        <div class="shade"></div>
-        <div class="cover-inset">
-            <h1 class="title-header title-header-about">About RE-volv</h1>
-            <h1 class="title-header title-header-tagline">People Funded Renewable Energy</h1>
-            <p>When you donate to revolv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
-        </div>
+
+<div class="cover-image">
+    <div class="shade"></div>
+    <div class="cover-inset">
+        <p class="title-header">WE'RE SAVING TOMORROW</p>
+        <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
+        <a href="#how-revolv-works">
+            <div class="learn-more button">Learn how RE-volv works</div>
+        </a>
     </div>
 </div>
-<div class="row icons-container">
-    <div class="small-3 columns icon-container">
-        <svg role="img" title="adult" class="revolv-icon icon-frontal"><use xlink:href="{% static "images/frontal7.svg" %}#entry"></use></svg>
-        <div class="stats-container">
-            <div class="stat-number">{{ total_donors_count|intcomma }}</div>
-            <div class="stat-description">project donor{{ total_donors_count|pluralize }}</div>
+
+{% include "base/animations/nav_spine.html" %}
+<div id="how-revolv-works" class="row about">
+    <div class="about-inset">
+        <p>Climate change is among the most alarming environmental issues the world faces today.</p>
+        <h1>How would your donation to RE-volv help?</h1>
+
+        <!-- Man, coin, and Woman -->
+        <img class="person" src="{% static "images/revolv-man.svg" %}" />
+        <img 
+            data-615="margin-bottom: -60px;"
+            data-732="margin-bottom: -660px;"
+            data-733="opacity[begin]: 1;"
+            data-734="opacity[end]: 0;"
+            class="coin" src="{% static "images/coin.svg" %}" />
+        <img class="person" src="{% static "images/revolv-woman.svg" %}" />
+
+        <img 
+            data-570="opacity: 0;"
+            data-670="opacity: 1;"
+            class="step" src="{% static "images/step1.svg" %}" />
+
+        <!-- RE-volv "factory" animation -->
+        {% include "base/animations/factory.html" %}
+        <img 
+            data-1200="opacity: 0;"
+            data-1300="opacity: 1;"
+            class="step" src="{% static "images/step2.svg" %}" />
+
+        <!-- Main solar panel and house -->
+        <img 
+            data-1175="top: 890px; transform: scale(0.2); opacity: 0.1;"
+            data-1375="top: 1245px; transform: scale(1); opacity: 1;"
+            class="main-panel" src="{% static "images/main-panel.svg" %}">
+        <img class="main-house" src="{% static "images/main-house.svg" %}">
+        <br>
+
+        <!-- Subsidiary houses and solar panels in "groupings" -->
+        <img 
+            data-1700="opacity: 0;"
+            data-1800="opacity: 1;"
+            class="step" src="{% static "images/step3.svg" %}" />
+        <div class="grouping">
+            <img 
+                data-1800="opacity: 0;"
+                data-1900="opacity: 1;"
+                class="solar-panel" src="{% static "images/main-panel.svg" %}">
+            <img class="house" src="{% static "images/house.svg" %}">
+        </div>
+
+        <div class="grouping">
+            <img 
+                data-1800="opacity: 0;"
+                data-1900="opacity: 1;"
+                class="solar-panel" src="{% static "images/main-panel.svg" %}">
+            <img class="house" src="{% static "images/house.svg" %}">
+        </div>
+        <div class="grouping">
+            <img
+                data-1800="opacity: 0;"
+                data-1900="opacity: 1;"
+                class="solar-panel" src="{% static "images/main-panel.svg" %}">
+            <img class="house" src="{% static "images/house.svg" %}">
         </div>
     </div>
-    <div class="small-3 columns icon-container">
-        <svg role="img" title="adult" class="revolv-icon icon-house"><use xlink:href="{% static "images/house4.svg" %}#entry"></use></svg>
-        <div class="stats-container">
-            <div class="stat-number">{{ completed_projects_count|intcomma }}</div>
-            <div class="stat-description">project{{ completed_projects_count|pluralize }} completed</div>
-        </div>
-    </div>
-    <div class="small-3 columns icon-container">
-        <svg role="img" title="adult" class="revolv-icon icon-co2"><use xlink:href="{% static "images/co2.svg" %}#entry"></use></svg>
-        <div class="stats-container">
-            <div class="stat-number">434,594</div>
-            <div class="stat-description">lbs of CO2 avoided</div>
-        </div>
-    </div>
-    <div class="small-3 columns icon-container">
-        <svg role="img" title="adult" class="revolv-icon icon-adult"><use xlink:href="{% static "images/adult3.svg" %}#entry"></use></svg>
-        <div class="stats-container">
-            <div class="stat-number">1,850</div>
-            <div class="stat-description">citizens impacted</div>
-        </div>
-    </div>
+
+    <!-- Call to action -->
+    <h2>Be a part of something great.</h2>
+    <div class="donate button">DONATE NOW</div>
 </div>
-<div class="row homepage-divider">our currently active solar projects</div>
-<div class="row project-badges-container">
-    {% for project in featured_projects %}
-        <div class="project-badge-container small-12 medium-6 large-4 columns {% if forloop.last %}end{% endif %}">
-            <a href="{% url "project:view" project.pk %}">
-                <div class="project-badge project-id-{{ project.pk }}">
-                    <!-- the svg for the partial circles will go here -->
-                    <div class="project-badge-detail-container">
-                        <p class="project-title">{{ project.title }}</p>
-                        <p class="project-organization">{{ project.org_name }}</p>
-                        <p class="project-amount-left">${{ project.rounded_amount_left|intcomma }} left</p>
-                        <p class="project-days-left">{{ project.formatted_days_left }}</p>
-                    </div>
-                    {% if project.cover_photo %}
-                        <div class="project-badge-photo" style="background-image: url({{ project.cover_photo.url }});"></div>
-                    {% endif %}
-                </div>
-            </a>
-        </div>
-    {% endfor %}
-</div>
-<div class="row nonmobile-learn homepage-divider">learn about how RE-volv works</div>
-<div class="row mobile-learn-container">
-    <div class="mobile-learn-button"><a href="/about/">learn about how RE-volv works</a></div>
-</div>
-<div class="row infographic"><img src="{% static "images/infographic.jpg" %}"></div>
+
+<script type="text/javascript" src="{% static "js/vendor/skroll-colors.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/skrollr.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/skrollr.menu.min.js" %}"></script>
+<script type="text/javascript">
+    var s = skrollr.init();
+
+    skrollr.menu.init(s, {
+        animate: true,
+        easing: 'sqrt'
+    });
+</script>
 {% endspaceless %}
 {% endblock %}

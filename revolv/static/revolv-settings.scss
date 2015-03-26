@@ -6,30 +6,32 @@ $revolv-logo-color-dark: #2C398C;
 $revolv-light-blue-bg: #E9F6FC;
 $revolv-very-light-blue-bg: #F5FBFE;
 $revolv-gray-bg: #F9F9FA;
+$revolv-tan-bg: #EBECE7;
 
 $revolv-yellow: #F0AD4E;
 $revolv-red: #E83D3D;
 $revolv-blue: #11ADE5;
+$revolv-light-blue: #1DB0E6;
 $revolv-icon-blue: #9ADBF4;
 
-$body-font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+$body-font-family: "Lato", sans-serif;
 
 // header ---------------------------------------------------------------------
 
-$revolv-header-color: #C0E7F6;
+$revolv-header-color: rgba(4, 78, 126, 0.75);
 $revolv-header-height: 60px;
 
 // footer ---------------------------------------------------------------------
 
 $revolv-footer-heading-font-size: 16px;
 $revolv-footer-detail-font-size: 16px;
-$revolv-footer-text-color: #a8aaaa;
+$revolv-footer-text-color: #EEEEEE;
 
 // homepage -------------------------------------------------------------------
 
 $revolv-shade-z-index: 1;
 
-$revolv-cover-photo-height: 400px;
+$revolv-cover-photo-height: 550px;
 // /**
 //  * Height of the main cover photo on the homepage in mobile phone landscape AND
 //  * portrait orientations.
@@ -48,12 +50,13 @@ $revolv-homepage-sections-margin: 40px;
 //  */
 $revolv-cover-inset-top-offset: 50px;
 $revolv-cover-inset-right-offset: 50px;
-$revolv-cover-inset-min-width: 350px;
-$revolv-cover-inset-max-width: 350px;
+$revolv-cover-inset-min-width: 300px;
+$revolv-cover-inset-max-width: 600px;
 // /**
 //  * Font size of the title "About RE-volv"
 //  */
-$revolv-cover-inset-title-size: 32px;
+$revolv-cover-inset-title-size: 64px;
+$revolv-cover-inset-title-size-mobile: 40px;
 $revolv-cover-inset-paragraph-size: 20px;
 $revolv-cover-inset-opacity: 0.7;
 
@@ -67,6 +70,12 @@ $revolv-project-badge-inset-height: 65%;
 // stats bar
 $revolv-stat-number-font-size: 36px;
 $revolv-stat-description-font-size: 18px;
+
+// About RE-volv
+$revolv-about-font-color: #ADADA9;
+$revolv-about-inset-title-size: 48px;
+$revolv-about-inset-paragraph-size: 20px;
+
 
 // signin page -------------------------------------------------------------------
 $revolv-signin-header-font-size: 25px;
