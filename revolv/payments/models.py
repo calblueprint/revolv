@@ -273,6 +273,14 @@ class PaymentManager(models.Manager):
 
     def donations(self, user=None, project=None, queryset=None, organic=False):
         """
+        :kwargs:
+            user: filter donations by this user
+            project: filter donations by this project
+            queryset: further filtering of Payments
+            organic: if True, indicates that this method should only return
+                Payments for which the `user` and the `entrant` columns are both
+                non-null and the same
+
         :return:
             Returns all payments that are not reinvestment_fragments associated
             with this user.

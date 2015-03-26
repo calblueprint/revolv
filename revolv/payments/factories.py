@@ -17,8 +17,6 @@ class PaymentFactory(factory.django.DjangoModelFactory):
     payment_type = PaymentType.objects.get_paypal()
     created_at = datetime.datetime.now()
 
-# organic_user = RevolvUserProfile.factories.base.create()
-
 
 class DonationPaymentFactory(factory.django.DjangoModelFactory):
     class Meta:
