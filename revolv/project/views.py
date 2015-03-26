@@ -21,9 +21,10 @@ class DonationLevelFormSetMixin(object):
     Mixin that gets the ProjectDonationLeveLFormSet for a page, specifically
     the Create Project and Update Project page.
     """
-    # checks if the request is a POST, and populates the formset with current object as the instance
 
     def get_donation_level_formset(self):
+        """ Checks if the request is a POST, and populates the formset with current object as the instance
+        """
         if self.request.POST:
             return forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
         else:
