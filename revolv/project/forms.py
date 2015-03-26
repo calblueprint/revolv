@@ -1,5 +1,7 @@
 from django import forms
-from models import Category, Project
+from django.forms.models import inlineformset_factory
+
+from models import Category, DonationLevel, Project
 
 
 class ProjectForm(forms.ModelForm):
@@ -74,3 +76,5 @@ class PostFundingUpdateForm(forms.ModelForm):
             'post_funding_updates',
             'solar_url',
         )
+
+ProjectDonationLevelFormSet = inlineformset_factory(Project, DonationLevel, extra=2)
