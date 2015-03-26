@@ -1,7 +1,7 @@
 import mock
 from django.contrib.auth.models import User
 from django.test import TestCase
-from revolv.payments.models import PaymentInstrumentType
+from revolv.payments.models import PaymentType
 from revolv.payments.services import PaymentService, PaymentServiceException
 from revolv.project.models import Project
 
@@ -18,7 +18,7 @@ class PaymentServiceTest(TestCase):
 
         # Mock out a payment instrument with paypal by default
         instrument_type = mock.PropertyMock(
-            return_value=PaymentInstrumentType.objects.get_paypal(),
+            return_value=PaymentType.objects.get_paypal(),
         )
         payment_instrument = mock.Mock()
         type(payment_instrument).type = instrument_type
@@ -49,7 +49,7 @@ class PaymentServiceTest(TestCase):
     def test_check_valid_payment_instrument(self):
         """Verify that we can get a valid payment instrument type."""
         # Mock out a payment instrument
-        instrument_type = PaymentInstrumentType.objects.get_paypal()
+        instrument_type = PaymentType.objects.get_paypal()
 
         # Check that it returns True
         self.assertTrue(PaymentService.check_valid_payment_instrument(instrument_type))

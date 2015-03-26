@@ -65,7 +65,4 @@ class CreditCardDonationForm(DonationForm):
             instrument
         )
 
-        # Add RevolvUserProfile to donors field of Project
-        project.donors.add(user.revolvuserprofile)
-
         return payment
