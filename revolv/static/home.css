@@ -5763,6 +5763,8 @@ body {
   html .cover-image .cover-inset p {
     font-size: 18px;
     line-height: 24px; }
+  html .cover-image .cover-inset {
+    top: calc(50% + 80px); }
   html .cover-image {
     background-position: left; }
   .about .grouping {

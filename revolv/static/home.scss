@@ -317,6 +317,10 @@ body {
         line-height: $revolv-cover-inset-paragraph-size + 4px;
     }
 
+    html .cover-image .cover-inset {
+        top: calc(50% + 80px);
+    }
+
     html .cover-image {
         // this may differ depending on the chosen background image
         background-position: left;
