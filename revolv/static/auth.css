@@ -16,7 +16,7 @@
   font-size: 25px;
   margin-bottom: 1.5em; }
   .component-row h1:first-line {
-    background-color: #f9f9fa; }
+    background-color: #ebece7; }
   .component-row h1:before {
     display: inline;
     content: "\a0\a0\a0"; }
@@ -35,7 +35,7 @@
     font-size: 25px;
     margin-bottom: 1.5em; }
     .component-row h1.heading-error:first-line {
-      background-color: #f9f9fa; }
+      background-color: #ebece7; }
     .component-row h1.heading-error:before {
       display: inline;
       content: "\a0\a0\a0"; }

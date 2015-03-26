@@ -15,12 +15,12 @@
         color: $revolv-blue;
         font-weight: 100;
 
-        @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-blue, $bg-color: $revolv-gray-bg);
+        @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-blue, $bg-color: $revolv-tan-bg);
 
         margin-bottom: 1.5em; // override
         &.heading-error {
             color: $revolv-red;
-            @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-gray-bg);
+            @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-tan-bg);
             margin-bottom: 1.5em; // override
         }
     }
