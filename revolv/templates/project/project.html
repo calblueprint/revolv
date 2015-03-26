@@ -47,7 +47,15 @@
         {% endif %}
         {% if project.categories|length > 0 %}
             <h5>Categories</h5>
-            {{ project.categories }}
+            {% for category in project.categories %}
+                {{ category }}
+            {% endfor %}
+        {% endif %}
+        {% if project.donation_levels|length > 0 %}
+            <h5>Donation Levels</h5>
+            {% for donation in project.donation_levels %}
+                <p>Description: {{ donation.description }}, Amount: {{ donation.amount }}</p>
+            {% endfor %}
         {% endif %}
         {% if project.is_completed or project.is_active and project.post_funding_updates %}
             <h5>Post Funding Updates</h5>
