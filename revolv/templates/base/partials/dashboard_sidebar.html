@@ -18,41 +18,39 @@
     conditionally render all of these partials and things based on what type of user the current user is.
 {% endcomment %}
 {% spaceless %}
-<div class="medium-2 columns dashboard-sidebar">
-    <div class="role-select">
-        {% if user.revolvuserprofile.is_administrator %}
-            <div class="role-select-inner">administrator</div>
-        {% elif user.revolvuserprofile.is_ambasassador %}
-            <div class="role-select-inner">ambassador</div>
-        {% else %}
-            <div class="role-select-inner">donor</div>
-        {% endif %}
-        <div class="dashboard-sidebar-chevron" data-state="collapsed"><i class="fa fa-chevron-down"></i></div>
-    </div>
-    <div class="role-select-options">
-        <div class="dashboard-header">View as:</div>
-        {% if user.revolvuserprofile.is_administrator %}
-            <div class="role-select-option">ambassador</div>
-            <div class="role-select-option">donor</div>
-        {% elif user.revolvuserprofile.is_ambasassador %}
-            <div class="role-select-option">donor</div>
-        {% else %}
-            <div class="role-select-option">donor</div>
-        {% endif %}
-    </div>
-    <div class="dashboard-section projects">
-        {% for project_group_name, project_list in project_dict.items %}
-            <div class="dashboard-header">{{ project_group_name.0 }}</div>
-            {% for project in project_list %}
-                <div class="dashboard-sidebar-bullet-point {{project_group_name.1}}"></div>
-                <div class="dashboard-sidebar-project {{project_group_name.1}} dashboard-data-link">{{project.title}}</div>
-            {% endfor %}
+<div class="role-select">
+    {% if user.revolvuserprofile.is_administrator %}
+        <div class="role-select-inner">administrator</div>
+    {% elif user.revolvuserprofile.is_ambasassador %}
+        <div class="role-select-inner">ambassador</div>
+    {% else %}
+        <div class="role-select-inner">donor</div>
+    {% endif %}
+    <div class="dashboard-sidebar-chevron" data-state="collapsed"><i class="fa fa-chevron-down"></i></div>
+</div>
+<div class="role-select-options">
+    <div class="dashboard-header">View as:</div>
+    {% if user.revolvuserprofile.is_administrator %}
+        <div class="role-select-option">ambassador</div>
+        <div class="role-select-option">donor</div>
+    {% elif user.revolvuserprofile.is_ambasassador %}
+        <div class="role-select-option">donor</div>
+    {% else %}
+        <div class="role-select-option">donor</div>
+    {% endif %}
+</div>
+<div class="dashboard-section projects">
+    {% for project_group_name, project_list in project_dict.items %}
+        <div class="dashboard-header">{{ project_group_name.0 }}</div>
+        {% for project in project_list %}
+            <div class="dashboard-sidebar-bullet-point {{project_group_name.1}}"></div>
+            <div class="dashboard-sidebar-project {{project_group_name.1}} dashboard-data-link">{{project.title}}</div>
         {% endfor %}
-    </div>
-    <div class="dashboard-section manage">
-        <div class="dashboard-header">Manage</div>
-        <div class="dashboard-manage-link dashboard-data-link" data-section="change-password">Change Password</div>
-        <div class="dashboard-manage-link"><a href="/logout/">Logout</a></div>
-    </div>
+    {% endfor %}
+</div>
+<div class="dashboard-section manage">
+    <div class="dashboard-header">Manage</div>
+    <div class="dashboard-manage-link dashboard-data-link" data-section="change-password">Change Password</div>
+    <div class="dashboard-manage-link"><a href="/logout/">Logout</a></div>
 </div>
 {% endspaceless %}

@@ -6302,6 +6302,11 @@ html, body, .main-row {
       color: inherit;
       text-decoration: underline; }
 
+.dashboard-project-header {
+  height: 55px;
+  background-color: red;
+  width: 100%; }
+
 body {
   background-color: #f9f9fa;
   font-weight: 300;

@@ -42,7 +42,7 @@ $sidebar-header-gray: #5c5c5c;
         .role-select-inner {
             display: inline-block;
             font-size: 22px;
-            line-height: 55px;
+            line-height: $revolv-dashboard-header-height;
         }
 
         .dashboard-sidebar-chevron {
@@ -118,4 +118,10 @@ $sidebar-header-gray: #5c5c5c;
             text-decoration: underline;
         }
     }
+}
+
+.dashboard-project-header {
+    height: $revolv-dashboard-header-height;
+    background-color: red;
+    width: 100%;
 }

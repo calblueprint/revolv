@@ -25,11 +25,17 @@
     {% cms_toolbar %}
 
     <div class='row main-row'>
-        {% include "base/partials/dashboard_sidebar.html" with user=user %}
+        <div class="medium-2 columns dashboard-sidebar">
+            {% include "base/partials/dashboard_sidebar.html" with user=user %}
+        </div>
         {% for project_group_name, project_list in project_dict.items %}
-            {% for project in project_list %}
-                {% include "base/partials/dashboard_project.html" with project=project user=user %}
-            {% endfor %}
+            {% with outer_index=forloop.index %}
+                {% for project in project_list %}
+                    <div class="medium-10 columns dashboard-project" {% if outer_index != 0 and forloop.index != 0 %}style="display:none"{% endif %}>
+                        {% include "base/partials/dashboard_project.html" with project=project user=user %}
+                    </div>
+                {% endfor %}
+            {% endwith %}
         {% endfor %}
     </div>
 
