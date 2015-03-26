@@ -16,7 +16,21 @@ from revolv.project import forms
 from revolv.project.models import Category, Project
 
 
-class CreateProjectView(CreateView):
+class DonationLevelFormSetMixin(object):
+    """
+    Mixin that gets the ProjectDonationLeveLFormSet for a page, specifically
+    the Create Project and Update Project page.
+    """
+    # checks if the request is a POST, and populates the formset with current object as the instance
+
+    def get_donation_level_formset(self):
+        if self.request.POST:
+            return forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
+        else:
+            return forms.ProjectDonationLevelFormSet(instance=self.object)
+
+
+class CreateProjectView(DonationLevelFormSetMixin, CreateView):
     """
     The view to create a new project. Redirects to the homepage upon success.
 
@@ -51,15 +65,8 @@ class CreateProjectView(CreateView):
         context['donation_level_formset'] = self.get_donation_level_formset()
         return context
 
-    # Gets the ProjectFormSet and sets the instance to the current object.
-    def get_donation_level_formset(self):
-        if self.request.POST:
-            return forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
-        else:
-            return forms.ProjectDonationLevelFormSet(instance=self.object)
 
-
-class UpdateProjectView(UpdateView):
+class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
     """
     The view to update a project. It is the same view as creating a new
     project, though it prepopulates the existing field and passes in the
@@ -97,13 +104,6 @@ class UpdateProjectView(UpdateView):
         context['valid_categories'] = Category.valid_categories
         context['donation_level_formset'] = self.get_donation_level_formset()
         return context
-
-    # Gets the ProjectFormSet and sets the instance to the current object.
-    def get_donation_level_formset(self):
-        if self.request.POST:
-            return forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
-        else:
-            return forms.ProjectDonationLevelFormSet(instance=self.object)
 
 
 class ReviewProjectView(UserDataMixin, UpdateView):
