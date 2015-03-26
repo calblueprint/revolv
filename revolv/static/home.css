@@ -5607,6 +5607,9 @@ body {
       line-height: 30px;
       margin: 0; }
 
+.spacer {
+  height: 0px !important; }
+
 .nav-spine {
   position: fixed;
   top: 0px;

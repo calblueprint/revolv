@@ -5747,6 +5747,9 @@ label.checkmark {
   line-height: 60px;
   color: white; }
 
+.spacer {
+  height: 60px; }
+
 nav.header {
   /**
      * Foundation will by default show all the menu items on the mobile version
