@@ -5,7 +5,8 @@
     <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
-
+<!--     <link rel='stylesheet' type="text/css" media='screen and (min-width: 200px) and (max-width: 800px)' href="{% static "projectmobile.css" %}" />
+ -->
     <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/vendor/svg4everybody.min.js" %}"></script>
     
@@ -95,13 +96,13 @@
     <div class="gray-bar"></div>
     {% for update in updates %}
         <div class="update-container">
-            <div class="large-2 columns">
+            <div class="large-2 small-12 columns">
                 <div class = "date-container">
                     <p class="date-year">{{ update.date.day }}</p>
                     <p class="date-month-day">{{ update.month_word }} {{ update.year_word }}<p>
                 </div>
             </div>
-            <div class="large-10 columns">
+            <div class="large-10 small-12 columns">
                 <p class="update-text">{{ update.update_text }}</p>
             </div>
         </div>

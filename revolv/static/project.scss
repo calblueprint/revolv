@@ -504,3 +504,207 @@ body {
     height: 300px;
     margin: 0 20px 20px 20px;
 }
+
+
+@media screen and (max-width: 1050px) {
+    .project-updates {
+
+        .small-12 {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .update-container {
+            margin: 10px 0px;
+
+            .date-container {
+                text-align: left;
+                margin-bottom: 50px;
+
+            }
+
+            .update-text {
+                font-weight: 500;
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .dashboard {
+        .graphics-container {
+            .top-bar {
+                height: 40px;
+                top: 50%;
+
+                .container {
+
+                    .amount-donated {
+                        width: 40%;
+                        line-height: 40px;
+                        font-size: 0.7rem;
+                        margin: 0px 0px 0px 10px;
+
+                    }
+
+                    .days-left {
+                        line-height: 40px;
+                        font-size: 0.7rem;
+                        margin: 0px 10px 0px 0px;
+                    }
+                }
+            }
+
+            .bottom-bar {
+                height: 40px;
+                top: 60%;
+
+                .container {
+
+                    .amount-saved {
+                        line-height: 40px;
+                        font-size: 0.7rem;
+                        margin: 0px 0px 0px 10px;
+                    }
+
+                    .num-donors {
+                        line-height: 40px;
+                        font-size: 0.7rem;
+                        margin: 0px 10px 0px 0px;
+                    }
+                }
+            }
+
+            .svg-graphics-container {
+                width:0%;
+                height:0%;
+                padding:65px;
+                border-radius:100%;
+                top: 215px;
+                left: 50%;
+                -webkit-transform: translateX(-50%);
+                -ms-transform: translateX(-50%);
+                background-color: white;
+            }
+
+            .internal-graphics-container {
+                top: 47%;
+                height: 120px;
+                width: 120px;
+            }
+
+            .project-badge-line, .project-badge-circle {
+              fill: none;
+              stroke-width: 14px;
+            }
+
+            .text-container {
+
+                .percentage-text {
+                    top: 35%;
+                    font-size: 1.1rem;
+                }
+
+                .funded {
+                    top: 45%;
+                    font-size: 1.1rem;
+                }
+            }
+        }
+    }
+
+    .header-img-div {
+
+        .overlay {
+            
+            .donate-button-header {
+                left: 70%;
+                width: 25%;
+
+                p {
+                    margin: 5% 0px;
+                }
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+                line-height: 1.5rem;
+
+            }
+        }
+    }
+
+
+
+    .about {
+
+        margin-top: 150px;
+        .header-text {
+            p {
+                font-size: 1.2rem;
+                line-height: 1.2rem;
+            }
+        }
+
+        .categories {
+
+            .category-holder {
+                width: 25%;
+            }
+        }
+
+        .about-text {
+            p {
+                font-size: 1rem;
+            }
+        }
+
+    }
+
+    .project-updates {
+
+        .small-12 {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .update-container {
+            margin: 10px 0px;
+
+            .date-container {
+                text-align: left;
+                margin-bottom: 50px;
+
+            }
+
+            .update-text {
+                font-weight: 500;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .map {
+        .title-container {
+            p {
+                font-size: 1rem;
+                line-height: 1rem;
+            }
+        }
+
+        .address-container {
+            p {
+                font-size: 0.8rem;
+                line-height: 0.8rem;
+            }
+        }
+
+        .donate-button-header {
+            p {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}

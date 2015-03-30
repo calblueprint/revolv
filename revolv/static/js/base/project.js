@@ -8,6 +8,11 @@ var drawPercentagePartialCircle = function() {
         padding = 10,
         radians = 2 * Math.PI;
 
+    if ($(document).width() > 200 && $(document).width() < 800) {
+        radius = 48;
+        //radius = $(document).width()*0.16;
+    }
+
     var dimension = (2 * radius) + (2 * padding);
 
     var svg = d3.select(".internal-graphics-container")
