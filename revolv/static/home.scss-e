@@ -183,7 +183,7 @@ body {
 
     .coin {
         height: 72px;
-        margin: 0px 10px;
+        margin: 0px 10px; 
         margin-bottom: -84px;
     }
 
@@ -200,7 +200,7 @@ body {
         top: 890px;
         left: 50%;
         margin-left: -95px;
-        z-index: -1;
+        z-index: -1; 
         transform: scale(0.2);
     }
 
