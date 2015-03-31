@@ -6,6 +6,12 @@ from paypalrestsdk import Payment
 from revolv.payments.models import PaymentType
 
 
+# Exceptions
+class InvalidCreditCardException(Exception):
+    pass
+
+
+# Instruments
 class PaymentInstrument(object):
 
     type = None
@@ -45,7 +51,7 @@ class CreditCard(AbstractCreditCard):
 
 class PayPalCreditCardInstrument(PaymentInstrument):
 
-    type = PaymentType.objects.get(name='paypal')
+    type = PaymentType.objects.get_paypal()
 
     def __init__(self, credit_card):
         if not isinstance(credit_card, CreditCard):
@@ -59,12 +65,14 @@ class PayPalCreditCardInstrument(PaymentInstrument):
 
     def charge(self, amount):
         """
-        Charge the credit card for the given amount.
+        Documentation: https://github.com/paypal/PayPal-Python-SDK
+
+        Charge the credit card for the given amount, floored to 2 decimal
+        places. Raises InvalidCreditCardException if charge fails.
 
         :param amount:
-        :return:
         """
-        amount = "{0:.2f}".format(round(float(amount), 2))
+        amount = "{0:.2f}".format(float(amount) - 0.005)  # floor
         payment = Payment({
             "intent": "sale",
             "payer": {
@@ -87,16 +95,10 @@ class PayPalCreditCardInstrument(PaymentInstrument):
                     "total": amount,
                     "currency": "USD"
                 },
-                "description": "This is a charitable payment to a Revolv funded project.",
+                "description": "This is a charitable donation to a Revolv funded project.",
             }]
         })
 
         if not payment.create():
-            print payment.error
-            raise Exception()
-
+            raise InvalidCreditCardException(payment.error)
         # Otherwise we're good
-
-
-class InvalidCreditCardException(Exception):
-    pass

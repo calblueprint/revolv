@@ -26,10 +26,6 @@ IS_PROD = 'IS_PROD' in os.environ
 IS_HEROKU = IS_STAGE or IS_PROD
 IS_LOCAL = not IS_HEROKU
 
-IS_STAGE = 'IS_STAGE' in os.environ
-IS_PROD = 'IS_PROD' in os.environ
-IS_HEROKU = IS_STAGE or IS_PROD
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
     "REVOLV_SECRET_KEY",
@@ -295,4 +291,6 @@ LANGUAGES = [
     ('en-us', 'English'),
 ]
 
-CHARGE_INSTRUMENT = False
+ENABLE_PAYMENT_CHARGING = IS_PROD
+# comment out for testing only!!!
+ENABLE_PAYMENT_CHARGING = True

@@ -1,11 +1,9 @@
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import Payment, PaymentType
-from revolv.settings import CHARGE_INSTRUMENT
+from revolv.settings import ENABLE_PAYMENT_CHARGING
 
 
 # Exceptions
-
-
 class PaymentServiceException(Exception):
     pass
 
@@ -32,12 +30,14 @@ class PaymentService(object):
         if not cls.check_valid_user_entrant(user, entrant, payment_instrument.type):
             raise PaymentServiceException('Improper Payment structure. Invalid entrant or user.')
 
-        if CHARGE_INSTRUMENT:
+        amount = round(float(amount) - 0.005, 2)  # floor amount to 2 decimal places
+
+        if ENABLE_PAYMENT_CHARGING:
             payment_instrument.charge(amount)
         payment = Payment(
             user=user,
             entrant=entrant,
-            amount=float(amount),
+            amount=amount,
             project=project,
             payment_type=payment_instrument.type
         )
@@ -76,8 +76,7 @@ class PaymentService(object):
         """Return True if the payment instrument type is legit."""
         return (
             isinstance(payment_type, PaymentType) and
-            PaymentType.objects.get(
-                name=payment_type.name)
+            PaymentType.objects.get(name=payment_type.name)
         )
 
     @classmethod
