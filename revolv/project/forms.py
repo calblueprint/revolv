@@ -88,7 +88,6 @@ class PostProjectUpdateForm(forms.ModelForm):
             'update_text',
         )
 
-<<<<<<< HEAD
 class EditProjectUpdateForm(forms.ModelForm):
     """ 
     A form used to edit updates about a project
@@ -99,6 +98,5 @@ class EditProjectUpdateForm(forms.ModelForm):
         fields = (
             'update_text',
         )
-=======
+
 ProjectDonationLevelFormSet = inlineformset_factory(Project, DonationLevel, extra=2)
->>>>>>> 9d47db66de22cf52b26e7fb228ebbd1e61bae595
