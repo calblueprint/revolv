@@ -311,6 +311,8 @@ class Project(models.Model):
     @property
     def location_city_state_zip(self):
         pieces = self.location.split(',')
+        if len(pieces) < 3:
+            return ""
         return pieces[1] + "," + pieces[2]
 
     @property

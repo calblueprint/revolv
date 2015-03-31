@@ -97,13 +97,19 @@ body {
             position: absolute;
             transition: all 0.3s;
 
-            p {
+            .donate-link {
                 width: 100%;
                 height: 100%;
-                margin: 5% 0px;
-                color: white;
-                text-align: center;
-                transition: all 0.3s;
+                display: inline-block;
+                
+                p {
+                    width: 100%;
+                    height: 100%;
+                    margin: 5% 0px;
+                    color: white;
+                    text-align: center;
+                    transition: all 0.3s;
+                }
             }
 
             &:hover {

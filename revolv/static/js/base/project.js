@@ -28,10 +28,11 @@ var drawPercentagePartialCircle = function() {
     console.log(window.project)
     
     //this line will get actual partial completeness
-    //var partialCompleteness = $(".storage-div").attr("id");
+    var partialCompleteness = $(".storage-div").attr("id");
 
     //use this for test purposes so you can see the progress bar
-    var partialCompleteness = 0.7;
+    // var partialCompleteness = 0.7;
+    
     if (partialCompleteness <= 0.01 && partialCompleteness !== 0.0) partialCompleteness = 0.02;
     drawD3PartialTriangle(partialGrouping, ["project-badge-line"], radius, padding, partialCompleteness);
 }
