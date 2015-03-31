@@ -5745,8 +5745,6 @@ body {
     html .cover-image .cover-inset p {
       font-size: 18px;
       line-height: 18px; }
-  html .cover-image {
-    height: 100%; }
   .about {
     width: 100%; }
     .about h1 {
