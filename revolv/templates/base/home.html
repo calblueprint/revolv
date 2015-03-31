@@ -28,6 +28,17 @@
 
 {% block javascripts %}
 <script type="text/javascript" src="{% static "js/base/home.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/skroll-colors.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/skrollr.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/vendor/skrollr.menu.min.js" %}"></script>
+<script type="text/javascript">
+  var s = skrollr.init();
+
+  skrollr.menu.init(s, {
+      animate: true,
+      easing: 'sqrt'
+  });
+</script>
 {% endblock %}
 
 {% block body %}
