@@ -111,7 +111,9 @@
 
     <!-- Call to action -->
     <h2>Be a part of something great.</h2>
+    {% if first_project != None %}
     <a href="{% url "project:view" pk=first_project.pk %}" class="donate button">START CONTRIBUTING</a>
+    {% endif %}
 </div>
 
 <script type="text/javascript" src="{% static "js/vendor/skroll-colors.min.js" %}"></script>
