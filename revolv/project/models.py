@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -304,6 +305,38 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse("project:view", kwargs={"pk": str(self.pk)})
 
+    def get_organic_donations(self):
+        return self.payment_set.exclude(user__isnull=True).filter(
+            entrant__pk=models.F('user__pk')
+        )
+
+    def proportion_donated(self, user):
+        """
+        :return:
+            The proportion that this user has organically donated to this
+            project as a float in the range [0, 1] (inclusive)
+        """
+        user_donation = Payment.objects.donations(
+            project=self,
+            user=user,
+            organic=True
+        ).aggregate(
+            models.Sum('amount')
+        )['amount__sum'] or 0.0
+        prop = user_donation / self.amount_donated_organically
+        assert 0 <= prop <= 1, "proportion_donated is incorrect!"
+        return prop
+
+    @property
+    def amount_donated_organically(self):
+        """
+        :return: the current total amount that has been organically donated to
+        this project, as a float
+        """
+        return self.get_organic_donations().aggregate(
+            models.Sum('amount')
+        )["amount__sum"] or 0.0
+
     @property
     def location_street(self):
         return self.location.split(',')[0]
@@ -321,12 +354,9 @@ class Project(models.Model):
         :return: the current total amount that has been donated to this project,
             as a float
         """
-        result = Payment.objects.donations(project=self).aggregate(
+        return self.payment_set.aggregate(
             models.Sum('amount')
-        )["amount__sum"]
-        if result is None:
-            return 0.0
-        return result
+        )["amount__sum"] or 0.0
 
     @property
     def amount_left(self):
@@ -344,7 +374,7 @@ class Project(models.Model):
         """
         :return: the current amount of money repaid by the project to RE-volv.
         """
-        return Payment.objects.repayments(project=self).aggregate(models.Sum('amount'))["amount__sum"] or 0.0
+        return self.adminrepayment_set.aggregate(models.Sum('amount'))["amount__sum"] or 0.0
 
     @property
     def rounded_amount_left(self):
@@ -455,7 +485,15 @@ class ProjectUpdate(models.Model):
     def year_word(self):
         return str(self.date.year)
 
+    def donation_levels(self):
+        return self.donationlevel_set.all()
+
+
 class Category(models.Model):
+    """
+    Categories that a project is associated with. Categories are predefined,
+    and as of now, loaded through fixtures.
+    """
     HEALTH = 'Health'
     ARTS = 'Arts'
     FAITH = 'Faith'
@@ -472,3 +510,15 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class DonationLevel(models.Model):
+    """
+    Model to track donation levels and perks for projects.
+    """
+    project = models.ForeignKey(Project)
+    description = models.CharField(max_length=200)
+    amount = models.DecimalField(
+        max_digits=15,
+        decimal_places=2
+    )

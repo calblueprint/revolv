@@ -24,7 +24,7 @@ class HomePageView(UserDataMixin, TemplateView):
         context["featured_projects"] = Project.objects.get_featured(
             HomePageView.NUM_PROJECTS_SHOWN)
         context["completed_projects_count"] = Project.objects.get_completed().count()
-        context["total_donors_count"] = Payment.objects.total_distinct_donors()
+        context["total_donors_count"] = Payment.objects.total_distinct_organic_donors()
         return context
 
 

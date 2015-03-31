@@ -1,6 +1,5 @@
 from revolv.base.models import RevolvUserProfile
-from revolv.payments.models import (INSTRUMENT_PAYPAL, Payment,
-                                    PaymentInstrumentType)
+from revolv.payments.models import Payment, PaymentType
 from revolv.settings import CHARGE_INSTRUMENT
 
 
@@ -40,7 +39,7 @@ class PaymentService(object):
             entrant=entrant,
             amount=float(amount),
             project=project,
-            payment_instrument_type=payment_instrument.type
+            payment_type=payment_instrument.type
         )
         payment.save()
         return payment
@@ -55,7 +54,7 @@ class PaymentService(object):
                 entrant=entrant,
                 amount=float(amount) * (donation.amount / total),
                 project=project,
-                payment_instrument_type=PaymentInstrumentType.objects.get_repayment()
+                payment_type=PaymentType.objects.get_repayment()
             )
             repayment.save()
         return
@@ -67,18 +66,18 @@ class PaymentService(object):
             entrant=entrant,
             amount=float(amount),
             project=project,
-            payment_instrument_type=PaymentInstrumentType.objects.get_check()
+            payment_type=PaymentType.objects.get_check()
         )
         check.save()
         return check
 
     @classmethod
-    def check_valid_payment_instrument(cls, payment_instrument_type):
+    def check_valid_payment_instrument(cls, payment_type):
         """Return True if the payment instrument type is legit."""
         return (
-            isinstance(payment_instrument_type, PaymentInstrumentType) and
-            PaymentInstrumentType.objects.get(
-                name=payment_instrument_type.name)
+            isinstance(payment_type, PaymentType) and
+            PaymentType.objects.get(
+                name=payment_type.name)
         )
 
     @classmethod
@@ -91,11 +90,11 @@ class PaymentService(object):
             return False
 
     @classmethod
-    def check_valid_user_entrant(cls, user, entrant, payment_instrument_type):
+    def check_valid_user_entrant(cls, user, entrant, payment_type):
         if not isinstance(entrant, RevolvUserProfile):
             return False
         if not isinstance(user, RevolvUserProfile):
             return False
-        if payment_instrument_type.name == INSTRUMENT_PAYPAL and user != entrant:
+        if payment_type.name == PaymentType._PAYPAL and user != entrant:
             return False
         return True
