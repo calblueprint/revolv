@@ -29,9 +29,11 @@
             {% include "base/partials/dashboard_sidebar.html" with user=user %}
         </div>
         {% for project_group_name, project_list in project_dict.items %}
-            {% with outer_index=forloop.index %}
+            {% with outer_counter=forloop.counter %}
                 {% for project in project_list %}
-                    <div class="medium-10 columns dashboard-project" {% if outer_index != 0 and forloop.index != 0 %}style="display:none"{% endif %}>
+                    <!-- {{outer_counter}} -->
+                    <!-- {{ forloop.counter}} -->
+                    <div class="medium-10 columns dashboard-project" {% if outer_counter != 1 or forloop.counter != 1 %}style="display:none"{% endif %}>
                         {% include "base/partials/dashboard_project.html" with project=project user=user %}
                     </div>
                 {% endfor %}

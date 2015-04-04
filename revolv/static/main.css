@@ -6302,10 +6302,105 @@ html, body, .main-row {
       color: inherit;
       text-decoration: underline; }
 
-.dashboard-project-header {
-  height: 55px;
-  background-color: red;
-  width: 100%; }
+.dashboard-project {
+  padding: 0; }
+  .dashboard-project .dashboard-project-header {
+    height: 55px;
+    width: 100%;
+    padding: 15px;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+    .dashboard-project .dashboard-project-header .sidebar-toggle {
+      display: none; }
+    .dashboard-project .dashboard-project-header .title-area {
+      display: inline-block;
+      height: 100%; }
+      .dashboard-project .dashboard-project-header .title-area .title, .dashboard-project .dashboard-project-header .title-area .project-status {
+        display: inline-block; }
+      .dashboard-project .dashboard-project-header .title-area .title {
+        font-size: 22px;
+        font-weight: bold;
+        line-height: 22px; }
+      .dashboard-project .dashboard-project-header .title-area .project-status {
+        margin-left: 10px;
+        font-size: 13px;
+        line-height: 16px;
+        color: #555555;
+        text-transform: uppercase; }
+      .dashboard-project .dashboard-project-header .title-area .location {
+        color: #777777;
+        font-size: 11px;
+        line-height: 15px; }
+        .dashboard-project .dashboard-project-header .title-area .location .location-text {
+          display: inline-block;
+          margin-left: 5px; }
+    .dashboard-project .dashboard-project-header .controls {
+      display: inline-block;
+      text-align: right; }
+      .dashboard-project .dashboard-project-header .controls .control-button {
+        display: inline-block;
+        margin-right: 30px;
+        font-size: 13px;
+        line-height: 16px;
+        color: #555555;
+        text-transform: uppercase;
+        padding: 7px 20px;
+        cursor: pointer;
+        background-color: transparent;
+        color: inherit;
+        border: 1px solid #555555; }
+        .dashboard-project .dashboard-project-header .controls .control-button:last-child {
+          margin-right: 0; }
+        .dashboard-project .dashboard-project-header .controls .control-button:hover {
+          background-color: #555555;
+          color: white;
+          transition: background-color 0.2s;
+          transition: color 0.1s;
+          -webkit-transition: background-color 0.2s;
+          -webkit-transition: color 0.1s; }
+        .dashboard-project .dashboard-project-header .controls .control-button:disabled {
+          opacity: 0.3; }
+        .dashboard-project .dashboard-project-header .controls .control-button.approve {
+          cursor: pointer;
+          background-color: transparent;
+          color: inherit;
+          border: 1px solid #4cb032; }
+          .dashboard-project .dashboard-project-header .controls .control-button.approve:hover {
+            background-color: #4cb032;
+            color: white;
+            transition: background-color 0.2s;
+            transition: color 0.1s;
+            -webkit-transition: background-color 0.2s;
+            -webkit-transition: color 0.1s; }
+          .dashboard-project .dashboard-project-header .controls .control-button.approve:disabled {
+            opacity: 0.3; }
+        .dashboard-project .dashboard-project-header .controls .control-button.deny {
+          cursor: pointer;
+          background-color: transparent;
+          color: inherit;
+          border: 1px solid #e83d3d; }
+          .dashboard-project .dashboard-project-header .controls .control-button.deny:hover {
+            background-color: #e83d3d;
+            color: white;
+            transition: background-color 0.2s;
+            transition: color 0.1s;
+            -webkit-transition: background-color 0.2s;
+            -webkit-transition: color 0.1s; }
+          .dashboard-project .dashboard-project-header .controls .control-button.deny:disabled {
+            opacity: 0.3; }
+        .dashboard-project .dashboard-project-header .controls .control-button.edit {
+          cursor: pointer;
+          background-color: transparent;
+          color: inherit;
+          border: 1px solid #11ade5; }
+          .dashboard-project .dashboard-project-header .controls .control-button.edit:hover {
+            background-color: #11ade5;
+            color: white;
+            transition: background-color 0.2s;
+            transition: color 0.1s;
+            -webkit-transition: background-color 0.2s;
+            -webkit-transition: color 0.1s; }
+          .dashboard-project .dashboard-project-header .controls .control-button.edit:disabled {
+            opacity: 0.3; }
 
 body {
   background-color: #f9f9fa;

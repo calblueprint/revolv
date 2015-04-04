@@ -1,6 +1,7 @@
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
 @import "revolv-settings";
+@import "utils";
 
 html, body, .main-row {
     height: 100%;
@@ -120,8 +121,83 @@ $sidebar-header-gray: #5c5c5c;
     }
 }
 
-.dashboard-project-header {
-    height: $revolv-dashboard-header-height;
-    background-color: red;
-    width: 100%;
+.dashboard-project {
+    padding: 0;
+
+    .dashboard-project-header {
+        height: $revolv-dashboard-header-height;
+        width: 100%;
+        padding: 15px;
+        font-family: $lato-font-family;
+
+        .sidebar-toggle {
+            display: none;
+        }
+
+        .title-area {
+            display: inline-block;
+            height: 100%;
+
+            .title, .project-status {
+                display: inline-block;
+            }
+
+            .title {
+                font-size: 22px;
+                font-weight: bold;
+                line-height: 22px;
+            }
+
+            .project-status {
+                margin-left: 10px;
+
+                font-size: 13px;
+                line-height: 16px;
+                color: #555;
+                text-transform: uppercase;
+            }
+
+            .location {
+                color: #777;
+                font-size: 11px;
+                line-height: 15px;
+
+                .location-text {
+                    display: inline-block;
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        .controls {
+            display: inline-block;
+            text-align: right;
+
+            .control-button {
+                display: inline-block;
+                margin-right: 30px;
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                font-size: 13px;
+                line-height: 16px;
+                color: #555;
+                text-transform: uppercase;
+                padding: 7px 20px;
+
+                @include revolv-hover-button(#555, inherit);
+                &.approve {
+                    @include revolv-hover-button($revolv-green, inherit);
+                }
+                &.deny {
+                    @include revolv-hover-button($revolv-red, inherit);
+                }
+                &.edit {
+                    @include revolv-hover-button($revolv-blue, inherit);
+                }
+            }
+        }
+    }
+
 }

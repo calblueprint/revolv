@@ -4,6 +4,21 @@
     This partial is the header that is displayed on each project on the RE-volv dashboard.
     See dashboard_project.html for more documentation.
 {% endcomment %}
-<div class="dashboard-project-header">
-    {{project.title}}
+<div class="dashboard-project-header row">
+    <div class="sidebar-toggle small-only small-1 columns"><i class="fa fa-align-justify"></i></div>
+    <div class="title-area small-5 columns">
+        <div class="title-line">
+            <div class="title">{{project.title}}</div>
+            <!-- TODO: actual data -->
+            <div class="project-status">(Proposed)</div>
+        </div>
+        <div class="location"><i class="fa fa-map-marker"></i><span class="location-text">San Francisco, CA</span></div>
+    </div>
+    <div class="controls small-6 medium-7 columns">
+        <!-- TODO: actual data -->
+        <div class="control-button approve">approve</div>
+        <div class="control-button deny">deny</div>
+        <div class="control-button edit">edit</div>
+        <div class="control-button post update">post update</div>
+    </div>
 </div>
