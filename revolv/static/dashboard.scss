@@ -71,26 +71,23 @@ $sidebar-header-gray: #5c5c5c;
 
     .dashboard-sidebar-bullet-point {
         display: inline-block;
+        vertical-align: middle;
         margin-right: 10px;
-        &:before {
-            display: inline-block;
-            background-color: red;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            content: "";
-        }
+        background-color: red;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
 
-        &.drafted:before {
+        &.drafted {
             background-color: $revolv-red;
         }
-        &.proposed:before {
+        &.proposed {
             background-color: $revolv-yellow;
         }
-        &.active:before {
+        &.active {
             background-color: $revolv-green;
         }
-        &.completed:before {
+        &.completed {
             background-color: $revolv-blue;
         }
     }
@@ -101,7 +98,6 @@ $sidebar-header-gray: #5c5c5c;
         line-height: 16px;
         max-width: 80%;
         color: lighten($sidebar-header-gray, 10%);
-        margin-bottom: 5px;
 
         &.active {
             color: lighten($sidebar-header-gray, 20%);
