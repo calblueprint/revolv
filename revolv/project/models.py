@@ -422,6 +422,10 @@ class Project(models.Model):
         return self.project_status == Project.COMPLETED
 
     @property
+    def status_display(self):
+        return dict(Project.PROJECT_STATUS_CHOICES)[self.project_status]
+
+    @property
     def categories(self):
         return [category.title for category in self.category_set.all()]
 
