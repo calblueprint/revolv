@@ -6239,6 +6239,57 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
+.header-small-text {
+  font-size: 14px;
+  line-height: 60px;
+  color: white; }
+
+.spacer {
+  height: 60px; }
+
+nav.header {
+  /**
+     * Foundation will by default show all the menu items on the mobile version
+     * of the top bar, but we want to prevent it from showing the user's username
+     * at the second level, since they've already clicked on it.
+     */
+  /**
+     * By default, Foundation will make all the visited menu items a dark purple
+     * color, so we want to change this to white even after links are visited
+     * so they remain visible. One selector gets all first-level links, while 
+     * the other covers dropdown menu items.
+    */ }
+  nav.header .logo-container {
+    display: inline-block;
+    margin: 0 20px 0 0; }
+    nav.header .logo-container .logo {
+      display: inline-block;
+      width: 60px;
+      margin: 0 10px 0 10px; }
+    nav.header .logo-container .tagline {
+      color: white;
+      font-size: 12px;
+      font-weight: 300; }
+  nav.header .user-controls > .dropdown a.js-generated {
+    display: none; }
+  nav.header .top-bar-section li:not(.has-form) a:not(.button), nav.header .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
+    color: white;
+    background: rgba(4, 78, 126, 0.75); }
+
+nav.row.header.top-bar, .top-bar-section ul li {
+  background: transparent !important;
+  margin-bottom: 0px; }
+
+@media only screen and (max-width: 40em) and (orientation: portrait) {
+  nav.header .tagline {
+    display: none !important; } }
+
+div.nav-bg-wrap {
+  position: fixed;
+  width: 100%;
+  background-color: rgba(4, 78, 126, 0.75);
+  z-index: 99; }
+
 html, body, .main-row {
   height: 100%; }
 
@@ -6421,6 +6472,11 @@ html, body, .main-row {
             -webkit-transition: color 0.1s; }
           .dashboard-project .dashboard-project-header .controls .control-button.edit:disabled {
             opacity: 0.3; }
+
+.cover-photo {
+  padding: 0 !important;
+  margin: 13px 0 0 0 !important;
+  height: 300px; }
 
 body {
   background-color: #ebece7;

@@ -2,6 +2,7 @@
 @import "bower_components/foundation/scss/foundation";
 @import "revolv-settings";
 @import "utils";
+@import "nav";
 
 html, body, .main-row {
     height: 100%;
@@ -199,5 +200,12 @@ $sidebar-header-gray: #5c5c5c;
             }
         }
     }
+}
 
+.cover-photo {
+    // HACK: have to use !important because .rows inside .rows have paddings/margins which have
+    // a high specificity, do to their selector being ".row .row".
+    padding: 0 !important;
+    margin: 13px 0 0 0 !important;
+    height: 300px;
 }
