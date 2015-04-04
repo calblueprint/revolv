@@ -5,6 +5,8 @@ This application allows RE-volv to crowdfund donations to community solar projec
 
 Stage URL: http://revolv-stage.herokuapp.com/
 
+![Codeship](https://codeship.com/projects/YOUR_PROJECT_UUID/status?branch=master)
+
 Who We Are
 ----------
 ![bp](http://bptech.berkeley.edu/assets/logo-full-large-d6419503b443e360bc6c404a16417583.png "BP Banner")

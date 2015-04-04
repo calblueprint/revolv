@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
     <style type="text/css">
         #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
@@ -24,7 +25,11 @@
         {% endif %}
         <ul class="button-group nav-tab-button-group">
             {% if project.is_active %}
-                <li><a class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
+                {% if user.is_authenticated %}
+                    <li><a id="donate-button" class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
+                {% else %}
+                    <li><a id="donate-button" class="small button success radius" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login">Donate</a></li>
+                {% endif %}
             {% endif %}
         </ul>
         <h3>Funding Goal : {{ project.funding_goal }}</h3>
@@ -33,14 +38,24 @@
         <div id="map-canvas"></div>
         <p>Organization : {{project.org_name}}</p>
         <p>About {{project.org_name}} : {{project.org_about}}</p>
-        <img src="{{project.cover_photo.url}}"></img>
+        {% if project.cover_photo %}
+            <img src="{{project.cover_photo.url}}"></img>
+        {% endif %}
         <p>Mission Statement : {{ project.mission_statement }}</p>
         {% if project.video_url %}
             <iframe width="420" height="315" id="project_video"></iframe>
         {% endif %}
         {% if project.categories|length > 0 %}
             <h5>Categories</h5>
-            {{ project.categories }}
+            {% for category in project.categories %}
+                {{ category }}
+            {% endfor %}
+        {% endif %}
+        {% if project.donation_levels|length > 0 %}
+            <h5>Donation Levels</h5>
+            {% for donation in project.donation_levels %}
+                <p>Description: {{ donation.description }}, Amount: {{ donation.amount }}</p>
+            {% endfor %}
         {% endif %}
         {% if project.is_completed or project.is_active and project.post_funding_updates %}
             <h5>Post Funding Updates</h5>

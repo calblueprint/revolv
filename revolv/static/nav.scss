@@ -5,12 +5,16 @@ $header-height: $revolv-header-height;
 .header-small-text {
     font-size: 14px;
     line-height: $header-height;
+    color: white;
+}
+
+.spacer {
+    height: 60px;
 }
 
 $header-page-padding: 20px;
 
 nav.header {
-
     $logo-dimension: $header-height;
     .logo-container {
         display: inline-block;
@@ -19,24 +23,42 @@ nav.header {
         .logo {
             display: inline-block;
             width: $logo-dimension;
-            margin: 0 10px 0 0;
+            margin: 0 10px 0 10px;
         }
 
         .tagline {
-            color: $revolv-logo-color-dark;
-            font-size: 1rem;
+            color: white;
+            font-size: 12px;
             font-weight: 300;
         }
     }
 
     /**
-     * Foundation will by default show all the menu items on the movile version
+     * Foundation will by default show all the menu items on the mobile version
      * of the top bar, but we want to prevent it from showing the user's username
      * at the second level, since they've already clicked on it.
      */
     .user-controls > .dropdown a.js-generated {
         display: none;
     }
+
+    /**
+     * By default, Foundation will make all the visited menu items a dark purple
+     * color, so we want to change this to white even after links are visited
+     * so they remain visible. One selector gets all first-level links, while 
+     * the other covers dropdown menu items.
+    */
+    .top-bar-section li:not(.has-form) a:not(.button),
+    .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
+        color: white;
+        background: $revolv-header-color;
+    }
+
+}
+
+nav.row.header.top-bar, .top-bar-section ul li {
+    background: transparent !important;
+    margin-bottom: 0px;
 }
 
 @media #{$small-only} and (orientation: portrait) {
@@ -46,5 +68,8 @@ nav.header {
 }
 
 div.nav-bg-wrap {
-  background-color: $revolv-header-color;
+    position: fixed;
+    width: 100%;
+    background-color: $revolv-header-color;
+    z-index: 99;
 }
