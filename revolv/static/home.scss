@@ -12,6 +12,7 @@
     position: relative;
     top: calc(50% + 40px);
     transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
 }
 
 @mixin vertically-centered-parent() {

@@ -5587,6 +5587,7 @@ body {
     position: relative;
     top: calc(50% + 40px);
     transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
     text-align: center;
     margin: 0 auto;
     min-width: 300px;
@@ -5734,6 +5735,7 @@ body {
     position: relative;
     top: calc(50% + 40px);
     transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
     left: 0;
     height: 100%;
     width: 75%;
