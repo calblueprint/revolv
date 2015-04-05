@@ -334,10 +334,9 @@ class Project(models.Model):
         """
         :return: a string of the street name of the location of this project
         """
-
         try:
             return self.location.split(',')[0]
-        except:
+        except IndexError:
             return ""
 
     @property
@@ -353,7 +352,7 @@ class Project(models.Model):
             elif len(pieces) == 2:
                 return pieces[1]
             return pieces[0]
-        except:
+        except IndexError:
             return ""
 
     @property
@@ -458,9 +457,10 @@ class Project(models.Model):
     @property
     def updates(self):
         """
-        :return: The set of all updates associated with this project.
+        :return: The set of all ProjectUpdate models associated with this project.
         """
-        return self.update_set.all()
+        #return self.update_set.all()
+        return self.update.all()
 
     def add_update(self, text):
         update = ProjectUpdate(update_text=text, project=self)

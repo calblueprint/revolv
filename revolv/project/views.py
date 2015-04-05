@@ -163,10 +163,10 @@ class TemplateProjectUpdateView(UserDataMixin, UpdateView):
 
 
     def dispatch(self, request, *args, **kwargs):
-        arg = super(TemplateProjectUpdateView, self).dispatch(request, args, kwargs)
+        response = super(TemplateProjectUpdateView, self).dispatch(request, args, kwargs)
         if not self.is_ambassador:
             return self.deny_access()
-        return arg
+        return response
 
 
 class PostProjectUpdateView(TemplateProjectUpdateView):
@@ -208,7 +208,7 @@ class ProjectView(UserDataMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
-        context['updates'] = self.get_object().update.all().order_by('date').reverse()
+        context['updates'] = self.get_object().updates.order_by('date').reverse()
         context['donor_count'] = self.get_object().donors.count()
         return context
 

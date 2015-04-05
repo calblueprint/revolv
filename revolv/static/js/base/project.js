@@ -7,10 +7,10 @@ $(document).ready(function () {
     }
 
     // this line will get actual partial completeness
-    var partialCompleteness = $(".storage-div").attr("id");
+    var partialCompleteness = window.PARTIAL_COMPLETENESS;
 
     // use this for test purposes so you can see the progress bar
-    // var partialCompleteness = 0.7;
+    var partialCompleteness = 0.7;
 
     var dimension = (2 * radius) + (2 * padding);
 

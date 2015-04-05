@@ -1,6 +1,6 @@
 /**
  * Draws a partial circle.
- * @param {string} title - The svg container class name that the circle should be drawn to
+ * @param {string} title - The destination class name that the circle should be drawn to
  * @param {string[]} classes - An array of classes that should be added to the created object.
  * @param {number} radius - The radius of this circle.
  * @param {number} padding - The padding of this circle.

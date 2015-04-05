@@ -5629,7 +5629,6 @@ body {
       height: 10%;
       bottom: 40px;
       right: 5%;
-      z-index: 100;
       transition: all 0.3s; }
       .header-img-div .overlay .donate-button-header .donate-link {
         width: 100%;
@@ -5658,7 +5657,7 @@ body {
 .dashboard {
   position: absolute;
   height: 400px;
-  z-index: 1000;
+  z-index: 1;
   top: 300px; }
   .dashboard .statistics-graphics-container {
     height: 100%;
@@ -5740,7 +5739,7 @@ body {
   margin-top: 200px; }
   .about .header-text p {
     font-weight: 800;
-    color: black;
+    color: #444444;
     font-size: 1.8rem; }
   .about .gray-bar {
     background-color: #999999;
@@ -5753,23 +5752,21 @@ body {
       display: inline-block;
       color: #888888;
       margin-left: 15px;
-      margin-right: 10px;
+      margin-right: 20px;
       height: 30px; }
       .about .categories .category-text .category-text-inside {
-        line-height: 28px;
+        line-height: 30px;
         font-size: 0.8rem; }
     .about .categories .category-holder {
       display: inline-block;
-      border-color: #888888;
-      border-style: solid;
-      border-width: 1px;
+      border: 1px solid #888888;
       width: 15%;
       height: 30px;
-      margin: 10px 5px inherit 5px; }
+      margin: 10px 15px inherit 15px; }
       .about .categories .category-holder .category-label {
         color: #888888;
         text-align: center;
-        line-height: 30px; }
+        line-height: 28px; }
   .about .about-text {
     margin-bottom: 80px; }
     .about .about-text p {
@@ -5817,7 +5814,11 @@ body {
   .map .map-canvas {
     position: absolute;
     width: 100%;
-    height: 400px; }
+    height: 400px;
+    margin: 0;
+    padding: 0; }
+    .map .map-canvas img {
+      max-width: none; }
   .map .overlay {
     position: absolute;
     background: rgba(0, 0, 0, 0.5);
@@ -5841,9 +5842,7 @@ body {
       margin: 0;
       line-height: 1.5rem; }
   .map .donate-button-header {
-    border-color: white;
-    border-width: 2px;
-    border-style: solid;
+    border: 2px solid white;
     width: 80%;
     height: 70px;
     z-index: 100;
@@ -5907,22 +5906,22 @@ body {
       width: 40%;
       line-height: 40px;
       font-size: 0.7rem;
-      margin: 0px 0px 0px 10px; }
+      margin: 0 0 0 10px; }
     .dashboard .graphics-container .top-bar .container .days-left {
       line-height: 40px;
       font-size: 0.7rem;
-      margin: 0px 10px 0px 0px; }
+      margin: 0 10px 0 0; }
   .dashboard .graphics-container .bottom-bar {
     height: 40px;
     top: 60%; }
     .dashboard .graphics-container .bottom-bar .container .amount-saved {
       line-height: 40px;
       font-size: 0.7rem;
-      margin: 0px 0px 0px 10px; }
+      margin: 0 0 0 10px; }
     .dashboard .graphics-container .bottom-bar .container .num-donors {
       line-height: 40px;
       font-size: 0.7rem;
-      margin: 0px 10px 0px 0px; }
+      margin: 0 10px 0 0; }
   .dashboard .graphics-container .svg-graphics-container {
     width: 100%;
     height: 100%;

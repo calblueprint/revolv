@@ -7,11 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
 
     <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
-    
-    <style type="text/css">
-        .map-canvas { width: 100px; height: 300px; margin: 0; padding: 0;}
-        .map-canvas img {max-width: none;}
-    </style>
+    <script type="text/javascript">
+        window.PARTIAL_COMPLETENESS = {{ project.partial_completeness_as_js }}
+    </script>
 {% endblock %}
 
 {% block title %}Project{% endblock %}
@@ -52,7 +50,11 @@
         <div class="large-12 header-img-div" style='background-image: url("{{project.cover_photo.url}}")'>
             <div class="overlay">
                 <div class="donate-button-header">
-                   <a class="donate-link" href="#donate" data-reveal-id="donate-modal"><p>DONATE</p></a>
+                    {% if user.is_authenticated %}
+                        <a class="donate-link" id="donate-button" href="#donate" data-reveal-id="donate-modal"><p>DONATE</p></a>
+                    {% else %}
+                        <a class="donate-link" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
+                    {% endif %}
                 </div>
                 <p class="project-title" >{{ project.title }}</p>
             </div>
@@ -63,7 +65,7 @@
 
 <div class="row about">
     <div class="header-text">
-        <p class="header">Promoting healthy business, healthy people, and a healthy planet</p>
+        <p class="header">{{ project.tagline }}</p>
     </div>
     <div class="gray-bar"></div>
     <div class="row categories">
@@ -122,13 +124,12 @@
         </div>
 
         <!-- TODO this donate button doesnt work because the model has a top attribute of like 4000 pixels -->
-        <a href="#donate" data-reveal-id="donate-modal"><div class="donate-button-header">
-            <p>DONATE</p>
-        </div></a>
+        {% if user.is_authenticated %}
+            <a href="#donate" id="donate-button" data-reveal-id="donate-modal"><div class="donate-button-header"><p>DONATE</p></div></a>
+        {% else %}
+            <a id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><div class="donate-button-header"><p>DONATE</p></div></a>
+        {% endif %}
     </div>
-</div>
-
-<div class="storage" id="{{ project.partial_completeness }}">
 </div>
 
 {% endblock %}
