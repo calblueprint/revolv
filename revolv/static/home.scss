@@ -268,11 +268,14 @@ body {
 @media #{$small-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
     html .cover-image .cover-inset {
-        @include vertically-centered-block();
-
+        position: absolute;
+        top: 60px;
         left: 0;
-        height: 100%;
-        width: 75%;
+        right: 0;
+        bottom: 0;
+        height: 50%
+        width: 50%;
+        margin: auto;
         background-color: inherit;
         color: white;
 
@@ -315,10 +318,6 @@ body {
     html .cover-image .cover-inset p {
         font-size: $revolv-cover-inset-paragraph-size - 2px;
         line-height: $revolv-cover-inset-paragraph-size + 4px;
-    }
-
-    html .cover-image .cover-inset {
-        top: calc(50% + 80px);
     }
 
     html .cover-image {
