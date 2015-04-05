@@ -244,14 +244,6 @@ class Project(models.Model):
         default=0.0,
         help_text='The internal rate of return for this project.'
     )
-    
-    #TAKE NOTICE AND GET RID OF THIS LATER
-    #should get rid of this but it causes an error somewhere
-    post_funding_updates = models.TextField(
-        'Updates After Completion',
-        help_text='Add any post project completion updates you want to let your backers know about.',
-        null=True
-    )
 
     # solar data csv files
     daily_solar_data = models.FileField(null=True, upload_to="projects/daily/")
@@ -339,14 +331,30 @@ class Project(models.Model):
 
     @property
     def location_street(self):
-        return self.location.split(',')[0]
+        """
+        :return: a string of the street name of the location of this project
+        """
+
+        try:
+            return self.location.split(',')[0]
+        except:
+            return ""
 
     @property
     def location_city_state_zip(self):
-        pieces = self.location.split(',')
-        if len(pieces) < 3:
+        """
+        :return: a string of the city, state, and zip code of the location of this project 
+        """
+        try:
+            pieces = self.location.split(',')
+            text = ""
+            if len(pieces) >= 3:
+                return pieces[1] + "," + pieces[2]
+            elif len(pieces) == 2:
+                return pieces[1]
+            return pieces[0]
+        except:
             return ""
-        return pieces[1] + "," + pieces[2]
 
     @property
     def amount_donated(self):
@@ -400,7 +408,7 @@ class Project(models.Model):
     @property
     def percent_complete(self):
         """
-        :return: an int between 0 and 100, representing the completeness of this
+        :return: a floored int between 0 and 100, representing the completeness of this
             project with respect to its goal (100 if exactly the goal amount, or
             more, has been donated, 0 if nothing has been donated).
         """
@@ -449,6 +457,9 @@ class Project(models.Model):
 
     @property
     def updates(self):
+        """
+        :return: The set of all updates associated with this project.
+        """
         return self.update_set.all()
 
     def add_update(self, text):
@@ -471,19 +482,6 @@ class ProjectUpdate(models.Model):
         Project,
         related_name="update"
     )
-
-    def set_update_text(self, text):
-        self.update_text = text
-
-    @property
-    def month_word(self):
-        month_num = self.date.month
-        month_dict = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"}
-        return month_dict[month_num]
-
-    @property
-    def year_word(self):
-        return str(self.date.year)
 
     def donation_levels(self):
         return self.donationlevel_set.all()

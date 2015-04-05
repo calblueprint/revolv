@@ -7,11 +7,10 @@
     <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
 
     <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/vendor/svg4everybody.min.js" %}"></script>
     
     <style type="text/css">
-        #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
-        #map-canvas img {max-width: none;}
+        .map-canvas { width: 100px; height: 300px; margin: 0; padding: 0;}
+        .map-canvas img {max-width: none;}
     </style>
 {% endblock %}
 
@@ -24,17 +23,17 @@
 {% include "project/partials/success_modal.html" with project=project %}
 
 <div class="row dashboard">
-    <div class="graphics-container">
-        <div class="top-bar">
+    <div class="statistics-graphics-container">
+        <div class="bar top-bar">
             <div class="container">
-                <p class="amount-donated">${{ project.amount_donated }} donated</p>
-                <p class="days-left">{{ project.days_left }} days left</p>
+                <p class="left-text statistic amount-donated">${{ project.amount_donated }} donated</p>
+                <p class="right-text statistic days-left">{{ project.days_left }} days left</p>
             </div>
         </div>
-        <div class="bottom-bar">
+        <div class="bar bottom-bar">
             <div class="container">
-                <p class ="amount-saved">{{ project.actual_energy }} kwH saved</p>
-                <p class ="num-donors">{{ donor_count }} donors</p>
+                <p class ="left-text statistic amount-saved">{{ project.actual_energy }} kwH saved</p>
+                <p class ="right-text statistic num-donors">{{ donor_count }} donors</p>
             </div>
         </div>
         <svg class="svg-graphics-container">
@@ -43,7 +42,6 @@
         <svg class="internal-graphics-container"></svg>
         <div class="text-container">
             <p class="percentage-text">{{ project.percent_complete }}%</p>
-            <!-- <p class="percentage-text">70%</p> -->
             <p class="funded">FUNDED</p>
         </div>
     </div>
@@ -51,14 +49,14 @@
 
 <div class="heading row">
     {% if project.cover_photo %}
-    <div class = "large-12 header-img-div" style='background-image: url("{{project.cover_photo.url}}")'>
-        <div class="overlay">
-            <div class="donate-button-header">
-               <a class="donate-link" href="#donate" data-reveal-id="donate-modal"><p>DONATE</p></a>
+        <div class="large-12 header-img-div" style='background-image: url("{{project.cover_photo.url}}")'>
+            <div class="overlay">
+                <div class="donate-button-header">
+                   <a class="donate-link" href="#donate" data-reveal-id="donate-modal"><p>DONATE</p></a>
+                </div>
+                <p class="project-title" >{{ project.title }}</p>
             </div>
-            <p class ="project-title" >{{ project.title }}</p>
         </div>
-    </div>
     {% endif %}
 </div>
 
@@ -76,13 +74,12 @@
             </div>
         {% endfor %}
 
-        <!-- These two are in here for testing and viewing purposes: projects don't have categories right now. -->
-        <div class="category-holder"><p class="category-label">ARTS</p></div>
-        <div class="category-holder"><p class="category-label">HEALTH</p></div>
+        <!-- These two are in here for testing and viewing purposes.  -->
+        <!-- <div class="category-holder"><p class="category-label">ARTS</p></div>
+        <div class="category-holder"><p class="category-label">HEALTH</p></div> -->
     </div>
     {% if project.video_url %}
-        <iframe width="100%" height="500" type="text/html" class="project_video youtube-player" frameborder="0" allowfullscreen>
-        </iframe>
+        <iframe width="100%" height="500" type="text/html" class="project_video youtube-player" frameborder="0" allowfullscreen></iframe>
     {% endif %}
 
     <div class="about-text"><p>{{ project.org_about }}</p>
@@ -90,29 +87,29 @@
 </div>
 
 {% if updates|length > 0 %}
-<div class="row project-updates">
-    <div class="header-text">
-        <p class="header">Project Updates</p>
-    </div>
-    <div class="gray-bar"></div>
-    {% for update in updates %}
-        <div class="update-container">
-            <div class="large-2 small-12 columns">
-                <div class = "date-container">
-                    <p class="date-year">{{ update.date.day }}</p>
-                    <p class="date-month-day">{{ update.month_word }} {{ update.year_word }}<p>
+    <div class="row project-updates">
+        <div class="header-text">
+            <p class="header">Project Updates</p>
+        </div>
+        <div class="gray-bar"></div>
+        {% for update in updates %}
+            <div class="update-container">
+                <div class="large-2 small-12 columns">
+                    <div class = "date-container">
+                        <p class="date-year">{{ update.date|date:"m" }}</p>
+                        <p class="date-month-day">{{ update.date|date:"N" }} {{ update.date|date:"o" }}<p>
+                    </div>
+                </div>
+                <div class="large-10 small-12 columns">
+                    <p class="update-text">{{ update.update_text }}</p>
                 </div>
             </div>
-            <div class="large-10 small-12 columns">
-                <p class="update-text">{{ update.update_text }}</p>
-            </div>
-        </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 {% endif %}
 
 <div class="row map">
-    <div id="map-canvas"></div>
+    <div id="map-canvas" class="map-canvas"></div>
     <div class="overlay">
         <div class="text-container">
             <div class="title-container">
@@ -124,14 +121,14 @@
             </div>
         </div>
 
-        <!-- this donate button doesnt work because the model has a top attribute of like 4000 pixels -->
+        <!-- TODO this donate button doesnt work because the model has a top attribute of like 4000 pixels -->
         <a href="#donate" data-reveal-id="donate-modal"><div class="donate-button-header">
             <p>DONATE</p>
         </div></a>
     </div>
 </div>
 
-<div class="storage-div" id="{{ project.partial_completeness }}">
+<div class="storage" id="{{ project.partial_completeness }}">
 </div>
 
 {% endblock %}
@@ -146,6 +143,7 @@
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>
 
+<script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
 <script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
 
 {# jQuery.payment necessary for sexy card info validation #}

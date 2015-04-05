@@ -65,29 +65,6 @@ class ProjectStatusForm(forms.ModelForm):
         # fields that need to be filled out, empty on purpose
         fields = ()
 
-
-# class PostFundingUpdateForm(forms.ModelForm):
-#     """
-#     A form for providing post funding updates about a project
-#     """
-#     class Meta:
-#         model = Project
-#         fields = (
-#             'post_funding_updates',
-#             'solar_url',
-#         )
-
-
-class PostProjectUpdateForm(forms.ModelForm):
-    """
-    A form used to create updates about a project
-    """
-    class Meta:
-        model = ProjectUpdate
-        fields = (
-            'update_text',
-        )
-
 class EditProjectUpdateForm(forms.ModelForm):
     """ 
     A form used to edit updates about a project

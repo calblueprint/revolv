@@ -35,8 +35,8 @@ class ProjectUpdateTest(TestCase):
     def test_add_update(self):
         project = Project.factories.base.create()
         project.add_update('Another sample update')
-        update3 = ProjectUpdate.objects.get(update_text='Another sample update')
-        self.assertEqual(project.id, update3.project_id)
+        update = ProjectUpdate.objects.get(update_text='Another sample update')
+        self.assertEqual(project, update3.project)
 
 class ProjectTests(TestCase):
     """Project model tests."""
@@ -250,19 +250,17 @@ class ProjectIntegrationTest(WebTest):
         login page instead of being able to donate.
         """
 
-        # project = Project.factories.active.create()
-        # resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
-        # self.assertEqual(resp.status_code, 200)
+        project = Project.factories.active.create()
+        resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
+        self.assertEqual(resp.status_code, 200)
         
         # note: if the link makes a modal appear, it will be skipped and the
         # test will fail because it couldn't find the link - this is what
         # we want to happen in this case, but we may have to change this if
         # we want a login modal to appear instead.
 
-        # commented out because this test is deprecated and a login modal
-        # exists now
-        # resp = (resp.click(linkid="donate-button")).maybe_follow()
-        # self.assertTemplateUsed(resp, "base/sign_in.html")
+        resp = (resp.click(linkid="donate-button")).maybe_follow()
+        self.assertTemplateUsed(resp, "base/sign_in.html")
 
 
 class ScrapeTest(TestCase):

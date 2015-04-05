@@ -5593,7 +5593,7 @@ th.hide-for-touch {
       opacity: 1; }
 
 body {
-  font-family: Lato; }
+  font-family: Lato, sans-serif; }
 
 .row {
   margin-right: 0px;
@@ -5613,33 +5613,29 @@ body {
 .header-img-div {
   width: 100%;
   height: 500px;
-  position: absolute;
+  position: relative;
   background-size: cover; }
   .header-img-div .overlay {
+    position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    position: absolute; }
+    background: rgba(0, 0, 0, 0.5); }
     .header-img-div .overlay .donate-button-header {
-      border-color: white;
-      border-width: 2px;
-      border-style: solid;
+      position: absolute;
+      border: 2px solid white;
       width: 15%;
       height: 10%;
-      top: 410px;
-      left: 80%;
+      bottom: 40px;
+      right: 5%;
       z-index: 100;
-      position: absolute;
       transition: all 0.3s; }
       .header-img-div .overlay .donate-button-header .donate-link {
         width: 100%;
         height: 100%;
         display: inline-block; }
         .header-img-div .overlay .donate-button-header .donate-link p {
-          width: 100%;
-          height: 100%;
           margin: 5% 0px;
           color: white;
           text-align: center;
@@ -5650,127 +5646,94 @@ body {
           color: black;
           font-weight: 500; }
     .header-img-div .overlay .project-title {
+      position: absolute;
       color: white;
       font-size: 2rem;
       font-weight: 800;
       top: 400px;
       left: 5%;
-      position: absolute;
       width: 30%;
       line-height: 2rem; }
 
 .dashboard {
+  position: absolute;
   height: 400px;
   z-index: 1000;
-  position: absolute;
   top: 300px; }
-  .dashboard .graphics-container {
+  .dashboard .statistics-graphics-container {
     height: 100%;
     width: 100%; }
-    .dashboard .graphics-container .top-bar {
-      background-color: #11ade5;
+    .dashboard .statistics-graphics-container .bar {
       width: 100%;
       height: 40px;
-      position: absolute;
-      top: 50%;
-      display: inline-block;
-      margin: 0; }
-      .dashboard .graphics-container .top-bar .container {
-        position: relative;
-        color: white;
-        font-weight: 500;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        display: inline-block; }
-        .dashboard .graphics-container .top-bar .container .amount-donated {
-          float: left;
-          width: 30%;
-          height: 100%;
-          line-height: 40px;
-          margin: 0px 0px 0px 20px;
-          font-size: 1.4rem; }
-        .dashboard .graphics-container .top-bar .container .days-left {
-          float: right;
-          height: 100%;
-          line-height: 40px;
-          font-size: 1.4rem;
-          margin: 0px 20px 0px 0px; }
-    .dashboard .graphics-container .bottom-bar {
-      background-color: #064f7e;
-      width: 100%;
-      height: 40px;
-      position: absolute;
-      top: 60%;
-      display: inline-block; }
-      .dashboard .graphics-container .bottom-bar .container {
+      position: absolute; }
+      .dashboard .statistics-graphics-container .bar.top-bar {
+        background-color: #11ade5;
+        top: 50%;
+        margin: 0; }
+        .dashboard .statistics-graphics-container .bar.top-bar .amount-donated {
+          width: 30%; }
+      .dashboard .statistics-graphics-container .bar.bottom-bar {
+        position: absolute;
+        background-color: #064f7e;
+        top: 60%; }
+      .dashboard .statistics-graphics-container .bar .container {
         position: relative;
         color: white;
         font-weight: 500;
         width: 100%;
         height: 100%;
         margin: 0; }
-        .dashboard .graphics-container .bottom-bar .container .amount-saved {
-          float: left;
-          height: 100%;
+        .dashboard .statistics-graphics-container .bar .container .statistic {
           line-height: 40px;
-          font-size: 1.4rem;
-          margin: 0px 0px 0px 20px; }
-        .dashboard .graphics-container .bottom-bar .container .num-donors {
-          float: right;
-          height: 100%;
-          line-height: 40px;
-          font-size: 1.4rem;
-          margin: 0px 20px 0px 0px; }
-    .dashboard .graphics-container .svg-graphics-container {
+          font-size: 1.4rem; }
+          .dashboard .statistics-graphics-container .bar .container .statistic.left-text {
+            float: left;
+            height: 100%;
+            margin: 0 0 0 20px; }
+          .dashboard .statistics-graphics-container .bar .container .statistic.right-text {
+            float: right;
+            height: 100%;
+            margin: 0 20px 0 0; }
+    .dashboard .statistics-graphics-container .svg-graphics-container {
+      position: absolute;
       height: 100%;
-      width: 100%;
-      position: absolute; }
-    .dashboard .graphics-container .internal-graphics-container {
+      width: 100%; }
+    .dashboard .statistics-graphics-container .internal-graphics-container {
+      position: absolute;
       height: 220px;
       width: 220px;
       position: relative;
       left: 50%;
       top: 50%;
-      -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-      position: absolute; }
-    .dashboard .graphics-container .project-badge-line, .dashboard .graphics-container .project-badge-circle {
+      transform: translate(-50%, -50%); }
+    .dashboard .statistics-graphics-container .project-badge-line, .dashboard .statistics-graphics-container .project-badge-circle {
       fill: none;
       stroke-width: 20px; }
-    .dashboard .graphics-container .project-badge-line {
+    .dashboard .statistics-graphics-container .project-badge-line {
       stroke: #11ade5; }
-    .dashboard .graphics-container .project-badge-circle {
+    .dashboard .statistics-graphics-container .project-badge-circle {
       stroke: white; }
-    .dashboard .graphics-container .text-container {
+    .dashboard .statistics-graphics-container .text-container {
       position: absolute;
       left: 50%;
       top: 50%;
-      -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
       height: 220px;
-      width: 220px; }
-      .dashboard .graphics-container .text-container .percentage-text {
-        font-size: 3rem;
-        color: #064f7e;
-        font-weight: 500;
+      width: 220px;
+      color: #064f7e; }
+      .dashboard .statistics-graphics-container .text-container .percentage-text {
         position: absolute;
+        font-size: 3rem;
         left: 50%;
         top: 40%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%); }
-      .dashboard .graphics-container .text-container .funded {
-        font-size: 1.5rem;
-        color: #064f7e;
-        font-weight: 800;
+      .dashboard .statistics-graphics-container .text-container .funded {
         position: absolute;
+        font-size: 1.5rem;
+        font-weight: 800;
         left: 50%;
         top: 60%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%); }
 
 .about {
@@ -5793,7 +5756,7 @@ body {
       margin-right: 10px;
       height: 30px; }
       .about .categories .category-text .category-text-inside {
-        line-height: 30px;
+        line-height: 28px;
         font-size: 0.8rem; }
     .about .categories .category-holder {
       display: inline-block;
@@ -5802,9 +5765,7 @@ body {
       border-width: 1px;
       width: 15%;
       height: 30px;
-      margin-top: 10px;
-      margin-right: 5px;
-      margin-left: 5px; }
+      margin: 10px 5px inherit 5px; }
       .about .categories .category-holder .category-label {
         color: #888888;
         text-align: center;
@@ -5813,7 +5774,8 @@ body {
     margin-bottom: 80px; }
     .about .about-text p {
       font-weight: 500;
-      font-size: 1.5rem; }
+      font-size: 1.5rem;
+      color: #333333; }
 
 .project-updates .header-text p {
   font-weight: 800;
@@ -5839,28 +5801,29 @@ body {
     .project-updates .update-container .date-container .date-year {
       font-size: 4.5rem;
       margin-bottom: 0rem;
-      line-height: 1; }
+      line-height: 4.5rem; }
     .project-updates .update-container .date-container .date-month-day {
       font-size: 1.5rem;
-      line-height: 1; }
+      line-height: 1.5rem; }
   .project-updates .update-container .update-text {
     font-weight: 500;
-    font-size: 1.5rem; }
+    font-size: 1.5rem;
+    color: #333333; }
 
 .map {
-  height: 400px;
   margin-top: 40px;
-  margin-bottom: 40px; }
-  .map #map-canvas {
+  margin-bottom: 50px;
+  height: 400px; }
+  .map .map-canvas {
+    position: absolute;
     width: 100%;
-    height: 100%; }
+    height: 400px; }
   .map .overlay {
+    position: absolute;
     background: rgba(0, 0, 0, 0.5);
     float: left;
     height: 400px;
-    width: 40%;
-    position: absolute;
-    margin-top: -400px; }
+    width: 40%; }
   .map .text-container {
     position: absolute;
     color: white;
@@ -5924,7 +5887,7 @@ body {
   margin: 0 20px 20px 20px; }
 
 @media screen and (max-width: 1050px) {
-  .project-updates .small-12 {
+  .project-updates .columns {
     padding-left: 0px;
     padding-right: 0px; }
   .project-updates .update-container {
@@ -5961,14 +5924,13 @@ body {
       font-size: 0.7rem;
       margin: 0px 10px 0px 0px; }
   .dashboard .graphics-container .svg-graphics-container {
-    width: 0%;
-    height: 0%;
+    width: 100%;
+    height: 100%;
     padding: 65px;
     border-radius: 100%;
     top: 215px;
     left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
     background-color: white; }
   .dashboard .graphics-container .internal-graphics-container {
     top: 47%;

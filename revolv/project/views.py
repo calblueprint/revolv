@@ -157,21 +157,20 @@ class ReviewProjectView(UserDataMixin, UpdateView):
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
-class PostProjectUpdateView(UserDataMixin, UpdateView):
-    model = Project
-    template_name = 'project/post_project_update.html'
-    form_class = forms.PostProjectUpdateForm
+class TemplateProjectUpdateView(UserDataMixin, UpdateView):
+    form_class = forms.EditProjectUpdateForm
+    template_name = 'project/edit_project_update.html'
+
 
     def dispatch(self, request, *args, **kwargs):
-        self.user = request.user
-        self.is_authenticated = self.user.is_authenticated()
-        if self.is_authenticated:
-            self.user_profile = RevolvUserProfile.objects.get(user=self.user)
-            self.is_ambassador = self.user_profile.is_ambassador()
-
+        arg = super(TemplateProjectUpdateView, self).dispatch(request, args, kwargs)
         if not self.is_ambassador:
             return self.deny_access()
-        return super(PostProjectUpdateView, self).dispatch(request, args, kwargs)
+        return arg
+
+
+class PostProjectUpdateView(TemplateProjectUpdateView):
+    model = Project
 
     def get_success_url(self):
         return reverse('project:review', kwargs={'pk': self.get_object().id})
@@ -182,27 +181,9 @@ class PostProjectUpdateView(UserDataMixin, UpdateView):
         project.add_update(text)
         return super(PostProjectUpdateView, self).form_valid(form)
 
-    def form_invalid(self, form):
-        print("oh no", form)
 
-class EditProjectUpdateView(UserDataMixin, UpdateView):
-    
+class EditProjectUpdateView(TemplateProjectUpdateView):    
     model = ProjectUpdate
-
-    #STILL HAVE TO MAKE THIS TEMPLATE AND FORM
-    template_name = 'project/edit_project_update.html'
-    form_class = forms.EditProjectUpdateForm
-
-    def dispatch(self, request, *args, **kwargs):
-        self.user = request.user
-        self.is_authenticated = self.user.is_authenticated()
-        if self.is_authenticated:
-            self.user_profile = RevolvUserProfile.objects.get(user=self.user)
-            self.is_ambassador = self.user_profile.is_ambassador()
-
-        if not self.is_ambassador:
-            return self.deny_access()
-        return super(EditProjectUpdateView, self).dispatch(request, args, kwargs)
 
     def get_success_url(self):
         return reverse('project:review', kwargs={'pk': self.get_object().project_id})
@@ -210,11 +191,9 @@ class EditProjectUpdateView(UserDataMixin, UpdateView):
     def form_valid(self, form):
         text = form.cleaned_data['update_text']
         update = self.get_object()
-        update.set_update_text(text)
+        update.update_text = text
         return super(EditProjectUpdateView, self).form_valid(form)
 
-    def form_invalid(self, form):
-        print("oh no", form)
 
 class ProjectView(UserDataMixin, DetailView):
     """
@@ -229,8 +208,8 @@ class ProjectView(UserDataMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
-        context['updates'] = self.get_object().update.all()[::-1]
-        context['donor_count'] = len(self.get_object().donors.all())
+        context['updates'] = self.get_object().update.all().order_by('date').reverse()
+        context['donor_count'] = self.get_object().donors.count()
         return context
 
     def dispatch(self, request, *args, **kwargs):

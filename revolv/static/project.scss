@@ -44,7 +44,7 @@
 }
 
 body {
-    font-family: Lato;
+    font-family: Lato, sans-serif;
 }
 
 .row {
@@ -74,37 +74,33 @@ body {
 .header-img-div {
     width: 100%;
     height: 500px;
-    position: absolute;
+    position: relative;
     background-size: cover;
 
     .overlay {
+        position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
         left: 0;
         background: rgba(0, 0, 0, .5);
-        position: absolute;
         
         .donate-button-header {
-            border-color: white;
-            border-width: 2px;
-            border-style: solid;
+            position: absolute;
+            border: 2px solid white;
             width: 15%;
             height: 10%;
-            top: 410px;
-            left: 80%;
+            bottom: 40px;
+            right: 5%;
             z-index: 100;
-            position: absolute;
             transition: all 0.3s;
 
             .donate-link {
                 width: 100%;
                 height: 100%;
                 display: inline-block;
-                
+
                 p {
-                    width: 100%;
-                    height: 100%;
                     margin: 5% 0px;
                     color: white;
                     text-align: center;
@@ -123,12 +119,12 @@ body {
         }
 
         .project-title {
+            position: absolute;
             color: white;
             font-size: 2rem;
             font-weight: 800;
             top: 400px;
             left: 5%;
-            position: absolute;
             width: 30%;
             line-height: 2rem;
 
@@ -137,59 +133,35 @@ body {
 }
 
 .dashboard {
+    position: absolute;
     height: 400px;
     z-index: 1000;
-    position: absolute;
     top: 300px;
 
-    .graphics-container {
+    .statistics-graphics-container {
         height: 100%;
         width: 100%;
 
-        .top-bar {
-            background-color: $revolv-blue;
+        .bar {
             width: 100%;
             height: 40px;
             position: absolute;
-            top: 50%;
-            display: inline-block;
-            margin: 0;
 
-            .container {
-                position: relative;
-                color: white;
-                font-weight: 500;
-                width: 100%;
-                height: 100%;
+            &.top-bar {
+                background-color: $revolv-blue;
+                top: 50%;
                 margin: 0;
-                display: inline-block;
 
                 .amount-donated {
-                    float: left;
                     width: 30%;
-                    height: 100%;
-                    line-height: 40px;
-                    margin: 0px 0px 0px 20px;
-                    font-size: 1.4rem;
-                }
-
-                .days-left {
-                    float: right;
-                    height: 100%;
-                    line-height: 40px;
-                    font-size: 1.4rem;
-                    margin: 0px 20px 0px 0px;
                 }
             }
-        }
 
-        .bottom-bar {
-            background-color: #064f7e;
-            width: 100%;
-            height: 40px;
-            position: absolute;
-            top: 60%;
-            display: inline-block;
+            &.bottom-bar {
+                position: absolute;
+                background-color: #064f7e;
+                top: 60%;
+            }
 
             .container {
                 position: relative;
@@ -198,41 +170,38 @@ body {
                 width: 100%;
                 height: 100%;
                 margin: 0;
-
-                .amount-saved {
-                    float: left;
-                    height: 100%;
+                .statistic {
                     line-height: 40px;
                     font-size: 1.4rem;
-                    margin: 0px 0px 0px 20px;
-                }
+                    &.left-text {
+                        float: left;
+                        height: 100%;
+                        margin: 0 0 0 20px;
+                    }
 
-                .num-donors {
-                    float: right;
-                    height: 100%;
-                    line-height: 40px;
-                    font-size: 1.4rem;
-                    margin: 0px 20px 0px 0px;
+                    &.right-text {
+                        float: right;
+                        height: 100%;
+                        margin: 0 20px 0 0;
+                    }
                 }
             }
         }
 
         .svg-graphics-container {
+            position: absolute;
             height: 100%;
             width: 100%;
-            position: absolute;
         }
 
         .internal-graphics-container {
+            position: absolute;
             height: 220px;
             width: 220px;
             position: relative;
             left: 50%;
             top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
-            position: absolute;
         }
 
         .project-badge-line, .project-badge-circle {
@@ -252,35 +221,25 @@ body {
             position: absolute;
             left: 50%;
             top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
             height: 220px;
             width: 220px;
+            color: $revolv-dark-blue;
 
             .percentage-text {
-                font-size: 3rem;
-                color: #064f7e;
-                font-weight: 500;
                 position: absolute;
-
+                font-size: 3rem;
                 left: 50%;
                 top: 40%;
-                -webkit-transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
             }
 
             .funded {
-                font-size: 1.5rem;
-                color: #064f7e;
-                font-weight: 800;
                 position: absolute;
-
+                font-size: 1.5rem;
+                font-weight: 800;
                 left: 50%;
                 top: 60%;
-                -webkit-transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
             }
         }
@@ -316,7 +275,7 @@ body {
             height: 30px;
 
             .category-text-inside {
-                line-height: 30px;
+                line-height: 28px;
                 font-size: 0.8rem;
             }
         }
@@ -328,9 +287,7 @@ body {
             border-width: 1px;
             width: 15%;
             height: 30px;
-            margin-top: 10px;
-            margin-right: 5px;
-            margin-left: 5px;
+            margin: 10px 5px inherit 5px;
 
             .category-label {
                 color: #888888;
@@ -344,6 +301,7 @@ body {
         p {
             font-weight: 500;
             font-size: 1.5rem;
+            color: #333333;
         }
         margin-bottom: 80px;
     }
@@ -375,47 +333,48 @@ body {
             height: 50px;
             width: 100%;
             text-align: center;
-            color: #064f7e;
+            color: $revolv-dark-blue;
             font-weight: 300;
-            line-height: .5;
+            line-height: 0.5;
 
             .date-year {
                 font-size: 4.5rem;
                 margin-bottom: 0rem;
-                line-height: 1;
+                line-height: 4.5rem;
             }
 
             .date-month-day {
                 font-size: 1.5rem;
-                line-height: 1;
+                line-height: 1.5rem;
             }
         }
 
         .update-text {
             font-weight: 500;
             font-size: 1.5rem;
+            color: #333333;
         }
     }
 }
 
 .map {
-    height: 400px;
     margin-top: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    height: 400px;
 
-    #map-canvas {
+    .map-canvas {
+        position: absolute;
         width: 100%;
-        height: 100%;
+        height: 400px;
     }
 
 
     .overlay {
+        position: absolute;
         background: rgba(0, 0, 0, .5);
         float: left;
         height: 400px;
         width: 40%;
-        position: absolute;
-        margin-top: -400px;
     }
 
     .text-container {
@@ -511,11 +470,13 @@ body {
     margin: 0 20px 20px 20px;
 }
 
+// --- Mobile Responsiveness Styles ------------------------------------------------------
+// TO FIX @MEDIA HEADERS AND TO ADD IN PORTRAIT/ORIENTATION STUFF
 
 @media screen and (max-width: 1050px) {
     .project-updates {
 
-        .small-12 {
+        .columns {
             padding-left: 0px;
             padding-right: 0px;
         }
@@ -584,14 +545,13 @@ body {
             }
 
             .svg-graphics-container {
-                width:0%;
-                height:0%;
-                padding:65px;
-                border-radius:100%;
+                width: 100%;
+                height: 100%;
+                padding: 65px;
+                border-radius: 100%;
                 top: 215px;
                 left: 50%;
-                -webkit-transform: translateX(-50%);
-                -ms-transform: translateX(-50%);
+                transform: translateX(-50%);
                 background-color: white;
             }
 
