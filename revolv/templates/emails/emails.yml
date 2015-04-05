@@ -42,3 +42,21 @@ post_donation:
         Thank you,
         The Re-volv Team
         "
+monthly_donation_email:
+    subject: "Your monthly report from Re-volv!"
+    body:
+        "
+        Hi {{user.first_name}}!
+
+        Thank you for your invaluable donations to Re-volv! Each contribution is a major step in bringing clean energy to everyone.
+
+        Monthly Stats
+
+        {% for payment in payments %}
+            You donated {{payment.amount}} to {{payment.project.title}}
+
+        {% endfor %}
+
+        Thank you,
+        The Re-volv Team
+        "
