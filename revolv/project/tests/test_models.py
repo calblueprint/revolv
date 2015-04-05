@@ -36,7 +36,7 @@ class ProjectUpdateTest(TestCase):
         project = Project.factories.base.create()
         project.add_update('Another sample update')
         update = ProjectUpdate.objects.get(update_text='Another sample update')
-        self.assertEqual(project, update3.project)
+        self.assertEqual(project, update.project)
 
 class ProjectTests(TestCase):
     """Project model tests."""
