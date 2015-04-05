@@ -296,6 +296,12 @@ var populateConfirmModal = function(formValues) {
     $('span.confirm-info-amount').text('{0} USD'.format(
         formValues['donation-amount']));
 };
+var confirmModalButtons = [
+    $('button.donation-submit'),
+    $('button.donation-change'),
+    $('button.cancel-confirm')
+];
+var paymentSpinner = new Spinner();
 $('button.donation-continue').click(function(e) {
     e.preventDefault();
     populateConfirmModal(getDonateFormValues());
@@ -307,6 +313,11 @@ $('button.donation-change').click(function(e) {
 });
 $('button.donation-submit').click(function(e) {
     e.preventDefault();
+    $.each(confirmModalButtons, function (i, btn) {
+        btn.prop('disabled', true);
+    });
+    paymentSpinner.spin();
+    $('#confirm-modal').append(paymentSpinner.el);
     $('#donate-form').submit();
 });
 $donateModalErrors = $('#donate-modal').find('.modal-errors');
@@ -378,6 +389,13 @@ $('#donate-form').submit(function(e) {
         $donateModalErrors.children('.error-msg')
             .text('Your card information is invalid. Please correct it.');
         $('#donate-modal').foundation('reveal', 'open');
+    }).always(function () {
+        paymentSpinner.stop();
+        setTimeout(function() {
+            $.each(confirmModalButtons, function (i, btn) {
+                btn.prop('disabled', false);
+            });
+        }, 500);
     });
 
 });

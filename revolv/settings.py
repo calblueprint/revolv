@@ -291,6 +291,5 @@ LANGUAGES = [
     ('en-us', 'English'),
 ]
 
-ENABLE_PAYMENT_CHARGING = IS_PROD
-# comment out for testing only!!!
+# be careful!
 ENABLE_PAYMENT_CHARGING = True

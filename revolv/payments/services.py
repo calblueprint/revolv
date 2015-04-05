@@ -1,3 +1,5 @@
+from math import floor
+
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import Payment, PaymentType
 from revolv.settings import ENABLE_PAYMENT_CHARGING
@@ -30,7 +32,7 @@ class PaymentService(object):
         if not cls.check_valid_user_entrant(user, entrant, payment_instrument.type):
             raise PaymentServiceException('Improper Payment structure. Invalid entrant or user.')
 
-        amount = round(float(amount) - 0.005, 2)  # floor amount to 2 decimal places
+        amount = floor(amount * 100) / 100.0  # floor amount to 2 decimal places
 
         if ENABLE_PAYMENT_CHARGING:
             payment_instrument.charge(amount)

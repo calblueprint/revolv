@@ -68,10 +68,9 @@
                   open: {
                       'opacity': 0,
                       'visibility': 'visible',
-                      // NOTE: you should manually change display of your modal
-                      // in the scss, because the "open" action will make it display:
-                      // block by default, and this will interfere if you want it to
-                      // be display: table (or anything else) instead.
+                      // display should be 'table' because we use the table
+                      // method for vertically centering the modal
+                      'display': 'table',
                   },
                   close: {
                       'opacity': 1,

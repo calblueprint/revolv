@@ -85,11 +85,21 @@ small.field-error {
     border: 1px solid #b3b3c0; }
     .submit-button.gray:hover {
       background-color: #b3b3c0; }
+    .submit-button.gray:disabled {
+      background-color: #b3b3c0;
+      border: 1px solid #b3b3c0; }
+      .submit-button.gray:disabled:hover {
+        background-color: #b3b3c0; }
   .submit-button.yellow {
     color: #f4c27d;
     border: 1px solid #f4c27d; }
     .submit-button.yellow:hover {
       background-color: #f0ad4e; }
+    .submit-button.yellow:disabled {
+      background-color: #f0ad4e;
+      border: 1px solid #f4c27d; }
+      .submit-button.yellow:disabled:hover {
+        background-color: #f0ad4e; }
   .submit-button:hover {
     background-color: #11ade5;
     color: white;
@@ -98,4 +108,9 @@ small.field-error {
     -webkit-transition: background-color 0.2s;
     -webkit-transition: color 0.1s; }
   .submit-button:disabled {
-    opacity: 0.3; }
+    opacity: 0.3;
+    background-color: #11ade5;
+    border: 1px solid #11ade5;
+    color: white; }
+    .submit-button:disabled:hover {
+      background-color: #11ade5; }

@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 from collections import namedtuple
+from math import floor
 
 from paypalrestsdk import Payment
 from revolv.payments.models import PaymentType
@@ -72,7 +73,7 @@ class PayPalCreditCardInstrument(PaymentInstrument):
 
         :param amount:
         """
-        amount = "{0:.2f}".format(float(amount) - 0.005)  # floor
+        amount = "{0:.2f}".format(floor(amount * 100) / 100.0)  # floor
         payment = Payment({
             "intent": "sale",
             "payer": {
