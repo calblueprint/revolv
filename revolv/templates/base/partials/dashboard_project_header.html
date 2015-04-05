@@ -9,16 +9,11 @@
     <div class="title-area small-5 columns">
         <div class="title-line">
             <div class="title">{{project.title}}</div>
-            <!-- TODO: actual data -->
             <div class="project-status">({{project.status_display}})</div>
         </div>
         <div class="location"><i class="fa fa-map-marker"></i><span class="location-text">San Francisco, CA</span></div>
     </div>
     <div class="controls small-6 medium-7 columns">
-        <!-- TODO: actual data -->
-        <div class="control-button approve">approve</div>
-        <div class="control-button deny">deny</div>
-        <div class="control-button edit">edit</div>
-        <div class="control-button post update">post update</div>
+        {% include "base/partials/project_controls.html" with project=project profile=user.revolvuserprofile %}
     </div>
 </div>
