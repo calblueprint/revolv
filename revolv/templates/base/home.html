@@ -123,7 +123,9 @@
 
     <!-- Call to action -->
     <h2>Be a part of something great.</h2>
-    <div class="donate button">DONATE NOW</div>
+    {% if first_project %}
+        <a href="{% url "project:view" pk=first_project.pk %}" class="donate button">START CONTRIBUTING</a>
+    {% endif %}
 </div>
 {% endspaceless %}
 
