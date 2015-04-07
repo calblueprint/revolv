@@ -53,7 +53,7 @@ monthly_donation_email:
         Monthly Stats
 
         {% for payment in payments %}
-        You donated {{payment.amount}} to {{payment.project.title}}
+        You donated {{payment.amount}} to {{payment.project.title}}.
         {% endfor %}
 
         Thank you,
@@ -68,7 +68,7 @@ monthly_donation_email:
         <p>Monthly Stats</p>
 
         {% for payment in payments %}
-        <p>You donated {{payment.amount}} to {{payment.project.title}}</p>
+        <p>You donated {{payment.amount}} to {{payment.project.title}}.</p>
         {% endfor %}
 
         Thank you,
