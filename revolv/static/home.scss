@@ -12,6 +12,8 @@
     position: relative;
     top: calc(50% + 40px);
     transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
 }
 
 @mixin vertically-centered-parent() {
@@ -121,12 +123,15 @@ body {
 
     .first {
         top: 0px;
+        background-color: $revolv-first-item-dark-blue;
     }
     .second {
         top: 180px;
+        background-color: $revolv-second-item-light-blue;
     }
     .third {
         top: 360px;
+        background-color: $revolv-third-item-yellow;
     }
 
     .first-caption {
@@ -268,7 +273,7 @@ body {
     // extra qualifiers for more specificity in order to overload non-mobile styles
     html .cover-image .cover-inset {
         position: absolute;
-        top: 60px;
+        top: 0;
         left: 0;
         right: 0;
         bottom: 0;
@@ -394,7 +399,6 @@ body {
         .step {
             display: block;
             height: 150px;
-            width: 375px;
             margin: 25px auto;
         }
         .grouping {
