@@ -18,7 +18,7 @@ class ProjectForm(forms.ModelForm):
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
     # generates options of categories and populates Multiple Choice field with options.
     options = [(category, category) for category in Category.valid_categories]
-    categories_select = forms.MultipleChoiceField(choices=options)
+    categories_select = forms.MultipleChoiceField(choices=options, required=False)
 
     class Meta:
         model = Project
