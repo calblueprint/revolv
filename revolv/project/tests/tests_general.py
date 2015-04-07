@@ -2,7 +2,7 @@ import datetime
 import json
 
 import mock
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django_webtest import WebTest
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.testing import TestUserMixin
@@ -298,6 +298,7 @@ class DonationAjaxTestCase(TestUserMixin, TestCase):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
 
+    @override_settings(ENABLE_PAYMENT_CHARGING=False)
     def test_valid_donation(self):
         """
         Test valid donation via AJAX to /project/<pk>/donation/submit.
@@ -308,6 +309,7 @@ class DonationAjaxTestCase(TestUserMixin, TestCase):
         self.assertIsNone(content.get('error'))
         self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
 
+    @override_settings(ENABLE_PAYMENT_CHARGING=False)
     @mock.patch('revolv.lib.mailer.EmailMultiAlternatives')
     def test_post_donation_email(self, mock_mailer):
         """

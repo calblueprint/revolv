@@ -1,8 +1,8 @@
 from math import floor
 
+from django.conf import settings
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import Payment, PaymentType
-from revolv.settings import ENABLE_PAYMENT_CHARGING
 
 
 # Exceptions
@@ -34,7 +34,7 @@ class PaymentService(object):
 
         amount = floor(amount * 100) / 100.0  # floor amount to 2 decimal places
 
-        if ENABLE_PAYMENT_CHARGING:
+        if settings.ENABLE_PAYMENT_CHARGING:
             payment_instrument.charge(amount)
         payment = Payment(
             user=user,
