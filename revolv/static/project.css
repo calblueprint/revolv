@@ -5600,7 +5600,10 @@ body {
   margin-left: 0px;
   max-width: 100rem; }
   .row.heading {
-    height: 500px; }
+    height: 500px;
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%; }
   .row.about, .row.project-updates, .row.dashboard {
     margin-right: 15%;
     margin-left: 15%;
@@ -5891,7 +5894,7 @@ body {
       margin-bottom: 50px; }
     .project-updates .update-container .update-text {
       font-weight: 500;
-      font-size: 1.5rem; }
+      font-size: 1rem; }
   .map {
     height: 250px; }
     .map .map-canvas {
@@ -5944,15 +5947,15 @@ body {
       width: 70%;
       height: 15%;
       top: 170%;
-      border-color: #064f7e; }
+      border-color: #064f7e;
+      z-index: 1000; }
       .header-img-div .overlay .donate-button-header .donate-link {
         line-height: 40px;
         margin-top: 0; }
         .header-img-div .overlay .donate-button-header .donate-link p {
           height: 100%;
           line-height: 40px;
-          color: #064f7e;
-          z-index: 100; }
+          color: #064f7e; }
     .header-img-div .overlay .project-title {
       font-size: 1.5rem;
       line-height: 1.5rem;
@@ -5968,7 +5971,7 @@ body {
     .about .categories .category-holder {
       width: 25%; }
     .about .about-text p {
-      font-size: 1.5rem; }
+      font-size: 1rem; }
   .map .title-container p {
     font-size: 1rem;
     line-height: 1rem; }
@@ -5978,4 +5981,8 @@ body {
   .map .donate-button-header p {
     font-size: 1.5rem; } }
 
-@media only screen and (min-width:40.063em) and (max-width:64em) { }
+@media only screen and (min-width:40.063em) and (max-width:64em) {
+  .dashboard .statistics-graphics-container .container .statistic.left-text {
+    font-size: 0.9rem; }
+  .dashboard .statistics-graphics-container .container .statistic.right-text {
+    font-size: 0.9rem; } }

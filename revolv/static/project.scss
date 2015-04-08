@@ -54,6 +54,9 @@ body {
 
     &.heading {
         height: 500px;
+        margin-right: 0;
+        margin-left: 0;
+        width: 100%;
     }
 
     &.about, &.project-updates, &.dashboard {
@@ -496,7 +499,7 @@ body {
 
             .update-text {
                 font-weight: 500;
-                font-size: 1.5rem;
+                font-size: 1rem;
             }
         }
     }
@@ -584,60 +587,6 @@ body {
                     }
                 }
             }
-
-            // .svg-graphics-container {
-            //     // height: 150px;
-            //     // top: 300px;
-            //     position: absolute;
-            //     height: 100%;
-            //     width: 100%;
-            //     .outside-circle {
-            //         fill: white;
-            //     }
-            // }
-            // .top-bar {
-            //     height: 40px;
-            //     top: 65%;
-
-            //     .container {
-
-            //         .amount-donated {
-            //             width: 40%;
-            //             line-height: 40px;
-            //             font-size: 0.7rem;
-            //             margin: 0 0 0 10px;
-
-            //         }
-
-            //         .days-left {
-            //             line-height: 40px;
-            //             font-size: 0.7rem;
-            //             margin: 0 10px 0 0;
-            //         }
-            //     }
-            // }
-
-            // .bottom-bar {
-            //     height: 40px;
-            //     top: 75%;
-
-            //     .container {
-
-            //         .amount-saved {
-            //             line-height: 40px;
-            //             font-size: 0.7rem;
-            //             margin: 0 0 0 10px;
-            //         }
-
-            //         .num-donors {
-            //             line-height: 40px;
-            //             font-size: 0.7rem;
-            //             margin: 0 10px 0 0;
-            //         }
-            //     }
-            // }
-
-            
         }
     }
 
@@ -654,6 +603,7 @@ body {
                 border-color: $revolv-dark-blue;
                 // width: 0;
                 // height: 0;
+                z-index: 1000;
 
                 .donate-link {
                     line-height: 40px;
@@ -663,7 +613,6 @@ body {
                         height: 100%;
                         line-height: 40px;
                         color: $revolv-dark-blue;
-                        z-index: 100;
                     }
                 }
             }
@@ -704,7 +653,7 @@ body {
 
         .about-text {
             p {
-                font-size: 1.5rem;
+                font-size: 1rem;
             }
         }
 
@@ -734,25 +683,20 @@ body {
 }
 
 @media #{$medium-only} {
-    // .project-updates {
+    .dashboard {
+        .statistics-graphics-container {
+            .container {
+                .statistic {
+                    &.left-text {
+                        font-size: 0.9rem;
+                    }
 
-    //     .columns {
-    //         padding-left: 0px;
-    //         padding-right: 0px;
-    //     }
+                    &.right-text {
+                        font-size: 0.9rem;
 
-    //     .update-container {
-
-    //         .date-container {
-    //             position: absolute;
-    //             width: 20%;
-    //             text-align: left;
-    //         }
-
-    //         .update-text {
-    //             position: relative;
-    //             float: left;
-    //         }
-    //     }
-    // }
+                    }
+                }
+            }
+        }
+    }
 }
