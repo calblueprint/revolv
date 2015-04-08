@@ -5605,8 +5605,6 @@ body {
     margin-right: 15%;
     margin-left: 15%;
     max-width: 70%; }
-  .row.dashboard {
-    height: 600px; }
   .row.categories {
     max-width: 100%; }
 
@@ -5635,7 +5633,8 @@ body {
         height: 100%;
         display: inline-block; }
         .header-img-div .overlay .donate-button-header .donate-link p {
-          margin: 5% 0px;
+          height: 0;
+          line-height: 50px;
           color: white;
           text-align: center;
           transition: all 0.3s; }
@@ -5656,7 +5655,7 @@ body {
 
 .dashboard {
   position: absolute;
-  height: 400px;
+  height: 600px;
   z-index: 1;
   top: 300px; }
   .dashboard .statistics-graphics-container {
@@ -5700,15 +5699,11 @@ body {
       width: 100%; }
     .dashboard .statistics-graphics-container .internal-graphics-container {
       position: absolute;
-      height: 220px;
-      width: 220px;
-      position: relative;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%); }
     .dashboard .statistics-graphics-container .project-badge-line, .dashboard .statistics-graphics-container .project-badge-circle {
-      fill: none;
-      stroke-width: 20px; }
+      fill: none; }
     .dashboard .statistics-graphics-container .project-badge-line {
       stroke: #11ade5; }
     .dashboard .statistics-graphics-container .project-badge-circle {
@@ -5723,13 +5718,11 @@ body {
       color: #064f7e; }
       .dashboard .statistics-graphics-container .text-container .percentage-text {
         position: absolute;
-        font-size: 3rem;
         left: 50%;
-        top: 40%;
+        top: 45%;
         transform: translate(-50%, -50%); }
       .dashboard .statistics-graphics-container .text-container .funded {
         position: absolute;
-        font-size: 1.5rem;
         font-weight: 800;
         left: 50%;
         top: 60%;
@@ -5820,11 +5813,13 @@ body {
     .map .map-canvas img {
       max-width: none; }
   .map .overlay {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.65);
     float: left;
+    height: 400px; }
+  .map .map-cover {
+    background: rgba(0, 0, 0, 0);
     height: 400px;
-    width: 40%; }
+    float: right; }
   .map .text-container {
     position: absolute;
     color: white;
@@ -5885,7 +5880,7 @@ body {
   height: 300px;
   margin: 0 20px 20px 20px; }
 
-@media screen and (max-width: 1050px) {
+@media only screen and (max-width: 40em) {
   .project-updates .columns {
     padding-left: 0px;
     padding-right: 0px; }
@@ -5896,82 +5891,84 @@ body {
       margin-bottom: 50px; }
     .project-updates .update-container .update-text {
       font-weight: 500;
-      font-size: 1rem; } }
-
-@media screen and (max-width: 800px) {
-  .dashboard .graphics-container .top-bar {
-    height: 40px;
-    top: 50%; }
-    .dashboard .graphics-container .top-bar .container .amount-donated {
-      width: 40%;
-      line-height: 40px;
-      font-size: 0.7rem;
-      margin: 0 0 0 10px; }
-    .dashboard .graphics-container .top-bar .container .days-left {
-      line-height: 40px;
-      font-size: 0.7rem;
-      margin: 0 10px 0 0; }
-  .dashboard .graphics-container .bottom-bar {
-    height: 40px;
-    top: 60%; }
-    .dashboard .graphics-container .bottom-bar .container .amount-saved {
-      line-height: 40px;
-      font-size: 0.7rem;
-      margin: 0 0 0 10px; }
-    .dashboard .graphics-container .bottom-bar .container .num-donors {
-      line-height: 40px;
-      font-size: 0.7rem;
-      margin: 0 10px 0 0; }
-  .dashboard .graphics-container .svg-graphics-container {
-    width: 100%;
-    height: 100%;
-    padding: 65px;
-    border-radius: 100%;
-    top: 215px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: white; }
-  .dashboard .graphics-container .internal-graphics-container {
-    top: 47%;
-    height: 120px;
-    width: 120px; }
-  .dashboard .graphics-container .project-badge-line, .dashboard .graphics-container .project-badge-circle {
-    fill: none;
-    stroke-width: 14px; }
-  .dashboard .graphics-container .text-container .percentage-text {
-    top: 35%;
-    font-size: 1.1rem; }
-  .dashboard .graphics-container .text-container .funded {
-    top: 45%;
-    font-size: 1.1rem; }
-  .header-img-div .overlay .donate-button-header {
-    left: 70%;
-    width: 25%; }
-    .header-img-div .overlay .donate-button-header p {
-      margin: 5% 0px; }
-  .header-img-div .overlay .project-title {
-    font-size: 1.5rem;
-    line-height: 1.5rem; }
+      font-size: 1.5rem; }
+  .map {
+    height: 250px; }
+    .map .map-canvas {
+      height: 250px; }
+      .map .map-canvas img {
+        max-width: none; }
+    .map .overlay {
+      height: 250px; }
+    .map .text-container .title-container p {
+      font-size: 1rem;
+      line-height: 1rem; }
+    .map .text-container .address-container p {
+      font-size: 0.8rem;
+      line-height: 0.8rem; }
+    .map .donate-button-header {
+      margin: 175px 10% 25px 10%;
+      height: 50px; }
+      .map .donate-button-header p {
+        line-height: 50px;
+        font-size: 1rem;
+        font-weight: 800; }
+  .dashboard {
+    height: 700px;
+    z-index: 1;
+    top: 0px; }
+    .dashboard .statistics-graphics-container {
+      height: 500px; }
+      .dashboard .statistics-graphics-container .bar {
+        height: 25px; }
+        .dashboard .statistics-graphics-container .bar.top-bar {
+          top: 63%; }
+        .dashboard .statistics-graphics-container .bar.bottom-bar {
+          top: 68%; }
+      .dashboard .statistics-graphics-container .container .statistic.left-text {
+        float: left;
+        height: 100%;
+        margin: 0 0 0 10px;
+        font-size: 0.8rem;
+        line-height: 25px; }
+      .dashboard .statistics-graphics-container .container .statistic.right-text {
+        float: right;
+        height: 100%;
+        margin: 0 10px 0 0;
+        font-size: 0.8rem;
+        line-height: 25px; }
+  .header-img-div {
+    height: 270px; }
+    .header-img-div .overlay .donate-button-header {
+      left: 15%;
+      width: 70%;
+      height: 15%;
+      top: 170%;
+      border-color: #064f7e; }
+      .header-img-div .overlay .donate-button-header .donate-link {
+        line-height: 40px;
+        margin-top: 0; }
+        .header-img-div .overlay .donate-button-header .donate-link p {
+          height: 100%;
+          line-height: 40px;
+          color: #064f7e;
+          z-index: 100; }
+    .header-img-div .overlay .project-title {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+      top: 140px;
+      width: 100%;
+      text-align: center;
+      left: 0; }
   .about {
-    margin-top: 150px; }
+    margin-top: 20px; }
     .about .header-text p {
-      font-size: 1.2rem;
-      line-height: 1.2rem; }
+      font-size: 1.5rem;
+      line-height: 1.5rem; }
     .about .categories .category-holder {
       width: 25%; }
     .about .about-text p {
-      font-size: 1rem; }
-  .project-updates .small-12 {
-    padding-left: 0px;
-    padding-right: 0px; }
-  .project-updates .update-container {
-    margin: 10px 0px; }
-    .project-updates .update-container .date-container {
-      text-align: left;
-      margin-bottom: 50px; }
-    .project-updates .update-container .update-text {
-      font-weight: 500;
-      font-size: 1rem; }
+      font-size: 1.5rem; }
   .map .title-container p {
     font-size: 1rem;
     line-height: 1rem; }
@@ -5980,3 +5977,5 @@ body {
     line-height: 0.8rem; }
   .map .donate-button-header p {
     font-size: 1.5rem; } }
+
+@media only screen and (min-width:40.063em) and (max-width:64em) { }

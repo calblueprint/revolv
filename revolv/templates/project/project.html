@@ -34,9 +34,7 @@
                 <p class ="right-text statistic num-donors">{{ donor_count }} donors</p>
             </div>
         </div>
-        <svg class="svg-graphics-container">
-            <circle class="outside-circle" cx="50%" cy="50%" r="125" fill="white" />
-        </svg>
+        <svg class="svg-graphics-container"></svg>
         <svg class="internal-graphics-container"></svg>
         <div class="text-container">
             <p class="percentage-text">{{ project.percent_complete }}%</p>
@@ -96,13 +94,13 @@
         <div class="gray-bar"></div>
         {% for update in updates %}
             <div class="update-container">
-                <div class="large-2 small-12 columns">
+                <div class="large-2 medium-3 small-12 columns">
                     <div class = "date-container">
                         <p class="date-year">{{ update.date|date:"m" }}</p>
                         <p class="date-month-day">{{ update.date|date:"N" }} {{ update.date|date:"o" }}<p>
                     </div>
                 </div>
-                <div class="large-10 small-12 columns">
+                <div class="large-10 medium-9 small-12 columns">
                     <p class="update-text">{{ update.update_text }}</p>
                 </div>
             </div>
@@ -112,7 +110,7 @@
 
 <div class="row map">
     <div id="map-canvas" class="map-canvas"></div>
-    <div class="overlay">
+    <div class="columns large-5 small-6 overlay">
         <div class="text-container">
             <div class="title-container">
                 <p>{{ project.title }}</p>
@@ -130,6 +128,7 @@
             <a id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><div class="donate-button-header"><p>DONATE</p></div></a>
         {% endif %}
     </div>
+    <div class="columns large-7 small-6 map-cover"></div>
 </div>
 
 {% endblock %}

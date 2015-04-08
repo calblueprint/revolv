@@ -63,7 +63,7 @@ body {
     }
 
     &.dashboard {
-        height: 600px;
+        // height: 600px;
     }
 
     &.categories {
@@ -100,7 +100,9 @@ body {
                 display: inline-block;
 
                 p {
-                    margin: 5% 0px;
+                    //margin: 5% 0px;
+                    height: 0;
+                    line-height: 50px;
                     color: white;
                     text-align: center;
                     transition: all 0.3s;
@@ -133,7 +135,7 @@ body {
 
 .dashboard {
     position: absolute;
-    height: 400px;
+    height: 600px;
     z-index: 1;
     top: 300px;
 
@@ -188,6 +190,7 @@ body {
         }
 
         .svg-graphics-container {
+            // this contains the formatting for the white outside circle - this works
             position: absolute;
             height: 100%;
             width: 100%;
@@ -195,9 +198,10 @@ body {
 
         .internal-graphics-container {
             position: absolute;
-            height: 220px;
-            width: 220px;
-            position: relative;
+            // height: 100%;
+            // width: 100%;
+            // height: 220px;
+            // width: 220px;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
@@ -205,7 +209,6 @@ body {
 
         .project-badge-line, .project-badge-circle {
           fill: none;
-          stroke-width: 20px;
         }
 
         .project-badge-line {
@@ -227,15 +230,13 @@ body {
 
             .percentage-text {
                 position: absolute;
-                font-size: 3rem;
                 left: 50%;
-                top: 40%;
+                top: 45%;
                 transform: translate(-50%, -50%);
             }
 
             .funded {
                 position: absolute;
-                font-size: 1.5rem;
                 font-weight: 800;
                 left: 50%;
                 top: 60%;
@@ -372,11 +373,15 @@ body {
     }
 
     .overlay {
-        position: absolute;
-        background: rgba(0, 0, 0, .5);
+        background: rgba(0, 0, 0, 0.65);
         float: left;
         height: 400px;
-        width: 40%;
+    }
+
+    .map-cover {
+        background: rgba(0,0,0,0);
+        height: 400px;
+        float: right;
     }
 
     .text-container {
@@ -472,7 +477,7 @@ body {
 // --- Mobile Responsiveness Styles ------------------------------------------------------
 // TO FIX @MEDIA HEADERS AND TO ADD IN PORTRAIT/ORIENTATION STUFF
 
-@media screen and (max-width: 1050px) {
+@media #{$small-only} {
     .project-updates {
 
         .columns {
@@ -491,112 +496,189 @@ body {
 
             .update-text {
                 font-weight: 500;
-                font-size: 1rem;
+                font-size: 1.5rem;
             }
         }
     }
-}
+    .map {
 
-@media screen and (max-width: 800px) {
+        height: 250px;
+
+        .map-canvas {
+            height: 250px;
+
+            img {
+                max-width: none;
+            }
+        }
+
+        .overlay {
+            height: 250px;
+        }
+
+        .text-container {
+            .title-container {
+                p {
+                    font-size: 1rem;
+                    line-height: 1rem;
+                }
+            }
+
+            .address-container {
+                p {
+                    font-size: 0.8rem;
+                    line-height: 0.8rem;
+                }
+            }
+        }
+
+        .donate-button-header {
+            margin: 175px 10% 25px 10%;
+            height: 50px;
+
+            p {
+                line-height: 50px;
+                font-size: 1rem;
+                font-weight: 800;
+            }
+        }
+    }
 
     .dashboard {
-        .graphics-container {
-            .top-bar {
-                height: 40px;
-                top: 50%;
+        height: 700px;
+        z-index: 1;
+        top: 0px;
 
-                .container {
+        .statistics-graphics-container {
+            height: 500px;
+            .bar {
+                height: 25px;
 
-                    .amount-donated {
-                        width: 40%;
-                        line-height: 40px;
-                        font-size: 0.7rem;
+                &.top-bar {
+                    top: 63%;
+                }
+                &.bottom-bar {
+                    top: 68%;
+                }
+            }
+
+            .container {
+                .statistic {
+
+                    &.left-text {
+                        float: left;
+                        height: 100%;
                         margin: 0 0 0 10px;
+                        font-size: 0.8rem;
+                        line-height: 25px;
 
                     }
 
-                    .days-left {
-                        line-height: 40px;
-                        font-size: 0.7rem;
+                    &.right-text {
+                        float: right;
+                        height: 100%;
                         margin: 0 10px 0 0;
+                        font-size: 0.8rem;
+                        line-height: 25px;
+
                     }
                 }
             }
 
-            .bottom-bar {
-                height: 40px;
-                top: 60%;
+            // .svg-graphics-container {
+            //     // height: 150px;
+            //     // top: 300px;
+            //     position: absolute;
+            //     height: 100%;
+            //     width: 100%;
+            //     .outside-circle {
+            //         fill: white;
+            //     }
+            // }
+            // .top-bar {
+            //     height: 40px;
+            //     top: 65%;
 
-                .container {
+            //     .container {
 
-                    .amount-saved {
-                        line-height: 40px;
-                        font-size: 0.7rem;
-                        margin: 0 0 0 10px;
-                    }
+            //         .amount-donated {
+            //             width: 40%;
+            //             line-height: 40px;
+            //             font-size: 0.7rem;
+            //             margin: 0 0 0 10px;
 
-                    .num-donors {
-                        line-height: 40px;
-                        font-size: 0.7rem;
-                        margin: 0 10px 0 0;
-                    }
-                }
-            }
+            //         }
 
-            .svg-graphics-container {
-                width: 100%;
-                height: 100%;
-                padding: 65px;
-                border-radius: 100%;
-                top: 215px;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: white;
-            }
+            //         .days-left {
+            //             line-height: 40px;
+            //             font-size: 0.7rem;
+            //             margin: 0 10px 0 0;
+            //         }
+            //     }
+            // }
 
-            .internal-graphics-container {
-                top: 47%;
-                height: 120px;
-                width: 120px;
-            }
+            // .bottom-bar {
+            //     height: 40px;
+            //     top: 75%;
 
-            .project-badge-line, .project-badge-circle {
-              fill: none;
-              stroke-width: 14px;
-            }
+            //     .container {
 
-            .text-container {
+            //         .amount-saved {
+            //             line-height: 40px;
+            //             font-size: 0.7rem;
+            //             margin: 0 0 0 10px;
+            //         }
 
-                .percentage-text {
-                    top: 35%;
-                    font-size: 1.1rem;
-                }
+            //         .num-donors {
+            //             line-height: 40px;
+            //             font-size: 0.7rem;
+            //             margin: 0 10px 0 0;
+            //         }
+            //     }
+            // }
 
-                .funded {
-                    top: 45%;
-                    font-size: 1.1rem;
-                }
-            }
+            
         }
     }
 
     .header-img-div {
+        height: 270px;
 
         .overlay {
             
             .donate-button-header {
-                left: 70%;
-                width: 25%;
+                left: 15%;
+                width: 70%;
+                height: 15%;
+                top: 170%;
+                border-color: $revolv-dark-blue;
+                // width: 0;
+                // height: 0;
 
-                p {
-                    margin: 5% 0px;
+                .donate-link {
+                    line-height: 40px;
+                    margin-top: 0;
+
+                    p {
+                        height: 100%;
+                        line-height: 40px;
+                        color: $revolv-dark-blue;
+                        z-index: 100;
+                    }
                 }
             }
 
             .project-title {
                 font-size: 1.5rem;
                 line-height: 1.5rem;
+                // top: 20px;
+                // width: 90%;
+                // left: 5%;
 
+                top: 140px;
+                width: 100%;
+                text-align: center;
+                left: 0;
             }
         }
     }
@@ -605,11 +687,11 @@ body {
 
     .about {
 
-        margin-top: 150px;
+        margin-top: 20px;
         .header-text {
             p {
-                font-size: 1.2rem;
-                line-height: 1.2rem;
+                font-size: 1.5rem;
+                line-height: 1.5rem;
             }
         }
 
@@ -622,33 +704,10 @@ body {
 
         .about-text {
             p {
-                font-size: 1rem;
+                font-size: 1.5rem;
             }
         }
 
-    }
-
-    .project-updates {
-
-        .small-12 {
-            padding-left: 0px;
-            padding-right: 0px;
-        }
-
-        .update-container {
-            margin: 10px 0px;
-
-            .date-container {
-                text-align: left;
-                margin-bottom: 50px;
-
-            }
-
-            .update-text {
-                font-weight: 500;
-                font-size: 1rem;
-            }
-        }
     }
 
     .map {
@@ -672,4 +731,28 @@ body {
             }
         }
     }
+}
+
+@media #{$medium-only} {
+    // .project-updates {
+
+    //     .columns {
+    //         padding-left: 0px;
+    //         padding-right: 0px;
+    //     }
+
+    //     .update-container {
+
+    //         .date-container {
+    //             position: absolute;
+    //             width: 20%;
+    //             text-align: left;
+    //         }
+
+    //         .update-text {
+    //             position: relative;
+    //             float: left;
+    //         }
+    //     }
+    // }
 }
