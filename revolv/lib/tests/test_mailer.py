@@ -4,11 +4,11 @@ import mock
 from django.core import mail
 from django.core.management import call_command
 from django.test import TestCase
+from django.utils import timezone
 
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.mailer import send_revolv_email
-from revolv.payments.models import Payment, PaymentType
-from revolv.project.models import Project
+from revolv.payments.models import Payment
 
 
 class MailerTestCase(TestCase):
@@ -84,27 +84,15 @@ class MonthlyDonationEmailTestCase(TestCase):
         Tests that with two donations in the past month from two different users,
         the Revolv Mailer send two emails
         """
-        # creates 2 users and 2 projects
-        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
-        project1, project2 = Project.factories.base.create_batch(2)
-
         # gets a day from the last month
-        date_of_last_month = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
+        date_of_last_month = timezone.now().replace(day=1) - datetime.timedelta(days=1)
 
         # creates two payments and sets their created_at date to a date from last month
         Payment.factories.base.create(
-            user=user1,
-            entrant=user1,
-            payment_type=PaymentType.objects.get_paypal(),
-            project=project1,
             created_at=date_of_last_month
         )
 
         Payment.factories.base.create(
-            user=user2,
-            entrant=user2,
-            payment_type=PaymentType.objects.get_paypal(),
-            project=project2,
             created_at=date_of_last_month
         )
 
@@ -116,29 +104,51 @@ class MonthlyDonationEmailTestCase(TestCase):
         Tests that with two donations from a year ago from two different users,
         the Revolv Mailer send no emails
         """
-        # creates 2 users and 2 projects
-        user1, user2 = RevolvUserProfile.factories.base.create_batch(2)
-        project1, project2 = Project.factories.base.create_batch(2)
-
         # gets a day from last year
-        date_from_last_year = datetime.date.today() - datetime.timedelta(days=365)
+        date_from_last_year = timezone.now() - datetime.timedelta(days=365)
 
         # creates two payments and sets their created_at date to a date from last year
         Payment.factories.base.create(
-            user=user1,
-            entrant=user1,
-            payment_type=PaymentType.objects.get_paypal(),
-            project=project1,
             created_at=date_from_last_year
         )
 
         Payment.factories.base.create(
-            user=user2,
-            entrant=user2,
-            payment_type=PaymentType.objects.get_paypal(),
-            project=project2,
             created_at=date_from_last_year
         )
 
         call_command('monthlydonationemail', override=True)
         self.assertEqual(len(mail.outbox), 0)
+
+    def test_monthly_donation_email_not_first_day_of_month_override(self):
+        """
+        Tests that if monthlydonationemail is called on a day which is not the first of the month,
+        it'll only email for payments from the last month, not from the last thirty days.
+
+        Calling on 3/5 won't email for payments on 3/2, but will for payments on 2/2.
+        """
+        # gets a day from the last month
+        february_payment = datetime.datetime(2013, 2, 2)
+        march_payment = datetime.datetime(2013, 3, 3)
+        with mock.patch.object(timezone, 'now', return_value=datetime.datetime(2013, 3, 4)):
+            Payment.factories.base.create(
+                created_at=february_payment
+            )
+            Payment.factories.base.create(
+                created_at=march_payment
+            )
+            call_command('monthlydonationemail', override=True)
+            self.assertEqual(len(mail.outbox), 1)
+
+    def test_monthly_donation_email_first_day_of_month(self):
+        """
+        Tests that the monthlydonationemail command actually runs on the first day of the month with no override.
+        """
+        payment_created_at = datetime.datetime(2013, 1, 30)
+        with mock.patch.object(timezone, 'now', return_value=datetime.datetime(2013, 2, 1)):
+
+            Payment.factories.base.create(
+                created_at=payment_created_at
+            )
+
+            call_command('monthlydonationemail')
+            self.assertEqual(len(mail.outbox), 1)
