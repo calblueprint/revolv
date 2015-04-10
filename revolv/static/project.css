@@ -5588,7 +5588,9 @@ th.hide-for-touch {
     display: inline-block; }
   .cc-type-list [class^="cc-type-"] {
     opacity: 0.5;
-    transition: all 0.3s; }
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s; }
     .cc-type-list [class^="cc-type-"].active {
       opacity: 1; }
 
@@ -5630,7 +5632,9 @@ body {
       height: 10%;
       bottom: 40px;
       right: 5%;
-      transition: all 0.3s; }
+      transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -webkit-transition: all 0.3s; }
       .header-img-div .overlay .donate-button-header .donate-link {
         width: 100%;
         height: 100%;
@@ -5640,7 +5644,9 @@ body {
           line-height: 50px;
           color: white;
           text-align: center;
-          transition: all 0.3s; }
+          transition: all 0.3s;
+          -moz-transition: all 0.3s;
+          -webkit-transition: all 0.3s; }
       .header-img-div .overlay .donate-button-header:hover {
         background-color: white; }
         .header-img-div .overlay .donate-button-header:hover p {
@@ -5704,7 +5710,9 @@ body {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%); }
+      transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%); }
     .dashboard .statistics-graphics-container .project-badge-line, .dashboard .statistics-graphics-container .project-badge-circle {
       fill: none; }
     .dashboard .statistics-graphics-container .project-badge-line {
@@ -5716,6 +5724,8 @@ body {
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
       height: 220px;
       width: 220px;
       color: #064f7e; }
@@ -5723,13 +5733,17 @@ body {
         position: absolute;
         left: 50%;
         top: 45%;
-        transform: translate(-50%, -50%); }
+        transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%); }
       .dashboard .statistics-graphics-container .text-container .funded {
         position: absolute;
         font-weight: 800;
         left: 50%;
         top: 60%;
-        transform: translate(-50%, -50%); }
+        transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%); }
 
 .about {
   margin-top: 200px; }
@@ -5793,7 +5807,7 @@ body {
     line-height: 0.5; }
     .project-updates .update-container .date-container .date-year {
       font-size: 4.5rem;
-      margin-bottom: 0rem;
+      margin-bottom: 0;
       line-height: 4.5rem; }
     .project-updates .update-container .date-container .date-month-day {
       font-size: 1.5rem;
@@ -5801,7 +5815,8 @@ body {
   .project-updates .update-container .update-text {
     font-weight: 500;
     font-size: 1.5rem;
-    color: #333333; }
+    color: #333333;
+    white-space: pre-wrap; }
 
 .map {
   margin-top: 40px;
@@ -5845,7 +5860,9 @@ body {
     height: 70px;
     z-index: 100;
     margin: 305px 10% 25px 10%;
-    transition: all 0.3s; }
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s; }
     .map .donate-button-header p {
       width: 100%;
       height: 100%;
@@ -5908,18 +5925,18 @@ body {
       line-height: 1rem; }
     .map .text-container .address-container p {
       font-size: 0.8rem;
-      line-height: 0.8rem; }
+      line-height: 1rem; }
     .map .donate-button-header {
       margin: 175px 10% 25px 10%;
       height: 50px; }
       .map .donate-button-header p {
-        line-height: 50px;
+        line-height: 45px;
         font-size: 1rem;
         font-weight: 800; }
   .dashboard {
     height: 700px;
     z-index: 1;
-    top: 0px; }
+    top: 0; }
     .dashboard .statistics-graphics-container {
       height: 500px; }
       .dashboard .statistics-graphics-container .bar {
@@ -5971,15 +5988,7 @@ body {
     .about .categories .category-holder {
       width: 25%; }
     .about .about-text p {
-      font-size: 1rem; }
-  .map .title-container p {
-    font-size: 1rem;
-    line-height: 1rem; }
-  .map .address-container p {
-    font-size: 0.8rem;
-    line-height: 0.8rem; }
-  .map .donate-button-header p {
-    font-size: 1.5rem; } }
+      font-size: 1rem; } }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) {
   .dashboard .statistics-graphics-container .container .statistic.left-text {

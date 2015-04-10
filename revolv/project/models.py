@@ -332,7 +332,8 @@ class Project(models.Model):
     @property
     def location_street(self):
         """
-        :return: a string of the street name of the location of this project
+        :return: a string of the street name of the location of this project.
+        If the project location is malformed, will return an empty string.
         """
         try:
             return self.location.split(',')[0]
@@ -342,7 +343,8 @@ class Project(models.Model):
     @property
     def location_city_state_zip(self):
         """
-        :return: a string of the city, state, and zip code of the location of this project 
+        :return: a string of the city, state, and zip code of the location of this project.
+        If the project location is malformed, will return an empty string.
         """
         try:
             pieces = self.location.split(',')
@@ -459,8 +461,7 @@ class Project(models.Model):
         """
         :return: The set of all ProjectUpdate models associated with this project.
         """
-        #return self.update_set.all()
-        return self.update.all()
+        return self.updates.all()
 
     def add_update(self, text):
         update = ProjectUpdate(update_text=text, project=self)
@@ -480,7 +481,7 @@ class ProjectUpdate(models.Model):
     
     project = models.ForeignKey(
         Project,
-        related_name="update"
+        related_name="updates"
     )
 
     def donation_levels(self):

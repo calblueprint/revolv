@@ -25,8 +25,8 @@ class ProjectUpdateTest(TestCase):
         self.assertEqual('This is another update', update2.update_text)
 
         # tests project relationship
-        self.assertEqual(update1.project_id, update2.project_id)
-        self.assertEqual(update1.project_id, project.id)
+        self.assertEqual(update1.project, update2.project)
+        self.assertEqual(update1.project, project)
 
         update1.save()
         update2.save()

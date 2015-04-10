@@ -36,6 +36,8 @@
     [class^="cc-type-"] {
         opacity: 0.5;
         transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -webkit-transition: all 0.3s;
 
         &.active {
             opacity: 1;
@@ -65,10 +67,6 @@ body {
         max-width: 70%;
     }
 
-    &.dashboard {
-        // height: 600px;
-    }
-
     &.categories {
         max-width: 100%;
     }
@@ -96,6 +94,8 @@ body {
             bottom: 40px;
             right: 5%;
             transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -webkit-transition: all 0.3s;
 
             .donate-link {
                 width: 100%;
@@ -103,12 +103,13 @@ body {
                 display: inline-block;
 
                 p {
-                    //margin: 5% 0px;
                     height: 0;
                     line-height: 50px;
                     color: white;
                     text-align: center;
                     transition: all 0.3s;
+                    -moz-transition: all 0.3s;
+                    -webkit-transition: all 0.3s;
                 }
             }
 
@@ -201,13 +202,11 @@ body {
 
         .internal-graphics-container {
             position: absolute;
-            // height: 100%;
-            // width: 100%;
-            // height: 220px;
-            // width: 220px;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
         }
 
         .project-badge-line, .project-badge-circle {
@@ -227,6 +226,8 @@ body {
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
             height: 220px;
             width: 220px;
             color: $revolv-dark-blue;
@@ -236,6 +237,8 @@ body {
                 left: 50%;
                 top: 45%;
                 transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
             }
 
             .funded {
@@ -244,6 +247,8 @@ body {
                 left: 50%;
                 top: 60%;
                 transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
             }
         }
     }
@@ -340,7 +345,7 @@ body {
 
             .date-year {
                 font-size: 4.5rem;
-                margin-bottom: 0rem;
+                margin-bottom: 0;
                 line-height: 4.5rem;
             }
 
@@ -354,19 +359,22 @@ body {
             font-weight: 500;
             font-size: 1.5rem;
             color: #333333;
+            white-space: pre-wrap;
         }
     }
 }
 
+$map-height: 400px;
+
 .map {
     margin-top: 40px;
     margin-bottom: 50px;
-    height: 400px;
+    height: $map-height;
 
     .map-canvas {
         position: absolute;
         width: 100%;
-        height: 400px;
+        height: $map-height;
         margin: 0;
         padding: 0;
 
@@ -383,7 +391,7 @@ body {
 
     .map-cover {
         background: rgba(0,0,0,0);
-        height: 400px;
+        height: $map-height;
         float: right;
     }
 
@@ -420,6 +428,8 @@ body {
         z-index: 100;
         margin: 305px 10% 25px 10%;
         transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -webkit-transition: all 0.3s;
 
         p {
             width: 100%;
@@ -478,7 +488,6 @@ body {
 }
 
 // --- Mobile Responsiveness Styles ------------------------------------------------------
-// TO FIX @MEDIA HEADERS AND TO ADD IN PORTRAIT/ORIENTATION STUFF
 
 @media #{$small-only} {
     .project-updates {
@@ -503,12 +512,15 @@ body {
             }
         }
     }
+
+    $map-height: 250px;
+
     .map {
 
-        height: 250px;
+        height: $map-height;
 
         .map-canvas {
-            height: 250px;
+            height: $map-height;
 
             img {
                 max-width: none;
@@ -516,7 +528,7 @@ body {
         }
 
         .overlay {
-            height: 250px;
+            height: $map-height;
         }
 
         .text-container {
@@ -530,7 +542,7 @@ body {
             .address-container {
                 p {
                     font-size: 0.8rem;
-                    line-height: 0.8rem;
+                    line-height: 1rem;
                 }
             }
         }
@@ -540,7 +552,7 @@ body {
             height: 50px;
 
             p {
-                line-height: 50px;
+                line-height: 45px;
                 font-size: 1rem;
                 font-weight: 800;
             }
@@ -550,7 +562,7 @@ body {
     .dashboard {
         height: 700px;
         z-index: 1;
-        top: 0px;
+        top: 0;
 
         .statistics-graphics-container {
             height: 500px;
@@ -601,8 +613,6 @@ body {
                 height: 15%;
                 top: 170%;
                 border-color: $revolv-dark-blue;
-                // width: 0;
-                // height: 0;
                 z-index: 1000;
 
                 .donate-link {
@@ -620,10 +630,6 @@ body {
             .project-title {
                 font-size: 1.5rem;
                 line-height: 1.5rem;
-                // top: 20px;
-                // width: 90%;
-                // left: 5%;
-
                 top: 140px;
                 width: 100%;
                 text-align: center;
@@ -657,28 +663,6 @@ body {
             }
         }
 
-    }
-
-    .map {
-        .title-container {
-            p {
-                font-size: 1rem;
-                line-height: 1rem;
-            }
-        }
-
-        .address-container {
-            p {
-                font-size: 0.8rem;
-                line-height: 0.8rem;
-            }
-        }
-
-        .donate-button-header {
-            p {
-                font-size: 1.5rem;
-            }
-        }
     }
 }
 

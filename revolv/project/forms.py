@@ -69,7 +69,6 @@ class EditProjectUpdateForm(forms.ModelForm):
     """ 
     A form used to edit updates about a project
     """
-    #SET SOME KIND OF DEFAULT VALUE
     class Meta:
         model = ProjectUpdate
         fields = (

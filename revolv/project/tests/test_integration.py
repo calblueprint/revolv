@@ -53,7 +53,7 @@ class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
         
 class EditProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
 
-    def assert_make_update(self, project, text):
+    def make_update(self, project, text):
         """
         Creates and posts an update with the given text to a given project. 
         Returns the update that was just created.
@@ -65,14 +65,14 @@ class EditProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
         new_updates = ProjectUpdate.objects.filter(update_text = text)
         return new_updates[0]
 
-    def assert_test_edit_update(self, donor = False):
+    def assert_user_can_or_cant_make_updates(self, donor = False):
         """
         Tests that the administrator and ambassador can make updates. 
         Posts a response to the editupdate page to change the update 
         text and checks whether the text of the update has changed.
         """
         project = Project.factories.base.create()
-        update = self.assert_make_update(project, "This update has not been changed.")
+        update = self.make_update(project, "This update has not been changed.")
 
         response = self.client.post('/project/editupdate/%d' % update.pk,
                         {'update_text': 'This update has been changed.'})
@@ -94,21 +94,21 @@ class EditProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
         Makes an an
         """
         self.test_profile.make_administrator()
-        self.assert_test_edit_update(donor = False)
+        self.assert_user_can_or_cant_make_updates(donor = False)
 
     def test_edit_update_ambassador(self):
         """
         Tests that a change is made to an update for an ambassador.
         """
         self.test_profile.make_ambassador()
-        self.assert_test_edit_update(donor = False)
+        self.assert_user_can_or_cant_make_updates(donor = False)
 
     def test_edit_update_donor(self):
         """
         Tests that a donor can't change an update.
         """
         self.test_profile.make_donor()
-        self.assert_test_edit_update(donor = True)
+        self.assert_user_can_or_cant_make_updates(donor = True)
 
 class DonationAjaxTestCase(TestUserMixin, TestCase):
     """

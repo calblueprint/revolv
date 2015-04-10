@@ -5564,12 +5564,6 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
-/**
- * This file overrides specific foundation settings in order to make foundation
- * work nicely with revolv's design. Note that only some, but not all, of
- * foundation's settings are overriden here: for the full list, see _settings.scss
- * in revolv/static/bower_components/foundation/scss/foundation.
- */
 /* Accessibility - hides the forward slash */
 [aria-label="breadcrumbs"] [aria-hidden="true"]:after {
   content: "/"; }
@@ -6745,8 +6739,8 @@ th.hide-for-touch {
     border-color: rgba(4, 78, 126, 0.75); }
 
 .project-container {
-  padding: 0px;
-  margin: 0px; }
+  padding: 0;
+  margin: 0; }
   .project-container .status-bar {
     transition: border-color 200ms linear;
     transition: background-color 200ms linear;
