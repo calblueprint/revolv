@@ -18,11 +18,11 @@ class Command(BaseCommand):
                     default=False,
                     help='Override to run on a day which is not the first of the month.'),
     ) + (
-        make_option('--emailadmins',
+        make_option('--silence_admin_notifications',
                     action='store_true',
-                    dest='emailadmins',
+                    dest='silence_admin_notifications',
                     default=False,
-                    help='Email administrators sends a notification that the monthlydonationemail command was run.'),
+                    help='Silences any administrator notifications that the monthlydonationemail command was run.'),
     )
 
     def handle(self, *args, **options):
@@ -30,12 +30,15 @@ class Command(BaseCommand):
         This handle function is run when the command "python manage.py monthlydonationemail"
         is typed into the command line.
 
-        To run it on any day which is not the first day, use "python manage.py monthlydonationemail --override"
+        To run it on any day which is not the first day, use "python manage.py monthlydonationemail --override".
 
-        To send a email notification to administrators as well, add the "--emailadmins" flag.
+        To silence email notifications to administrators as well, add the "--silence_admin_notifications" flag.
 
-        It iterates through all users, and sends a monthly donation email to any user
-        who has donated in the past month.
+        It iterates through all users, and sends a monthly donation email to any user who donated
+        in the last month. (Specifically the last month, not the last 30 days, it it is run on 4/4,
+        it'll email users who donated on 3/1 but not on 4/2.) It by default will also send an email
+        notification to all administrators.
+
         """
         if timezone.now().day == 1 or options['override']:  # checks if the it is the first day of the month
             print "Running monthlydonationemail command on " + str(timezone.now()) + "."
@@ -52,8 +55,9 @@ class Command(BaseCommand):
                         'monthly_donation_email',
                         context, [user.email]
                     )
-            # Sends an email notification to administrators if the flag is enabled
-            if options['emailadmins']:
+            # Sends an email notification to administrators
+            if not options['silence_admin_notifications']:
+                context = {}
                 send_revolv_email(
                     'monthly_donation_email_admin_notification',
                     context, get_all_administrator_emails()
