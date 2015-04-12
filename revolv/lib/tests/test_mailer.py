@@ -73,11 +73,20 @@ class MailerTestCase(TestCase):
 class MonthlyDonationEmailTestCase(TestCase):
     def test_monthly_donation_email_no_donations(self):
         """
-        Tests that if there are no donations, nothing will be sent
+        Tests that if there are no donations, nothing will be sent to any users, but
+        an email notification will be sent to administrators.
+
+        Also tests the silence_admin_notifications flag.
         """
+        # creates a regular user
         RevolvUserProfile.factories.base.create()
-        call_command('monthlydonationemail', override=True)
+        # creates an administrator user
+        RevolvUserProfile.factories.admin.create()
+
+        call_command('monthlydonationemail', override=True, silence_admin_notifications=True)
         self.assertEqual(len(mail.outbox), 0)
+        call_command('monthlydonationemail', override=True)
+        self.assertEqual(len(mail.outbox), 1)
 
     def test_monthly_donation_email(self):
         """

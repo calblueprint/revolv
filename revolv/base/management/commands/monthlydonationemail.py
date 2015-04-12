@@ -43,6 +43,7 @@ class Command(BaseCommand):
         if timezone.now().day == 1 or options['override']:  # checks if the it is the first day of the month
             print "Running monthlydonationemail command on " + str(timezone.now()) + "."
             revolv_user_profiles = RevolvUserProfile.objects.all()
+            num_emails_sent = 0
             for revolv_user_profile in revolv_user_profiles:
                 donation_set = revolv_user_profile.payment_set.all()
                 donation_set = get_last_month_donations(donation_set)
@@ -55,9 +56,11 @@ class Command(BaseCommand):
                         'monthly_donation_email',
                         context, [user.email]
                     )
+                    num_emails_sent = num_emails_sent + 1
             # Sends an email notification to administrators
             if not options['silence_admin_notifications']:
                 context = {}
+                context['emails_sent'] = num_emails_sent
                 send_revolv_email(
                     'monthly_donation_email_admin_notification',
                     context, get_all_administrator_emails()
