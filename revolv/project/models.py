@@ -118,7 +118,6 @@ class ProjectManager(models.Manager):
         project.save()
         return project
 
-
 class Project(models.Model):
     """
     Project model. Stores basic metadata, information about the project,
@@ -245,11 +244,6 @@ class Project(models.Model):
         default=0.0,
         help_text='The internal rate of return for this project.'
     )
-    post_funding_updates = models.TextField(
-        'Updates After Completion',
-        help_text='Add any post project completion updates you want to let your backers know about.',
-        null=True
-    )
 
     # solar data csv files
     daily_solar_data = models.FileField(null=True, upload_to="projects/daily/")
@@ -336,6 +330,34 @@ class Project(models.Model):
         )["amount__sum"] or 0.0
 
     @property
+    def location_street(self):
+        """
+        :return: a string of the street name of the location of this project.
+        If the project location is malformed, will return an empty string.
+        """
+        try:
+            return self.location.split(',')[0]
+        except IndexError:
+            return ""
+
+    @property
+    def location_city_state_zip(self):
+        """
+        :return: a string of the city, state, and zip code of the location of this project.
+        If the project location is malformed, will return an empty string.
+        """
+        try:
+            pieces = self.location.split(',')
+            text = ""
+            if len(pieces) >= 3:
+                return pieces[1] + "," + pieces[2]
+            elif len(pieces) == 2:
+                return pieces[1]
+            return pieces[0]
+        except IndexError:
+            return ""
+
+    @property
     def amount_donated(self):
         """
         :return: the current total amount that has been donated to this project,
@@ -384,6 +406,15 @@ class Project(models.Model):
         ratio = self.amount_donated / float(self.funding_goal)
         return min(ratio, 1.0)
 
+    @property
+    def percent_complete(self):
+        """
+        :return: a floored int between 0 and 100, representing the completeness of this
+            project with respect to its goal (100 if exactly the goal amount, or
+            more, has been donated, 0 if nothing has been donated).
+        """
+        return int(self.partial_completeness * 100)
+
     def partial_completeness_as_js(self):
         return unicode(self.partial_completeness)
 
@@ -426,6 +457,33 @@ class Project(models.Model):
         return [category.title for category in self.category_set.all()]
 
     @property
+    def updates(self):
+        """
+        :return: The set of all ProjectUpdate models associated with this project.
+        """
+        return self.updates.all()
+
+    def add_update(self, text):
+        update = ProjectUpdate(update_text=text, project=self)
+        update.save()
+
+class ProjectUpdate(models.Model):
+    update_text = models.TextField(
+        'Update text',
+        help_text = "What should the update say?"
+    )
+    
+    date = models.DateField(
+        'Date of update creation',
+        help_text = "What time was your update created?",
+        auto_now_add = True
+    )
+    
+    project = models.ForeignKey(
+        Project,
+        related_name="updates"
+    )
+
     def donation_levels(self):
         return self.donationlevel_set.all()
 

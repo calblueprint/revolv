@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Edit Project Updates{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+    <div class='large-12 columns'>
+        <h1>Edit Project Updates</h1>
+    </div>
+</div>
+<div class="row white-section">
+    <div class="large-12 columns">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for error in form.non_field_errors %}
+            <div data-alert class="alert-box alert">
+                {{ error }}
+                <a href="#" class="close">&times;</a>
+            </div>
+            {% endfor %}
+            <div class="row">
+                <div class="medium-12 columns">
+                    {% include "base/partials/tooltip_formfield.html" with field=form.update_text %}
+                </div>
+            </div>
+            <button class="large right" id="save_project" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

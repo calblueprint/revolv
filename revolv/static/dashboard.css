@@ -5564,444 +5564,137 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
-.payment-modal-content {
-  width: 300px; }
+#project-menu {
+  background-color: orange; }
 
-.confirm-modal-content {
-  width: 600px; }
+.homepage-divider {
+  display: block;
+  height: 0.5em;
+  line-height: 1em;
+  border: none;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-size: 14px;
+  color: #11ade5;
+  height: 0.6em;
+  font-weight: 100; }
+  .homepage-divider:first-line {
+    background-color: white; }
+  .homepage-divider:before {
+    display: inline;
+    content: "\a0\a0\a0"; }
+  .homepage-divider:after {
+    display: inline;
+    content: "\a0\a0\a0"; }
 
-.success-modal-content {
-  width: 400px; }
-
-.condense > .columns {
-  padding-left: 0.46875rem;
-  padding-right: 0.46875rem; }
-  .condense > .columns:first-child {
-    padding-left: 0.9375rem; }
-  .condense > .columns:last-child {
-    padding-right: 0.9375rem; }
-
-.cc-type-list {
-  list-style: none;
-  margin: 0; }
-  .cc-type-list > li {
-    display: inline-block; }
-  .cc-type-list [class^="cc-type-"] {
-    opacity: 0.5;
-    transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s; }
-    .cc-type-list [class^="cc-type-"].active {
-      opacity: 1; }
-
-body {
-  font-family: Lato, sans-serif; }
-
-.row {
-  margin-right: 0px;
-  margin-left: 0px;
-  max-width: 100rem; }
-  .row.heading {
-    height: 500px;
-    margin-right: 0;
-    margin-left: 0;
-    width: 100%; }
-  .row.about, .row.project-updates, .row.dashboard {
-    margin-right: 15%;
-    margin-left: 15%;
-    max-width: 70%; }
-  .row.categories {
-    max-width: 100%; }
-
-.header-img-div {
-  width: 100%;
-  height: 500px;
-  position: relative;
-  background-size: cover; }
-  .header-img-div .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5); }
-    .header-img-div .overlay .donate-button-header {
-      position: absolute;
-      border: 2px solid white;
-      width: 15%;
-      height: 50px;
-      bottom: 40px;
-      right: 5%;
-      transition: all 0.3s;
-      -moz-transition: all 0.3s;
-      -webkit-transition: all 0.3s; }
-      .header-img-div .overlay .donate-button-header .donate-link {
-        width: 100%;
-        height: 100%;
-        display: inline-block; }
-        .header-img-div .overlay .donate-button-header .donate-link p {
-          height: 0;
-          line-height: 46px;
-          color: white;
-          text-align: center;
-          transition: all 0.3s;
-          -moz-transition: all 0.3s;
-          -webkit-transition: all 0.3s; }
-      .header-img-div .overlay .donate-button-header:hover {
-        background-color: white; }
-        .header-img-div .overlay .donate-button-header:hover p {
-          color: black;
-          font-weight: 500; }
-    .header-img-div .overlay .project-title {
-      position: absolute;
-      color: white;
-      font-size: 2rem;
-      font-weight: 800;
-      top: 400px;
-      left: 5%;
-      width: 30%;
-      line-height: 2rem; }
-
-.dashboard {
-  position: absolute;
-  height: 600px;
-  z-index: 1;
-  top: 300px; }
-  .dashboard .statistics-graphics-container {
-    height: 100%;
-    width: 100%; }
-    .dashboard .statistics-graphics-container .bar {
-      width: 100%;
-      height: 40px;
-      position: absolute; }
-      .dashboard .statistics-graphics-container .bar.top-bar {
-        background-color: #11ade5;
-        top: 50%;
-        margin: 0; }
-        .dashboard .statistics-graphics-container .bar.top-bar .amount-donated {
-          width: 30%; }
-      .dashboard .statistics-graphics-container .bar.bottom-bar {
-        position: absolute;
-        background-color: #064f7e;
-        top: 60%; }
-      .dashboard .statistics-graphics-container .bar .container {
-        position: relative;
-        color: white;
-        font-weight: 500;
-        width: 100%;
-        height: 100%;
-        margin: 0; }
-        .dashboard .statistics-graphics-container .bar .container .statistic {
-          line-height: 40px;
-          font-size: 1.4rem; }
-          .dashboard .statistics-graphics-container .bar .container .statistic.left-text {
-            float: left;
-            height: 100%;
-            margin: 0 0 0 20px; }
-          .dashboard .statistics-graphics-container .bar .container .statistic.right-text {
-            float: right;
-            height: 100%;
-            margin: 0 20px 0 0; }
-    .dashboard .statistics-graphics-container .svg-graphics-container {
-      position: absolute;
-      height: 100%;
-      width: 100%; }
-    .dashboard .statistics-graphics-container .internal-graphics-container {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      -moz-transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%); }
-    .dashboard .statistics-graphics-container .project-badge-line, .dashboard .statistics-graphics-container .project-badge-circle {
-      fill: none; }
-    .dashboard .statistics-graphics-container .project-badge-line {
-      stroke: #11ade5; }
-    .dashboard .statistics-graphics-container .project-badge-circle {
-      stroke: white; }
-    .dashboard .statistics-graphics-container .text-container {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      -moz-transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
-      height: 220px;
-      width: 220px;
-      color: #064f7e; }
-      .dashboard .statistics-graphics-container .text-container .percentage-text {
-        position: absolute;
-        left: 50%;
-        top: 45%;
-        transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%); }
-      .dashboard .statistics-graphics-container .text-container .funded {
-        position: absolute;
-        font-weight: 800;
-        left: 50%;
-        top: 60%;
-        transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%); }
-
-.about {
-  margin-top: 200px; }
-  .about .header-text p {
-    font-weight: 800;
-    color: #444444;
-    font-size: 1.8rem; }
-  .about .gray-bar {
-    background-color: #999999;
-    height: 1px;
-    width: 100%; }
-  .about .categories {
-    max-width: 100%;
-    line-height: 50px; }
-    .about .categories .category-text {
-      display: inline-block;
-      color: #888888;
-      margin-left: 15px;
-      margin-right: 20px;
-      height: 30px; }
-      .about .categories .category-text .category-text-inside {
-        line-height: 30px;
-        font-size: 0.8rem; }
-    .about .categories .category-holder {
-      display: inline-block;
-      border: 1px solid #888888;
-      width: auto;
-      padding: 0 10px;
-      min-width: 15%;
-      height: 30px;
-      margin: 10px 15px inherit 15px; }
-      .about .categories .category-holder .category-label {
-        color: #888888;
-        text-align: center;
-        line-height: 28px; }
-  .about .about-text {
-    margin-bottom: 80px; }
-    .about .about-text p {
-      font-weight: 500;
-      font-size: 1.5rem;
-      color: #333333; }
-
-.project-updates .header-text p {
-  font-weight: 800;
+.administrator-button.small {
+  width: 15%;
   color: black;
-  font-size: 1.8rem; }
-.project-updates .gray-bar {
-  background-color: #999999;
-  height: 1px;
-  width: 100%; }
-.project-updates .update-container {
-  margin-top: 40px;
-  width: 100%;
-  margin-bottom: 40px;
-  display: inline-block;
-  position: relative; }
-  .project-updates .update-container .date-container {
-    height: 50px;
-    width: 100%;
-    text-align: center;
-    color: #064f7e;
-    font-weight: 300;
-    line-height: 0.5; }
-    .project-updates .update-container .date-container .date-year {
-      font-size: 4.5rem;
-      margin-bottom: 0;
-      line-height: 4.5rem; }
-    .project-updates .update-container .date-container .date-month-day {
-      font-size: 1.5rem;
-      line-height: 1.5rem; }
-  .project-updates .update-container .update-text {
-    font-weight: 500;
-    font-size: 1.5rem;
-    color: #333333;
-    white-space: pre-wrap; }
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #f9f9fa;
+  border-width: 2px;
+  border-color: rgba(4, 78, 126, 0.75);
+  font-weight: 300;
+  font-family: "Lato", sans-serif;
+  font-size: 1em;
+  transition: border-color 200ms linear; }
+  .administrator-button.small.active, .administrator-button.small:focus, .administrator-button.small:hover {
+    color: black;
+    background-color: #f9f9fa;
+    border-color: #007295; }
 
-.map {
-  margin-top: 40px;
-  margin-bottom: 50px;
-  height: 400px; }
-  .map .map-canvas {
+.dashboard-button {
+  width: 33%;
+  color: black;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  background-color: #f9f9fa;
+  font-weight: 300;
+  font-family: "Lato", sans-serif;
+  border-width: 2px;
+  border-color: #f9f9fa;
+  transition: border-color 200ms linear; }
+  .dashboard-button.active, .dashboard-button:focus, .dashboard-button:hover {
+    color: black;
+    background-color: #f9f9fa;
+    border-color: rgba(4, 78, 126, 0.75); }
+
+.project-container {
+  padding: 0;
+  margin: 0; }
+  .project-container .status-bar {
+    transition: border-color 200ms linear;
+    transition: background-color 200ms linear;
+    height: 40px;
+    width: 80%;
     position: absolute;
-    width: 100%;
-    height: 400px;
-    margin: 0;
-    padding: 0; }
-    .map .map-canvas img {
-      max-width: none; }
-  .map .overlay {
-    background: rgba(0, 0, 0, 0.65);
-    float: left;
-    height: 400px; }
-  .map .map-cover {
-    background: rgba(0, 0, 0, 0);
-    height: 400px;
-    float: right; }
-  .map .text-container {
+    top: 50%;
+    left: 10%;
+    border-color: white;
+    border-width: 2px;
+    border-style: solid; }
+    .project-container .status-bar .status-bar-menu-text {
+      transition: color 200ms linear;
+      font-family: "Lato", sans-serif;
+      text-align: center;
+      top: 50%;
+      margin-right: 6px;
+      color: white;
+      font-weight: 300;
+      z-index: -1; }
+    .project-container .status-bar.active, .project-container .status-bar:hover {
+      border-width: 2px;
+      border-style: solid; }
+      .project-container .status-bar.active .status-bar-menu-text, .project-container .status-bar:hover .status-bar-menu-text {
+        color: #11ade5; }
+    .project-container .status-bar .progress-bar-scale {
+      height: 10%;
+      width: 100%;
+      background-color: white;
+      position: absolute;
+      top: 90%;
+      bottom: 10%; }
+      .project-container .status-bar .progress-bar-scale .green-bar {
+        width: 90%;
+        height: 100%;
+        background-color: green; }
+  .project-container .project-img {
+    position: relative; }
+  .project-container .project-title {
     position: absolute;
     color: white;
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 35px; }
-    .map .text-container .title-container p {
-      font-weight: 500;
-      font-size: 1.8rem;
-      line-height: 1.8rem; }
-    .map .text-container .address-container p {
-      font-weight: 500;
-      font-size: 1.5rem;
-      margin: 0;
-      line-height: 1.5rem; }
-  .map .donate-button-header {
-    border: 2px solid white;
-    width: 80%;
-    height: 70px;
-    z-index: 100;
-    margin: 305px 10% 25px 10%;
-    transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s; }
-    .map .donate-button-header p {
-      width: 100%;
-      height: 100%;
-      color: white;
-      text-align: center;
-      line-height: 70px;
-      font-size: 2rem;
-      font-weight: 800; }
-    .map .donate-button-header:hover {
-      background-color: white; }
-      .map .donate-button-header:hover p {
-        color: black; }
+    top: 7%;
+    left: 7%;
+    font-weight: 800;
+    width: 60%;
+    text-shadow: 1px 1px 1px #494949; }
 
-.confirm-column .table {
-  width: 100%; }
-.confirm-column .table-cell-middle {
-  width: 100%;
-  height: 120px; }
-.confirm-column span.confirm-info-amount {
-  font-weight: bold;
-  font-size: 30px; }
-.confirm-column ul.confirm-info-card {
-  list-style: none;
-  margin: 0;
-  margin-left: 1.875rem; }
+.active-project-container .status-bar {
+  top: 65%;
+  left: 30%;
+  width: 40%;
+  height: 15%; }
+  .active-project-container .status-bar .progress-bar-scale {
+    width: 75%;
+    left: 5%; }
+  .active-project-container .status-bar .status-bar-menu-text {
+    height: 50%;
+    top: 25%;
+    bottom: 25%; }
+.active-project-container .project-title {
+  font-size: 34px; }
 
-.confirm-text {
-  height: 20px;
-  line-height: 20px;
-  text-align: center;
-  padding: 0.9375rem 0; }
-
-.success-check {
-  width: 300px;
-  height: 300px;
-  margin: 0 20px 20px 20px; }
-
-@media only screen and (max-width: 40em) {
-  .project-updates .columns {
-    padding-left: 0px;
-    padding-right: 0px; }
-  .project-updates .update-container {
-    margin: 10px 0px; }
-    .project-updates .update-container .date-container {
-      text-align: left;
-      margin-bottom: 50px; }
-    .project-updates .update-container .update-text {
-      font-weight: 500;
-      font-size: 1rem; }
-  .map {
-    height: 250px; }
-    .map .map-canvas {
-      height: 250px; }
-      .map .map-canvas img {
-        max-width: none; }
-    .map .overlay {
-      height: 250px; }
-    .map .text-container .title-container p {
-      font-size: 1rem;
-      line-height: 1rem; }
-    .map .text-container .address-container p {
-      font-size: 0.8rem;
-      line-height: 1rem; }
-    .map .donate-button-header {
-      margin: 175px 10% 25px 10%;
-      height: 50px; }
-      .map .donate-button-header p {
-        line-height: 45px;
-        font-size: 1rem;
-        font-weight: 800; }
-  .dashboard {
-    height: 700px;
-    z-index: 1;
-    top: 0; }
-    .dashboard .statistics-graphics-container {
-      height: 500px; }
-      .dashboard .statistics-graphics-container .bar {
-        height: 25px; }
-        .dashboard .statistics-graphics-container .bar.top-bar {
-          top: 63%; }
-        .dashboard .statistics-graphics-container .bar.bottom-bar {
-          top: 68%; }
-      .dashboard .statistics-graphics-container .container .statistic.left-text {
-        float: left;
-        height: 100%;
-        margin: 0 0 0 10px;
-        font-size: 0.8rem;
-        line-height: 25px; }
-      .dashboard .statistics-graphics-container .container .statistic.right-text {
-        float: right;
-        height: 100%;
-        margin: 0 10px 0 0;
-        font-size: 0.8rem;
-        line-height: 25px; }
-  .header-img-div {
-    height: 270px; }
-    .header-img-div .overlay .donate-button-header {
-      left: 15%;
-      width: 70%;
-      height: 40px;
-      top: 170%;
-      border-color: #064f7e;
-      z-index: 1000; }
-      .header-img-div .overlay .donate-button-header .donate-link {
-        line-height: 40px;
-        margin-top: 0; }
-        .header-img-div .overlay .donate-button-header .donate-link p {
-          height: 100%;
-          line-height: 36px;
-          color: #064f7e; }
-    .header-img-div .overlay .project-title {
-      font-size: 1.5rem;
-      line-height: 1.5rem;
-      top: 140px;
-      width: 100%;
-      text-align: center;
-      left: 0; }
-  .about {
-    margin-top: 20px; }
-    .about .header-text p {
-      font-size: 1.5rem;
-      line-height: 1.5rem; }
-    .about .categories {
-      margin: 0; }
-      .about .categories .category-text {
-        margin: 0; }
-      .about .categories .category-holder {
-        display: block;
-        margin: 0;
-        margin-bottom: 5px; }
-        .about .categories .category-holder:last-child {
-          margin-bottom: 15px; }
-    .about .about-text p {
-      font-size: 1rem; } }
-
-@media only screen and (min-width:40.063em) and (max-width:64em) {
-  .dashboard .statistics-graphics-container .container .statistic.left-text {
-    font-size: 0.9rem; }
-  .dashboard .statistics-graphics-container .container .statistic.right-text {
-    font-size: 0.9rem; } }
+.accordion {
+  top: 0;
+  font-family: "Lato", sans-serif;
+  font-weight: 300; }
+  .accordion .accordion-navigation {
+    transition: background-color 200ms linear; }
+    .accordion .accordion-navigation a {
+      transition: background-color 200ms linear; }
+    .accordion .accordion-navigation #new-project-button {
+      background-color: green; }
