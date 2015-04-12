@@ -292,7 +292,9 @@ body {
         .category-holder {
             display: inline-block;
             border: 1px solid #888888;
-            width: 15%;
+            width: auto;
+            padding: 0 10px;
+            min-width: 15%;
             height: 30px;
             margin: 10px 15px inherit 15px;
 
@@ -653,10 +655,20 @@ $map-height: 400px;
         }
 
         .categories {
+            margin: 0;
+
+            .category-text {
+                margin: 0;
+            }
 
             .category-holder {
-                width: auto;
-                padding: 0 10px;
+                display: block;
+                margin: 0;
+                margin-bottom: 5px;
+
+                &:last-child {
+                    margin-bottom: 15px;
+                }
             }
         }
 

@@ -5770,7 +5770,9 @@ body {
     .about .categories .category-holder {
       display: inline-block;
       border: 1px solid #888888;
-      width: 15%;
+      width: auto;
+      padding: 0 10px;
+      min-width: 15%;
       height: 30px;
       margin: 10px 15px inherit 15px; }
       .about .categories .category-holder .category-label {
@@ -5985,9 +5987,16 @@ body {
     .about .header-text p {
       font-size: 1.5rem;
       line-height: 1.5rem; }
-    .about .categories .category-holder {
-      width: auto;
-      padding: 0 10px; }
+    .about .categories {
+      margin: 0; }
+      .about .categories .category-text {
+        margin: 0; }
+      .about .categories .category-holder {
+        display: block;
+        margin: 0;
+        margin-bottom: 5px; }
+        .about .categories .category-holder:last-child {
+          margin-bottom: 15px; }
     .about .about-text p {
       font-size: 1rem; } }
 
