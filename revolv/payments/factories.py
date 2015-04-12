@@ -17,6 +17,19 @@ class PaymentFactory(factory.django.DjangoModelFactory):
     payment_type = PaymentType.objects.get_paypal()
     created_at = datetime.datetime.now()
 
+    @classmethod
+    def _create(cls, target_class, *args, **kwargs):
+        """
+        Override the default _create to allow for the overriding of created_at
+        See : https://github.com/rbarrois/factory_boy/issues/102
+        """
+        created_at = kwargs.pop('created_at', None)
+        obj = super(PaymentFactory, cls)._create(target_class, *args, **kwargs)
+        if created_at is not None:
+            obj.created_at = created_at
+            obj.save()
+        return obj
+
 
 class DonationPaymentFactory(factory.django.DjangoModelFactory):
     class Meta:
