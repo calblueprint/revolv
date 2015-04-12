@@ -37,9 +37,9 @@
         <div class="tabs-content">
             {% for project in donated_projects %}
                 {% if project == donated_projects.first %}
-                    <div class="content active" id="proj{{project.id}}">
+                <div class="content active" id="proj{{project.id}}">
                 {% else %}
-                    <div class="content" id="proj{{project.id}}">
+                <div class="content" id="proj{{project.id}}">
                 {% endif %}
                     <div class="small-9 columns">
                         <div class="row">
@@ -74,8 +74,8 @@
             {% empty %}
                 <p> You have not donated to any projects. </p>
             {% endfor %}
+        </div>
     </div>
-  </div>
 </div>
 
 {% endblock %}

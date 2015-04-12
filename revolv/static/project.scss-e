@@ -607,7 +607,7 @@ $map-height: 400px;
         height: 270px;
 
         .overlay {
-
+            
             $donate-header-button-mobile-height: 40px;
             .donate-button-header {
                 left: 15%;

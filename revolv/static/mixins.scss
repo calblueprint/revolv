@@ -1,5 +1,3 @@
-@import "bower_components/foundation/scss/foundation";
-
 // Mixin for keyframes
 @mixin keyframes($name) {
     @-webkit-keyframes #{$name} { @content; }

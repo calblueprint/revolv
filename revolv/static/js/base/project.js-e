@@ -15,7 +15,7 @@ $( window ).resize(function() {
  * Resizes the text inside the speedometer.
  */
 var setTextSize = function(radius) {
-
+    
     var percentage_size = 3 * radius / 100;
     var funded_size = percentage_size * 0.5;
 
@@ -32,7 +32,7 @@ var resizeIframe = function() {
 };
 
 /**
- * Dynamically resizes text inside the speedometer, resizes the iframe, draws an outside circle, and draws an inner
+ * Dynamically resizes text inside the speedometer, resizes the iframe, draws an outside circle, and draws an inner 
  * partial circle based on the width of the existing screen.
  */
 var draw = function() {
@@ -65,7 +65,7 @@ var draw = function() {
 
     // this line will get actual partial completeness - set this variable to something else if you want to test.
     var partialCompleteness = window.PARTIAL_COMPLETENESS;
-
+    
     var dimension = (2 * radius) + (2 * padding);
     var translateVar = (radius + padding) * 0.5;
 

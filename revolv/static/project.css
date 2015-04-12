@@ -5629,7 +5629,7 @@ body {
       position: absolute;
       border: 2px solid white;
       width: 15%;
-      height: 10%;
+      height: 50px;
       bottom: 40px;
       right: 5%;
       transition: all 0.3s;
@@ -5641,7 +5641,7 @@ body {
         display: inline-block; }
         .header-img-div .overlay .donate-button-header .donate-link p {
           height: 0;
-          line-height: 50px;
+          line-height: 46px;
           color: white;
           text-align: center;
           transition: all 0.3s;
@@ -5757,7 +5757,7 @@ body {
     width: 100%; }
   .about .categories {
     max-width: 100%;
-    height: 50px; }
+    line-height: 50px; }
     .about .categories .category-text {
       display: inline-block;
       color: #888888;
@@ -5962,7 +5962,7 @@ body {
     .header-img-div .overlay .donate-button-header {
       left: 15%;
       width: 70%;
-      height: 15%;
+      height: 40px;
       top: 170%;
       border-color: #064f7e;
       z-index: 1000; }
@@ -5971,7 +5971,7 @@ body {
         margin-top: 0; }
         .header-img-div .overlay .donate-button-header .donate-link p {
           height: 100%;
-          line-height: 40px;
+          line-height: 36px;
           color: #064f7e; }
     .header-img-div .overlay .project-title {
       font-size: 1.5rem;
@@ -5986,7 +5986,8 @@ body {
       font-size: 1.5rem;
       line-height: 1.5rem; }
     .about .categories .category-holder {
-      width: 25%; }
+      width: auto;
+      padding: 0 10px; }
     .about .about-text p {
       font-size: 1rem; } }
 
