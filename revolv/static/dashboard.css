@@ -5669,6 +5669,8 @@ html, body, .main-row {
   .dashboard-sidebar .role-select-options {
     border-bottom: 1px solid #4d4d4d;
     display: none; }
+    .dashboard-sidebar .role-select-options a, .dashboard-sidebar .role-select-options a:visited, .dashboard-sidebar .role-select-options a:active, .dashboard-sidebar .role-select-options a:hover {
+      color: inherit; }
     .dashboard-sidebar .role-select-options .role-select-option {
       margin-left: 10px;
       font-size: 15px;
