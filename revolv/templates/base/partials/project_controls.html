@@ -20,49 +20,49 @@
         {% if project.is_drafted %}
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <input id="propose_project" class="small button radius" name="_propose" type="submit" value="Propose" />
+                <input id="propose_project" class="small button" name="_propose" type="submit" value="Propose" />
             </form>
         {% endif %}
         {% if project.is_proposed %}
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <input id="approve_project" class="small button success radius" name="_approve" type="submit" value="Approve" />
-                <input id="deny_project" class="small button alert radius" name="_deny" type="submit" value="Deny" />
+                <input id="approve_project" class="small button success" name="_approve" type="submit" value="Approve" />
+                <input id="deny_project" class="small button alert" name="_deny" type="submit" value="Deny" />
             </form>
         {% endif %}
         {% if project.is_active %}
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <input id="complete_project" class="small button radius" name="_complete" type="submit" value="Complete" />
+                <input id="complete_project" class="small button" name="_complete" type="submit" value="Complete" />
             </form>
         {% endif %}
         {% if project.is_completed or project.is_active %}
             <form enctype="multipart/form-data" method="GET" action="{% url "project:update" pk=project.id %}">
-                <input id="post_project_updates" class="small button radius" type="submit" value="Post Project Updates" />
+                <input id="post_project_updates" class="small button" type="submit" value="Post Project Updates" />
             </form>
         {% endif %}
         {% if project.is_completed %}
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <input id="incomplete_project" class="small button alert radius" name="_incomplete" type="submit" value="Mark Project as Incomplete" />
+                <input id="incomplete_project" class="small button alert" name="_incomplete" type="submit" value="Mark Project as Incomplete" />
             </form>
         {% endif %}
         <form enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
-            <input id="edit_project" class="small button radius" type="submit" value="Edit Project" />
+            <input id="edit_project" class="small button" type="submit" value="Edit Project" />
         </form>
     {% elif profile.is_ambassador %}
         {% if project.is_drafted %}
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <input id="propose_project" class="small button radius" name="_propose" type="submit" value="Propose" />
+                <input id="propose_project" class="small button" name="_propose" type="submit" value="Propose" />
             </form>
             <form enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
-                <input id="edit_project" class="small button radius" type="submit" value="Edit Project" />
+                <input id="edit_project" class="small button" type="submit" value="Edit Project" />
             </form>
         {% endif %}
         {% if project.is_completed or project.is_active %}
             <form enctype="multipart/form-data" method="GET" action="{% url "project:update" pk=project.id %}">
-                <input id="post_project_updates" class="small button radius" type="submit" value="Post Project Updates" />
+                <input id="post_project_updates" class="small button" type="submit" value="Post Project Updates" />
             </form>
         {% endif %}
     {% endif %}

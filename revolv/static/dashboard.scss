@@ -1,7 +1,7 @@
+@import "utils";
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
 @import "revolv-settings";
-@import "utils";
 @import "nav";
 
 html, body, .main-row {
@@ -175,12 +175,19 @@ $sidebar-header-gray: #5c5c5c;
             display: inline-block;
             text-align: right;
 
-            .control-button {
+            form {
+                padding: 0;
+            }
+            form, .button {
                 display: inline-block;
                 margin-right: 30px;
                 &:last-child {
                     margin-right: 0;
                 }
+            }
+
+            .button {
+                display: inline-block;
 
                 font-size: 13px;
                 line-height: 16px;
@@ -188,15 +195,12 @@ $sidebar-header-gray: #5c5c5c;
                 text-transform: uppercase;
                 padding: 7px 20px;
 
-                @include revolv-hover-button(#555, inherit);
-                &.approve {
+                @include revolv-hover-button($revolv-blue, inherit);
+                &.success {
                     @include revolv-hover-button($revolv-green, inherit);
                 }
-                &.deny {
+                &.alert {
                     @include revolv-hover-button($revolv-red, inherit);
-                }
-                &.edit {
-                    @include revolv-hover-button($revolv-blue, inherit);
                 }
             }
         }

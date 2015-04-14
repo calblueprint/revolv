@@ -6407,9 +6407,15 @@ html, body, .main-row {
     .dashboard-project .dashboard-project-header .controls {
       display: inline-block;
       text-align: right; }
-      .dashboard-project .dashboard-project-header .controls .control-button {
+      .dashboard-project .dashboard-project-header .controls form {
+        padding: 0; }
+      .dashboard-project .dashboard-project-header .controls form, .dashboard-project .dashboard-project-header .controls .button {
         display: inline-block;
-        margin-right: 30px;
+        margin-right: 30px; }
+        .dashboard-project .dashboard-project-header .controls form:last-child, .dashboard-project .dashboard-project-header .controls .button:last-child {
+          margin-right: 0; }
+      .dashboard-project .dashboard-project-header .controls .button {
+        display: inline-block;
         font-size: 13px;
         line-height: 16px;
         color: #555555;
@@ -6418,59 +6424,43 @@ html, body, .main-row {
         cursor: pointer;
         background-color: transparent;
         color: inherit;
-        border: 1px solid #555555; }
-        .dashboard-project .dashboard-project-header .controls .control-button:last-child {
-          margin-right: 0; }
-        .dashboard-project .dashboard-project-header .controls .control-button:hover {
-          background-color: #555555;
+        border: 1px solid #11ade5; }
+        .dashboard-project .dashboard-project-header .controls .button:hover {
+          background-color: #11ade5;
           color: white;
           transition: background-color 0.2s;
           transition: color 0.1s;
           -webkit-transition: background-color 0.2s;
           -webkit-transition: color 0.1s; }
-        .dashboard-project .dashboard-project-header .controls .control-button:disabled {
+        .dashboard-project .dashboard-project-header .controls .button:disabled {
           opacity: 0.3; }
-        .dashboard-project .dashboard-project-header .controls .control-button.approve {
+        .dashboard-project .dashboard-project-header .controls .button.success {
           cursor: pointer;
           background-color: transparent;
           color: inherit;
           border: 1px solid #4cb032; }
-          .dashboard-project .dashboard-project-header .controls .control-button.approve:hover {
+          .dashboard-project .dashboard-project-header .controls .button.success:hover {
             background-color: #4cb032;
             color: white;
             transition: background-color 0.2s;
             transition: color 0.1s;
             -webkit-transition: background-color 0.2s;
             -webkit-transition: color 0.1s; }
-          .dashboard-project .dashboard-project-header .controls .control-button.approve:disabled {
+          .dashboard-project .dashboard-project-header .controls .button.success:disabled {
             opacity: 0.3; }
-        .dashboard-project .dashboard-project-header .controls .control-button.deny {
+        .dashboard-project .dashboard-project-header .controls .button.alert {
           cursor: pointer;
           background-color: transparent;
           color: inherit;
           border: 1px solid #e83d3d; }
-          .dashboard-project .dashboard-project-header .controls .control-button.deny:hover {
+          .dashboard-project .dashboard-project-header .controls .button.alert:hover {
             background-color: #e83d3d;
             color: white;
             transition: background-color 0.2s;
             transition: color 0.1s;
             -webkit-transition: background-color 0.2s;
             -webkit-transition: color 0.1s; }
-          .dashboard-project .dashboard-project-header .controls .control-button.deny:disabled {
-            opacity: 0.3; }
-        .dashboard-project .dashboard-project-header .controls .control-button.edit {
-          cursor: pointer;
-          background-color: transparent;
-          color: inherit;
-          border: 1px solid #11ade5; }
-          .dashboard-project .dashboard-project-header .controls .control-button.edit:hover {
-            background-color: #11ade5;
-            color: white;
-            transition: background-color 0.2s;
-            transition: color 0.1s;
-            -webkit-transition: background-color 0.2s;
-            -webkit-transition: color 0.1s; }
-          .dashboard-project .dashboard-project-header .controls .control-button.edit:disabled {
+          .dashboard-project .dashboard-project-header .controls .button.alert:disabled {
             opacity: 0.3; }
 
 .cover-photo {

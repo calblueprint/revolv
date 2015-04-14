@@ -118,7 +118,6 @@ class ProjectManager(models.Manager):
         project.save()
         return project
 
-
 class Project(models.Model):
     """
     Project model. Stores basic metadata, information about the project,
@@ -349,6 +348,7 @@ class Project(models.Model):
         """
         try:
             pieces = self.location.split(',')
+            text = ""
             if len(pieces) >= 3:
                 return pieces[1] + "," + pieces[2]
             elif len(pieces) == 2:
@@ -471,19 +471,18 @@ class Project(models.Model):
         update = ProjectUpdate(update_text=text, project=self)
         update.save()
 
-
 class ProjectUpdate(models.Model):
     update_text = models.TextField(
         'Update text',
-        help_text="What should the update say?"
+        help_text = "What should the update say?"
     )
-
+    
     date = models.DateField(
         'Date of update creation',
-        help_text="What time was your update created?",
-        auto_now_add=True
+        help_text = "What time was your update created?",
+        auto_now_add = True
     )
-
+    
     project = models.ForeignKey(
         Project,
         related_name="updates"

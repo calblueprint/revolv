@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
@@ -13,7 +13,9 @@ from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.services import PaymentService
 from revolv.project import forms
-from revolv.project.models import Category, Project
+from revolv.project.models import Category, Project, ProjectUpdate
+from revolv.base.models import RevolvUserProfile
+
 
 
 class DonationLevelFormSetMixin(object):
@@ -155,19 +157,42 @@ class ReviewProjectView(UserDataMixin, UpdateView):
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
+class TemplateProjectUpdateView(UserDataMixin, UpdateView):
+    form_class = forms.EditProjectUpdateForm
+    template_name = 'project/edit_project_update.html'
 
-class PostFundingUpdateView(UpdateView):
-    """
-    The view to send out post funding updates about a project after it has completed.
 
-    Accessed through /project/{project_id}/update
-    """
+    def dispatch(self, request, *args, **kwargs):
+        response = super(TemplateProjectUpdateView, self).dispatch(request, args, kwargs)
+        if not self.is_ambassador:
+            return self.deny_access()
+        return response
+
+
+class PostProjectUpdateView(TemplateProjectUpdateView):
     model = Project
-    template_name = 'project/post_funding_update.html'
-    form_class = forms.PostFundingUpdateForm
 
     def get_success_url(self):
-        return reverse('project:view', kwargs={'pk': self.get_object().id})
+        return reverse('project:review', kwargs={'pk': self.get_object().id})
+
+    def form_valid(self, form):
+        text = form.cleaned_data['update_text']
+        project = self.get_object()
+        project.add_update(text)
+        return super(PostProjectUpdateView, self).form_valid(form)
+
+
+class EditProjectUpdateView(TemplateProjectUpdateView):    
+    model = ProjectUpdate
+
+    def get_success_url(self):
+        return reverse('project:review', kwargs={'pk': self.get_object().project_id})
+
+    def form_valid(self, form):
+        text = form.cleaned_data['update_text']
+        update = self.get_object()
+        update.update_text = text
+        return super(EditProjectUpdateView, self).form_valid(form)
 
 
 class ProjectView(UserDataMixin, DetailView):
@@ -183,6 +208,8 @@ class ProjectView(UserDataMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        context['updates'] = self.get_object().updates.order_by('date').reverse()
+        context['donor_count'] = self.get_object().donors.count()
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -199,6 +226,7 @@ class ProjectView(UserDataMixin, DetailView):
 class SubmitDonationView(UserDataMixin, FormView):
     form_class = CreditCardDonationForm
     model = Project
+    http_method_names = [u'post']
 
     def form_valid(self, form):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
