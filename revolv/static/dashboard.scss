@@ -18,15 +18,36 @@ html, body, .main-row {
     margin: 0 !important;
 }
 
-$sidebar-header-gray: #5c5c5c;
+$sidebar-header-gray: #777;
 .dashboard-sidebar {
     padding: 0;
     background-color: $oil;
     height: 100%;
     font-family: $lato-font-family;
 
-    .role-select-options, .dashboard-section {
+    .role-select-options {
         padding: 10px 20px;
+    }
+    .dashboard-section {
+        padding: 10px 0;
+
+        .dashboard-header {
+            padding: 0 20px;
+        }
+        .dashboard-sidebar-project-container {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: $sidebar-header-gray;
+
+            &.active {
+                background-color: $revolv-blue;
+                color: white;
+
+                .dashboard-sidebar-bullet-point {
+                    visibility: hidden;
+                }
+            }
+        }
     }
 
     .dashboard-header {
@@ -100,16 +121,13 @@ $sidebar-header-gray: #5c5c5c;
         display: inline-block;
         vertical-align: middle;
         font-size: 13px;
-        line-height: 16px;
+        line-height: 15px;
         max-width: 80%;
-        color: lighten($sidebar-header-gray, 10%);
-
-        &.active {
-            color: lighten($sidebar-header-gray, 20%);
-        }
+        color: inherit;
     }
 
     .dashboard-manage-link {
+        padding: 0 20px;
         font-size: 13px;
         line-height: 16px;
         margin-left: 16px;
@@ -125,6 +143,10 @@ $sidebar-header-gray: #5c5c5c;
 
 .dashboard-project {
     padding: 0;
+    display: none;
+    &.dashboard-data-section-current {
+        display: block;
+    }
 
     // the dashboard project page should scroll instead of extending
     // down past the sidebar

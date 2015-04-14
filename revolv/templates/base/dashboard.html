@@ -33,7 +33,7 @@
                 {% for project in project_list %}
                     <!-- {{outer_counter}} -->
                     <!-- {{ forloop.counter}} -->
-                    <div class="medium-10 columns dashboard-project" {% if outer_counter != 1 or forloop.counter != 1 %}style="display:none"{% endif %}>
+                    <div class="medium-10 columns dashboard-project dashboard-data-section-project-{{project.pk}}{% if outer_counter == 1 and forloop.counter == 1 %} dashboard-data-section-current{% endif %}">
                         {% include "base/partials/dashboard_project.html" with project=project user=user %}
                     </div>
                 {% endfor %}

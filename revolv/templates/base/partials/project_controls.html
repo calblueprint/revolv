@@ -33,7 +33,7 @@
         {% if project.is_active %}
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <input id="complete_project" class="small button" name="_complete" type="submit" value="Complete" />
+                <input id="complete_project" class="small button success" name="_complete" type="submit" value="Complete" />
             </form>
         {% endif %}
         {% if project.is_completed or project.is_active %}
@@ -44,7 +44,7 @@
         {% if project.is_completed %}
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <input id="incomplete_project" class="small button alert" name="_incomplete" type="submit" value="Mark Project as Incomplete" />
+                <input id="incomplete_project" class="small button alert" name="_incomplete" type="submit" value="Mark as Incomplete" />
             </form>
         {% endif %}
         <form enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">

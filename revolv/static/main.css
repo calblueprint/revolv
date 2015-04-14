@@ -6305,12 +6305,25 @@ html, body, .main-row {
   background-color: #333333;
   height: 100%;
   font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
-  .dashboard-sidebar .role-select-options, .dashboard-sidebar .dashboard-section {
+  .dashboard-sidebar .role-select-options {
     padding: 10px 20px; }
+  .dashboard-sidebar .dashboard-section {
+    padding: 10px 0; }
+    .dashboard-sidebar .dashboard-section .dashboard-header {
+      padding: 0 20px; }
+    .dashboard-sidebar .dashboard-section .dashboard-sidebar-project-container {
+      padding: 10px 20px;
+      cursor: pointer;
+      color: #777777; }
+      .dashboard-sidebar .dashboard-section .dashboard-sidebar-project-container.active {
+        background-color: #11ade5;
+        color: white; }
+        .dashboard-sidebar .dashboard-section .dashboard-sidebar-project-container.active .dashboard-sidebar-bullet-point {
+          visibility: hidden; }
   .dashboard-sidebar .dashboard-header {
     font-size: 13px;
     line-height: 16px;
-    color: #5c5c5c;
+    color: #777777;
     text-transform: uppercase;
     margin: 10px auto; }
   .dashboard-sidebar .role-select {
@@ -6358,16 +6371,15 @@ html, body, .main-row {
     display: inline-block;
     vertical-align: middle;
     font-size: 13px;
-    line-height: 16px;
+    line-height: 15px;
     max-width: 80%;
-    color: #767676; }
-    .dashboard-sidebar .dashboard-sidebar-project.active {
-      color: #8f8f8f; }
+    color: inherit; }
   .dashboard-sidebar .dashboard-manage-link {
+    padding: 0 20px;
     font-size: 13px;
     line-height: 16px;
     margin-left: 16px;
-    color: #767676;
+    color: #919191;
     margin-bottom: 5px; }
     .dashboard-sidebar .dashboard-manage-link a, .dashboard-sidebar .dashboard-manage-link a:visited, .dashboard-sidebar .dashboard-manage-link a:active, .dashboard-sidebar .dashboard-manage-link a:hover {
       color: inherit;
@@ -6375,8 +6387,11 @@ html, body, .main-row {
 
 .dashboard-project {
   padding: 0;
+  display: none;
   max-height: 100%;
   overflow-y: scroll; }
+  .dashboard-project.dashboard-data-section-current {
+    display: block; }
   .dashboard-project .dashboard-project-header {
     height: 55px;
     width: 100%;

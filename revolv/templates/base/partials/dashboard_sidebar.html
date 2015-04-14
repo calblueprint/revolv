@@ -42,10 +42,14 @@
 <div class="dashboard-section projects">
     {% for project_group_name, project_list in project_dict.items %}
         <div class="dashboard-header">{{ project_group_name.0 }}</div>
-        {% for project in project_list %}
-            <div class="dashboard-sidebar-bullet-point {{project_group_name.1}}"></div>
-            <div class="dashboard-sidebar-project {{project_group_name.1}} dashboard-data-link">{{project.title}}</div>
-        {% endfor %}
+        {% with outer_counter=forloop.counter %}
+            {% for project in project_list %}
+                <div class="dashboard-sidebar-project-container dashboard-data-link {% if outer_counter == 1 and forloop.counter == 1 %} active{% endif %}" data-section="project-{{project.pk}}">
+                    <div class="dashboard-sidebar-bullet-point {{project_group_name.1}}"></div>
+                    <div class="dashboard-sidebar-project {{project_group_name.1}} dashboard-data-link">{{project.title}}</div>
+                </div>
+            {% endfor %}
+        {% endwith %}
     {% endfor %}
 </div>
 <div class="dashboard-section manage">

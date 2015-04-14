@@ -13,7 +13,9 @@ $(document).ready(function () {
     });
 
     $(".dashboard-data-link").click(function() {
-        $(".dashboard-data-section-current").removeClass("dashboard-data-current");
+        $(".dashboard-data-link.active").removeClass("active");
+        $(this).addClass("active");
+        $(".dashboard-data-section-current").removeClass("dashboard-data-section-current");
         var sectionToShow = $(".dashboard-data-section-" + $(this).data("section"));
         sectionToShow.addClass("dashboard-data-section-current");
     });
