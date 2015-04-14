@@ -11,7 +11,7 @@
             <div class="title">{{project.title}}</div>
             <div class="project-status">({{project.status_display}})</div>
         </div>
-        <div class="location"><i class="fa fa-map-marker"></i><span class="location-text">San Francisco, CA</span></div>
+        <div class="location"><i class="fa fa-map-marker"></i><span class="location-text">{{project.location_city_state_zip}}</span></div>
     </div>
     <div class="controls small-6 medium-7 columns">
         {% include "base/partials/project_controls.html" with project=project profile=user.revolvuserprofile %}

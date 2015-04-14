@@ -6374,7 +6374,9 @@ html, body, .main-row {
       text-decoration: underline; }
 
 .dashboard-project {
-  padding: 0; }
+  padding: 0;
+  max-height: 100%;
+  overflow-y: scroll; }
   .dashboard-project .dashboard-project-header {
     height: 55px;
     width: 100%;
@@ -6489,6 +6491,18 @@ html, body, .main-row {
           text-transform: uppercase;
           color: #555555;
           background-color: transparent; }
+  .dashboard-project .project-tabs-content .row {
+    margin: 0; }
+  .dashboard-project .project-tabs-content p, .dashboard-project .project-tabs-content h2 {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+  .dashboard-project .project-tabs-content p {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 300; }
+  .dashboard-project .project-tabs-content h2 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 20px; }
 
 .cover-photo {
   padding: 0 !important;

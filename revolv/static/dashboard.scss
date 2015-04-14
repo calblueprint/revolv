@@ -126,6 +126,11 @@ $sidebar-header-gray: #5c5c5c;
 .dashboard-project {
     padding: 0;
 
+    // the dashboard project page should scroll instead of extending
+    // down past the sidebar
+    max-height: 100%;
+    overflow-y: scroll;
+
     .dashboard-project-header {
         height: $revolv-dashboard-header-height;
         width: 100%;
@@ -224,6 +229,28 @@ $sidebar-header-gray: #5c5c5c;
                     background-color: transparent; // foundation override
                 }
             }
+        }
+    }
+
+    .project-tabs-content {
+        .row {
+            margin: 0;
+        }
+
+        p, h2 {
+            font-family: $lato-font-family;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 18px;
+            font-weight: 300;
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 20px;
         }
     }
 }

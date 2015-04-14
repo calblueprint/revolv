@@ -27,16 +27,25 @@
 <div class="row project-tabs">
     <dl class="tabs" data-tab>
         <dd class="tab-title active"><a href="#description">Description</a></dd>
+        <!-- todo: funding and statistics and updates tabs -->
         <dd class="tab-title"><a href="#funding">Funding</a></dd>
         <dd class="tab-title"><a href="#statistics">Statistics</a></dd>
-        <dd class="tab-title"><a href="#updates">Updates</a></dd>
+        {% if project.updates.count > 0 %}
+            <dd class="tab-title"><a href="#updates">Updates</a></dd>
+        {% endif %}
     </dl>
 </div>
-<div class="tabs-content">
-    <div class="content active" id="description">
-        <p>This is the first panel of the basic tab example. You can place all sorts of content here including a grid.</p>
-    </div>
-    <div class="content" id="funding">
-        <p>HEY</p>
+<div class="project-tabs-content tabs-content">
+    <div class="content active description" id="description">
+        <div class="row project-tagline">
+            <h2 class="small-8 small-offset-1 columns">{{project.tagline}}</h2>
+        </div>
+        <div class="row project-description">
+            <div class="small-8 small-offset-1 columns">
+                {% for line in project.org_about_lines %}
+                    <p>{{line}}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
