@@ -13,6 +13,11 @@ html, body, .main-row {
     min-width: 100%;
 }
 
+.header, .spacer {
+    // the header is now a row within a row, so we need to override foundation styles
+    margin: 0 !important;
+}
+
 $sidebar-header-gray: #5c5c5c;
 .dashboard-sidebar {
     padding: 0;

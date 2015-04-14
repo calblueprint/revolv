@@ -6297,6 +6297,9 @@ html, body, .main-row {
   width: 100%;
   min-width: 100%; }
 
+.header, .spacer {
+  margin: 0 !important; }
+
 .dashboard-sidebar {
   padding: 0;
   background-color: #333333;
