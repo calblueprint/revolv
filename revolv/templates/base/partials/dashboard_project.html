@@ -24,3 +24,19 @@
 {% include "base/partials/nav.html" %}
 {% include "base/partials/dashboard_project_header.html" with user=user project=project %}
 <div class="row cover-photo"{% if project.cover_photo %} style="background-image: url({{project.cover_photo.url}});"{% endif %}></div>
+<div class="row project-tabs">
+    <dl class="tabs" data-tab>
+        <dd class="tab-title active"><a href="#description">Description</a></dd>
+        <dd class="tab-title"><a href="#funding">Funding</a></dd>
+        <dd class="tab-title"><a href="#statistics">Statistics</a></dd>
+        <dd class="tab-title"><a href="#updates">Updates</a></dd>
+    </dl>
+</div>
+<div class="tabs-content">
+    <div class="content active" id="description">
+        <p>This is the first panel of the basic tab example. You can place all sorts of content here including a grid.</p>
+    </div>
+    <div class="content" id="funding">
+        <p>HEY</p>
+    </div>
+</div>

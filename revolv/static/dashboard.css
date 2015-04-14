@@ -5787,6 +5787,33 @@ html, body, .main-row {
             -webkit-transition: color 0.1s; }
           .dashboard-project .dashboard-project-header .controls .button.alert:disabled {
             opacity: 0.3; }
+  .dashboard-project .project-tabs {
+    margin: 0;
+    margin-top: 10px;
+    text-align: center; }
+    .dashboard-project .project-tabs .tabs {
+      display: inline-block; }
+      .dashboard-project .project-tabs .tabs .tab-title {
+        display: inline-block;
+        position: relative;
+        padding-bottom: 2px; }
+        .dashboard-project .project-tabs .tabs .tab-title:after {
+          content: '';
+          display: block;
+          margin: auto;
+          height: 2px;
+          width: 0px;
+          background: transparent;
+          transition: width 0.3s ease, background-color 0.3s ease; }
+        .dashboard-project .project-tabs .tabs .tab-title.active:after {
+          width: 100%;
+          background: #11ade5; }
+        .dashboard-project .project-tabs .tabs .tab-title a {
+          font-size: 13px;
+          line-height: 16px;
+          text-transform: uppercase;
+          color: #555555;
+          background-color: transparent; }
 
 .cover-photo {
   padding: 0 !important;

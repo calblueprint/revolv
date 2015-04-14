@@ -205,6 +205,27 @@ $sidebar-header-gray: #5c5c5c;
             }
         }
     }
+
+    .project-tabs {
+        margin: 0; // foundation override
+        margin-top: 10px;
+        text-align: center;
+
+        .tabs {
+            display: inline-block;
+
+            .tab-title {
+                @include revolv-sliding-border($revolv-blue, 2px, .3s);
+                a {
+                    font-size: 13px;
+                    line-height: 16px;
+                    text-transform: uppercase;
+                    color: #555;
+                    background-color: transparent; // foundation override
+                }
+            }
+        }
+    }
 }
 
 .cover-photo {
