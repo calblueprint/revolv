@@ -19,26 +19,28 @@
 {% endcomment %}
 {% spaceless %}
 <div class="role-select">
-    {% if user.revolvuserprofile.is_administrator %}
+    {% if role == "administrator" and user.revolvuserprofile.is_administrator %}
         <div class="role-select-inner">administrator</div>
-    {% elif user.revolvuserprofile.is_ambasassador %}
+    {% elif role == "ambassador" and user.revolvuserprofile.is_ambassador %}
         <div class="role-select-inner">ambassador</div>
     {% else %}
         <div class="role-select-inner">donor</div>
     {% endif %}
     <div class="dashboard-sidebar-chevron" data-state="collapsed"><i class="fa fa-chevron-down"></i></div>
 </div>
+{% if user.revolvuserprofile.is_ambassador %}
 <div class="role-select-options">
     <div class="dashboard-header">View as:</div>
     {% if user.revolvuserprofile.is_administrator %}
-        <div class="role-select-option">ambassador</div>
-        <div class="role-select-option">donor</div>
+        <div class="role-select-option"><a href="/dashboard/admin/">administrator</a></div>
+        <div class="role-select-option"><a href="/dashboard/ambassador/">ambassador</a></div>
+        <div class="role-select-option"><a href="/dashboard/donor/">donor</a></div>
     {% elif user.revolvuserprofile.is_ambasassador %}
-        <div class="role-select-option">donor</div>
-    {% else %}
+        <div class="role-select-option"><a href="/dashboard/ambassador/">ambassador</a></div>
         <div class="role-select-option">donor</div>
     {% endif %}
 </div>
+{% endif %}
 <div class="dashboard-section projects">
     {% for project_group_name, project_list in project_dict.items %}
         <div class="dashboard-header">{{ project_group_name.0 }}</div>

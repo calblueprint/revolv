@@ -6,14 +6,14 @@
 {% endcomment %}
 <div class="dashboard-project-header row">
     <div class="sidebar-toggle small-only small-1 columns"><i class="fa fa-align-justify"></i></div>
-    <div class="title-area small-5 columns">
+    <div class="title-area small-6 columns">
         <div class="title-line">
             <div class="title">{{project.title}}</div>
             <div class="project-status">({{project.status_display}})</div>
         </div>
         <div class="location"><i class="fa fa-map-marker"></i><span class="location-text">{{project.location_city_state_zip}}</span></div>
     </div>
-    <div class="controls small-6 medium-7 columns">
+    <div class="controls small-5 medium-6 columns">
         {% include "base/partials/project_controls.html" with project=project profile=user.revolvuserprofile %}
     </div>
 </div>

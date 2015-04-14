@@ -20,7 +20,8 @@ class AdministratorDashboardView(UserDataMixin, TemplateView):
         project_dict[('Active Projects', "active")] = Project.objects.get_active()
         project_dict[('Completed Projects', "completed")] = Project.objects.get_completed()
         context["project_dict"] = project_dict
-        context['all_projects'] = list(chain(*(project_dict.values())))
+        context["all_projects"] = list(chain(*(project_dict.values())))
+        context["role"] = "administrator"
         if len(context['all_projects']) > 0:
             context['active_project'] = int(self.request.GET['active_project']) if 'active_project' in self.request.GET else context['all_projects'][0].id
         return context
