@@ -424,6 +424,10 @@ class PaymentTest(TestCase):
         """
         Test reinvestment on AdminReinvestment level. Lots of moving parts,
         see docstrings for respective models for info.
+
+        Creates 3 users, 2 of which have category preferences that match
+        categories for project2. Checks that those 2 users will reinvest into
+        it completely, and that the other users do not.
         """
         user1, user2, user3 = RevolvUserProfile.factories.base.create_batch(3)
         admin1 = RevolvUserProfile.factories.admin.create()
@@ -432,11 +436,11 @@ class PaymentTest(TestCase):
         Category.factories.base.title.reset()
         category1, category2, category3 = Category.factories.base.create_batch(3)
 
+        # assigns preferred categories for users and categories for project
         user1.preferred_categories.add(category2)
         user2.preferred_categories.add(category3)
         user3.preferred_categories.add(category1, category3)
-        project2.category_set.add(category1)
-        project2.category_set.add(category2)
+        project2.category_set.add(category1, category2)
 
         self._create_payment(user1, amount=25.00, project=project1).save()
         self._create_payment(user2, amount=75.00, project=project1).save()
@@ -445,6 +449,7 @@ class PaymentTest(TestCase):
 
         self._create_admin_repayment(admin1, amount=400.00, project=project1).save()
 
+        # verifies that reinvestment pools have values that we expect, must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
         user3 = RevolvUserProfile.objects.get(pk=user3.pk)
@@ -455,6 +460,7 @@ class PaymentTest(TestCase):
         reinvest1 = self._create_admin_reinvestment(admin1, 250.00, project=project2)
         reinvest1.save()
 
+        # checks that only users with preferences for project 2 actually donate
         self.assertEquals(project2.amount_donated, 250.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 1)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
@@ -478,6 +484,7 @@ class PaymentTest(TestCase):
 
         reinvest1.delete()
 
+        # checks that after deleting, we have no reinvestment fragments
         self.assertEquals(project2.amount_donated, 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
         self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(

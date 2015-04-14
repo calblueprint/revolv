@@ -96,8 +96,9 @@ def post_save_admin_reinvestment(**kwargs):
         if total_left <= 0.0:
             break
 
-    users_without_preferences = RevolvUserProfile.objects.filter(reinvest_pool__gt=0.0).exclude(pk__in=users_with_preferences)
+    # if we still have money we want to reinvest, loop through users without preferences
     if total_left > 0.0:
+        users_without_preferences = RevolvUserProfile.objects.filter(reinvest_pool__gt=0.0).exclude(pk__in=users_with_preferences)
         for user in users_without_preferences:
             total_left -= user.reinvest_pool
             reinvest_amount = user.reinvest_pool + min(0.0, total_left)
