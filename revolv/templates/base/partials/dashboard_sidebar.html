@@ -24,9 +24,11 @@
     {% elif role == "ambassador" and user.revolvuserprofile.is_ambassador %}
         <div class="role-select-inner">ambassador</div>
     {% else %}
-        <div class="role-select-inner">donor</div>
+        <div class="role-select-inner">{{user.username}}</div>
     {% endif %}
-    <div class="dashboard-sidebar-chevron" data-state="collapsed"><i class="fa fa-chevron-down"></i></div>
+    {% if user.revolvuserprofile.is_ambassador %}
+        <div class="dashboard-sidebar-chevron" data-state="collapsed"><i class="fa fa-chevron-down"></i></div>
+    {% endif %}
 </div>
 {% if user.revolvuserprofile.is_ambassador %}
 <div class="role-select-options">
@@ -35,24 +37,35 @@
         <div class="role-select-option"><a href="/dashboard/admin/">administrator</a></div>
         <div class="role-select-option"><a href="/dashboard/ambassador/">ambassador</a></div>
         <div class="role-select-option"><a href="/dashboard/donor/">donor</a></div>
-    {% elif user.revolvuserprofile.is_ambasassador %}
+    {% elif user.revolvuserprofile.is_ambassador %}
         <div class="role-select-option"><a href="/dashboard/ambassador/">ambassador</a></div>
-        <div class="role-select-option">donor</div>
+        <div class="role-select-option"><a href="/dashboard/donor/">donor</a></div>
     {% endif %}
 </div>
 {% endif %}
+
+{% if user.revolvuserprofile.is_ambassador and role != "donor" %}
+<div class="dashboard-section create-new">
+    <a href="{% url "project:new" %}" class="create-new-button">Create Project</a>
+</div>
+{% endif %}
+
 <div class="dashboard-section projects">
-    {% for project_group_name, project_list in project_dict.items %}
-        <div class="dashboard-header">{{ project_group_name.0 }}</div>
-        {% with outer_counter=forloop.counter %}
-            {% for project in project_list %}
-                <div class="dashboard-sidebar-project-container dashboard-data-link {% if outer_counter == 1 and forloop.counter == 1 %} active{% endif %}" data-section="project-{{project.pk}}">
-                    <div class="dashboard-sidebar-bullet-point {{project_group_name.1}}"></div>
-                    <div class="dashboard-sidebar-project {{project_group_name.1}} dashboard-data-link">{{project.title}}</div>
-                </div>
-            {% endfor %}
-        {% endwith %}
-    {% endfor %}
+    {% if donor_has_no_donated_projects %}
+        <div class="dashboard-header">No projects found.</div>
+    {% else %}
+        {% for project_group_name, project_list in project_dict.items %}
+            <div class="dashboard-header">{{ project_group_name.0 }}</div>
+            {% with outer_counter=forloop.counter %}
+                {% for project in project_list %}
+                    <div class="dashboard-sidebar-project-container dashboard-data-link {% if outer_counter == 1 and forloop.counter == 1 %} active{% endif %}" data-section="project-{{project.pk}}">
+                        <div class="dashboard-sidebar-bullet-point {{project_group_name.1}}"></div>
+                        <div class="dashboard-sidebar-project {{project_group_name.1}} dashboard-data-link">{{project.title}}</div>
+                    </div>
+                {% endfor %}
+            {% endwith %}
+        {% endfor %}
+    {% endif %}
 </div>
 <div class="dashboard-section manage">
     <div class="dashboard-header">Manage</div>

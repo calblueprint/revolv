@@ -81,6 +81,17 @@ $sidebar-header-gray: #777;
         }
     }
 
+    .create-new {
+        padding: 10px 20px;
+        a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            @include revolv-hover-button($revolv-blue, white);
+        }
+    }
+
     .role-select-options {
         border-bottom: 1px solid lighten($oil, 10%);
         display: none; // initially hidden
@@ -142,6 +153,17 @@ $sidebar-header-gray: #777;
             color: inherit;
             text-decoration: underline;
         }
+    }
+}
+
+.no-donations {
+    h2, p {
+        width: 300px;
+        margin: 0 auto;
+        font-size: 20px;
+        line-height: 22px;
+        font-weight: 300;
+        margin-top: 50px;
     }
 }
 
