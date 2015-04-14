@@ -1,62 +1,83 @@
 $(document).ready(function () {
-	drawPercentagePartialCircle()	
-
+    draw();
 });
 
-var drawPercentagePartialCircle = function() {
-    var radius = 100,
-        padding = 10,
-        radians = 2 * Math.PI;
+$( window ).resize(function() {
+    $(".project-badge-circle-grouping").remove();
+    $(".project-badge-partial-grouping").remove();
+    $(".project-badge-circle").remove();
+    $(".project-badge-line" ).remove();
+    $(".outside-circle" ).remove();
+    draw();
+});
+
+/**
+ * Resizes the text inside the speedometer.
+ */
+var setTextSize = function(radius) {
+
+    var percentage_size = 3 * radius / 100;
+    var funded_size = percentage_size * 0.5;
+
+    d3.select(".percentage-text").attr("style", "font-size:" + percentage_size + "rem");
+    d3.select(".funded").attr("font-size", "font-size:" + funded_size + "rem");
+
+};
+
+/**
+ * Resizes the iframe.
+ */
+var resizeIframe = function() {
+    d3.select("iframe").attr("height", $(document).width() * 0.4 + "");
+};
+
+/**
+ * Dynamically resizes text inside the speedometer, resizes the iframe, draws an outside circle, and draws an inner
+ * partial circle based on the width of the existing screen.
+ */
+var draw = function() {
+
+    var radius = $(document).width() * 0.12;
+    setTextSize(radius);
+
+    resizeIframe();
+
+    var outsideCircle = d3.select(".svg-graphics-container")
+        .append("circle")
+        .attr("class", "outside-circle")
+        .attr("cx", "50%")
+        .attr("cy", "50%")
+        .attr("r", radius + $(document).width() * 0.03 + "")
+        .attr("fill", "white");
+
+    if (radius > 100 ){
+        radius = 100;
+        outsideCircle.attr("r", 125);
+    }
+
+    if (radius < 60 ) {
+        radius = 60;
+        outsideCircle.attr("r", 75);
+    }
+
+    setTextSize(radius);
+    var padding = radius * 0.1;
+
+    // this line will get actual partial completeness - set this variable to something else if you want to test.
+    var partialCompleteness = window.PARTIAL_COMPLETENESS;
 
     var dimension = (2 * radius) + (2 * padding);
+    var translateVar = (radius + padding) * 0.5;
 
     var svg = d3.select(".internal-graphics-container")
         .attr("width", dimension)
         .attr("height", dimension)
         .append("g");
 
-    var circleGrouping = svg.append("g").attr("class", "project-badge-circle-grouping");
-    var partialGrouping = svg.append("g").attr("class", "project-badge-partial-grouping");
+    var stroke = radius * 0.2;
+    var circleGrouping = svg.append("g").attr("class", "project-badge-circle-grouping").attr("stroke-width", stroke + "px");
+    var partialGrouping = svg.append("g").attr("class", "project-badge-partial-grouping").attr("stroke-width", stroke + "px");
 
-    drawD3PartialTriangle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
-
-    console.log(window.project)
-    
-    //this line will get actual partial completeness
-    //var partialCompleteness = $(".storage-div").attr("id");
-
-    //use this for test purposes so you can see the progress bar
-    var partialCompleteness = 0.7;
-    if (partialCompleteness <= 0.01 && partialCompleteness !== 0.0) partialCompleteness = 0.02;
-    drawD3PartialTriangle(partialGrouping, ["project-badge-line"], radius, padding, partialCompleteness);
-}
-
-var drawD3PartialTriangle = function (destination, classes, radius, padding, partial) {
-    var points = 100,
-        pointsToDraw = Math.floor(points * partial),
-        radians = 2 * Math.PI;
-
-    var angle = d3.scale.linear()
-        .domain([0, points-1])
-        .range([0, radians]);
-
-    var line = d3.svg.line.radial()
-        .interpolate("basis")
-        .tension(0)
-        .radius(radius)
-        .angle(function(d, i) { return -angle(i); });
-
-    var result = destination.append("path").datum(d3.range(pointsToDraw));
-
-    classes.forEach(function (cls) {
-        var currentClass = result.attr("class");
-        if (currentClass) {
-            result.attr("class", currentClass + " " + cls);
-        } else {
-            result.attr("class", cls);
-        }
-    });
-
-    result.attr("d", line)
-        .attr("transform", "translate(" + (radius + padding) + ", " + (radius + padding) + ")");
+    drawD3PartialCircle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
+    drawD3PartialCircle(partialGrouping, ["project-badge-line"], radius, padding, partialCompleteness);
 };

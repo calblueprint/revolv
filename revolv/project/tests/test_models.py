@@ -1,9 +1,15 @@
+import mock
+import json
 import datetime
 from django.test import TestCase
 from revolv.project.models import Category, Project, ProjectUpdate, Payment
 from revolv.lib.testing import TestUserMixin, UserTestingMixin
 from django_webtest import WebTest
-from revolv.payments.models import Payment
+from revolv.base.models import RevolvUserProfile
+from revolv.lib.testing import TestUserMixin
+from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
+                                    PaymentType)
+from revolv.project.models import Category, Project
 from revolv.project.tasks import scrape
 
 class ProjectUpdateTest(TestCase):
@@ -19,8 +25,8 @@ class ProjectUpdateTest(TestCase):
         self.assertEqual('This is another update', update2.update_text)
 
         # tests project relationship
-        self.assertEqual(update1.project_id, update2.project_id)
-        self.assertEqual(update1.project_id, project.id)
+        self.assertEqual(update1.project, update2.project)
+        self.assertEqual(update1.project, project)
 
         update1.save()
         update2.save()
@@ -29,8 +35,8 @@ class ProjectUpdateTest(TestCase):
     def test_add_update(self):
         project = Project.factories.base.create()
         project.add_update('Another sample update')
-        update3 = ProjectUpdate.objects.get(update_text='Another sample update')
-        self.assertEqual(project.id, update3.project_id)
+        update = ProjectUpdate.objects.get(update_text='Another sample update')
+        self.assertEqual(project, update.project)
 
 class ProjectTests(TestCase):
     """Project model tests."""
@@ -58,25 +64,67 @@ class ProjectTests(TestCase):
 
     def test_aggregate_donations(self):
         """Test that project.amount_donated works."""
-        project = Project.factories.base.create(funding_goal=200.0, amount_donated=0.0, amount_left=200.0)
+        project = Project.factories.base.create(funding_goal=200.0,
+                                                amount_donated=0.0,
+                                                amount_left=200.0)
 
         Payment.factories.donation.create(project=project, amount=50.0)
         self.assertEqual(project.amount_donated, 50.0)
         self.assertEqual(project.amount_left, 150.0)
 
         Payment.factories.donation.create(project=project, amount=25.5)
-        Payment.factories.repayment.create(project=project, amount=25.5)
-        self.assertEqual(project.amount_donated, 75.50)
-        self.assertEqual(project.amount_left, 124.50)
-        self.assertEqual(project.rounded_amount_left, 124.00)
+
+        done_project = Project.factories.base.create()
+        Payment.factories.donation.create(project=done_project,
+                                          amount=10.0)
+        done_project.complete_project()
+        AdminRepayment.factories.base.create(project=done_project, amount=35.0)
+
+        AdminReinvestment.factories.base.create(project=project, amount=25.0)
+        AdminReinvestment.factories.base.create(project=project, amount=10.0)
+        self.assertEqual(project.amount_donated, 110.5)
+        self.assertEqual(project.amount_left, 200.0 - 110.5)
+        self.assertEqual(project.rounded_amount_left, int(200.0 - 110.5))
+
+    def test_donors_relation(self):
+        """
+        Make sure that a user isn't removed from the donors relation of a
+        project if he has *multiple* donations to that project but only *one* is
+        deleted.
+        """
+        user = RevolvUserProfile.factories.base.create()
+        project = Project.factories.base.create()
+
+        payment1 = Payment.factories.base.create(
+            user=user,
+            entrant=user,
+            payment_type=PaymentType.objects.get_paypal(),
+            project=project
+        )
+        self.assertEquals(project.donors.filter(user=user).count(), 1)
+
+        payment2 = Payment.factories.base.create(
+            user=user,
+            entrant=user,
+            payment_type=PaymentType.objects.get_paypal(),
+            project=project
+        )
+        self.assertEquals(project.donors.filter(user=user).count(), 1)
+
+        payment1.delete()
+        self.assertEquals(project.donors.filter(user=user).count(), 1)
+
+        payment2.delete()
+        self.assertEquals(project.donors.filter(user=user).count(), 0)
 
     def test_amount_repaid(self):
         """Test that we calculate the amount repaied on a project correctly."""
         project = Project.factories.base.create(funding_goal=200.0)
         self.assertEqual(project.amount_repaid, 0.0)
-        Payment.factories.repayment.create(project=project, amount=50)
+        project.complete_project()  # must complete project to make repayments
+        AdminRepayment.factories.base.create(project=project, amount=50)
         self.assertEqual(project.amount_repaid, 50.0)
-        Payment.factories.repayment.create(project=project, amount=60)
+        AdminRepayment.factories.base.create(project=project, amount=60)
         self.assertEqual(project.amount_repaid, 110.0)
 
     def test_partial_completeness(self):
@@ -195,42 +243,22 @@ class CategoryTest(TestCase):
         self.assertItemsEqual(project2.category_set.all(), [category2, category3])
 
 
-class RequestTest(TestCase):
-    """Test that all is well with the project pages."""
-
-    def _assert_project_page_works(self, project):
-        resp = self.client.get(project.get_absolute_url())
-        self.assertNotEqual(resp.status_code, 500)
-
-    def test_project_page(self):
-        project = Project.factories.base.create()
-
-        for status_choice in Project.PROJECT_STATUS_CHOICES:
-            status = status_choice[0]
-            project.project_status = status
-            project.save()
-            self._assert_project_page_works(project)
-
-    def test_drafted_projects_404(self):
-        """Test that the response is 404 when trying to request the page of a drafted project."""
-        project = Project.factories.base.create(project_status=Project.DRAFTED)
-        resp = self.client.get(project.get_absolute_url())
-        self.assertEqual(resp.status_code, 404)
-
-
 class ProjectIntegrationTest(WebTest):
     def test_only_donate_when_logged_in(self):
         """
         Test that a not logged in user gets redirected to the
         login page instead of being able to donate.
         """
+
         project = Project.factories.active.create()
         resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
         self.assertEqual(resp.status_code, 200)
+        
         # note: if the link makes a modal appear, it will be skipped and the
         # test will fail because it couldn't find the link - this is what
         # we want to happen in this case, but we may have to change this if
         # we want a login modal to appear instead.
+
         resp = (resp.click(linkid="donate-button")).maybe_follow()
         self.assertTemplateUsed(resp, "base/sign_in.html")
 

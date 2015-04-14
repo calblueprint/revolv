@@ -42,6 +42,9 @@
                     {% include "base/partials/tooltip_formfield.html" with field=form.tagline %}
                     <span>Categories</span>
                     {{ form.categories_select|add_class:"chosen-select" }}
+                    {% for error in form.categories_select.errors %}
+                        <small class="error">{{ error }}</small>
+                    {% endfor %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
@@ -61,6 +64,21 @@
                 </div>
                 <div class="medium-12 columns">
                     <div id="map-canvas"></div>
+                </div>
+                <div class="medium-12 columns">
+                    <h4>Donation Levels / Perks</h4>
+                    {{ donation_level_formset.management_form }}
+                    {% for donation_level_form in donation_level_formset %}
+                        <div id="donation-level-{{ forloop.counter0 }}">
+                            Perk {{ forloop.counter0|add:"1" }}:
+                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.description %}
+                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.amount %}
+                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.DELETE %}
+                            {% for hidden in donation_level_form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             <button class="large right" id="save_project" type="submit">Save</button>

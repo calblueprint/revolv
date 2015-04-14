@@ -1,6 +1,7 @@
 from django import forms
-
-from models import Category, Project, ProjectUpdate
+from models import Category, Project, ProjectUpdate, DonationLevel
+from django.forms.models import inlineformset_factory
+from models import Category, DonationLevel, Project
 
 
 class ProjectForm(forms.ModelForm):
@@ -17,7 +18,7 @@ class ProjectForm(forms.ModelForm):
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
     # generates options of categories and populates Multiple Choice field with options.
     options = [(category, category) for category in Category.valid_categories]
-    categories_select = forms.MultipleChoiceField(choices=options)
+    categories_select = forms.MultipleChoiceField(choices=options, required=False)
 
     class Meta:
         model = Project
@@ -64,36 +65,14 @@ class ProjectStatusForm(forms.ModelForm):
         # fields that need to be filled out, empty on purpose
         fields = ()
 
-
-# class PostFundingUpdateForm(forms.ModelForm):
-#     """
-#     A form for providing post funding updates about a project
-#     """
-#     class Meta:
-#         model = Project
-#         fields = (
-#             'post_funding_updates',
-#             'solar_url',
-#         )
-
-
-class PostProjectUpdateForm(forms.ModelForm):
-    """
-    A form used to create updates about a project
-    """
-    class Meta:
-        model = ProjectUpdate
-        fields = (
-            'update_text',
-        )
-
 class EditProjectUpdateForm(forms.ModelForm):
     """ 
     A form used to edit updates about a project
     """
-    #SET SOME KIND OF DEFAULT VALUE
     class Meta:
         model = ProjectUpdate
         fields = (
             'update_text',
         )
+
+ProjectDonationLevelFormSet = inlineformset_factory(Project, DonationLevel, extra=2)

@@ -21,10 +21,12 @@ class HomePageView(UserDataMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
+        active = Project.objects.get_active()
+        context["first_project"] = active[0] if active.count() > 0 else None
         context["featured_projects"] = Project.objects.get_featured(
             HomePageView.NUM_PROJECTS_SHOWN)
         context["completed_projects_count"] = Project.objects.get_completed().count()
-        context["total_donors_count"] = Payment.objects.total_distinct_donors()
+        context["total_donors_count"] = Payment.objects.total_distinct_organic_donors()
         return context
 
 

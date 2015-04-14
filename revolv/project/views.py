@@ -7,6 +7,7 @@ from django.http import JsonResponse, Http404
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
+
 from revolv.base.users import UserDataMixin
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
@@ -17,7 +18,22 @@ from revolv.base.models import RevolvUserProfile
 
 
 
-class CreateProjectView(CreateView):
+class DonationLevelFormSetMixin(object):
+    """
+    Mixin that gets the ProjectDonationLeveLFormSet for a page, specifically
+    the Create Project and Update Project page.
+    """
+
+    def get_donation_level_formset(self):
+        """ Checks if the request is a POST, and populates the formset with current object as the instance
+        """
+        if self.request.POST:
+            return forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
+        else:
+            return forms.ProjectDonationLevelFormSet(instance=self.object)
+
+
+class CreateProjectView(DonationLevelFormSetMixin, CreateView):
     """
     The view to create a new project. Redirects to the homepage upon success.
 
@@ -30,10 +46,18 @@ class CreateProjectView(CreateView):
     def get_success_url(self):
         return reverse('ambassador:dashboard')
 
+    # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-        new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
-        new_project.update_categories(form.cleaned_data['categories_select'])
-        messages.success(self.request, new_project.title + ' has been created!')
+        formset = self.get_donation_level_formset()
+        if formset.is_valid():
+            new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
+            new_project.update_categories(form.cleaned_data['categories_select'])
+            formset.instance = new_project
+            formset.save()
+            messages.success(self.request, new_project.title + ' has been created!')
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
         return super(CreateProjectView, self).form_valid(form)
 
     # sets context to be the create view, doesn't pass in the id
@@ -41,10 +65,11 @@ class CreateProjectView(CreateView):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['valid_categories'] = Category.valid_categories
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        context['donation_level_formset'] = self.get_donation_level_formset()
         return context
 
 
-class UpdateProjectView(UpdateView):
+class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
     """
     The view to update a project. It is the same view as creating a new
     project, though it prepopulates the existing field and passes in the
@@ -64,15 +89,23 @@ class UpdateProjectView(UpdateView):
         messages.success(self.request, 'Project details updated')
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
+    # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-        project = self.get_object()
-        project.update_categories(form.cleaned_data['categories_select'])
+        formset = self.get_donation_level_formset()
+        if formset.is_valid():
+            project = self.get_object()
+            project.update_categories(form.cleaned_data['categories_select'])
+            formset.instance = project
+            formset.save()
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
         return super(UpdateProjectView, self).form_valid(form)
 
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
         context = super(UpdateProjectView, self).get_context_data(**kwargs)
         context['valid_categories'] = Category.valid_categories
+        context['donation_level_formset'] = self.get_donation_level_formset()
         return context
 
 
@@ -124,21 +157,20 @@ class ReviewProjectView(UserDataMixin, UpdateView):
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
 
-class PostProjectUpdateView(UserDataMixin, UpdateView):
-    model = Project
-    template_name = 'project/post_project_update.html'
-    form_class = forms.PostProjectUpdateForm
+class TemplateProjectUpdateView(UserDataMixin, UpdateView):
+    form_class = forms.EditProjectUpdateForm
+    template_name = 'project/edit_project_update.html'
+
 
     def dispatch(self, request, *args, **kwargs):
-        self.user = request.user
-        self.is_authenticated = self.user.is_authenticated()
-        if self.is_authenticated:
-            self.user_profile = RevolvUserProfile.objects.get(user=self.user)
-            self.is_ambassador = self.user_profile.is_ambassador()
-
+        response = super(TemplateProjectUpdateView, self).dispatch(request, args, kwargs)
         if not self.is_ambassador:
             return self.deny_access()
-        return super(PostProjectUpdateView, self).dispatch(request, args, kwargs)
+        return response
+
+
+class PostProjectUpdateView(TemplateProjectUpdateView):
+    model = Project
 
     def get_success_url(self):
         return reverse('project:review', kwargs={'pk': self.get_object().id})
@@ -149,27 +181,9 @@ class PostProjectUpdateView(UserDataMixin, UpdateView):
         project.add_update(text)
         return super(PostProjectUpdateView, self).form_valid(form)
 
-    def form_invalid(self, form):
-        print("oh no", form)
 
-class EditProjectUpdateView(UserDataMixin, UpdateView):
-    
+class EditProjectUpdateView(TemplateProjectUpdateView):    
     model = ProjectUpdate
-
-    #STILL HAVE TO MAKE THIS TEMPLATE AND FORM
-    template_name = 'project/edit_project_update.html'
-    form_class = forms.EditProjectUpdateForm
-
-    def dispatch(self, request, *args, **kwargs):
-        self.user = request.user
-        self.is_authenticated = self.user.is_authenticated()
-        if self.is_authenticated:
-            self.user_profile = RevolvUserProfile.objects.get(user=self.user)
-            self.is_ambassador = self.user_profile.is_ambassador()
-
-        if not self.is_ambassador:
-            return self.deny_access()
-        return super(EditProjectUpdateView, self).dispatch(request, args, kwargs)
 
     def get_success_url(self):
         return reverse('project:review', kwargs={'pk': self.get_object().project_id})
@@ -177,11 +191,9 @@ class EditProjectUpdateView(UserDataMixin, UpdateView):
     def form_valid(self, form):
         text = form.cleaned_data['update_text']
         update = self.get_object()
-        update.set_update_text(text)
+        update.update_text = text
         return super(EditProjectUpdateView, self).form_valid(form)
 
-    def form_invalid(self, form):
-        print("oh no", form)
 
 class ProjectView(UserDataMixin, DetailView):
     """
@@ -196,7 +208,8 @@ class ProjectView(UserDataMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
-        context['updates'] = self.get_object().update.all()[::-1]
+        context['updates'] = self.get_object().updates.order_by('date').reverse()
+        context['donor_count'] = self.get_object().donors.count()
         return context
 
     def dispatch(self, request, *args, **kwargs):

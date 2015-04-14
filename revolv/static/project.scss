@@ -36,6 +36,8 @@
     [class^="cc-type-"] {
         opacity: 0.5;
         transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -webkit-transition: all 0.3s;
 
         &.active {
             opacity: 1;
@@ -44,7 +46,7 @@
 }
 
 body {
-    font-family: Lato;
+    font-family: Lato, sans-serif;
 }
 
 .row {
@@ -54,16 +56,15 @@ body {
 
     &.heading {
         height: 500px;
+        margin-right: 0;
+        margin-left: 0;
+        width: 100%;
     }
 
     &.about, &.project-updates, &.dashboard {
         margin-right: 15%;
         margin-left: 15%;
         max-width: 70%;
-    }
-
-    &.dashboard {
-        height: 600px;
     }
 
     &.categories {
@@ -74,35 +75,43 @@ body {
 .header-img-div {
     width: 100%;
     height: 500px;
-    position: absolute;
+    position: relative;
+    background-size: cover;
 
     .overlay {
+        position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
         left: 0;
         background: rgba(0, 0, 0, .5);
-        position: absolute;
-        
-        .donate-button-header {
-            border-color: white;
-            border-width: 2px;
-            border-style: solid;
-            width: 15%;
-            height: 10%;
-            top: 410px;
-            left: 80%;
-            z-index: 100;
-            position: absolute;
-            transition: all 0.3s;
 
-            p {
+        $donate-header-button-height: 50px;
+        .donate-button-header {
+            position: absolute;
+            border: 2px solid white;
+            width: 15%;
+            height: $donate-header-button-height;
+            bottom: 40px;
+            right: 5%;
+            transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -webkit-transition: all 0.3s;
+
+            .donate-link {
                 width: 100%;
                 height: 100%;
-                margin: 5% 0px;
-                color: white;
-                text-align: center;
-                transition: all 0.3s;
+                display: inline-block;
+
+                p {
+                    height: 0;
+                    line-height: $donate-header-button-height - 4px;
+                    color: white;
+                    text-align: center;
+                    transition: all 0.3s;
+                    -moz-transition: all 0.3s;
+                    -webkit-transition: all 0.3s;
+                }
             }
 
             &:hover {
@@ -116,12 +125,12 @@ body {
         }
 
         .project-title {
+            position: absolute;
             color: white;
             font-size: 2rem;
             font-weight: 800;
             top: 400px;
             left: 5%;
-            position: absolute;
             width: 30%;
             line-height: 2rem;
 
@@ -130,59 +139,35 @@ body {
 }
 
 .dashboard {
-    height: 400px;
-    z-index: 1000;
     position: absolute;
+    height: 600px;
+    z-index: 1;
     top: 300px;
 
-    .graphics-container {
+    .statistics-graphics-container {
         height: 100%;
         width: 100%;
 
-        .top-bar {
-            background-color: $revolv-blue;
+        .bar {
             width: 100%;
             height: 40px;
             position: absolute;
-            top: 50%;
-            display: inline-block;
-            margin: 0;
 
-            .container {
-                position: relative;
-                color: white;
-                font-weight: 500;
-                width: 100%;
-                height: 100%;
+            &.top-bar {
+                background-color: $revolv-blue;
+                top: 50%;
                 margin: 0;
-                display: inline-block;
 
                 .amount-donated {
-                    float: left;
                     width: 30%;
-                    height: 100%;
-                    line-height: 40px;
-                    margin: 0px 0px 0px 20px;
-                    font-size: 1.4rem;
-                }
-
-                .days-left {
-                    float: right;
-                    height: 100%;
-                    line-height: 40px;
-                    font-size: 1.4rem;
-                    margin: 0px 20px 0px 0px;
                 }
             }
-        }
 
-        .bottom-bar {
-            background-color: $revolv-blue;
-            width: 100%;
-            height: 40px;
-            position: absolute;
-            top: 60%;
-            display: inline-block;
+            &.bottom-bar {
+                position: absolute;
+                background-color: #064f7e;
+                top: 60%;
+            }
 
             .container {
                 position: relative;
@@ -191,46 +176,42 @@ body {
                 width: 100%;
                 height: 100%;
                 margin: 0;
-
-                .amount-saved {
-                    float: left;
-                    height: 100%;
+                .statistic {
                     line-height: 40px;
                     font-size: 1.4rem;
-                    margin: 0px 0px 0px 20px;
-                }
+                    &.left-text {
+                        float: left;
+                        height: 100%;
+                        margin: 0 0 0 20px;
+                    }
 
-                .num-donors {
-                    float: right;
-                    height: 100%;
-                    line-height: 40px;
-                    font-size: 1.4rem;
-                    margin: 0px 20px 0px 0px;
+                    &.right-text {
+                        float: right;
+                        height: 100%;
+                        margin: 0 20px 0 0;
+                    }
                 }
             }
         }
 
         .svg-graphics-container {
+            // this contains the formatting for the white outside circle - this works
+            position: absolute;
             height: 100%;
             width: 100%;
-            position: absolute;
         }
 
         .internal-graphics-container {
-            height: 220px;
-            width: 220px;
-            position: relative;
+            position: absolute;
             left: 50%;
             top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
-            position: absolute;
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
         }
 
         .project-badge-line, .project-badge-circle {
           fill: none;
-          stroke-width: 20px;
         }
 
         .project-badge-line {
@@ -245,36 +226,30 @@ body {
             position: absolute;
             left: 50%;
             top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
             height: 220px;
             width: 220px;
+            color: $revolv-dark-blue;
 
             .percentage-text {
-                font-size: 3rem;
-                color: $revolv-blue;
-                font-weight: 500;
                 position: absolute;
-
                 left: 50%;
-                top: 40%;
-                -webkit-transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
+                top: 45%;
                 transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
             }
 
             .funded {
-                font-size: 1.5rem;
-                color: $revolv-blue;
-                font-weight: 800;
                 position: absolute;
-
+                font-weight: 800;
                 left: 50%;
                 top: 60%;
-                -webkit-transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
             }
         }
     }
@@ -286,7 +261,7 @@ body {
     .header-text {
         p {
             font-weight: 800;
-            color: black;
+            color: #444444;
             font-size: 1.8rem;
         }
     }
@@ -298,33 +273,35 @@ body {
 
     .categories {
         max-width: 100%;
-        height: 50px;
+        line-height: 50px;
 
 
         .category-text {
             display: inline-block;
-            color: #777777;
+            color: #888888;
             margin-left: 15px;
+            margin-right: 20px;
             height: 30px;
 
             .category-text-inside {
                 line-height: 30px;
+                font-size: 0.8rem;
             }
         }
 
         .category-holder {
             display: inline-block;
-            border-color: #777777;
-            border-style: solid;
-            border-width: 1px;
-            width: 15%;
+            border: 1px solid #888888;
+            width: auto;
+            padding: 0 10px;
+            min-width: 15%;
             height: 30px;
-            margin-top: 10px;
+            margin: 10px 15px inherit 15px;
 
             .category-label {
-                color: #777777;
+                color: #888888;
                 text-align: center;
-                line-height: 30px;
+                line-height: 28px;
             }
         }
     }
@@ -333,6 +310,7 @@ body {
         p {
             font-weight: 500;
             font-size: 1.5rem;
+            color: #333333;
         }
         margin-bottom: 80px;
     }
@@ -364,47 +342,60 @@ body {
             height: 50px;
             width: 100%;
             text-align: center;
-            color: $revolv-blue;
+            color: $revolv-dark-blue;
             font-weight: 300;
-            line-height: .5;
+            line-height: 0.5;
 
             .date-year {
                 font-size: 4.5rem;
-                margin-bottom: 0rem;
-                line-height: 1;
+                margin-bottom: 0;
+                line-height: 4.5rem;
             }
 
             .date-month-day {
                 font-size: 1.5rem;
-                line-height: 1;
+                line-height: 1.5rem;
             }
         }
 
         .update-text {
             font-weight: 500;
             font-size: 1.5rem;
+            color: #333333;
+            white-space: pre-wrap;
         }
     }
 }
 
-.map {
-    height: 400px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+$map-height: 400px;
 
-    #map-canvas {
+.map {
+    margin-top: 40px;
+    margin-bottom: 50px;
+    height: $map-height;
+
+    .map-canvas {
+        position: absolute;
         width: 100%;
-        height: 100%;
+        height: $map-height;
+        margin: 0;
+        padding: 0;
+
+        img {
+            max-width: none;
+        }
     }
 
-
     .overlay {
-        background: rgba(0, 0, 0, .5);
+        background: rgba(0, 0, 0, 0.65);
         float: left;
         height: 400px;
-        width: 40%;
-        position: absolute;
-        margin-top: -400px;
+    }
+
+    .map-cover {
+        background: rgba(0,0,0,0);
+        height: $map-height;
+        float: right;
     }
 
     .text-container {
@@ -434,15 +425,14 @@ body {
     }
 
     .donate-button-header {
-        border-color: white;
-        border-width: 2px;
-        border-style: solid;
-
+        border: 2px solid white;
         width: 80%;
         height: 70px;
         z-index: 100;
         margin: 305px 10% 25px 10%;
         transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -webkit-transition: all 0.3s;
 
         p {
             width: 100%;
@@ -498,4 +488,214 @@ body {
     width: 300px;
     height: 300px;
     margin: 0 20px 20px 20px;
+}
+
+// --- Mobile Responsiveness Styles ------------------------------------------------------
+
+@media #{$small-only} {
+    .project-updates {
+
+        .columns {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .update-container {
+            margin: 10px 0px;
+
+            .date-container {
+                text-align: left;
+                margin-bottom: 50px;
+
+            }
+
+            .update-text {
+                font-weight: 500;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    $map-height: 250px;
+
+    .map {
+
+        height: $map-height;
+
+        .map-canvas {
+            height: $map-height;
+
+            img {
+                max-width: none;
+            }
+        }
+
+        .overlay {
+            height: $map-height;
+        }
+
+        .text-container {
+            .title-container {
+                p {
+                    font-size: 1rem;
+                    line-height: 1rem;
+                }
+            }
+
+            .address-container {
+                p {
+                    font-size: 0.8rem;
+                    line-height: 1rem;
+                }
+            }
+        }
+
+        .donate-button-header {
+            margin: 175px 10% 25px 10%;
+            height: 50px;
+
+            p {
+                line-height: 45px;
+                font-size: 1rem;
+                font-weight: 800;
+            }
+        }
+    }
+
+    .dashboard {
+        height: 700px;
+        z-index: 1;
+        top: 0;
+
+        .statistics-graphics-container {
+            height: 500px;
+            .bar {
+                height: 25px;
+
+                &.top-bar {
+                    top: 63%;
+                }
+                &.bottom-bar {
+                    top: 68%;
+                }
+            }
+
+            .container {
+                .statistic {
+
+                    &.left-text {
+                        float: left;
+                        height: 100%;
+                        margin: 0 0 0 10px;
+                        font-size: 0.8rem;
+                        line-height: 25px;
+
+                    }
+
+                    &.right-text {
+                        float: right;
+                        height: 100%;
+                        margin: 0 10px 0 0;
+                        font-size: 0.8rem;
+                        line-height: 25px;
+
+                    }
+                }
+            }
+        }
+    }
+
+    .header-img-div {
+        height: 270px;
+
+        .overlay {
+
+            $donate-header-button-mobile-height: 40px;
+            .donate-button-header {
+                left: 15%;
+                width: 70%;
+                height: $donate-header-button-mobile-height;
+                top: 170%;
+                border-color: $revolv-dark-blue;
+                z-index: 1000;
+
+                .donate-link {
+                    line-height: 40px;
+                    margin-top: 0;
+
+                    p {
+                        height: 100%;
+                        line-height: $donate-header-button-mobile-height - 4px;
+                        color: $revolv-dark-blue;
+                    }
+                }
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+                line-height: 1.5rem;
+                top: 140px;
+                width: 100%;
+                text-align: center;
+                left: 0;
+            }
+        }
+    }
+
+
+
+    .about {
+
+        margin-top: 20px;
+        .header-text {
+            p {
+                font-size: 1.5rem;
+                line-height: 1.5rem;
+            }
+        }
+
+        .categories {
+            margin: 0;
+
+            .category-text {
+                margin: 0;
+            }
+
+            .category-holder {
+                display: block;
+                margin: 0;
+                margin-bottom: 5px;
+
+                &:last-child {
+                    margin-bottom: 15px;
+                }
+            }
+        }
+
+        .about-text {
+            p {
+                font-size: 1rem;
+            }
+        }
+
+    }
+}
+
+@media #{$medium-only} {
+    .dashboard {
+        .statistics-graphics-container {
+            .container {
+                .statistic {
+                    &.left-text {
+                        font-size: 0.9rem;
+                    }
+
+                    &.right-text {
+                        font-size: 0.9rem;
+
+                    }
+                }
+            }
+        }
+    }
 }

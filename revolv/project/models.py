@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -243,14 +244,6 @@ class Project(models.Model):
         default=0.0,
         help_text='The internal rate of return for this project.'
     )
-    
-    #TAKE NOTICE AND GET RID OF THIS LATER
-    #should get rid of this but it causes an error somewhere
-    post_funding_updates = models.TextField(
-        'Updates After Completion',
-        help_text='Add any post project completion updates you want to let your backers know about.',
-        null=True
-    )
 
     # solar data csv files
     daily_solar_data = models.FileField(null=True, upload_to="projects/daily/")
@@ -304,14 +297,65 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse("project:view", kwargs={"pk": str(self.pk)})
 
+    def get_organic_donations(self):
+        return self.payment_set.exclude(user__isnull=True).filter(
+            entrant__pk=models.F('user__pk')
+        )
+
+    def proportion_donated(self, user):
+        """
+        :return:
+            The proportion that this user has organically donated to this
+            project as a float in the range [0, 1] (inclusive)
+        """
+        user_donation = Payment.objects.donations(
+            project=self,
+            user=user,
+            organic=True
+        ).aggregate(
+            models.Sum('amount')
+        )['amount__sum'] or 0.0
+        prop = user_donation / self.amount_donated_organically
+        assert 0 <= prop <= 1, "proportion_donated is incorrect!"
+        return prop
+
+    @property
+    def amount_donated_organically(self):
+        """
+        :return: the current total amount that has been organically donated to
+        this project, as a float
+        """
+        return self.get_organic_donations().aggregate(
+            models.Sum('amount')
+        )["amount__sum"] or 0.0
+
     @property
     def location_street(self):
-        return self.location.split(',')[0]
+        """
+        :return: a string of the street name of the location of this project.
+        If the project location is malformed, will return an empty string.
+        """
+        try:
+            return self.location.split(',')[0]
+        except IndexError:
+            return ""
 
     @property
     def location_city_state_zip(self):
-        pieces = self.location.split(',')
-        return pieces[1] + "," + pieces[2]
+        """
+        :return: a string of the city, state, and zip code of the location of this project.
+        If the project location is malformed, will return an empty string.
+        """
+        try:
+            pieces = self.location.split(',')
+            text = ""
+            if len(pieces) >= 3:
+                return pieces[1] + "," + pieces[2]
+            elif len(pieces) == 2:
+                return pieces[1]
+            return pieces[0]
+        except IndexError:
+            return ""
 
     @property
     def amount_donated(self):
@@ -319,12 +363,9 @@ class Project(models.Model):
         :return: the current total amount that has been donated to this project,
             as a float
         """
-        result = Payment.objects.donations(project=self).aggregate(
+        return self.payment_set.aggregate(
             models.Sum('amount')
-        )["amount__sum"]
-        if result is None:
-            return 0.0
-        return result
+        )["amount__sum"] or 0.0
 
     @property
     def amount_left(self):
@@ -342,7 +383,7 @@ class Project(models.Model):
         """
         :return: the current amount of money repaid by the project to RE-volv.
         """
-        return Payment.objects.repayments(project=self).aggregate(models.Sum('amount'))["amount__sum"] or 0.0
+        return self.adminrepayment_set.aggregate(models.Sum('amount'))["amount__sum"] or 0.0
 
     @property
     def rounded_amount_left(self):
@@ -368,7 +409,7 @@ class Project(models.Model):
     @property
     def percent_complete(self):
         """
-        :return: an int between 0 and 100, representing the completeness of this
+        :return: a floored int between 0 and 100, representing the completeness of this
             project with respect to its goal (100 if exactly the goal amount, or
             more, has been donated, 0 if nothing has been donated).
         """
@@ -417,7 +458,10 @@ class Project(models.Model):
 
     @property
     def updates(self):
-        return self.update_set.all()
+        """
+        :return: The set of all ProjectUpdate models associated with this project.
+        """
+        return self.updates.all()
 
     def add_update(self, text):
         update = ProjectUpdate(update_text=text, project=self)
@@ -437,23 +481,18 @@ class ProjectUpdate(models.Model):
     
     project = models.ForeignKey(
         Project,
-        related_name="update"
+        related_name="updates"
     )
 
-    def set_update_text(self, text):
-        self.update_text = text
+    def donation_levels(self):
+        return self.donationlevel_set.all()
 
-    @property
-    def month_word(self):
-        month_num = self.date.month
-        month_dict = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"}
-        return month_dict[month_num]
-
-    @property
-    def year_word(self):
-        return str(self.date.year)
 
 class Category(models.Model):
+    """
+    Categories that a project is associated with. Categories are predefined,
+    and as of now, loaded through fixtures.
+    """
     HEALTH = 'Health'
     ARTS = 'Arts'
     FAITH = 'Faith'
@@ -470,3 +509,15 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class DonationLevel(models.Model):
+    """
+    Model to track donation levels and perks for projects.
+    """
+    project = models.ForeignKey(Project)
+    description = models.CharField(max_length=200)
+    amount = models.DecimalField(
+        max_digits=15,
+        decimal_places=2
+    )

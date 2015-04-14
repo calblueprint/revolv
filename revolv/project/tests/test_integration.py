@@ -8,9 +8,10 @@ from revolv.project.models import Project, ProjectUpdate
 
 class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
 
-    def helper_test_create_update_ambassador_administrator(self):
+    def assert_user_can_create_project_update(self):
         """
-        Tests that administrators and ambassadors can create project updates.
+        Tests that administrators and ambassadors can create project updates. This assert function logs in, creates a project,
+        posts an update to the project, and then verifies that the posted update exists.
         """
         response = self.send_test_user_login_request()
         self.assertUserAuthed(response)
@@ -23,20 +24,23 @@ class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
     def test_admin_form_submission(self):
         """
         Tests that administrators can create project updates.
+        This function makes an administrator and then calls the assert_user_can_create_project_update function.
         """
         self.test_profile.make_administrator()
-        self.helper_test_create_update_ambassador_administrator()
+        self.assert_user_can_create_project_update()
 
     def test_ambassador_form_submission(self):
         """
         Tests that ambassadors can create project updates.
+        This function makes an ambassador and then calls the assert_user_can_create_project_update function.
         """
         self.test_profile.make_ambassador()
-        self.helper_test_create_update_ambassador_administrator()
+        self.assert_user_can_create_project_update()
 
     def test_donor_form_submission(self):
         """
         Tests that donors can't create project updates.
+        This function makes a donor, logs in, creates a project, and then attempts to post an update to the project.
         """
         self.test_profile.make_donor()
         response = self.send_test_user_login_request()
@@ -44,14 +48,15 @@ class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
         project = Project.factories.base.create()
         response = self.client.post('/project/%d/update' % project.pk, {'update_text': 'This is an update'})
         
-        #the deny_access method is called in the view from the userdatamixin, which returns a redirect to the homepage
+        # the deny_access method is called in the view from the userdatamixin, which returns a redirect to the homepage
         self.assertEqual(response.status_code, 302)
         
 class EditProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
 
-    def _make_update(self, project, text):
+    def make_update(self, project, text):
         """
-        Makes an update to of given text to the given project.
+        Creates and posts an update with the given text to a given project. 
+        Returns the update that was just created.
         """
         response = self.send_test_user_login_request()
         self.assertUserAuthed(response)
@@ -60,12 +65,14 @@ class EditProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
         new_updates = ProjectUpdate.objects.filter(update_text = text)
         return new_updates[0]
 
-    def _helper_test_edit_update(self, donor = False):
+    def assert_user_can_or_cant_make_updates(self, donor = False):
         """
         Tests that the administrator and ambassador can make updates. 
+        Posts a response to the editupdate page to change the update 
+        text and checks whether the text of the update has changed.
         """
         project = Project.factories.base.create()
-        update = self._make_update(project, "This update has not been changed.")
+        update = self.make_update(project, "This update has not been changed.")
 
         response = self.client.post('/project/editupdate/%d' % update.pk,
                         {'update_text': 'This update has been changed.'})
@@ -78,29 +85,30 @@ class EditProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
             self.assertEqual(update.project, new_updates[0].project)
             self.assertEqual(new_updates[0].update_text, "This update has been changed.")
         else:
-            #the donor should be denied access and redirected
+            # the donor should be denied access and redirected
             self.assertEqual(response.status_code, 302)
 
     def test_edit_update_administrator(self):
         """
         Tests that a change is made to an update for an administrator.
+        Makes an an
         """
         self.test_profile.make_administrator()
-        self._helper_test_edit_update()
+        self.assert_user_can_or_cant_make_updates(donor = False)
 
     def test_edit_update_ambassador(self):
         """
         Tests that a change is made to an update for an ambassador.
         """
         self.test_profile.make_ambassador()
-        self._helper_test_edit_update()
+        self.assert_user_can_or_cant_make_updates(donor = False)
 
     def test_edit_update_donor(self):
         """
         Tests that a donor can't change an update.
         """
         self.test_profile.make_donor()
-        self._helper_test_edit_update(True)
+        self.assert_user_can_or_cant_make_updates(donor = True)
 
 class DonationAjaxTestCase(TestUserMixin, TestCase):
     """

@@ -3,15 +3,17 @@
 @import "bower_components/foundation/scss/foundation";
 @import "revolv-settings";
 
-@mixin vertically-centered($font-size) {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: $font-size;
-}
-
 @mixin vertically-centered() {
     display: inline-block;
     vertical-align: middle;
+}
+
+@mixin vertically-centered-block() {
+    position: relative;
+    top: calc(50% + 40px);
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
 }
 
 @mixin vertically-centered-parent() {
@@ -44,87 +46,274 @@
     color: rgba(0, 0, 0, 0.8);
 }
 
-.cover-image-row {
-    margin-bottom: 0;
+body {
+    background-color: $revolv-tan-bg;
 }
+
+// --- Cover Image Styles ----------------------------------------------------------------
 
 .cover-image {
     background: url(/static/images/solar-worker-stockphoto.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-
     display: block;
     width: 100%;
     height: $revolv-cover-photo-height;
     margin-bottom: 0;
-
     position: relative;
 
     .shade {
-        @include dark-shade(0.2);
+        @include dark-shade(0.3);
     }
 
     .cover-inset {
-        position: absolute;
-        top: $revolv-cover-inset-top-offset;
-        right: $revolv-cover-inset-right-offset;
-
-        background-color: rgba(255, 255, 255, $revolv-cover-inset-opacity);
-        padding: 25px;
-
+        @include vertically-centered-block();
+        text-align: center;
+        margin: 0 auto;
         min-width: $revolv-cover-inset-min-width;
         max-width: $revolv-cover-inset-max-width;
-
         z-index: $revolv-shade-z-index + 10;
 
         .title-header {
             font-size: $revolv-cover-inset-title-size;
             line-height: $revolv-cover-inset-title-size;
-            @include soft-header-text(23px);
-
-            margin: 0;
-            margin-bottom: 10px;
+            color: white;
         }
-
-        .title-header-tagline {
-            display: none;
+        h1 {
+            color: white;
         }
-
         p {
             font-size: $revolv-cover-inset-paragraph-size;
             line-height: $revolv-cover-inset-paragraph-size + 6px;
             font-weight: 200;
-            color: rgba(0, 0, 0, 0.8);
-
+            color: white;
+            padding-top: 30px;
+            line-height: 30px;
             margin: 0;
         }
     }
 }
 
+.spacer {
+    height: 0px !important;
+}
+
+// --- About RE-volv Styles --------------------------------------------------------------
+
+.nav-spine {
+    position: fixed;
+    top: 0px;
+    width: 5px;
+    height: 400px;
+    margin-top: 100px;
+    background-color: $revolv-about-font-color;
+
+    .nav-spine-item {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        background-color: $revolv-about-font-color;
+        color: white;
+        left: -18px;
+        text-align: center;
+    }
+
+    .first {
+        top: 0px;
+        background-color: $revolv-first-item-dark-blue;
+    }
+    .second {
+        top: 180px;
+        background-color: $revolv-second-item-light-blue;
+    }
+    .third {
+        top: 360px;
+        background-color: $revolv-third-item-yellow;
+    }
+
+    .first-caption {
+        color: $revolv-header-color;
+    }
+    .second-caption {
+        color: $revolv-light-blue;
+    }
+    .third-caption {
+        color: $revolv-yellow;
+    }
+
+    figure {
+        height: 150px;
+        width: 200px;
+    }
+
+    figcaption {
+        font-size: 24px;
+    }
+}
+
+.about {
+    position: relative;
+    width: 600px;
+    text-align: center;
+    color: $revolv-about-font-color;
+
+    h1 {
+        font-size: $revolv-about-inset-title-size;
+        line-height: $revolv-about-inset-title-size;
+        color: $revolv-about-font-color;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        font-size: 36px;
+        line-height: 36px;
+        color: $revolv-about-font-color;
+    }
+
+    p {
+        font-size: $revolv-about-inset-paragraph-size;
+    }
+
+    .about-inset {
+        margin: 0 auto;
+        padding: 75px 30px;
+    }
+
+    .person {
+        height: 144px;
+    }
+
+    .coin {
+        height: 72px;
+        margin: 0px 10px;
+        margin-bottom: -84px;
+    }
+
+    .factory {
+        margin-top: 248px;
+        height: 400px;
+        width: 205px
+    }
+
+    .main-panel {
+        position: absolute;
+        height: 100px;
+        width: 190px;
+        top: 890px;
+        left: 50%;
+        margin-left: -95px;
+        z-index: -1;
+        transform: scale(0.2);
+    }
+
+    .main-house {
+        margin-top: 254px;
+        height: 254px;
+    }
+
+    .solar-panel {
+        position: absolute;
+        height: 50px;
+        top: -50px;
+        left: 50px;
+        margin-left: -25px;
+    }
+
+    .step {
+        display: none;
+    }
+
+    .house {
+        height: 84px;
+    }
+
+    .grouping {
+        display: inline-block;
+        position: relative;
+        height: 140px;
+        width: 140px;
+        margin: 140px 20px;
+    }
+}
+
+.button {
+    height: 54px;
+    line-height: 24px;
+    font-size: 24px;
+    color: white;
+    border-radius: 5px;
+    margin: 30px auto;
+}
+
+.learn-more {
+    line-height: 16px;
+    font-size: 16px;
+    border-width: 2px;
+    border-color: white;
+    background: transparent;
+}
+.learn-more:hover {
+    color: white;
+    background: $revolv-header-color
+}
+
+.donate {
+    background-color: #1bb580;
+}
+.donate:hover {
+    background-color: #137F5A;
+}
+
+// --- Mobile Responsiveness Styles ------------------------------------------------------
+
 @media #{$small-only} {
-    html .top-bar {
-        margin-bottom: 0;
-    }
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .cover-image {
-        height: $revolv-mobile-cover-photo-height;
-
-        .shade {
-            @include dark-shade(0.6);
-        }
-    }
-
     html .cover-image .cover-inset {
+        position: absolute;
         top: 0;
         left: 0;
-        height: 100%;
-        width: 100%;
+        right: 0;
+        bottom: 0;
+        height: 50%;
+        width: 50%;
+        margin: auto;
         background-color: inherit;
+        color: white;
 
-        .title-header, p {
-            color: white;
+        .title-header {
+            font-size: $revolv-cover-inset-title-size-mobile;
+            line-height: $revolv-cover-inset-title-size-mobile;
         }
+        p {
+            font-size: 18px;
+            line-height: 18px;
+        }
+    }
+
+    .about {
+        width: 100%;
+        h1 {
+            font-size: 28px;
+            line-height: 36px;
+        }
+        h2 {
+            font-size: 20px;
+            line-height: 30px;
+        }
+        .grouping {
+            margin-bottom: 0px;
+        }
+    }
+
+    .button {
+        margin-top: 5px;
+    }
+
+    .learn-more {
+        margin-top: 15px;
     }
 }
 
@@ -134,247 +323,59 @@
         font-size: $revolv-cover-inset-paragraph-size - 2px;
         line-height: $revolv-cover-inset-paragraph-size + 4px;
     }
-}
 
-$divider-font-size: 14px;
-.homepage-divider {
-    @include text-with-divider($divider-font-size, #ddd);
-    color: $revolv-blue;
-    height: 0.6em; // adjustment for helvetica neue
-    font-weight: 100;
-}
-
-.nonmobile-learn {
-    margin-bottom: $revolv-homepage-sections-margin;
-}
-
-.mobile-learn-button, .mobile-learn-container {
-    display: none;
-}
-
-.mobile-learn-container {
-    text-align: center;
-}
-
-.mobile-learn-button {
-    padding: 15px 20px;
-    line-height: 20px;
-    font-size: 16px;
-    font-weight: 100;
-    min-width: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
-    background-color: #f7f7f7;
-
-    border: 2px solid $revolv-blue;
-    &:before, &:after {
-        content: "";
+    html .cover-image {
+        // this may differ depending on the chosen background image
+        background-position: left;
     }
 
-    margin-bottom: $revolv-homepage-sections-margin;
-}
-
-@media #{$small-only} and (orientation: portrait) {
-    // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .mobile-learn-container {
-        display: block;
-    }
-    html .mobile-learn-button {
-        display: inline-block;
-    }
-    html .nonmobile-learn {
-        display: none;
-    }
-
-    .infographic {
-        display: none;
-    }
-}
-
-.project-badges-container {
-    margin-top: 20px;
-    margin-bottom: $revolv-homepage-sections-margin;
-
-    a, a:hover, a:visited, a:active {
-        color: inherit;
-        text-decoration: none;
-    }
-}
-
-.project-badge {
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-
-    height: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
-    width: 2 * $revolv-project-badge-radius + $revolv-project-badge-stroke-width;
-
-    svg, .project-badge-photo {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    svg {
-        z-index: 3;
-    }
-    .project-badge-detail-container {
-        z-index: 2;
-    }
-    .project-badge-photo {
-        z-index: 1;
-    }
-
-    svg:hover + .project-badge-detail-container .project-title {
-        text-decoration: underline;
-    }
-
-    .project-badge-photo {
-        width: 100%;
-        height: 100%;
-
-        // background will be set in html since the photo url is a template variable
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-
-        border-radius: 50%;
-    }
-
-    .project-badge-detail-container {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: $revolv-project-badge-inset-height;
-
-        background-color: rgba(255, 255, 255, 0.8);
-        border-bottom-left-radius: $revolv-project-badge-inset-height 100%;
-        border-bottom-right-radius: $revolv-project-badge-inset-height 100%;
-
-        text-align: center;
-
-        padding: 10px;
-
-        .project-title, .project-organization {
-            display: inline-block;
-            text-align: center;
+    .about {
+        .grouping {
+            height: 70px;
+            width: 70px;
+            margin: 140px 5px;
         }
-
-        .project-title {
-            line-height: 22px;
-            max-height: 44px;
-            @include soft-header-text(20px);
-            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
-
-            margin: 0;
-
-            &:hover {
-                text-decoration: underline;
-            }
+        .person {
+            height: 100px;
         }
-
-        $org-line-height: 17px;
-        .project-organization {
-            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2;
-            line-height: $org-line-height;
-            max-height: $org-line-height * 2;
-            @include soft-header-text(14px);
-            margin-bottom: 11px;
+        .coin {
+            height: 50px;
         }
-
-
-        $left-line-height: 22px;
-        .project-amount-left, .project-days-left {
-            width: 2 * $revolv-project-badge-radius - $revolv-project-badge-stroke-width * 2 - 20px;
-            display: inline-block;
-            text-align: center;
-            height: $left-line-height;
-            line-height: $left-line-height;
-            font-size: 16px;
-            margin: 0;
+        .main-panel {
+            height: 95px;
+        }
+        .main-house {
+            height: 200px;
+        }
+        .solar-panel {
+            top: -28px;
+            margin-left: -45px;
         }
     }
-
-    .project-badge-photo {
-        border: 10px solid $revolv-gray-bg;
-    }
-
-    .project-badge-detail-container {
-        border-bottom: 1px solid $revolv-gray-bg;
-        border-left: 1px solid $revolv-gray-bg;
-        border-right: 1px solid $revolv-gray-bg;
-    }
 }
 
-.icons-container {
-    border: 1px solid $revolv-blue;
-    background-color: $revolv-very-light-blue-bg;
-    padding: 10px 0;
-    margin-bottom: $revolv-homepage-sections-margin;
-
-    .revolv-icon {
-        fill: $revolv-icon-blue;
-    }
-
-    .icon-adult {
-        width: 43px;
-        height: 50px;
-    }
-
-    .icon-frontal {
-        width: 21px;
-        height: 53px;
-    }
-
-    .icon-house {
-        width: 43px;
-        height: 44px;
-    }
-
-    .icon-co2 {
-        width: 56px;
-        height: 37px;
-    }
-
-    .revolv-icon, .stats-container {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .stat-number, .stat-description {
-        display: block;
-        color: $revolv-blue;
-        margin-left: 20px;
-        font-weight: 100;
-        font-family: "Helvetica Neue", Helvetica, sans-serif;
-    }
-
-    .stat-number {
-        font-size: $revolv-stat-number-font-size;
-        line-height: $revolv-stat-number-font-size;
-    }
-
-    .stat-description {
-        font-size: $revolv-stat-description-font-size;
-        line-height: $revolv-stat-description-font-size;
+@media #{$small-only} and (orientation: landscape) {
+    .about {
+        .grouping {
+            height: 70px;
+            width: 100px;
+            margin: 140px 10px;
+        }
+        .main-panel {
+            height: 70px;
+        }
+        .main-house {
+            height: 200px;
+        }
+        .solar-panel {
+            top: -46px;
+            margin-left: -45px;
+        }
     }
 }
 
 @media #{$medium-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .icons-container {
-        display: none;
-    }
-    .cover-image {
-        margin-bottom: 20px;
-    }
-}
-@media #{$small-only} {
-    // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .icons-container {
-        display: none;
-    }
     .cover-image {
         margin-bottom: 20px;
     }
@@ -382,37 +383,26 @@ $divider-font-size: 14px;
 
 @media #{$small-only}, #{$medium-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    .project-badge-container {
-        text-align: center;
-        margin-bottom: 10px;
+    body {
+        height: 100% !important;
     }
-}
-
-// --- svg --------------------------------------------------------------------
-
-.project-badge-line, .project-badge-circle {
-  fill: none;
-  stroke-width: $revolv-project-badge-stroke-width;
-}
-
-.project-badge-line {
-  stroke: $revolv-project-badge-fulfilled-color;
-}
-
-.project-badge-circle {
-  stroke: $revolv-project-badge-unfulfilled-color;
-}
-
-// these are all hardcoded to get the icons to look correct
-.icon-adult use {
-    transform: scale(0.4);
-}
-.icon-frontal use {
-    transform: scale(0.9) translate(-21px);
-}
-.icon-house use {
-    transform: scale(2.7);
-}
-.icon-co2 use {
-    transform: scale(0.55) translate(-12px, -30px);
+    .nav-spine {
+        display: none;
+    }
+    .about {
+        .factory {
+            margin-top: 48px;
+        }
+        .main-house {
+            margin-top: 54px;
+        }
+        .step {
+            display: block;
+            height: 150px;
+            margin: 25px auto;
+        }
+        .grouping {
+            margin: 70px 8px 140px;
+        }
+    }
 }
