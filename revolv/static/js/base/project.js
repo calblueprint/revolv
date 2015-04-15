@@ -28,7 +28,7 @@ var setTextSize = function(radius) {
  * Resizes the iframe.
  */
 var resizeIframe = function() {
-    d3.select("iframe").attr("height", $(document).width() * 0.4 + "");
+    d3.select("iframe").attr("height", $(document).width() * 0.28 + "");
 };
 
 /**

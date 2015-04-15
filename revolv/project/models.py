@@ -463,6 +463,13 @@ class Project(models.Model):
         """
         return self.updates.all()
 
+    @property
+    def donation_levels(self):
+        """
+        :return: The set of all DonationLevel models associated with this project.
+        """
+        return self.donationlevel_set.all()
+
     def add_update(self, text):
         update = ProjectUpdate(update_text=text, project=self)
         update.save()
@@ -483,9 +490,6 @@ class ProjectUpdate(models.Model):
         Project,
         related_name="updates"
     )
-
-    def donation_levels(self):
-        return self.donationlevel_set.all()
 
 
 class Category(models.Model):
@@ -516,7 +520,7 @@ class DonationLevel(models.Model):
     Model to track donation levels and perks for projects.
     """
     project = models.ForeignKey(Project)
-    description = models.CharField(max_length=200)
+    description = models.TextField()
     amount = models.DecimalField(
         max_digits=15,
         decimal_places=2
