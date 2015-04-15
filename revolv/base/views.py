@@ -9,13 +9,18 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
+from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
 from revolv.project.models import Project
 
 
 class HomePageView(UserDataMixin, TemplateView):
-    """Website home page. THIS VIEW IS INCOMPLETE. UPDATE DOCSTRING
-    WHEN COMPLETED."""
+    """
+    Website home page.
+
+    TODO: this view is deprecated - most of the context variables are not
+    used anymore. Should be cleaned up.
+    """
     template_name = 'base/home.html'
     NUM_PROJECTS_SHOWN = 1000
 
@@ -27,6 +32,34 @@ class HomePageView(UserDataMixin, TemplateView):
             HomePageView.NUM_PROJECTS_SHOWN)
         context["completed_projects_count"] = Project.objects.get_completed().count()
         context["total_donors_count"] = Payment.objects.total_distinct_organic_donors()
+        return context
+
+
+class BaseStaffDashboardView(UserDataMixin, TemplateView):
+    """
+    Base view for the administrator and ambassador dashboard views. The
+    specific views in administrator/views.py and ambassador/views.py
+    will inherit from this view.
+    """
+
+    def get_filter_args(self):
+        """
+        Return an array of arguments to pass to Project.objects.get_[drafted|proposed|active|completed].
+        """
+        return []
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseStaffDashboardView, self).get_context_data(**kwargs)
+
+        project_dict = {}
+        project_dict[ProjectGroup('Proposed Projects', "proposed")] = Project.objects.get_proposed(*self.get_filter_args())
+        project_dict[ProjectGroup('Active Projects', "active")] = Project.objects.get_active(*self.get_filter_args())
+        project_dict[ProjectGroup('Completed Projects', "completed")] = Project.objects.get_completed(*self.get_filter_args())
+
+        context["project_dict"] = project_dict
+        context["role"] = self.role or "donor"
+
+        # TODO (noah): add in support for autoshowing a project based on the active_project GET parameter
         return context
 
 
