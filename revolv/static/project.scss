@@ -278,7 +278,7 @@ body {
 
     .categories {
         max-width: 100%;
-        line-height: 50px;
+        line-height: 56px;
 
 
         .category-text {
@@ -324,10 +324,30 @@ body {
         }
 
         .donation-level-box {
-            // width: 90%;
-            // margin-left: 5%;
-            // margin-right: 5%;
-            // border: 2px solid black;
+            width: 95%;
+            //height: 400px;
+            margin-left: 5%;
+            margin-right: 0%;
+            margin-bottom: 10%;
+            background-color: #f0f0f0;
+
+
+            .donation-level-header {
+                font-size: 2rem;
+                color: #777777;
+                font-weight: 800;
+                padding-top: 15px;
+                padding-left: 20px;
+            }
+
+            .donation-level-text {
+                margin-left: 15px;
+                color: #888888;
+                font-weight: 300;
+                margin-right: 5%;
+                font-size: 0.8rem;
+                padding-bottom: 20px;
+            }
         }
     }
 

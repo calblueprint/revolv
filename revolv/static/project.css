@@ -5759,7 +5759,7 @@ body {
     width: 100%; }
   .about .categories {
     max-width: 100%;
-    line-height: 50px; }
+    line-height: 56px; }
     .about .categories .category-text {
       display: inline-block;
       color: #888888;
@@ -5787,6 +5787,25 @@ body {
     color: #888888; }
     .about .rewards-container .rewards-text .rewards-text-inside {
       font-size: 0.8rem; }
+  .about .rewards-container .donation-level-box {
+    width: 95%;
+    margin-left: 5%;
+    margin-right: 0%;
+    margin-bottom: 10%;
+    background-color: #f0f0f0; }
+    .about .rewards-container .donation-level-box .donation-level-header {
+      font-size: 2rem;
+      color: #777777;
+      font-weight: 800;
+      padding-top: 15px;
+      padding-left: 20px; }
+    .about .rewards-container .donation-level-box .donation-level-text {
+      margin-left: 15px;
+      color: #888888;
+      font-weight: 300;
+      margin-right: 5%;
+      font-size: 0.8rem;
+      padding-bottom: 20px; }
   .about .about-text {
     margin-bottom: 80px; }
     .about .about-text p {

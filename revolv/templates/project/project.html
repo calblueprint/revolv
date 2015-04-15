@@ -90,8 +90,19 @@
         <div class="rewards-text"><p class="rewards-text-inside">REWARDS</p></div>
         {% for donation_level in project.donation_levels %}
             <div class="donation-level-box">
-            <div>
+                <div class="donation-level-header">${{ donation_level.amount }}</div>
+                <div class="donation-level-text">{{ donation_level.description }}</div>
+            </div>
         {% endfor %}
+            <!-- UNCOMMENT THESE BOXES TO SEE SAMPLE DONATION LEVELS 
+            <div class="donation-level-box">
+                <div class="donation-level-header">$20</div>
+                <div class="donation-level-text">Information on the update goes here. Information on the update goes here. Information on the update goes here.Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah</div>
+            </div>
+            <div class="donation-level-box">
+                <div class="donation-level-header">$20</div>
+                <div class="donation-level-text">Information on the update goes here. Information on the update goes here. Information on the update goes here.Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah</div>
+            </div> -->
     </div>
 </div>
 
