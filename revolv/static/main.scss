@@ -1,8 +1,8 @@
 @import "foundation-settings";
+@import "revolv-settings";
 @import "bower_components/foundation/scss/foundation";
 @import "modal";
 @import "nav";
-@import "dashboard";
 
 body {
     background-color: $revolv-tan-bg;

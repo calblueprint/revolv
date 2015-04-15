@@ -1,167 +1,313 @@
 @import "utils";
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
+@import "revolv-settings";
+@import "nav";
 
-
-#project-menu {
-    background-color: orange;
+html, body, .main-row {
+    height: 100%;
 }
 
-$divider-font-size: 14px;
-.homepage-divider {
-    @include text-with-divider($divider-font-size, #ddd);
-    color: $revolv-blue;
-    height: 0.6em; // adjustment for helvetica neue
-    font-weight: 100;
+.main-row {
+    width: 100%;
+    min-width: 100%;
 }
 
-.administrator-button.small {
-    width: 15%;
-    color: black;
-    padding-top:10px;
-    padding-bottom:10px;
-    padding-left:10px;
-    padding-right:10px;
-    background-color: $revolv-gray-bg;
-    border-width: 2px;
-    border-color: $revolv-header-color;
-    font-weight: 300;
-    font-family: $body-font-family;
-    font-size: 1em;
-    transition: border-color 200ms linear;
-    &.active, &:focus, &:hover {
-        color: black;
-        background-color: $revolv-gray-bg;
-        border-color: #007295;
-    }
+.header, .spacer {
+    // the header is now a row within a row, so we need to override foundation styles
+    margin: 0 !important;
 }
 
-.dashboard-button {
-    width: 33%;
-    color: black;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    background-color: $revolv-gray-bg;
-    font-weight: 300;
-    font-family: $body-font-family;
-    border-width: 2px;
-    border-color: $revolv-gray-bg;
-    transition: border-color 200ms linear;
-    
-    &.active, &:focus, &:hover {
-        color: black;
-        background-color: $revolv-gray-bg;
-        border-color: $revolv-header-color;
-    }
-}
-
-.project-container {
+$sidebar-header-gray: #777;
+.dashboard-sidebar {
     padding: 0;
-    margin: 0;
+    background-color: $oil;
+    height: 100%;
+    font-family: $lato-font-family;
 
-    .status-bar {
-        transition: border-color 200ms linear;
-        transition: background-color 200ms linear;
-        height: 40px;
-        width: 80%;
-        position: absolute;
-        top: 50%;
-        left: 10%;
-        border-color: white;
-        border-width: 2px;
-        border-style: solid;
+    .dashboard-section {
+        padding: 10px 0;
 
-        .status-bar-menu-text {
-            transition: color 200ms linear;
-            font-family: $body-font-family;
-            text-align: center;
-            top: 50%;
-            margin-right: 6px;
-            color: white;
-            font-weight: 300;
-            z-index: -1;
+        .dashboard-header {
+            padding: 0 20px;
         }
+        .dashboard-sidebar-project-container {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: $sidebar-header-gray;
 
-        &.active, &:hover {
-            border-width: 2px;
-            border-style: solid; 
+            &.active {
+                background-color: $revolv-blue;
+                color: white;
 
-            .status-bar-menu-text {
-                color: $revolv-blue;
+                .dashboard-sidebar-bullet-point {
+                    visibility: hidden;
+                }
             }
-        }
-
-        .progress-bar-scale {
-            height: 10%;
-            width: 100%;
-            background-color: white;
-            position: absolute;
-            top: 90%;
-            bottom: 10%;
-
-            .green-bar {
-                width: 90%;
-                height: 100%;
-                background-color: green;
-            }
-
         }
     }
 
-    .project-img {
-        position: relative;
+    .dashboard-header {
+        font-size: 13px;
+        line-height: 16px;
+        color: $sidebar-header-gray;
+        text-transform: uppercase;
+        margin: 10px auto;
     }
 
-    .project-title {
-        position: absolute;
+    .role-select {
         color: white;
-        top: 7%;
-        left: 7%;
-        font-weight: 800;
-        width: 60%;
-        text-shadow: 1px 1px 1px #494949;
-    }
+        width: 100%; // of the sidebar itself
+        text-align: center;
 
-}
+        font-weight: bold;
 
-.active-project-container {
-    .status-bar {
-        top: 65%;
-        left: 30%;
-        width: 40%;
-        height: 15%;
+        border-bottom: 1px solid lighten($oil, 10%);
 
-        .progress-bar-scale {
-            width: 75%;
-            left: 5%;
+        .role-select-inner {
+            display: inline-block;
+            font-size: 22px;
+            line-height: $revolv-dashboard-header-height;
         }
 
-        .status-bar-menu-text {
-            height: 50%;
-            top: 25%;
-            bottom: 25%;
+        .dashboard-sidebar-chevron {
+            display: inline-block;
+            color: #999;
+            margin-left: 10px;
+            cursor: pointer;
         }
     }
 
-    .project-title {
-        font-size: 34px;
+    .create-new {
+        padding: 10px 20px;
+        a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            @include revolv-hover-button($revolv-blue, white);
+        }
     }
-}
 
-.accordion {
-    top: 0;
-    font-family: $body-font-family;
-    font-weight: 300;
-    
-    .accordion-navigation {
-        transition: background-color 200ms linear;
+    .role-select-options {
+        padding: 10px 20px;
+        border-bottom: 1px solid lighten($oil, 10%);
+        display: none; // initially hidden
 
         a {
-            transition: background-color 200ms linear;
+            color: inherit;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
         }
-        
-        #new-project-button {
-            background-color: green;
+
+        .role-select-option {
+            margin-left: 10px;
+            font-size: 15px;
+            line-height: 18px;
+            color: #bbb;
+            cursor: pointer;
         }
     }
+
+    .dashboard-sidebar-bullet-point {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+        background-color: red;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+
+        &.drafted {
+            background-color: $revolv-red;
+        }
+        &.proposed {
+            background-color: $revolv-yellow;
+        }
+        &.active {
+            background-color: $revolv-green;
+        }
+        &.completed {
+            background-color: $revolv-blue;
+        }
+    }
+    .dashboard-sidebar-project {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 13px;
+        line-height: 15px;
+        max-width: 80%;
+        color: inherit;
+    }
+
+    .dashboard-manage-link {
+        padding: 0 20px;
+        font-size: 13px;
+        line-height: 16px;
+        margin-left: 16px;
+        color: lighten($sidebar-header-gray, 10%);
+        margin-bottom: 5px;
+
+        a, a:visited, a:active, a:hover {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+}
+
+.no-donations {
+    h2, p {
+        width: 300px;
+        margin: 0 auto;
+        font-size: 20px;
+        line-height: 22px;
+        font-weight: 300;
+        margin-top: 50px;
+    }
+}
+
+.dashboard-project {
+    padding: 0;
+    display: none;
+    &.dashboard-data-section-current {
+        display: block;
+    }
+
+    // the dashboard project page should scroll instead of extending
+    // down past the sidebar
+    max-height: 100%;
+    overflow-y: scroll;
+
+    .dashboard-project-header {
+        height: $revolv-dashboard-header-height;
+        width: 100%;
+        padding: 15px;
+        font-family: $lato-font-family;
+
+        .sidebar-toggle {
+            display: none;
+        }
+
+        .title-area {
+            display: inline-block;
+            height: 100%;
+
+            .title, .project-status {
+                display: inline-block;
+            }
+
+            .title {
+                font-size: 22px;
+                font-weight: bold;
+                line-height: 22px;
+            }
+
+            .project-status {
+                margin-left: 10px;
+
+                font-size: 13px;
+                line-height: 16px;
+                color: #555;
+                text-transform: uppercase;
+            }
+
+            .location {
+                color: #777;
+                font-size: 11px;
+                line-height: 15px;
+
+                .location-text {
+                    display: inline-block;
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        .controls {
+            display: inline-block;
+            text-align: right;
+
+            form {
+                padding: 0;
+            }
+            form, .button {
+                display: inline-block;
+                margin-right: 30px;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+
+            .button {
+                display: inline-block;
+
+                font-size: 13px;
+                line-height: 16px;
+                color: #555;
+                text-transform: uppercase;
+                padding: 7px 20px;
+
+                @include revolv-hover-button($revolv-blue, inherit);
+                &.success {
+                    @include revolv-hover-button($revolv-green, inherit);
+                }
+                &.alert {
+                    @include revolv-hover-button($revolv-red, inherit);
+                }
+            }
+        }
+    }
+
+    .project-tabs {
+        margin: 0; // foundation override
+        margin-top: 10px;
+        text-align: center;
+
+        .tabs {
+            display: inline-block;
+
+            .tab-title {
+                @include revolv-sliding-border($revolv-blue, 2px, .3s);
+                a {
+                    font-size: 13px;
+                    line-height: 16px;
+                    text-transform: uppercase;
+                    color: #555;
+                    background-color: transparent; // foundation override
+                }
+            }
+        }
+    }
+
+    .project-tabs-content {
+        .row {
+            margin: 0;
+        }
+
+        p, h2 {
+            font-family: $lato-font-family;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 22px;
+            font-weight: 300;
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 20px;
+        }
+    }
+}
+
+.cover-photo {
+    // HACK: have to use !important because .rows inside .rows have paddings/margins which have
+    // a high specificity, do to their selector being ".row .row".
+    padding: 0 !important;
+    margin: 13px 0 0 0 !important;
+    height: 300px;
 }
