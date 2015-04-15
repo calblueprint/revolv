@@ -5630,8 +5630,6 @@ html, body, .main-row {
   background-color: #333333;
   height: 100%;
   font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
-  .dashboard-sidebar .role-select-options {
-    padding: 10px 20px; }
   .dashboard-sidebar .dashboard-section {
     padding: 10px 0; }
     .dashboard-sidebar .dashboard-section .dashboard-header {
@@ -5687,16 +5685,19 @@ html, body, .main-row {
       .dashboard-sidebar .create-new a:disabled {
         opacity: 0.3; }
   .dashboard-sidebar .role-select-options {
+    padding: 10px 20px;
     border-bottom: 1px solid #4d4d4d;
     display: none; }
-    .dashboard-sidebar .role-select-options a, .dashboard-sidebar .role-select-options a:visited, .dashboard-sidebar .role-select-options a:active, .dashboard-sidebar .role-select-options a:hover {
-      color: inherit; }
+    .dashboard-sidebar .role-select-options a {
+      color: inherit;
+      text-decoration: none; }
+      .dashboard-sidebar .role-select-options a:hover {
+        text-decoration: underline; }
     .dashboard-sidebar .role-select-options .role-select-option {
       margin-left: 10px;
       font-size: 15px;
       line-height: 18px;
       color: #bbbbbb;
-      text-decoration: underline;
       cursor: pointer; }
   .dashboard-sidebar .dashboard-sidebar-bullet-point {
     display: inline-block;
@@ -5867,7 +5868,7 @@ html, body, .main-row {
     font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
   .dashboard-project .project-tabs-content p {
     font-size: 16px;
-    line-height: 18px;
+    line-height: 22px;
     font-weight: 300; }
   .dashboard-project .project-tabs-content h2 {
     font-weight: 700;
