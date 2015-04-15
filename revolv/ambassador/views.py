@@ -2,6 +2,7 @@ from itertools import chain
 
 from django.views.generic import TemplateView
 from revolv.base.users import UserDataMixin
+from revolv.base.utils import ProjectGroup
 from revolv.project.models import Project
 
 
@@ -16,10 +17,11 @@ class AmbassadorDashboardView(UserDataMixin, TemplateView):
         user_projects = Project.objects.owned_projects(self.user)
 
         project_dict = {}
-        project_dict[('Drafted Projects', "drafted")] = Project.objects.get_drafted(user_projects)
-        project_dict[('Proposed Projects', "proposed")] = Project.objects.get_proposed(user_projects)
-        project_dict[('Active Projects', "active")] = Project.objects.get_active(user_projects)
-        project_dict[('Completed Projects', "completed")] = Project.objects.get_completed(user_projects)
+        project_dict[ProjectGroup('Drafted Projects', "drafted")] = Project.objects.get_drafted(user_projects)
+        project_dict[ProjectGroup('Proposed Projects', "proposed")] = Project.objects.get_proposed(user_projects)
+        project_dict[ProjectGroup('Active Projects', "active")] = Project.objects.get_active(user_projects)
+        project_dict[ProjectGroup('Completed Projects', "completed")] = Project.objects.get_completed(user_projects)
+
         context["project_dict"] = project_dict
         context["all_projects"] = list(chain(*(project_dict.values())))
         context["role"] = "ambassador"

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
+from revolv.base.utils import ProjectGroup
 from revolv.project.models import Project
 
 
@@ -15,10 +16,13 @@ class AdministratorDashboardView(UserDataMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(AdministratorDashboardView, self).get_context_data(**kwargs)
+
+        # maps project status classification (e.g. proposed, drafted, etc) to list of projects in that classification
         project_dict = {}
-        project_dict[('Proposed Projects', "proposed")] = Project.objects.get_proposed()
-        project_dict[('Active Projects', "active")] = Project.objects.get_active()
-        project_dict[('Completed Projects', "completed")] = Project.objects.get_completed()
+        project_dict[ProjectGroup('Proposed Projects', "proposed")] = Project.objects.get_proposed()
+        project_dict[ProjectGroup('Active Projects', "active")] = Project.objects.get_active()
+        project_dict[ProjectGroup('Completed Projects', "completed")] = Project.objects.get_completed()
+
         context["project_dict"] = project_dict
         context["all_projects"] = list(chain(*(project_dict.values())))
         context["role"] = "administrator"

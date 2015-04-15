@@ -1,6 +1,16 @@
+<!DOCTYPE html>
+{% comment %}
+    Dashboard
+
+    This is the base template for the donor, ambassador, and administrator dashboards for RE-volv.
+    Note that this template is the only one that does not inherit from base.html: this defines a
+    totally different template inheritance tree (necessary since we don't want the footer, header,
+    etc on these pages). Also, no templates directly inherit from this one: instead, this template
+    includes many different partials conditionally based on the projects and the logged in user.
+
+{% endcomment %}
 {% load cms_tags sekizai_tags %}
 {% load staticfiles %}
-<!DOCTYPE html>
 <html>
 <head>
     <title>{% block title %}RE-volv - Dashboard{% endblock %}</title>
@@ -35,11 +45,9 @@
                 {% endif %}
             </div>
         {% endif %}
-        {% for project_group_name, project_list in project_dict.items %}
+        {% for project_group, project_list in project_dict.items %}
             {% with outer_counter=forloop.counter %}
                 {% for project in project_list %}
-                    <!-- {{outer_counter}} -->
-                    <!-- {{ forloop.counter}} -->
                     <div class="medium-10 columns dashboard-project dashboard-data-section-project-{{project.pk}}{% if outer_counter == 1 and forloop.counter == 1 %} dashboard-data-section-current{% endif %}">
                         {% include "base/partials/dashboard_project.html" with project=project user=user %}
                     </div>
