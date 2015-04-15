@@ -1,9 +1,9 @@
+
 import datetime
 from itertools import chain
 
 from django.core.urlresolvers import reverse
 from django.db import models
-
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -117,6 +117,7 @@ class ProjectManager(models.Manager):
         project.ambassador = ambassador
         project.save()
         return project
+
 
 class Project(models.Model):
     """
@@ -348,7 +349,6 @@ class Project(models.Model):
         """
         try:
             pieces = self.location.split(',')
-            text = ""
             if len(pieces) >= 3:
                 return pieces[1] + "," + pieces[2]
             elif len(pieces) == 2:
@@ -437,6 +437,13 @@ class Project(models.Model):
         return unicode(days_left) + " days left"
 
     @property
+    def org_about_lines(self):
+        """
+        :return: this project's org_about as an array split on its newlines.
+        """
+        return [line for line in self.org_about.strip().split("\n") if line.strip()]
+
+    @property
     def is_active(self):
         return self.project_status == Project.ACTIVE
 
@@ -453,6 +460,10 @@ class Project(models.Model):
         return self.project_status == Project.COMPLETED
 
     @property
+    def status_display(self):
+        return dict(Project.PROJECT_STATUS_CHOICES)[self.project_status]
+
+    @property
     def categories(self):
         return [category.title for category in self.category_set.all()]
 
@@ -467,18 +478,19 @@ class Project(models.Model):
         update = ProjectUpdate(update_text=text, project=self)
         update.save()
 
+
 class ProjectUpdate(models.Model):
     update_text = models.TextField(
         'Update text',
-        help_text = "What should the update say?"
+        help_text="What should the update say?"
     )
-    
+
     date = models.DateField(
         'Date of update creation',
-        help_text = "What time was your update created?",
-        auto_now_add = True
+        help_text="What time was your update created?",
+        auto_now_add=True
     )
-    
+
     project = models.ForeignKey(
         Project,
         related_name="updates"

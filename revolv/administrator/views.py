@@ -1,29 +1,19 @@
 import csv
-from itertools import chain
 
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-
 from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
-from revolv.project.models import Project
+from revolv.base.views import BaseStaffDashboardView
 
 
-class AdministratorDashboardView(UserDataMixin, TemplateView):
-    """Basic view for the Administrator dashboard. Shows the list of projects.
+class AdministratorDashboardView(BaseStaffDashboardView):
     """
-    template_name = 'administrator/dashboard.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(AdministratorDashboardView, self).get_context_data(**kwargs)
-        context['proposed_projects'] = Project.objects.get_proposed()
-        context['active_projects'] = Project.objects.get_active()
-        context['completed_projects'] = Project.objects.get_completed()
-        context['all_projects'] = list(chain(context['proposed_projects'],
-                                             context['active_projects'], context['completed_projects']))
-        if len(context['all_projects']) > 0:
-            context['active_project'] = int(self.request.GET['active_project']) if 'active_project' in self.request.GET else context['all_projects'][0].id
-        return context
+    Basic view for the Administrator dashboard. Shows the list of projects that this
+    ambassador owns.
+    """
+    template_name = 'base/dashboard.html'
+    role = "admin"
 
 
 class AdministratorEmailView(UserDataMixin, TemplateView):

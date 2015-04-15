@@ -1,4 +1,13 @@
+from collections import namedtuple
+
 from django.contrib.auth.models import Group, User
+
+"""
+An abstraction for a classification of grouped projects which have a string that
+the group displays as, e.g. "Proposed Projects" and a unique key which we can use
+to refer to the group, e.g. "proposed".
+"""
+ProjectGroup = namedtuple("ProjectGroup", ["display", "key"])
 
 
 def get_profile(user):

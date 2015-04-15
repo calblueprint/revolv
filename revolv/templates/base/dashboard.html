@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% comment %}
+    Dashboard
+
+    This is the base template for the donor, ambassador, and administrator dashboards for RE-volv.
+    Note that this template is the only one that does not inherit from base.html: this defines a
+    totally different template inheritance tree (necessary since we don't want the footer, header,
+    etc on these pages). Also, no templates directly inherit from this one: instead, this template
+    includes many different partials conditionally based on the projects and the logged in user.
+
+{% endcomment %}
+{% load cms_tags sekizai_tags %}
+{% load staticfiles %}
+<html>
+<head>
+    <title>{% block title %}RE-volv - Dashboard{% endblock %}</title>
+    <meta charset="utf-8">
+    {% block meta %}
+    {% endblock %}
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static "dashboard.css" %}" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    {% render_block "css" %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    {% cms_toolbar %}
+
+    <div class='row main-row'>
+        <div class="medium-2 columns dashboard-sidebar">
+            {% include "base/partials/dashboard_sidebar.html" with user=user %}
+        </div>
+        {% if donor_has_no_donated_projects %}
+            <div class="medium-10 columns no-donations">
+                <h2>Thanks for signing up with RE-volv! Looks like you haven't supported any solar projects yet.</h2>
+                {% if first_project %}
+                    <p>Click <a href="{% url "project:view" pk=first_project.pk %}">here</a> to start contributing.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% for project_group, project_list in project_dict.items %}
+            {% with outer_counter=forloop.counter %}
+                {% for project in project_list %}
+                    <div class="medium-10 columns dashboard-project dashboard-data-section-project-{{project.pk}}{% if outer_counter == 1 and forloop.counter == 1 %} dashboard-data-section-current{% endif %}">
+                        {% include "base/partials/dashboard_project.html" with project=project user=user %}
+                    </div>
+                {% endfor %}
+            {% endwith %}
+        {% endfor %}
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+    {% block body-bottom %}
+    {% endblock %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/js/foundation.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+
+    <script>
+        $(document).foundation();
+    </script>
+
+    <script src="{% static "js/base/dashboard.js" %}"></script>
+
+    {% if messages %}
+        <script>
+            toastr.options.positionClass = "toast-bottom-right";
+        </script>
+        {% for message in messages %}
+        <script>
+            toastr.{{ message.tags }}('{{ message }}')
+        </script>
+        {% endfor %}
+    {% endif %}
+
+    {% render_block "js" %}
+    {% block javascripts %}
+    {% endblock %}
+</body>
+
+</html>
+
+

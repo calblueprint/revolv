@@ -1,0 +1,51 @@
+{% comment %}
+    Dashboard Project
+
+    This is a partial for the view of a project on the the RE-volv dashboard (mockup can be seen at
+    https://cloud.githubusercontent.com/assets/7706852/6608266/b4c8fdd8-c802-11e4-9610-939a5f9f5dd9.png).
+    This partial accepts the following template variables:
+
+    :project: the project to render. Various things about the project will be renedered, including controls
+        to approve/edit/complete the project, based on the permissions of the user.
+    :user: the currently logged in user. This user is guaranteed to be logged in, since if they're
+        seeing this page then they have bypassed the functionality which redirects to the homepage for
+        unauthenticated users.
+
+    The project view includes (1) a top bar with the title of the project, its status, and control buttons, (2)
+    the cover photo of the project, and (3) a tabbed area with more into realted to the project in each tab,
+    including management functions if the user has the appropriate permissions.
+
+    TODO: currently, we load in the html for every single project in the RE-volv database on the admin dashboard
+    page (on the donor and ambassador pages, we technically may load in some or all of them). When RE-volv grows
+    beyond the order of 10-100 projects, this page may become very slow to load and/or a lot to work through
+    easily in the sidebar UI, so we may have to rethink this design a little bit.
+{% endcomment %}
+
+{% include "base/partials/nav.html" %}
+{% include "base/partials/dashboard_project_header.html" with user=user project=project %}
+<div class="row cover-photo"{% if project.cover_photo %} style="background-image: url({{project.cover_photo.url}});"{% endif %}></div>
+<div class="row project-tabs">
+    <dl class="tabs" data-tab>
+        <dd class="tab-title active"><a href="#description">Description</a></dd>
+        <!-- todo: funding and statistics and updates tabs -->
+        <dd class="tab-title"><a href="#funding">Funding</a></dd>
+        <dd class="tab-title"><a href="#statistics">Statistics</a></dd>
+        {% if project.updates.count > 0 %}
+            <dd class="tab-title"><a href="#updates">Updates</a></dd>
+        {% endif %}
+    </dl>
+</div>
+<div class="project-tabs-content tabs-content">
+    <div class="content active description" id="description">
+        <div class="row project-tagline">
+            <h2 class="small-8 small-offset-1 columns">{{project.tagline}}</h2>
+        </div>
+        <div class="row project-description">
+            <div class="small-8 small-offset-1 columns">
+                {% for line in project.org_about_lines %}
+                    <p>{{line}}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,22 +1,23 @@
-from itertools import chain
-
-from django.views.generic import TemplateView
-from revolv.base.users import UserDataMixin
+from revolv.base.utils import ProjectGroup
+from revolv.base.views import BaseStaffDashboardView
 from revolv.project.models import Project
 
 
-class AmbassadorDashboardView(UserDataMixin, TemplateView):
+class AmbassadorDashboardView(BaseStaffDashboardView):
     """Basic view for the Ambassador dashboard.
     """
-    template_name = 'ambassador/dashboard.html'
+    template_name = 'base/dashboard.html'
+    role = "ambassador"
+
+    def get_filter_args(self):
+        """
+        Return a list that contains a set of projects that this user owns, to pass
+        to various Project filtering functions.
+        """
+        return [Project.objects.owned_projects(self.user)]
 
     def get_context_data(self, **kwargs):
         context = super(AmbassadorDashboardView, self).get_context_data(**kwargs)
-        user_projects = Project.objects.owned_projects(self.user)
-        context['drafted_projects'] = Project.objects.get_drafted(user_projects)
-        context['proposed_projects'] = Project.objects.get_proposed(user_projects)
-        context['active_projects'] = Project.objects.get_active(user_projects)
-        context['completed_projects'] = Project.objects.get_completed(user_projects)
-        context['all_projects'] = list(chain(context['drafted_projects'], context['proposed_projects'],
-                                             context['active_projects'], context['completed_projects']))
+
+        context["project_dict"][ProjectGroup('Drafted Projects', "drafted")] = Project.objects.get_drafted(*self.get_filter_args())
         return context
