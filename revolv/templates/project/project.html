@@ -10,6 +10,8 @@
     <script type="text/javascript">
         window.PARTIAL_COMPLETENESS = {{ project.partial_completeness_as_js }}
     </script>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,800' rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block title %}Project{% endblock %}
@@ -88,14 +90,15 @@
     </div>
     <div class="large-4 columns rewards-container">
         <div class="rewards-text"><p class="rewards-text-inside">REWARDS</p></div>
+        <div class="gray-bar"></div>
         {% for donation_level in project.donation_levels %}
             <div class="donation-level-box">
                 <div class="donation-level-header">${{ donation_level.amount }}</div>
                 <div class="donation-level-text">{{ donation_level.description }}</div>
             </div>
         {% endfor %}
-            <!-- UNCOMMENT THESE BOXES TO SEE SAMPLE DONATION LEVELS 
-            <div class="donation-level-box">
+            <!-- UNCOMMENT THESE BOXES TO SEE SAMPLE DONATION LEVELS  -->
+            <!-- <div class="donation-level-box">
                 <div class="donation-level-header">$20</div>
                 <div class="donation-level-text">Information on the update goes here. Information on the update goes here. Information on the update goes here.Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah</div>
             </div>
@@ -117,7 +120,7 @@
                 <div class="large-2 medium-3 small-12 columns">
                     <div class = "date-container">
                         <p class="date-year">{{ update.date|date:"m" }}</p>
-                        <p class="date-month-day">{{ update.date|date:"N" }} {{ update.date|date:"o" }}<p>
+                        <p class="date-month-day">{{ update.date|date:"M" }} {{ update.date|date:"o" }}<p>
                     </div>
                 </div>
                 <div class="large-10 medium-9 small-12 columns">

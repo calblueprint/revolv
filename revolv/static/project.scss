@@ -74,7 +74,7 @@ body {
 
 .header-img-div {
     width: 100%;
-    height: 350px;
+    height: 380px;
     position: relative;
     background-size: cover;
 
@@ -86,11 +86,11 @@ body {
         left: 0;
         background: rgba(0, 0, 0, .5);
 
-        $donate-header-button-height: 50px;
+        $donate-header-button-height: 60px;
         .donate-button-header {
             position: absolute;
             border: 2px solid white;
-            width: 15%;
+            width: 20%;
             height: $donate-header-button-height;
             bottom: 40px;
             right: 5%;
@@ -108,6 +108,8 @@ body {
                     line-height: $donate-header-button-height - 4px;
                     color: white;
                     text-align: center;
+                    font-weight: 800;
+                    font-size: 1.8rem;
                     transition: all 0.3s;
                     -moz-transition: all 0.3s;
                     -webkit-transition: all 0.3s;
@@ -129,7 +131,7 @@ body {
             color: white;
             font-size: 2rem;
             font-weight: 800;
-            top: 250px;
+            top: 280px;
             left: 5%;
             width: 30%;
             line-height: 2rem;
@@ -142,7 +144,7 @@ body {
     position: absolute;
     height: 600px;
     z-index: 1;
-    top: 150px;
+    top: 170px;
 
     .statistics-graphics-container {
         height: 100%;
@@ -152,6 +154,7 @@ body {
             width: 100%;
             height: 40px;
             position: absolute;
+            font-weight: 300;
 
             &.top-bar {
                 background-color: $revolv-blue;
@@ -313,6 +316,10 @@ body {
 
     .rewards-container {
 
+        .gray-bar {
+            visibility: hidden;
+        }
+
         .rewards-text {
             margin-left: 20px;
             margin-top: 15px;
@@ -347,6 +354,7 @@ body {
                 margin-right: 5%;
                 font-size: 0.8rem;
                 padding-bottom: 20px;
+                white-space: pre-wrap;
             }
         }
     }
@@ -356,6 +364,7 @@ body {
             font-weight: 500;
             font-size: 1.2rem;
             color: #333333;
+            white-space: pre-wrap;
         }
         margin-bottom: 80px;
     }
@@ -366,7 +375,7 @@ body {
     .header-text {
         p {
             font-weight: 800;
-            color: black;
+            color: #444444;
             font-size: 1.8rem;
         }
     }
@@ -390,7 +399,7 @@ body {
         .date-container {
             height: 50px;
             width: 100%;
-            text-align: center;
+            text-align: left;
             color: $revolv-dark-blue;
             font-weight: 300;
             line-height: 0.5;
@@ -403,8 +412,8 @@ body {
             }
 
             .date-month-day {
-                font-size: 1.5rem;
-                line-height: 1.5rem;
+                font-size: 1.2rem;
+                line-height: 1.2rem;
             }
         }
 
@@ -541,6 +550,33 @@ $map-height: 400px;
 }
 
 // --- Mobile Responsiveness Styles ------------------------------------------------------
+@media #{$small-only}, #{$medium-only} {
+    .about {
+        .rewards-container {
+            .rewards-text {
+                margin: 0;
+
+                .rewards-text-inside {
+                    font-weight: 800;
+                    color: #444444;
+                    font-size: 1.5rem;
+                    margin: 0;
+                }
+            }
+
+            .gray-bar {
+                visibility: visible;
+                margin-bottom: 20px;
+            }
+
+            .donation-level-box {
+                width: 100%;
+                padding: 0;
+                margin: 0 0 20px 0;
+            }
+        }
+    }
+}
 
 @media #{$small-only} {
     .project-updates {
@@ -623,10 +659,10 @@ $map-height: 400px;
                 height: 25px;
 
                 &.top-bar {
-                    top: 63%;
+                    top: 65%;
                 }
                 &.bottom-bar {
-                    top: 68%;
+                    top: 70%;
                 }
             }
 
@@ -665,7 +701,7 @@ $map-height: 400px;
                 left: 15%;
                 width: 70%;
                 height: $donate-header-button-mobile-height;
-                top: 170%;
+                top: 173%;
                 border-color: $revolv-dark-blue;
                 z-index: 1000;
 
