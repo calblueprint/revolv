@@ -11,7 +11,10 @@
         window.PARTIAL_COMPLETENESS = {{ project.partial_completeness_as_js }}
     </script>
 
-    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
+
+    {% load humanize %}
+
 {% endblock %}
 
 {% block title %}Project{% endblock %}
@@ -62,13 +65,13 @@
     {% endif %}
 </div>
 
-
+{% if project_donation_levels|length > 0 %}
 <div class="row about">
     <div class="header-text">
         <p class="header">{{ project.tagline }}</p>
     </div>
     <div class="gray-bar"></div>
-    <div class="large-8 columns">
+    <div class="large-8 columns about-column">
         <div class="row categories">
         <div class="category-text"><p class="category-text-inside">CATEGORIES:   </p></div>
         {% for category in project.categories %}
@@ -77,9 +80,6 @@
             </div>
         {% endfor %}
 
-        <!-- These two are in here for testing and viewing purposes.  -->
-        <!-- <div class="category-holder"><p class="category-label">ARTS</p></div>
-        <div class="category-holder"><p class="category-label">HEALTH</p></div> -->
         </div>
         {% if project.video_url %}
             <iframe width="100%" height="500" type="text/html" class="project_video youtube-player" frameborder="0" allowfullscreen></iframe>
@@ -88,26 +88,40 @@
         <div class="about-text"><p>{{ project.org_about }}</p>
         </div>
     </div>
-    <div class="large-4 columns rewards-container">
+    <div class="large-4 columns rewards-container about-column">
         <div class="rewards-text"><p class="rewards-text-inside">REWARDS</p></div>
         <div class="gray-bar"></div>
-        {% for donation_level in project.donation_levels %}
+        {% for donation_level in project_donation_levels %}
             <div class="donation-level-box">
-                <div class="donation-level-header">${{ donation_level.amount }}</div>
+                <div class="donation-level-header">${{ donation_level.amount|floatformat:"0"|intcomma }}</div>
                 <div class="donation-level-text">{{ donation_level.description }}</div>
             </div>
         {% endfor %}
-            <!-- UNCOMMENT THESE BOXES TO SEE SAMPLE DONATION LEVELS  -->
-            <!-- <div class="donation-level-box">
-                <div class="donation-level-header">$20</div>
-                <div class="donation-level-text">Information on the update goes here. Information on the update goes here. Information on the update goes here.Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah</div>
-            </div>
-            <div class="donation-level-box">
-                <div class="donation-level-header">$20</div>
-                <div class="donation-level-text">Information on the update goes here. Information on the update goes here. Information on the update goes here.Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah. Information on the update goes here. Information on the update information blah blah blah blah blah blah</div>
-            </div> -->
     </div>
 </div>
+{% else %}
+<div class="row about">
+    <div class="header-text">
+        <p class="header">{{ project.tagline }}</p>
+    </div>
+    <div class="gray-bar"></div>
+    {% if project.categories|length > 0 %}
+        <div class="row categories">
+            <div class="category-text"><p class="category-text-inside">CATEGORIES:   </p></div>
+            {% for category in project.categories %}
+                <div class="category-holder">
+                    <p class="category-label">{{ category }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if project.video_url %}
+        <iframe width="100%" height="500" type="text/html" class="project_video youtube-player" frameborder="0" allowfullscreen></iframe>
+    {% endif %}
+
+    <div class="about-text"><p>{{ project.org_about }}</p></div>
+</div>
+{% endif %}
 
 {% if updates|length > 0 %}
     <div class="row project-updates">
@@ -117,13 +131,13 @@
         <div class="gray-bar"></div>
         {% for update in updates %}
             <div class="update-container">
-                <div class="large-2 medium-3 small-12 columns">
+                <div class="large-2 medium-3 small-12 columns update-column">
                     <div class = "date-container">
                         <p class="date-year">{{ update.date|date:"m" }}</p>
                         <p class="date-month-day">{{ update.date|date:"M" }} {{ update.date|date:"o" }}<p>
                     </div>
                 </div>
-                <div class="large-10 medium-9 small-12 columns">
+                <div class="large-10 medium-9 small-12 columns update-column">
                     <p class="update-text">{{ update.update_text }}</p>
                 </div>
             </div>

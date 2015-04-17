@@ -210,6 +210,7 @@ class ProjectView(UserDataMixin, DetailView):
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         context['updates'] = self.get_object().updates.order_by('date').reverse()
         context['donor_count'] = self.get_object().donors.count()
+        context['project_donation_levels'] = self.get_object().donation_levels.order_by('amount')
         return context
 
     def dispatch(self, request, *args, **kwargs):

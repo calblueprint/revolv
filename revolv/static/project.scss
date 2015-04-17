@@ -175,13 +175,14 @@ body {
             .container {
                 position: relative;
                 color: white;
-                font-weight: 500;
                 width: 100%;
                 height: 100%;
                 margin: 0;
                 .statistic {
                     line-height: 40px;
                     font-size: 1.4rem;
+                    font-weight: 300;
+
                     &.left-text {
                         float: left;
                         height: 100%;
@@ -269,7 +270,7 @@ body {
         }
     }
 
-    .columns {
+    .about-column {
         padding: 0;
     }
 
@@ -277,11 +278,13 @@ body {
         background-color: #999999;
         height: 1px;
         width: 100%;
+        margin-bottom: 10px;
     }
 
     .categories {
         max-width: 100%;
         line-height: 56px;
+        margin-bottom: 10px;
 
 
         .category-text {
@@ -332,7 +335,6 @@ body {
 
         .donation-level-box {
             width: 95%;
-            //height: 400px;
             margin-left: 5%;
             margin-right: 0%;
             margin-bottom: 10%;
@@ -392,7 +394,7 @@ body {
         display: inline-block;
         position: relative;
 
-        .columns {
+        .update-column {
             padding: 0;
         }
 
@@ -581,7 +583,7 @@ $map-height: 400px;
 @media #{$small-only} {
     .project-updates {
 
-        .columns {
+        .update-column {
             padding-left: 0px;
             padding-right: 0px;
         }
