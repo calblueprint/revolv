@@ -425,13 +425,15 @@ class PaymentTest(TestCase):
         Test reinvestment on AdminReinvestment level. Lots of moving parts,
         see docstrings for respective models for info.
 
-        Creates 3 users, 2 of which have category preferences that match
-        categories for project2. Checks that those 2 users will reinvest into
+        Creates 3 users, 2 of which have category preferences that match categories
+        for project2. Creates a reinvestment equal to the sum of the pools for
+        the two users with preferences. Checks that those 2 users will reinvest into
         it completely, and that the other users do not.
         """
         user1, user2, user3 = RevolvUserProfile.factories.base.create_batch(3)
         admin1 = RevolvUserProfile.factories.admin.create()
-        project1, project2 = Project.factories.base.create_batch(2)
+        project1 = Project.factories.base.create(funding_goal=200)
+        project2 = Project.factories.base.create(funding_goal=250)
 
         Category.factories.base.title.reset()
         category1, category2, category3 = Category.factories.base.create_batch(3)
@@ -480,6 +482,184 @@ class PaymentTest(TestCase):
         user3 = RevolvUserProfile.objects.get(pk=user3.pk)
         self.assertEquals(user1.reinvest_pool, 0)
         self.assertEquals(user2.reinvest_pool, 150.00)
+        self.assertEquals(user3.reinvest_pool, 0)
+
+        reinvest1.delete()
+
+        # checks that after deleting, we have no reinvestment fragments
+        self.assertEquals(project2.amount_donated, 0)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
+        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'])
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 0)
+        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'])
+        self.assertEquals(Payment.objects.reinvestment_fragments(user3).count(), 0)
+        self.assertIsNone(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'])
+        # must reload to get new reinvest_pool amount
+        user1 = RevolvUserProfile.objects.get(pk=user1.pk)
+        user2 = RevolvUserProfile.objects.get(pk=user2.pk)
+        user3 = RevolvUserProfile.objects.get(pk=user3.pk)
+        self.assertEquals(user1.reinvest_pool, 50.00)
+        self.assertEquals(user2.reinvest_pool, 150.00)
+        self.assertEquals(user3.reinvest_pool, 200.00)
+
+    def test_admin_reinvestment_leftover_reinvest_pool(self):
+        """
+        Test reinvestment on AdminReinvestment level. Lots of moving parts,
+        see docstrings for respective models for info.
+
+        Creates 3 users, 2 of which have category preferences that match
+        categories for project2. Creates a reinvestment large enough to exhaust
+        the pools of users with preferences, and use some from the user without
+        preferences. Checks that those 2 users will reinvest into
+        it completely, and that the other user will invest the remainder and
+        have leftover funds after the project hits its reinvestment goal.
+        """
+        user1, user2, user3 = RevolvUserProfile.factories.base.create_batch(3)
+        admin1 = RevolvUserProfile.factories.admin.create()
+        project1 = Project.factories.base.create(funding_goal=200)
+        project2 = Project.factories.base.create(funding_goal=350)
+
+        Category.factories.base.title.reset()
+        category1, category2, category3 = Category.factories.base.create_batch(3)
+
+        # assigns preferred categories for users and categories for project
+        user1.preferred_categories.add(category2)
+        user2.preferred_categories.add(category3)
+        user3.preferred_categories.add(category1, category3)
+        project2.category_set.add(category1, category2)
+
+        self._create_payment(user1, amount=25.00, project=project1).save()
+        self._create_payment(user2, amount=75.00, project=project1).save()
+        self._create_payment(user3, amount=100.00, project=project1).save()
+        project1.complete_project()
+
+        self._create_admin_repayment(admin1, amount=400.00, project=project1).save()
+
+        # verifies that reinvestment pools have values that we expect, must reload to get new reinvest_pool amount
+        user1 = RevolvUserProfile.objects.get(pk=user1.pk)
+        user2 = RevolvUserProfile.objects.get(pk=user2.pk)
+        user3 = RevolvUserProfile.objects.get(pk=user3.pk)
+        self.assertEquals(user1.reinvest_pool, 50.00)
+        self.assertEquals(user2.reinvest_pool, 150.00)
+        self.assertEquals(user3.reinvest_pool, 200.00)
+
+        reinvest1 = self._create_admin_reinvestment(admin1, 350.00, project=project2)
+        reinvest1.save()
+
+        # checks that all three users donate, and user 2, the user with no preferences,
+        # has leftover funds
+        self.assertEquals(project2.amount_donated, 350.00)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'], 50.00)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'], 200.00)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'], 100.00)
+        # must reload to get new reinvest_pool amount
+        user1 = RevolvUserProfile.objects.get(pk=user1.pk)
+        user2 = RevolvUserProfile.objects.get(pk=user2.pk)
+        user3 = RevolvUserProfile.objects.get(pk=user3.pk)
+        self.assertEquals(user1.reinvest_pool, 0)
+        self.assertEquals(user2.reinvest_pool, 50.00)
+        self.assertEquals(user3.reinvest_pool, 0)
+
+        reinvest1.delete()
+
+        # checks that after deleting, we have no reinvestment fragments
+        self.assertEquals(project2.amount_donated, 0)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
+        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'])
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 0)
+        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'])
+        self.assertEquals(Payment.objects.reinvestment_fragments(user3).count(), 0)
+        self.assertIsNone(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'])
+        # must reload to get new reinvest_pool amount
+        user1 = RevolvUserProfile.objects.get(pk=user1.pk)
+        user2 = RevolvUserProfile.objects.get(pk=user2.pk)
+        user3 = RevolvUserProfile.objects.get(pk=user3.pk)
+        self.assertEquals(user1.reinvest_pool, 50.00)
+        self.assertEquals(user2.reinvest_pool, 150.00)
+        self.assertEquals(user3.reinvest_pool, 200.00)
+
+    def test_admin_reinvestment_depleted_reinvestment_pool(self):
+        """
+        Test reinvestment on AdminReinvestment level. Lots of moving parts,
+        see docstrings for respective models for info.
+
+        Creates 3 users, 1 of which have category preferences that match
+        categories for project2. Creates a reinvestment equal to the sum of all
+        the user's reinvestment pools. Checks that all three users will exhaust their
+        reinvest pools.
+        """
+        user1, user2, user3 = RevolvUserProfile.factories.base.create_batch(3)
+        admin1 = RevolvUserProfile.factories.admin.create()
+        project1 = Project.factories.base.create(funding_goal=200)
+        project2 = Project.factories.base.create(funding_goal=450)
+
+        Category.factories.base.title.reset()
+        category1, category2, category3 = Category.factories.base.create_batch(3)
+
+        # assigns preferred categories for users and categories for project
+        user1.preferred_categories.add(category2)
+        user2.preferred_categories.add(category3)
+        project2.category_set.add(category1, category2)
+
+        self._create_payment(user1, amount=25.00, project=project1).save()
+        self._create_payment(user2, amount=75.00, project=project1).save()
+        self._create_payment(user3, amount=100.00, project=project1).save()
+        project1.complete_project()
+
+        self._create_admin_repayment(admin1, amount=400.00, project=project1).save()
+
+        # verifies that reinvestment pools have values that we expect, must reload to get new reinvest_pool amount
+        user1 = RevolvUserProfile.objects.get(pk=user1.pk)
+        user2 = RevolvUserProfile.objects.get(pk=user2.pk)
+        user3 = RevolvUserProfile.objects.get(pk=user3.pk)
+        self.assertEquals(user1.reinvest_pool, 50.00)
+        self.assertEquals(user2.reinvest_pool, 150.00)
+        self.assertEquals(user3.reinvest_pool, 200.00)
+
+        reinvest1 = self._create_admin_reinvestment(admin1, 400.00, project=project2)
+        reinvest1.save()
+
+        # checks that all three users donate, and that all of their reinvest pools are depleted
+        self.assertEquals(project2.amount_donated, 400.00)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'], 50.00)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'], 200.00)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 1)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
+            Sum('amount')
+        )['amount__sum'], 150.00)
+        # must reload to get new reinvest_pool amount
+        user1 = RevolvUserProfile.objects.get(pk=user1.pk)
+        user2 = RevolvUserProfile.objects.get(pk=user2.pk)
+        user3 = RevolvUserProfile.objects.get(pk=user3.pk)
+        self.assertEquals(user1.reinvest_pool, 0)
+        self.assertEquals(user2.reinvest_pool, 0)
         self.assertEquals(user3.reinvest_pool, 0)
 
         reinvest1.delete()

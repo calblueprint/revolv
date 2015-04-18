@@ -76,7 +76,6 @@ def post_save_admin_reinvestment(**kwargs):
     Category of the project begin invested into. We only consider users that
     have a non-zero pool of investable money.
 
-    !!! TODO: actually prioritize by Category
     """
     if not kwargs.get('created'):
         return
