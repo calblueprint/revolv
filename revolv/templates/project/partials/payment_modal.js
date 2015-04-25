@@ -300,14 +300,17 @@ $('button.donation-continue').click(function(e) {
     e.preventDefault();
     populateConfirmModal(getDonateFormValues());
     $('#confirm-modal').foundation('reveal', 'open');
+    return false;
 });
 $('button.donation-change').click(function(e) {
     e.preventDefault();
     $('#donate-modal').foundation('reveal', 'open');
+    return false;
 });
 $('button.donation-submit').click(function(e) {
     e.preventDefault();
     $('#donate-form').submit();
+    return false;
 });
 $donateModalErrors = $('#donate-modal').find('.modal-errors');
 
