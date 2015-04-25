@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
 from revolv.base.utils import get_profile
 
@@ -10,17 +11,30 @@ class TestUserMixin(object):
     do extra database operations if you don't need to access self.test_user ever.
     """
 
-    def send_test_user_login_request(self):
-        """Send a request to login the test user then return the response."""
-        response = self.client.post(
+    def send_user_login_request(self, user, password, webtest=False):
+        """Send a request to login the user then return the response."""
+        if webtest:
+            client = self.app
+            kwargs = {}
+        else:
+            client = self.client
+            kwargs = {"follow": True}
+
+        response = client.post(
             "/login/",
             {
-                "username": self.test_user.get_username(),
-                "password": "test_user_password"
+                "username": user.get_username(),
+                "password": password
             },
-            follow=True
+            **kwargs
         )
+        if webtest:
+            response = response.maybe_follow()
         return response
+
+    def send_test_user_login_request(self, webtest=False):
+        """Send a request to login the test user then return the response."""
+        return self.send_user_login_request(self.test_user, "test_user_password", webtest)
 
     def bust_test_user_cache(self):
         """Make sure that the user and profile are up to date (avoid db caching)."""
@@ -50,3 +64,42 @@ class UserTestingMixin(object):
     def assertUserAuthed(self, response):
         """Given a response, assert that there IS a user authenticated in the session."""
         self.assertTrue(response.context["user"].is_authenticated())
+
+
+class WebTestMixin(object):
+    """
+    A testing mixin which provides additional functionality for integration tests
+    using WebTest.
+    """
+
+    def fill_form_from_model(self, form, model_instance):
+        """"
+        Given a WebTest form which was rendered from a django ModelForm,
+        fill out as much of it as possible from the model, then return the filled
+        out form.
+
+        This method will look at the fields of the form, and for every field, it will
+        check for a corresponding field on the model. If that exists, it will try to set the
+        field of the form to be the corresponding value from the model instance. It
+        makes no guarentee about whether the fields can be set, and will error if they
+        cannot.
+        """
+        ThisModelForm = modelform_factory(type(model_instance))
+        model_form_instance = ThisModelForm(instance=model_instance)
+        for field_name, field_value in form.fields.items():
+            if field_name is None:  # for the submit button, the field name is none
+                continue
+            field_model_value = getattr(model, field_name, None)
+            if field_model_value:
+                form[field_name] = str(field_model_value)
+        return form
+
+    def assert_id_in_response_html(self, response, id):
+        """
+        Given the html of a WebTest response (response.html), assert that the given id
+        exists in that response's DOM.
+        """
+        query = BeautifulSoup(response.html)
+        # we want to make sure that there is a password reset link (not just a url) in the email
+        element = query.find(id=id)
+        self.assertIsNotNone(element)

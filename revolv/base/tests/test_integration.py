@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate
 from django.core import mail
 from django.test import TestCase
 from django_webtest import WebTest
-from revolv.lib.testing import TestUserMixin, UserTestingMixin
+from revolv.lib.testing import TestUserMixin, WebTestMixin
+from revolv.project.models import Project
 
 
 class DashboardTestCase(TestUserMixin, TestCase):
@@ -70,3 +71,26 @@ class AuthIntegrationTest(TestUserMixin, WebTest):
         self.bust_test_user_cache()
         result = authenticate(username=self.test_user.username, password="test_new_password")
         self.assertEqual(result, self.test_user)
+
+
+class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
+    csrf_checks = False
+
+    def test_create_new_project_via_dashboard(self):
+        self.test_profile.make_ambassador()
+        self.send_test_user_login_request(webtest=True)
+
+        import pdb
+        pdb.set_trace()
+
+        project = Project.factories.base.build(tagline="this_tagline_will_be_unique_so_we_can_find_it_later")
+
+        dashboard_response = self.app.get("/dashboard/").maybe_follow()
+        create_page_response = dashboard_response.click(linkid="create_project").maybe_follow()
+        project_form = create_page_response.forms["project_form"]
+        project_form = self.fill_form_from_model(project_form, project)
+        dashboard_new_project_response = project_form.submit().maybe_follow()
+        self.assertEqual(dashboard_new_project_response.status_code, 200)
+
+        created_project = Project.objects.get(tagline="this_tagline_will_be_unique_so_we_can_find_it_later")
+        self.assert_id_in_response_body(dashboard_new_project_response, "project-%d" % created_project.pk)

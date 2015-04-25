@@ -43,7 +43,7 @@
 
 {% if user.revolvuserprofile.is_ambassador and role != "donor" %}
 <div class="dashboard-section create-new">
-    <a href="{% url "project:new" %}" class="create-new-button">Create Project</a>
+    <a href="{% url "project:new" %}" class="create-new-button" id="create_project">Create Project</a>
 </div>
 {% endif %}
 
