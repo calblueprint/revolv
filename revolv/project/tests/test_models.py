@@ -1,24 +1,25 @@
-import mock
-import json
 import datetime
+import json
+
+import mock
 from django.test import TestCase
-from revolv.project.models import Category, Project, ProjectUpdate, Payment
-from revolv.lib.testing import TestUserMixin, UserTestingMixin
+
 from django_webtest import WebTest
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.testing import TestUserMixin
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType)
-from revolv.project.models import Category, Project
+from revolv.project.models import Category, Project, ProjectUpdate
 from revolv.project.tasks import scrape
+
 
 class ProjectUpdateTest(TestCase):
     """Tests that check that project updates work with projects"""
 
     def test_construct(self):
         project = Project.factories.base.create()
-        update1 = ProjectUpdate(update_text = 'This is update text', project=project)
-        update2 = ProjectUpdate(update_text = 'This is another update', project=project)
+        update1 = ProjectUpdate(update_text='This is update text', project=project)
+        update2 = ProjectUpdate(update_text='This is another update', project=project)
 
         # tests basic construction
         self.assertEqual('This is update text', update1.update_text)
@@ -30,13 +31,14 @@ class ProjectUpdateTest(TestCase):
 
         update1.save()
         update2.save()
-        self.assertEqual(len(ProjectUpdate.objects.all()),2)
+        self.assertEqual(len(ProjectUpdate.objects.all()), 2)
 
     def test_add_update(self):
         project = Project.factories.base.create()
         project.add_update('Another sample update')
         update = ProjectUpdate.objects.get(update_text='Another sample update')
         self.assertEqual(project, update.project)
+
 
 class ProjectTests(TestCase):
     """Project model tests."""
@@ -211,6 +213,7 @@ class CategoryTest(TestCase):
     def test_update_category(self):
         """ Test that updating a single projects category works """
         project = Project.factories.base.create()
+        Category.factories.base.title.reset()
         category1, category2 = Category.factories.base.create_batch(2)
         # tests that associating two categories with the project works
         project.update_categories(Category.valid_categories[:2])
@@ -253,7 +256,7 @@ class ProjectIntegrationTest(WebTest):
         project = Project.factories.active.create()
         resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
         self.assertEqual(resp.status_code, 200)
-        
+
         # note: if the link makes a modal appear, it will be skipped and the
         # test will fail because it couldn't find the link - this is what
         # we want to happen in this case, but we may have to change this if

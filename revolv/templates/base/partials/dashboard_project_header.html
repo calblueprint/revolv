@@ -8,7 +8,7 @@
     <div class="sidebar-toggle small-only small-1 columns"><i class="fa fa-align-justify"></i></div>
     <div class="title-area small-6 columns">
         <div class="title-line">
-            <div class="title">{{project.title}}</div>
+            <div class="title"><a href="{% url "project:view" project.pk %}">{{project.title}}</a></div>
             <div class="project-status">({{project.status_display}})</div>
         </div>
         <div class="location"><i class="fa fa-map-marker"></i><span class="location-text">{{project.location_city_state_zip}}</span></div>
