@@ -391,6 +391,8 @@ $('#donate-form').submit(function(e) {
         $('#donate-modal').foundation('reveal', 'open');
     }).always(function () {
         paymentSpinner.stop();
+        // timeout is for cosmetic purposes only; buttons flicker and look
+        // weird without it, due to animation overlap
         setTimeout(function() {
             $.each(confirmModalButtons, function (i, btn) {
                 btn.prop('disabled', false);

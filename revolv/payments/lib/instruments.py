@@ -59,17 +59,18 @@ class PayPalCreditCardInstrument(PaymentInstrument):
             raise InvalidCreditCardException('Tried to instatiate with an invalid credit card object.')
         self.credit_card = credit_card
 
-        # TODO: do some validation
-
-    # def __setattr__(self, key, value):
-    #     raise AttributeError('Not allowed to modify')
-
     def charge(self, amount):
         """
         Documentation: https://github.com/paypal/PayPal-Python-SDK
 
         Charge the credit card for the given amount, floored to 2 decimal
         places. Raises InvalidCreditCardException if charge fails.
+
+        Charing is enabled by default in settings.py. However, in development,
+        charges go to the PayPal Sandbox, which means that your card shouldn't
+        actually be charged (it'll just show up in the Sandbox charge history).
+        When on production, payments go to a live PayPal, where cards are
+        actually charged.
 
         :param amount:
         """

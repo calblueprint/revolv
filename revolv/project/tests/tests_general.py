@@ -298,6 +298,8 @@ class DonationAjaxTestCase(TestUserMixin, TestCase):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
 
+    # override payment charging because we only want to unit test that the
+    # ajax endpoints work (actually validating through Paypal takes a millenia)
     @override_settings(ENABLE_PAYMENT_CHARGING=False)
     def test_valid_donation(self):
         """

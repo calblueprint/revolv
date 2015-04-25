@@ -291,5 +291,17 @@ LANGUAGES = [
     ('en-us', 'English'),
 ]
 
-# be careful!
+"""
+Payment Charging is enabled by default.
+
+When in developement, payments go to the Paypal Sandbox. This (should) mean
+that no cards are actually being charged; they just show up in the PayPal
+dashboard so that you can run tests, track payments, etc.
+
+On production, payments go to the actual Paypal account, meaning that cards
+actually do get charged.
+
+Consequently, it's safe to always enable charging, since in development nothing
+is actually being charged on the PayPal side.
+"""
 ENABLE_PAYMENT_CHARGING = True
