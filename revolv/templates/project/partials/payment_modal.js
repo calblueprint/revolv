@@ -395,4 +395,13 @@ $(document).on('closed.fndtn.reveal', '#success-modal', function() {
     $('#success-modal').find('label.checkmark').removeClass('animate');
 });
 
+// Hack to close modal on modal-table click
+// (i.e., when the dimmed background is clicked)
+$('.revolv-reveal-modal-table').click(function (e) {
+    if (e.target === this ||
+        e.target === $(this).children(':first')[0]) {
+        $(document).foundation('reveal', 'close');
+    }
+});
+
 });
