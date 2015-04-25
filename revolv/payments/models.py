@@ -351,7 +351,7 @@ class PaymentManager(models.Manager):
         :return:
             Returns the total amount reinvested for a specified user or project or both.
         """
-        total_amount = self.reinvestment_fragments(user, project).aggregate(
+        total_amount = self.reinvestment_fragments(user, project, queryset).aggregate(
             models.Sum('amount')
         )['amount__sum']
         if total_amount is None:
