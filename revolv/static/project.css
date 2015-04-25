@@ -5799,13 +5799,22 @@ body {
     margin-left: 5%;
     margin-right: 0%;
     margin-bottom: 10%;
-    background-color: #f0f0f0; }
+    background-color: #f0f0f0;
+    border: 1px solid white;
+    transition: all 0.1s;
+    -moz-transition: all 0.1s;
+    -webkit-transition: all 0.1s; }
     .about .rewards-container .donation-level-box .donation-level-header {
       font-size: 2rem;
       color: #777777;
       font-weight: 800;
       padding-top: 15px;
-      padding-left: 20px; }
+      padding-left: 20px;
+      transition: all 0.1s;
+      -moz-transition: all 0.1s;
+      -webkit-transition: all 0.1s; }
+      .about .rewards-container .donation-level-box .donation-level-header:hover {
+        color: #11ade5; }
     .about .rewards-container .donation-level-box .donation-level-text {
       margin-left: 15px;
       color: #888888;
@@ -5814,6 +5823,8 @@ body {
       font-size: 0.8rem;
       padding-bottom: 20px;
       white-space: pre-wrap; }
+    .about .rewards-container .donation-level-box:hover {
+      border: 1px solid #999999; }
   .about .about-text {
     margin-bottom: 80px; }
     .about .about-text p {
@@ -5997,39 +6008,40 @@ body {
     .dashboard .statistics-graphics-container {
       height: 500px; }
       .dashboard .statistics-graphics-container .bar {
-        height: 25px; }
+        height: 35px; }
         .dashboard .statistics-graphics-container .bar.top-bar {
           top: 65%; }
         .dashboard .statistics-graphics-container .bar.bottom-bar {
-          top: 70%; }
+          top: 72%; }
       .dashboard .statistics-graphics-container .container .statistic.left-text {
         float: left;
         height: 100%;
         margin: 0 0 0 10px;
         font-size: 0.8rem;
-        line-height: 25px; }
+        line-height: 35px; }
       .dashboard .statistics-graphics-container .container .statistic.right-text {
         float: right;
         height: 100%;
         margin: 0 10px 0 0;
         font-size: 0.8rem;
-        line-height: 25px; }
+        line-height: 35px; }
   .header-img-div {
     height: 270px; }
     .header-img-div .overlay .donate-button-header {
       left: 15%;
       width: 70%;
-      height: 40px;
-      top: 173%;
+      height: 50px;
+      top: 190%;
       border-color: #064f7e;
       z-index: 1000; }
       .header-img-div .overlay .donate-button-header .donate-link {
         line-height: 40px;
-        margin-top: 0; }
+        margin-top: 0px; }
         .header-img-div .overlay .donate-button-header .donate-link p {
           height: 100%;
-          line-height: 36px;
-          color: #064f7e; }
+          line-height: 46px;
+          color: #064f7e;
+          font-size: 1.2rem; }
     .header-img-div .overlay .project-title {
       font-size: 1.5rem;
       line-height: 1.5rem;
@@ -6038,7 +6050,7 @@ body {
       text-align: center;
       left: 0; }
   .about {
-    margin-top: 20px; }
+    margin-top: 125px; }
     .about .header-text p {
       font-size: 1.5rem;
       line-height: 1.5rem; }

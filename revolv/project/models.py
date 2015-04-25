@@ -437,13 +437,6 @@ class Project(models.Model):
         return unicode(days_left) + " days left"
 
     @property
-    def org_about_lines(self):
-        """
-        :return: this project's org_about as an array split on its newlines.
-        """
-        return [line for line in self.org_about.strip().split("\n") if line.strip()]
-
-    @property
     def is_active(self):
         return self.project_status == Project.ACTIVE
 

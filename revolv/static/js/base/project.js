@@ -29,6 +29,10 @@ var setTextSize = function(radius) {
  */
 var resizeIframe = function() {
     d3.select("iframe").attr("height", $(document).width() * 0.28 + "");
+
+    if ($(document).width() < 500) {
+        d3.select("iframe").attr("height", $(document).width() * 0.45 + "");
+    }
 };
 
 /**

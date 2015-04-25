@@ -49,6 +49,12 @@ body {
     font-family: Lato, sans-serif;
 }
 
+$gray-3: #333333;
+$gray-4: #444444;
+$gray-7: #777777;
+$gray-8: #888888;
+$gray-9: #999999;
+
 .row {
     margin-right: 0px;
     margin-left: 0px;
@@ -265,7 +271,7 @@ body {
     .header-text {
         p {
             font-weight: 800;
-            color: #444444;
+            color: $gray-4;
             font-size: 1.8rem;
         }
     }
@@ -275,7 +281,7 @@ body {
     }
 
     .gray-bar {
-        background-color: #999999;
+        background-color: $gray-9;
         height: 1px;
         width: 100%;
         margin-bottom: 10px;
@@ -289,7 +295,7 @@ body {
 
         .category-text {
             display: inline-block;
-            color: #888888;
+            color: $gray-8;
             margin-left: 15px;
             margin-right: 20px;
             height: 30px;
@@ -302,7 +308,7 @@ body {
 
         .category-holder {
             display: inline-block;
-            border: 1px solid #888888;
+            border: 1px solid $gray-8;
             width: auto;
             padding: 0 10px;
             min-width: 15%;
@@ -310,7 +316,7 @@ body {
             margin: 10px 15px inherit 15px;
 
             .category-label {
-                color: #888888;
+                color: $gray-8;
                 text-align: center;
                 line-height: 28px;
             }
@@ -326,7 +332,7 @@ body {
         .rewards-text {
             margin-left: 20px;
             margin-top: 15px;
-            color: #888888;
+            color: $gray-8;
 
             .rewards-text-inside {
                 font-size: 0.8rem;
@@ -339,24 +345,39 @@ body {
             margin-right: 0%;
             margin-bottom: 10%;
             background-color: #f0f0f0;
+            border: 1px solid white;
+            transition: all 0.1s;
+            -moz-transition: all 0.1s;
+            -webkit-transition: all 0.1s;
 
 
             .donation-level-header {
                 font-size: 2rem;
-                color: #777777;
+                color: $gray-7;
                 font-weight: 800;
                 padding-top: 15px;
                 padding-left: 20px;
+                transition: all 0.1s;
+                -moz-transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+
+                &:hover {
+                    color: $revolv-blue;
+                }
             }
 
             .donation-level-text {
                 margin-left: 15px;
-                color: #888888;
+                color: $gray-8;
                 font-weight: 300;
                 margin-right: 5%;
                 font-size: 0.8rem;
                 padding-bottom: 20px;
                 white-space: pre-wrap;
+            }
+
+            &:hover {
+                border: 1px solid $gray-9;
             }
         }
     }
@@ -365,7 +386,7 @@ body {
         p {
             font-weight: 500;
             font-size: 1.2rem;
-            color: #333333;
+            color: $gray-3;
             white-space: pre-wrap;
         }
         margin-bottom: 80px;
@@ -377,12 +398,12 @@ body {
     .header-text {
         p {
             font-weight: 800;
-            color: #444444;
+            color: $gray-4;
             font-size: 1.8rem;
         }
     }
     .gray-bar {
-        background-color: #999999;
+        background-color: $gray-9;
         height: 1px;
         width: 100%;
     }
@@ -422,7 +443,7 @@ body {
         .update-text {
             font-weight: 500;
             font-size: 1.2rem;
-            color: #333333;
+            color: $gray-3;
             white-space: pre-wrap;
         }
     }
@@ -560,7 +581,7 @@ $map-height: 400px;
 
                 .rewards-text-inside {
                     font-weight: 800;
-                    color: #444444;
+                    color: $gray-4;
                     font-size: 1.5rem;
                     margin: 0;
                 }
@@ -658,13 +679,13 @@ $map-height: 400px;
         .statistics-graphics-container {
             height: 500px;
             .bar {
-                height: 25px;
+                height: 35px;
 
                 &.top-bar {
                     top: 65%;
                 }
                 &.bottom-bar {
-                    top: 70%;
+                    top: 72%;
                 }
             }
 
@@ -676,7 +697,7 @@ $map-height: 400px;
                         height: 100%;
                         margin: 0 0 0 10px;
                         font-size: 0.8rem;
-                        line-height: 25px;
+                        line-height: 35px;
 
                     }
 
@@ -685,7 +706,7 @@ $map-height: 400px;
                         height: 100%;
                         margin: 0 10px 0 0;
                         font-size: 0.8rem;
-                        line-height: 25px;
+                        line-height: 35px;
 
                     }
                 }
@@ -698,23 +719,24 @@ $map-height: 400px;
 
         .overlay {
 
-            $donate-header-button-mobile-height: 40px;
+            $donate-header-button-mobile-height: 50px;
             .donate-button-header {
                 left: 15%;
                 width: 70%;
                 height: $donate-header-button-mobile-height;
-                top: 173%;
+                top: 190%;
                 border-color: $revolv-dark-blue;
                 z-index: 1000;
 
                 .donate-link {
                     line-height: 40px;
-                    margin-top: 0;
+                    margin-top: 0px;
 
                     p {
                         height: 100%;
                         line-height: $donate-header-button-mobile-height - 4px;
                         color: $revolv-dark-blue;
+                        font-size: 1.2rem;
                     }
                 }
             }
@@ -734,7 +756,7 @@ $map-height: 400px;
 
     .about {
 
-        margin-top: 20px;
+        margin-top: 125px;
         .header-text {
             p {
                 font-size: 1.5rem;
