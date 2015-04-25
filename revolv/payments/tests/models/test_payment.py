@@ -390,13 +390,9 @@ class PaymentTest(TestCase):
 
         self.assertEquals(project2.amount_donated, 200.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 50.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1, project2), 50.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 150.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2, project2), 150.00)
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -407,13 +403,9 @@ class PaymentTest(TestCase):
 
         self.assertEquals(project2.amount_donated, 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
-        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1), 0)
+        self.assertEquals(Payment.objects.reinvestment_fragments(user2).count(), 0)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2), 0)
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -465,17 +457,11 @@ class PaymentTest(TestCase):
         # checks that only users with preferences for project 2 actually donate
         self.assertEquals(project2.amount_donated, 250.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 50.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1, project2), 50.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2, project2), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 200.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3, project2), 200.00)
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -489,17 +475,12 @@ class PaymentTest(TestCase):
         # checks that after deleting, we have no reinvestment fragments
         self.assertEquals(project2.amount_donated, 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3), 0)
+
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -556,17 +537,11 @@ class PaymentTest(TestCase):
         # has leftover funds
         self.assertEquals(project2.amount_donated, 350.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 50.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1, project2), 50.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 100.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2, project2), 100.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 200.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3, project2), 200.00)
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -580,17 +555,12 @@ class PaymentTest(TestCase):
         # checks that after deleting, we have no reinvestment fragments
         self.assertEquals(project2.amount_donated, 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3), 0)
+
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -643,17 +613,12 @@ class PaymentTest(TestCase):
         # checks that all three users donate, and that all of their reinvest pools are depleted
         self.assertEquals(project2.amount_donated, 400.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 50.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1, project2), 50.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 150.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2, project2), 150.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 200.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3, project2), 200.00)
+
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -667,17 +632,11 @@ class PaymentTest(TestCase):
         # checks that after deleting, we have no reinvestment fragments
         self.assertEquals(project2.amount_donated, 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3), 0)
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -732,17 +691,11 @@ class PaymentTest(TestCase):
         # checks that user 1 and user 3 donate
         self.assertEquals(project2.amount_donated, 250.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 50.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1, project2), 50.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2, project2).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2, project2), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'], 200.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3, project2), 200.00)
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -757,17 +710,11 @@ class PaymentTest(TestCase):
         # checks that user 1 and user 3 donate
         self.assertEquals(project3.amount_donated, 150.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1, project3).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project3).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1, project3), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2, project3).count(), 1)
-        self.assertEquals(Payment.objects.reinvestment_fragments(user2, project3).aggregate(
-            Sum('amount')
-        )['amount__sum'], 150.00)
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2, project3), 150.00)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3, project3).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user3, project3).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3, project3), 0)
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)
@@ -782,17 +729,12 @@ class PaymentTest(TestCase):
         # checks that after deleting, we have no reinvestment fragments
         self.assertEquals(project2.amount_donated, 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user1).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user1, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user1), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user2).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user2, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user2), 0)
         self.assertEquals(Payment.objects.reinvestment_fragments(user3).count(), 0)
-        self.assertIsNone(Payment.objects.reinvestment_fragments(user3, project2).aggregate(
-            Sum('amount')
-        )['amount__sum'])
+        self.assertEquals(Payment.objects.total_reinvestment_amount(user3), 0)
+
         # must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
         user2 = RevolvUserProfile.objects.get(pk=user2.pk)

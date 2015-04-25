@@ -1,4 +1,5 @@
 from django.db import models
+
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
 
@@ -339,6 +340,24 @@ class PaymentManager(models.Manager):
             queryset = self.donations()
         num_users = queryset.values("user").distinct().count()
         return num_users
+
+    def total_reinvestment_amount(self, user=None, project=None, queryset=None):
+        """
+        :kwargs:
+            user: filter donations by this user
+            project: filter donations by this project
+            queryset: further filtering of Payments
+
+        :return:
+            Returns the total amount reinvested for a specified user or project or both.
+        """
+        total_amount = self.reinvestment_fragments(user, project).aggregate(
+            models.Sum('amount')
+        )['amount__sum']
+        if total_amount is None:
+            return 0
+        else:
+            return total_amount
 
 
 class Payment(models.Model):
