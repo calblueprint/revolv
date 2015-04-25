@@ -5569,6 +5569,7 @@ th.hide-for-touch {
   display: none;
   opacity: 0;
   table-layout: fixed;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%; }

@@ -10,7 +10,7 @@
     width: 100%;
     height: 100%;
 
-    @media #{$medium-up}
+    @media #{$medium-up} 
         // !important to override foundation JS top calculation on desktop
         top: 0 !important;
     }
