@@ -55,6 +55,7 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = (
+    'treebeard',
     'djangocms_admin_style',  # must go before 'django.contrib.admin'.
 
     # django apps
@@ -82,7 +83,6 @@ INSTALLED_APPS = (
     'imagekit',
     'widget_tweaks',
     'djcelery',
-    'treebeard',
 
     # django-cms
     'djangocms_text_ckeditor',
@@ -95,6 +95,10 @@ INSTALLED_APPS = (
     'djangocms_file',
     'djangocms_video',
 )
+
+MIGRATION_MODULES = {
+    'treebeard': 'treebeard.db_migrations',
+}
 
 MIDDLEWARE_CLASSES = (
     'sslify.middleware.SSLifyMiddleware',

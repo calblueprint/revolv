@@ -21,6 +21,7 @@ WebTest==2.0.18
 django-webtest==1.7.7
 factory_boy
 django-sslify>=0.2.0
+treebeard>=3.0
 
 # django-cms
 django-cms==3.0.7
