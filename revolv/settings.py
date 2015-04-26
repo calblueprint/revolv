@@ -55,7 +55,6 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = (
-    'treebeard',
     'djangocms_admin_style',  # must go before 'django.contrib.admin'.
 
     # django apps
