@@ -11,6 +11,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RemoveField(
+            model_name='project',
+            name='post_funding_updates',
+        ),
         migrations.AlterField(
             model_name='donationlevel',
             name='description',
