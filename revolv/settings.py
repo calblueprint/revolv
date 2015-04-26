@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'imagekit',
     'widget_tweaks',
     'djcelery',
+    'treebeard',
 
     # django-cms
     'djangocms_text_ckeditor',
