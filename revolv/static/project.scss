@@ -349,21 +349,17 @@ $gray-9: #999999;
             transition: all 0.1s;
             -moz-transition: all 0.1s;
             -webkit-transition: all 0.1s;
+            color: $gray-7;
 
 
             .donation-level-header {
                 font-size: 2rem;
-                color: $gray-7;
                 font-weight: 800;
                 padding-top: 15px;
                 padding-left: 20px;
                 transition: all 0.1s;
                 -moz-transition: all 0.1s;
                 -webkit-transition: all 0.1s;
-
-                &:hover {
-                    color: $revolv-blue;
-                }
             }
 
             .donation-level-text {
@@ -378,6 +374,7 @@ $gray-9: #999999;
 
             &:hover {
                 border: 1px solid $gray-9;
+                color: $revolv-blue;
             }
         }
     }
