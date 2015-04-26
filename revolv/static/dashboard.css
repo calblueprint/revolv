@@ -5869,7 +5869,8 @@ html, body, .main-row {
   .dashboard-project .project-tabs-content p {
     font-size: 16px;
     line-height: 22px;
-    font-weight: 300; }
+    font-weight: 300;
+    white-space: pre-wrap; }
   .dashboard-project .project-tabs-content h2 {
     font-weight: 700;
     font-size: 18px;

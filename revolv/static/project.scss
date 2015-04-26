@@ -49,6 +49,12 @@ body {
     font-family: Lato, sans-serif;
 }
 
+$gray-3: #333333;
+$gray-4: #444444;
+$gray-7: #777777;
+$gray-8: #888888;
+$gray-9: #999999;
+
 .row {
     margin-right: 0px;
     margin-left: 0px;
@@ -74,7 +80,7 @@ body {
 
 .header-img-div {
     width: 100%;
-    height: 500px;
+    height: 380px;
     position: relative;
     background-size: cover;
 
@@ -86,11 +92,11 @@ body {
         left: 0;
         background: rgba(0, 0, 0, .5);
 
-        $donate-header-button-height: 50px;
+        $donate-header-button-height: 60px;
         .donate-button-header {
             position: absolute;
             border: 2px solid white;
-            width: 15%;
+            width: 20%;
             height: $donate-header-button-height;
             bottom: 40px;
             right: 5%;
@@ -108,6 +114,8 @@ body {
                     line-height: $donate-header-button-height - 4px;
                     color: white;
                     text-align: center;
+                    font-weight: 800;
+                    font-size: 1.8rem;
                     transition: all 0.3s;
                     -moz-transition: all 0.3s;
                     -webkit-transition: all 0.3s;
@@ -129,7 +137,7 @@ body {
             color: white;
             font-size: 2rem;
             font-weight: 800;
-            top: 400px;
+            top: 280px;
             left: 5%;
             width: 30%;
             line-height: 2rem;
@@ -142,7 +150,7 @@ body {
     position: absolute;
     height: 600px;
     z-index: 1;
-    top: 300px;
+    top: 170px;
 
     .statistics-graphics-container {
         height: 100%;
@@ -152,6 +160,7 @@ body {
             width: 100%;
             height: 40px;
             position: absolute;
+            font-weight: 300;
 
             &.top-bar {
                 background-color: $revolv-blue;
@@ -172,13 +181,14 @@ body {
             .container {
                 position: relative;
                 color: white;
-                font-weight: 500;
                 width: 100%;
                 height: 100%;
                 margin: 0;
                 .statistic {
                     line-height: 40px;
                     font-size: 1.4rem;
+                    font-weight: 300;
+
                     &.left-text {
                         float: left;
                         height: 100%;
@@ -256,29 +266,36 @@ body {
 }
 
 .about {
-    margin-top: 200px;
+    margin-top: 50px;
 
     .header-text {
         p {
             font-weight: 800;
-            color: #444444;
+            color: $gray-4;
             font-size: 1.8rem;
         }
     }
+
+    .about-column {
+        padding: 0;
+    }
+
     .gray-bar {
-        background-color: #999999;
+        background-color: $gray-9;
         height: 1px;
         width: 100%;
+        margin-bottom: 10px;
     }
 
     .categories {
         max-width: 100%;
-        line-height: 50px;
+        line-height: 56px;
+        margin-bottom: 10px;
 
 
         .category-text {
             display: inline-block;
-            color: #888888;
+            color: $gray-8;
             margin-left: 15px;
             margin-right: 20px;
             height: 30px;
@@ -291,7 +308,7 @@ body {
 
         .category-holder {
             display: inline-block;
-            border: 1px solid #888888;
+            border: 1px solid $gray-8;
             width: auto;
             padding: 0 10px;
             min-width: 15%;
@@ -299,9 +316,65 @@ body {
             margin: 10px 15px inherit 15px;
 
             .category-label {
-                color: #888888;
+                color: $gray-8;
                 text-align: center;
                 line-height: 28px;
+            }
+        }
+    }
+
+    .rewards-container {
+
+        .gray-bar {
+            visibility: hidden;
+        }
+
+        .rewards-text {
+            margin-left: 20px;
+            margin-top: 15px;
+            color: $gray-8;
+
+            .rewards-text-inside {
+                font-size: 0.8rem;
+            }
+        }
+
+        .donation-level-box {
+            width: 95%;
+            margin-left: 5%;
+            margin-right: 0%;
+            margin-bottom: 10%;
+            background-color: #f0f0f0;
+            border: 1px solid white;
+            transition: all 0.1s;
+            -moz-transition: all 0.1s;
+            -webkit-transition: all 0.1s;
+            color: $gray-7;
+
+
+            .donation-level-header {
+                font-size: 2rem;
+                font-weight: 800;
+                padding-top: 15px;
+                padding-left: 20px;
+                transition: all 0.1s;
+                -moz-transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+
+            .donation-level-text {
+                margin-left: 15px;
+                color: $gray-8;
+                font-weight: 300;
+                margin-right: 5%;
+                font-size: 0.8rem;
+                padding-bottom: 20px;
+                white-space: pre-wrap;
+            }
+
+            &:hover {
+                border: 1px solid $gray-9;
+                color: $revolv-blue;
             }
         }
     }
@@ -309,8 +382,9 @@ body {
     .about-text {
         p {
             font-weight: 500;
-            font-size: 1.5rem;
-            color: #333333;
+            font-size: 1.2rem;
+            color: $gray-3;
+            white-space: pre-wrap;
         }
         margin-bottom: 80px;
     }
@@ -321,12 +395,12 @@ body {
     .header-text {
         p {
             font-weight: 800;
-            color: black;
+            color: $gray-4;
             font-size: 1.8rem;
         }
     }
     .gray-bar {
-        background-color: #999999;
+        background-color: $gray-9;
         height: 1px;
         width: 100%;
     }
@@ -338,10 +412,14 @@ body {
         display: inline-block;
         position: relative;
 
+        .update-column {
+            padding: 0;
+        }
+
         .date-container {
             height: 50px;
             width: 100%;
-            text-align: center;
+            text-align: left;
             color: $revolv-dark-blue;
             font-weight: 300;
             line-height: 0.5;
@@ -350,18 +428,19 @@ body {
                 font-size: 4.5rem;
                 margin-bottom: 0;
                 line-height: 4.5rem;
+                font-weight: 300;
             }
 
             .date-month-day {
-                font-size: 1.5rem;
-                line-height: 1.5rem;
+                font-size: 1.2rem;
+                line-height: 1.2rem;
             }
         }
 
         .update-text {
             font-weight: 500;
-            font-size: 1.5rem;
-            color: #333333;
+            font-size: 1.2rem;
+            color: $gray-3;
             white-space: pre-wrap;
         }
     }
@@ -491,11 +570,38 @@ $map-height: 400px;
 }
 
 // --- Mobile Responsiveness Styles ------------------------------------------------------
+@media #{$small-only}, #{$medium-only} {
+    .about {
+        .rewards-container {
+            .rewards-text {
+                margin: 0;
+
+                .rewards-text-inside {
+                    font-weight: 800;
+                    color: $gray-4;
+                    font-size: 1.5rem;
+                    margin: 0;
+                }
+            }
+
+            .gray-bar {
+                visibility: visible;
+                margin-bottom: 20px;
+            }
+
+            .donation-level-box {
+                width: 100%;
+                padding: 0;
+                margin: 0 0 20px 0;
+            }
+        }
+    }
+}
 
 @media #{$small-only} {
     .project-updates {
 
-        .columns {
+        .update-column {
             padding-left: 0px;
             padding-right: 0px;
         }
@@ -570,13 +676,13 @@ $map-height: 400px;
         .statistics-graphics-container {
             height: 500px;
             .bar {
-                height: 25px;
+                height: 35px;
 
                 &.top-bar {
-                    top: 63%;
+                    top: 65%;
                 }
                 &.bottom-bar {
-                    top: 68%;
+                    top: 72%;
                 }
             }
 
@@ -588,7 +694,7 @@ $map-height: 400px;
                         height: 100%;
                         margin: 0 0 0 10px;
                         font-size: 0.8rem;
-                        line-height: 25px;
+                        line-height: 35px;
 
                     }
 
@@ -597,7 +703,7 @@ $map-height: 400px;
                         height: 100%;
                         margin: 0 10px 0 0;
                         font-size: 0.8rem;
-                        line-height: 25px;
+                        line-height: 35px;
 
                     }
                 }
@@ -610,23 +716,24 @@ $map-height: 400px;
 
         .overlay {
 
-            $donate-header-button-mobile-height: 40px;
+            $donate-header-button-mobile-height: 50px;
             .donate-button-header {
                 left: 15%;
                 width: 70%;
                 height: $donate-header-button-mobile-height;
-                top: 170%;
+                top: 190%;
                 border-color: $revolv-dark-blue;
                 z-index: 1000;
 
                 .donate-link {
                     line-height: 40px;
-                    margin-top: 0;
+                    margin-top: 0px;
 
                     p {
                         height: 100%;
                         line-height: $donate-header-button-mobile-height - 4px;
                         color: $revolv-dark-blue;
+                        font-size: 1.2rem;
                     }
                 }
             }
@@ -646,7 +753,7 @@ $map-height: 400px;
 
     .about {
 
-        margin-top: 20px;
+        margin-top: 125px;
         .header-text {
             p {
                 font-size: 1.5rem;
