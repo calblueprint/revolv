@@ -95,10 +95,6 @@ INSTALLED_APPS = (
     'djangocms_video',
 )
 
-MIGRATION_MODULES = {
-    'treebeard': 'treebeard.db_migrations',
-}
-
 MIDDLEWARE_CLASSES = (
     'sslify.middleware.SSLifyMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
