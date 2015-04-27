@@ -119,6 +119,53 @@ class TemplateProjectUpdateView(UserDataMixin, UpdateView):
             return self.deny_access()
         return response
 
+class ReviewProjectView(UserDataMixin, UpdateView):
+    """
+    The view to review a project. Shows the same view as ProjectView, but at
+    the top, has a button group through which an ambassador or admin can
+    update the project status.
+    Accessed through /project/{project_id}/review
+    """
+    model = Project
+    template_name = 'project/review_project.html'
+    form_class = forms.ProjectStatusForm
+    http_method_names = [u'post']
+
+    def get_success_url(self):
+        if self.is_administrator:
+            return "%s?active_project=%d" % (reverse('administrator:dashboard'), self.get_object().id)
+        else:
+            return reverse('project:view', kwargs={'pk': self.get_object().id})
+
+    # Checks the post request and updates the project_status
+    def form_valid(self, form):
+        project = self.object
+        if '_approve' in self.request.POST:
+            messages.success(self.request, project.title + ' has been approved')
+            project.approve_project()
+        elif '_propose' in self.request.POST:
+            messages.success(self.request, project.title + ' is now pending approval')
+            project.propose_project()
+        elif '_deny' in self.request.POST:
+            messages.info(self.request, project.title + ' has been denied')
+            project.deny_project()
+        elif '_complete' in self.request.POST:
+            messages.success(self.request, project.title + ' has been completed')
+            project.complete_project()
+        elif '_incomplete' in self.request.POST:
+            messages.info(self.request, project.title + ' has been marked as incomplete')
+            project.mark_as_incomplete_project()
+        elif '_repayment' in self.request.POST:
+            repayment_amount = Decimal(self.request.POST['_repayment_amount'])
+            PaymentService.create_repayment(self.user_profile, repayment_amount, project)
+            messages.success(self.request, '$' + str(repayment_amount) + ' repaid by ' + project.org_name)
+        return redirect(self.get_success_url())
+
+    # pass in Project Categories and Maps API key
+    def get_context_data(self, **kwargs):
+        context = super(ReviewProjectView, self).get_context_data(**kwargs)
+        context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
+        return context
 
 class PostProjectUpdateView(TemplateProjectUpdateView):
     model = Project
