@@ -124,7 +124,7 @@ class PostProjectUpdateView(TemplateProjectUpdateView):
     model = Project
 
     def get_success_url(self):
-        return reverse('project:review', kwargs={'pk': self.get_object().id})
+        return reverse('project:view', kwargs={'pk': self.get_object().id})
 
     def form_valid(self, form):
         text = form.cleaned_data['update_text']
@@ -137,7 +137,7 @@ class EditProjectUpdateView(TemplateProjectUpdateView):
     model = ProjectUpdate
 
     def get_success_url(self):
-        return reverse('project:review', kwargs={'pk': self.get_object().project_id})
+        return reverse('project:view', kwargs={'pk': self.get_object().project_id})
 
     def form_valid(self, form):
         text = form.cleaned_data['update_text']
