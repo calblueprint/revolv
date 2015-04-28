@@ -1,5 +1,7 @@
 from django.db import models
+from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
+
 
 class AdminRepaymentManager(models.Manager):
     """
@@ -30,7 +32,7 @@ class AdminRepayment(models.Model):
     organically donated to the project.  For user U, project P, and
     AdminRepayment R, the "amount" of the U's RepaymentFragment will be:
 
-        ((U's donation to P) / (Total organic donations to P)) * R.amount
+        ((U's donation to P) / (Total organic donations to P)) * R.reinvestable
 
     Generating a RepaymentFragment for a user increases that user's pool of
     reinvestable money.
@@ -50,14 +52,20 @@ class AdminRepayment(models.Model):
         all donors to a project, each weighted by that donor's proportion of the
         contribution to the project.
     """
-    amount = models.FloatField()
-    admin = models.ForeignKey('base.RevolvUserProfile')
+    reinvestable = models.FloatField()
+    organizational_cost = models.FloatField()
+
+    admin = models.ForeignKey(RevolvUserProfile, blank=True, null=True)
     project = models.ForeignKey("project.Project")
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = AdminRepaymentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminRepaymentFactories")
+
+    @property
+    def reinvestable_amount(self):
+        return self.amount - self.organizational_cost
 
 
 class AdminReinvestmentManager(models.Manager):

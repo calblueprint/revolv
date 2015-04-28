@@ -77,7 +77,7 @@ class ProjectTests(TestCase):
         Payment.factories.donation.create(project=done_project,
                                           amount=10.0)
         done_project.complete_project()
-        AdminRepayment.factories.base.create(project=done_project, amount=35.0)
+        AdminRepayment.factories.base.create(project=done_project, reinvestable=35.0)
 
         AdminReinvestment.factories.base.create(project=project, amount=25.0)
         AdminReinvestment.factories.base.create(project=project, amount=10.0)
@@ -137,9 +137,9 @@ class ProjectTests(TestCase):
         project = Project.factories.base.create(funding_goal=200.0)
         self.assertEqual(project.amount_repaid, 0.0)
         project.complete_project()  # must complete project to make repayments
-        AdminRepayment.factories.base.create(project=project, amount=50)
+        AdminRepayment.factories.base.create(project=project, reinvestable=50)
         self.assertEqual(project.amount_repaid, 50.0)
-        AdminRepayment.factories.base.create(project=project, amount=60)
+        AdminRepayment.factories.base.create(project=project, reinvestable=60)
         self.assertEqual(project.amount_repaid, 110.0)
 
     def test_partial_completeness(self):
