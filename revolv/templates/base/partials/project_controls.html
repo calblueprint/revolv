@@ -47,7 +47,7 @@
                 <input id="incomplete_project" class="small button alert" name="_incomplete" type="submit" value="Mark as Incomplete" />
             </form>
         {% endif %}
-        <form enctype="multipart/form-data" method="GET" action="{% url "project:review" pk=project.id %}">
+        <form enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
             <input id="edit_project" class="small button" type="submit" value="Edit" />
         </form>
     {% elif profile.is_ambassador %}
