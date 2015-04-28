@@ -1,0 +1,70 @@
+{% comment %}
+    Project Controls
+
+    This template renders a series of forms (for the RE-volv dashboard page) based
+    on a given project and what kind of user is logged in. For example: when an
+    ambassador is logged in, we want to render controls for editing and proposing
+    projects, whereas an admin can do other things like mark them as complete. Note
+    that if the logged in user is neither an admin nor an ambassador this template
+    will simply render nothing.
+
+    This template expects to be rendered with the following context:
+
+    :project: the project in question.
+    :profile: the RevolvUserProfile (base/models.py) representing the currently logged
+        user.
+{% endcomment %}
+{% spaceless %}
+{% if project and profile %}
+    {% if profile.is_administrator %}
+        {% if project.is_drafted %}
+            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+                {% csrf_token %}
+                <input id="propose_project" class="small button" name="_propose" type="submit" value="Propose" />
+            </form>
+        {% endif %}
+        {% if project.is_proposed %}
+            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+                {% csrf_token %}
+                <input id="approve_project" class="small button success" name="_approve" type="submit" value="Approve" />
+                <input id="deny_project" class="small button alert" name="_deny" type="submit" value="Deny" />
+            </form>
+        {% endif %}
+        {% if project.is_active %}
+            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+                {% csrf_token %}
+                <input id="complete_project" class="small button success" name="_complete" type="submit" value="Complete" />
+            </form>
+        {% endif %}
+        {% if project.is_completed or project.is_active %}
+            <form enctype="multipart/form-data" method="GET" action="{% url "project:update" pk=project.id %}">
+                <input id="post_project_updates" class="small button" type="submit" value="Post Updates" />
+            </form>
+        {% endif %}
+        {% if project.is_completed %}
+            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+                {% csrf_token %}
+                <input id="incomplete_project" class="small button alert" name="_incomplete" type="submit" value="Mark as Incomplete" />
+            </form>
+        {% endif %}
+        <form enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
+            <input id="edit_project" class="small button" type="submit" value="Edit" />
+        </form>
+    {% elif profile.is_ambassador %}
+        {% if project.is_drafted %}
+            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+                {% csrf_token %}
+                <input id="propose_project" class="small button" name="_propose" type="submit" value="Propose" />
+            </form>
+            <form enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
+                <input id="edit_project" class="small button" type="submit" value="Edit" />
+            </form>
+        {% endif %}
+        {% if project.is_completed or project.is_active %}
+            <form enctype="multipart/form-data" method="GET" action="{% url "project:update" pk=project.id %}">
+                <input id="post_project_updates" class="small button" type="submit" value="Post Updates" />
+            </form>
+        {% endif %}
+    {% endif %}
+{% endif %}
+{% endspaceless %}

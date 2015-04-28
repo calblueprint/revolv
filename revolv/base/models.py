@@ -70,6 +70,7 @@ class RevolvUserProfile(FacebookModel):
     subscribed_to_newsletter = models.BooleanField(default=False)
 
     reinvest_pool = models.FloatField(default=0.0)
+    preferred_categories = models.ManyToManyField("project.Category")
 
     def is_donor(self):
         """Return whether the associated user can donate."""

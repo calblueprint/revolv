@@ -12,6 +12,8 @@
     position: relative;
     top: calc(50% + 40px);
     transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
 }
 
 @mixin vertically-centered-parent() {
@@ -121,12 +123,15 @@ body {
 
     .first {
         top: 0px;
+        background-color: $revolv-first-item-dark-blue;
     }
     .second {
         top: 180px;
+        background-color: $revolv-second-item-light-blue;
     }
     .third {
         top: 360px;
+        background-color: $revolv-third-item-yellow;
     }
 
     .first-caption {
@@ -183,7 +188,7 @@ body {
 
     .coin {
         height: 72px;
-        margin: 0px 10px; 
+        margin: 0px 10px;
         margin-bottom: -84px;
     }
 
@@ -200,7 +205,7 @@ body {
         top: 890px;
         left: 50%;
         margin-left: -95px;
-        z-index: -1; 
+        z-index: -1;
         transform: scale(0.2);
     }
 
@@ -235,7 +240,6 @@ body {
 }
 
 .button {
-    width: 250px;
     height: 54px;
     line-height: 24px;
     font-size: 24px;
@@ -268,11 +272,14 @@ body {
 @media #{$small-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
     html .cover-image .cover-inset {
-        @include vertically-centered-block();
-
+        position: absolute;
+        top: 0;
         left: 0;
-        height: 100%;
-        width: 75%;
+        right: 0;
+        bottom: 0;
+        height: 50%;
+        width: 50%;
+        margin: auto;
         background-color: inherit;
         color: white;
 
@@ -315,10 +322,6 @@ body {
     html .cover-image .cover-inset p {
         font-size: $revolv-cover-inset-paragraph-size - 2px;
         line-height: $revolv-cover-inset-paragraph-size + 4px;
-    }
-
-    html .cover-image .cover-inset {
-        top: calc(50% + 80px);
     }
 
     html .cover-image {
@@ -396,7 +399,6 @@ body {
         .step {
             display: block;
             height: 150px;
-            width: 375px;
             margin: 25px auto;
         }
         .grouping {

@@ -92,6 +92,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'sslify.middleware.SSLifyMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -290,6 +291,10 @@ MIGRATION_MODULES = {
 LANGUAGES = [
     ('en-us', 'English'),
 ]
+
+# SSL Settings for Heroku
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SSLIFY_DISABLE = IS_LOCAL
 
 """
 Payment Charging is enabled by default.

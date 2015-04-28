@@ -1,5 +1,6 @@
-from django.db.models import Sum, signals
+from django.db.models import signals, Sum
 from django.dispatch import receiver
+
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType, RepaymentFragment)
@@ -75,19 +76,34 @@ def post_save_admin_reinvestment(**kwargs):
     Category of the project begin invested into. We only consider users that
     have a non-zero pool of investable money.
 
-    !!! TODO: actually prioritize by Category
     """
     if not kwargs.get('created'):
         return
     instance = kwargs.get('instance')
     total_left = instance.amount
     pending_reinvestors = []
-    for user in RevolvUserProfile.objects.filter(reinvest_pool__gt=0.0):
+
+    project = instance.project
+    # the list of users with at least one preferred category that matches any of the
+    # categories that the project is tagged with
+    users_with_preferences = RevolvUserProfile.objects.filter(preferred_categories__in=project.category_set.all()).filter(reinvest_pool__gt=0.0)
+    # iterates through users with preferred categories first
+    for user in users_with_preferences:
         total_left -= user.reinvest_pool
         reinvest_amount = user.reinvest_pool + min(0.0, total_left)
         pending_reinvestors.append((user, reinvest_amount))
         if total_left <= 0.0:
             break
+
+    # if we still have money we want to reinvest, loop through users without preferences
+    if total_left > 0.0:
+        users_without_preferences = RevolvUserProfile.objects.filter(reinvest_pool__gt=0.0).exclude(pk__in=users_with_preferences)
+        for user in users_without_preferences:
+            total_left -= user.reinvest_pool
+            reinvest_amount = user.reinvest_pool + min(0.0, total_left)
+            pending_reinvestors.append((user, reinvest_amount))
+            if total_left <= 0.0:
+                break
     for (user, amount) in pending_reinvestors:
         reinvestment = Payment(user=user,
                                project=instance.project,

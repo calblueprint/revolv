@@ -2,12 +2,18 @@
 {% load staticfiles %}
 
 {% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
-    <style type="text/css">
-        #map-canvas { width: 500px; height: 300px; margin: 0; padding: 0;}
-        #map-canvas img {max-width: none;}
-    </style>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
+    <script type="text/javascript">
+        window.PARTIAL_COMPLETENESS = {{ project.partial_completeness_as_js }}
+    </script>
+
+    {% load humanize %}
+
 {% endblock %}
 
 {% block title %}Project{% endblock %}
@@ -17,51 +23,150 @@
 {% include "project/partials/payment_modal.html" %}
 {% include "project/partials/confirm_modal.html" %}
 {% include "project/partials/success_modal.html" with project=project %}
-<div class="row">
-    <div class="large-12 columns">
-        <h1><strong>{{ project.title }}</strong></h1>
-        {% if project.tagline %}
-            <h3>{{project.tagline}}</h3>
-        {% endif %}
-        <ul class="button-group nav-tab-button-group">
-            {% if project.is_active %}
-                {% if user.is_authenticated %}
-                    <li><a id="donate-button" class="small button success radius" href="#donate" data-reveal-id="donate-modal">Donate</a></li>
-                {% else %}
-                    <li><a id="donate-button" class="small button success radius" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login">Donate</a></li>
-                {% endif %}
-            {% endif %}
-        </ul>
-        <h3>Funding Goal : {{ project.funding_goal }}</h3>
-        <h3>End Date : {{ project.end_date }}</h3>
-        <h5>Location : {{ project.location}}</h5>
-        <div id="map-canvas"></div>
-        <p>Organization : {{project.org_name}}</p>
-        <p>About {{project.org_name}} : {{project.org_about}}</p>
-        {% if project.cover_photo %}
-            <img src="{{project.cover_photo.url}}"></img>
-        {% endif %}
-        <p>Mission Statement : {{ project.mission_statement }}</p>
-        {% if project.video_url %}
-            <iframe width="420" height="315" id="project_video"></iframe>
-        {% endif %}
-        {% if project.categories|length > 0 %}
-            <h5>Categories</h5>
+
+<div class="row dashboard">
+    <div class="statistics-graphics-container">
+        <div class="bar top-bar">
+            <div class="container">
+                <p class="left-text statistic amount-donated">${{ project.amount_donated }} donated</p>
+                <p class="right-text statistic days-left">{{ project.days_left }} days left</p>
+            </div>
+        </div>
+        <div class="bar bottom-bar">
+            <div class="container">
+                <p class ="left-text statistic amount-saved">{{ project.actual_energy }} kwH saved</p>
+                <p class ="right-text statistic num-donors">{{ donor_count }} donors</p>
+            </div>
+        </div>
+        <svg class="svg-graphics-container"></svg>
+        <svg class="internal-graphics-container"></svg>
+        <div class="text-container">
+            <p class="percentage-text">{{ project.percent_complete }}%</p>
+            <p class="funded">FUNDED</p>
+        </div>
+    </div>
+</div>
+
+<div class="heading row">
+    {% if project.cover_photo %}
+        <div class="large-12 header-img-div" style='background-image: url("{{project.cover_photo.url}}")'>
+            <div class="overlay">
+                <div class="donate-button-header">
+                    {% if user.is_authenticated %}
+                        <a class="donate-link" id="donate-button" href="#donate" data-reveal-id="donate-modal"><p>DONATE</p></a>
+                    {% else %}
+                        <a class="donate-link" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
+                    {% endif %}
+                </div>
+                <p class="project-title" >{{ project.title }}</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% if project_donation_levels|length > 0 %}
+    <div class="row about">
+        <div class="header-text">
+            <p class="header">{{ project.tagline }}</p>
+        </div>
+        <div class="gray-bar"></div>
+        <div class="large-8 columns about-column">
+            <div class="row categories">
+            <div class="category-text"><p class="category-text-inside">CATEGORIES:   </p></div>
             {% for category in project.categories %}
-                {{ category }}
+                <div class="category-holder">
+                    <p class="category-label">{{ category }}</p>
+                </div>
             {% endfor %}
-        {% endif %}
-        {% if project.donation_levels|length > 0 %}
-            <h5>Donation Levels</h5>
-            {% for donation in project.donation_levels %}
-                <p>Description: {{ donation.description }}, Amount: {{ donation.amount }}</p>
+
+            </div>
+            {% if project.video_url %}
+                <iframe width="100%" height="500" type="text/html" class="project_video youtube-player" frameborder="0" allowfullscreen></iframe>
+            {% endif %}
+
+            <div class="about-text"><p>{{ project.org_about }}</p>
+            </div>
+        </div>
+        <div class="large-4 columns rewards-container about-column">
+            <div class="rewards-text"><p class="rewards-text-inside">REWARDS</p></div>
+            <div class="gray-bar"></div>
+            {% for donation_level in project_donation_levels %}
+                <a class="donate-link" id="donate-button" href="#donate" data-reveal-id="donate-modal">
+                    <div class="donation-level-box">
+                        <div class="donation-level-header">${{ donation_level.amount|floatformat:"0"|intcomma }}</div>
+                        <div class="donation-level-text">{{ donation_level.description }}</div>
+                    </div>
+                </a>
             {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div class="row about">
+        <div class="header-text">
+            <p class="header">{{ project.tagline }}</p>
+        </div>
+        <div class="gray-bar"></div>
+        {% if project.categories|length > 0 %}
+            <div class="row categories">
+                <div class="category-text"><p class="category-text-inside">CATEGORIES:   </p></div>
+                {% for category in project.categories %}
+                    <div class="category-holder">
+                        <p class="category-label">{{ category }}</p>
+                    </div>
+                {% endfor %}
+            </div>
         {% endif %}
-        {% if project.is_completed or project.is_active and project.post_funding_updates %}
-            <h5>Post Funding Updates</h5>
-            <p>{{ project.post_funding_updates}}</p>
+        {% if project.video_url %}
+            <iframe width="100%" height="500" type="text/html" class="project_video youtube-player" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
+
+        <div class="about-text"><p>{{ project.org_about }}</p></div>
+    </div>
+{% endif %}
+
+{% if updates|length > 0 %}
+    <div class="row project-updates">
+        <div class="header-text">
+            <p class="header">Project Updates</p>
+        </div>
+        <div class="gray-bar"></div>
+        {% for update in updates %}
+            <div class="update-container">
+                <div class="large-2 medium-3 small-12 columns update-column">
+                    <div class = "date-container">
+                        <p class="date-year">{{ update.date|date:"m" }}</p>
+                        <p class="date-month-day">{{ update.date|date:"M" }} {{ update.date|date:"o" }}<p>
+                    </div>
+                </div>
+                <div class="large-10 medium-9 small-12 columns update-column">
+                    <p class="update-text">{{ update.update_text }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="row map">
+    <div id="map-canvas" class="map-canvas"></div>
+    <div class="columns large-5 small-6 overlay">
+        <div class="text-container">
+            <div class="title-container">
+                <p>{{ project.title }}</p>
+            </div>
+            <div class="address-container">
+                <p>{{ project.location_street }}</p>
+                <p>{{ project.location_city_state_zip }}</p>
+            </div>
+        </div>
+
+        <!-- TODO this donate button doesnt work because the model has a top attribute of like 4000 pixels -->
+        {% if user.is_authenticated %}
+            <a href="#donate" id="donate-button" data-reveal-id="donate-modal"><div class="donate-button-header"><p>DONATE</p></div></a>
+        {% else %}
+            <a id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><div class="donate-button-header"><p>DONATE</p></div></a>
         {% endif %}
     </div>
+    <div class="columns large-7 small-6 map-cover"></div>
 </div>
 
 {% endblock %}
@@ -75,6 +180,9 @@
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>
+
+<script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
+<script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
 
 {# jQuery.payment necessary for sexy card info validation #}
 <script type="text/javascript"
@@ -92,7 +200,6 @@
 function getEmbedUrl(url) {
     var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
-
     if (match && match[2].length == 11) {
         var video_id = match[2];
         return "http://www.youtube.com/embed/" + video_id;
@@ -100,13 +207,12 @@ function getEmbedUrl(url) {
         return "error";
     }
 }
-
 // updates the iframe src url if youtube url is valid, otherwise hides it
 var embedUrl = getEmbedUrl("{{project.video_url}}");
 if (embedUrl === "error") {
-    $("#project_video").remove();
+    $(".project_video").remove();
 } else {
-    $("#project_video").attr("src", embedUrl);
+    $(".project_video").attr("src", embedUrl);
 }
 </script>
 {% endif %}

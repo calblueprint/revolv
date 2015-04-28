@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.core import mail
 from django.test import TestCase
 from django_webtest import WebTest
-from revolv.lib.testing import TestUserMixin
+from revolv.lib.testing import TestUserMixin, UserTestingMixin
 
 
 class DashboardTestCase(TestUserMixin, TestCase):

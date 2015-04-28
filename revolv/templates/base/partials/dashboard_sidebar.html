@@ -1,0 +1,72 @@
+{% comment %}
+    Dashboard Sidebar
+
+    This is a partial for the sidebar of the RE-volv dashboard design (mockup can be seen at
+    https://cloud.githubusercontent.com/assets/7706852/6608266/b4c8fdd8-c802-11e4-9610-939a5f9f5dd9.png).
+    This partial accepts the following template variables:
+
+    :user: the currently logged in user. The user will always be logged in, since if they're
+            seeing this page then they have bypassed the functionality which redirects to the
+            homepage for unauthenticated users.
+
+    :project_dict: a dictionary with keys as project group names, such as "Completed Projects", "Projects",
+            etc, and values as lists of project model objects in the group. The project group names
+
+    The idea for the sidebar is that there is an area at the top where the user can switch between
+    different user types, if applicable, can see the projects which are relevant to their role, and can also
+    see management pages (for example admin accounting page) below. The point of this template is to
+    conditionally render all of these partials and things based on what type of user the current user is.
+{% endcomment %}
+{% spaceless %}
+<div class="role-select">
+    {% if role == "administrator" and user.revolvuserprofile.is_administrator %}
+        <div class="role-select-inner">administrator</div>
+    {% elif role == "ambassador" and user.revolvuserprofile.is_ambassador %}
+        <div class="role-select-inner">ambassador</div>
+    {% else %}
+        <div class="role-select-inner">{{user.username}}</div>
+    {% endif %}
+    {% if user.revolvuserprofile.is_ambassador %}
+        <div class="dashboard-sidebar-chevron" data-state="collapsed"><i class="fa fa-chevron-down"></i></div>
+    {% endif %}
+</div>
+{% if user.revolvuserprofile.is_ambassador %}
+<div class="role-select-options">
+    <div class="dashboard-header">View as:</div>
+    {% if user.revolvuserprofile.is_administrator %}
+        <div class="role-select-option"><a href="/dashboard/admin/">administrator</a></div>
+    {% endif %}
+    <div class="role-select-option"><a href="/dashboard/ambassador/">ambassador</a></div>
+    <div class="role-select-option"><a href="/dashboard/donor/">donor</a></div>
+</div>
+{% endif %}
+
+{% if user.revolvuserprofile.is_ambassador and role != "donor" %}
+<div class="dashboard-section create-new">
+    <a href="{% url "project:new" %}" class="create-new-button">Create Project</a>
+</div>
+{% endif %}
+
+<div class="dashboard-section projects">
+    {% if donor_has_no_donated_projects %}
+        <div class="dashboard-header">No projects found.</div>
+    {% else %}
+        {% for project_group, project_list in project_dict.items %}
+            <div class="dashboard-header">{{ project_group.display }}</div>
+            {% with outer_counter=forloop.counter %}
+                {% for project in project_list %}
+                    <div class="dashboard-sidebar-project-container dashboard-data-link {% if outer_counter == 1 and forloop.counter == 1 %} active{% endif %}" data-section="project-{{project.pk}}">
+                        <div class="dashboard-sidebar-bullet-point {{project_group.key}}"></div>
+                        <div class="dashboard-sidebar-project {{project_group.key}} dashboard-data-link">{{project.title}}</div>
+                    </div>
+                {% endfor %}
+            {% endwith %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="dashboard-section manage">
+    <div class="dashboard-header">Manage</div>
+    <div class="dashboard-manage-link dashboard-data-link" data-section="change-password">Change Password</div>
+    <div class="dashboard-manage-link"><a href="/logout/">Logout</a></div>
+</div>
+{% endspaceless %}

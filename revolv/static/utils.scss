@@ -19,3 +19,45 @@
         content: "\a0\a0\a0";
     }
 }
+
+@mixin revolv-hover-button($color, $text-color) {
+    cursor: pointer;
+    background-color: transparent;
+    color: $text-color;
+    border: 1px solid $color;
+
+    &:hover {
+        background-color: $color;
+        color: white;
+        transition: background-color 0.2s;
+        transition: color 0.1s;
+        -webkit-transition: background-color 0.2s;
+        -webkit-transition: color 0.1s;
+    }
+
+    &:disabled {
+        opacity: 0.3;
+    }
+}
+
+@mixin revolv-sliding-border($color, $width, $transition-time) {
+    // sliding border from http://bradsknutson.com/blog/css-sliding-underline/
+    display: inline-block;
+    position: relative;
+    padding-bottom: $width;
+
+    &:after {
+        content: '';
+        display: block;
+        margin: auto;
+        height: $width;
+        width: 0px;
+        background: transparent;
+        transition: width $transition-time ease, background-color $transition-time ease;
+    }
+
+    &.active:after {
+        width: 100%;
+        background: $revolv-blue;
+    }
+}

@@ -42,6 +42,9 @@
                     {% include "base/partials/tooltip_formfield.html" with field=form.tagline %}
                     <span>Categories</span>
                     {{ form.categories_select|add_class:"chosen-select" }}
+                    {% for error in form.categories_select.errors %}
+                        <small class="error">{{ error }}</small>
+                    {% endfor %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}

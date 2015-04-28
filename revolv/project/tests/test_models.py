@@ -8,8 +8,35 @@ from revolv.base.models import RevolvUserProfile
 from revolv.lib.testing import TestUserMixin
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType)
-from revolv.project.models import Category, Project
+from revolv.project.models import Category, Project, ProjectUpdate
 from revolv.project.tasks import scrape
+
+
+class ProjectUpdateTest(TestCase):
+    """Tests that check that project updates work with projects"""
+
+    def test_construct(self):
+        project = Project.factories.base.create()
+        update1 = ProjectUpdate(update_text='This is update text', project=project)
+        update2 = ProjectUpdate(update_text='This is another update', project=project)
+
+        # tests basic construction
+        self.assertEqual('This is update text', update1.update_text)
+        self.assertEqual('This is another update', update2.update_text)
+
+        # tests project relationship
+        self.assertEqual(update1.project, update2.project)
+        self.assertEqual(update1.project, project)
+
+        update1.save()
+        update2.save()
+        self.assertEqual(len(ProjectUpdate.objects.all()), 2)
+
+    def test_add_update(self):
+        project = Project.factories.base.create()
+        project.add_update('Another sample update')
+        update = ProjectUpdate.objects.get(update_text='Another sample update')
+        self.assertEqual(project, update.project)
 
 
 class ProjectTests(TestCase):
@@ -185,6 +212,7 @@ class CategoryTest(TestCase):
     def test_update_category(self):
         """ Test that updating a single projects category works """
         project = Project.factories.base.create()
+        Category.factories.base.title.reset()
         category1, category2 = Category.factories.base.create_batch(2)
         # tests that associating two categories with the project works
         project.update_categories(Category.valid_categories[:2])
@@ -217,42 +245,22 @@ class CategoryTest(TestCase):
         self.assertItemsEqual(project2.category_set.all(), [category2, category3])
 
 
-class RequestTest(TestCase):
-    """Test that all is well with the project pages."""
-
-    def _assert_project_page_works(self, project):
-        resp = self.client.get(project.get_absolute_url())
-        self.assertNotEqual(resp.status_code, 500)
-
-    def test_project_page(self):
-        project = Project.factories.base.create()
-
-        for status_choice in Project.PROJECT_STATUS_CHOICES:
-            status = status_choice[0]
-            project.project_status = status
-            project.save()
-            self._assert_project_page_works(project)
-
-    def test_drafted_projects_404(self):
-        """Test that the response is 404 when trying to request the page of a drafted project."""
-        project = Project.factories.base.create(project_status=Project.DRAFTED)
-        resp = self.client.get(project.get_absolute_url())
-        self.assertEqual(resp.status_code, 404)
-
-
 class ProjectIntegrationTest(WebTest):
     def test_only_donate_when_logged_in(self):
         """
         Test that a not logged in user gets redirected to the
         login page instead of being able to donate.
         """
+
         project = Project.factories.active.create()
         resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
         self.assertEqual(resp.status_code, 200)
+
         # note: if the link makes a modal appear, it will be skipped and the
         # test will fail because it couldn't find the link - this is what
         # we want to happen in this case, but we may have to change this if
         # we want a login modal to appear instead.
+
         resp = (resp.click(linkid="donate-button")).maybe_follow()
         self.assertTemplateUsed(resp, "base/sign_in.html")
 

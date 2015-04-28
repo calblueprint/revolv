@@ -5587,6 +5587,8 @@ body {
     position: relative;
     top: calc(50% + 40px);
     transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
     text-align: center;
     margin: 0 auto;
     min-width: 300px;
@@ -5628,11 +5630,14 @@ body {
     left: -18px;
     text-align: center; }
   .nav-spine .first {
-    top: 0px; }
+    top: 0px;
+    background-color: #044e7e; }
   .nav-spine .second {
-    top: 180px; }
+    top: 180px;
+    background-color: #1db0e6; }
   .nav-spine .third {
-    top: 360px; }
+    top: 360px;
+    background-color: #f0ad4e; }
   .nav-spine .first-caption {
     color: rgba(4, 78, 126, 0.75); }
   .nav-spine .second-caption {
@@ -5704,7 +5709,6 @@ body {
     margin: 140px 20px; }
 
 .button {
-  width: 250px;
   height: 54px;
   line-height: 24px;
   font-size: 24px;
@@ -5731,12 +5735,14 @@ body {
 
 @media only screen and (max-width: 40em) {
   html .cover-image .cover-inset {
-    position: relative;
-    top: calc(50% + 40px);
-    transform: translateY(-50%);
+    position: absolute;
+    top: 0;
     left: 0;
-    height: 100%;
-    width: 75%;
+    right: 0;
+    bottom: 0;
+    height: 50%;
+    width: 50%;
+    margin: auto;
     background-color: inherit;
     color: white; }
     html .cover-image .cover-inset .title-header {
@@ -5764,8 +5770,6 @@ body {
   html .cover-image .cover-inset p {
     font-size: 18px;
     line-height: 24px; }
-  html .cover-image .cover-inset {
-    top: calc(50% + 80px); }
   html .cover-image {
     background-position: left; }
   .about .grouping {
@@ -5813,7 +5817,6 @@ body {
   .about .step {
     display: block;
     height: 150px;
-    width: 375px;
     margin: 25px auto; }
   .about .grouping {
     margin: 70px 8px 140px; } }
