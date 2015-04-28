@@ -306,10 +306,12 @@ $('button.donation-continue').click(function(e) {
     e.preventDefault();
     populateConfirmModal(getDonateFormValues());
     $('#confirm-modal').foundation('reveal', 'open');
+    return false;
 });
 $('button.donation-change').click(function(e) {
     e.preventDefault();
     $('#donate-modal').foundation('reveal', 'open');
+    return false;
 });
 $('button.donation-submit').click(function(e) {
     e.preventDefault();
@@ -319,6 +321,7 @@ $('button.donation-submit').click(function(e) {
     paymentSpinner.spin();
     $('#confirm-modal').append(paymentSpinner.el);
     $('#donate-form').submit();
+    return false;
 });
 $donateModalErrors = $('#donate-modal').find('.modal-errors');
 
@@ -410,6 +413,15 @@ $(document).on('opened.fndtn.reveal', '#success-modal', function() {
 });
 $(document).on('closed.fndtn.reveal', '#success-modal', function() {
     $('#success-modal').find('label.checkmark').removeClass('animate');
+});
+
+// Hack to close modal on modal-table click
+// (i.e., when the dimmed background is clicked)
+$('.revolv-reveal-modal-table').click(function (e) {
+    if (e.target === this ||
+        e.target === $(this).children(':first')[0]) {
+        $(document).foundation('reveal', 'close');
+    }
 });
 
 });

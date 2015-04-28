@@ -68,8 +68,12 @@
                   open: {
                       'opacity': 0,
                       'visibility': 'visible',
-                      // display should be 'table' because we use the table
-                      // method for vertically centering the modal
+                      // NOTE: we set display to 'table' because we use the
+                      // table method to vertically center the modal div. We
+                      // need to set this in the foundation javascript,
+                      // otherwise the modal "flickers" as a result of
+                      // momentarily changing `display` to 'block' before
+                      // closing
                       'display': 'table',
                   },
                   close: {
