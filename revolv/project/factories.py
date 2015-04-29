@@ -41,9 +41,14 @@ class ActiveProjectFactory(ProjectFactory):
     project_status = Project.ACTIVE
 
 
+class DraftedProjectFactory(ProjectFactory):
+    project_status = Project.DRAFTED
+
+
 class ProjectFactories(object):
     base = ProjectFactory
     active = ActiveProjectFactory
+    drafted = DraftedProjectFactory
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):

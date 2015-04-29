@@ -76,11 +76,8 @@ class AuthIntegrationTest(TestUserMixin, WebTest):
 class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
     csrf_checks = False
 
-    def test_create_new_project_via_dashboard(self):
-        self.test_profile.make_ambassador()
-        self.send_test_user_login_request(webtest=True)
-
-        project = Project.factories.base.build(tagline="this_tagline_will_be_unique_so_we_can_find_it_later")
+    def assert_logged_in_user_can_create_project_via_dashboard(self, tagline):
+        project = Project.factories.base.build(tagline=tagline)
 
         dashboard_response = self.app.get("/dashboard/").maybe_follow()
         create_page_response = dashboard_response.click(linkid="create_project").maybe_follow()
@@ -89,5 +86,36 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         dashboard_new_project_response = project_form.submit().maybe_follow()
         self.assertEqual(dashboard_new_project_response.status_code, 200)
 
-        created_project = Project.objects.get(tagline="this_tagline_will_be_unique_so_we_can_find_it_later")
+        created_project = Project.objects.get(tagline=tagline)
+        self.assertEqual(created_project.project_status, Project.DRAFTED)
         self.assert_in_response_html(dashboard_new_project_response, "project-%d" % created_project.pk)
+
+    def test_create_new_project_via_dashboard(self):
+        """Test that an ambassador can create a new project via the dashboard."""
+        self.test_profile.make_ambassador()
+        self.send_test_user_login_request(webtest=True)
+
+        self.assert_logged_in_user_can_create_project_via_dashboard("this_project_made_by_ambsaddador")
+
+        self.test_profile.make_administrator()
+        self.send_test_user_login_request(webtest=True)
+        self.assert_logged_in_user_can_create_project_via_dashboard("this_project_made_by_ambsaddador")
+
+    def test_admin_can_approve_drafted_project(self):
+        # amb_user = User.objects.create_user(username="amb", password="amb_pass")
+        # admin_user = User.objects.create_user(username="admin", password="admin_pass")
+        # ambassador = RevolvUserProfile.factories.create()
+        # TODO: do this function lol
+        pass
+
+    def test_admin_can_deny_drafted_project(self):
+        pass
+
+    def test_admin_can_complete_active_project(self):
+        pass
+
+    def test_post_updates_for_active_and_completed_projects(self):
+        pass
+
+    def test_ambassador_cant_see_other_ambassadors_projects(self):
+        pass
