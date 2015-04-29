@@ -1,24 +1,21 @@
-import mock
-import json
 import datetime
+
 from django.test import TestCase
-from revolv.project.models import Category, Project, ProjectUpdate, Payment
-from revolv.lib.testing import TestUserMixin, UserTestingMixin
 from django_webtest import WebTest
 from revolv.base.models import RevolvUserProfile
-from revolv.lib.testing import TestUserMixin
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType)
-from revolv.project.models import Category, Project
+from revolv.project.models import Category, Project, ProjectUpdate
 from revolv.project.tasks import scrape
+
 
 class ProjectUpdateTest(TestCase):
     """Tests that check that project updates work with projects"""
 
     def test_construct(self):
         project = Project.factories.base.create()
-        update1 = ProjectUpdate(update_text = 'This is update text', project=project)
-        update2 = ProjectUpdate(update_text = 'This is another update', project=project)
+        update1 = ProjectUpdate(update_text='This is update text', project=project)
+        update2 = ProjectUpdate(update_text='This is another update', project=project)
 
         # tests basic construction
         self.assertEqual('This is update text', update1.update_text)
@@ -30,13 +27,14 @@ class ProjectUpdateTest(TestCase):
 
         update1.save()
         update2.save()
-        self.assertEqual(len(ProjectUpdate.objects.all()),2)
+        self.assertEqual(len(ProjectUpdate.objects.all()), 2)
 
     def test_add_update(self):
         project = Project.factories.base.create()
         project.add_update('Another sample update')
         update = ProjectUpdate.objects.get(update_text='Another sample update')
         self.assertEqual(project, update.project)
+
 
 class ProjectTests(TestCase):
     """Project model tests."""
@@ -211,6 +209,7 @@ class CategoryTest(TestCase):
     def test_update_category(self):
         """ Test that updating a single projects category works """
         project = Project.factories.base.create()
+        Category.factories.base.title.reset()
         category1, category2 = Category.factories.base.create_batch(2)
         # tests that associating two categories with the project works
         project.update_categories(Category.valid_categories[:2])
@@ -253,7 +252,7 @@ class ProjectIntegrationTest(WebTest):
         project = Project.factories.active.create()
         resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
         self.assertEqual(resp.status_code, 200)
-        
+
         # note: if the link makes a modal appear, it will be skipped and the
         # test will fail because it couldn't find the link - this is what
         # we want to happen in this case, but we may have to change this if
@@ -270,86 +269,3 @@ class ScrapeTest(TestCase):
     def test_scrape(self):
         result = scrape.delay()
         self.assertTrue(result.successful())
-
-
-class DonationAjaxTestCase(TestUserMixin, TestCase):
-    """
-    Test suite for AJAX payment donations for projects.
-    """
-    DONATION = 'donation/submit'
-
-    def setUp(self):
-        super(DonationAjaxTestCase, self).setUp()
-        self.send_test_user_login_request()
-        self.project = Project.factories.base.create(project_status=Project.ACTIVE)
-
-    def perform_valid_donation(self):
-        """
-        Utility method for performing a valid donation. Returns the response.
-        """
-        valid_donation = {
-            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
-            'type': 'visa',
-            'first_name': 'William',
-            'last_name': 'Taft',
-            'expire_month': 6,
-            'expire_year': 2020,
-            'cvv2': '00',
-            'number': '1234123412341234',
-            'amount': '10.00',
-        }
-        return self.client.post(
-            self.project.get_absolute_url() + self.DONATION,
-            data=valid_donation,
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-        )
-
-    def test_valid_donation(self):
-        """
-        Test valid donation via AJAX to /project/<pk>/donation/submit.
-        """
-        resp = self.perform_valid_donation()
-        self.assertEqual(resp.status_code, 200)
-        content = json.loads(resp.content)
-        self.assertIsNone(content.get('error'))
-        self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
-
-    @mock.patch('revolv.lib.mailer.EmailMultiAlternatives')
-    def test_post_donation_email(self, mock_mailer):
-        """
-        Tests whether a valid donation will send a revolv email
-        """
-        resp = self.perform_valid_donation()
-        self.assertEqual(resp.status_code, 200)
-        content = json.loads(resp.content)
-        self.assertIsNone(content.get('error'))
-        self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
-        self.assertTrue(mock_mailer.called)
-        # checks that the email address sent using mock mailer matches the user who donatred
-        args, kwargs = mock_mailer.call_args
-        self.assertEqual(kwargs['to'], ["john@example.com"])
-
-    def test_invalid_donation_ajax(self):
-        """
-        Tests that invalid donation appropriately errors with on
-        /donation/submit endpoint.
-        """
-        invalid_donation = {
-            'csrfmiddlewaretoken': self.client.cookies['csrftoken'].value,
-            'type': 'visa',
-            # 'first_name': '',
-            'last_name': 'Taft',
-            'expire_month': 6,
-            'expire_year': 2020,
-            'cvv2': '00',
-            'number': 'not a number',
-            'amount': '10.00',
-        }
-        resp = self.client.post(
-            self.project.get_absolute_url() + self.DONATION,
-            data=invalid_donation,
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
-        )
-        content = json.loads(resp.content)
-        self.assertEquals(resp.status_code, 400)
-        self.assertIsNotNone(content['error'])

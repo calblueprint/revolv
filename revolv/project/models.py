@@ -438,13 +438,6 @@ class Project(models.Model):
         return unicode(days_left) + " days left"
 
     @property
-    def org_about_lines(self):
-        """
-        :return: this project's org_about as an array split on its newlines.
-        """
-        return [line for line in self.org_about.strip().split("\n") if line.strip()]
-
-    @property
     def is_active(self):
         return self.project_status == Project.ACTIVE
 
@@ -475,6 +468,13 @@ class Project(models.Model):
         """
         return self.updates.all()
 
+    @property
+    def donation_levels(self):
+        """
+        :return: The set of all DonationLevel models associated with this project.
+        """
+        return self.donationlevel_set.all()
+
     def add_update(self, text):
         update = ProjectUpdate(update_text=text, project=self)
         update.save()
@@ -496,9 +496,6 @@ class ProjectUpdate(models.Model):
         Project,
         related_name="updates"
     )
-
-    def donation_levels(self):
-        return self.donationlevel_set.all()
 
 
 class Category(models.Model):
@@ -529,7 +526,7 @@ class DonationLevel(models.Model):
     Model to track donation levels and perks for projects.
     """
     project = models.ForeignKey(Project)
-    description = models.CharField(max_length=200)
+    description = models.TextField()
     amount = models.DecimalField(
         max_digits=15,
         decimal_places=2

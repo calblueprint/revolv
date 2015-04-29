@@ -5573,6 +5573,9 @@ th.hide-for-touch {
   left: 0;
   width: 100%;
   height: 100%; }
+  @media only screen and (min-width:40.063em) {
+    .revolv-reveal-modal-table {
+      top: 0 !important; } }
   .revolv-reveal-modal-table.open {
     opacity: 1;
     z-index: 1005;
@@ -5584,7 +5587,8 @@ th.hide-for-touch {
     vertical-align: middle; }
   @media only screen and (max-width: 40em) {
     .revolv-reveal-modal-table {
-      display: block; }
+      display: block;
+      position: absolute; }
       .revolv-reveal-modal-table > .modal-cell {
         display: block; } }
 

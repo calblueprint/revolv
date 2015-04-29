@@ -24,3 +24,4 @@
     -   id: jshint
         args:
         - --verbose
+        - --exclude=revolv/static/js/vendor/*

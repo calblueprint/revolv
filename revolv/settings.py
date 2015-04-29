@@ -26,10 +26,6 @@ IS_PROD = 'IS_PROD' in os.environ
 IS_HEROKU = IS_STAGE or IS_PROD
 IS_LOCAL = not IS_HEROKU
 
-IS_STAGE = 'IS_STAGE' in os.environ
-IS_PROD = 'IS_PROD' in os.environ
-IS_HEROKU = IS_STAGE or IS_PROD
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
     "REVOLV_SECRET_KEY",
@@ -296,8 +292,21 @@ LANGUAGES = [
     ('en-us', 'English'),
 ]
 
-CHARGE_INSTRUMENT = False
-
 # SSL Settings for Heroku
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SSLIFY_DISABLE = IS_LOCAL
+
+"""
+Payment Charging is enabled by default.
+
+When in developement, payments go to the Paypal Sandbox. This (should) mean
+that no cards are actually being charged; they just show up in the PayPal
+dashboard so that you can run tests, track payments, etc.
+
+On production, payments go to the actual Paypal account, meaning that cards
+actually do get charged.
+
+Consequently, it's safe to always enable charging, since in development nothing
+is actually being charged on the PayPal side.
+"""
+ENABLE_PAYMENT_CHARGING = True

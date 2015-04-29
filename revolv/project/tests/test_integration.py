@@ -1,7 +1,7 @@
-import mock
 import json
-from django.test import TestCase
-from django_webtest import WebTest
+
+import mock
+from django.test import TestCase, override_settings
 from revolv.lib.testing import TestUserMixin, UserTestingMixin
 from revolv.project.models import Project, ProjectUpdate
 
@@ -17,8 +17,8 @@ class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
         self.assertUserAuthed(response)
         project = Project.factories.base.create()
         response = self.client.post('/project/%d/update' % project.pk, {'update_text': 'This is an update'})
-        new_updates = ProjectUpdate.objects.filter(update_text = 'This is an update')
-        self.assertEqual(len(new_updates),1)
+        new_updates = ProjectUpdate.objects.filter(update_text='This is an update')
+        self.assertEqual(len(new_updates), 1)
         self.assertEqual(new_updates[0].project, project)
 
     def test_admin_form_submission(self):
@@ -47,35 +47,36 @@ class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
         self.assertUserAuthed(response)
         project = Project.factories.base.create()
         response = self.client.post('/project/%d/update' % project.pk, {'update_text': 'This is an update'})
-        
+
         # the deny_access method is called in the view from the userdatamixin, which returns a redirect to the homepage
         self.assertEqual(response.status_code, 302)
-        
+
+
 class EditProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
 
     def make_update(self, project, text):
         """
-        Creates and posts an update with the given text to a given project. 
+        Creates and posts an update with the given text to a given project.
         Returns the update that was just created.
         """
         response = self.send_test_user_login_request()
         self.assertUserAuthed(response)
         #response = self.client.post('/project/%d/update' % project.pk, {'update_text': text})
-        ProjectUpdate(project = project, update_text = text).save()
-        new_updates = ProjectUpdate.objects.filter(update_text = text)
+        ProjectUpdate(project=project, update_text=text).save()
+        new_updates = ProjectUpdate.objects.filter(update_text=text)
         return new_updates[0]
 
-    def assert_user_can_or_cant_make_updates(self, donor = False):
+    def assert_user_can_or_cant_make_updates(self, donor=False):
         """
-        Tests that the administrator and ambassador can make updates. 
-        Posts a response to the editupdate page to change the update 
+        Tests that the administrator and ambassador can make updates.
+        Posts a response to the editupdate page to change the update
         text and checks whether the text of the update has changed.
         """
         project = Project.factories.base.create()
         update = self.make_update(project, "This update has not been changed.")
 
         response = self.client.post('/project/editupdate/%d' % update.pk,
-                        {'update_text': 'This update has been changed.'})
+                                    {'update_text': 'This update has been changed.'})
 
         old_update_text_updates = ProjectUpdate.objects.filter(update_text="This update has not been changed.")
         new_updates = ProjectUpdate.objects.filter(update_text="This update has been changed.")
@@ -94,21 +95,22 @@ class EditProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
         Makes an an
         """
         self.test_profile.make_administrator()
-        self.assert_user_can_or_cant_make_updates(donor = False)
+        self.assert_user_can_or_cant_make_updates(donor=False)
 
     def test_edit_update_ambassador(self):
         """
         Tests that a change is made to an update for an ambassador.
         """
         self.test_profile.make_ambassador()
-        self.assert_user_can_or_cant_make_updates(donor = False)
+        self.assert_user_can_or_cant_make_updates(donor=False)
 
     def test_edit_update_donor(self):
         """
         Tests that a donor can't change an update.
         """
         self.test_profile.make_donor()
-        self.assert_user_can_or_cant_make_updates(donor = True)
+        self.assert_user_can_or_cant_make_updates(donor=True)
+
 
 class DonationAjaxTestCase(TestUserMixin, TestCase):
     """
@@ -142,6 +144,9 @@ class DonationAjaxTestCase(TestUserMixin, TestCase):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
 
+    # override payment charging because we only want to unit test that the
+    # ajax endpoints work (actually validating through Paypal takes a millenia)
+    @override_settings(ENABLE_PAYMENT_CHARGING=False)
     def test_valid_donation(self):
         """
         Test valid donation via AJAX to /project/<pk>/donation/submit.
@@ -152,6 +157,9 @@ class DonationAjaxTestCase(TestUserMixin, TestCase):
         self.assertIsNone(content.get('error'))
         self.assertIsNotNone(self.project.donors.get(pk=self.test_user.pk))
 
+    # override payment charging because we only want to unit test that the
+    # ajax endpoints work (actually validating through Paypal takes a millenia)
+    @override_settings(ENABLE_PAYMENT_CHARGING=False)
     @mock.patch('revolv.lib.mailer.EmailMultiAlternatives')
     def test_post_donation_email(self, mock_mailer):
         """
