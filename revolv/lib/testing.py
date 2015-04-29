@@ -86,10 +86,15 @@ class WebTestMixin(object):
         makes no guarentee about whether the fields can be set, and will error if they
         cannot.
 
-        TODO: docs for model_name
+        If model_name is provided, it should be the name of a model, like "Project". This function
+        will check to see if there is a webtest FormFiller defined in revolv/lib/webtest/form_fillers.py,
+        and if so will use it to further fill the form. This strategy can be useful when we want to
+        have things like project cover_photo which are required by the form but default to none -
+        the form filler will take care of populating the form with a dummy cover_photo.
 
         If warn_of_errors is true, this method will print out all the errors of the ModelForm
-        which it is supposed to be filling out.
+        which it is supposed to be filling out. Can be useful to triage which fields of the form
+        are ignored by the default filling algorithm and thus must be used by a webtest FormFiller.
         """
         ThisModelForm = modelform_factory(type(model_instance))
         model_form_instance = ThisModelForm(instance=model_instance, data=model_to_dict(model_instance))
@@ -101,7 +106,7 @@ class WebTestMixin(object):
             if field_model_value:
                 webtest_form[field_name] = str(field_model_value)
             else:
-                print "WARNING: no field for " + str(field_name)
+                print "[WebTestMixin.fill_form_from_model] WARNING: no field for " + str(field_name)
 
         if model_name is not None and FILLERS.get(model_name) is not None:
             webtest_form = FILLERS[model_name](webtest_form, model_instance).fill_form()
