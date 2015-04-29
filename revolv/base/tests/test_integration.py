@@ -80,9 +80,6 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.test_profile.make_ambassador()
         self.send_test_user_login_request(webtest=True)
 
-        import pdb
-        pdb.set_trace()
-
         project = Project.factories.base.build(tagline="this_tagline_will_be_unique_so_we_can_find_it_later")
 
         dashboard_response = self.app.get("/dashboard/").maybe_follow()
@@ -93,4 +90,4 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.assertEqual(dashboard_new_project_response.status_code, 200)
 
         created_project = Project.objects.get(tagline="this_tagline_will_be_unique_so_we_can_find_it_later")
-        self.assert_id_in_response_html(dashboard_new_project_response, "project-%d" % created_project.pk)
+        self.assert_in_response_html(dashboard_new_project_response, "project-%d" % created_project.pk)

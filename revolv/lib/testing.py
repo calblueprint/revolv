@@ -96,16 +96,20 @@ class WebTestMixin(object):
         which it is supposed to be filling out. Can be useful to triage which fields of the form
         are ignored by the default filling algorithm and thus must be used by a webtest FormFiller.
         """
-        ThisModelForm = modelform_factory(type(model_instance))
+        ThisModelForm = modelform_factory(type(model_instance), exclude=[])
         model_form_instance = ThisModelForm(instance=model_instance, data=model_to_dict(model_instance))
-        model_form_instance.is_valid()  # trigger data clean to make cleaned_data available
+        if not model_form_instance.is_valid() and warn_of_errors:  # trigger data clean to make cleaned_data available
+            print "[WebTestMixin.fill_form_from_model] WARNING: ModelForm has errors %s and nonfield errors %s" % (
+                model_form_instance.errors, model_form_instance.non_field_errors()
+            )
+
         for field_name, field_value in webtest_form.fields.items():
             if field_name is None:  # for the submit button, the field name is none
                 continue
             field_model_value = model_form_instance.cleaned_data.get(field_name)
             if field_model_value:
                 webtest_form[field_name] = str(field_model_value)
-            else:
+            elif warn_of_errors:
                 print "[WebTestMixin.fill_form_from_model] WARNING: no field for " + str(field_name)
 
         if model_name is not None and FILLERS.get(model_name) is not None:
@@ -113,12 +117,16 @@ class WebTestMixin(object):
 
         return webtest_form
 
+    def assert_in_response_html(self, response, needle):
+        """Assert that needle is contained somewhere in the html of response."""
+        self.assertIn(needle, response.body)
+
     def assert_id_in_response_html(self, response, id):
         """
         Given the html of a WebTest response (response.html), assert that the given id
         exists in that response's DOM.
         """
-        query = BeautifulSoup(response.html)
+        query = BeautifulSoup(response.body)
         # we want to make sure that there is a password reset link (not just a url) in the email
         element = query.find(id=id)
         self.assertIsNotNone(element)

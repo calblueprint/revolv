@@ -31,7 +31,7 @@ class ProjectFormFiller:
         2. categories_select
         """
         form = self.partial_webtest_form
-        form["cover_photo"] = Upload("revolv/lib/test_utils/test_cover_photo.png")
+        form["cover_photo"] = Upload("revolv/lib/test_utils/test_cover_photo.jpg")
         form["categories_select"] = ["Health"]
         return form
 
