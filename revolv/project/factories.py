@@ -26,10 +26,14 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     end_date = datetime.date.today() - datetime.timedelta(days=1)  # tomorrow
     mission_statement = "We do solar!"
     cover_photo = None
+    org_name = "Power for Community Center"
+    org_about = "Community Center is a center for communities."
     org_start_date = datetime.date.today() + datetime.timedelta(days=1)  # today
     actual_energy = 25.5
     amount_repaid = 29.25
     ambassador = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
+    location_latitude = 42.0
+    location_longitude = 42.0
 
 
 class ActiveProjectFactory(ProjectFactory):

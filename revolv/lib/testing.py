@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
+from django.forms.models import model_to_dict, modelform_factory
 from revolv.base.utils import get_profile
+from revolv.lib.webtest.form_fillers import FILLERS
 
 
 class TestUserMixin(object):
@@ -72,7 +74,7 @@ class WebTestMixin(object):
     using WebTest.
     """
 
-    def fill_form_from_model(self, form, model_instance):
+    def fill_form_from_model(self, webtest_form, model_instance, model_name=None, warn_of_errors=False):
         """"
         Given a WebTest form which was rendered from a django ModelForm,
         fill out as much of it as possible from the model, then return the filled
@@ -83,16 +85,28 @@ class WebTestMixin(object):
         field of the form to be the corresponding value from the model instance. It
         makes no guarentee about whether the fields can be set, and will error if they
         cannot.
+
+        TODO: docs for model_name
+
+        If warn_of_errors is true, this method will print out all the errors of the ModelForm
+        which it is supposed to be filling out.
         """
         ThisModelForm = modelform_factory(type(model_instance))
-        model_form_instance = ThisModelForm(instance=model_instance)
-        for field_name, field_value in form.fields.items():
+        model_form_instance = ThisModelForm(instance=model_instance, data=model_to_dict(model_instance))
+        model_form_instance.is_valid()  # trigger data clean to make cleaned_data available
+        for field_name, field_value in webtest_form.fields.items():
             if field_name is None:  # for the submit button, the field name is none
                 continue
-            field_model_value = getattr(model, field_name, None)
+            field_model_value = model_form_instance.cleaned_data.get(field_name)
             if field_model_value:
-                form[field_name] = str(field_model_value)
-        return form
+                webtest_form[field_name] = str(field_model_value)
+            else:
+                print "WARNING: no field for " + str(field_name)
+
+        if model_name is not None and FILLERS.get(model_name) is not None:
+            webtest_form = FILLERS[model_name](webtest_form, model_instance).fill_form()
+
+        return webtest_form
 
     def assert_id_in_response_html(self, response, id):
         """

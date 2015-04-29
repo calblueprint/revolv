@@ -93,4 +93,4 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.assertEqual(dashboard_new_project_response.status_code, 200)
 
         created_project = Project.objects.get(tagline="this_tagline_will_be_unique_so_we_can_find_it_later")
-        self.assert_id_in_response_body(dashboard_new_project_response, "project-%d" % created_project.pk)
+        self.assert_id_in_response_html(dashboard_new_project_response, "project-%d" % created_project.pk)
