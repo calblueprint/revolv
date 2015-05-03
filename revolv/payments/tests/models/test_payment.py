@@ -1,7 +1,6 @@
+import factory
 from django.db.models import signals, Sum
 from django.test import TestCase
-
-import factory
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType, RepaymentFragment)
@@ -427,7 +426,6 @@ class PaymentTest(TestCase):
         project1 = Project.factories.base.create(funding_goal=200)
         project2 = Project.factories.base.create(funding_goal=250)
 
-        Category.factories.base.title.reset()
         category1, category2, category3 = Category.factories.base.create_batch(3)
 
         # assigns preferred categories for users and categories for project
@@ -506,7 +504,6 @@ class PaymentTest(TestCase):
         project1 = Project.factories.base.create(funding_goal=200)
         project2 = Project.factories.base.create(funding_goal=350)
 
-        Category.factories.base.title.reset()
         category1, category2, category3 = Category.factories.base.create_batch(3)
 
         # assigns preferred categories for users and categories for project
@@ -584,7 +581,6 @@ class PaymentTest(TestCase):
         project1 = Project.factories.base.create(funding_goal=200)
         project2 = Project.factories.base.create(funding_goal=450)
 
-        Category.factories.base.title.reset()
         category1, category2, category3 = Category.factories.base.create_batch(3)
 
         # assigns preferred categories for users and categories for project
@@ -661,7 +657,6 @@ class PaymentTest(TestCase):
         project2 = Project.factories.base.create(funding_goal=250)
         project3 = Project.factories.base.create(funding_goal=450)
 
-        Category.factories.base.title.reset()
         category1, category2, category3 = Category.factories.base.create_batch(3)
 
         # assigns preferred categories for users and categories for project

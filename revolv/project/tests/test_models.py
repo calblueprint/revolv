@@ -241,6 +241,11 @@ class CategoryTest(TestCase):
         # tests that deleting category 2 from project 1 does not affect project 2
         self.assertItemsEqual(project2.category_set.all(), [category2, category3])
 
+    def test_categories_are_always_populated(self):
+        """Test that Category.valid_categories always exist in the database initially."""
+        for title in Category.valid_categories:
+            Category.objects.get(title=title)
+
 
 class ProjectIntegrationTest(WebTest):
     def test_only_donate_when_logged_in(self):
