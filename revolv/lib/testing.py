@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict, modelform_factory
 from revolv.base.utils import get_profile
-from revolv.lib.webtest.form_fillers import FILLERS
 
 
 class TestUserMixin(object):
@@ -111,9 +110,6 @@ class WebTestMixin(object):
                 webtest_form[field_name] = str(field_model_value)
             elif warn_of_errors:
                 print "[WebTestMixin.fill_form_from_model] WARNING: no field for " + str(field_name)
-
-        if model_name is not None and FILLERS.get(model_name) is not None:
-            webtest_form = FILLERS[model_name](webtest_form, model_instance).fill_form()
 
         return webtest_form
 
