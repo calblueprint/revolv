@@ -1,9 +1,30 @@
 import json
 
 import mock
-from django.test import TestCase, override_settings
+from django.test import override_settings, TestCase
+from django_webtest import WebTest
 from revolv.lib.testing import TestUserMixin, UserTestingMixin
 from revolv.project.models import Project, ProjectUpdate
+
+
+class ProjectIntegrationTest(WebTest):
+    def test_only_donate_when_logged_in(self):
+        """
+        Test that a not logged in user gets redirected to the
+        login page instead of being able to donate.
+        """
+
+        project = Project.factories.active.create()
+        resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
+        self.assertEqual(resp.status_code, 200)
+
+        # note: if the link makes a modal appear, it will be skipped and the
+        # test will fail because it couldn't find the link - this is what
+        # we want to happen in this case, but we may have to change this if
+        # we want a login modal to appear instead.
+
+        resp = (resp.click(linkid="donate-button")).maybe_follow()
+        self.assertTemplateUsed(resp, "base/sign_in.html")
 
 
 class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):

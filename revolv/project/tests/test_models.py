@@ -1,7 +1,6 @@
 import datetime
 
 from django.test import TestCase
-from django_webtest import WebTest
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType)
@@ -206,13 +205,20 @@ class ProjectManagerTests(TestCase):
 class CategoryTest(TestCase):
     """Tests that category selection and updating work with projects."""
 
+    def make_test_categories_and_titles(self, num):
+        """
+        Create a batch of num Categories from CategoryFactory. Return a tuple
+        of those categories and the list of their titles as the last element.
+        """
+        test_categories = Category.factories.base.create_batch(num)
+        return tuple(test_categories) + tuple([[c.title for c in test_categories]])
+
     def test_update_category(self):
         """ Test that updating a single projects category works """
         project = Project.factories.base.create()
-        Category.factories.base.title.reset()
-        category1, category2 = Category.factories.base.create_batch(2)
+        category1, category2, category_titles = self.make_test_categories_and_titles(2)
         # tests that associating two categories with the project works
-        project.update_categories(Category.valid_categories[:2])
+        project.update_categories(category_titles[:2])
         self.assertEqual(len(project.category_set.all()), 2)
         self.assertItemsEqual(project.category_set.all(), [category1, category2])
         # tests that having no categories with the project works
@@ -224,18 +230,17 @@ class CategoryTest(TestCase):
         # creates 2 projects
         project1, project2 = Project.factories.base.create_batch(2)
         # resets the category factory and makes three categories
-        Category.factories.base.title.reset()
-        category1, category2, category3 = Category.factories.base.create_batch(3)
+        category1, category2, category3, category_titles = self.make_test_categories_and_titles(3)
         # adds categories 1 and 2 to project 1
-        project1.update_categories(Category.valid_categories[:2])
+        project1.update_categories(category_titles[:2])
         self.assertEqual(len(project1.category_set.all()), 2)
         self.assertItemsEqual(project1.category_set.all(), [category1, category2])
         # adds categories 2 and 3 to project 1
-        project2.update_categories(Category.valid_categories[1:3])
+        project2.update_categories(category_titles[1:3])
         self.assertEqual(len(project2.category_set.all()), 2)
         self.assertItemsEqual(project2.category_set.all(), [category2, category3])
         # removes category 2 from project 1
-        project1.update_categories(Category.valid_categories[1:2])
+        project1.update_categories(category_titles[1:2])
         self.assertEqual(len(project1.category_set.all()), 1)
         self.assertItemsEqual(project1.category_set.all(), [category2])
         # tests that deleting category 2 from project 1 does not affect project 2
@@ -245,26 +250,6 @@ class CategoryTest(TestCase):
         """Test that Category.valid_categories always exist in the database initially."""
         for title in Category.valid_categories:
             Category.objects.get(title=title)
-
-
-class ProjectIntegrationTest(WebTest):
-    def test_only_donate_when_logged_in(self):
-        """
-        Test that a not logged in user gets redirected to the
-        login page instead of being able to donate.
-        """
-
-        project = Project.factories.active.create()
-        resp = self.app.get("/project/%d/" % project.pk, auto_follow=True)
-        self.assertEqual(resp.status_code, 200)
-
-        # note: if the link makes a modal appear, it will be skipped and the
-        # test will fail because it couldn't find the link - this is what
-        # we want to happen in this case, but we may have to change this if
-        # we want a login modal to appear instead.
-
-        resp = (resp.click(linkid="donate-button")).maybe_follow()
-        self.assertTemplateUsed(resp, "base/sign_in.html")
 
 
 class ScrapeTest(TestCase):
