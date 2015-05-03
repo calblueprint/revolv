@@ -1,8 +1,9 @@
 @import "revolv-settings";
 @import "utils";
+@import "placeholder-formfield";
 
 .component-row {
-    &.login, &.password-reset, &.password-reset-done, &.password-reset-confirm, &.password-reset-complete {
+    &.login, &.password-reset, &.password-reset-done, &.password-reset-confirm, &.password-reset-complete, &.password-change {
         margin: 120px auto;
     }
     &.signup {
@@ -23,58 +24,5 @@
             @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-tan-bg);
             margin-bottom: 1.5em; // override
         }
-    }
-}
-
-.placeholder-tooltip-entry {
-    position: absolute;
-    right: -6px;
-    top: -7px;
-    background-color: white;
-    padding: 2px 4px;
-    border-radius: 5px;
-    border: 1px solid #bbb;
-    text-decoration: none;
-    font-size: 10px;
-}
-
-.placeholder-field-label {
-    position: relative;
-
-    &.has-errors input {
-        border-color: $revolv-error-color;
-    }
-}
-
-label.checkbox-field-label {
-    text-align: center;
-}
-
-label.checkbox-field-label span {
-    margin-left: 8px;
-}
-
-small.non-field-error {
-    background-color: $revolv-error-color;
-}
-
-small.field-error { // extra qualifiers to override foundation
-    background-color: transparent;
-    color: $revolv-error-color;
-}
-
-.submit-button {
-    margin: 0;
-    width: 100%;
-    height: 37px;
-    line-height: 0px; // this is a little weird, but it's because the buttons are entirely composed of padding by foundation
-    @include revolv-hover-button($revolv-blue, $revolv-blue);
-
-    &.gray {
-        @include revolv-hover-button(darken($revolv-gray-bg, 25%), darken($revolv-gray-bg, 25%));
-    }
-
-    &.yellow {
-        @include revolv-hover-button($revolv-yellow, $revolv-yellow);
     }
 }

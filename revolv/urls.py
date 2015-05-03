@@ -22,6 +22,7 @@ urlpatterns = patterns(
     url(r'^password_reset/done/$', base_views.password_reset_done, name="password_reset_done"),
     url(r'^password_reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$$', base_views.password_reset_confirm, name="password_reset_confirm"),
     url(r'^password_reset/complete/$', base_views.password_reset_complete, name="password_reset_complete"),
+    url(r'^password_change/$', base_views.password_change, name="password_change"),
 
     url(r'^', include('cms.urls')),
 )

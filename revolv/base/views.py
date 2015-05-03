@@ -224,7 +224,7 @@ class DashboardRedirect(UserDataMixin, View):
         return redirect('donor:dashboard')
 
 
-# password reset views: thin wrappers around django's built in password
+# password reset/change views: thin wrappers around django's built in password
 # reset views, but with our own templates
 def password_reset_initial(request):
     return auth_views.password_reset(
@@ -232,6 +232,14 @@ def password_reset_initial(request):
         template_name="base/auth/forgot_password_initial.html",
         email_template_name="base/auth/forgot_password_email.html",
         from_email="support@re-volv.org"
+    )
+
+
+def password_change(request):
+    return auth_views.password_change(
+        request,
+        template_name="base/auth/change_password.html",
+        post_change_redirect="/dashboard/donor/?password_change_success",
     )
 
 
