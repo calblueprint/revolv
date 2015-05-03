@@ -76,9 +76,15 @@ class AuthIntegrationTest(TestUserMixin, WebTest):
 
 
 class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
+    """Integration tests related to ambassador and admin functions for the dashboard."""
     csrf_checks = False
 
     def assert_logged_in_user_can_create_project_via_dashboard(self, tagline):
+        """
+        Assert that the user currently logged in can create a project from the
+        dashboard. This method must provide a unique tagline for the project, so
+        that the project can be checked as correctly created.
+        """
         project = Project.factories.base.build(tagline=tagline)
 
         dashboard_response = self.app.get("/dashboard/").maybe_follow()
@@ -159,6 +165,13 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project2.pk, Project.DRAFTED))
 
     def test_admin_can_complete_and_incomplete_active_project(self):
+        """
+        Test that an admin user can use the dashboard to mark active projects as complete
+        and mark complete projects as back to active.
+
+        Creates an active project and an admin user, then runs through the flow of completing
+        and incompleting (marking as active again) the project.
+        """
         self.test_profile.make_administrator()
         self.send_test_user_login_request(webtest=True)
         project = Project.factories.active.create()
@@ -179,6 +192,10 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.assert_in_response_html(dash_resp, "project-status-%i-%s" % (project.id, Project.ACTIVE))
 
     def assert_can_post_update_for_project(self, user, password, project):
+        """
+        Assert that the given user, with the given password, can create a project
+        update for the given project.
+        """
         self.app.get("/logout/")
         update_count = project.updates.count()
         self.send_user_login_request(user, password, webtest=True)
@@ -191,6 +208,10 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.assertEqual(project.updates.count(), update_count + 1)
 
     def test_post_updates_for_active_and_completed_projects(self):
+        """
+        Test that project updates can be added by an admin user and the ambassador that
+        created the project, both when the project is active and completed.
+        """
         amb_user = User.objects.create_user(username="amb", password="amb_pass")
         amb = get_profile(amb_user)
         amb.make_ambassador()
@@ -208,6 +229,14 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.assert_can_post_update_for_project(admin_user, "admin_pass", project)
 
     def test_ambassador_cant_see_other_ambassadors_projects(self):
+        """
+        Test that one ambassador cannot see the projects on the dashboard created by
+        another ambassador.
+
+        Creates two ambassador users, creates a project for each of them, then checks
+        that the dashboard for each of them does not contain a reference to the other's
+        project.
+        """
         amb1_user = User.objects.create_user(username="amb1", password="amb1_pass")
         amb2_user = User.objects.create_user(username="amb2", password="amb2_pass")
         amb1 = get_profile(amb1_user)
