@@ -31,7 +31,7 @@
             </form>
         {% endif %}
         {% if project.is_active %}
-            <form if="complete_form" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+            <form id="complete_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="complete_project" class="small button success" name="_complete" type="submit" value="Complete" />
             </form>
@@ -42,7 +42,7 @@
             </form>
         {% endif %}
         {% if project.is_completed %}
-            <form if="incomplete_form" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+            <form id="incomplete_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="incomplete_project" class="small button alert" name="_incomplete" type="submit" value="Mark as Incomplete" />
             </form>

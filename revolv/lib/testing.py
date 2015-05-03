@@ -121,6 +121,10 @@ class WebTestMixin(object):
         """Assert that needle is contained somewhere in the html of response."""
         self.assertIn(needle, response.body)
 
+    def assert_not_in_response_html(self, response, needle):
+        """Assert that needle is contained somewhere in the html of response."""
+        self.assertNotIn(needle, response.body)
+
     def assert_id_in_response_html(self, response, id):
         """
         Given the html of a WebTest response (response.html), assert that the given id

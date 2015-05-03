@@ -158,11 +158,46 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project1.pk, Project.ACTIVE))
         self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project2.pk, Project.DRAFTED))
 
-    def test_admin_can_complete_active_project(self):
-        pass
+    def test_admin_can_complete_and_incomplete_active_project(self):
+        self.test_profile.make_administrator()
+        self.send_test_user_login_request(webtest=True)
+        project = Project.factories.active.create()
+
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        self.assert_in_response_html(dash_resp, "project-status-%i-%s" % (project.id, Project.ACTIVE))
+        completed_resp = dash_resp.forms["complete_form_%i" % project.pk].submit("_complete").maybe_follow()
+        self.assertEqual(completed_resp.status_code, 200)
+        self.assertEqual(Project.objects.get(id=project.pk).project_status, Project.COMPLETED)
+
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        self.assert_in_response_html(dash_resp, "project-status-%i-%s" % (project.id, Project.COMPLETED))
+        incompleted_resp = dash_resp.forms["incomplete_form_%i" % project.pk].submit("_incomplete").maybe_follow()
+        self.assertEqual(incompleted_resp.status_code, 200)
+        self.assertEqual(Project.objects.get(id=project.pk).project_status, Project.ACTIVE)
+
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        self.assert_in_response_html(dash_resp, "project-status-%i-%s" % (project.id, Project.ACTIVE))
 
     def test_post_updates_for_active_and_completed_projects(self):
         pass
 
     def test_ambassador_cant_see_other_ambassadors_projects(self):
-        pass
+        amb1_user = User.objects.create_user(username="amb1", password="amb1_pass")
+        amb2_user = User.objects.create_user(username="amb2", password="amb2_pass")
+        amb1 = get_profile(amb1_user)
+        amb2 = get_profile(amb2_user)
+        amb1.make_ambassador()
+        amb2.make_ambassador()
+        project1 = Project.factories.drafted.create(ambassador=amb1)
+        project2 = Project.factories.drafted.create(ambassador=amb2)
+
+        self.send_user_login_request(amb1_user, "amb1_pass", webtest=True)
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        self.assert_in_response_html(dash_resp, "project-%i" % project1.pk)
+        self.assert_not_in_response_html(dash_resp, "project-%i" % project2.pk)
+
+        self.app.get("/logout/")
+        self.send_user_login_request(amb2_user, "amb2_pass", webtest=True)
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        self.assert_in_response_html(dash_resp, "project-%i" % project2.pk)
+        self.assert_not_in_response_html(dash_resp, "project-%i" % project1.pk)
