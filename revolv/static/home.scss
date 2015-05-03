@@ -26,6 +26,16 @@
     font-size: 0;
 }
 
+@mixin absolute-center() {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right:0;
+    margin: auto;
+    height: 50%;
+}
+
 @mixin dark-shade($opacity) {
     position: absolute;
     z-index: $revolv-shade-z-index;
@@ -51,6 +61,44 @@ body {
 }
 
 // --- Cover Image Styles ----------------------------------------------------------------
+
+.cover {
+    width: 100%; 
+    height: 600px;
+    overflow: hidden;
+    position: relative;
+
+    h1 {
+        color: white;
+        text-align: center;
+    }
+
+    p {
+        font-size: $revolv-cover-inset-paragraph-size;
+        line-height: $revolv-cover-inset-paragraph-size + 6px;
+        text-align: center;
+        font-weight: 200;
+        color: white;
+        padding-top: 30px;
+        line-height: 30px;
+        margin: 0;
+    }
+
+    .shade {
+        @include dark-shade(0.3);
+    }
+
+    .cover-inset {
+        @include absolute-center();
+        width: 600px;
+        z-index: 1;
+        text-align: center;
+    }
+
+    .cover-video {
+        width: 100%;
+    }
+}
 
 .cover-image {
     background: url(/static/images/solar-worker-stockphoto.jpg);
@@ -97,6 +145,24 @@ body {
 
 .spacer {
     height: 0px !important;
+}
+
+// --- Current Project Styles ------------------------------------------------------------
+
+.current-project {
+    h1 {
+        color: $revolv-dark-blue;
+        font-weight: 100;
+
+        @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-dark-blue, $bg-color: $revolv-tan-bg);
+
+        margin-bottom: 1.5em; // override
+        &.heading-error {
+            color: $revolv-red;
+            @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-tan-bg);
+            margin-bottom: 1.5em; // override
+        }
+    }
 }
 
 // --- About RE-volv Styles --------------------------------------------------------------

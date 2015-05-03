@@ -44,7 +44,7 @@
 {% block body %}
 
 {% spaceless %}
-
+<!-- 
 <div class="cover-image">
     <div class="shade"></div>
     <div class="cover-inset">
@@ -54,6 +54,24 @@
             <div class="learn-more button">Learn how RE-volv works</div>
         </a>
     </div>
+</div> -->
+
+<div class="cover">
+    <div class="shade"></div>
+    <div class="cover-inset">
+        <h1>WE'RE SAVING TOMORROW</h1>
+        <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
+        <a href="#how-revolv-works">
+            <div class="learn-more button">Learn how RE-volv works</div>
+        </a>
+    </div>
+
+    <video autoplay loop muted src="{% static "videos/cover.mp4" %}" class="cover-video">
+    </video>
+</div>
+
+<div class="row current-project">
+    <h1>OUR CURRENT PROJECT</h1>
 </div>
 
 {% include "base/animations/nav_spine.html" %}
