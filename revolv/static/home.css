@@ -5656,6 +5656,8 @@ body {
   padding: 30px;
   box-sizing: border-box;
   color: white; }
+  .current-project a {
+    color: white; }
   .current-project h1 {
     color: white; }
   .current-project .current-project-inset {
@@ -5664,8 +5666,10 @@ body {
     box-sizing: border-box; }
   .current-project .graphics-container {
     position: absolute;
-    top: 50%;
-    right: 20%; }
+    width: 250px;
+    height: 250px;
+    top: calc(50% - 125px);
+    right: 60px; }
     .current-project .graphics-container .svg-graphics-container {
       position: absolute;
       height: 100%;

@@ -58,7 +58,6 @@
     </div>
 </div> -->
 
-
 <div class="cover">
     <a target="_blank" href="https://youtu.be/eSADOAxjcPU">
     <div class="shade"></div>
@@ -76,11 +75,16 @@
 {% if first_project %}
 <div class="text-with-divider">OUR CURRENT PROJECT</div>
 <div class="row current-project" style="background-image: url({{first_project.cover_photo.url}})">
+    <a href="{% url "project:view" pk=first_project.pk %}">
     <div class="overlay">
         <div class="current-project-inset">
             <h1>{{ first_project.title }}</h1>
             <p>{{ first_project.org_about }}</p>
         </div>
+
+        <script type="text/javascript">
+            window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
+        </script>
 
         <div class="graphics-container">
             <svg class="svg-graphics-container"></svg>
@@ -90,7 +94,9 @@
                 <p class="funded">FUNDED</p>
             </div>
         </div>
+
     </div>
+    </a>
 </div>
 {% endif %}
 
