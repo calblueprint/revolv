@@ -6,7 +6,7 @@ from django.test import TestCase
 from django_webtest import WebTest
 from revolv.base.utils import get_profile
 from revolv.lib.testing import TestUserMixin, WebTestMixin
-from revolv.project.models import Project
+from revolv.project.models import Project, ProjectUpdate
 
 
 class DashboardTestCase(TestUserMixin, TestCase):
@@ -178,8 +178,34 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         dash_resp = self.app.get("/dashboard/").maybe_follow()
         self.assert_in_response_html(dash_resp, "project-status-%i-%s" % (project.id, Project.ACTIVE))
 
+    def assert_can_post_update_for_project(self, user, password, project):
+        self.app.get("/logout/")
+        update_count = project.updates.count()
+        self.send_user_login_request(user, password, webtest=True)
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        updates_resp = dash_resp.forms["post_project_updates_form_%i" % project.pk].submit().maybe_follow()
+        edit_page_form = updates_resp.forms["project_update_form"]
+        edit_page_form = self.fill_form_from_model(edit_page_form, ProjectUpdate.factories.base.build())
+        post_update_resp = edit_page_form.submit().maybe_follow()
+        self.assertEqual(post_update_resp.status_code, 200)
+        self.assertEqual(project.updates.count(), update_count + 1)
+
     def test_post_updates_for_active_and_completed_projects(self):
-        pass
+        amb_user = User.objects.create_user(username="amb", password="amb_pass")
+        amb = get_profile(amb_user)
+        amb.make_ambassador()
+        admin_user = User.objects.create_user(username="admin", password="admin_pass")
+        admin = get_profile(admin_user)
+        admin.make_administrator()
+        project = Project.factories.active.create(ambassador=amb)
+
+        self.assert_can_post_update_for_project(amb_user, "amb_pass", project)
+        self.assert_can_post_update_for_project(admin_user, "admin_pass", project)
+
+        project.complete_project()
+
+        self.assert_can_post_update_for_project(amb_user, "amb_pass", project)
+        self.assert_can_post_update_for_project(admin_user, "admin_pass", project)
 
     def test_ambassador_cant_see_other_ambassadors_projects(self):
         amb1_user = User.objects.create_user(username="amb1", password="amb1_pass")

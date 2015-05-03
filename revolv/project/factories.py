@@ -1,7 +1,7 @@
 import datetime
 
 import factory
-from revolv.project.models import Category, Project
+from revolv.project.models import Category, Project, ProjectUpdate
 
 
 class ProjectFactory(factory.django.DjangoModelFactory):
@@ -67,3 +67,16 @@ class CategoryFactory(factory.django.DjangoModelFactory):
 
 class CategoryFactories(object):
     base = CategoryFactory
+
+
+class ProjectUpdateFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = ProjectUpdate
+
+    update_text = "This is an update"
+    date = datetime.date.today()
+    project = factory.SubFactory(ProjectFactory)
+
+
+class ProjectUpdateFactories(object):
+    base = ProjectUpdateFactory

@@ -481,6 +481,7 @@ class Project(models.Model):
 
 
 class ProjectUpdate(models.Model):
+    factories = ImportProxy("revolv.project.factories", "ProjectUpdateFactories")
     update_text = models.TextField(
         'Update text',
         help_text="What should the update say?"
