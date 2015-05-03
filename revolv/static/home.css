@@ -5663,7 +5663,8 @@ body {
   .current-project .current-project-inset {
     width: 50%;
     padding: 30px;
-    box-sizing: border-box; }
+    box-sizing: border-box;
+    white-space: pre-wrap; }
   .current-project .graphics-container {
     position: absolute;
     width: 250px;

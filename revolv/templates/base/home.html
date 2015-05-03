@@ -13,6 +13,9 @@
 <script type="text/javascript" src="{% static "js/vendor/svg4everybody.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
 <script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
+<script type="text/javascript">
+    window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
+</script>
 
 <script type="text/javascript">
     window.HOMEPAGE_PROJECT_DATA = [
@@ -81,11 +84,6 @@
             <h1>{{ first_project.title }}</h1>
             <p>{{ first_project.org_about }}</p>
         </div>
-
-        <script type="text/javascript">
-            window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
-        </script>
-
         <div class="graphics-container">
             <svg class="svg-graphics-container"></svg>
             <svg class="internal-graphics-container"></svg>
@@ -94,7 +92,6 @@
                 <p class="funded">FUNDED</p>
             </div>
         </div>
-
     </div>
     </a>
 </div>
