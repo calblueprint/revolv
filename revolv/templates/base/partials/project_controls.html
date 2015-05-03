@@ -18,50 +18,50 @@
 {% if project and profile %}
     {% if profile.is_administrator %}
         {% if project.is_drafted %}
-            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+            <form id="propose_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="propose_project" class="small button" name="_propose" type="submit" value="Propose" />
             </form>
         {% endif %}
         {% if project.is_proposed %}
-            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+            <form id="approve_deny_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="approve_project" class="small button success" name="_approve" type="submit" value="Approve" />
                 <input id="deny_project" class="small button alert" name="_deny" type="submit" value="Deny" />
             </form>
         {% endif %}
         {% if project.is_active %}
-            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+            <form if="complete_form" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="complete_project" class="small button success" name="_complete" type="submit" value="Complete" />
             </form>
         {% endif %}
         {% if project.is_completed or project.is_active %}
-            <form enctype="multipart/form-data" method="GET" action="{% url "project:update" pk=project.id %}">
+            <form id="post_project_updates_form_{{project.pk}}" enctype="multipart/form-data" method="GET" action="{% url "project:update" pk=project.id %}">
                 <input id="post_project_updates" class="small button" type="submit" value="Post Updates" />
             </form>
         {% endif %}
         {% if project.is_completed %}
-            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+            <form if="incomplete_form" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="incomplete_project" class="small button alert" name="_incomplete" type="submit" value="Mark as Incomplete" />
             </form>
         {% endif %}
-        <form enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
+        <form id="edit_form_{{project.pk}}" enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
             <input id="edit_project" class="small button" type="submit" value="Edit" />
         </form>
     {% elif profile.is_ambassador %}
         {% if project.is_drafted %}
-            <form enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+            <form id="propose_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="propose_project" class="small button" name="_propose" type="submit" value="Propose" />
             </form>
-            <form enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
+            <form id="edit_form_{{project.pk}}" enctype="multipart/form-data" method="GET" action="{% url "project:edit" pk=project.id %}">
                 <input id="edit_project" class="small button" type="submit" value="Edit" />
             </form>
         {% endif %}
         {% if project.is_completed or project.is_active %}
-            <form enctype="multipart/form-data" method="GET" action="{% url "project:update" pk=project.id %}">
+            <form id="post_project_updates_form_{{project.pk}}" enctype="multipart/form-data" method="GET" action="{% url "project:update" pk=project.id %}">
                 <input id="post_project_updates" class="small button" type="submit" value="Post Updates" />
             </form>
         {% endif %}

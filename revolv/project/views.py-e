@@ -3,16 +3,19 @@ from decimal import Decimal
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
+
 from revolv.base.users import UserDataMixin
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate
+from revolv.base.models import RevolvUserProfile
+
 
 
 class DonationLevelFormSetMixin(object):
@@ -179,7 +182,7 @@ class PostProjectUpdateView(TemplateProjectUpdateView):
         return super(PostProjectUpdateView, self).form_valid(form)
 
 
-class EditProjectUpdateView(TemplateProjectUpdateView):
+class EditProjectUpdateView(TemplateProjectUpdateView):    
     model = ProjectUpdate
 
     def get_success_url(self):

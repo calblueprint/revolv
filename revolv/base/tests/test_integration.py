@@ -1,8 +1,10 @@
 from bs4 import BeautifulSoup
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
 from django_webtest import WebTest
+from revolv.base.utils import get_profile
 from revolv.lib.testing import TestUserMixin, WebTestMixin
 from revolv.project.models import Project
 
@@ -99,17 +101,62 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
 
         self.test_profile.make_administrator()
         self.send_test_user_login_request(webtest=True)
-        self.assert_logged_in_user_can_create_project_via_dashboard("this_project_made_by_ambsaddador")
+        self.assert_logged_in_user_can_create_project_via_dashboard("this_project_made_by_admin")
 
-    def test_admin_can_approve_drafted_project(self):
-        # amb_user = User.objects.create_user(username="amb", password="amb_pass")
-        # admin_user = User.objects.create_user(username="admin", password="admin_pass")
-        # ambassador = RevolvUserProfile.factories.create()
-        # TODO: do this function lol
-        pass
+    def test_ambassador_can_propose_project(self):
+        """
+        Test that if an ambassador has created a project, it will show up on the dashboard
+        and they can propose it from there.
 
-    def test_admin_can_deny_drafted_project(self):
-        pass
+        Note: this is a possible failure point if we scale the RE-volv app to many projects,
+        and change the dashboard to load project asynchronously: this async loading could cause
+        the test to fail because it won't find the project propose button.
+        """
+        self.test_profile.make_ambassador()
+        self.send_test_user_login_request(webtest=True)
+
+        project = Project.factories.drafted.create(ambassador=self.test_profile)
+        dash_response = self.app.get("/dashboard/").maybe_follow()
+        propose_form = dash_response.forms["propose_form_%i" % project.pk]
+        new_dash_response = propose_form.submit("_propose").maybe_follow()
+        self.assertEqual(new_dash_response.status_code, 200)
+
+        self.assertEqual(Project.objects.get(id=project.pk).project_status, Project.PROPOSED)
+
+    def test_admin_can_approve_or_deny_proposed_project(self):
+        """
+        Test that an admin can approve and deny proposed projects from the dashboard.
+
+        Creates two projects, both proposed, and tests that the admin can use the buttons
+        on the dashboard to approve and deny, respectively, each one. Then, tests that
+        the ambassador that created the projects can see
+        """
+        amb_user = User.objects.create_user(username="amb", password="amb_pass")
+        admin_user = User.objects.create_user(username="admin", password="admin_pass")
+        ambassador = get_profile(amb_user)
+        admin = get_profile(admin_user)
+        ambassador.make_ambassador()
+        admin.make_administrator()
+        project1 = Project.factories.proposed.create(ambassador=ambassador)
+        project2 = Project.factories.proposed.create(ambassador=ambassador)
+
+        self.send_user_login_request(admin_user, "admin_pass", webtest=True)
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        approved_resp = dash_resp.forms["approve_deny_form_%i" % project1.pk].submit("_approve").maybe_follow()
+        self.assertEqual(approved_resp.status_code, 200)
+        # TODO(#255): when we add a STAGED project status as per https://github.com/calblueprint/revolv/issues/255,
+        # we'll need to check that project 1 is staged here instead of active.
+        self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.ACTIVE)
+
+        denied_resp = dash_resp.forms["approve_deny_form_%i" % project2.pk].submit("_deny").maybe_follow()
+        self.assertEqual(denied_resp.status_code, 200)
+        self.assertEqual(Project.objects.get(id=project2.pk).project_status, Project.DRAFTED)
+
+        self.app.get("/logout/")
+        self.send_user_login_request(amb_user, "amb_pass", webtest=True)
+        amb_dash_resp = self.app.get("/dashboard/").maybe_follow()
+        self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project1.pk, Project.ACTIVE))
+        self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project2.pk, Project.DRAFTED))
 
     def test_admin_can_complete_active_project(self):
         pass

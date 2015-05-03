@@ -42,13 +42,20 @@ class ActiveProjectFactory(ProjectFactory):
 
 
 class DraftedProjectFactory(ProjectFactory):
+    """Factory for default drafted projects."""
     project_status = Project.DRAFTED
+
+
+class ProposedProjectFactory(ProjectFactory):
+    """Factory for default proposed projects."""
+    project_status = Project.PROPOSED
 
 
 class ProjectFactories(object):
     base = ProjectFactory
     active = ActiveProjectFactory
     drafted = DraftedProjectFactory
+    proposed = ProposedProjectFactory
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
