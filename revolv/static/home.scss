@@ -71,12 +71,14 @@ body {
     h1 {
         color: white;
         text-align: center;
+        text-shadow: 2px 2px black;
     }
 
     p {
         font-size: $revolv-cover-inset-paragraph-size;
         line-height: $revolv-cover-inset-paragraph-size + 6px;
         text-align: center;
+        text-shadow: 2px 2px black;
         font-weight: 200;
         color: white;
         padding-top: 30px;
@@ -85,7 +87,7 @@ body {
     }
 
     .shade {
-        @include dark-shade(0.3);
+        @include dark-shade(0.2);
     }
 
     .cover-inset {
@@ -150,18 +152,113 @@ body {
 // --- Current Project Styles ------------------------------------------------------------
 
 .current-project {
+    position: relative;
+    width: 75%;
+    height: 450px;
+    padding: 30px;
+    box-sizing: border-box;
+    color: white;
+
     h1 {
-        color: $revolv-dark-blue;
-        font-weight: 100;
+        color: white;
+    }
 
-        @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-dark-blue, $bg-color: $revolv-tan-bg);
+    .current-project-inset {
+        width: 50%;
+        padding: 30px;
+        box-sizing: border-box;
+    }
 
-        margin-bottom: 1.5em; // override
-        &.heading-error {
-            color: $revolv-red;
-            @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-tan-bg);
-            margin-bottom: 1.5em; // override
+    // Progress circle styles
+    .graphics-container {
+        position: absolute;
+        top: 50%;
+        right: 20%;
+
+        .svg-graphics-container {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
         }
+
+        .internal-graphics-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+        }
+
+        .project-badge-line, .project-badge-circle {
+          fill: none;
+        }
+
+        .project-badge-line {
+          stroke: $revolv-blue;
+        }
+
+        .project-badge-circle {
+          stroke: white;
+        }
+
+        .text-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            height: 220px;
+            width: 220px;
+            color: $revolv-dark-blue;
+
+            .percentage-text {
+                position: absolute;
+                left: 50%;
+                top: 45%;
+                transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+            }
+
+            .funded {
+                position: absolute;
+                font-weight: 800;
+                left: 50%;
+                top: 60%;
+                transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .5);
+    }
+}
+
+.text-with-divider {
+    font-size: 24px;
+    margin: 30px auto;
+    width: 75%;
+    color: $revolv-dark-blue;
+    font-weight: 100;
+
+    @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-dark-blue, $bg-color: $revolv-tan-bg);
+
+    margin-bottom: 1.5em; // override
+    &.heading-error {
+        color: $revolv-red;
+        @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-tan-bg);
+        margin-bottom: 1.5em; // override
     }
 }
 
@@ -245,7 +342,7 @@ body {
 
     .about-inset {
         margin: 0 auto;
-        padding: 75px 30px;
+        padding: 30px 30px;
     }
 
     .person {

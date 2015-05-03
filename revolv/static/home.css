@@ -5572,11 +5572,13 @@ body {
   position: relative; }
   .cover h1 {
     color: white;
-    text-align: center; }
+    text-align: center;
+    text-shadow: 2px 2px black; }
   .cover p {
     font-size: 20px;
     line-height: 26px;
     text-align: center;
+    text-shadow: 2px 2px black;
     font-weight: 200;
     color: white;
     padding-top: 30px;
@@ -5587,7 +5589,7 @@ body {
     z-index: 1;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); }
+    background-color: rgba(0, 0, 0, 0.2); }
   .cover .cover-inset {
     position: absolute;
     top: 0;
@@ -5647,7 +5649,78 @@ body {
 .spacer {
   height: 0px !important; }
 
-.current-project h1 {
+.current-project {
+  position: relative;
+  width: 75%;
+  height: 450px;
+  padding: 30px;
+  box-sizing: border-box;
+  color: white; }
+  .current-project h1 {
+    color: white; }
+  .current-project .current-project-inset {
+    width: 50%;
+    padding: 30px;
+    box-sizing: border-box; }
+  .current-project .graphics-container {
+    position: absolute;
+    top: 50%;
+    right: 20%; }
+    .current-project .graphics-container .svg-graphics-container {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0; }
+    .current-project .graphics-container .internal-graphics-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%); }
+    .current-project .graphics-container .project-badge-line, .current-project .graphics-container .project-badge-circle {
+      fill: none; }
+    .current-project .graphics-container .project-badge-line {
+      stroke: #11ADE5; }
+    .current-project .graphics-container .project-badge-circle {
+      stroke: white; }
+    .current-project .graphics-container .text-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      height: 220px;
+      width: 220px;
+      color: #064f7e; }
+      .current-project .graphics-container .text-container .percentage-text {
+        position: absolute;
+        left: 50%;
+        top: 45%;
+        transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%); }
+      .current-project .graphics-container .text-container .funded {
+        position: absolute;
+        font-weight: 800;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%); }
+  .current-project .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5); }
+
+.text-with-divider {
+  font-size: 24px;
+  margin: 30px auto;
+  width: 75%;
   color: #064f7e;
   font-weight: 100;
   display: block;
@@ -5659,15 +5732,15 @@ body {
   text-align: center;
   font-size: 25px;
   margin-bottom: 1.5em; }
-  .current-project h1:first-line {
+  .text-with-divider:first-line {
     background-color: #EBECE7; }
-  .current-project h1:before {
+  .text-with-divider:before {
     display: inline;
     content: "\a0\a0\a0"; }
-  .current-project h1:after {
+  .text-with-divider:after {
     display: inline;
     content: "\a0\a0\a0"; }
-  .current-project h1.heading-error {
+  .text-with-divider.heading-error {
     color: #E83D3D;
     display: block;
     height: 0.5em;
@@ -5678,12 +5751,12 @@ body {
     text-align: center;
     font-size: 25px;
     margin-bottom: 1.5em; }
-    .current-project h1.heading-error:first-line {
+    .text-with-divider.heading-error:first-line {
       background-color: #EBECE7; }
-    .current-project h1.heading-error:before {
+    .text-with-divider.heading-error:before {
       display: inline;
       content: "\a0\a0\a0"; }
-    .current-project h1.heading-error:after {
+    .text-with-divider.heading-error:after {
       display: inline;
       content: "\a0\a0\a0"; }
 
@@ -5743,7 +5816,7 @@ body {
     font-size: 20px; }
   .about .about-inset {
     margin: 0 auto;
-    padding: 75px 30px; }
+    padding: 30px 30px; }
   .about .person {
     height: 144px; }
   .about .coin {
