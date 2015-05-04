@@ -31,4 +31,8 @@ Vagrant.configure("2") do |config|
     
     # Enable provisioning with a shell script.
     config.vm.provision :shell, :path => "vagrant/install.sh"
+
+    config.vm.provider "virtualbox" do |vb|
+        vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
+    end
 end

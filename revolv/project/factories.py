@@ -1,7 +1,7 @@
 import datetime
 
 import factory
-from revolv.project.models import Category, Project
+from revolv.project.models import Category, Project, ProjectUpdate
 
 
 class ProjectFactory(factory.django.DjangoModelFactory):
@@ -26,10 +26,14 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     end_date = datetime.date.today() - datetime.timedelta(days=1)  # tomorrow
     mission_statement = "We do solar!"
     cover_photo = None
+    org_name = "Power for Community Center"
+    org_about = "Community Center is a center for communities."
     org_start_date = datetime.date.today() + datetime.timedelta(days=1)  # today
     actual_energy = 25.5
     amount_repaid = 29.25
     ambassador = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
+    location_latitude = 42.0
+    location_longitude = 42.0
 
 
 class ActiveProjectFactory(ProjectFactory):
@@ -37,9 +41,21 @@ class ActiveProjectFactory(ProjectFactory):
     project_status = Project.ACTIVE
 
 
+class DraftedProjectFactory(ProjectFactory):
+    """Factory for default drafted projects."""
+    project_status = Project.DRAFTED
+
+
+class ProposedProjectFactory(ProjectFactory):
+    """Factory for default proposed projects."""
+    project_status = Project.PROPOSED
+
+
 class ProjectFactories(object):
     base = ProjectFactory
     active = ActiveProjectFactory
+    drafted = DraftedProjectFactory
+    proposed = ProposedProjectFactory
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
@@ -51,3 +67,16 @@ class CategoryFactory(factory.django.DjangoModelFactory):
 
 class CategoryFactories(object):
     base = CategoryFactory
+
+
+class ProjectUpdateFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = ProjectUpdate
+
+    update_text = "This is an update"
+    date = datetime.date.today()
+    project = factory.SubFactory(ProjectFactory)
+
+
+class ProjectUpdateFactories(object):
+    base = ProjectUpdateFactory
