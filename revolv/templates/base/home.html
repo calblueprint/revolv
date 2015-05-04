@@ -167,6 +167,8 @@
     <h2>Be a part of something great.</h2>
     {% if first_project %}
         <a href="{% url "project:view" pk=first_project.pk %}" class="donate button">START CONTRIBUTING</a>
+    {% else %}
+        <a href="{% url "signin" %}#signup" class="donate button">START CONTRIBUTING</a>
     {% endif %}
 </div>
 {% endspaceless %}

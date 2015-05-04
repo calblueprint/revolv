@@ -5862,11 +5862,11 @@ body {
     margin: 140px 20px; }
 
 .button {
-  height: 54px;
-  line-height: 24px;
+  height: auto;
+  line-height: auto;
   font-size: 24px;
-  color: white;
   border-radius: 5px;
+  color: white;
   margin: 30px auto; }
 
 .learn-more {
@@ -5887,23 +5887,12 @@ body {
   background-color: #137F5A; }
 
 @media only screen and (max-width: 40em) {
-  html .cover-image .cover-inset {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 50%;
-    width: 50%;
-    margin: auto;
-    background-color: inherit;
-    color: white; }
-    html .cover-image .cover-inset .title-header {
-      font-size: 40px;
-      line-height: 40px; }
-    html .cover-image .cover-inset p {
-      font-size: 18px;
-      line-height: 18px; }
+  html .cover-image .cover-inset .title-header {
+    font-size: 40px;
+    line-height: 40px; }
+  html .cover-image .cover-inset p {
+    font-size: 18px;
+    line-height: 18px; }
   .about {
     width: 100%; }
     .about h1 {
@@ -5915,7 +5904,9 @@ body {
     .about .grouping {
       margin-bottom: 0px; }
   .button {
-    margin-top: 5px; }
+    margin-top: 10px;
+    font-size: 16px;
+    width: 80%; }
   .learn-more {
     margin-top: 15px; } }
 
