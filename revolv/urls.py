@@ -25,3 +25,5 @@ urlpatterns = patterns(
 
     url(r'^', include('cms.urls')),
 )
+
+#handler404 = 'base_views.PageNotFoundView'

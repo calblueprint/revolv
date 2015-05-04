@@ -205,6 +205,8 @@ class LogoutView(UserDataMixin, View):
         messages.success(self.request, 'Logged out successfully')
         return redirect('home')
 
+# class PageNotFoundView(View):
+#     template_name = "404.html"
 
 class DashboardRedirect(UserDataMixin, View):
     """
