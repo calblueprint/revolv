@@ -50,33 +50,22 @@
 
 {% spaceless %}
 
-<!-- <div class="cover-image">
-    <div class="shade"></div>
-    <div class="cover-inset">
-        <p class="title-header">WE'RE SAVING TOMORROW</p>
-        <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
-        <a href="#how-revolv-works">
-            <div class="learn-more button">Learn how RE-volv works</div>
-        </a>
-    </div>
-</div> -->
-
 <div class="cover">
     <a target="_blank" href="https://youtu.be/eSADOAxjcPU">
-    <div class="shade"></div>
-    <div class="cover-inset">
-        <h1>WE'RE SAVING TOMORROW</h1>
-        <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
-        <a href="#how-revolv-works">
-            <div class="learn-more button">Learn how RE-volv works</div>
-        </a>
-    </div>
-    <video autoplay loop muted src="{% static "videos/cover.mp4" %}" class="cover-video"></video>
+        <div class="shade"></div>
+        <div class="cover-inset">
+            <h1>WE'RE SAVING TOMORROW</h1>
+            <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
+            <a href="#how-revolv-works">
+                <div class="learn-more button">Learn how RE-volv works</div>
+            </a>
+        </div>
+        <video autoplay loop muted src="{% static "videos/cover.mp4" %}" class="cover-video"></video>
     </a>
 </div>
 
 {% if first_project %}
-<div class="text-with-divider">OUR CURRENT PROJECT</div>
+<div class="divider-title">OUR CURRENT PROJECT</div>
 {% if first_project.cover_photo %}
 <div class="row current-project" style="background-image: url({{first_project.cover_photo.url}})">
     <a href="{% url "project:view" pk=first_project.pk %}">
@@ -100,7 +89,7 @@
 {% endif %}
 
 {% include "base/animations/nav_spine.html" %}
-<div id="how-revolv-works" class="text-with-divider">HOW RE-VOLV WORKS</div>
+<div id="how-revolv-works" class="divider-title">HOW RE-VOLV WORKS</div>
 <div class="row about">
     <div class="about-inset">
         <p>Climate change is among the most alarming environmental issues the world faces today.</p>

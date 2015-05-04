@@ -4,8 +4,7 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-sass": "^0.18.1",
-    "node-sass": "~0.7.0"
+    "grunt-sass": "~0.8.0"
   },
   "description": "About Blueprint ======= We strive to make beautiful engineering accessible and useful for those who create communities and promote public welfare. Our vision is a world where the good, passionate, and visionary have the biggest impact on our communities and society.",
   "main": "Gruntfile.js",

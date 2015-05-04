@@ -102,49 +102,6 @@ body {
     }
 }
 
-.cover-image {
-    background: url(/static/images/solar-worker-stockphoto.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    display: block;
-    width: 100%;
-    height: $revolv-cover-photo-height;
-    margin-bottom: 0;
-    position: relative;
-
-    .shade {
-        @include dark-shade(0.3);
-    }
-
-    .cover-inset {
-        @include vertically-centered-block();
-        text-align: center;
-        margin: 0 auto;
-        min-width: $revolv-cover-inset-min-width;
-        max-width: $revolv-cover-inset-max-width;
-        z-index: $revolv-shade-z-index + 10;
-
-        .title-header {
-            font-size: $revolv-cover-inset-title-size;
-            line-height: $revolv-cover-inset-title-size;
-            color: white;
-        }
-        h1 {
-            color: white;
-        }
-        p {
-            font-size: $revolv-cover-inset-paragraph-size;
-            line-height: $revolv-cover-inset-paragraph-size + 6px;
-            font-weight: 200;
-            color: white;
-            padding-top: 30px;
-            line-height: 30px;
-            margin: 0;
-        }
-    }
-}
-
 .spacer {
     height: 0px !important;
 }
@@ -212,7 +169,6 @@ body {
 
         .text-container {
             position: absolute;
-            // margin-left: 25%;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
@@ -253,7 +209,7 @@ body {
     }
 }
 
-.text-with-divider {
+.divider-title {
     font-size: 24px;
     margin: 30px auto;
     width: 75%;
@@ -442,16 +398,6 @@ body {
 
 @media #{$small-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .cover-image .cover-inset {
-        .title-header {
-            font-size: $revolv-cover-inset-title-size-mobile;
-            line-height: $revolv-cover-inset-title-size-mobile;
-        }
-        p {
-            font-size: 18px;
-            line-height: 18px;
-        }
-    }
 
     .about {
         width: 100%;
@@ -481,15 +427,6 @@ body {
 
 @media #{$small-only} and (orientation: portrait) {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    html .cover-image .cover-inset p {
-        font-size: $revolv-cover-inset-paragraph-size - 2px;
-        line-height: $revolv-cover-inset-paragraph-size + 4px;
-    }
-
-    html .cover-image {
-        // this may differ depending on the chosen background image
-        background-position: left;
-    }
 
     .about {
         .grouping {
@@ -536,15 +473,9 @@ body {
     }
 }
 
-@media #{$medium-only} {
-    // extra qualifiers for more specificity in order to overload non-mobile styles
-    .cover-image {
-        margin-bottom: 20px;
-    }
-}
-
 @media #{$small-only}, #{$medium-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
+
     body {
         height: 100% !important;
     }

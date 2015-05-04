@@ -5604,48 +5604,6 @@ body {
   .cover .cover-video {
     width: 100%; }
 
-.cover-image {
-  background: url(/static/images/solar-worker-stockphoto.jpg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  display: block;
-  width: 100%;
-  height: 550px;
-  margin-bottom: 0;
-  position: relative; }
-  .cover-image .shade {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); }
-  .cover-image .cover-inset {
-    position: relative;
-    top: calc(50% + 40px);
-    transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    text-align: center;
-    margin: 0 auto;
-    min-width: 300px;
-    max-width: 600px;
-    z-index: 11; }
-    .cover-image .cover-inset .title-header {
-      font-size: 64px;
-      line-height: 64px;
-      color: white; }
-    .cover-image .cover-inset h1 {
-      color: white; }
-    .cover-image .cover-inset p {
-      font-size: 20px;
-      line-height: 26px;
-      font-weight: 200;
-      color: white;
-      padding-top: 30px;
-      line-height: 30px;
-      margin: 0; }
-
 .spacer {
   height: 0px !important; }
 
@@ -5722,7 +5680,7 @@ body {
     left: 0;
     background: rgba(0, 0, 0, 0.5); }
 
-.text-with-divider {
+.divider-title {
   font-size: 24px;
   margin: 30px auto;
   width: 75%;
@@ -5737,15 +5695,15 @@ body {
   text-align: center;
   font-size: 25px;
   margin-bottom: 1.5em; }
-  .text-with-divider:first-line {
+  .divider-title:first-line {
     background-color: #EBECE7; }
-  .text-with-divider:before {
+  .divider-title:before {
     display: inline;
     content: "\a0\a0\a0"; }
-  .text-with-divider:after {
+  .divider-title:after {
     display: inline;
     content: "\a0\a0\a0"; }
-  .text-with-divider.heading-error {
+  .divider-title.heading-error {
     color: #E83D3D;
     display: block;
     height: 0.5em;
@@ -5756,12 +5714,12 @@ body {
     text-align: center;
     font-size: 25px;
     margin-bottom: 1.5em; }
-    .text-with-divider.heading-error:first-line {
+    .divider-title.heading-error:first-line {
       background-color: #EBECE7; }
-    .text-with-divider.heading-error:before {
+    .divider-title.heading-error:before {
       display: inline;
       content: "\a0\a0\a0"; }
-    .text-with-divider.heading-error:after {
+    .divider-title.heading-error:after {
       display: inline;
       content: "\a0\a0\a0"; }
 
@@ -5887,12 +5845,6 @@ body {
   background-color: #137F5A; }
 
 @media only screen and (max-width: 40em) {
-  html .cover-image .cover-inset .title-header {
-    font-size: 40px;
-    line-height: 40px; }
-  html .cover-image .cover-inset p {
-    font-size: 18px;
-    line-height: 18px; }
   .about {
     width: 100%; }
     .about h1 {
@@ -5911,11 +5863,6 @@ body {
     margin-top: 15px; } }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
-  html .cover-image .cover-inset p {
-    font-size: 18px;
-    line-height: 24px; }
-  html .cover-image {
-    background-position: left; }
   .about .grouping {
     height: 70px;
     width: 70px;
@@ -5944,10 +5891,6 @@ body {
   .about .solar-panel {
     top: -46px;
     margin-left: -45px; } }
-
-@media only screen and (min-width:40.063em) and (max-width:64em) {
-  .cover-image {
-    margin-bottom: 20px; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   body {
