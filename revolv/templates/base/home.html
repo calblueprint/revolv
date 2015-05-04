@@ -11,6 +11,11 @@
 <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/vendor/svg4everybody.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
+<script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
+<script type="text/javascript">
+    window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
+</script>
 
 <script type="text/javascript">
     window.HOMEPAGE_PROJECT_DATA = [
@@ -45,19 +50,47 @@
 
 {% spaceless %}
 
-<div class="cover-image">
-    <div class="shade"></div>
-    <div class="cover-inset">
-        <p class="title-header">WE'RE SAVING TOMORROW</p>
-        <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
-        <a href="#how-revolv-works">
-            <div class="learn-more button">Learn how RE-volv works</div>
-        </a>
-    </div>
+<div class="cover">
+    <a target="_blank" href="https://youtu.be/eSADOAxjcPU">
+        <div class="shade"></div>
+        <div class="cover-inset">
+            <h1>WE'RE SAVING TOMORROW</h1>
+            <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
+            <a href="#how-revolv-works">
+                <div class="learn-more button">Learn how RE-volv works</div>
+            </a>
+        </div>
+        <video autoplay loop muted src="{% static "videos/cover.mp4" %}" class="cover-video"></video>
+    </a>
 </div>
 
+{% if first_project %}
+<div class="divider-title">OUR CURRENT PROJECT</div>
+{% if first_project.cover_photo %}
+<div class="row current-project" style="background-image: url({{first_project.cover_photo.url}})">
+    <a href="{% url "project:view" pk=first_project.pk %}">
+    <div class="overlay">
+        <div class="current-project-inset">
+            <h1>{{ first_project.title }}</h1>
+            <p>{{ first_project.org_about }}</p>
+        </div>
+        <div class="graphics-container">
+            <svg class="svg-graphics-container"></svg>
+            <svg class="internal-graphics-container"></svg>
+            <div class="text-container">
+                <p class="percentage-text">{{ first_project.percent_complete }}%</p>
+                <p class="funded">FUNDED</p>
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+{% endif %}
+{% endif %}
+
 {% include "base/animations/nav_spine.html" %}
-<div id="how-revolv-works" class="row about">
+<div id="how-revolv-works" class="divider-title">HOW RE-VOLV WORKS</div>
+<div class="row about">
     <div class="about-inset">
         <p>Climate change is among the most alarming environmental issues the world faces today.</p>
         <h1>How would your donation to RE-volv help?</h1>
@@ -65,10 +98,10 @@
         <!-- Man, coin, and Woman -->
         <img class="person" src="{% static "images/revolv-man.svg" %}" />
         <img 
-            data-615="margin-bottom: -60px;"
-            data-732="margin-bottom: -660px;"
-            data-733="opacity[begin]: 1;"
-            data-734="opacity[end]: 0;"
+            data-1250="margin-bottom: -60px;"
+            data-1600="margin-bottom: -660px;"
+            data-1601="opacity[begin]: 1;"
+            data-1602="opacity[end]: 0;"
             class="coin" src="{% static "images/coin.svg" %}" />
         <img class="person" src="{% static "images/revolv-woman.svg" %}" />
 
@@ -86,8 +119,8 @@
 
         <!-- Main solar panel and house -->
         <img 
-            data-1175="top: 890px; transform: scale(0.2); opacity: 0.1;"
-            data-1375="top: 1245px; transform: scale(1); opacity: 1;"
+            data-1900="top: 890px; transform: scale(0.2); opacity: 0.1;"
+            data-2100="top: 1200px; transform: scale(1); opacity: 1;"
             class="main-panel" src="{% static "images/main-panel.svg" %}">
         <img class="main-house" src="{% static "images/main-house.svg" %}">
         <br>
@@ -99,23 +132,23 @@
             class="step" src="{% static "images/step3.png" %}" />
         <div class="grouping">
             <img 
-                data-1800="opacity: 0;"
-                data-1900="opacity: 1;"
+                data-2300="opacity: 0;"
+                data-2500="opacity: 1;"
                 class="solar-panel" src="{% static "images/main-panel.svg" %}">
             <img class="house" src="{% static "images/house.svg" %}">
         </div>
 
         <div class="grouping">
             <img 
-                data-1800="opacity: 0;"
-                data-1900="opacity: 1;"
+                data-2300="opacity: 0;"
+                data-2500="opacity: 1;"
                 class="solar-panel" src="{% static "images/main-panel.svg" %}">
             <img class="house" src="{% static "images/house.svg" %}">
         </div>
         <div class="grouping">
             <img
-                data-1800="opacity: 0;"
-                data-1900="opacity: 1;"
+                data-2300="opacity: 0;"
+                data-2500="opacity: 1;"
                 class="solar-panel" src="{% static "images/main-panel.svg" %}">
             <img class="house" src="{% static "images/house.svg" %}">
         </div>
