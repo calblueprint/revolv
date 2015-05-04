@@ -5,7 +5,7 @@ from django.core import mail
 from django.test import TestCase
 from django_webtest import WebTest
 from revolv.base.utils import get_profile
-from revolv.lib.testing import TestUserMixin, WebTestMixin
+from revolv.lib.testing import TestUserMixin, WebTestMixin, UserTestingMixin
 from revolv.project.models import Project, ProjectUpdate
 
 
@@ -35,7 +35,50 @@ class DashboardTestCase(TestUserMixin, TestCase):
         self.assertRedirects(response, self.DONOR_DASH)
 
 
-class AuthIntegrationTest(TestUserMixin, WebTest):
+class AuthIntegrationTest(TestUserMixin, WebTest, UserTestingMixin):
+    csrf_checks = False
+
+    def assert_user_can_follow_change_password_flow(self, user, password):
+        """Given a user and their current password, assert they can change it via the auth pages."""
+        self.send_user_login_request(user, password, webtest=True)
+
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        change_pass_resp = dash_resp.click(linkid="change_password_link").maybe_follow()
+        form = change_pass_resp.forms["change_password_form"]
+        form["old_password"] = password
+        form["new_password1"] = "new_pass"
+        form["new_password2"] = "new_pass_oops"
+
+        # user did not enter passwords correctly: should not be authed
+        form.submit().maybe_follow()
+        self.app.get("/logout/")
+        no_user_authed_resp = self.send_user_login_request(user, "new_pass", webtest=True).maybe_follow()
+        self.assertNoUserAuthed(no_user_authed_resp)
+
+        self.send_user_login_request(user, password, webtest=True)
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        change_pass_resp = dash_resp.click(linkid="change_password_link").maybe_follow()
+        form = change_pass_resp.forms["change_password_form"]
+        form["old_password"] = password
+        form["new_password1"] = "new_pass"
+        form["new_password2"] = "new_pass"
+
+        # user should now be authed
+        form.submit().maybe_follow()
+        self.app.get("/logout/")
+        user_authed_resp = self.send_user_login_request(user, "new_pass", webtest=True).maybe_follow()
+        self.assertEqual(user_authed_resp.status_code, 200)
+        self.assertUserAuthed(user_authed_resp)
+
+    def test_change_password_flow(self):
+        """Test that donors, ambassadors, and admins can change their passwords."""
+        user1, _ = self.create_new_user_with_password("some_donor", "some_password")
+        self.assert_user_can_follow_change_password_flow(user1, "some_password")
+        amb, _ = self.create_new_user_with_password("some_ambassador", "some_password", ambassador=True)
+        self.assert_user_can_follow_change_password_flow(amb, "some_password")
+        admin, _ = self.create_new_user_with_password("some_admin", "some_password", admin=True)
+        self.assert_user_can_follow_change_password_flow(admin, "some_password")
+
     def test_forgot_password_flow(self):
         """Test that the entire forgot password flow works."""
         response = self.app.get("/login/").maybe_follow()

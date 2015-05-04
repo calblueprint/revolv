@@ -51,6 +51,16 @@ class TestUserMixin(object):
         )
         self.test_profile = get_profile(self.test_user)
 
+    def create_new_user_with_password(self, username, password, ambassador=False, admin=False):
+        """Create a new user with the given credentials and return their user object and profile."""
+        user = User.objects.create_user(username=username, password=password)
+        profile = get_profile(user)
+        if ambassador:
+            profile.make_ambassador()
+        if admin:
+            profile.make_administrator()
+        return user, profile
+
 
 class UserTestingMixin(object):
     """
