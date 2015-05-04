@@ -1,0 +1,39 @@
+@import "foundation-settings";
+@import "bower_components/foundation/scss/foundation";
+
+.container {
+	height: 100%;
+	width: 100%;
+
+	.title {
+		width: 100%;
+		font-weight: 800;
+		margin-top: 7%;
+		text-align: center;
+		font-size: 2.5rem;
+	}
+
+	.body-text {
+		font-weight: 300;
+		width: 60%;
+		text-align: center;
+		margin-left: 20%;
+		font-size: 1.5rem;
+	}
+
+	.png-image {
+		height: 400px;
+		display: block;
+	    margin-left: auto;
+	    margin-right: auto;
+	    margin-top: 140px;
+	}
+}
+
+@media #{$small-only}, #{$medium-only} {
+    .container {
+		.png-image {
+			height: 250px;
+		}
+	}
+}
