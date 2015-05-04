@@ -43,7 +43,7 @@
 
 {% if user.revolvuserprofile.is_ambassador and role != "donor" %}
 <div class="dashboard-section create-new">
-    <a href="{% url "project:new" %}" class="create-new-button">Create Project</a>
+    <a href="{% url "project:new" %}" class="create-new-button" id="create_project">Create Project</a>
 </div>
 {% endif %}
 
@@ -57,7 +57,7 @@
                 {% for project in project_list %}
                     <div class="dashboard-sidebar-project-container dashboard-data-link {% if outer_counter == 1 and forloop.counter == 1 %} active{% endif %}" data-section="project-{{project.pk}}">
                         <div class="dashboard-sidebar-bullet-point {{project_group.key}}"></div>
-                        <div class="dashboard-sidebar-project {{project_group.key}} dashboard-data-link">{{project.title}}</div>
+                        <div class="dashboard-sidebar-project project-{{project.pk}} project-status-{{project.pk}}-{{project.project_status}} {{project_group.key}} dashboard-data-link">{{project.title}}</div>
                     </div>
                 {% endfor %}
             {% endwith %}

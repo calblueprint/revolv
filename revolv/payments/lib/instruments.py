@@ -1,11 +1,18 @@
 from __future__ import absolute_import
 
 from collections import namedtuple
+from math import floor
 
 from paypalrestsdk import Payment
 from revolv.payments.models import PaymentType
 
 
+# Exceptions
+class InvalidCreditCardException(Exception):
+    pass
+
+
+# Instruments
 class PaymentInstrument(object):
 
     type = None
@@ -45,26 +52,29 @@ class CreditCard(AbstractCreditCard):
 
 class PayPalCreditCardInstrument(PaymentInstrument):
 
-    type = PaymentType.objects.get(name='paypal')
+    type = PaymentType.objects.get_paypal()
 
     def __init__(self, credit_card):
         if not isinstance(credit_card, CreditCard):
             raise InvalidCreditCardException('Tried to instatiate with an invalid credit card object.')
         self.credit_card = credit_card
 
-        # TODO: do some validation
-
-    # def __setattr__(self, key, value):
-    #     raise AttributeError('Not allowed to modify')
-
     def charge(self, amount):
         """
-        Charge the credit card for the given amount.
+        Documentation: https://github.com/paypal/PayPal-Python-SDK
+
+        Charge the credit card for the given amount, floored to 2 decimal
+        places. Raises InvalidCreditCardException if charge fails.
+
+        Charing is enabled by default in settings.py. However, in development,
+        charges go to the PayPal Sandbox, which means that your card shouldn't
+        actually be charged (it'll just show up in the Sandbox charge history).
+        When on production, payments go to a live PayPal, where cards are
+        actually charged.
 
         :param amount:
-        :return:
         """
-        amount = "{0:.2f}".format(round(float(amount), 2))
+        amount = "{0:.2f}".format(floor(amount * 100) / 100.0)  # floor
         payment = Payment({
             "intent": "sale",
             "payer": {
@@ -87,16 +97,10 @@ class PayPalCreditCardInstrument(PaymentInstrument):
                     "total": amount,
                     "currency": "USD"
                 },
-                "description": "This is a charitable payment to a Revolv funded project.",
+                "description": "This is a charitable donation to a Revolv funded project.",
             }]
         })
 
         if not payment.create():
-            print payment.error
-            raise Exception()
-
+            raise InvalidCreditCardException(payment.error)
         # Otherwise we're good
-
-
-class InvalidCreditCardException(Exception):
-    pass

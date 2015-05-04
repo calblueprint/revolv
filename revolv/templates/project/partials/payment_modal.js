@@ -296,18 +296,32 @@ var populateConfirmModal = function(formValues) {
     $('span.confirm-info-amount').text('{0} USD'.format(
         formValues['donation-amount']));
 };
+var confirmModalButtons = [
+    $('button.donation-submit'),
+    $('button.donation-change'),
+    $('button.cancel-confirm')
+];
+var paymentSpinner = new Spinner();
 $('button.donation-continue').click(function(e) {
     e.preventDefault();
     populateConfirmModal(getDonateFormValues());
     $('#confirm-modal').foundation('reveal', 'open');
+    return false;
 });
 $('button.donation-change').click(function(e) {
     e.preventDefault();
     $('#donate-modal').foundation('reveal', 'open');
+    return false;
 });
 $('button.donation-submit').click(function(e) {
     e.preventDefault();
+    $.each(confirmModalButtons, function (i, btn) {
+        btn.prop('disabled', true);
+    });
+    paymentSpinner.spin();
+    $('#confirm-modal').append(paymentSpinner.el);
     $('#donate-form').submit();
+    return false;
 });
 $donateModalErrors = $('#donate-modal').find('.modal-errors');
 
@@ -378,6 +392,15 @@ $('#donate-form').submit(function(e) {
         $donateModalErrors.children('.error-msg')
             .text('Your card information is invalid. Please correct it.');
         $('#donate-modal').foundation('reveal', 'open');
+    }).always(function () {
+        paymentSpinner.stop();
+        // timeout is for cosmetic purposes only; buttons flicker and look
+        // weird without it, due to animation overlap
+        setTimeout(function() {
+            $.each(confirmModalButtons, function (i, btn) {
+                btn.prop('disabled', false);
+            });
+        }, 500);
     });
 
 });
@@ -390,6 +413,15 @@ $(document).on('opened.fndtn.reveal', '#success-modal', function() {
 });
 $(document).on('closed.fndtn.reveal', '#success-modal', function() {
     $('#success-modal').find('label.checkmark').removeClass('animate');
+});
+
+// Hack to close modal on modal-table click
+// (i.e., when the dimmed background is clicked)
+$('.revolv-reveal-modal-table').click(function (e) {
+    if (e.target === this ||
+        e.target === $(this).children(':first')[0]) {
+        $(document).foundation('reveal', 'close');
+    }
 });
 
 });
