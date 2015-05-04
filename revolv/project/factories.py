@@ -62,7 +62,9 @@ class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Category
 
-    title = factory.Iterator(Category.valid_categories)
+    # note: we can't actually use default category names here, since newly created
+    # factories might violate unique key constraints for category titles
+    title = factory.Sequence(lambda n: 'Some Category %i' % n)
 
 
 class CategoryFactories(object):
