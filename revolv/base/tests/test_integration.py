@@ -5,7 +5,7 @@ from django.core import mail
 from django.test import TestCase
 from django_webtest import WebTest
 from revolv.base.utils import get_profile
-from revolv.lib.testing import TestUserMixin, WebTestMixin, UserTestingMixin
+from revolv.lib.testing import TestUserMixin, UserTestingMixin, WebTestMixin
 from revolv.project.models import Project, ProjectUpdate
 
 
