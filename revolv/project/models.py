@@ -204,7 +204,8 @@ class Project(models.Model):
         format='JPEG',
         options={'quality': 80},
         default=None,
-        help_text='Choose a beautiful high resolution image to represent this project.'
+        help_text='Choose a beautiful high resolution image to represent this project.',
+        blank=True
     )
     preview_photo = ImageSpecField(
         source='cover_photo',
@@ -232,7 +233,7 @@ class Project(models.Model):
         help_text='Elaborate more about the organization, what it does, who it serves, etc.'
     )
 
-    donors = models.ManyToManyField(RevolvUserProfile)
+    donors = models.ManyToManyField(RevolvUserProfile, blank=True)
 
     ambassador = models.ForeignKey(RevolvUserProfile, related_name='ambassador')
 
@@ -247,9 +248,9 @@ class Project(models.Model):
     )
 
     # solar data csv files
-    daily_solar_data = models.FileField(null=True, upload_to="projects/daily/")
-    monthly_solar_data = models.FileField(null=True, upload_to="projects/monthly/")
-    annual_solar_data = models.FileField(null=True, upload_to="projects/annual/")
+    daily_solar_data = models.FileField(blank=True, null=True, upload_to="projects/daily/")
+    monthly_solar_data = models.FileField(blank=True, null=True, upload_to="projects/monthly/")
+    annual_solar_data = models.FileField(blank=True, null=True, upload_to="projects/annual/")
 
     objects = ProjectManager()
     factories = ImportProxy("revolv.project.factories", "ProjectFactories")
@@ -480,6 +481,7 @@ class Project(models.Model):
 
 
 class ProjectUpdate(models.Model):
+    factories = ImportProxy("revolv.project.factories", "ProjectUpdateFactories")
     update_text = models.TextField(
         'Update text',
         help_text="What should the update say?"
