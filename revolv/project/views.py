@@ -21,13 +21,15 @@ class DonationLevelFormSetMixin(object):
     the Create Project and Update Project page.
     """
 
-    def get_donation_level_formset(self):
+    def get_donation_level_formset(self, extra = 2):
         """ Checks if the request is a POST, and populates the formset with current object as the instance
         """
+        ProjectDonationLevelFormSet = forms.make_donation_level_formset(extra)
+        
         if self.request.POST:
-            return forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
+            return ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
         else:
-            return forms.ProjectDonationLevelFormSet(instance=self.object)
+            return ProjectDonationLevelFormSet(instance=self.object)
 
 
 class CreateProjectView(DonationLevelFormSetMixin, CreateView):
@@ -45,6 +47,7 @@ class CreateProjectView(DonationLevelFormSetMixin, CreateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
+        
         formset = self.get_donation_level_formset()
         if formset.is_valid():
             new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
@@ -88,7 +91,9 @@ class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
+        
         formset = self.get_donation_level_formset()
+        
         if formset.is_valid():
             project = self.get_object()
             project.update_categories(form.cleaned_data['categories_select'])

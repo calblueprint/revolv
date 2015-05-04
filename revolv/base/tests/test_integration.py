@@ -103,7 +103,7 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.test_profile.make_ambassador()
         self.send_test_user_login_request(webtest=True)
 
-        self.assert_logged_in_user_can_create_project_via_dashboard("this_project_made_by_ambsaddador")
+        self.assert_logged_in_user_can_create_project_via_dashboard("this_project_made_by_ambassador")
 
         self.test_profile.make_administrator()
         self.send_test_user_login_request(webtest=True)

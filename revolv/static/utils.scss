@@ -40,6 +40,16 @@
     }
 }
 
+@mixin revolv-form-field() {
+    position: absolute;
+    background-color: white;
+    padding: 2px 4px;
+    border-radius: 5px;
+    border: 1px solid #bbb;
+    text-decoration: none;
+    font-size: 10px;
+}
+
 @mixin revolv-sliding-border($color, $width, $transition-time) {
     // sliding border from http://bradsknutson.com/blog/css-sliding-underline/
     display: inline-block;

@@ -5,27 +5,37 @@
 {% block head %}
 <link rel="stylesheet" href="{% static "typeahead/typeahead.css" %}" />
 <link rel="stylesheet" href="{% static "chosen/chosen.css" %}" />
+<link rel="stylesheet" href="{% static "project-edit.css" %}" />
+<link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
 <style type="text/css">
     #map-canvas { width: 100%; height: 500px; margin: 0; padding: 0;}
     #map-canvas img {max-width: none;}
 </style>
+
+<script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
+
 {% endblock %}
 
-
-{% block title %}Create Project{% endblock %}
+{% block title %}Edit Project{% endblock %}
 
 {% block body %}
 
-<div class='row'>
-    <div class='large-12 columns'>
+<div class='row header-container'>
+    <div class='medium-4 columns'>
+        <div class="blue-bar"></div>
+    </div>
+    <div class='medium-4 columns'>
         {% if project.id %}
-        <h1>Edit Project</h1>
+        <h1 class="header">Edit Project</h1>
         {% else %}
-        <h1>Create Project</h1>
+        <h1 class="header">Create Project</h1>
         {% endif %}
     </div>
+    <div class='medium-4 columns'>
+        <div class="blue-bar"></div>
+    </div>
 </div>
-<div class="row white-section">
+<div class="row form-section">
     <div class="large-12 columns">
         <form method="POST" enctype="multipart/form-data" id="project_form">
               {% csrf_token %}
@@ -36,8 +46,9 @@
               </div>
             {% endfor %}
 
-            <div class="row">
-                <div class="medium-12 columns">
+            <div class="row project-overview section">
+                <p class="section-title">Project Overview</p>
+                <div class="medium-6 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.title %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.tagline %}
                     <span>Categories</span>
@@ -45,43 +56,70 @@
                     {% for error in form.categories_select.errors %}
                         <small class="error">{{ error }}</small>
                     {% endfor %}
+                </div>
+
+                <div class="medium-6 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.end_date %}
+                </div>
+                
+                <div class="medium-12 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.video_url %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.solar_url %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.cover_photo %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.org_name %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.mission_statement %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.internal_rate_return %}
-                    <div class="hide">
-                        {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
-                        {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
-                    </div>
-                </div>
-                <div class="medium-12 columns">
-                    <div id="map-canvas"></div>
-                </div>
-                <div class="medium-12 columns">
-                    <h4>Donation Levels / Perks</h4>
-                    {{ donation_level_formset.management_form }}
-                    {% for donation_level_form in donation_level_formset %}
-                        <div id="donation-level-{{ forloop.counter0 }}">
-                            Perk {{ forloop.counter0|add:"1" }}:
-                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.description %}
-                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.amount %}
-                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.DELETE %}
-                            {% for hidden in donation_level_form.hidden_fields %}
-                                {{ hidden }}
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.description %}
                 </div>
             </div>
-            <button class="large right" id="save_project" type="submit">Save</button>
+
+            <div class="row donation-levels section">
+                <p class="section-title donation-level-container">Donation Levels</p>
+                {{ donation_level_formset.management_form }}
+                <script type="text/javascript">
+                    window.DONATION_LEVEL_COUNT = {{ donation_level_formset|length }};
+                    window.EXTRA = 1;
+                </script>
+                {% for donation_level_form in donation_level_formset %}
+                    <div class="donation-level-box donation-level-{{ forloop.counter0 }}">
+                        <div class="small-4 columns">
+                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.amount %}
+                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.DELETE %}
+                        </div>
+                        <div class="small-8 columns">
+                            {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.description %}
+                        </div>
+                        {% for hidden in donation_level_form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- THIS DOES NOT EXIST -->
+            <!-- <div class="row add-button">Add a new donation level</div> -->
+
+            <div class="row organization-overview section">
+                <p class="section-title">Organization Overview</p>
+                <div class="medium-6 small-12 columns">
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_name %}
+                </div>
+                <div class="medium-6 small-12 columns">
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
+                </div>
+                <div class="medium-12 small-12 columns">
+                    {% include "base/partials/tooltip_formfield.html" with field=form.location %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
+                </div>
+            </div>
+            <div row="map section">
+                <div class="hide">
+                    {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
+                    {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
+                </div>
+            </div>
+            <div class="hide">
+                {% include "base/partials/tooltip_formfield.html" with field=form.extra %}
+            </div>
+            <button class="large right save-button" id="save_project" type="submit">Save</button>
         </form>
     </div>
 </div>
@@ -96,72 +134,75 @@
 <script src="{% static 'typeahead/typeahead.bundle.js' %}"></script>
 <script src="{% static 'typeahead/typeahead-addresspicker.js' %}"></script>
 <script type="text/javascript">
-    $( function() {
-        // gets the start location of the map
-        {% if project.location_latitude %}
-            var latitude = {{project.location_latitude}};
-        {% else %}
-            var latitude = 37.7699298;
-        {% endif %}
+    // gets the start location of the map
+    {% if project.location_latitude %}
+        var latitude = {{project.location_latitude}};
+    {% else %}
+        var latitude = 37.7699298;
+    {% endif %}
 
-        {% if project.location_longitude %}
-            var longitude = {{project.location_longitude}};
-        {% else %}
-            var longitude = -122.4469157;
-        {% endif %}
-        var startLocation = new google.maps.LatLng(latitude, longitude);
-        // instantiate the addressPicker suggestion engine (based on bloodhound)
-        // https://github.com/sgruhier/typeahead-addresspicker
-        var addressPicker = new AddressPicker({
-            map: {
-                center: startLocation,
-                id: '#map-canvas',
-                displayMarker: true,
-                zoom: 18
-            },
-            marker: {
-                position: startLocation,
-                visible: true,
-                draggable: false
-            },
-            zoomForLocation: 18,
-            draggable: false,
-            reverseGeocoding: true,
-            utocompleteService: {
-                componentRestrictions: {
-                    country: 'US'
-                }
+    {% if project.location_longitude %}
+        var longitude = {{project.location_longitude}};
+    {% else %}
+        var longitude = -122.4469157;
+    {% endif %}
+    var startLocation = new google.maps.LatLng(latitude, longitude);
+    // instantiate the addressPicker suggestion engine (based on bloodhound)
+    // https://github.com/sgruhier/typeahead-addresspicker
+    var addressPicker = new AddressPicker({
+        map: {
+            center: startLocation,
+            id: '#map-canvas',
+            displayMarker: true,
+            zoom: 18
+        },
+        marker: {
+            position: startLocation,
+            visible: true,
+            draggable: false
+        },
+        zoomForLocation: 18,
+        draggable: false,
+        reverseGeocoding: true,
+        utocompleteService: {
+            componentRestrictions: {
+                country: 'US'
             }
-        });
-        // instantiate the typeahead UI
-        $('#id_location').typeahead(null, {
-            displayKey: 'description',
-            source: addressPicker.ttAdapter()
-        });
-        // add click listeners
-        addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
-        $(addressPicker).on('addresspicker:selected', function (event, result) {
-            $('#id_location_latitude').val(result.lat());
-            $('#id_location_longitude').val(result.lng());
-        });
+        }
+    });
+    // instantiate the typeahead UI
+    $('#id_location').typeahead(null, {
+        displayKey: 'description',
+        source: addressPicker.ttAdapter()
+    });
+    // add click listeners
+    addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
+    $(addressPicker).on('addresspicker:selected', function (event, result) {
+        $('#id_location_latitude').val(result.lat());
+        $('#id_location_longitude').val(result.lng());
+    });
 
-        $("#project_form").on('submit', function(e) {
-            if (!$('#id_location_latitude').val() || !$('#id_location_longitude').val()) {
-                toastr.options.positionClass = "toast-bottom-right";
-                toastr.error("Please enter a valid address");
-                e.preventDefault();
-                return false;
-            }
-        });
+    $("#project_form").on('submit', function(e) {
+        if (!$('#id_location_latitude').val() || !$('#id_location_longitude').val()) {
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.error("Please enter a valid address");
+            e.preventDefault();
+            return false;
+        }
     });
 </script>
 <!-- Initializes the category selection tool -->
 <script src="{% static 'chosen/chosen.jquery.js' %}"></script>
-<script>
-    $( document ).ready(function() {
-        // initializes chosen
-        $(".chosen-select").chosen();
-    });
+<script type="text/javascript">
+    $("#id_extra").val(1);
+    $('#id_location_latitude').val(0.0);
+    $('#id_location_longitude').val(0.0);
+
+    $('<div class="project-edit-spacer"></div>').insertBefore("#cover_photo-clear_id");
+    // window.PROJECT_ID = {{ project.id }};
+</script>
+<script type="text/javascript">
+    $(".chosen-select").chosen();
 </script>
 
 {% endblock %}
