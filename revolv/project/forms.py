@@ -9,13 +9,11 @@ class ProjectForm(forms.ModelForm):
     Form used for the Create and Update Project View. Controls what fields
     the user can access and their basic appearance to the user.
     """
-
-    # for allowing numbers to use commas for thousands separators
-    funding_goal = forms.DecimalField(min_value=0, decimal_places=2, localize=True)
-    impact_power = forms.FloatField(localize=True)
     # sets the lat and long fields to hidden (clicking on the map updates them)
     location_latitude = forms.DecimalField(widget=forms.HiddenInput())
     location_longitude = forms.DecimalField(widget=forms.HiddenInput())
+    extra = forms.IntegerField(widget=forms.HiddenInput(attrs={'id':'id_extra'}))
+
     # generates options of categories and populates Multiple Choice field with options.
     options = [(category, category) for category in Category.valid_categories]
     categories_select = forms.MultipleChoiceField(choices=options, required=False)
@@ -23,10 +21,25 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         # fields that need to be filled out
+        localized_fields = ('__all__')
+
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'e.g. Other Avenues Food Cooperative'}),
+            'tagline': forms.TextInput(attrs={'placeholder': 'e.g. Power the future!'}),
+            'funding_goal': forms.TextInput(attrs={'placeholder': 'e.g. $1000', 'min_value':0, 'decimal_places':2}),
+            'impact_power': forms.NumberInput(attrs={'placeholder': 'e.g. 12.0'}),
+            'end_date': forms.DateInput(attrs={'placeholder': 'e.g. 10/25/2006', 'input_formats': '%m/%d/%Y'}),
+            'video_url': forms.URLInput(attrs={'placeholder': 'e.g. youtube.com/url_to_video'}),
+            'org_name': forms.TextInput(attrs={'placeholder': 'e.g. Other Avenues'}),
+            'org_start_date': forms.DateInput(attrs={'placeholder': 'e.g. 10/25/2006', 'input_formats': '%m/%d/%Y'}),
+            'org_about': forms.Textarea(attrs={'placeholder': 'e.g. Other Avenues is a worker-owned cooperative that seeks to maintain a thriving business while providing food and supplies for sustainable living, supporting organic and local farms and to serve as a model of workplace democracy for the community.'}),
+            'location': forms.TextInput(attrs={'placeholder': 'e.g. 3930 Judah Street San Francisco, CA 94122'}),
+            'description': forms.Textarea(attrs={'placeholder': "e.g. The solar energy system will be a 36kW project that provides 33% of Other Avenue's electricity needs."}),
+        }
+
         fields = (
             'title',
             'tagline',
-            'mission_statement',
             'funding_goal',
             'impact_power',
             'end_date',
@@ -38,7 +51,8 @@ class ProjectForm(forms.ModelForm):
             'location',
             'location_latitude',
             'location_longitude',
-            'categories_select'
+            'categories_select',
+            'description',
         )
 
     def clean_categories_select(self):
@@ -73,6 +87,8 @@ class EditProjectUpdateForm(forms.ModelForm):
         model = ProjectUpdate
         fields = (
             'update_text',
-        )
+        ) 
 
-ProjectDonationLevelFormSet = inlineformset_factory(Project, DonationLevel, extra=2)
+def make_donation_level_formset(extra):
+    ProjectDonationLevelFormSet = inlineformset_factory(Project, DonationLevel, extra=extra)
+    return ProjectDonationLevelFormSet

@@ -24,13 +24,18 @@ class DonationLevelFormSetMixin(object):
     the Create Project and Update Project page.
     """
 
-    def get_donation_level_formset(self):
+    def get_donation_level_formset(self, extra = 2):
         """ Checks if the request is a POST, and populates the formset with current object as the instance
         """
+        ProjectDonationLevelFormSet = forms.make_donation_level_formset(extra)
+        
+        print("IN DONATION LEVEL FORMSET FUNCTION: " + str(extra))
+
         if self.request.POST:
-            return forms.ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
+            print(self.request.POST)
+            return ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
         else:
-            return forms.ProjectDonationLevelFormSet(instance=self.object)
+            return ProjectDonationLevelFormSet(instance=self.object)
 
 
 class CreateProjectView(DonationLevelFormSetMixin, CreateView):
@@ -48,6 +53,7 @@ class CreateProjectView(DonationLevelFormSetMixin, CreateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
+        
         formset = self.get_donation_level_formset()
         if formset.is_valid():
             new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
@@ -91,7 +97,11 @@ class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
+        
+        # extra = form.cleaned_data['extra']
         formset = self.get_donation_level_formset()
+
+        
         if formset.is_valid():
             project = self.get_object()
             project.update_categories(form.cleaned_data['categories_select'])
@@ -100,6 +110,11 @@ class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
         else:
             return self.render_to_response(self.get_context_data(form=form))
         return super(UpdateProjectView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print(form.errors)
+        print(form.non_field_errors())
+        return self.render_to_response(self.get_context_data(form=form))
 
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):
