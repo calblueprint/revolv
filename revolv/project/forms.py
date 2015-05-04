@@ -85,6 +85,11 @@ class EditProjectUpdateForm(forms.ModelForm):
     """
     class Meta:
         model = ProjectUpdate
+        
+        widgets = {
+            'update_text': forms.Textarea(attrs={'placeholder': 'e.g. Thank you for all the support! The project has been going extremely well. These are the milestones we have hit so far, and this is what we plan to do in the near future.'}),
+        }
+
         fields = (
             'update_text',
         ) 
