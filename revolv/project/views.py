@@ -64,7 +64,7 @@ class CreateProjectView(DonationLevelFormSetMixin, CreateView):
         print(form.errors)
         print(form.non_field_errors())
         return self.render_to_response(self.get_context_data(form=form))
-        
+
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)

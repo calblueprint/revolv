@@ -150,72 +150,70 @@
 <script src="{% static 'typeahead/typeahead.bundle.js' %}"></script>
 <script src="{% static 'typeahead/typeahead-addresspicker.js' %}"></script>
 <script type="text/javascript">
-    $( function() {
-        // gets the start location of the map
-        {% if project.location_latitude %}
-            var latitude = {{project.location_latitude}};
-        {% else %}
-            var latitude = 37.7699298;
-        {% endif %}
+    // gets the start location of the map
+    {% if project.location_latitude %}
+        var latitude = {{project.location_latitude}};
+    {% else %}
+        var latitude = 37.7699298;
+    {% endif %}
 
-        {% if project.location_longitude %}
-            var longitude = {{project.location_longitude}};
-        {% else %}
-            var longitude = -122.4469157;
-        {% endif %}
-        var startLocation = new google.maps.LatLng(latitude, longitude);
-        // instantiate the addressPicker suggestion engine (based on bloodhound)
-        // https://github.com/sgruhier/typeahead-addresspicker
-        var addressPicker = new AddressPicker({
-            map: {
-                center: startLocation,
-                id: '#map-canvas',
-                displayMarker: true,
-                zoom: 18
-            },
-            marker: {
-                position: startLocation,
-                visible: true,
-                draggable: false
-            },
-            zoomForLocation: 18,
-            draggable: false,
-            reverseGeocoding: true,
-            utocompleteService: {
-                componentRestrictions: {
-                    country: 'US'
-                }
+    {% if project.location_longitude %}
+        var longitude = {{project.location_longitude}};
+    {% else %}
+        var longitude = -122.4469157;
+    {% endif %}
+    var startLocation = new google.maps.LatLng(latitude, longitude);
+    // instantiate the addressPicker suggestion engine (based on bloodhound)
+    // https://github.com/sgruhier/typeahead-addresspicker
+    var addressPicker = new AddressPicker({
+        map: {
+            center: startLocation,
+            id: '#map-canvas',
+            displayMarker: true,
+            zoom: 18
+        },
+        marker: {
+            position: startLocation,
+            visible: true,
+            draggable: false
+        },
+        zoomForLocation: 18,
+        draggable: false,
+        reverseGeocoding: true,
+        utocompleteService: {
+            componentRestrictions: {
+                country: 'US'
             }
-        });
-        // instantiate the typeahead UI
-        $('#id_location').typeahead(null, {
-            displayKey: 'description',
-            source: addressPicker.ttAdapter()
-        });
-        // add click listeners
-        addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
-        $(addressPicker).on('addresspicker:selected', function (event, result) {
-            $('#id_location_latitude').val(result.lat());
-            $('#id_location_longitude').val(result.lng());
-        });
+        }
+    });
+    // instantiate the typeahead UI
+    $('#id_location').typeahead(null, {
+        displayKey: 'description',
+        source: addressPicker.ttAdapter()
+    });
+    // add click listeners
+    addressPicker.bindDefaultTypeaheadEvent($('#id_location'))
+    $(addressPicker).on('addresspicker:selected', function (event, result) {
+        $('#id_location_latitude').val(result.lat());
+        $('#id_location_longitude').val(result.lng());
+    });
 
-        $("#project_form").on('submit', function(e) {
-            if (!$('#id_location_latitude').val() || !$('#id_location_longitude').val()) {
-                toastr.options.positionClass = "toast-bottom-right";
-                toastr.error("Please enter a valid address");
-                e.preventDefault();
-                return false;
-            }
-        });
+    $("#project_form").on('submit', function(e) {
+        if (!$('#id_location_latitude').val() || !$('#id_location_longitude').val()) {
+            toastr.options.positionClass = "toast-bottom-right";
+            toastr.error("Please enter a valid address");
+            e.preventDefault();
+            return false;
+        }
     });
 </script>
 <!-- Initializes the category selection tool -->
 <script src="{% static 'chosen/chosen.jquery.js' %}"></script>
 <script type="text/javascript">
     $("#id_extra").val(1);
-    $("#id_lat").val(0);
-    $("#id_long").val(0);
-    window.PROJECT_ID = {{ project.id }};
+    $('#id_location_latitude').val(0.0);
+    $('#id_location_longitude').val(0.0);
+    //window.PROJECT_ID = {{ project.id }};
 </script>
 <script type="text/javascript">
     $(".chosen-select").chosen();
