@@ -20,6 +20,7 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     funding_goal = 50.0
     title = "Hello"
     tagline = "This project will be really cool."
+    description = "This is a swaggy description of this project."
     video_url = "https://www.youtube.com/watch?v=9bZkp7q19f0"
     impact_power = 50.5
     location = "Berkeley"
