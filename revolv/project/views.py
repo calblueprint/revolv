@@ -26,10 +26,7 @@ class DonationLevelFormSetMixin(object):
         """
         ProjectDonationLevelFormSet = forms.make_donation_level_formset(extra)
         
-        print("IN DONATION LEVEL FORMSET FUNCTION: " + str(extra))
-
         if self.request.POST:
-            print(self.request.POST)
             return ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
         else:
             return ProjectDonationLevelFormSet(instance=self.object)
@@ -62,7 +59,11 @@ class CreateProjectView(DonationLevelFormSetMixin, CreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
         return super(CreateProjectView, self).form_valid(form)
-
+    
+    def form_invalid(self, form):
+        print(form.errors)
+        print(form.non_field_errors())
+        return self.render_to_response(self.get_context_data(form=form))
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
@@ -95,9 +96,7 @@ class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
         
-        # extra = form.cleaned_data['extra']
         formset = self.get_donation_level_formset()
-
         
         if formset.is_valid():
             project = self.get_object()
