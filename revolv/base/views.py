@@ -205,7 +205,6 @@ class LogoutView(UserDataMixin, View):
         messages.success(self.request, 'Logged out successfully')
         return redirect('home')
 
-
 class DashboardRedirect(UserDataMixin, View):
     """
     Redirects user to appropriate dashboard. (e.g. Administrators automagically
