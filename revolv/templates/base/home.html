@@ -77,7 +77,7 @@
 
 {% if first_project %}
 <div class="text-with-divider">OUR CURRENT PROJECT</div>
-{% if project.cover_photo %}
+{% if first_project.cover_photo %}
 <div class="row current-project" style="background-image: url({{first_project.cover_photo.url}})">
     <a href="{% url "project:view" pk=first_project.pk %}">
     <div class="overlay">
