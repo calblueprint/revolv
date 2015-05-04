@@ -219,10 +219,17 @@ class Project(models.Model):
         null=True,
         help_text='When was the organization being helped established?'
     )
+
     org_name = models.CharField(
         'Organization Name',
         max_length=255,
         help_text='What is the name of the organization being helped?'
+    )
+
+    mission_statement = models.TextField(
+        'Organization Mission',
+        help_text='What is the mission statement of the organization being helped by this project?',
+        default='This is the mission statement!',
     )
 
     org_about = models.TextField(
