@@ -229,7 +229,6 @@ class Project(models.Model):
     mission_statement = models.TextField(
         'Organization Mission',
         help_text='What is the mission statement of the organization being helped by this project?',
-        default='This is the mission statement!',
     )
 
     org_about = models.TextField(
@@ -239,7 +238,7 @@ class Project(models.Model):
 
     description = models.TextField(
         'Project description',
-        help_text='Elaborate more about the project, the goals, etc.'
+        help_text='This is the body of text that shows up on the project page.'
     )
 
     donors = models.ManyToManyField(RevolvUserProfile, blank=True)

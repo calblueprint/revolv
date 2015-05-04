@@ -59,11 +59,6 @@ class CreateProjectView(DonationLevelFormSetMixin, CreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
         return super(CreateProjectView, self).form_valid(form)
-    
-    def form_invalid(self, form):
-        print(form.errors)
-        print(form.non_field_errors())
-        return self.render_to_response(self.get_context_data(form=form))
 
     # sets context to be the create view, doesn't pass in the id
     def get_context_data(self, **kwargs):
@@ -107,11 +102,6 @@ class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
         else:
             return self.render_to_response(self.get_context_data(form=form))
         return super(UpdateProjectView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        print(form.errors)
-        print(form.non_field_errors())
-        return self.render_to_response(self.get_context_data(form=form))
 
     # sets context to be the edit view by providing in the model id
     def get_context_data(self, **kwargs):

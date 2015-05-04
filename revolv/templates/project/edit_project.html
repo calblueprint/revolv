@@ -50,39 +50,29 @@
                 <p class="section-title">Project Overview</p>
                 <div class="medium-6 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.title %}
-                    
                     {% include "base/partials/tooltip_formfield.html" with field=form.tagline %}
-                    
                     <span>Categories</span>
                     {{ form.categories_select|add_class:"chosen-select" }}
                     {% for error in form.categories_select.errors %}
                         <small class="error">{{ error }}</small>
                     {% endfor %}
-
                 </div>
 
                 <div class="medium-6 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.funding_goal %}
-
                     {% include "base/partials/tooltip_formfield.html" with field=form.impact_power %}
-
                     {% include "base/partials/tooltip_formfield.html" with field=form.end_date %}
-
                 </div>
                 
                 <div class="medium-12 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.video_url %}
-
                     {% include "base/partials/tooltip_formfield.html" with field=form.cover_photo %}
-
                     {% include "base/partials/tooltip_formfield.html" with field=form.description %}
-
                 </div>
             </div>
 
             <div class="row donation-levels section">
                 <p class="section-title donation-level-container">Donation Levels</p>
-
                 {{ donation_level_formset.management_form }}
                 <script type="text/javascript">
                     window.DONATION_LEVEL_COUNT = {{ donation_level_formset|length }};
@@ -94,11 +84,9 @@
                             {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.amount %}
                             {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.DELETE %}
                         </div>
-
                         <div class="small-8 columns">
                             {% include "base/partials/tooltip_formfield.html" with field=donation_level_form.description %}
                         </div>
-                        
                         {% for hidden in donation_level_form.hidden_fields %}
                             {{ hidden }}
                         {% endfor %}
@@ -113,19 +101,15 @@
                 <p class="section-title">Organization Overview</p>
                 <div class="medium-6 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_name %}
-
                 </div>
-                
                 <div class="medium-6 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
                 </div>
-
                 <div class="medium-12 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
                 </div>
             </div>
-
             <div row="map section">
                 <div class="hide">
                     {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
