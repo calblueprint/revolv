@@ -92,7 +92,7 @@ class EditProjectUpdateForm(forms.ModelForm):
 
         fields = (
             'update_text',
-        ) 
+        )
 
 def make_donation_level_formset(extra):
     ProjectDonationLevelFormSet = inlineformset_factory(Project, DonationLevel, extra=extra)
