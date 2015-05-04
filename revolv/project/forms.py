@@ -10,8 +10,8 @@ class ProjectForm(forms.ModelForm):
     the user can access and their basic appearance to the user.
     """
     # sets the lat and long fields to hidden (clicking on the map updates them)
-    location_latitude = forms.DecimalField(widget=forms.HiddenInput(), required=False)
-    location_longitude = forms.DecimalField(widget=forms.HiddenInput(), required=False)
+    location_latitude = forms.DecimalField(widget=forms.HiddenInput(attrs={'id':'id_lat'}), required=False)
+    location_longitude = forms.DecimalField(widget=forms.HiddenInput(attrs={'id':'id_long'}), required=False)
     extra = forms.IntegerField(widget=forms.HiddenInput(attrs={'id':'id_extra'}))
 
     # generates options of categories and populates Multiple Choice field with options.
