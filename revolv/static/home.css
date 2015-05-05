@@ -5646,7 +5646,7 @@ body {
     .current-project .graphics-container .project-badge-line, .current-project .graphics-container .project-badge-circle {
       fill: none; }
     .current-project .graphics-container .project-badge-line {
-      stroke: #11ADE5; }
+      stroke: #11ade5; }
     .current-project .graphics-container .project-badge-circle {
       stroke: white; }
     .current-project .graphics-container .text-container {
@@ -5698,7 +5698,7 @@ body {
   font-size: 25px;
   margin-bottom: 1.5em; }
   .divider-title:first-line {
-    background-color: #EBECE7; }
+    background-color: #ebece7; }
   .divider-title:before {
     display: inline;
     content: "\a0\a0\a0"; }
@@ -5706,18 +5706,18 @@ body {
     display: inline;
     content: "\a0\a0\a0"; }
   .divider-title.heading-error {
-    color: #E83D3D;
+    color: #e83d3d;
     display: block;
     height: 0.5em;
     line-height: 1em;
     border: none;
-    border-bottom: 1px solid #E83D3D;
+    border-bottom: 1px solid #e83d3d;
     margin-bottom: 0.5em;
     text-align: center;
     font-size: 25px;
     margin-bottom: 1.5em; }
     .divider-title.heading-error:first-line {
-      background-color: #EBECE7; }
+      background-color: #ebece7; }
     .divider-title.heading-error:before {
       display: inline;
       content: "\a0\a0\a0"; }

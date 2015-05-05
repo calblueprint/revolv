@@ -1,48 +1,3 @@
-.component-row.login, .component-row.password-reset, .component-row.password-reset-done, .component-row.password-reset-confirm, .component-row.password-reset-complete {
-  margin: 120px auto; }
-.component-row.signup {
-  margin: 100px auto; }
-
-.component-row h1 {
-  color: #11ade5;
-  font-weight: 100;
-  display: block;
-  height: 0.5em;
-  line-height: 1em;
-  border: none;
-  border-bottom: 1px solid #11ade5;
-  margin-bottom: 0.5em;
-  text-align: center;
-  font-size: 25px;
-  margin-bottom: 1.5em; }
-  .component-row h1:first-line {
-    background-color: #ebece7; }
-  .component-row h1:before {
-    display: inline;
-    content: "\a0\a0\a0"; }
-  .component-row h1:after {
-    display: inline;
-    content: "\a0\a0\a0"; }
-  .component-row h1.heading-error {
-    color: #e83d3d;
-    display: block;
-    height: 0.5em;
-    line-height: 1em;
-    border: none;
-    border-bottom: 1px solid #e83d3d;
-    margin-bottom: 0.5em;
-    text-align: center;
-    font-size: 25px;
-    margin-bottom: 1.5em; }
-    .component-row h1.heading-error:first-line {
-      background-color: #ebece7; }
-    .component-row h1.heading-error:before {
-      display: inline;
-      content: "\a0\a0\a0"; }
-    .component-row h1.heading-error:after {
-      display: inline;
-      content: "\a0\a0\a0"; }
-
 .placeholder-tooltip-entry {
   position: absolute;
   background-color: white;
@@ -118,3 +73,48 @@ small.field-error {
       -webkit-transition: color 0.1s; }
     .submit-button.yellow:disabled {
       opacity: 0.3; }
+
+.component-row.login, .component-row.password-reset, .component-row.password-reset-done, .component-row.password-reset-confirm, .component-row.password-reset-complete, .component-row.password-change {
+  margin: 120px auto; }
+.component-row.signup {
+  margin: 100px auto; }
+
+.component-row h1 {
+  color: #11ade5;
+  font-weight: 100;
+  display: block;
+  height: 0.5em;
+  line-height: 1em;
+  border: none;
+  border-bottom: 1px solid #11ade5;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-size: 25px;
+  margin-bottom: 1.5em; }
+  .component-row h1:first-line {
+    background-color: #ebece7; }
+  .component-row h1:before {
+    display: inline;
+    content: "\a0\a0\a0"; }
+  .component-row h1:after {
+    display: inline;
+    content: "\a0\a0\a0"; }
+  .component-row h1.heading-error {
+    color: #e83d3d;
+    display: block;
+    height: 0.5em;
+    line-height: 1em;
+    border: none;
+    border-bottom: 1px solid #e83d3d;
+    margin-bottom: 0.5em;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 1.5em; }
+    .component-row h1.heading-error:first-line {
+      background-color: #ebece7; }
+    .component-row h1.heading-error:before {
+      display: inline;
+      content: "\a0\a0\a0"; }
+    .component-row h1.heading-error:after {
+      display: inline;
+      content: "\a0\a0\a0"; }

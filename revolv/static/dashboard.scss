@@ -3,6 +3,7 @@
 @import "bower_components/foundation/scss/foundation";
 @import "revolv-settings";
 @import "nav";
+@import "placeholder-formfield";
 
 html, body, .main-row {
     height: 100%;
@@ -35,15 +36,6 @@ $sidebar-header-gray: #777;
             padding: 10px 20px;
             cursor: pointer;
             color: $sidebar-header-gray;
-
-            &.active {
-                background-color: $revolv-blue;
-                color: white;
-
-                .dashboard-sidebar-bullet-point {
-                    visibility: hidden;
-                }
-            }
         }
     }
 
@@ -143,16 +135,29 @@ $sidebar-header-gray: #777;
     }
 
     .dashboard-manage-link {
-        padding: 0 20px;
+        cursor: pointer;
+        padding: 5px 20px 5px 36px;
         font-size: 13px;
         line-height: 16px;
-        margin-left: 16px;
         color: lighten($sidebar-header-gray, 10%);
-        margin-bottom: 5px;
+        &:hover {
+            color: lighten($sidebar-header-gray, 20%);
+        }
 
         a, a:visited, a:active, a:hover {
             color: inherit;
             text-decoration: underline;
+        }
+    }
+
+    .dashboard-sidebar-project-container, .dashboard-manage-link {
+        &.active {
+            background-color: $revolv-blue;
+            color: white;
+
+            .dashboard-sidebar-bullet-point {
+                visibility: hidden;
+            }
         }
     }
 }
@@ -168,12 +173,15 @@ $sidebar-header-gray: #777;
     }
 }
 
-.dashboard-project {
-    padding: 0;
+.dashboard-data-section {
     display: none;
     &.dashboard-data-section-current {
         display: block;
     }
+}
+
+.dashboard-project {
+    padding: 0;
 
     // the dashboard project page should scroll instead of extending
     // down past the sidebar
