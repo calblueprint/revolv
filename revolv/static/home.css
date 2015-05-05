@@ -5567,50 +5567,163 @@ th.hide-for-touch {
 body {
   background-color: #ebece7; }
 
-.cover-image {
-  background: url(/static/images/solar-worker-stockphoto.jpg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  display: block;
+.cover {
   width: 100%;
-  height: 550px;
-  margin-bottom: 0;
+  height: 600px;
+  overflow: hidden;
   position: relative; }
-  .cover-image .shade {
+  .cover h1 {
+    color: white;
+    text-align: center;
+    text-shadow: 2px 2px black; }
+  .cover p {
+    font-size: 20px;
+    line-height: 26px;
+    text-align: center;
+    text-shadow: 2px 2px black;
+    font-weight: 200;
+    color: white;
+    padding-top: 30px;
+    line-height: 30px;
+    margin: 0; }
+  .cover .shade {
     position: absolute;
     z-index: 1;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3); }
-  .cover-image .cover-inset {
-    position: relative;
-    top: calc(50% + 40px);
-    transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    text-align: center;
-    margin: 0 auto;
-    min-width: 300px;
-    max-width: 600px;
-    z-index: 11; }
-    .cover-image .cover-inset .title-header {
-      font-size: 64px;
-      line-height: 64px;
-      color: white; }
-    .cover-image .cover-inset h1 {
-      color: white; }
-    .cover-image .cover-inset p {
-      font-size: 20px;
-      line-height: 26px;
-      font-weight: 200;
-      color: white;
-      padding-top: 30px;
-      line-height: 30px;
-      margin: 0; }
+  .cover .cover-inset {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 50%;
+    width: 600px;
+    z-index: 1;
+    text-align: center; }
+  .cover .cover-video {
+    width: 100%; }
 
 .spacer {
   height: 0px !important; }
+
+.current-project {
+  position: relative;
+  width: 75%;
+  height: 450px;
+  padding: 30px;
+  box-sizing: border-box;
+  color: white; }
+  .current-project a {
+    color: white; }
+  .current-project h1 {
+    color: white; }
+  .current-project .current-project-inset {
+    width: 50%;
+    padding: 30px;
+    box-sizing: border-box;
+    white-space: pre-wrap; }
+  .current-project .graphics-container {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    top: calc(50% - 125px);
+    right: 60px; }
+    .current-project .graphics-container .svg-graphics-container {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0; }
+    .current-project .graphics-container .internal-graphics-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%); }
+    .current-project .graphics-container .project-badge-line, .current-project .graphics-container .project-badge-circle {
+      fill: none; }
+    .current-project .graphics-container .project-badge-line {
+      stroke: #11ade5; }
+    .current-project .graphics-container .project-badge-circle {
+      stroke: white; }
+    .current-project .graphics-container .text-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      height: 220px;
+      width: 220px;
+      color: #064f7e; }
+      .current-project .graphics-container .text-container .percentage-text {
+        position: absolute;
+        left: 50%;
+        top: 45%;
+        transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%); }
+      .current-project .graphics-container .text-container .funded {
+        position: absolute;
+        font-weight: 800;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%); }
+  .current-project .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5); }
+
+.divider-title {
+  font-size: 24px;
+  margin: 30px auto;
+  width: 75%;
+  color: #064f7e;
+  font-weight: 100;
+  display: block;
+  height: 0.5em;
+  line-height: 1em;
+  border: none;
+  border-bottom: 1px solid #064f7e;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-size: 25px;
+  margin-bottom: 1.5em; }
+  .divider-title:first-line {
+    background-color: #ebece7; }
+  .divider-title:before {
+    display: inline;
+    content: "\a0\a0\a0"; }
+  .divider-title:after {
+    display: inline;
+    content: "\a0\a0\a0"; }
+  .divider-title.heading-error {
+    color: #e83d3d;
+    display: block;
+    height: 0.5em;
+    line-height: 1em;
+    border: none;
+    border-bottom: 1px solid #e83d3d;
+    margin-bottom: 0.5em;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 1.5em; }
+    .divider-title.heading-error:first-line {
+      background-color: #ebece7; }
+    .divider-title.heading-error:before {
+      display: inline;
+      content: "\a0\a0\a0"; }
+    .divider-title.heading-error:after {
+      display: inline;
+      content: "\a0\a0\a0"; }
 
 .nav-spine {
   position: fixed;
@@ -5668,7 +5781,7 @@ body {
     font-size: 20px; }
   .about .about-inset {
     margin: 0 auto;
-    padding: 75px 30px; }
+    padding: 30px 30px; }
   .about .person {
     height: 144px; }
   .about .coin {
@@ -5734,12 +5847,6 @@ body {
   background-color: #137f5a; }
 
 @media only screen and (max-width: 40em) {
-  html .cover-image .cover-inset .title-header {
-    font-size: 40px;
-    line-height: 40px; }
-  html .cover-image .cover-inset p {
-    font-size: 18px;
-    line-height: 18px; }
   .about {
     width: 100%; }
     .about h1 {
@@ -5758,11 +5865,6 @@ body {
     margin-top: 15px; } }
 
 @media only screen and (max-width: 40em) and (orientation: portrait) {
-  html .cover-image .cover-inset p {
-    font-size: 18px;
-    line-height: 24px; }
-  html .cover-image {
-    background-position: left; }
   .about .grouping {
     height: 70px;
     width: 70px;
@@ -5791,10 +5893,6 @@ body {
   .about .solar-panel {
     top: -46px;
     margin-left: -45px; } }
-
-@media only screen and (min-width:40.063em) and (max-width:64em) {
-  .cover-image {
-    margin-bottom: 20px; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   body {

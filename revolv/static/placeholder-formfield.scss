@@ -2,15 +2,10 @@
 @import "revolv-settings";
 
 .placeholder-tooltip-entry {
-    position: absolute;
+    @include revolv-form-field();
+
     right: -6px;
     top: -7px;
-    background-color: white;
-    padding: 2px 4px;
-    border-radius: 5px;
-    border: 1px solid #bbb;
-    text-decoration: none;
-    font-size: 10px;
 }
 
 .placeholder-field-label {

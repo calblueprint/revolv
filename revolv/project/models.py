@@ -219,18 +219,26 @@ class Project(models.Model):
         null=True,
         help_text='When was the organization being helped established?'
     )
+
     org_name = models.CharField(
         'Organization Name',
         max_length=255,
         help_text='What is the name of the organization being helped?'
     )
+
     mission_statement = models.TextField(
         'Organization Mission',
-        help_text='What is the mission statement of the organization being helped by this project?'
+        help_text='What is the mission statement of the organization being helped by this project?',
     )
+
     org_about = models.TextField(
         'Organization Description',
         help_text='Elaborate more about the organization, what it does, who it serves, etc.'
+    )
+
+    description = models.TextField(
+        'Project description',
+        help_text='This is the body of text that shows up on the project page.'
     )
 
     donors = models.ManyToManyField(RevolvUserProfile, blank=True)
@@ -528,7 +536,4 @@ class DonationLevel(models.Model):
     """
     project = models.ForeignKey(Project)
     description = models.TextField()
-    amount = models.DecimalField(
-        max_digits=15,
-        decimal_places=2
-    )
+    amount = models.IntegerField()

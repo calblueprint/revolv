@@ -20,6 +20,7 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     funding_goal = 50.0
     title = "Hello"
     tagline = "This project will be really cool."
+    description = "This is a swaggy description of this project."
     video_url = "https://www.youtube.com/watch?v=9bZkp7q19f0"
     impact_power = 50.5
     location = "Berkeley"
@@ -62,7 +63,9 @@ class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Category
 
-    title = factory.Iterator(Category.valid_categories)
+    # note: we can't actually use default category names here, since newly created
+    # factories might violate unique key constraints for category titles
+    title = factory.Sequence(lambda n: 'Some Category %i' % n)
 
 
 class CategoryFactories(object):

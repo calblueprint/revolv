@@ -1,13 +1,20 @@
 {% load widget_tweaks %}
 
 <label has-tooltip for="{{ field.id_for_label }}">
-    <span {% if field.help_text %}data-tooltip{% endif %} class="{% if field.help_text %} has-tip tip-top tip-thin {% endif %}" title="{{ field.help_text }}">
+    <span {% if field.help_text %}data-tooltip{% endif %} class="help-text {% if field.help_text %} has-tip tip-top tip-thin {% endif %}" title="{{ field.help_text }}">
     {{ field.label }} {% if field.field.required %}<small>Required</small>{% endif %}
     </span>
     {% if field.errors %}
         {{ field|add_class:"error" }}
     {% else %}
-        {{ field }}
+        {% if field.name == "funding_goal" or field.name == "amount" %}
+        	<p class="dollar-sign">$</p><div class="unit-container">{{ field }}</div>
+        {% elif field.name == "cover_photo" %}
+        	<div class="project-edit-spacer"></div>
+            {{ field }}
+        {% else %}
+            {{ field }}
+        {% endif %}
     {% endif %}
 </label>
 {% for error in field.errors %}

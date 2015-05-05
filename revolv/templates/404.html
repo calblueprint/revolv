@@ -1,0 +1,19 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static "404.css" %}">
+<link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% block body %}
+<div class="row container">
+	<h1 class="title">We're sorry! This page doesn't exist.</h1>
+	<p class="body-text">Shoot us an email at info@re-volv.org to let us know if there's been an error, 
+		or just head back to our <a href="{% url "home" %}">homepage</a>.</p>
+	<img class="png-image" src="{% static "images/revolv-humans.png" %}" />
+</div>
+
+{% endblock %}
