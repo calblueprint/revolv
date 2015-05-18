@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "accounting.css" %}" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/base/accounting.js" %}"></script>
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}

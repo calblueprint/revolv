@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
 from revolv.base.views import BaseStaffDashboardView
+from revolv.payments.models import AdminRepayment, AdminReinvestment, Payment
 
 
 class AdministratorDashboardView(BaseStaffDashboardView):
@@ -28,6 +29,17 @@ class AdministratorEmailView(UserDataMixin, TemplateView):
         context['subscribed_user_emails'] = user_emails
         return context
 
+class AdministratorAccountingView(TemplateView):
+    """View of the administrator accounting page.
+    """
+    template_name = 'administrator/accounting.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AdministratorAccountingView, self).get_context_data(**kwargs)
+        context['admin_repayments'] = AdminRepayment.objects.repayments()
+        context['admin_reinvestments'] = AdminReinvestment.objects.reinvestments()
+        context['payments'] = Payment.objects.donations()
+        return context
 
 def admin_email_csv_download(request):
     """View for downloading the list of newsletter subscribers as a csv file.
