@@ -20,6 +20,7 @@ module.exports = function(grunt) {
           'revolv/static/dashboard.css': 'revolv/static/dashboard.scss',
           'revolv/static/project-edit.css': 'revolv/static/project-edit.scss',
           'revolv/static/404.css': 'revolv/static/404.scss',
+          'revolv/static/email.css': 'revolv/static/email.scss',
         }
       }
     },
