@@ -21,6 +21,7 @@ module.exports = function(grunt) {
           'revolv/static/project-edit.css': 'revolv/static/project-edit.scss',
           'revolv/static/404.css': 'revolv/static/404.scss',
           'revolv/static/accounting.css': 'revolv/static/accounting.scss',
+          'revolv/static/adjustment.css': 'revolv/static/adjustment.scss',
         }
       }
     },

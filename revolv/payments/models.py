@@ -253,6 +253,28 @@ class RepaymentFragment(models.Model):
     factories = ImportProxy("revolv.payments.factories", "RepaymentFragmentFactories")
 
 
+class AdminAdjustmentManager(models.Manager):
+    """Simple manager for the AdminAdjustment model"""
+
+    def adjustments(self):
+        queryset = AdminAdjustment.objects.all()
+        return queryset
+
+class AdminAdjustment(models.Model):
+    """
+    Abstraction indicating one RE-volv adjustment to the accounting.
+    
+    This model exists for accounting reasons.
+    """
+    amount = models.FloatField()
+    admin = models.ForeignKey(RevolvUserProfile)
+    name = models.CharField(max_length=100)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    objects = AdminAdjustmentManager()
+    factories = ImportProxy("revolv.payments.factories", "AdminAdjustmentFactories")
+
 class PaymentManager(models.Manager):
     """
     Simple manager for the Payment model.
