@@ -5911,6 +5911,9 @@ body {
     width: 75%; }
   .cover .cover-video {
     display: none; }
+  .cover .cover-video-link {
+    pointer-events: none;
+    cursor: default; }
   .cover .mobile-cover {
     display: block;
     height: 100%;

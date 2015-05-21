@@ -501,6 +501,10 @@ body {
         .cover-video {
             display: none;
         }
+        .cover-video-link {
+            pointer-events: none;
+            cursor: default;
+        }
         .mobile-cover {
             display: block;
             height: 100%;
