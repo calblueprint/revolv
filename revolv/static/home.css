@@ -5931,3 +5931,8 @@ body {
     margin: 25px auto; }
   .about .grouping {
     margin: 70px 8px 140px; } }
+
+@media only screen and (min-width:40.063em) and (max-width:64em) {
+  .cover .learn-more {
+    width: 50%;
+    font-size: 15px; } }

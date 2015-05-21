@@ -487,31 +487,25 @@ body {
             text-align: center;
             text-shadow: 2px 2px black;
         }
-
         p {
             font-size: $revolv-cover-inset-paragraph-size - 2px;
             line-height: $revolv-cover-inset-paragraph-size + 6px;
         }
-
         .learn-more {
             width: 100%;
             font-size: 15px;
         }
-
         .cover-inset {
             width: 75%;
         }
-
         .cover-video {
             display: none;
         }
-
         .mobile-cover {
             display: block;
             height: 100%;
             object-fit: cover;
         }
-
         .shade {
             height: 600px;
         }
@@ -520,9 +514,11 @@ body {
     body {
         height: 100% !important;
     }
+
     .nav-spine {
         display: none;
     }
+
     .about {
         .factory {
             margin-top: 48px;
@@ -537,6 +533,15 @@ body {
         }
         .grouping {
             margin: 70px 8px 140px;
+        }
+    }
+}
+
+@media #{$medium-only} {
+    .cover {
+        .learn-more {
+            width: 50%;
+            font-size: 15px;
         }
     }
 }
