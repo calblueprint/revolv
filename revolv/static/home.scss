@@ -100,6 +100,10 @@ body {
     .cover-video {
         width: 100%;
     }
+
+    .mobile-cover {
+        display: none;
+    }
 }
 
 .spacer {
@@ -398,6 +402,9 @@ body {
 
 @media #{$small-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
+    .divider-title {
+        font-size: 18px;
+    }
 
     .about {
         width: 100%;
@@ -427,7 +434,6 @@ body {
 
 @media #{$small-only} and (orientation: portrait) {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-
     .about {
         .grouping {
             height: 70px;
@@ -475,6 +481,41 @@ body {
 
 @media #{$small-only}, #{$medium-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
+    .cover {
+        h1 {
+            color: white;
+            text-align: center;
+            text-shadow: 2px 2px black;
+        }
+
+        p {
+            font-size: $revolv-cover-inset-paragraph-size - 2px;
+            line-height: $revolv-cover-inset-paragraph-size + 6px;
+        }
+
+        .learn-more {
+            width: 100%;
+            font-size: 15px;
+        }
+
+        .cover-inset {
+            width: 75%;
+        }
+
+        .cover-video {
+            display: none;
+        }
+
+        .mobile-cover {
+            display: block;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .shade {
+            height: 600px;
+        }
+    }
 
     body {
         height: 100% !important;

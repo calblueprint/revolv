@@ -60,9 +60,14 @@
                 <div class="learn-more button">Learn how RE-volv works</div>
             </a>
         </div>
+        <!-- Background video to play on desktop view -->
         <video autoplay loop muted src="{% static "videos/cover.mp4" %}"
             poster="{% static "images/cover-video-poster.png" %}" 
-            class="cover-video"></video>
+            class="cover-video">
+        </video>
+        <!-- Background image displayed on mobile devices -->
+        <img src="{% static "images/mobile-cover.png" %}" 
+            class="mobile-cover" />
     </a>
 </div>
 
