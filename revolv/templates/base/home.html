@@ -61,9 +61,9 @@
             </a>
         </div>
         <!-- Background video to play on desktop view -->
-        <video autoplay loop muted src="{% static "videos/cover.mp4" %}"
-            poster="{% static "images/cover-video-poster.png" %}" 
-            class="cover-video">
+        <video autoplay loop muted poster="{% static "images/cover-video-poster.png" %}" class="cover-video">
+            <source src="{% static "videos/cover.mp4" %}" type="video/mp4">
+            <source src="{% static "videos/cover.webm" %}" type="video/webm">
         </video>
         <!-- Background image displayed on mobile devices -->
         <img src="{% static "images/mobile-cover.png" %}" 
