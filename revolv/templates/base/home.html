@@ -79,7 +79,7 @@
     <div class="overlay">
         <div class="current-project-inset">
             <h1>{{ first_project.title }}</h1>
-            <p>{{ first_project.org_about }}</p>
+            <p>{{ first_project.org_about|safe|truncatewords:"25"|linebreaks }}</p>
         </div>
         <div class="graphics-container">
             <svg class="svg-graphics-container"></svg>
