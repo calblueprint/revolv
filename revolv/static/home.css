@@ -5847,8 +5847,6 @@ body {
   background-color: #137F5A; }
 
 @media only screen and (max-width: 40em) {
-  .divider-title {
-    font-size: 18px; }
   .about {
     width: 100%; }
     .about h1 {
@@ -5863,6 +5861,21 @@ body {
     margin-top: 10px;
     font-size: 16px;
     width: 80%; }
+  .divider-title {
+    font-size: 18px;
+    width: 90%; }
+  .current-project {
+    height: 400px;
+    width: 100%;
+    margin: 50px auto; }
+    .current-project .current-project-inset {
+      width: 100%; }
+    .current-project .current-project-inset p {
+      display: none; }
+    .current-project .graphics-container {
+      width: 100%;
+      top: 45%;
+      right: 0%; }
   .learn-more {
     margin-top: 15px; } }
 
@@ -5894,7 +5907,13 @@ body {
     height: 200px; }
   .about .solar-panel {
     top: -46px;
-    margin-left: -45px; } }
+    margin-left: -45px; }
+  .cover {
+    height: 400px; }
+  .current-project {
+    height: 300px; }
+    .current-project .graphics-container {
+      top: 25%; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   .cover h1 {

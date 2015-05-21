@@ -402,10 +402,6 @@ body {
 
 @media #{$small-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-    .divider-title {
-        font-size: 18px;
-    }
-
     .about {
         width: 100%;
         h1 {
@@ -425,6 +421,28 @@ body {
         margin-top: 10px;
         font-size: 16px;
         width: 80%;
+    }
+
+    .divider-title {
+        font-size: 18px;
+        width: 90%;
+    }
+
+    .current-project {
+        height: 400px;
+        width: 100%;
+        margin: 50px auto;
+        .current-project-inset {
+            width: 100%;
+        }
+        .current-project-inset p {
+            display: none;
+        }
+        .graphics-container {
+            width: 100%;
+            top: 45%;
+            right: 0%;
+        }
     }
 
     .learn-more {
@@ -475,6 +493,17 @@ body {
         .solar-panel {
             top: -46px;
             margin-left: -45px;
+        }
+    }
+
+    .cover {
+        height: 400px;
+    }
+
+    .current-project {
+        height: 300px;
+        .graphics-container {
+            top: 25%;
         }
     }
 }
