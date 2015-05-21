@@ -5870,6 +5870,8 @@ body {
     margin: 50px auto; }
     .current-project .current-project-inset {
       width: 100%; }
+    .current-project .current-project-inset h1 {
+      text-align: center; }
     .current-project .current-project-inset p {
       display: none; }
     .current-project .graphics-container {

@@ -66,8 +66,7 @@
             <source src="{% static "videos/cover.webm" %}" type="video/webm">
         </video>
         <!-- Background image displayed on mobile devices -->
-        <img src="{% static "images/mobile-cover.png" %}" 
-            class="mobile-cover" />
+        <img src="{% static "images/mobile-cover.png" %}" class="mobile-cover" />
     </a>
 </div>
 
@@ -79,7 +78,7 @@
     <div class="overlay">
         <div class="current-project-inset">
             <h1>{{ first_project.title }}</h1>
-            <p>{{ first_project.org_about|safe|truncatewords:"25"|linebreaks }}</p>
+            <p>{{ first_project.description|safe|truncatewords:"25"|linebreaks }}</p>
         </div>
         <div class="graphics-container">
             <svg class="svg-graphics-container"></svg>
