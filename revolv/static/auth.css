@@ -3,7 +3,7 @@
   background-color: white;
   padding: 2px 4px;
   border-radius: 5px;
-  border: 1px solid #bbbbbb;
+  border: 1px solid #bbb;
   text-decoration: none;
   font-size: 10px;
   right: -6px;
@@ -12,7 +12,7 @@
 .placeholder-field-label {
   position: relative; }
   .placeholder-field-label.has-errors input {
-    border-color: #f46b7b; }
+    border-color: #F46B7B; }
 
 label.checkbox-field-label {
   text-align: center; }
@@ -21,11 +21,11 @@ label.checkbox-field-label span {
   margin-left: 8px; }
 
 small.non-field-error {
-  background-color: #f46b7b; }
+  background-color: #F46B7B; }
 
 small.field-error {
   background-color: transparent;
-  color: #f46b7b; }
+  color: #F46B7B; }
 
 .submit-button {
   margin: 0;
@@ -34,10 +34,10 @@ small.field-error {
   line-height: 0px;
   cursor: pointer;
   background-color: transparent;
-  color: #11ade5;
-  border: 1px solid #11ade5; }
+  color: #11ADE5;
+  border: 1px solid #11ADE5; }
   .submit-button:hover {
-    background-color: #11ade5;
+    background-color: #11ADE5;
     color: white;
     transition: background-color 0.2s;
     transition: color 0.1s;
@@ -62,10 +62,10 @@ small.field-error {
   .submit-button.yellow {
     cursor: pointer;
     background-color: transparent;
-    color: #f0ad4e;
-    border: 1px solid #f0ad4e; }
+    color: #F0AD4E;
+    border: 1px solid #F0AD4E; }
     .submit-button.yellow:hover {
-      background-color: #f0ad4e;
+      background-color: #F0AD4E;
       color: white;
       transition: background-color 0.2s;
       transition: color 0.1s;
@@ -80,19 +80,19 @@ small.field-error {
   margin: 100px auto; }
 
 .component-row h1 {
-  color: #11ade5;
+  color: #11ADE5;
   font-weight: 100;
   display: block;
   height: 0.5em;
   line-height: 1em;
   border: none;
-  border-bottom: 1px solid #11ade5;
+  border-bottom: 1px solid #11ADE5;
   margin-bottom: 0.5em;
   text-align: center;
   font-size: 25px;
   margin-bottom: 1.5em; }
   .component-row h1:first-line {
-    background-color: #ebece7; }
+    background-color: #EBECE7; }
   .component-row h1:before {
     display: inline;
     content: "\a0\a0\a0"; }
@@ -100,18 +100,18 @@ small.field-error {
     display: inline;
     content: "\a0\a0\a0"; }
   .component-row h1.heading-error {
-    color: #e83d3d;
+    color: #E83D3D;
     display: block;
     height: 0.5em;
     line-height: 1em;
     border: none;
-    border-bottom: 1px solid #e83d3d;
+    border-bottom: 1px solid #E83D3D;
     margin-bottom: 0.5em;
     text-align: center;
     font-size: 25px;
     margin-bottom: 1.5em; }
     .component-row h1.heading-error:first-line {
-      background-color: #ebece7; }
+      background-color: #EBECE7; }
     .component-row h1.heading-error:before {
       display: inline;
       content: "\a0\a0\a0"; }

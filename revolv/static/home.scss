@@ -100,6 +100,10 @@ body {
     .cover-video {
         width: 100%;
     }
+
+    .mobile-cover {
+        display: none;
+    }
 }
 
 .spacer {
@@ -398,7 +402,6 @@ body {
 
 @media #{$small-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-
     .about {
         width: 100%;
         h1 {
@@ -420,6 +423,31 @@ body {
         width: 80%;
     }
 
+    .divider-title {
+        font-size: 18px;
+        width: 90%;
+    }
+
+    .current-project {
+        height: 400px;
+        width: 100%;
+        margin: 50px auto;
+        .current-project-inset {
+            width: 100%;
+        }
+        .current-project-inset h1 {
+            text-align: center;
+        }
+        .current-project-inset p {
+            display: none;
+        }
+        .graphics-container {
+            width: 100%;
+            top: 45%;
+            right: 0%;
+        }
+    }
+
     .learn-more {
         margin-top: 15px;
     }
@@ -427,7 +455,6 @@ body {
 
 @media #{$small-only} and (orientation: portrait) {
     // extra qualifiers for more specificity in order to overload non-mobile styles
-
     .about {
         .grouping {
             height: 70px;
@@ -471,17 +498,63 @@ body {
             margin-left: -45px;
         }
     }
+
+    .cover {
+        height: 400px;
+    }
+
+    .current-project {
+        height: 300px;
+        .graphics-container {
+            top: 25%;
+        }
+    }
 }
 
 @media #{$small-only}, #{$medium-only} {
     // extra qualifiers for more specificity in order to overload non-mobile styles
+    .cover {
+        h1 {
+            color: white;
+            text-align: center;
+            text-shadow: 2px 2px black;
+        }
+        p {
+            font-size: $revolv-cover-inset-paragraph-size - 2px;
+            line-height: $revolv-cover-inset-paragraph-size + 6px;
+        }
+        .learn-more {
+            width: 100%;
+            font-size: 15px;
+        }
+        .cover-inset {
+            width: 75%;
+        }
+        .cover-video {
+            display: none;
+        }
+        .cover-video-link {
+            pointer-events: none;
+            cursor: default;
+        }
+        .mobile-cover {
+            display: block;
+            height: 100%;
+            object-fit: cover;
+        }
+        .shade {
+            height: 600px;
+        }
+    }
 
     body {
         height: 100% !important;
     }
+
     .nav-spine {
         display: none;
     }
+
     .about {
         .factory {
             margin-top: 48px;
@@ -496,6 +569,15 @@ body {
         }
         .grouping {
             margin: 70px 8px 140px;
+        }
+    }
+}
+
+@media #{$medium-only} {
+    .cover {
+        .learn-more {
+            width: 50%;
+            font-size: 15px;
         }
     }
 }
