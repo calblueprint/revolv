@@ -1,18 +1,21 @@
-.save-button {
+.button {
   cursor: pointer;
   background-color: transparent;
   color: #064f7e;
-  border: 1px solid #064f7e;
-  width: 100%; }
-  .save-button:hover {
+  border: 1px solid #064f7e; }
+  .button:hover {
     background-color: #064f7e;
     color: white;
     transition: background-color 0.2s;
     transition: color 0.1s;
     -webkit-transition: background-color 0.2s;
     -webkit-transition: color 0.1s; }
-  .save-button:disabled {
+  .button:disabled {
     opacity: 0.3; }
 
-.container {
-  margin-top: 50px; }
+.download {
+  width: 100%;
+  margin-bottom: 50px; }
+
+.main {
+  margin-top: 30px; }

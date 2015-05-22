@@ -1,0 +1,12 @@
+@import "utils";
+@import "revolv-settings";
+
+.save-button {
+	@include revolv-hover-button($revolv-dark-blue, $revolv-dark-blue);
+	width: 100%;
+}
+
+.container {
+	margin-top: 50px;
+}
+

@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 from revolv.base.models import RevolvUserProfile
@@ -9,7 +11,7 @@ class AdminRepaymentManager(models.Manager):
     Manager for AdminRepayment.
     """
 
-    def repayments(self, admin=None, project=None, queryset=None):
+    def repayments(self, admin=None, project=None, queryset=None, start_date=datetime.datetime.min, end_date=datetime.datetime.max):
         """
         :return: AdminRepayments associated with this admin and project.
         """
@@ -19,6 +21,9 @@ class AdminRepaymentManager(models.Manager):
             queryset = queryset.filter(admin=admin).order_by('created_at')
         if project:
             queryset = queryset.filter(project=project).order_by('created_at')
+        if start_date and end_date:
+            queryset = queryset.filter(created_at__gte=start_date)
+            queryset = queryset.filter(created_at__lte=end_date)
         return queryset
 
 
@@ -68,7 +73,7 @@ class AdminReinvestmentManager(models.Manager):
     Manager for AdminReinvestment.
     """
 
-    def reinvestments(self, admin=None, project=None, queryset=None):
+    def reinvestments(self, admin=None, project=None, queryset=None, start_date=datetime.datetime.min, end_date=datetime.datetime.max):
         """
         :return: AdminReinvestment associated with this admin and project.
         """
@@ -78,6 +83,9 @@ class AdminReinvestmentManager(models.Manager):
             queryset = queryset.filter(admin=admin).order_by('created_at')
         if project:
             queryset = queryset.filter(project=project).order_by('created_at')
+        if start_date and end_date:
+            queryset = queryset.filter(created_at__gte=start_date)
+            queryset = queryset.filter(created_at__lte=end_date)
         return queryset
 
 
@@ -256,8 +264,15 @@ class RepaymentFragment(models.Model):
 class AdminAdjustmentManager(models.Manager):
     """Simple manager for the AdminAdjustment model"""
 
-    def adjustments(self):
-        queryset = AdminAdjustment.objects.all()
+    def adjustments(self, start_date=datetime.datetime.min, end_date=datetime.datetime.max, cash_type=None):
+        queryset = AdminAdjustment.objects.all().order_by('created_at')
+        
+        if start_date and end_date:
+            queryset = queryset.filter(created_at__gte=start_date)
+            queryset = queryset.filter(created_at__lte=end_date)
+        if cash_type:
+            queryset = queryset.filter(cash_type=cash_type)
+        
         return queryset
 
 class AdminAdjustment(models.Model):
@@ -270,7 +285,13 @@ class AdminAdjustment(models.Model):
     admin = models.ForeignKey(RevolvUserProfile)
     name = models.CharField(max_length=100)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    CASH_TYPE_CHOICES = (
+        ('cash_in', 'Cash in'),
+        ('cash_out', 'Cash out'),
+    )
+    cash_type = models.CharField(choices=CASH_TYPE_CHOICES, max_length=10)
+
+    created_at = models.DateField(auto_now_add=False)
 
     objects = AdminAdjustmentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminAdjustmentFactories")
@@ -280,7 +301,7 @@ class PaymentManager(models.Manager):
     Simple manager for the Payment model.
     """
 
-    def payments(self, user=None, entrant=None, project=None, queryset=None):
+    def payments(self, user=None, entrant=None, project=None, queryset=None, start_date=datetime.datetime.min, end_date=datetime.datetime.max):
         """
         :return: Payments associated with this user and project
         """
@@ -292,9 +313,12 @@ class PaymentManager(models.Manager):
             queryset = queryset.filter(entrant=entrant).order_by('created_at')
         if project:
             queryset = queryset.filter(project=project).order_by('created_at')
+        if start_date and end_date:
+            queryset = queryset.filter(created_at__gte=start_date)
+            queryset = queryset.filter(created_at__lte=end_date)
         return queryset
 
-    def donations(self, user=None, project=None, queryset=None, organic=False):
+    def donations(self, user=None, project=None, queryset=None, organic=False, start_date=datetime.datetime.min, end_date=datetime.datetime.max):
         """
         :kwargs:
             user: filter donations by this user
@@ -322,6 +346,10 @@ class PaymentManager(models.Manager):
             else:
                 donations = donations.exclude(user__isnull=True).filter(
                     entrant__pk=models.F('user__pk'))
+
+        if start_date and end_date:
+            donations = donations.filter(created_at__gte=start_date)
+            donations = donations.filter(created_at__lte=end_date)
 
         return donations
 

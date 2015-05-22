@@ -4,9 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static "adjustment.css" %}" />
-<link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
 <link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
 
 {% endblock %}
 
@@ -14,23 +12,24 @@
 
 {% block body %}
 
-<div class="main row">
-	<form method="POST" enctype="multipart/form-data" id="expense_form">
-       	{% csrf_token %}
-        {% for error in form.non_field_errors %}
-	        <div data-alert class="alert-box alert">
-	            {{ error }}
-	            <a href="#" class="close">&times;</a>
-	        </div>
-        {% endfor %}
-		<div class="small-12 columns">
-           	<div class="row project-overview section">
-                {% include "base/partials/tooltip_formfield.html" with field=form.name %}
-                {% include "base/partials/tooltip_formfield.html" with field=form.amount %}
-                {% include "base/partials/tooltip_formfield.html" with field=form.created_at %}
-        	<button class="large right save-button" id="save_project" type="submit">Save</button>
-        </div>
-    </form>
+<div class="row">
+    <div class="large-12 columns container">
+        <form method="POST" enctype="multipart/form-data" id="expense_form">
+            {% csrf_token %}
+            {% for error in form.non_field_errors %}
+        	    <div data-alert class="alert-box alert">
+        	        {{ error }}
+            	    <a href="#" class="close">&times;</a>
+            	</div>
+            {% endfor %}
+
+            {% include "base/partials/tooltip_formfield.html" with field=form.name %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.amount %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.created_at %}
+            {% include "base/partials/tooltip_formfield.html" with field=form.cash_type %}
+            <button class="large right save-button" id="save_project" type="submit">Save</button>
+        </form>
+    </div>
 </div>
 
 {% endblock %}

@@ -4,8 +4,11 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="{% static "accounting.css" %}" />
-    <link href='https://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
-
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'/>
+    <script type="text/javascript">
+		window.JSONURL = "{{ jsonurl }}";
+		//window.JSONURL = "http://127.0.0.1:8000/dashboard/admin/accounting/json";
+	</script>
 {% endblock %}
 
 {% block javascripts %}
@@ -21,34 +24,27 @@
 		<h1 class="revolv-header-text">RE-volv Accounting Information</h1>
 	</div>
 	<div class="large-6 columns">
-		<form method="GET" enctype="multipart/form-data" id="filter_form">
-			<!-- <input type="month" name="start-date" placeholder="Start date">
-			<input type="month" name="end-date" placeholder="End date"> -->
-			{% csrf_token %}
-        	{% for error in form.non_field_errors %}
-		        <div data-alert class="alert-box alert">
-		            {{ error }}
-		            <a href="#" class="close">&times;</a>
-		        </div>
-        	{% endfor %}
-
-	        {% include "base/partials/tooltip_formfield.html" with field=form.project %}
-	        {% include "base/partials/tooltip_formfield.html" with field=form.start_date %}
-	        {% include "base/partials/tooltip_formfield.html" with field=form.end_date %}
-        	<button class="large right save-button" id="save_project" type="submit">Generate Statement</button>
-			<a href="{% url "administrator:adjustment" %}"><input type="button" value="Add adjustment"></a>
+		<form class="filter_form">
+			<input class="selector start_selector" type="date" name="start-date" placeholder="Start date"/>
+			<input class="selector end_selector" type="date" name="end-date" placeholder="End date"/>
+			<select class="selector project_selector">
+				<option value="all">All projects</option>
+			  {% for title in project_names %}
+			  	<option value={{ title }}>{{ title }}</option>
+			  {% endfor %}
+			</select>
 		</form>
 	</div>
 </div>
 
 <div class="row cash-flow-statement">
 	<h1 class="cash-flow-header-text">Statement of Cash Flows</h1>
-	<p class="time-sub-text"></p>
+	<p class="time-sub-text">time information here</p>
 	<table class="cash-in-table">
 		<thead>
 			<th class="label-column">Cash In</th>
 		</thead>
-		<tbody>>
+		<tbody>
 		</tbody>
 	</table>
 	<table class="cash-out-table">
