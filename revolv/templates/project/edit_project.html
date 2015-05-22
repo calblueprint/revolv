@@ -8,11 +8,9 @@
 <link rel="stylesheet" href="{% static "project-edit.css" %}" />
 <link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
 <style type="text/css">
-    #map-canvas { width: 100%; height: 500px; margin: 0; padding: 0;}
+    #map-canvas { width: 100%; height: 300px; margin-bottom: 20px; padding: 0;}
     #map-canvas img {max-width: none;}
 </style>
-
-<script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
 
 {% endblock %}
 
@@ -107,16 +105,13 @@
                 </div>
                 <div class="medium-12 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
+                    <div id="map-canvas"></div>
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_about %}
                 </div>
             </div>
-            <div row="map section">
-                <div class="hide">
-                    {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
-                    {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
-                </div>
-            </div>
             <div class="hide">
+                {% include "base/partials/tooltip_formfield.html" with field=form.location_latitude %}
+                {% include "base/partials/tooltip_formfield.html" with field=form.location_longitude %}
                 {% include "base/partials/tooltip_formfield.html" with field=form.extra %}
             </div>
             <button class="large right save-button" id="save_project" type="submit">Save</button>
@@ -195,8 +190,6 @@
 <script src="{% static 'chosen/chosen.jquery.js' %}"></script>
 <script type="text/javascript">
     $("#id_extra").val(1);
-    $('#id_location_latitude').val(0.0);
-    $('#id_location_longitude').val(0.0);
 
     $('<div class="project-edit-spacer"></div>').insertBefore("#cover_photo-clear_id");
     // window.PROJECT_ID = {{ project.id }};
