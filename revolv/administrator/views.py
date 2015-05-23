@@ -35,81 +35,6 @@ class AdministratorEmailView(UserDataMixin, TemplateView):
         return context
 
 
-class AccountingJSONView(View):
-    
-    start_date = datetime.datetime.strptime('2015-06-01', '%Y-%m-%d')
-    end_date = datetime.datetime.now()
-    project_filter = Project.objects.all()
-    
-    def dispatch(self, request, *args, **kwargs):
-
-        request = request.GET
-        keys = request.keys()
-
-        #THESE ARE DUMMY VARIABLES
-        payment_service_fee_rate = 0.01
-        revolv_earnings_rate = 0.07
-
-        try:
-            if 'start_date' in keys:
-                self.start_date = datetime.datetime.strptime(request['start_date'], '%Y-%m-%d')
-            elif 'end_date' in keys:
-                self.end_date = datetime.datetime.strptime(request['end_date'], '%Y-%m-%d')
-            elif 'project_filter' in keys:
-                self.project_filter = Project.objects.filter(title=request['project']) 
-        except ValueError:
-            pass
-
-        filtered_dict = {'cash_in': {'repayments': {}, 'donations': {}, 'adjustments': {}}, 'cash_out': {'reinvestments': {}, 'adjustments': {}}}
-        
-        filtered_dict['date_info'] = {}
-        date_info = filtered_dict['date_info']
-        date_info['start_date'] = self.start_date.strftime('%Y-%m-%d')
-        date_info['end_date'] = self.end_date.strftime('%Y-%m-%d')
-
-        cash_in_repayment = filtered_dict['cash_in']['repayments']
-        cash_in_donation = filtered_dict['cash_in']['donations']
-        cash_in_adjustment = filtered_dict['cash_in']['adjustments']
-        cash_out_reinvestment = filtered_dict['cash_out']['reinvestments']
-        cash_out_adjustment = filtered_dict['cash_out']['adjustments']
-
-
-        for proj in self.project_filter:
-            
-            cash_in_repayment[proj.title] = {}
-            cash_in_donation[proj.title] = {}
-            cash_in_adjustment[proj.title] = {}
-            cash_out_reinvestment[proj.title] = {}
-            cash_out_adjustment[proj.title] = {}
-
-
-            current_dict = cash_in_donation[proj.title] 
-            total =  sum([donation.amount for donation in Payment.objects.donations(project=proj, start_date=self.start_date, end_date=self.end_date)])
-            #map the date to the amount IF correct range
-            current_dict['total'] = total
-            current_dict['payment_service_fees'] = total * payment_service_fee_rate
-            current_dict['retained_donations'] = total * (1 - payment_service_fee_rate)
-
-            current_dict = cash_in_repayment[proj.title]
-            total = sum([repayment.amount for repayment in AdminRepayment.objects.repayments(project=proj, start_date=self.start_date, end_date=self.end_date)])
-            current_dict['total'] = total
-            current_dict['revolv_earnings'] = total * revolv_earnings_rate
-            current_dict['retained_ROI'] = total * (1 - revolv_earnings_rate)
-
-            current_dict = cash_in_adjustment[proj.title]
-            total = sum([adjustment for adjustment in AdminAdjustment.objects.adjustments(start_date=self.start_date, end_date=self.end_date, cash_type='cash_in')])
-            current_dict['total'] = total
-
-            current_dict = cash_out_adjustment[proj.title]
-            total = sum([adjustment for adjustment in AdminAdjustment.objects.adjustments(start_date=self.start_date, end_date=self.end_date, cash_type='cash_out')])
-            current_dict['total'] = total
-
-            current_dict = cash_out_reinvestment[proj.title]
-            total = sum([reinvestment.amount for reinvestment in AdminReinvestment.objects.reinvestments(project=proj, start_date=self.start_date, end_date=self.end_date)])
-            current_dict['total'] = total
-
-        return JsonResponse(filtered_dict)
-
 class AdministratorAccountingView(TemplateView):
     """View of the administrator accounting page.
     """
@@ -125,6 +50,120 @@ class AdministratorAccountingView(TemplateView):
         context['jsonurl'] = unicode(str(reverse('administrator:accountingJSON')))
 
         return context
+
+class AccountingJSONView(View):
+    
+    start_date = datetime.datetime.strptime('2015-01-01', '%Y-%m-%d')
+    end_date = datetime.datetime.now()
+    project_filter = Project.objects.all()
+    
+    def dispatch(self, request, *args, **kwargs):
+        request = request.GET
+        keys = request.keys()
+        
+        #THESE ARE DUMMY VARIABLES
+        payment_service_fee_rate = 0.01
+        revolv_earnings_rate = 0.07
+
+        try:
+            if 'start_date' in keys:
+                self.start_date = datetime.datetime.strptime(request['start_date'], '%Y-%m-%d')
+            elif 'end_date' in keys:
+                self.end_date = datetime.datetime.strptime(request['end_date'], '%Y-%m-%d')
+            elif 'project_filter' in keys:
+                self.project_filter = Project.objects.filter(title=request['project']) 
+        except ValueError:
+            pass
+
+        filtered_dict = {'cash_in': {'repayments': {}, 'adjustments': {}, 'donations': {}}, 'cash_out': {'reinvestments': {}, 'adjustments': {}}}
+        
+        filtered_dict['date_info'] = {}
+        date_info = filtered_dict['date_info']
+        date_info['start_date'] = self.start_date.strftime('%Y-%m-%d')
+        date_info['end_date'] = self.end_date.strftime('%Y-%m-%d')
+        date_info['date_list'] = []
+        date_list = date_info['date_list']
+
+        filtered_dict['project_names'] = []
+        project_names = filtered_dict['project_names']
+
+        for proj in self.project_filter:
+            project_names.append(proj.title)
+
+        cash_in_repayment = filtered_dict['cash_in']['repayments']
+        cash_in_donation = filtered_dict['cash_in']['donations']
+        cash_in_adjustment = filtered_dict['cash_in']['adjustments']
+        cash_out_reinvestment = filtered_dict['cash_out']['reinvestments']
+        cash_out_adjustment = filtered_dict['cash_out']['adjustments']
+
+        temp_start_date = self.start_date
+        new_month = (self.start_date.month)%12 + 1
+        if new_month==1:
+            new_year = self.start_date.year + 1
+            temp_end_date = self.start_date.replace(month=new_month, year=new_year)
+        else:
+            temp_end_date = self.start_date.replace(month=new_month)
+
+        while temp_start_date < self.end_date:
+            if (self.end_date < temp_end_date):
+                temp_end_date = self.end_date
+
+            date_list.append(temp_start_date.strftime('%Y-%m-%d'))
+
+            date = temp_start_date.strftime('%Y-%m-%d')
+            cash_in_repayment[date] = {}
+            cash_in_donation[date] = {}
+            cash_in_adjustment[date] = {}
+            cash_out_reinvestment[date] = {}
+            cash_out_adjustment[date] = {}
+
+            cash_in_repayment_date = cash_in_repayment[date]
+            cash_in_donation_date = cash_in_donation[date]
+            cash_in_adjustment_date = cash_in_adjustment[date]
+            cash_out_reinvestment_date = cash_out_reinvestment[date]
+            cash_out_adjustment_date = cash_out_adjustment[date]
+
+            for proj in self.project_filter:
+                
+                cash_in_repayment_date[proj.title] = {}
+                cash_in_donation_date[proj.title] = {}
+                cash_in_adjustment_date[proj.title] = {}
+                cash_out_reinvestment_date[proj.title] = {}
+                cash_out_adjustment_date[proj.title] = {}
+
+                current_dict = cash_in_repayment_date[proj.title]
+                total = sum([repayment.amount for repayment in AdminRepayment.objects.repayments(project=proj, start_date=temp_start_date, end_date=temp_end_date)])
+                current_dict['total'] = total
+                current_dict['revolv_earnings'] = total * revolv_earnings_rate
+                current_dict['retained_ROI'] = total * (1 - revolv_earnings_rate)
+
+                current_dict = cash_in_donation_date[proj.title] 
+                total =  sum([donation.amount for donation in Payment.objects.donations(project=proj, start_date=temp_start_date, end_date=temp_end_date)])
+                current_dict['total'] = total
+                current_dict['payment_service_fees'] = total * payment_service_fee_rate
+                current_dict['retained_donations'] = total * (1 - payment_service_fee_rate)
+
+                current_dict = cash_in_adjustment_date[proj.title]
+                total = sum([adjustment for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type='cash_in')])
+                current_dict['total'] = total
+
+                current_dict = cash_out_adjustment_date[proj.title]
+                total = sum([adjustment for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type='cash_out')])
+                current_dict['total'] = total
+
+                current_dict = cash_out_reinvestment_date[proj.title]
+                total = sum([reinvestment.amount for reinvestment in AdminReinvestment.objects.reinvestments(project=proj, start_date=temp_start_date, end_date=temp_end_date)])
+                current_dict['total'] = total
+            
+            temp_start_date = temp_end_date
+            new_month = (temp_end_date.month)%12 + 1
+            if new_month==1:
+                new_year = temp_end_date.year + 1
+                temp_end_date = temp_end_date.replace(month=new_month, year=new_year)
+            else:
+                temp_end_date = temp_end_date.replace(month=new_month)
+
+        return JsonResponse(filtered_dict)
 
 class AdministratorAddAdjustmentView(CreateView):
     
