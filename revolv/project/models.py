@@ -491,14 +491,14 @@ class Project(models.Model):
 
 class ProjectUpdate(models.Model):
     factories = ImportProxy("revolv.project.factories", "ProjectUpdateFactories")
-    update_text = models.TextField(
-        'Update text',
-        help_text="What should the update say?"
+    update_text = RichTextField(
+        'Update content',
+        help_text="What should be the content of the update?"
     )
 
     date = models.DateField(
         'Date of update creation',
-        help_text="What time was your update created?",
+        help_text="What time was the update created?",
         auto_now_add=True
     )
 

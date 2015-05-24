@@ -139,7 +139,7 @@
                     </div>
                 </div>
                 <div class="large-10 medium-9 small-12 columns update-column">
-                    <p class="update-text">{{ update.update_text }}</p>
+                    <div class="update-text">{{ update.update_text|safe }}</div>
                 </div>
             </div>
         {% endfor %}
