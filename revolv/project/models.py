@@ -1,8 +1,8 @@
 
 import datetime
 from itertools import chain
-from ckeditor.fields import RichTextField
 
+from ckeditor.fields import RichTextField
 from django.core.urlresolvers import reverse
 from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
