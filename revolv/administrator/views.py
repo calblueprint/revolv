@@ -53,28 +53,32 @@ class AdministratorAccountingView(TemplateView):
 
 class AccountingJSONView(View):
     
+    beginning_of_time = datetime.datetime.strptime('2015-01-01', '%Y-%m-%d')
+
     start_date = datetime.datetime.strptime('2015-01-01', '%Y-%m-%d')
     end_date = datetime.datetime.now()
     project_filter = Project.objects.all()
-    
-    def dispatch(self, request, *args, **kwargs):
-        request = request.GET
-        keys = request.keys()
-        
-        #THESE ARE DUMMY VARIABLES
-        payment_service_fee_rate = 0.01
-        revolv_earnings_rate = 0.07
 
+    def calculateCashBalanceFromStart(self):
+        # compare the beginning of time to the start_date
+        # TODO : DO THIS METHOD
+        pass
+
+    def updateFilterVariables(self, keys):
         try:
             if 'start_date' in keys:
                 self.start_date = datetime.datetime.strptime(request['start_date'], '%Y-%m-%d')
             elif 'end_date' in keys:
                 self.end_date = datetime.datetime.strptime(request['end_date'], '%Y-%m-%d')
             elif 'project_filter' in keys:
-                self.project_filter = Project.objects.filter(title=request['project']) 
+                if (request['project'] == 'all'):
+                    self.project_filter = Project.objects.all()
+                else:
+                    self.project_filter = Project.objects.filter(title=request['project']) 
         except ValueError:
             pass
 
+    def setUpFilteredDict(self):
         filtered_dict = {'cash_in': {'repayments': {}, 'adjustments': {}, 'donations': {}}, 'cash_out': {'reinvestments': {}, 'adjustments': {}}}
         
         filtered_dict['date_info'] = {}
@@ -82,13 +86,27 @@ class AccountingJSONView(View):
         date_info['start_date'] = self.start_date.strftime('%Y-%m-%d')
         date_info['end_date'] = self.end_date.strftime('%Y-%m-%d')
         date_info['date_list'] = []
-        date_list = date_info['date_list']
-
+        filtered_dict['current_cash_balance'] = self.calculateCashBalanceFromStart()
         filtered_dict['project_names'] = []
         project_names = filtered_dict['project_names']
-
         for proj in self.project_filter:
             project_names.append(proj.title)
+
+        return filtered_dict
+
+    def dispatch(self, request, *args, **kwargs):
+        request = request.GET
+        keys = request.keys()
+        
+        #THESE ARE DUMMY VARIABLES - USE THE REVOLV EARNINGS MODEL INSTEAD
+        payment_service_fee_rate = 0.01
+        revolv_earnings_rate = 0.07
+
+        self.updateFilterVariables(keys)
+
+        filtered_dict = self.setUpFilteredDict()      
+        date_info = filtered_dict['date_info']
+        date_list = date_info['date_list']
 
         cash_in_repayment = filtered_dict['cash_in']['repayments']
         cash_in_donation = filtered_dict['cash_in']['donations']
@@ -123,13 +141,29 @@ class AccountingJSONView(View):
             cash_out_reinvestment_date = cash_out_reinvestment[date]
             cash_out_adjustment_date = cash_out_adjustment[date]
 
+            current_dict = cash_in_adjustment_date
+            total = sum([adjustment for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type='cash_in')])
+            current_dict['total'] = total
+
+            current_dict['transactions'] = {}
+            current_dict = current_dict['transactions']
+            for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type='cash_in'):
+                current_dict[adjustment.name] = str(amount)
+
+            current_dict = cash_out_adjustment_date
+            total = sum([adjustment for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type='cash_out')])
+            current_dict['total'] = total
+
+            current_dict['transactions'] = {}
+            current_dict = current_dict['transactions']
+            for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type='cash_out'):
+                current_dict[adjustment.name] = str(amount)
+
             for proj in self.project_filter:
                 
                 cash_in_repayment_date[proj.title] = {}
                 cash_in_donation_date[proj.title] = {}
-                cash_in_adjustment_date[proj.title] = {}
                 cash_out_reinvestment_date[proj.title] = {}
-                cash_out_adjustment_date[proj.title] = {}
 
                 current_dict = cash_in_repayment_date[proj.title]
                 total = sum([repayment.amount for repayment in AdminRepayment.objects.repayments(project=proj, start_date=temp_start_date, end_date=temp_end_date)])
@@ -142,14 +176,6 @@ class AccountingJSONView(View):
                 current_dict['total'] = total
                 current_dict['payment_service_fees'] = total * payment_service_fee_rate
                 current_dict['retained_donations'] = total * (1 - payment_service_fee_rate)
-
-                current_dict = cash_in_adjustment_date[proj.title]
-                total = sum([adjustment for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type='cash_in')])
-                current_dict['total'] = total
-
-                current_dict = cash_out_adjustment_date[proj.title]
-                total = sum([adjustment for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type='cash_out')])
-                current_dict['total'] = total
 
                 current_dict = cash_out_reinvestment_date[proj.title]
                 total = sum([reinvestment.amount for reinvestment in AdminReinvestment.objects.reinvestments(project=proj, start_date=temp_start_date, end_date=temp_end_date)])
