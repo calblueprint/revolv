@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'imagekit',
     'widget_tweaks',
     'djcelery',
+    'ckeditor',
 
     # django-cms
     'djangocms_text_ckeditor',
@@ -127,6 +128,8 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
+CKEDITOR_UPLOAD_PATH = "ckeditor_uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
 CMS_TEMPLATES = (
     ('base/cms_templates/template_1.html', 'Template One'),
 )

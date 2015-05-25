@@ -4,8 +4,10 @@ from revolv.base import views as base_views
 
 urlpatterns = patterns(
     '',
+    (r'^ckeditor/', include('ckeditor.urls')),  # for assets for the ckedit widget, etc
     url(r'^facebook/', include('django_facebook.urls')),
     url(r'^admin/', include(admin.site.urls)),
+
     url(r'^$', base_views.HomePageView.as_view(), name='home'),
     url(r'^project/', include('revolv.project.urls', namespace='project')),
     url(r'^dashboard/$', base_views.DashboardRedirect.as_view(), name='dashboard'),
