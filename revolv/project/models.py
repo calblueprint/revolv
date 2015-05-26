@@ -2,6 +2,7 @@
 import datetime
 from itertools import chain
 
+from ckeditor.fields import RichTextField
 from django.core.urlresolvers import reverse
 from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
@@ -236,9 +237,9 @@ class Project(models.Model):
         help_text='Elaborate more about the organization, what it does, who it serves, etc.'
     )
 
-    description = models.TextField(
+    description = RichTextField(
         'Project description',
-        help_text='This is the body of text that shows up on the project page.'
+        help_text='This is the body of content that shows up on the project page.'
     )
 
     donors = models.ManyToManyField(RevolvUserProfile, blank=True)
@@ -490,14 +491,14 @@ class Project(models.Model):
 
 class ProjectUpdate(models.Model):
     factories = ImportProxy("revolv.project.factories", "ProjectUpdateFactories")
-    update_text = models.TextField(
-        'Update text',
-        help_text="What should the update say?"
+    update_text = RichTextField(
+        'Update content',
+        help_text="What should be the content of the update?"
     )
 
     date = models.DateField(
         'Date of update creation',
-        help_text="What time was your update created?",
+        help_text="What time was the update created?",
         auto_now_add=True
     )
 

@@ -5864,7 +5864,7 @@ body {
     .project-updates .update-container .date-container .date-month-day {
       font-size: 1.2rem;
       line-height: 1.2rem; }
-  .project-updates .update-container .update-text {
+  .project-updates .update-container .update-text p {
     font-weight: 500;
     font-size: 1.2rem;
     color: #333333;
@@ -5977,7 +5977,7 @@ body {
     .project-updates .update-container .date-container {
       text-align: left;
       margin-bottom: 50px; }
-    .project-updates .update-container .update-text {
+    .project-updates .update-container .update-text p {
       font-weight: 500;
       font-size: 1rem; }
   .map {
