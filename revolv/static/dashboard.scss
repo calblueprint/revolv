@@ -28,6 +28,7 @@ $sidebar-header-gray: #777;
     background-color: $oil;
     height: 100%;
     font-family: $lato-font-family;
+    overflow: scroll;
 
     .dashboard-section {
         padding: 10px 0;

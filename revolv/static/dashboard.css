@@ -7422,7 +7422,8 @@ html, body, .main-row {
   padding: 0;
   background-color: #333333;
   height: 100%;
-  font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+  font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  overflow: scroll; }
   .dashboard-sidebar .dashboard-section {
     padding: 10px 0; }
     .dashboard-sidebar .dashboard-section .dashboard-header {
