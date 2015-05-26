@@ -291,7 +291,7 @@ class AdminAdjustment(models.Model):
     )
     cash_type = models.CharField(choices=CASH_TYPE_CHOICES, max_length=10)
 
-    created_at = models.DateField(auto_now_add=False)
+    created_at = models.DateField(auto_now_add=False, default = datetime.datetime.now())
 
     objects = AdminAdjustmentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminAdjustmentFactories")

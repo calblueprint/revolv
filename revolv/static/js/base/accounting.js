@@ -5,6 +5,8 @@ $(document).ready(function(){
 
 $(".selector").change(function(){
 	// makes an AJAX call to the accountingJSON view when the selectors are changed
+	
+	$(".added").remove();
 	var changed_selector = $(this);
 	var changed_data = {};
 
@@ -15,7 +17,7 @@ $(".selector").change(function(){
 	} else {
 		changed_data['project_choice'] = changed_selector[0].value;
 	}
-
+	console.log(changed_data)
 	makeAJAXcall(changed_data);
 });
 
@@ -84,9 +86,9 @@ function placeDonationElement(data_to_insert, project_name, time_key) {
 	var payment_service_fees = data_to_insert['payment_service_fees'];
 	var retained_donations = data_to_insert['retained_donations'];
 	var className  = '.project-' + cleanUpString(project_name);
-	$('.total-donation').filter(className).append("<td>" + String(total) + "</td>");
-	$('.payment-service-fees').filter(className).append("<td>" + String(payment_service_fees) + "</td>");
-	$('.retained-donations').filter(className).append("<td>" + String(retained_donations) + "</td>");
+	$('.total-donation').filter(className).append('<td class="added">' + String(total) + "</td>");
+	$('.payment-service-fees').filter(className).append('<td class="added">' + String(payment_service_fees) + "</td>");
+	$('.retained-donations').filter(className).append('<td class="added">' + String(retained_donations) + "</td>");
 }
 
 /**
@@ -101,9 +103,9 @@ function placeROIElement(data_to_insert, project, time) {
 	var retained_ROI = data_to_insert['retained_ROI'];
 
 	var className = '.project-' + cleanUpString(project);
-	$('.total-repayment').filter(className).append("<td>" + String(total) + "</td>");
-	$('.revolv-earnings').filter(className).append("<td>" + String(revolv_earnings) + "</td>");
-	$('.retained-ROI').filter(className).append("<td>" + String(retained_ROI) + "</td>");
+	$('.total-repayment').filter(className).append('<td class="added">' + String(total) + "</td>");
+	$('.revolv-earnings').filter(className).append('<td class="added">' + String(revolv_earnings) + "</td>");
+	$('.retained-ROI').filter(className).append('<td class="added">' + String(retained_ROI) + "</td>");
 }
 
 /**
@@ -116,7 +118,7 @@ function placeAdminInvestmentElement(data_to_insert, project, time) {
 	var total = data_to_insert['total'];
 
 	var className = '.project-' + cleanUpString(project);
-	$('.reinvestment').filter(className).append("<td>" + String(total) + "</td>");
+	$('.reinvestment').filter(className).append('<td class="added">' + String(total) + "</td>");
 
 }
 
@@ -141,7 +143,7 @@ function placeCashInAdjustmentElement(data_to_insert, time) {
 		var transactionAmount = transactions[transactionName];
 		var cleanedTransactionName = cleanUpString(transactionName);
 		if ($(cleanedTransactionName).length) {
-			$('.cash-in-body').append('<tr class="transaction ' + cleanedTransactionName + '"><td>Total</td><td>" + String(total) + "</td></tr>');
+			$('.cash-in-body').append('<tr class="added transaction ' + cleanedTransactionName + '"><td class = "added">Total</td><td class="added">' + String(total) + '</td></tr>');
 		}
 		allCashInTransactions[cleanedTransactionName] = transactionAmount;
 	}
@@ -150,10 +152,10 @@ function placeCashInAdjustmentElement(data_to_insert, time) {
 	for (var i = 0; i < allTransactionsKeys.length; i++) {
 		var name = allTransactionsKeys[i];
 		var amount = allCashInTransactions[name];
-		$('.transaction').filter(name).append("<td>" + amount + "</td>");
+		$('.transaction').filter(name).append('<td class="added">' + amount + "</td>");
 	}
 
-	$('.cash-in-adjustment-total').append("<td>" + total + "</td>");
+	$('.cash-in-adjustment-total').append('<td class="added">' + total + "</td>");
 }
 
 /**
@@ -177,7 +179,7 @@ function placeCashOutAdjustmentElement(data_to_insert, time) {
 		var transactionAmount = transactions[transactionName];
 		var cleanedTransactionName = cleanUpString(transactionName);
 		if ($(cleanedTransactionName).length) {
-			$('.cash-in-body').append('<tr class="transaction ' + cleanedTransactionName + '"><td>Total</td><td>" + String(total) + "</td></tr>');
+			$('.cash-in-body').append('<tr class="added transaction ' + cleanedTransactionName + '"><td class="added">Total</td><td class="added">' + String(total) + '</td></tr>');
 		}
 		allCashInTransactions[cleanedTransactionName] = transactionAmount;
 	}
@@ -186,10 +188,10 @@ function placeCashOutAdjustmentElement(data_to_insert, time) {
 	for (var i = 0; i < allTransactionsKeys.length; i++) {
 		var name = allTransactionsKeys[i];
 		var amount = allCashOutTransactions[name];
-		$('.transaction').filter(name).append("<td>" + amount + "</td>");
+		$('.transaction').filter(name).append('<td class="added">' + amount + "</td>");
 	}
 
-	$('.cash-out-adjustment-total').append("<td>" + total + "</td>");
+	$('.cash-out-adjustment-total').append('<td class="added">' + total + "</td>");
 }
 
 /**
@@ -229,6 +231,30 @@ function placeElements(data, cash_in_or_cash_out, subsection, insert_func) {
 function setTotalsAndCashFlow(data) {
 	//create the total row
 	//iterate through and create all the cash positions at each time
+	$('.cash-in-body').append('<tr class="added total-cash-in"><td class="added">Total Cash In</td><tr>');
+	$('.cash-out-body').append('<tr class="added total-cash-out"><td class="added">Total Cash Out</td><tr>');
+
+	$('.cash-flow-table').append('<tbody class="added cash-position"></tbody>');
+	$('.cash-position').append('<tr class="added initial-cash-position"><td class="added">Initial Cash Position</td></tr>');
+	$('.cash-position').append('<tr class="added net-cash"><td class="added">Net Change in Cash</td></tr>');
+	$('.cash-position').append('<tr class="added final-cash-position"><td class="added">Final Cash Position</td></tr>');
+
+	var cashPositions = data['cash_balances'];
+	var dateKeys = Object.keys(cashPositions);
+	for (var i = 0; i < dateKeys.length; i++) {
+		var key = dateKeys[i];
+		var cash_info = cashPositions[key];
+		var initial_cash = cash_info['beginning_cash_balance'];
+		var change_in_cash = cash_info['change_in_cash'];
+		var final_cash = cash_info['final_cash_balance'];
+		var net_cash_in = cash_info['net_cash_in'];
+		var net_cash_out = cash_info['net_cash_out'];
+		$('.initial-cash-position').append('<td class="added">' + initial_cash + '</td>');
+		$('.net-cash').append('<td class="added">' + change_in_cash + '</td>');
+		$('.final-cash-position').append('<td class="added">' + final_cash + '</td>');
+		$('.total-cash-in').append('<td class="added">' + net_cash_in + '</td>');
+		$('.total-cash-out').append('<td class="added">' + net_cash_out + '</td>');
+	}
 }
 
 /**
@@ -246,7 +272,7 @@ function makeColumnHeaders(data) {
 		var date = parseDate(JSONdates[i]);
 		var tableHeader = "" + shortMonthNames[date.getMonth()] + " " + date.getDate();
 		var className = "date-" + i;
-		var thElement = $('.cash-in-head-row').append('<th class="' + className + '"></th>');
+		var thElement = $('.cash-in-head-row').append('<th class="added ' + className + '"></th>');
 		$("." + className).text(tableHeader);
 	}
 }
@@ -260,26 +286,26 @@ function makeRowHeaders(data) {
 	for (var i = project_names.length-1; i >= 0; i--) {
 		var name = cleanUpString(project_names[i]);
 		var className = "project-" + name;
-		var toAppendInvestment = $('<tr class="reinvestment ' + className + '"><td>' + project_names[i] + '</td></tr>');
+		var toAppendInvestment = $('<tr class="added reinvestment ' + className + '"><td class="added">' + project_names[i] + '</td></tr>');
 		toAppendInvestment.insertAfter(".investment");
 
-		toAppendDonation = $('<tr class = "' + className + '"><td>' + project_names[i] + '</td></tr>' + 
-							'<tr class="total-donation ' + className + '"><td>Total</td></tr>' + 
-							'<tr class="payment-service-fees ' + className + '"><td>Payment Service Fees</td></tr>' + 
-							'<tr class="retained-donations ' + className + '"><td>Retained Donations</td></tr>');
+		toAppendDonation = $('<tr class = "added ' + className + '"><td class="added">' + project_names[i] + '</td></tr>' + 
+							'<tr class="added total-donation ' + className + '"><td class="added">Total</td></tr>' + 
+							'<tr class="added payment-service-fees ' + className + '"><td class="added">Payment Service Fees</td></tr>' + 
+							'<tr class="added retained-donations ' + className + '"><td class="added">Retained Donations</td></tr>');
 
 		toAppendDonation.insertAfter('.donation');
 
-		toAppendRepayment = $('<tr><td class="' + className + '">' + project_names[i] + '</td></tr>' + 
-							'<tr class="total-repayment ' + className + '"><td>Total</td></tr>' + 
-							'<tr class="revolv-earnings ' + className + '"><td>Earnings for RE-volv</td></tr>' + 
-							'<tr class="retained-ROI ' + className + '"><td>Retained ROI</td></tr>');
+		toAppendRepayment = $('<tr class="added"><td class="added ' + className + '">' + project_names[i] + '</td></tr>' + 
+							'<tr class="added total-repayment ' + className + '"><td class="added">Total</td></tr>' + 
+							'<tr class="added revolv-earnings ' + className + '"><td class="added">Earnings for RE-volv</td></tr>' + 
+							'<tr class="added retained-ROI ' + className + '"><td class="added">Retained ROI</td></tr>');
 
 		toAppendRepayment.insertAfter('.ROI');	
 	}
 
-	$('.cash-in-body').append('<tr class="cash-in-adjustment-total"><td>Total</td></tr>');
-	$('.cash-out-body').append('<tr class="cash-out-adjustment-total"><td>Total</td></tr>');
+	$('.cash-in-body').append('<tr class="added cash-in-adjustment-total"><td class="added">Total</td></tr>');
+	$('.cash-out-body').append('<tr class="added cash-out-adjustment-total"><td class="added">Total</td></tr>');
 }
 
 /**

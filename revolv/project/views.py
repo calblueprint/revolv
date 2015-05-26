@@ -47,7 +47,6 @@ class CreateProjectView(DonationLevelFormSetMixin, CreateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-        
         formset = self.get_donation_level_formset()
         if formset.is_valid():
             new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
