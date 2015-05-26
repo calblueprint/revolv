@@ -9,8 +9,10 @@
             seeing this page then they have bypassed the functionality which redirects to the
             homepage for unauthenticated users.
 
-    :project_dict: a dictionary with keys as project group names, such as "Completed Projects", "Projects",
-            etc, and values as lists of project model objects in the group. The project group names
+    :project_dict: a dictionary with keys as revolv.base.utils.ProjectGroups, and values as lists
+        of project model objects in the group. The project group names have a `key` and a `display`:
+        the key should be used for uniquely identifying the project group in class names, etc, and the
+        display should be used for the sidebar heading (e.g. "Proposed Projects").
 
     The idea for the sidebar is that there is an area at the top where the user can switch between
     different user types, if applicable, can see the projects which are relevant to their role, and can also
