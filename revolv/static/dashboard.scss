@@ -190,10 +190,11 @@ $sidebar-header-gray: #777;
     // the dashboard project page should scroll instead of extending
     // down past the sidebar
     max-height: 100%;
-    overflow-y: scroll;
+    overflow: scroll;
 
     .dashboard-project-header {
-        height: $revolv-dashboard-header-height;
+        height: auto;
+        min-height: $revolv-dashboard-header-height;
         width: 100%;
         padding: 15px;
         font-family: $lato-font-family;
@@ -202,30 +203,36 @@ $sidebar-header-gray: #777;
             display: none;
         }
 
+        .project-status {
+            margin-left: 10px;
+
+            font-size: 13px;
+            line-height: 16px;
+            color: #555;
+            text-transform: uppercase;
+        }
+        .project-status-large {
+            display: inline-block;
+        }
+        .project-status-medium {
+            display: none;
+            margin-left: 0;
+            margin-right: 10px;
+        }
+
         .title-area {
             display: inline-block;
             height: 100%;
 
-            .title, .project-status {
-                display: inline-block;
-            }
-
             .title {
+                display: inline-block;
                 font-size: 22px;
                 font-weight: bold;
                 line-height: 22px;
             }
 
-            .project-status {
-                margin-left: 10px;
-
-                font-size: 13px;
-                line-height: 16px;
-                color: #555;
-                text-transform: uppercase;
-            }
-
             .location {
+                display: inline-block;
                 color: #777;
                 font-size: 11px;
                 line-height: 15px;
@@ -249,6 +256,10 @@ $sidebar-header-gray: #777;
                 margin-right: 30px;
                 &:last-child {
                     margin-right: 0;
+                }
+
+                input {
+                    margin-bottom: 0; // foundation override
                 }
             }
 
@@ -321,6 +332,32 @@ $sidebar-header-gray: #777;
     // HACK: have to use !important because .rows inside .rows have paddings/margins which have
     // a high specificity, do to their selector being ".row .row".
     padding: 0 !important;
-    margin: 13px 0 0 0 !important;
+    margin: 0 !important;
     height: 300px;
+}
+
+@media #{$medium-only} {
+    .dashboard-project {
+        .dashboard-project-header {
+            .title-area {
+                .title {
+                    font-size: 18px;
+                    line-height: 20px;
+                }
+                // the project status is inside the title area on large screens,
+                // but outside it next to the location on tablets
+                .project-status-large {
+                    display: none;
+                }
+            }
+            .project-status-medium {
+                display: inline-block;
+            }
+            .controls {
+                form {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
 }

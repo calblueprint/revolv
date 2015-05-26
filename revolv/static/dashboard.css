@@ -7544,30 +7544,37 @@ html, body, .main-row {
 .dashboard-project {
   padding: 0;
   max-height: 100%;
-  overflow-y: scroll; }
+  overflow: scroll; }
   .dashboard-project .dashboard-project-header {
-    height: 55px;
+    height: auto;
+    min-height: 55px;
     width: 100%;
     padding: 15px;
     font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
     .dashboard-project .dashboard-project-header .sidebar-toggle {
       display: none; }
+    .dashboard-project .dashboard-project-header .project-status {
+      margin-left: 10px;
+      font-size: 13px;
+      line-height: 16px;
+      color: #555555;
+      text-transform: uppercase; }
+    .dashboard-project .dashboard-project-header .project-status-large {
+      display: inline-block; }
+    .dashboard-project .dashboard-project-header .project-status-medium {
+      display: none;
+      margin-left: 0;
+      margin-right: 10px; }
     .dashboard-project .dashboard-project-header .title-area {
       display: inline-block;
       height: 100%; }
-      .dashboard-project .dashboard-project-header .title-area .title, .dashboard-project .dashboard-project-header .title-area .project-status {
-        display: inline-block; }
       .dashboard-project .dashboard-project-header .title-area .title {
+        display: inline-block;
         font-size: 22px;
         font-weight: bold;
         line-height: 22px; }
-      .dashboard-project .dashboard-project-header .title-area .project-status {
-        margin-left: 10px;
-        font-size: 13px;
-        line-height: 16px;
-        color: #555555;
-        text-transform: uppercase; }
       .dashboard-project .dashboard-project-header .title-area .location {
+        display: inline-block;
         color: #777777;
         font-size: 11px;
         line-height: 15px; }
@@ -7584,6 +7591,8 @@ html, body, .main-row {
         margin-right: 30px; }
         .dashboard-project .dashboard-project-header .controls form:last-child, .dashboard-project .dashboard-project-header .controls .button:last-child {
           margin-right: 0; }
+        .dashboard-project .dashboard-project-header .controls form input, .dashboard-project .dashboard-project-header .controls .button input {
+          margin-bottom: 0; }
       .dashboard-project .dashboard-project-header .controls .button {
         display: inline-block;
         font-size: 13px;
@@ -7675,5 +7684,16 @@ html, body, .main-row {
 
 .cover-photo {
   padding: 0 !important;
-  margin: 13px 0 0 0 !important;
+  margin: 0 !important;
   height: 300px; }
+
+@media only screen and (min-width:40.063em) and (max-width:64em) {
+  .dashboard-project .dashboard-project-header .title-area .title {
+    font-size: 18px;
+    line-height: 20px; }
+  .dashboard-project .dashboard-project-header .title-area .project-status-large {
+    display: none; }
+  .dashboard-project .dashboard-project-header .project-status-medium {
+    display: inline-block; }
+  .dashboard-project .dashboard-project-header .controls form {
+    margin-right: 10px; } }
