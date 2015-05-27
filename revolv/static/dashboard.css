@@ -7765,7 +7765,7 @@ html, body, .main-row {
   .dashboard-project .controls-large {
     display: none; }
   .dashboard-project .controls-small {
-    display: block; }
+    display: inline-block; }
   .dashboard-project .controls {
     text-align: left;
     line-height: 2em; }
