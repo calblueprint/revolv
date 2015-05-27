@@ -8,6 +8,12 @@
 @import "nav";
 @import "placeholder-formfield";
 
+// TODO:
+// [ ] Closing the sidebar with no project selected gets you stuck
+// [ ] Mobilify tabs
+// [ ] Weird scroll on landscape mobile
+// [ ] Big comment at the bottom of this file
+
 html, body, .main-row {
     height: 100%;
 }
@@ -233,11 +239,11 @@ $sidebar-icon-gray: #999;
         }
 
         .project-status-large {
-            display: inline-block;
+            display: none; // will only be displayed in $large-up
         }
 
         .project-status-medium {
-            display: none;
+            display: inline-block;
             margin-left: 0;
             margin-right: 10px;
         }
@@ -248,9 +254,9 @@ $sidebar-icon-gray: #999;
 
             .title {
                 display: inline-block;
-                font-size: 22px;
+                font-size: 18px;
                 font-weight: bold;
-                line-height: 22px;
+                line-height: 20px;
             }
 
             .location {
@@ -274,7 +280,7 @@ $sidebar-icon-gray: #999;
         display: inline-block;
     }
 
-    .controls-medium {
+    .controls-small {
         display: none;
         padding: 0 0 15px 15px;
     }
@@ -287,7 +293,7 @@ $sidebar-icon-gray: #999;
         }
         form, .button {
             display: inline-block;
-            margin-right: 30px;
+            margin-right: 10px;
             &:last-child {
                 margin-right: 0;
             }
@@ -371,20 +377,32 @@ $sidebar-icon-gray: #999;
     background-size: cover;
 }
 
+@media #{$large-up} {
+    .dashboard-project {
+        .dashboard-projct-header {
+            .title-area {
+                .title {
+                    font-size: 22px;
+                    line-height: 22px;
+                }
+                // the project status is inside the title area on large screens,
+                // but outside it next to the location on tablets/phones
+                .project-status-large {
+                    display: inline-block;
+                }
+            }
+        }
+        .controls {
+            form {
+                margin-right: 30px;
+            }
+        }
+    }
+}
+
 @media #{$medium-only} {
     .dashboard-project {
         .dashboard-project-header {
-            .title-area {
-                .title {
-                    font-size: 18px;
-                    line-height: 20px;
-                }
-                // the project status is inside the title area on large screens,
-                // but outside it next to the location on tablets
-                .project-status-large {
-                    display: none;
-                }
-            }
             .project-status-medium {
                 display: inline-block;
             }
@@ -397,39 +415,84 @@ $sidebar-icon-gray: #999;
     }
 }
 
+@mixin mobilfied-dashboard-sidebar {
+    position: fixed;
+    width: 300px;
+    z-index: 200;
+    height: 100%;
+    box-shadow: 0px 0px 22px #222; // to give the "floating" appearance
+    transition: width 0.3s;
+
+    .sidebar-close-button {
+        display: block;
+    }
+}
+
+@mixin mobilified-dashboard-project {
+    width: 100%;
+    .dashboard-project-header {
+        .title-area {
+            // TODO: may need to move this comment around
+            // this is a slight hack: we want ths project header row to take
+            // up 100% (all 12 columns) in portrait orientation since the screen
+            // is now too small to fit the controls and the title info in one
+            // row, and we've now moved them to separate rows. however, we can't
+            // add a medium-12 class since that would interfere with medium
+            // landscape orientation. so, we hack it by making this element 100%
+            // width, as if it were 12 columns. controls-large, which was taking
+            // up the rest of the columns on tablet landscape and larger, is now
+            // not displayed, so the title-area can take up all the space.
+            width: 100%;
+
+            .sidebar-toggle {
+                display: inline-block;
+            }
+        }
+    }
+}
+
 @media #{$medium-only} and (orientation:portrait) {
     .dashboard-sidebar {
-        position: fixed;
-        width: 300px;
-        z-index: 200;
-        height: 100%;
-        box-shadow: 0px 0px 22px #222; // to give the "floating" appearance
-        transition: width 0.2s;
-
-        .sidebar-close-button {
-            display: block;
-        }
+        @include mobilfied-dashboard-sidebar;
     }
 
     .dashboard-project {
-        width: 100%;
-        .dashboard-project-header {
-            .title-area {
-                // TODO: may need to move this comment around
-                // this is a slight hack: we want ths project header row to take
-                // up 100% (all 12 columns) in portrait orientation since the screen
-                // is now too small to fit the controls and the title info in one
-                // row, and we've now moved them to separate rows. however, we can't
-                // add a medium-12 class since that would interfere with medium
-                // landscape orientation. so, we hack it by making this element 100%
-                // width, as if it were 12 columns. controls-large, which was taking
-                // up the rest of the columns on tablet landscape and larger, is now
-                // not displayed, so the title-area can take up all the space.
-                width: 100%;
+        @include mobilified-dashboard-project;
+    }
+}
 
-                .sidebar-toggle {
-                    display: inline-block;
+@media #{$small-only} {
+    .dashboard-sidebar {
+        @include mobilfied-dashboard-sidebar;
+    }
+
+    .dashboard-project {
+        @include mobilified-dashboard-project;
+
+        .dashboard-project-header {
+            .title-area  {
+                .project-header-inner-wrap {
+                    // long project titles flow on to the next line on phones. to stop this, we
+                    // set a max-width.
+                    max-width: 85%;
                 }
+            }
+        }
+        .controls-large {
+            display: none;
+        }
+
+        .controls-small {
+            display: block;
+        }
+
+        .controls {
+            text-align: left; // when buttons overflow one line, make them at least look nice
+            line-height: 2em;
+
+            .button {
+                font-size: 11px;
+                line-height: 12px;
             }
         }
     }

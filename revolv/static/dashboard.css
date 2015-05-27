@@ -7575,9 +7575,9 @@ html, body, .main-row {
       color: #555555;
       text-transform: uppercase; }
     .dashboard-project .dashboard-project-header .project-status-large {
-      display: inline-block; }
+      display: none; }
     .dashboard-project .dashboard-project-header .project-status-medium {
-      display: none;
+      display: inline-block;
       margin-left: 0;
       margin-right: 10px; }
     .dashboard-project .dashboard-project-header .title-area {
@@ -7585,9 +7585,9 @@ html, body, .main-row {
       height: 100%; }
       .dashboard-project .dashboard-project-header .title-area .title {
         display: inline-block;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: bold;
-        line-height: 22px; }
+        line-height: 20px; }
       .dashboard-project .dashboard-project-header .title-area .location {
         display: inline-block;
         color: #777777;
@@ -7598,7 +7598,7 @@ html, body, .main-row {
           margin-left: 5px; }
   .dashboard-project .controls-large {
     display: inline-block; }
-  .dashboard-project .controls-medium {
+  .dashboard-project .controls-small {
     display: none;
     padding: 0 0 15px 15px; }
   .dashboard-project .controls {
@@ -7607,7 +7607,7 @@ html, body, .main-row {
       padding: 0; }
     .dashboard-project .controls form, .dashboard-project .controls .button {
       display: inline-block;
-      margin-right: 30px; }
+      margin-right: 10px; }
       .dashboard-project .controls form:last-child, .dashboard-project .controls .button:last-child {
         margin-right: 0; }
       .dashboard-project .controls form input, .dashboard-project .controls .button input {
@@ -7708,12 +7708,16 @@ html, body, .main-row {
   background-position: center;
   background-size: cover; }
 
+@media only screen and (min-width:64.063em) {
+  .dashboard-project .dashboard-projct-header .title-area .title {
+    font-size: 22px;
+    line-height: 22px; }
+  .dashboard-project .dashboard-projct-header .title-area .project-status-large {
+    display: inline-block; }
+  .dashboard-project .controls form {
+    margin-right: 30px; } }
+
 @media only screen and (min-width:40.063em) and (max-width:64em) {
-  .dashboard-project .dashboard-project-header .title-area .title {
-    font-size: 18px;
-    line-height: 20px; }
-  .dashboard-project .dashboard-project-header .title-area .project-status-large {
-    display: none; }
   .dashboard-project .dashboard-project-header .project-status-medium {
     display: inline-block; }
   .dashboard-project .controls form {
@@ -7726,7 +7730,7 @@ html, body, .main-row {
     z-index: 200;
     height: 100%;
     box-shadow: 0px 0px 22px #222222;
-    transition: width 0.2s; }
+    transition: width 0.3s; }
     .dashboard-sidebar .sidebar-close-button {
       display: block; }
   .dashboard-project {
@@ -7735,3 +7739,32 @@ html, body, .main-row {
       width: 100%; }
       .dashboard-project .dashboard-project-header .title-area .sidebar-toggle {
         display: inline-block; } }
+
+@media only screen and (max-width: 40em) {
+  .dashboard-sidebar {
+    position: fixed;
+    width: 300px;
+    z-index: 200;
+    height: 100%;
+    box-shadow: 0px 0px 22px #222222;
+    transition: width 0.3s; }
+    .dashboard-sidebar .sidebar-close-button {
+      display: block; }
+  .dashboard-project {
+    width: 100%; }
+    .dashboard-project .dashboard-project-header .title-area {
+      width: 100%; }
+      .dashboard-project .dashboard-project-header .title-area .sidebar-toggle {
+        display: inline-block; }
+    .dashboard-project .dashboard-project-header .title-area .project-header-inner-wrap {
+      max-width: 85%; }
+    .dashboard-project .controls-large {
+      display: none; }
+    .dashboard-project .controls-small {
+      display: block; }
+    .dashboard-project .controls {
+      text-align: left;
+      line-height: 2em; }
+      .dashboard-project .controls .button {
+        font-size: 11px;
+        line-height: 12px; } }

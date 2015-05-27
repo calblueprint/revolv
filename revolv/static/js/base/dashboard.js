@@ -38,6 +38,7 @@ $(document).ready(function () {
         $(".dashboard-data-section-current").removeClass("dashboard-data-section-current");
         var sectionToShow = $(".dashboard-data-section-" + $(this).data("section"));
         sectionToShow.addClass("dashboard-data-section-current");
+        $(".dashboard-sidebar").attr("style", "width: 0");
     });
 
     $(".sidebar-toggle-close").click(function() {
