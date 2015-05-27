@@ -3,7 +3,7 @@ import json
 import datetime
 
 from django.http import HttpResponse, JsonResponse
-from django.views.generic import TemplateView, CreateView, FormView, View
+from django.views.generic import TemplateView, CreateView, View
 from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
 from revolv.base.views import BaseStaffDashboardView
@@ -12,7 +12,6 @@ from revolv.administrator.forms import AdjustmentForm
 from revolv.project.models import Project
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.core.urlresolvers import reverse
-from revolv.base.users import UserDataMixin
 
 class AdministratorDashboardView(BaseStaffDashboardView):
     """
