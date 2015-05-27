@@ -7728,8 +7728,11 @@ html, body, .main-row {
 @media only screen and (min-width:40.063em) and (max-width:64em) {
   .dashboard-project .dashboard-project-header .project-status-medium {
     display: inline-block; }
-  .dashboard-project .controls form {
-    margin-right: 10px; } }
+  .dashboard-project .controls {
+    text-align: left;
+    line-height: 36px; }
+    .dashboard-project .controls form {
+      margin-right: 10px; } }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) and (orientation: portrait) {
   .dashboard-sidebar {
@@ -7744,9 +7747,7 @@ html, body, .main-row {
   .dashboard-project {
     width: 100%; }
     .dashboard-project .dashboard-project-header .title-area .sidebar-toggle {
-      display: inline-block; }
-    .dashboard-project .dashboard-project-header .title-area {
-      width: 100%; } }
+      display: inline-block; } }
 
 @media only screen and (max-width: 40em) {
   .dashboard-sidebar {
@@ -7766,12 +7767,9 @@ html, body, .main-row {
     display: none; }
   .dashboard-project .controls-small {
     display: inline-block; }
-  .dashboard-project .controls {
-    text-align: left;
-    line-height: 2em; }
-    .dashboard-project .controls .button {
-      font-size: 11px;
-      line-height: 12px; }
+  .dashboard-project .controls .button {
+    font-size: 11px;
+    line-height: 12px; }
   .dashboard-project .project-tabs .tabs .tab-title {
     margin-right: 5px; }
     .dashboard-project .project-tabs .tabs .tab-title a {

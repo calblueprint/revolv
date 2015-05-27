@@ -414,6 +414,9 @@ $sidebar-icon-gray: #999;
             }
         }
         .controls {
+            text-align: left; // when buttons overflow one line, make them at least look nice
+            line-height: 36px;
+
             form {
                 margin-right: 10px;
             }
@@ -461,11 +464,6 @@ $sidebar-icon-gray: #999;
         // up the rest of the columns on tablet landscape and larger, is now
         // not displayed, so the title-area can take up all the space.
         width: 100%;
-        .dashboard-project-header {
-            .title-area {
-                width: 100%;
-            }
-        }
     }
 }
 
@@ -495,9 +493,6 @@ $sidebar-icon-gray: #999;
         }
 
         .controls {
-            text-align: left; // when buttons overflow one line, make them at least look nice
-            line-height: 2em;
-
             .button {
                 font-size: 11px;
                 line-height: 12px;

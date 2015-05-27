@@ -5,7 +5,7 @@
     See dashboard_project.html for more documentation.
 {% endcomment %}
 <div class="dashboard-project-header row">
-    <div class="title-area large-6 medium-4 columns">
+    <div class="title-area large-6 medium-5 columns">
         <div class="sidebar-toggle sidebar-toggle-open"><i class="fa fa-align-justify"></i></div>
         <div class="project-header-inner-wrap">
             <div class="title-line">
@@ -18,11 +18,11 @@
             </div>
         </div>
     </div>
-    <div class="controls controls-large large-6 medium-8 columns">
+    <div class="controls controls-large large-6 medium-7 columns">
         {% include "base/partials/project_controls.html" with project=project profile=user.revolvuserprofile %}
     </div>
 </div>
-<!-- controls-medium will be shown on mobile devices, in place of controls-large -->
+<!-- controls-small will be shown on mobile devices, in place of controls-large -->
 <div class="row controls-small">
     <div class="controls small-12 columns">
         {% include "base/partials/project_controls.html" with project=project profile=user.revolvuserprofile %}
