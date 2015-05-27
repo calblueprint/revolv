@@ -20,6 +20,7 @@
     conditionally render all of these partials and things based on what type of user the current user is.
 {% endcomment %}
 {% spaceless %}
+<div class="sidebar-close-button sidebar-toggle-close"><i class="fa fa-close"></i></div>
 <div class="role-select">
     {% if role == "administrator" and user.revolvuserprofile.is_administrator %}
         <div class="role-select-inner">administrator</div>

@@ -7424,6 +7424,13 @@ html, body, .main-row {
   height: 100%;
   font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   overflow: scroll; }
+  .dashboard-sidebar .sidebar-close-button {
+    display: none;
+    color: #999999;
+    font-size: 19px;
+    position: absolute;
+    right: 9px;
+    top: 0; }
   .dashboard-sidebar .dashboard-section {
     padding: 10px 0; }
     .dashboard-sidebar .dashboard-section .dashboard-header {
@@ -7551,8 +7558,16 @@ html, body, .main-row {
     width: 100%;
     padding: 15px;
     font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+    .dashboard-project .dashboard-project-header .project-header-inner-wrap {
+      display: inline-block;
+      vertical-align: top; }
     .dashboard-project .dashboard-project-header .sidebar-toggle {
-      display: none; }
+      display: none;
+      height: 55px;
+      vertical-align: top;
+      margin-right: 10px;
+      color: #064f7e;
+      cursor: pointer; }
     .dashboard-project .dashboard-project-header .project-status {
       margin-left: 10px;
       font-size: 13px;
@@ -7581,66 +7596,70 @@ html, body, .main-row {
         .dashboard-project .dashboard-project-header .title-area .location .location-text {
           display: inline-block;
           margin-left: 5px; }
-    .dashboard-project .dashboard-project-header .controls {
+  .dashboard-project .controls-large {
+    display: inline-block; }
+  .dashboard-project .controls-medium {
+    display: none;
+    padding: 0 0 15px 15px; }
+  .dashboard-project .controls {
+    text-align: right; }
+    .dashboard-project .controls form {
+      padding: 0; }
+    .dashboard-project .controls form, .dashboard-project .controls .button {
       display: inline-block;
-      text-align: right; }
-      .dashboard-project .dashboard-project-header .controls form {
-        padding: 0; }
-      .dashboard-project .dashboard-project-header .controls form, .dashboard-project .dashboard-project-header .controls .button {
-        display: inline-block;
-        margin-right: 30px; }
-        .dashboard-project .dashboard-project-header .controls form:last-child, .dashboard-project .dashboard-project-header .controls .button:last-child {
-          margin-right: 0; }
-        .dashboard-project .dashboard-project-header .controls form input, .dashboard-project .dashboard-project-header .controls .button input {
-          margin-bottom: 0; }
-      .dashboard-project .dashboard-project-header .controls .button {
-        display: inline-block;
-        font-size: 13px;
-        line-height: 16px;
-        color: #555555;
-        text-transform: uppercase;
-        padding: 7px 20px;
+      margin-right: 30px; }
+      .dashboard-project .controls form:last-child, .dashboard-project .controls .button:last-child {
+        margin-right: 0; }
+      .dashboard-project .controls form input, .dashboard-project .controls .button input {
+        margin-bottom: 0; }
+    .dashboard-project .controls .button {
+      display: inline-block;
+      font-size: 13px;
+      line-height: 16px;
+      color: #555555;
+      text-transform: uppercase;
+      padding: 7px 20px;
+      cursor: pointer;
+      background-color: transparent;
+      color: inherit;
+      border: 1px solid #11ade5; }
+      .dashboard-project .controls .button:hover {
+        background-color: #11ade5;
+        color: white;
+        transition: background-color 0.2s;
+        transition: color 0.1s;
+        -webkit-transition: background-color 0.2s;
+        -webkit-transition: color 0.1s; }
+      .dashboard-project .controls .button:disabled {
+        opacity: 0.3; }
+      .dashboard-project .controls .button.success {
         cursor: pointer;
         background-color: transparent;
         color: inherit;
-        border: 1px solid #11ade5; }
-        .dashboard-project .dashboard-project-header .controls .button:hover {
-          background-color: #11ade5;
+        border: 1px solid #4cb032; }
+        .dashboard-project .controls .button.success:hover {
+          background-color: #4cb032;
           color: white;
           transition: background-color 0.2s;
           transition: color 0.1s;
           -webkit-transition: background-color 0.2s;
           -webkit-transition: color 0.1s; }
-        .dashboard-project .dashboard-project-header .controls .button:disabled {
+        .dashboard-project .controls .button.success:disabled {
           opacity: 0.3; }
-        .dashboard-project .dashboard-project-header .controls .button.success {
-          cursor: pointer;
-          background-color: transparent;
-          color: inherit;
-          border: 1px solid #4cb032; }
-          .dashboard-project .dashboard-project-header .controls .button.success:hover {
-            background-color: #4cb032;
-            color: white;
-            transition: background-color 0.2s;
-            transition: color 0.1s;
-            -webkit-transition: background-color 0.2s;
-            -webkit-transition: color 0.1s; }
-          .dashboard-project .dashboard-project-header .controls .button.success:disabled {
-            opacity: 0.3; }
-        .dashboard-project .dashboard-project-header .controls .button.alert {
-          cursor: pointer;
-          background-color: transparent;
-          color: inherit;
-          border: 1px solid #e83d3d; }
-          .dashboard-project .dashboard-project-header .controls .button.alert:hover {
-            background-color: #e83d3d;
-            color: white;
-            transition: background-color 0.2s;
-            transition: color 0.1s;
-            -webkit-transition: background-color 0.2s;
-            -webkit-transition: color 0.1s; }
-          .dashboard-project .dashboard-project-header .controls .button.alert:disabled {
-            opacity: 0.3; }
+      .dashboard-project .controls .button.alert {
+        cursor: pointer;
+        background-color: transparent;
+        color: inherit;
+        border: 1px solid #e83d3d; }
+        .dashboard-project .controls .button.alert:hover {
+          background-color: #e83d3d;
+          color: white;
+          transition: background-color 0.2s;
+          transition: color 0.1s;
+          -webkit-transition: background-color 0.2s;
+          -webkit-transition: color 0.1s; }
+        .dashboard-project .controls .button.alert:disabled {
+          opacity: 0.3; }
   .dashboard-project .project-tabs {
     margin: 0;
     margin-top: 10px;
@@ -7685,7 +7704,9 @@ html, body, .main-row {
 .cover-photo {
   padding: 0 !important;
   margin: 0 !important;
-  height: 300px; }
+  height: 300px;
+  background-position: center;
+  background-size: cover; }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) {
   .dashboard-project .dashboard-project-header .title-area .title {
@@ -7695,5 +7716,22 @@ html, body, .main-row {
     display: none; }
   .dashboard-project .dashboard-project-header .project-status-medium {
     display: inline-block; }
-  .dashboard-project .dashboard-project-header .controls form {
+  .dashboard-project .controls form {
     margin-right: 10px; } }
+
+@media only screen and (min-width:40.063em) and (max-width:64em) and (orientation: portrait) {
+  .dashboard-sidebar {
+    position: fixed;
+    width: 300px;
+    z-index: 200;
+    height: 100%;
+    box-shadow: 0px 0px 22px #222222;
+    transition: width 0.2s; }
+    .dashboard-sidebar .sidebar-close-button {
+      display: block; }
+  .dashboard-project {
+    width: 100%; }
+    .dashboard-project .dashboard-project-header .title-area {
+      width: 100%; }
+      .dashboard-project .dashboard-project-header .title-area .sidebar-toggle {
+        display: inline-block; } }

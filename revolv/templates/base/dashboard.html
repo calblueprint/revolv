@@ -15,6 +15,7 @@
 <head>
     <title>{% block title %}RE-volv - Dashboard{% endblock %}</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block meta %}
     {% endblock %}
 
@@ -33,7 +34,7 @@
     {% cms_toolbar %}
 
     <div class='row main-row'>
-        <div class="medium-3 large-2 columns dashboard-sidebar">
+        <div class="small-3 large-2 columns dashboard-sidebar">
             {% include "base/partials/dashboard_sidebar.html" with user=user %}
         </div>
         {% if donor_has_no_donated_projects %}

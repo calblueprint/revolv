@@ -39,4 +39,12 @@ $(document).ready(function () {
         var sectionToShow = $(".dashboard-data-section-" + $(this).data("section"));
         sectionToShow.addClass("dashboard-data-section-current");
     });
+
+    $(".sidebar-toggle-close").click(function() {
+        $(".dashboard-sidebar").attr("style", "width: 0");
+    });
+
+    $(".sidebar-toggle-open").click(function() {
+        $(".dashboard-sidebar").removeAttr("style");
+    });
 });

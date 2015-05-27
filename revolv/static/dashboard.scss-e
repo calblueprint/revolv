@@ -414,7 +414,7 @@ $sidebar-icon-gray: #999;
     .dashboard-project {
         width: 100%;
         .dashboard-project-header {
-            .title-area {
+            .title-area {   
                 // TODO: may need to move this comment around
                 // this is a slight hack: we want ths project header row to take
                 // up 100% (all 12 columns) in portrait orientation since the screen
