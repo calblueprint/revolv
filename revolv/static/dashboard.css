@@ -7602,7 +7602,8 @@ html, body, .main-row {
     display: none;
     padding: 0 0 15px 15px; }
   .dashboard-project .controls {
-    text-align: right; }
+    text-align: left;
+    line-height: 36px; }
     .dashboard-project .controls form {
       padding: 0; }
     .dashboard-project .controls form, .dashboard-project .controls .button {
@@ -7722,17 +7723,16 @@ html, body, .main-row {
     line-height: 22px; }
   .dashboard-project .dashboard-projct-header .title-area .project-status-large {
     display: inline-block; }
-  .dashboard-project .controls form {
-    margin-right: 30px; } }
+  .dashboard-project .controls {
+    text-align: right; }
+    .dashboard-project .controls form {
+      margin-right: 30px; } }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) {
   .dashboard-project .dashboard-project-header .project-status-medium {
     display: inline-block; }
-  .dashboard-project .controls {
-    text-align: left;
-    line-height: 36px; }
-    .dashboard-project .controls form {
-      margin-right: 10px; } }
+  .dashboard-project .controls form {
+    margin-right: 10px; } }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) and (orientation: portrait) {
   .dashboard-sidebar {

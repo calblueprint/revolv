@@ -280,7 +280,8 @@ $sidebar-icon-gray: #999;
     }
 
     .controls {
-        text-align: right;
+        text-align: left; // when buttons overflow one line, make them at least look nice
+        line-height: 36px;
 
         form {
             padding: 0;
@@ -399,6 +400,7 @@ $sidebar-icon-gray: #999;
             }
         }
         .controls {
+            text-align: right;
             form {
                 margin-right: 30px;
             }
@@ -414,9 +416,6 @@ $sidebar-icon-gray: #999;
             }
         }
         .controls {
-            text-align: left; // when buttons overflow one line, make them at least look nice
-            line-height: 36px;
-
             form {
                 margin-right: 10px;
             }
