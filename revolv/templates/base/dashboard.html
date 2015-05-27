@@ -48,7 +48,7 @@
         {% for project_group, project_list in project_dict.items %}
             {% with outer_counter=forloop.counter %}
                 {% for project in project_list %}
-                    <div class="large-10 medium-9 columns dashboard-project dashboard-data-section dashboard-data-section-project-{{project.pk}}{% if outer_counter == 1 and forloop.counter == 1 %} dashboard-data-section-current{% endif %}">
+                    <div class="large-10 medium-9 columns dashboard-project dashboard-data-section dashboard-data-section-project-{{project.pk}}" data-project-id="{{project.pk}}">
                         {% include "base/partials/dashboard_project.html" with project=project user=user %}
                     </div>
                 {% endfor %}

@@ -31,6 +31,11 @@ $(document).ready(function () {
      * This function will also add an "active" class to whichever dashboard data link was
      * clicked on, and remove the "active" class from all other dashboard data links. This
      * works very well for selecting projects via the dashboard sidebar.
+     *
+     * Note: if we detect that we're in an orientation of a device where we should be collapsing
+     * the sidebar when we click a link in it, we also set the sidebar's width to 0 in this
+     * function. It's width will be restored to whatever it was previously when the .sidebar-toggle-open
+     * is clicked.
      */
     $(".dashboard-data-link").click(function() {
         $(".dashboard-data-link.active").removeClass("active");
@@ -38,7 +43,11 @@ $(document).ready(function () {
         $(".dashboard-data-section-current").removeClass("dashboard-data-section-current");
         var sectionToShow = $(".dashboard-data-section-" + $(this).data("section"));
         sectionToShow.addClass("dashboard-data-section-current");
-        $(".dashboard-sidebar").attr("style", "width: 0");
+
+        // if we're in an orientation where we should collapse the sidebar, collapse it.
+        if ($(window).width() < 800) {
+            $(".dashboard-sidebar").attr("style", "width: 0");
+        }
     });
 
     $(".sidebar-toggle-close").click(function() {
@@ -48,4 +57,10 @@ $(document).ready(function () {
     $(".sidebar-toggle-open").click(function() {
         $(".dashboard-sidebar").removeAttr("style");
     });
+
+    var $firstProject = $(".dashboard-project").first();
+    if ($firstProject.length) {
+        $firstProject.addClass("dashboard-data-section-current");
+        $(".dashboard-sidebar-project-container-" + $firstProject.data("project-id")).addClass("active");
+    }
 });
