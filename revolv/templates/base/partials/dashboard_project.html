@@ -38,11 +38,11 @@
 <div class="project-tabs-content tabs-content">
     <div class="content active description" id="description">
         <div class="row project-tagline">
-            <h2 class="small-8 small-offset-1 columns">{{project.tagline}}</h2>
+            <h2 class="small-10 small-offset-1 columns">{{project.tagline}}</h2>
         </div>
         <div class="row project-description">
-            <div class="small-8 small-offset-1 columns">
-                <p>{{project.org_about}}</p>
+            <div class="small-10 small-offset-1 columns">
+                <p>{{project.description|safe}}</p>
             </div>
         </div>
     </div>

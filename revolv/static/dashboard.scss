@@ -363,6 +363,18 @@ $sidebar-icon-gray: #999;
             font-size: 18px;
             line-height: 20px;
         }
+        h3 {
+            font-size: 16px;
+        }
+        h4 {
+            font-size: 14px;
+        }
+        h5 {
+            font-size: 12px;
+        }
+        h6 {
+            font-size: 10px;
+        }
     }
 }
 
@@ -492,6 +504,20 @@ $sidebar-icon-gray: #999;
             .button {
                 font-size: 11px;
                 line-height: 12px;
+            }
+        }
+
+        .project-tabs {
+            .tabs {
+                .tab-title {
+                    margin-right: 5px;
+
+                    a {
+                        font-size: 11px;
+                        line-height: 28px; // large line height to separate from blue border
+                        padding: 5px;
+                    }
+                }
             }
         }
     }
