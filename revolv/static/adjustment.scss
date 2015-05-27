@@ -3,10 +3,23 @@
 
 .save-button {
 	@include revolv-hover-button($revolv-dark-blue, $revolv-dark-blue);
-	width: 100%;
+	width: 97%;
+	margin-right: 15px;
+	margin-bottom: 30px;
 }
 
 .container {
 	margin-top: 50px;
+}
+
+body {
+	position: inline;
+}
+
+#id_amount {
+	position: absolute;
+	margin-top: -45px;
+	width: 91%;
+	margin-left: 15px;
 }
 

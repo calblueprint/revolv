@@ -3,7 +3,9 @@
   background-color: transparent;
   color: #064f7e;
   border: 1px solid #064f7e;
-  width: 100%; }
+  width: 97%;
+  margin-right: 15px;
+  margin-bottom: 30px; }
   .save-button:hover {
     background-color: #064f7e;
     color: white;
@@ -16,3 +18,12 @@
 
 .container {
   margin-top: 50px; }
+
+body {
+  position: inline; }
+
+#id_amount {
+  position: absolute;
+  margin-top: -45px;
+  width: 91%;
+  margin-left: 15px; }

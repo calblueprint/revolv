@@ -12,24 +12,26 @@
 
 {% block body %}
 
-<div class="row">
-    <div class="large-12 columns container">
-        <form method="POST" enctype="multipart/form-data" id="expense_form">
-            {% csrf_token %}
-            {% for error in form.non_field_errors %}
-        	    <div data-alert class="alert-box alert">
-        	        {{ error }}
-            	    <a href="#" class="close">&times;</a>
-            	</div>
-            {% endfor %}
-
+<div class="container row">
+    <form method="POST" enctype="multipart/form-data" id="expense_form">
+        {% csrf_token %}
+        {% for error in form.non_field_errors %}
+        	<div data-alert class="alert-box alert">
+        	    {{ error }}
+            	<a href="#" class="close">&times;</a>
+            </div>
+        {% endfor %}
+        <div class="large-6 columns">
             {% include "base/partials/tooltip_formfield.html" with field=form.name %}
             {% include "base/partials/tooltip_formfield.html" with field=form.amount %}
+        </div>
+        <div class="large-6 columns">
             {% include "base/partials/tooltip_formfield.html" with field=form.created_at %}
             {% include "base/partials/tooltip_formfield.html" with field=form.cash_type %}
-            <button class="large right save-button" id="save_project" type="submit">Save</button>
-        </form>
-    </div>
+        </div>
+        
+        <button class="large right save-button" id="save_project" type="submit">Save</button>
+    </form>
 </div>
 
 {% endblock %}

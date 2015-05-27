@@ -281,17 +281,25 @@ class AdminAdjustment(models.Model):
     
     This model exists for accounting reasons.
     """
-    amount = models.FloatField()
-    admin = models.ForeignKey(RevolvUserProfile)
-    name = models.CharField(max_length=100)
+    amount = models.FloatField("How many dollars is this transaction?")
+    name = models.CharField(
+            "What is the name of this expense or income?", 
+            max_length=100)
 
     CASH_TYPE_CHOICES = (
-        ('cash_in', 'Cash in'),
-        ('cash_out', 'Cash out'),
+        ('cash_in', 'Income'),
+        ('cash_out', 'Expense'),
     )
-    cash_type = models.CharField(choices=CASH_TYPE_CHOICES, max_length=10)
+    cash_type = models.CharField(
+                "Is this income or an expense?", 
+                choices=CASH_TYPE_CHOICES, 
+                max_length=10, 
+                default='cash_out')
 
-    created_at = models.DateField(auto_now_add=False, default = datetime.datetime.now())
+    created_at = models.DateField(
+                    "What time period should this transaction be recorded under?", 
+                    auto_now_add=False, 
+                    default = datetime.datetime.now())
 
     objects = AdminAdjustmentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminAdjustmentFactories")
