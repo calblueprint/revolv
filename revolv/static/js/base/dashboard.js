@@ -51,20 +51,53 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * This function defines what happens when a sidebar close toggle is clicked. A sidebar close
+     * toggle, in this context, means anything that will cause the sidebar to be closed: this
+     * includes the x button at the top right of the sidebar and any link to projects on the sidebar,
+     * since when you click a project, it should automatically close the sidebar so you can actually
+     * see the project.
+     *
+     * To implement closing, we add a style attribute to the element which sets the width to zero.
+     * When we repoen the sidebar, we'll remove that style element, setting the width back to whatever
+     * it was before.
+     *
+     * Note that if we ever need a significant style="..." attribute on the element, this function will
+     * mess that up.
+     */
     $(".sidebar-toggle-close").click(function() {
         $(".dashboard-sidebar").attr("style", "width: 0");
     });
 
+    /**
+     * This function defines what happens when a sidebar open toggle is clicked. Currently, the only way
+     * to open the sidebar is by clicking the hamburger icon in the dashboard project container - this icon
+     * is the only sidebar open toggle.
+     *
+     * As described above, we remove the style attribute to open up the sidebar again when the toggle is
+     * clicked.
+     */
     $(".sidebar-toggle-open").click(function() {
         $(".dashboard-sidebar").removeAttr("style");
     });
 
+    /**
+     * When we resize the window, it might be resized to a width in which we don't want the dashboard sidebar
+     * to float anymore, and instead want it to stay fixed on the left side of the screen. In order to enforce
+     * this we hook into the window resize event and reset the sidebar's style if the new window size is
+     * big enough.
+     */
     $(window).resize(function () {
         if ($(window).width() >= TABLET_PORTRAIT_BREAKPOINT) {
             $(".dashboard-sidebar").removeAttr("style");
         }
     });
 
+    /**
+     * When the document is ready, find the first dashboard project and make it selected. This is done to make
+     * sure that a project is always selected when we load the page: if this was not enforced, then it would
+     * be possible to close the dashboard sidebar and be left stuck at an empty screen.
+     */
     var $firstProject = $(".dashboard-project").first();
     if ($firstProject.length) {
         $firstProject.addClass("dashboard-data-section-current");
