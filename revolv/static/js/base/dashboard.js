@@ -37,6 +37,7 @@ $(document).ready(function () {
      * function. It's width will be restored to whatever it was previously when the .sidebar-toggle-open
      * is clicked.
      */
+    var TABLET_PORTRAIT_BREAKPOINT = 800; // pixels width
     $(".dashboard-data-link").click(function() {
         $(".dashboard-data-link.active").removeClass("active");
         $(this).addClass("active");
@@ -45,7 +46,7 @@ $(document).ready(function () {
         sectionToShow.addClass("dashboard-data-section-current");
 
         // if we're in an orientation where we should collapse the sidebar, collapse it.
-        if ($(window).width() < 800) {
+        if ($(window).width() < TABLET_PORTRAIT_BREAKPOINT) {
             $(".dashboard-sidebar").attr("style", "width: 0");
         }
     });
@@ -56,6 +57,12 @@ $(document).ready(function () {
 
     $(".sidebar-toggle-open").click(function() {
         $(".dashboard-sidebar").removeAttr("style");
+    });
+
+    $(window).resize(function () {
+        if ($(window).width() >= TABLET_PORTRAIT_BREAKPOINT) {
+            $(".dashboard-sidebar").removeAttr("style");
+        }
     });
 
     var $firstProject = $(".dashboard-project").first();
