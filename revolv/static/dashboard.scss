@@ -9,7 +9,6 @@
 @import "placeholder-formfield";
 
 // TODO:
-// [ ] Mobilify tabs
 // [ ] Weird scroll on landscape mobile
 // [ ] Big comment at the bottom of this file
 
@@ -440,21 +439,8 @@ $sidebar-icon-gray: #999;
 }
 
 @mixin mobilified-dashboard-project {
-    width: 100%;
     .dashboard-project-header {
         .title-area {
-            // TODO: may need to move this comment around
-            // this is a slight hack: we want ths project header row to take
-            // up 100% (all 12 columns) in portrait orientation since the screen
-            // is now too small to fit the controls and the title info in one
-            // row, and we've now moved them to separate rows. however, we can't
-            // add a medium-12 class since that would interfere with medium
-            // landscape orientation. so, we hack it by making this element 100%
-            // width, as if it were 12 columns. controls-large, which was taking
-            // up the rest of the columns on tablet landscape and larger, is now
-            // not displayed, so the title-area can take up all the space.
-            width: 100%;
-
             .sidebar-toggle {
                 display: inline-block;
             }
@@ -469,6 +455,21 @@ $sidebar-icon-gray: #999;
 
     .dashboard-project {
         @include mobilified-dashboard-project;
+        // this is a slight hack: we want ths project header row (and the project
+        // container itself) to take up 100% (all 12 columns) in portrait
+        // orientation since the screen is now too small to fit the controls and
+        // the title info in one row, and we've now moved them to separate rows.
+        // however, we can't add a medium-12 class since that would interfere with
+        // medium landscape orientation. so, we hack it by making this element 100%
+        // width, as if it were 12 columns. controls-large, which was taking
+        // up the rest of the columns on tablet landscape and larger, is now
+        // not displayed, so the title-area can take up all the space.
+        width: 100%;
+        .dashboard-project-header {
+            .title-area {
+                width: 100%;
+            }
+        }
     }
 }
 

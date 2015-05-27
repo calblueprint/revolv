@@ -7743,10 +7743,10 @@ html, body, .main-row {
       display: block; }
   .dashboard-project {
     width: 100%; }
+    .dashboard-project .dashboard-project-header .title-area .sidebar-toggle {
+      display: inline-block; }
     .dashboard-project .dashboard-project-header .title-area {
-      width: 100%; }
-      .dashboard-project .dashboard-project-header .title-area .sidebar-toggle {
-        display: inline-block; } }
+      width: 100%; } }
 
 @media only screen and (max-width: 40em) {
   .dashboard-sidebar {
@@ -7758,27 +7758,23 @@ html, body, .main-row {
     transition: width 0.3s; }
     .dashboard-sidebar .sidebar-close-button {
       display: block; }
-  .dashboard-project {
-    width: 100%; }
-    .dashboard-project .dashboard-project-header .title-area {
-      width: 100%; }
-      .dashboard-project .dashboard-project-header .title-area .sidebar-toggle {
-        display: inline-block; }
-    .dashboard-project .dashboard-project-header .title-area .project-header-inner-wrap {
-      max-width: 85%; }
-    .dashboard-project .controls-large {
-      display: none; }
-    .dashboard-project .controls-small {
-      display: block; }
-    .dashboard-project .controls {
-      text-align: left;
-      line-height: 2em; }
-      .dashboard-project .controls .button {
-        font-size: 11px;
-        line-height: 12px; }
-    .dashboard-project .project-tabs .tabs .tab-title {
-      margin-right: 5px; }
-      .dashboard-project .project-tabs .tabs .tab-title a {
-        font-size: 11px;
-        line-height: 28px;
-        padding: 5px; } }
+  .dashboard-project .dashboard-project-header .title-area .sidebar-toggle {
+    display: inline-block; }
+  .dashboard-project .dashboard-project-header .title-area .project-header-inner-wrap {
+    max-width: 85%; }
+  .dashboard-project .controls-large {
+    display: none; }
+  .dashboard-project .controls-small {
+    display: block; }
+  .dashboard-project .controls {
+    text-align: left;
+    line-height: 2em; }
+    .dashboard-project .controls .button {
+      font-size: 11px;
+      line-height: 12px; }
+  .dashboard-project .project-tabs .tabs .tab-title {
+    margin-right: 5px; }
+    .dashboard-project .project-tabs .tabs .tab-title a {
+      font-size: 11px;
+      line-height: 28px;
+      padding: 5px; } }
