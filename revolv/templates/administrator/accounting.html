@@ -7,7 +7,6 @@
     <link href='https://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'/>
     <script type="text/javascript">
 		window.JSONURL = "{{ jsonurl }}";
-		//window.JSONURL = "http://127.0.0.1:8000/dashboard/admin/accounting/json";
 	</script>
 {% endblock %}
 
@@ -23,13 +22,13 @@
 	<h1 class="revolv-header-text">RE-volv Accounting Information</h1>
 	<p>Filter what data you're looking at by changing the start date, end date, or project group!</p>
 	<form class="filter_form">
-		<div class="large-6 columns form-column">
+		<div class="medium-6 columns form-column">
 			<p class="field-label">Select Start Date</p>
 			<input class="selector start_selector" type="date" name="start-date" placeholder="Start date"/>
 			<p class="field-label">Select End Date</p>
 			<input class="selector end_selector" type="date" name="end-date" placeholder="End date"/>
 		</div>
-		<div class="large-6 columns form-column">
+		<div class="medium-6 columns form-column">
 			<p class="field-label">Select Project</p>
 			<select class="selector project_selector">
 				<option value="all">All projects</option>
