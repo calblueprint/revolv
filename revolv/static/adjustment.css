@@ -4,8 +4,8 @@
   color: #064f7e;
   border: 1px solid #064f7e;
   width: 97%;
-  margin-right: 15px;
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  margin-right: 15px; }
   .save-button:hover {
     background-color: #064f7e;
     color: white;
@@ -16,14 +16,13 @@
   .save-button:disabled {
     opacity: 0.3; }
 
-.container {
-  margin-top: 50px; }
-
 body {
   position: inline; }
 
-#id_amount {
-  position: absolute;
-  margin-top: -45px;
-  width: 91%;
-  margin-left: 15px; }
+.container {
+  margin-top: 50px; }
+  .container .amount {
+    position: absolute;
+    top: 95px;
+    width: 91%;
+    left: 30px; }

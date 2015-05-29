@@ -3,9 +3,7 @@
 {% load widget_tweaks %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static "adjustment.css" %}" />
-<link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
-
+    <link rel="stylesheet" href="{% static "adjustment.css" %}" />
 {% endblock %}
 
 {% block title %}Add Expense{% endblock %}
@@ -13,24 +11,24 @@
 {% block body %}
 
 <div class="container row">
-    <form method="POST" enctype="multipart/form-data" id="expense_form">
+    <form method="POST" enctype="multipart/form-data" id="expense-form">
         {% csrf_token %}
         {% for error in form.non_field_errors %}
-        	<div data-alert class="alert-box alert">
-        	    {{ error }}
-            	<a href="#" class="close">&times;</a>
+            <div data-alert class="alert-box alert">
+                {{ error }}
+                <a href="#" class="close">&times;</a>
             </div>
         {% endfor %}
-        <div class="large-6 columns">
+        <div class="large-6 columns left-column">
             {% include "base/partials/tooltip_formfield.html" with field=form.name %}
             {% include "base/partials/tooltip_formfield.html" with field=form.amount %}
         </div>
-        <div class="large-6 columns">
+        <div class="large-6 columns right-column">
             {% include "base/partials/tooltip_formfield.html" with field=form.created_at %}
             {% include "base/partials/tooltip_formfield.html" with field=form.cash_type %}
         </div>
         
-        <button class="large right save-button" id="save_project" type="submit">Save</button>
+        <button class="large right save-button" id="save-project" type="submit">Save</button>
     </form>
 </div>
 

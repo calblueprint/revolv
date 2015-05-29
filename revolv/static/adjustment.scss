@@ -2,24 +2,24 @@
 @import "revolv-settings";
 
 .save-button {
-	@include revolv-hover-button($revolv-dark-blue, $revolv-dark-blue);
-	width: 97%;
-	margin-right: 15px;
-	margin-bottom: 30px;
-}
-
-.container {
-	margin-top: 50px;
+    @include revolv-hover-button($revolv-dark-blue, $revolv-dark-blue);
+    width: 97%;
+    margin-bottom: 30px;
+    margin-right: 15px;
 }
 
 body {
-	position: inline;
+    position: inline;
 }
 
-#id_amount {
-	position: absolute;
-	margin-top: -45px;
-	width: 91%;
-	margin-left: 15px;
+.container {
+    margin-top: 50px;
+    
+    .amount {
+        position: absolute;
+        top: 95px;
+        width: 91%;
+        left: 30px;
+    }
 }
 

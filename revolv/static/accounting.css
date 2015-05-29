@@ -9,15 +9,15 @@ body {
   font-size: 1.3rem;
   font-weight: 800;
   margin-top: 30px; }
-.heading .filter_form .form-column {
+.heading .filter-form .form-column {
   margin: 0; }
-.heading .filter_form input, .heading .filter_form select {
+.heading .filter-form input, .heading .filter-form select {
   width: 80%; }
-.heading .filter_form .field-label {
+.heading .filter-form .field-label {
   margin: 0; }
-.heading .filter_form .expense-link {
+.heading .filter-form .expense-link {
   margin-top: 30px; }
-  .heading .filter_form .expense-link .link {
+  .heading .filter-form .expense-link .link {
     height: 100%;
     width: 100%; }
 

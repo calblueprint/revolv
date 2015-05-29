@@ -1,115 +1,115 @@
 body {
-	background-color: white;
+    background-color: white;
 }
 
 .columns {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .heading {
-	.revolv-header-text {
-		font-size: 1.3rem;
-		font-weight: 800;
-		margin-top: 30px;
-	}
-	.filter_form {
-		.form-column {
-			margin: 0;
-		}
+    .revolv-header-text {
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin-top: 30px;
+    }
+    .filter-form {
+        .form-column {
+            margin: 0;
+        }
 
-		input, select {
-			width: 80%;
-		}
+        input, select {
+            width: 80%;
+        }
 
-		.field-label {
-			margin: 0;
-		}
+        .field-label {
+            margin: 0;
+        }
 
-		.expense-link {
+        .expense-link {
 
-			margin-top: 30px;
+            margin-top: 30px;
 
-			.link {
-				height: 100%;
-				width: 100%;
-			}
-		}
-	}
+            .link {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
 }
 
 table, tr, th, td, tbody, thead {
-	border-collapse: collapse;
-	border-width: 0;
-	background-color: white;
+    border-collapse: collapse;
+    border-width: 0;
+    background-color: white;
 }
 
 .cash-flow-statement {
 
-	.cash-flow-header-text {
-		font-weight: 800;
-		font-size: 1.5rem;
-		margin: 0;
-	}
-	
-	.time-sub-text {
-		color: black;
-		font-style: italic;
-		margin: 0 0 10px 0;
-	}
+    .cash-flow-header-text {
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+    
+    .time-sub-text {
+        color: black;
+        font-style: italic;
+        margin: 0 0 10px 0;
+    }
 
-	.cash-flow-table {
-		width: 100%;
-		margin-bottom: 100px;
+    .cash-flow-table {
+        width: 100%;
+        margin-bottom: 100px;
 
-		td, th {
-			padding: 3px;
-			font-size: 0.9rem;
-			font-weight: 300;
-		}
+        td, th {
+            padding: 3px;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
 
-		.payment-service-fees, .revolv-earnings {
-			color: red;
-		}
+        .payment-service-fees, .revolv-earnings {
+            color: red;
+        }
 
-		.cash-in-head-row, .cash-out-head-row {
-			border-bottom: 1px solid #999999;
+        .cash-in-head-row, .cash-out-head-row {
+            border-bottom: 1px solid #999999;
 
-			.label-column, th {
-				font-weight: 800;
-				font-size: 1.2rem;
-			}
-		}
+            .label-column, th {
+                font-weight: 800;
+                font-size: 1.2rem;
+            }
+        }
 
-		.cash-out-head-row {
-			th {
-				padding-top: 25px;
-				align: bottom;
-			}
-		}
+        .cash-out-head-row {
+            th {
+                padding-top: 25px;
+                align: bottom;
+            }
+        }
 
-		.level-0 {
-			font-weight: 800;
-			font-size: 1rem;
-			color: black;
+        .level-0 {
+            font-weight: 800;
+            font-size: 1rem;
+            color: black;
 
-			&.table-content {
-				font-size: 0.9rem;
-			}
-		}
+            &.table-content {
+                font-size: 0.9rem;
+            }
+        }
 
-		.level-1 {
-			padding-left: 15px;
-			font-size: 0.95rem;
-			font-weight: 500;
-			color: black;
-		}
+        .level-1 {
+            padding-left: 15px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: black;
+        }
 
-		.level-2 {
-			padding-left: 30px;
-			font-size: 0.9rem;
-			font-style: italic;
-			color: black;
-		}
-	}
+        .level-2 {
+            padding-left: 30px;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: black;
+        }
+    }
 }

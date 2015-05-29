@@ -6,77 +6,77 @@
     <link rel="stylesheet" type="text/css" href="{% static "accounting.css" %}" />
     <link href='https://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'/>
     <script type="text/javascript">
-		window.JSONURL = "{{ jsonurl }}";
-	</script>
+        window.JSONURL = "{{ jsonurl }}";
+    </script>
 {% endblock %}
 
 {% block javascripts %}
     <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/base/accounting.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/accounting.js" %}"></script>
 {% endblock %}
 
 {% block body %}
 
 <div class="row heading">
-	<h1 class="revolv-header-text">RE-volv Accounting Information</h1>
-	<p>Filter what data you're looking at by changing the start date, end date, or project group!</p>
-	<form class="filter_form">
-		<div class="medium-6 columns form-column">
-			<p class="field-label">Select Start Date</p>
-			<input class="selector start_selector" type="date" name="start-date" placeholder="Start date"/>
-			<p class="field-label">Select End Date</p>
-			<input class="selector end_selector" type="date" name="end-date" placeholder="End date"/>
-		</div>
-		<div class="medium-6 columns form-column">
-			<p class="field-label">Select Project</p>
-			<select class="selector project_selector">
-				<option value="all">All projects</option>
-				{% for cleantitle, title in clean_project_names.items %}
-					<option value={{ cleantitle }}>{{ title }}</option>
-				{% endfor %}
-			</select>
-			{% if is_administrator %}
-				<div class="expense-link"><a class="link" href="{% url "administrator:adjustment" %}">Add Expense/Adjustment<a/></div>
-			{% endif %}
-		</div>
-	</form>
+    <h1 class="revolv-header-text">RE-volv Accounting Information</h1>
+    <p>Filter what data you're looking at by changing the start date, end date, or project group!</p>
+    <form class="filter-form">
+        <div class="medium-6 columns form-column">
+            <p class="field-label">Select Start Date</p>
+            <input class="selector start_selector" type="date" name="start-date" placeholder="Start date"/>
+            <p class="field-label">Select End Date</p>
+            <input class="selector end_selector" type="date" name="end-date" placeholder="End date"/>
+        </div>
+        <div class="medium-6 columns form-column">
+            <p class="field-label">Select Project</p>
+            <select class="selector project_selector">
+                <option value="all">All projects</option>
+                {% for cleantitle, title in clean_project_names.items %}
+                    <option value={{ cleantitle }}>{{ title }}</option>
+                {% endfor %}
+            </select>
+            {% if is_administrator %}
+                <div class="expense-link"><a class="link" href="{% url "administrator:adjustment" %}">Add Expense/Adjustment<a/></div>
+            {% endif %}
+        </div>
+    </form>
 </div>
 
 <div class="row cash-flow-statement">
-	<h1 class="cash-flow-header-text">Statement of Cash Flows</h1>
-	<p class="time-sub-text"></p>
-	<table class="cash-flow-table">
-		<thead class="cash-in-head">
-			<tr class="cash-in-head-row">
-				<th class="label-column">Cash In</th>
-			</tr>
-		</thead>
-		<tbody class="cash-in-body table-body">
-			<tr class="event-type donation">
-				<td class="level-0">Donations</td>
-			</tr>
-			<tr class="event-type ROI">
-				<td class="level-0">Returns on Investments</td>
-			</tr>
-			<tr class="other-type">
-				<td class="level-0">Other</td>
-			</tr>
-		</tbody>
-		<thead class="cash-out-head">
-			<tr class="cash-out-head-row">
-				<th class="label-column">Cash Out</th>
-			</tr>
-		</thead>
-		<tbody class="cash-out-body table-body">
-			<tr class="event-type investment">
-				<td class="level-0">Investments</td>
-			</tr>
-			<tr class="other-type">
-				<td class="level-0">Other</td>
-			</tr>
-		</tbody>
-	</table>
+    <h1 class="cash-flow-header-text">Statement of Cash Flows</h1>
+    <p class="time-sub-text"></p>
+    <table class="cash-flow-table">
+        <thead class="cash-in-head">
+            <tr class="cash-in-head-row">
+                <th class="label-column">Cash In</th>
+            </tr>
+        </thead>
+        <tbody class="cash-in-body table-body">
+            <tr class="event-type donation">
+                <td class="level-0">Donations</td>
+            </tr>
+            <tr class="event-type ROI">
+                <td class="level-0">Returns on Investments</td>
+            </tr>
+            <tr class="other-type">
+                <td class="level-0">Other</td>
+            </tr>
+        </tbody>
+        <thead class="cash-out-head">
+            <tr class="cash-out-head-row">
+                <th class="label-column">Cash Out</th>
+            </tr>
+        </thead>
+        <tbody class="cash-out-body table-body">
+            <tr class="event-type investment">
+                <td class="level-0">Investments</td>
+            </tr>
+            <tr class="other-type">
+                <td class="level-0">Other</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 
