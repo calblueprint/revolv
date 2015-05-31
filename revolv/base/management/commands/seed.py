@@ -1,4 +1,5 @@
 from exceptions import NotImplementedError
+from optparse import make_option
 
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
@@ -44,14 +45,14 @@ class RevolvUserProfileSeedSpec(SeedSpec):
             last_name="Donor",
             password="password"
         )
-        RevolvUserProfile.objects.create_as_ambassador(
+        RevolvUserProfile.objects.create_user_as_ambassador(
             username="ambassador",
             email="ambassador@re-volv.org",
             first_name="Joe",
             last_name="Ambassador",
             password="password"
         )
-        RevolvUserProfile.objects.create_user(
+        RevolvUserProfile.objects.create_user_as_admin(
             username="administrator",
             email="administrator@re-volv.org",
             first_name="Joe",
@@ -75,6 +76,14 @@ SPECS_TO_RUN = [
 
 
 class Command(BaseCommand):
+    option_list = BaseCommand.option_list + (
+        make_option('--clear',
+                    action='store_true',
+                    dest='clear',
+                    default=False,
+                    help='Clear the seeded data instead of seeding it.'),
+    )
+
     def handle(self, *args, **options):
         """
         This handle function is run when the command "python manage.py seed" is run.
@@ -88,7 +97,15 @@ class Command(BaseCommand):
         associated with them. This function fully expects signals to be enabled, and will
         create objects knowing that signals will be run on the creation of some of them.
         """
-        print "[Seed:Info] Seeding objects from %i seed specs..." % len(SPECS_TO_RUN)
+        if options["clear"]:
+            verb = "Clearing"
+        else:
+            verb = "Seeding"
+
+        print "[Seed:Info] %s objects from %i seed spec(s)..." % (verb, len(SPECS_TO_RUN))
         for spec in SPECS_TO_RUN:
-            spec.seed()
+            if options["clear"]:
+                spec.clear()
+            else:
+                spec.seed()
         print "[Seed:Info] Done!"
