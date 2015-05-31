@@ -87,13 +87,13 @@ class ProjectSeedSpec(SeedSpec):
         "title": "Power Community Dance Studio",
         "tagline": "Dance forever, dance until dawn.",
         "video_url": "https://www.youtube.com/watch?v=fzShzO2pk-E",
+        "solar_url": "http://home.solarlog-web.net/1445.html",
         "org_name": "The Community Dance Studio",
         "impact_power": 10.0,
-        "solar_url": "http://home.solarlog-web.net/1445.html",
+        "actual_energy": 0.0,
         "location": "2415 Bowditch St, Berkeley, CA 94704, United States",
         "location_latitude": 37.8670289,
         "location_longitude": -122.2561597,
-        "actual_energy": 0.0,
         "end_date": datetime.date(2050, 10, 8),
         "cover_photo": "covers/box.jpg",
         "org_start_date": datetime.date(1995, 10, 9),
@@ -102,17 +102,77 @@ class ProjectSeedSpec(SeedSpec):
         "org_about": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n",
         "internal_rate_return": 7.8
     }
-    projects = [studio]
+    dairy = {
+        "funding_goal": 14000.00,
+        "title": "Power for Comoonity Dairy",
+        "tagline": "Some say that milk is power.",
+        "video_url": "https://www.youtube.com/watch?v=JtA8gqWA6PE",
+        "solar_url": "http://home.solarlog-web.net/1445.html",
+        "org_name": "Comoonity Dairy",
+        "impact_power": 12.0,
+        "actual_energy": 0.0,
+        "location": "1238 5th Street, Berkeley, CA, United States",
+        "location_latitude": 37.87968940000000,
+        "location_longitude": -122.30289330000000,
+        "end_date": datetime.date(2175, 1, 1),
+        "cover_photo": "covers/Dairy-Products-vitamin-D-foods.jpg",
+        "org_start_date": datetime.date(1997, 10, 9),
+        "mission_statement": "With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",
+        "description": "With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",
+        "org_about": "The idea that companies should prioritize phones and tablets over old-school PCs isn't new, and companies like Google claim to have been doing it for years. But what they're finally realizing is that mobile-first means more than just making a finely polished app for touch screens. User behavior isn't the same on phones as it is on PCs, which means the app itself must be fundamentally different.\r\n\r\nMicrosoft's Sway, for instance, throws out most of the robust tools that PowerPoint offers, and instead focuses on letting people throw things together quickly, even on a smartphone. It's sort of like using templates in PowerPoint, except that each slide can adapt to the amount of photos and text you put in it, and will format itself automatically for any screen size.",
+        "internal_rate_return": 7.5,
+    }
+    educathing = {
+        "funding_goal": 22000.00,
+        "title": "Some Education Thing",
+        "tagline": "Our children need to learn.",
+        "video_url": "https://www.youtube.com/watch?v=slbco4zHmt8",
+        "solar_url": "http://home.solarlog-web.net/1445.html",
+        "org_name": "Educathing",
+        "actual_energy": 0.0,
+        "impact_power": 18.0,
+        "location": "School, Oakland, CA, United States",
+        "location_latitude": "37.79515640000000",
+        "location_longitude": "-122.21575089999999",
+        "end_date": datetime.date(2200, 01, 01),
+        "cover_photo": "covers/education.jpg",
+        "org_start_date": datetime.date(1980, 01, 01),
+        "mission_statement": "The Internship, which opens on June 7, finds Vince Vaughn and Owen Wilson playing middle-aged watch salesmen who are dinosaurs when it comes to technology. The guys become Google interns--this is a comedy, so just suspend your disbelief--to learn all they can about the digital world. The aspiring tech experts hope to get jobs at Google when all is said and done, but they must beat out brilliant geeks for the coveted positions. Leaving aside the creative merits of the film (just about every reviewer has called The Internship an unabashed, two-hour ad for Google), it does explore a hypothetically interesting topic--what it\u2019s like to make the grade at the competitive corporate promised land of the Internet age.\r\n",
+        "description": "The Internship, which opens on June 7, finds Vince Vaughn and Owen Wilson playing middle-aged watch salesmen who are dinosaurs when it comes to technology. The guys become Google interns--this is a comedy, so just suspend your disbelief--to learn all they can about the digital world. The aspiring tech experts hope to get jobs at Google when all is said and done, but they must beat out brilliant geeks for the coveted positions. Leaving aside the creative merits of the film (just about every reviewer has called The Internship an unabashed, two-hour ad for Google), it does explore a hypothetically interesting topic--what it\u2019s like to make the grade at the competitive corporate promised land of the Internet age.\r\n",
+        "org_about": "The environment for interns at Google is healthier than it might be portrayed in the movie Ewing says with a laugh, noting, \u201cOne of the biggest differences between the movie and a real internship at Google is that interns are not competing against each other, not for jobs or anything else. We would never pit them against each other.\u201d\r\n\r\nIn addition to working in what Ewing describes as a supportive and collaborative environment, Google interns enjoy competitive pay and perks, and interning can indeed be a path to a full-time job.",
+        "internal_rate_return": 7.2,
+    }
+    emblem = {
+        "funding_goal": 24000.00,
+        "title": "Roy's our Boy!",
+        "tagline": "The force is strong with this boy.",
+        "video_url": "https://www.youtube.com/watch?v=I7WqXwb4GQg",
+        "solar_url": "http://home.solarlog-web.net/1445.html",
+        "org_name": "Fire Emblem",
+        "actual_energy": 0.0,
+        "impact_power": 18.0,
+        "location": "140 New Montgomery, San Francisco, CA, United States",
+        "location_latitude": "37.79515640000000",
+        "location_longitude": "-122.21575089999999",
+        "end_date": datetime.date(2200, 01, 01),
+        "cover_photo": "covers/education.jpg",
+        "org_start_date": datetime.date(1980, 01, 01),
+        "mission_statement": "Fire Emblem, the best game ever.",
+        "description": "Fire Emblem, the best game ever.",
+        "org_about": "Embark with our heroes on a quest to save the world!",
+        "internal_rate_return": 7.0,
+    }
+    projects_to_clear = [studio, dairy, educathing, emblem]
 
     def seed(self):
         ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
         Project.factories.active.create(ambassador=ambassador, **self.studio)
-        # Project.factories.completed.create(ambassador=ambassador, **self.dairy)
-        # Project.factories.proposed.create(ambassador=ambassador, **self.educathing)
-        # Project.factories.drafted.create(ambassador=ambassador, **self.emblem)
+        Project.factories.completed.create(ambassador=ambassador, **self.dairy)
+        Project.factories.proposed.create(ambassador=ambassador, **self.educathing)
+        Project.factories.drafted.create(ambassador=ambassador, **self.emblem)
 
     def clear(self):
-        for project in self.projects:
+        for project in self.projects_to_clear:
             try:
                 Project.objects.get(tagline=project["tagline"]).delete()
             except Project.DoesNotExist as e:
