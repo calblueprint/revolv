@@ -29,6 +29,7 @@ If *not* using vagrant, first install PostgreSQL and set up a database and user 
     $ pip install -r requirements.txt
     $ python manage.py migrate
     $ python manage.py runserver
+    $ python manage.py seed
 
 If *using* vagrant:
 
@@ -37,11 +38,13 @@ If *using* vagrant:
 3. `vagrant up --provision`
 4. `python vmanage.py migrate`
 5. `python vmanage.py runserver`
+6. `python vmanage.py seed`
 
 Development
 -----------
 1. Running `grunt watch` will start a process which will watch for changes to specific SCSS files (defined in `Gruntfile`) and will autocompile them to CSS.
 2. You can use the `vmanage.py` script to run manage.py commands on the running vagrant machine without having to `vagrant ssh` in. For example: `python vmanage.py runserver`, `python vmanage.py migrate`, `python vmanage.py makemigrations --empty`, etc.
+3. You can run `manage.py seed` to seed the database, and you can run `manage.py seed --clear` to clear the seeded data (useful for when something goes wrong and you want to regenerate all the seed data from scratch). You can also run `manage.py seed revolvuserprofile` to seed specific data (replace `revolvuserprofile` with any of the strings from `revolv/base/management/commands/seed.py`).
 
 Contributing
 ------------

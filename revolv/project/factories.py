@@ -35,6 +35,7 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     ambassador = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
     location_latitude = 42.0
     location_longitude = 42.0
+    solar_url = "http://home.solarlog-web.net/1445.html",
 
 
 class ActiveProjectFactory(ProjectFactory):
@@ -52,11 +53,17 @@ class ProposedProjectFactory(ProjectFactory):
     project_status = Project.PROPOSED
 
 
+class CompletedProjectFactory(ProjectFactory):
+    """Factory for default completed projects."""
+    project_status = Project.COMPLETED
+
+
 class ProjectFactories(object):
     base = ProjectFactory
     active = ActiveProjectFactory
     drafted = DraftedProjectFactory
     proposed = ProposedProjectFactory
+    completed = CompletedProjectFactory
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
