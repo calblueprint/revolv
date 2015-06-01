@@ -7700,7 +7700,7 @@ html, body, .main-row {
     text-align: center; }
     .dashboard-project .project-tabs-content .days-remaining .num-days-remaining {
       font-size: 40px;
-      font-weight: bold; }
+      font-weight: 700; }
     .dashboard-project .project-tabs-content .days-remaining .days-remaining-label {
       font-size: 25px;
       line-height: 27px;
