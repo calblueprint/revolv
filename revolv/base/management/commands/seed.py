@@ -223,11 +223,11 @@ SPECS_TO_RUN = (
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option(
-            '--clear',
-            action='store_true',
-            dest='clear',
+            "--clear",
+            action="store_true",
+            dest="clear",
             default=False,
-            help='Clear the seeded data instead of seeding it.'
+            help="Clear the seeded data instead of seeding it."
         ),
         make_option(
             "-s",
@@ -235,6 +235,13 @@ class Command(BaseCommand):
             action="store",
             type="string",
             dest="spec"
+        ),
+        make_option(
+            "--quiet",
+            action="store_true",
+            dest="quiet",
+            default=False,
+            help="Don't print warnings or logging information."
         ),
     )
 

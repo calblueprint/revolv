@@ -9,15 +9,15 @@ from revolv.project.models import Project
 class SeedTest(TestCase):
     def test_seed(self):
         """Test manage.py seed command does not error."""
-        call_command("seed")
+        call_command("seed", quiet=True)
 
     def test_clear(self):
         """Test manage.py seed --clear does not error."""
-        call_command("seed", clear=True)
+        call_command("seed", clear=True, quiet=True)
 
     def test_single(self):
         """Test manage.py seed command can load only a single seed spec."""
-        call_command("seed", spec="revolvuserprofile")
+        call_command("seed", spec="revolvuserprofile", quiet=True)
         self.assertEqual(Project.objects.count(), 0)
 
     def test_seed_then_clear(self):
@@ -30,9 +30,9 @@ class SeedTest(TestCase):
         project_count = Project.objects.count()
         payment_count = Payment.objects.count()
 
-        call_command("seed", clear=True)
-        call_command("seed")
-        call_command("seed", clear=True)
+        call_command("seed", clear=True, quiet=True)
+        call_command("seed", quiet=True)
+        call_command("seed", clear=True, quiet=True)
 
         self.assertEqual(User.objects.count(), user_count)
         self.assertEqual(RevolvUserProfile.objects.count(), profile_count)
