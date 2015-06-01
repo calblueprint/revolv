@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_group_by_name
 from revolv.lib.testing import TestUserMixin, UserTestingMixin
@@ -16,6 +15,7 @@ class RevolvUserProfileManagerTestCase(TestCase):
         context = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         self.assertEqual(len(context), 2)
         self.assertEqual(context[0].user.email, "revolv@gmail.com")
+
 
 class UserPermissionsTestCase(TestCase):
 
@@ -117,6 +117,22 @@ class UserPermissionsTestCase(TestCase):
             admin=True
         )
         self.assertTrue(self.test_user.is_staff)
+
+    def test_create_as(self):
+        """Test that create_user_as_ambassador and create_user_as_admin work."""
+        amb = RevolvUserProfile.objects.create_user_as_ambassador(username="amb")
+        self._assert_groups_correct(
+            amb.user,
+            ambassador=True,
+            admin=False
+        )
+
+        admin = RevolvUserProfile.objects.create_user_as_admin(username="admin")
+        self._assert_groups_correct(
+            admin.user,
+            ambassador=True,
+            admin=True
+        )
 
 
 class ProfileTestCase(TestUserMixin, UserTestingMixin, TestCase):

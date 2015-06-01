@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-
 from django_facebook.models import FacebookModel
 from revolv.base.utils import get_group_by_name, get_profile
 from revolv.lib.utils import ImportProxy
@@ -14,6 +13,12 @@ class RevolvUserProfileManager(models.Manager):
         """
         user = User.objects.create_user(*args, **kwargs)
         return get_profile(user)
+
+    def create_user_as_ambassador(self, *args, **kwargs):
+        """Create a user, assign it to be an ambassador, and return its profile."""
+        profile = self.create_user(*args, **kwargs)
+        profile.make_ambassador()
+        return profile
 
     def create_user_as_admin(self, *args, **kwargs):
         """Create a user, assign it to be an admin, and return its profile."""
