@@ -27,23 +27,30 @@
 <div class="row cover-photo"{% if project.cover_photo %} style="background-image: url({{project.cover_photo.url}});"{% endif %}></div>
 <div class="row project-tabs">
     <dl class="tabs" data-tab>
-        <dd class="tab-title active"><a href="#description">Description</a></dd>
+        <dd class="tab-title"><a href="#description">Description</a></dd>
         <!-- todo: funding and statistics and updates tabs -->
-        <dd class="tab-title"><a href="#funding">Funding</a></dd>
-        <dd class="tab-title"><a href="#statistics">Statistics</a></dd>
+        <dd class="tab-title active"><a href="#funding">Funding &amp; Statistics</a></dd>
         {% if project.updates.count > 0 %}
             <dd class="tab-title"><a href="#updates">Updates</a></dd>
         {% endif %}
     </dl>
 </div>
 <div class="project-tabs-content tabs-content">
-    <div class="content active description" id="description">
+    <div class="content description" id="description">
         <div class="row project-tagline">
             <h2 class="small-10 small-offset-1 columns">{{project.tagline}}</h2>
         </div>
         <div class="row project-description">
             <div class="small-10 small-offset-1 columns">
                 <p>{{project.description|safe}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="content active funding" id="funding">
+        <div class="row donation-stats">
+            <div class="days-remaining small-2 columns">
+                <div class="num-days-remaining">{{project.days_left}}</div>
+                <div class="days-remaining-label">day{{project.days_left|pluralize}} left</div>
             </div>
         </div>
     </div>
