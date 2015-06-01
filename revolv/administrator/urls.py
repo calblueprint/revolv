@@ -15,5 +15,5 @@ urlpatterns = patterns(
     url(r'^email/csv$', admin_email_csv_download, name='emailcsv'),
     url(r'^accounting$', is_administrator(AdministratorAccountingView.as_view()), name='accounting'),
     url(r'^accounting/adjustment$', is_administrator(AdministratorAddAdjustmentView.as_view()), name='adjustment'),
-    url(r'^accounting/json$', is_administrator(AccountingJSONView.as_view()), name='accountingJSON')
+    url(r'^accounting/json$', AccountingJSONView.as_view(), name='accountingJSON')
 )

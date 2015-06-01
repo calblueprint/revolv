@@ -1,0 +1,156 @@
+{% comment %}
+	stuff here who knows tbh
+{% endcomment %}
+
+{% block body %}
+
+<div class="row cash-flow-statement">
+    <h1 class="cash-flow-header-text">Statement of Cash Flows</h1>
+    <p class="time-sub-text">{{ data.date_info.start_date|date }} - {{ data.date_info.end_date|date }}</p>
+    <table class="cash-flow-table">
+        <thead class="cash-in-head">
+            <tr class="cash-in-head-row">
+                <th class="label-column">Cash In</th>
+                {% for d in data.date_info.date_list %}
+                	<th>{{ d|date:"M j" }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody class="cash-in-body table-body">
+            <tr class="event-type donation">
+                <td class="level-0">Donations</td>
+            </tr>
+            {% for project_name, project_info in data.cash_in.donations.items %}
+            	<tr><td class="level-1">{{ project_name }}</td></tr>
+            	<tr>
+            		<td class="level-2">Total</td>
+            		{% for total in project_info.totals %}
+            			<td>{{ total }}</td>
+            		{% endfor %} 
+            	</tr>
+                <tr>
+                    <td class="level-2">Payment Service Fees</td>
+                    {% for fee in project_info.payment_service_fees %}
+                        <td>{{ fee }}</td>
+                    {% endfor %} 
+                </tr>
+                <tr>
+                    <td class="level-2">Retained Donations</td>
+                    {% for donation in project_info.retained_donations %}
+                        <td>{{ donation }}</td>
+                    {% endfor %} 
+                </tr>   	
+            {% endfor %}
+            <tr class="event-type ROI">
+                <td class="level-0">Returns on Investments</td>
+            </tr>
+            {% for project_name, project_info in data.cash_in.repayments.items %}
+                <tr><td class="level-1">{{ project_name }}</td></tr>
+                <tr>
+                    <td class="level-2">Total</td>
+                    {% for total in project_info.totals %}
+                        <td>{{ total }}</td>
+                    {% endfor %} 
+                </tr>
+                <tr>
+                    <td class="level-2">Revolv Earnings</td>
+                    {% for earning in project_info.revolv_earnings %}
+                        <td>{{ earning }}</td>
+                    {% endfor %} 
+                </tr>
+                <tr>
+                    <td class="level-2">Retained ROI</td>
+                    {% for roi in project_info.retained_ROI %}
+                        <td>{{ roi }}</td>
+                    {% endfor %} 
+                </tr>      
+            {% endfor %}
+            <tr class="other-type">
+                <td class="level-0">Other</td>
+            </tr>
+            {% for name, amount_list in data.cash_in.adjustments.items %}
+                <tr>
+                    <td class="level-2">{{ name }}</td>
+                    {% for amount in amount_list %}
+                        <td>{{ amount }}</td>
+                    {% endfor %} 
+                </tr>      
+            {% endfor %}
+            <tr class="event-type total-row">
+                <td class="level-0">Total Cash In</td>
+                {% for cash_in in data.cash_balances.net_cash_in %}
+                    <td>{{ cash_in }}</td>
+                {% endfor %}
+            </tr> 
+        </tbody>
+        <thead class="cash-out-head">
+            <tr class="cash-out-head-row">
+                <th class="label-column">Cash Out</th>
+                {% for d in data.date_info.date_list %}
+                    <th></th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody class="cash-out-body table-body">
+            <tr class="event-type investment">
+                <td class="level-0">Investments</td>
+            </tr>
+            {% for project_name, project_info in data.cash_out.reinvestments.items %}
+                <tr><td class="level-1">{{ project_name }}</td></tr>
+                <tr>
+                    <td class="level-2">Total</td>
+                    {% for total in project_info.totals %}
+                        <td>{{ total }}</td>
+                    {% endfor %} 
+                </tr>      
+            {% endfor %}
+            <tr class="other-type">
+                <td class="level-0">Other</td>
+            </tr>
+            {% for name, amount_list in data.cash_out.adjustments.items %}
+                <tr>
+                    <td class="level-2">{{ name }}</td>
+                    {% for amount in amount_list %}
+                        <td>{{ amount }}</td>
+                    {% endfor %} 
+                </tr>      
+            {% endfor %}
+            <tr class="event-type total-row">
+                <td class="level-0">Total Cash Out</td>
+                {% for cash_out in data.cash_balances.net_cash_out %}
+                    <td>{{ cash_out }}</td>
+                {% endfor %}
+            </tr> 
+        </tbody>
+        <thead class="cash-flow-row">
+            <tr class="cash-flow-head-row">
+                <th class="label-column">Cash Position</th>
+                {% for d in data.date_info.date_list %}
+                    <th></th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody class="cash-flow-body">
+            <tr>
+                <td class="level-0">Initial Cash Position</td>
+                {% for initial_cash in data.cash_balances.beginning_cash_balance %}
+                    <td>{{ initial_cash }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td class="level-0">Change in Cash Position</td>
+                {% for initial_cash in data.cash_balances.change_in_cash %}
+                    <td>{{ initial_cash }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td class="level-0">Final Cash Position</td>
+                {% for initial_cash in data.cash_balances.final_cash_balance %}
+                    <td>{{ initial_cash }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

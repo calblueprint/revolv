@@ -60,7 +60,6 @@ class AdministratorAccountingView(UserDataMixin, TemplateView):
 
         return context
 
-
 class AccountingJSONView(TemplateView):
     """
     A view that returns a JsonResponse of all relevant accounting data.
@@ -112,7 +111,6 @@ class AccountingJSONView(TemplateView):
         self.updateFilterVariables(request.GET)
         normal_dispatch_dict = super(AccountingJSONView, self).dispatch(request, *args, **kwargs)
         return normal_dispatch_dict
-
 
 class AdministratorAddAdjustmentView(CreateView):
     

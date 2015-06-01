@@ -34,7 +34,6 @@ class HomePageView(UserDataMixin, TemplateView):
         context["total_donors_count"] = Payment.objects.total_distinct_organic_donors()
         return context
 
-
 class BaseStaffDashboardView(UserDataMixin, TemplateView):
     """
     Base view for the administrator and ambassador dashboard views. The
@@ -61,7 +60,6 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
 
         # TODO (noah): add in support for autoshowing a project based on the active_project GET parameter
         return context
-
 
 class SignInView(TemplateView):
     """Signup and login page. Has three submittable forms: login, signup,
