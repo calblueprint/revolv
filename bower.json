@@ -6,6 +6,7 @@
     "**/*.txt"
   ],
   "dependencies": {
-    "foundation": "~5.4"
+    "foundation": "~5.4",
+    "fontawesome": "=4.3.0"
   }
 }

@@ -9,8 +9,10 @@
             seeing this page then they have bypassed the functionality which redirects to the
             homepage for unauthenticated users.
 
-    :project_dict: a dictionary with keys as project group names, such as "Completed Projects", "Projects",
-            etc, and values as lists of project model objects in the group. The project group names
+    :project_dict: a dictionary with keys as revolv.base.utils.ProjectGroups, and values as lists
+        of project model objects in the group. The project group names have a `key` and a `display`:
+        the key should be used for uniquely identifying the project group in class names, etc, and the
+        display should be used for the sidebar heading (e.g. "Proposed Projects").
 
     The idea for the sidebar is that there is an area at the top where the user can switch between
     different user types, if applicable, can see the projects which are relevant to their role, and can also
@@ -18,6 +20,7 @@
     conditionally render all of these partials and things based on what type of user the current user is.
 {% endcomment %}
 {% spaceless %}
+<div class="sidebar-close-button sidebar-toggle-close"><i class="fa fa-close"></i></div>
 <div class="role-select">
     {% if role == "administrator" and user.revolvuserprofile.is_administrator %}
         <div class="role-select-inner">administrator</div>
@@ -55,7 +58,7 @@
             <div class="dashboard-header">{{ project_group.display }}</div>
             {% with outer_counter=forloop.counter %}
                 {% for project in project_list %}
-                    <div class="dashboard-sidebar-project-container dashboard-data-link {% if outer_counter == 1 and forloop.counter == 1 %} active{% endif %}" data-section="project-{{project.pk}}">
+                    <div class="dashboard-sidebar-project-container dashboard-sidebar-project-container-{{project.pk}} dashboard-data-link {% if outer_counter == 1 and forloop.counter == 1 %} active{% endif %}" data-section="project-{{project.pk}}">
                         <div class="dashboard-sidebar-bullet-point {{project_group.key}}"></div>
                         <div class="dashboard-sidebar-project project-{{project.pk}} project-status-{{project.pk}}-{{project.project_status}} {{project_group.key}} dashboard-data-link">{{project.title}}</div>
                     </div>
