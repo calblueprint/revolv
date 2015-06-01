@@ -67,6 +67,7 @@ $(document).ready(function () {
      */
     $(".sidebar-toggle-close").click(function() {
         $(".dashboard-sidebar").attr("style", "width: 0");
+        $(".dashboard-sidebar-back-overlay").attr("style", "display: none");
     });
 
     /**
@@ -79,6 +80,7 @@ $(document).ready(function () {
      */
     $(".sidebar-toggle-open").click(function() {
         $(".dashboard-sidebar").removeAttr("style");
+        $(".dashboard-sidebar-back-overlay").removeAttr("style");
     });
 
     /**

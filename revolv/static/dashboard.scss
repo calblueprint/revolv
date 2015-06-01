@@ -202,6 +202,18 @@ $sidebar-icon-gray: #999;
     max-height: 100%;
     overflow: scroll;
 
+    // the dashboard sidebar back overlay is active when the sidebar is expanded at low
+    // screen sizes. it covers the entier project container, in order to facilitate the
+    // action which closes the dashboard sidebar when the background behind it is clicked.
+    .dashboard-sidebar-back-overlay {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     .dashboard-project-header {
         height: auto;
         min-height: $revolv-dashboard-header-height;
@@ -437,6 +449,9 @@ $sidebar-icon-gray: #999;
 }
 
 @mixin mobilified-dashboard-project {
+    .dashboard-sidebar-back-overlay {
+        display: block;
+    }
     .dashboard-project-header {
         .title-area {
             .sidebar-toggle {
@@ -463,6 +478,14 @@ $sidebar-icon-gray: #999;
         // up the rest of the columns on tablet landscape and larger, is now
         // not displayed, so the title-area can take up all the space.
         width: 100%;
+
+        .dashboard-project-header {
+            .title-area {
+                .project-header-inner-wrap {
+                    max-width: 85%;
+                }
+            }
+        }
     }
 }
 

@@ -21,6 +21,7 @@
     easily in the sidebar UI, so we may have to rethink this design a little bit.
 {% endcomment %}
 
+<div class="dashboard-sidebar-back-overlay sidebar-toggle-close"></div>
 {% include "base/partials/nav.html" %}
 {% include "base/partials/dashboard_project_header.html" with user=user project=project %}
 <div class="row cover-photo"{% if project.cover_photo %} style="background-image: url({{project.cover_photo.url}});"{% endif %}></div>
