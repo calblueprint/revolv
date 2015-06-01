@@ -77,7 +77,7 @@ class ProjectSeedSpec(SeedSpec):
     """
     Database seed specification for revolv.project.models.Project
 
-    Creates 4 projects with various settings: Community Dairy, Community Dance Studio,
+    Creates 4 projects with various settings: Comoonity Dairy, Community Dance Studio,
     Educathing, and Fire Emblem.
 
     TODO: Make this spec create projects that mirror the projects that RE-volv has already
