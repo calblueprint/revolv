@@ -28,7 +28,6 @@
 <div class="row project-tabs">
     <dl class="tabs" data-tab>
         <dd class="tab-title"><a href="#description">Description</a></dd>
-        <!-- todo: funding and statistics and updates tabs -->
         <dd class="tab-title active"><a href="#funding">Funding &amp; Statistics</a></dd>
         {% if project.updates.count > 0 %}
             <dd class="tab-title"><a href="#updates">Updates</a></dd>
@@ -48,7 +47,7 @@
     </div>
     <div class="content active funding" id="funding">
         <div class="row donation-stats">
-            <div class="days-remaining small-2 columns">
+            <div class="days-remaining small-6 medium-3 large-2 columns">
                 <div class="num-days-remaining">{{project.days_left}}</div>
                 <div class="days-remaining-label">day{{project.days_left|pluralize}} left</div>
             </div>

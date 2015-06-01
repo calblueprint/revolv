@@ -351,6 +351,21 @@ $sidebar-icon-gray: #999;
     }
 
     .project-tabs-content {
+        .days-remaining {
+            // more padding than a normal row
+            padding: 0 40px;
+            text-align: center;
+
+            .num-days-remaining {
+                font-size: 40px;
+                font-weight: bold;
+            }
+            .days-remaining-label {
+                font-size: 25px;
+                line-height: 27px;
+                font-weight: 300;
+            }
+        }
         .row {
             margin: 0;
         }
