@@ -17,6 +17,9 @@ class AccountingAggregator():
     """
     An aggregator class that does much of the computation for the AdministratorAccountingView
     view in revolv.administrator.views.
+    This class contains a bunch of helper functions and one main function (aggregate) which returns 
+    a dictionary of relevant accounting data, filtered by instance variables representing the start date,
+    end date, and project filters.
     """
 
     def __init__(self, start_date=None, end_date=None, project_filter=None, revolv_earnings_rate=0, payment_service_fee_rate=0):
@@ -62,7 +65,10 @@ class AccountingAggregator():
     def clean_project_name(self, name):
         """
         A helper function that cleans a project name to make it JQuery 
-        friendly for use in the Accounting page.
+        friendly for use in the Accounting page. This is because the project name
+        is included as part of the class name for the selector buttons.
+        The function removes all characters that are not a-z or A-Z and replaces them
+        with a 'z'.
 
         :args:
             name: A string to be cleaned
@@ -113,15 +119,13 @@ class AccountingAggregator():
 
     def set_up_filtered_dict(self):
         """
-        Sets up the basics of a JSON serializable dictionary.
+        Sets up the basics of a dictionary containing all necessary information.
         This sets up:
         1. cash_in and its various components (repayments, adjustments, donations)
         2. cash_out and its various components (reinvestments, adjustments)
         3. date_info and its various components (start_date, end_date, date_list)
         4. cash_balances
         5. project_names
-        6. clean_project_names
-        7. cash_in/out_adjustment_names, which is a list of all the names of adjustments created
 
         :return:
             Returns a properly set up dictionary.
@@ -130,10 +134,10 @@ class AccountingAggregator():
         filtered_dict['cash_in'] = {'repayments': {}, 'adjustments': {}, 'donations': {}}
         filtered_dict['cash_out'] = {'reinvestments': {}, 'adjustments': {}}  
         filtered_dict['date_info'] = {}
-        filtered_dict['cash_balances'] = {}
+        filtered_dict['cash_balances'] = {'beginning_cash_balance': [], 'change_in_cash': [], 'final_cash_balance': [], 'net_cash_in': [], 'net_cash_out': []}
         date_info = filtered_dict['date_info']
-        date_info['start_date'] = self.start_date.strftime('%Y-%m-%d')
-        date_info['end_date'] = self.end_date.strftime('%Y-%m-%d')
+        date_info['start_date'] = self.start_date
+        date_info['end_date'] = self.end_date
         date_info['date_list'] = []
         filtered_dict['project_names'] = []
         project_names = filtered_dict['project_names']
@@ -141,26 +145,13 @@ class AccountingAggregator():
             if (self.has_payments(proj)):
                 project_names.append(proj.title)
 
-        filtered_dict['cash_in_adjustment_names'] = [adj.name for adj in AdminAdjustment.objects.adjustments(start_date=self.start_date, end_date=self.end_date, cash_type='cash_in').distinct()]
-        filtered_dict['cash_out_adjustment_names'] = [adj.name for adj in AdminAdjustment.objects.adjustments(start_date=self.start_date, end_date=self.end_date, cash_type='cash_out').distinct()]
+        for ct in ['cash_in', 'cash_out']:
+            for adj in AdminAdjustment.objects.adjustments(start_date=self.start_date, end_date=self.end_date, cash_type=ct).distinct():
+                filtered_dict[ct]['adjustments'][adj.name] = []
 
         return filtered_dict
-
-    def make_payment_type_keys(self, filtered_dict, date):
-        """
-        Sets up subdictionaries of each Payment object model for a certain date.
-
-        :args:
-            filtered_dict: The JSON serializable dictionary to be modified.
-            date: The current date period we are iterating over.
-        """
-        paths = [['cash_in', 'repayments'], ['cash_in', 'donations'], ['cash_in', 'adjustments'], ['cash_out', 'adjustments'], ['cash_out', 'reinvestments']]
-        for path in paths:
-            filtered_dict[path[0]][path[1]][date] = {}
-        
-        filtered_dict['cash_balances'][date] = {}
     
-    def make_project_keys(self, filtered_dict, date, title):
+    def make_project_keys(self, filtered_dict, title, filtered_project_filter):
         """
         Sets up subdictionaries of each Payment object model for a certain date and project.
 
@@ -169,32 +160,34 @@ class AccountingAggregator():
             date: The current date period we are iterating over.
             title: The title of the project.
         """
-        filtered_dict['cash_in']['repayments'][date][title] = {}
-        filtered_dict['cash_in']['donations'][date][title] = {}
-        filtered_dict['cash_out']['reinvestments'][date][title] = {}
+        for proj in filtered_project_filter:
+            title = proj.title
+            filtered_dict['cash_in']['repayments'][title] = {'totals': [], 'retained_ROI': [], 'revolv_earnings': []}
+            filtered_dict['cash_in']['donations'][title] = {'totals': [], 'payment_service_fees': [], 'retained_donations': []}
+            filtered_dict['cash_out']['reinvestments'][title] = {'totals': []}
     
     def set_cash_balances(self, cash, cash_balance, net_cash_in, net_cash_out):
         """
         For a specific date period, adds beginning cash balance, change
-        in cash balance, and final cash balance to the JSON serializable
+        in cash balance, and final cash balance to the 
         dictionary.
 
         :args:
-            cash: A subdictionary of the JSON serializable dictionary filtered_dict.
+            cash: A subdictionary of filtered_dict.
             cash_balance: The cash balance at the beginning of this period.
             net_cash_in: Net inflow of cash during this period.
             net_cash_out: Net outflow of cash during this period.
         """
-        cash['beginning_cash_balance'] = cash_balance
-        cash['change_in_cash'] = net_cash_in - net_cash_out
-        cash['final_cash_balance'] = cash_balance + net_cash_in - net_cash_out
-        cash['net_cash_in'] = net_cash_in
-        cash['net_cash_out'] = net_cash_out
+        cash['beginning_cash_balance'].append(cash_balance)
+        cash['change_in_cash'].append(net_cash_in - net_cash_out)
+        cash['final_cash_balance'].append(cash_balance + net_cash_in - net_cash_out)
+        cash['net_cash_in'].append(net_cash_in)
+        cash['net_cash_out'].append(net_cash_out)
     
     def set_time_period_adjustments(self, filtered_dict, date, temp_start_date, temp_end_date):
         """
         Creates and fills in the 'adjustment' subdictionary of 'cash_in' and 'cash_out'
-        within the JSON serializable dictionary.
+        within the dictionary.
         The dictionary structure is as follows:
         date: {
             'total': 5,
@@ -205,48 +198,46 @@ class AccountingAggregator():
         }
 
         :args:
-            cash: A subdictionary of the JSON serializable dictionary filtered_dict.
+            cash: A subdictionary of filtered_dict.
             cash_balance: The cash balance at the beginning of this period.
             net_cash_in: Net inflow of cash during this period.
             net_cash_out: Net outflow of cash during this period.
         """
         for in_or_out in ['cash_in', 'cash_out']:
             # creates the 'transactions' subdictionary
-            filtered_dict[in_or_out]['adjustments'][date]['transactions'] = {}
-            current_dict = filtered_dict[in_or_out]['adjustments'][date]['transactions']
+            current_dict = filtered_dict[in_or_out]['adjustments']
+
+            added = set()
+            
             # adds each transaction to the 'transactions' subdictionary
-            for adjustment in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type=in_or_out):
-                if adjustment.name in current_dict:
-                    current_dict[adjustment.name] += adjustment.amount
-                else:
-                    current_dict[adjustment.name] = adjustment.amount
-            # switches subdictionaries and fills in the 'total' value
-            current_dict = filtered_dict[in_or_out]['adjustments'][date]
-            total = AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type=in_or_out).aggregate(Sum('amount'))['amount__sum']
-            if not total:
-                total = 0
-            current_dict['total'] = total
+            for adj in AdminAdjustment.objects.adjustments(start_date=temp_start_date, end_date=temp_end_date, cash_type=in_or_out):
+                current_dict[adj.name].append(adj.amount)
+                added.add(adj.name)
+
+            for k in current_dict.keys():
+                if k not in added:
+                    current_dict[k].append(0)
     
     def set_repayment_table_values(self, filtered_dict, date, proj, temp_start_date, temp_end_date, revolv_earnings_rate):
         """
         Creates and fills in the 'repayments' subdictionary of 'cash_in' and 'cash_out'
-        within the JSON serializable dictionary for a certain time period and project.
+        within the dictionary for a certain time period and project.
 
         :args:
-            filtered_dict: The JSON serializable dictionary.
+            filtered_dict: The dictionary containing all the information.
             date: A string represenation of temp_start_date.
             proj: The project of interest.
             temp_start_date: The start date of this time period.
             temp_end_date: The end date of this time period.
             revolv_earnings_rate: A float from 0-1 representing what percentage of repayments RE-volv takes as earnings.
         """
-        current_dict = filtered_dict['cash_in']['repayments'][date][proj.title]
+        current_dict = filtered_dict['cash_in']['repayments'][proj.title]
         total = AdminRepayment.objects.repayments(project=proj, start_date=temp_start_date, end_date=temp_end_date).aggregate(Sum('amount'))['amount__sum']
         if not total:
             total = 0
-        current_dict['total'] = total
-        current_dict['revolv_earnings'] = total * revolv_earnings_rate
-        current_dict['retained_ROI'] = total * (1 - revolv_earnings_rate)
+        current_dict['totals'].append(total)
+        current_dict['revolv_earnings'].append(total * revolv_earnings_rate)
+        current_dict['retained_ROI'].append(total * (1 - revolv_earnings_rate))
     
     def set_donation_table_values(self, filtered_dict, date, proj, temp_start_date, temp_end_date, payment_service_fee_rate):
         """
@@ -254,46 +245,46 @@ class AccountingAggregator():
         within the JSON serializable dictionary for a certain time period and project.
 
         :args:
-            filtered_dict: The JSON serializable dictionary.
+            filtered_dict: The dictionary containing all the information.
             date: A string represenation of temp_start_date.
             proj: The project of interest.
             temp_start_date: The start date of this time period.
             temp_end_date: The end date of this time period.
             payment_service_fee_rate: A float from 0-1 representing what percentage of donations that are taken by payment service fees.
         """
-        current_dict['filtered_dict']['donations'][date][proj.title]
+        current_dict = filtered_dict['cash_in']['donations'][proj.title]
         total = Payment.objects.donations(project=proj, start_date=temp_start_date, end_date=temp_end_date).aggregate(Sum('amount'))['amount__sum']
         if not total:
             total = 0
-        current_dict['total'] = total
-        current_dict['payment_service_fees'] = total * payment_service_fee_rate
-        current_dict['retained_donations'] = total * (1 - payment_service_fee_rate)
+        current_dict['totals'].append(total)
+        current_dict['payment_service_fees'].append(total * payment_service_fee_rate)
+        current_dict['retained_donations'].append(total * (1 - payment_service_fee_rate))
     
     def set_reinvestment_table_values(self, filtered_dict, date, proj, temp_start_date, temp_end_date):
         """
         Creates and fills in the 'reinvestments' subdictionary of 'cash_in' and 'cash_out'
-        within the JSON serializable dictionary for a certain time period and project.
+        within the dictionary for a certain time period and project.
 
         :args:
-            filtered_dict: The JSON serializable dictionary.
+            filtered_dict: The dictionary containing all the information.
             date: A string represenation of temp_start_date.
             proj: The project of interest.
             temp_start_date: The start date of this time period.
             temp_end_date: The end date of this time period.
         """
-        current_dict['cash_out']['reinvestments'][date][proj.title]
+        current_dict = filtered_dict['cash_out']['reinvestments'][proj.title]
         total = AdminReinvestment.objects.reinvestments(project=proj, start_date=temp_start_date, end_date=temp_end_date).aggregate(Sum('amount'))['amount__sum']
         if not total:
             total = 0
-        current_dict['total'] = total
+        current_dict['totals'].append(total)
 
     def set_all_table_values(self, filtered_dict, date, proj, temp_start_date, temp_end_date, revolv_earnings_rate, payment_service_fee_rate):
         """
         Creates and fills in the 'repayments', 'reinvestments', and 'donations' subdictionary of 'cash_in' and 'cash_out'
-        within the JSON serializable dictionary for a certain time period and project.
+        within the dictionary for a certain time period and project.
 
         :args:
-            filtered_dict: The JSON serializable dictionary.
+            filtered_dict: The dictionary containing all the information.
             date: A string represenation of temp_start_date.
             proj: The project of interest.
             temp_start_date: The start date of this time period.
@@ -307,7 +298,57 @@ class AccountingAggregator():
 
     def aggregate(self):
         """
-        PUT DOCUMENTATION FOR THIS FUNCTION IN HERE
+        Creates and returns a dictionary with the structure shown below.
+        It filters data using the instance variables self.start_date, self.end_date, 
+        and self.project_filter.    
+    
+        The data is structured as shown below:
+        data = {
+            'cash_in': {
+                'adjustments': {
+                    'Surprise Income': [0, 0, 5],
+                },
+                'donations': {
+                    'Power Community Dance Studio': {
+                        'totals': [10, 0, 0],
+                        'payment_service_fees': [1, 0, 0],
+                        'retained_donations': [9, 0, 0] 
+                    },
+                },
+                'repayments': {
+                    'Power Community Dance Studio': {
+                        'totals': [0, 0, 0],
+                        'revolv_earnings': [0, 0, 0],
+                        'retained_ROI': [0, 0, 0],
+                    },
+                },
+            },
+            'cash_out': {
+                'adjustments': {
+                    'Surprise Expense': [0, 0, 1]
+                },
+                'reinvestments': {
+                    'Power Community Dance Studio': [1, 1, 1],
+                },
+            },
+            'date_info': {
+                'date_list': [
+                    datetime.datetime object,
+                    datetime.datetime object,
+                    datetime.datetime object,
+                ],
+                'start_date': datetime.datetime object,
+                'end_date': datetime.datetime object,
+            },
+            'project_names': ['Power Community Dance Studio'],
+            'cash_balances': {
+                "net_cash_out": [50, 0, 0],
+                "net_cash_in": [0, 0, 0],
+                "change_in_cash": [-50, 0, 0],
+                "beginning_cash_balance": [0, -50, -50],
+                "final_cash_balance": [-50, -50, -50],
+            },
+        }
         """
         # sets up the basic filtered dictionary
         filtered_dict = self.set_up_filtered_dict()
@@ -319,6 +360,7 @@ class AccountingAggregator():
         temp_end_date = self.move_one_month_forward(temp_start_date)
         cash_balance = self.calculate_cash_balance_from_start()
         filtered_project_filter = [proj for proj in self.project_filter if self.has_payments(proj)]
+        self.make_project_keys(filtered_dict, proj.title, filtered_project_filter)
         
         while temp_start_date < self.end_date:
             net_cash_in = 0
@@ -328,24 +370,23 @@ class AccountingAggregator():
                 temp_end_date = self.end_date
 
             # creates subdictionaries for this specific date and for adjustments within that date
-            filtered_dict['date_info']['date_list'].append(temp_start_date.strftime('%Y-%m-%d'))
-            date = temp_start_date.strftime('%Y-%m-%d')        
-            self.make_payment_type_keys(filtered_dict, date)
+            filtered_dict['date_info']['date_list'].append(temp_start_date)
+            date = temp_start_date
             self.set_time_period_adjustments(filtered_dict, date, temp_start_date, temp_end_date)
-            net_cash_in += filtered_dict['cash_in']['adjustments'][date]['total']
-            net_cash_out += filtered_dict['cash_out']['adjustments'][date]['total']
 
+            net_cash_in += sum([v[-1] for k, v in filtered_dict['cash_in']['adjustments'].iteritems()])
+            net_cash_out += sum([v[-1] for k, v in filtered_dict['cash_out']['adjustments'].iteritems()])
+            
             # creates project subdictionaries for this each project and inserts their respective transactions
             for proj in filtered_project_filter:
-                self.make_project_keys(filtered_dict, date, title)
-                self.set_all_table_values(filtered_dict, date, proj, temp_start_date, temp_end_date, revolv_earnings_rate, payment_service_fee_rate)
+                self.set_all_table_values(filtered_dict, date, proj, temp_start_date, temp_end_date, self.revolv_earnings_rate, self.payment_service_fee_rate)
                 
-                net_cash_in += filtered_dict['cash_in']['repayments'][date][proj.title]['retained_ROI']
-                net_cash_in += filtered_dict['cash_in']['donations'][date][proj.title]['retained_donations']
-                net_cash_out += filtered_dict['cash_out']['reinvestments'][date][proj.title]['total']
+                net_cash_in += filtered_dict['cash_in']['repayments'][proj.title]['retained_ROI'][-1]
+                net_cash_in += filtered_dict['cash_in']['donations'][proj.title]['retained_donations'][-1]
+                net_cash_out += filtered_dict['cash_out']['reinvestments'][proj.title]['totals'][-1]
             
             # fills in the inital cash balance, change in cash, and the final cash balance for this time period
-            cash = filtered_dict['cash_balances'][date]
+            cash = filtered_dict['cash_balances']
             self.set_cash_balances(cash, cash_balance, net_cash_in, net_cash_out)
             cash_balance += net_cash_in - net_cash_out
 

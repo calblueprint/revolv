@@ -72,7 +72,7 @@ table, tr, th, td, tbody, thead {
             color: red;
         }
 
-        .cash-in-head-row, .cash-out-head-row {
+        .cash-in-head-row, .cash-out-head-row, .cash-flow-head-row {
             border-bottom: 1px solid #999999;
 
             .label-column, th {
@@ -81,7 +81,7 @@ table, tr, th, td, tbody, thead {
             }
         }
 
-        .cash-out-head-row {
+        .cash-out-head-row, .cash-flow-head-row {
             th {
                 padding-top: 25px;
                 align: bottom;

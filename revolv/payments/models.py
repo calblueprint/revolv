@@ -294,7 +294,7 @@ class AdminAdjustment(models.Model):
     AdminAdjustment can reflect that. AdminAdjustments can also repesent anything unexpected that requires a certain
     a certain adjustment to the accounting.
 
-    TODO: AdminAdjustments aren't included when calculating how much money is left. It seems like they should be.
+    TODO: AdminAdjustments aren't included when calculating how much money is left to reinvestment. It seems like they should be.
     """
     amount = models.FloatField("How many dollars is this transaction?")
     name = models.CharField(

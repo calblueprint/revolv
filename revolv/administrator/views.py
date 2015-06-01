@@ -3,7 +3,7 @@ import json
 import datetime
 import urllib
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.views.generic import TemplateView, CreateView, View
 from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
@@ -61,105 +61,26 @@ class AdministratorAccountingView(UserDataMixin, TemplateView):
         return context
 
 
-class AccountingJSONView(View):
+class AccountingJSONView(TemplateView):
     """
     A view that returns a JsonResponse of all relevant accounting data.
     This is queried by an AJAX request when creating the Accounting page.
-
-    The data is structured as shown below:
-    data = {
-        'cash_in': {
-            'adjustments': {
-                '2015-01-01': {
-                    'Power Community Dance Studio': {
-                        'total': 5,
-                        'transactions': {
-                            'income': 3,
-                            'other income': 2,
-                        },
-                    },
-                },
-            },
-            'donations': {
-                '2015-01-01': {
-                    'Power Community Dance Studio': {
-                        'total': 5,
-                        'payment_service_fees': 3,
-                        'retained_donations': 2,
-                    },
-                },
-            },
-            'repayments': {
-                '2015-01-01': {
-                    'Power Community Dance Studio': {
-                        'total': 5,
-                        'revolv_earnings': 3,
-                        'retained_ROI': 2,
-                    },
-                },
-            },
-        },
-        'cash_out': {
-            'adjustments': {
-                '2015-01-01': {
-                    'Power Community Dance Studio': {
-                        'total': 5,
-                        'transactions': {
-                            'salaries': 3,
-                            'other expenses': 2,
-                        },
-                    },
-                },
-            },
-            'reinvestments': {
-                'total': 5,
-            },
-        },
-        'date_info': {
-            'date_list': [
-                '2015-01-01',
-                '2015-02-01',
-                '2015-03-01',
-                ],
-            'start_date': '2015-01-01',
-            'end_date': '2015-03-01',
-        },
-        'project_names': [
-            'Power Community Dance Studio',
-        ],
-        'cash_in_adjustment_names': [
-            'income',
-            'other income',
-        ],
-        'cash_out_adjustment_names': [
-            'salaries',
-            'other expenses',
-        ],
-        'cash_balances': {
-            "2015-03-01": {
-              "net_cash_out": 50,
-              "net_cash_in": 0,
-              "change_in_cash": -50,
-              "beginning_cash_balance": -5000,
-              "final_cash_balance": -5050
-        },
-    }
     """
 
     start_date = datetime.datetime.strptime('2015-01-01', '%Y-%m-%d')
     end_date = datetime.datetime.now()
     project_filter = Project.objects.all()
     allProjects = Project.objects.all()
+    template_name = 'base/partials/cash_flow_table.html'
 
-    """
-    Updates instance variables such as start_date, end_date, and project_filter
-    based on the keys passed in.
-
-    :args:
-        keys: The request passed in to the AccountingJSONView
-    """
     def updateFilterVariables(self, request):
+        """
+        Updates instance variables such as start_date, end_date, and project_filter
+        based on the keys passed in.
 
+        :args:
+            keys: The request passed in to the AccountingJSONView
+        """
         if 'start_date' in request:
             self.start_date = datetime.datetime.strptime(request['start_date'], '%Y-%m-%d')
         elif 'end_date' in request:
@@ -171,20 +92,26 @@ class AccountingJSONView(View):
                 project_dict = {}
                 for proj in self.allProjects:
                     name = proj.title
-                    project_dict[AccountingAggregator.clean_project_name(name)] = name
+                    project_dict[AccountingAggregator().clean_project_name(name)] = name
                 real_name = project_dict[request['project_choice']]
                 self.project_filter = Project.objects.filter(title=real_name)
 
-    """
-    Creates and returns a JsonResponse.
-    """
-    def dispatch(self, request, *args, **kwargs):
-        request = request.GET
-        self.updateFilterVariables(request)
+    def get_context_data(self, **kwargs):
+        context = super(AccountingJSONView, self).get_context_data(**kwargs)
         revolv_earnings_rate = 0.07
         payment_service_fee_rate = 0.01
         filtered_dict = AccountingAggregator(self.start_date, self.end_date, self.project_filter, revolv_earnings_rate, payment_service_fee_rate).aggregate()
-        return JsonResponse(filtered_dict)
+        context['data'] = filtered_dict
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Updates the variables used to filter the data (such as start date, end date, and project)
+        and then calls the inherited dispatch function.
+        """
+        self.updateFilterVariables(request.GET)
+        normal_dispatch_dict = super(AccountingJSONView, self).dispatch(request, *args, **kwargs)
+        return normal_dispatch_dict
 
 
 class AdministratorAddAdjustmentView(CreateView):

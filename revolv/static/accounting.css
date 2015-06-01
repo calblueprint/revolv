@@ -43,12 +43,12 @@ table, tr, th, td, tbody, thead {
     font-weight: 300; }
   .cash-flow-statement .cash-flow-table .payment-service-fees, .cash-flow-statement .cash-flow-table .revolv-earnings {
     color: red; }
-  .cash-flow-statement .cash-flow-table .cash-in-head-row, .cash-flow-statement .cash-flow-table .cash-out-head-row {
+  .cash-flow-statement .cash-flow-table .cash-in-head-row, .cash-flow-statement .cash-flow-table .cash-out-head-row, .cash-flow-statement .cash-flow-table .cash-flow-head-row {
     border-bottom: 1px solid #999999; }
-    .cash-flow-statement .cash-flow-table .cash-in-head-row .label-column, .cash-flow-statement .cash-flow-table .cash-in-head-row th, .cash-flow-statement .cash-flow-table .cash-out-head-row .label-column, .cash-flow-statement .cash-flow-table .cash-out-head-row th {
+    .cash-flow-statement .cash-flow-table .cash-in-head-row .label-column, .cash-flow-statement .cash-flow-table .cash-in-head-row th, .cash-flow-statement .cash-flow-table .cash-out-head-row .label-column, .cash-flow-statement .cash-flow-table .cash-out-head-row th, .cash-flow-statement .cash-flow-table .cash-flow-head-row .label-column, .cash-flow-statement .cash-flow-table .cash-flow-head-row th {
       font-weight: 800;
       font-size: 1.2rem; }
-  .cash-flow-statement .cash-flow-table .cash-out-head-row th {
+  .cash-flow-statement .cash-flow-table .cash-out-head-row th, .cash-flow-statement .cash-flow-table .cash-flow-head-row th {
     padding-top: 25px;
     align: bottom; }
   .cash-flow-statement .cash-flow-table .level-0 {

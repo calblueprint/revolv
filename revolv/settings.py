@@ -313,3 +313,4 @@ Consequently, it's safe to always enable charging, since in development nothing
 is actually being charged on the PayPal side.
 """
 ENABLE_PAYMENT_CHARGING = True
+
