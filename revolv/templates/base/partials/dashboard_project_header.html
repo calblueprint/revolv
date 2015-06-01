@@ -5,15 +5,26 @@
     See dashboard_project.html for more documentation.
 {% endcomment %}
 <div class="dashboard-project-header row">
-    <div class="sidebar-toggle small-only small-1 columns"><i class="fa fa-align-justify"></i></div>
-    <div class="title-area small-6 columns">
-        <div class="title-line">
-            <div class="title"><a href="{% url "project:view" project.pk %}">{{project.title}}</a></div>
-            <div class="project-status">({{project.status_display}})</div>
+    <div class="title-area large-6 medium-5 columns">
+        <div class="sidebar-toggle sidebar-toggle-open"><i class="fa fa-align-justify"></i></div>
+        <div class="project-header-inner-wrap">
+            <div class="title-line">
+                <div class="title"><a href="{% url "project:view" project.pk %}">{{project.title}}</a></div>
+                <div class="project-status project-status-large">({{project.status_display}})</div>
+            </div>
+            <div class="project-status project-status-medium">({{project.status_display}})</div>
+            <div class="location">
+                <i class="fa fa-map-marker"></i><span class="location-text">{{project.location_city_state_zip}}</span>
+            </div>
         </div>
-        <div class="location"><i class="fa fa-map-marker"></i><span class="location-text">{{project.location_city_state_zip}}</span></div>
     </div>
-    <div class="controls small-5 medium-6 columns">
+    <div class="controls controls-large large-6 medium-7 columns">
+        {% include "base/partials/project_controls.html" with project=project profile=user.revolvuserprofile %}
+    </div>
+</div>
+<!-- controls-small will be shown on mobile devices, in place of controls-large -->
+<div class="row controls-small">
+    <div class="controls small-12 columns">
         {% include "base/partials/project_controls.html" with project=project profile=user.revolvuserprofile %}
     </div>
 </div>

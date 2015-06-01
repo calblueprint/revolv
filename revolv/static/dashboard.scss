@@ -1,6 +1,9 @@
 @import "utils";
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
+@import "fontawesome-settings";
+@import "bower_components/fontawesome/scss/font-awesome";
+
 @import "revolv-settings";
 @import "nav";
 @import "placeholder-formfield";
@@ -20,11 +23,22 @@ html, body, .main-row {
 }
 
 $sidebar-header-gray: #777;
+$sidebar-icon-gray: #999;
 .dashboard-sidebar {
     padding: 0;
     background-color: $oil;
     height: 100%;
     font-family: $lato-font-family;
+    overflow: scroll;
+
+    .sidebar-close-button {
+        display: none;
+        color: $sidebar-icon-gray;
+        font-size: 19px;
+        position: absolute;
+        right: 9px;
+        top: 0;
+    }
 
     .dashboard-section {
         padding: 10px 0;
@@ -64,7 +78,7 @@ $sidebar-header-gray: #777;
 
         .dashboard-sidebar-chevron {
             display: inline-block;
-            color: #999;
+            color: $sidebar-icon-gray;
             margin-left: 10px;
             cursor: pointer;
         }
@@ -186,42 +200,73 @@ $sidebar-header-gray: #777;
     // the dashboard project page should scroll instead of extending
     // down past the sidebar
     max-height: 100%;
-    overflow-y: scroll;
+    overflow: scroll;
+
+    // the dashboard sidebar back overlay is active when the sidebar is expanded at low
+    // screen sizes. it covers the entier project container, in order to facilitate the
+    // action which closes the dashboard sidebar when the background behind it is clicked.
+    .dashboard-sidebar-back-overlay {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 
     .dashboard-project-header {
-        height: $revolv-dashboard-header-height;
+        height: auto;
+        min-height: $revolv-dashboard-header-height;
         width: 100%;
         padding: 15px;
         font-family: $lato-font-family;
 
+        .project-header-inner-wrap {
+            display: inline-block;
+            vertical-align: top;
+        }
+
         .sidebar-toggle {
             display: none;
+            height: $revolv-dashboard-header-height;
+            vertical-align: top;
+            margin-right: 10px;
+            color: $revolv-dark-blue;
+            cursor: pointer;
+        }
+
+        .project-status {
+            margin-left: 10px;
+
+            font-size: 13px;
+            line-height: 16px;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        .project-status-large {
+            display: none; // will only be displayed in $large-up
+        }
+
+        .project-status-medium {
+            display: inline-block;
+            margin-left: 0;
+            margin-right: 10px;
         }
 
         .title-area {
             display: inline-block;
             height: 100%;
 
-            .title, .project-status {
-                display: inline-block;
-            }
-
             .title {
-                font-size: 22px;
+                display: inline-block;
+                font-size: 18px;
                 font-weight: bold;
-                line-height: 22px;
-            }
-
-            .project-status {
-                margin-left: 10px;
-
-                font-size: 13px;
-                line-height: 16px;
-                color: #555;
-                text-transform: uppercase;
+                line-height: 20px;
             }
 
             .location {
+                display: inline-block;
                 color: #777;
                 font-size: 11px;
                 line-height: 15px;
@@ -232,38 +277,54 @@ $sidebar-header-gray: #777;
                 }
             }
         }
+    }
 
-        .controls {
+    .controls-large {
+        // controls-large is shown by default, and in medium portrait and smaller
+        // screens, we hide it and make controls-medium visible instead (it's in
+        // another row)
+        display: inline-block;
+    }
+
+    .controls-small {
+        display: none;
+        padding: 0 0 15px 15px;
+    }
+
+    .controls {
+        text-align: left; // when buttons overflow one line, make them at least look nice
+        line-height: 36px;
+
+        form {
+            padding: 0;
+        }
+        form, .button {
             display: inline-block;
-            text-align: right;
-
-            form {
-                padding: 0;
-            }
-            form, .button {
-                display: inline-block;
-                margin-right: 30px;
-                &:last-child {
-                    margin-right: 0;
-                }
+            margin-right: 10px;
+            &:last-child {
+                margin-right: 0;
             }
 
-            .button {
-                display: inline-block;
+            input {
+                margin-bottom: 0; // foundation override
+            }
+        }
 
-                font-size: 13px;
-                line-height: 16px;
-                color: #555;
-                text-transform: uppercase;
-                padding: 7px 20px;
+        .button {
+            display: inline-block;
 
-                @include revolv-hover-button($revolv-blue, inherit);
-                &.success {
-                    @include revolv-hover-button($revolv-green, inherit);
-                }
-                &.alert {
-                    @include revolv-hover-button($revolv-red, inherit);
-                }
+            font-size: 13px;
+            line-height: 16px;
+            color: #555;
+            text-transform: uppercase;
+            padding: 7px 20px;
+
+            @include revolv-hover-button($revolv-blue, inherit);
+            &.success {
+                @include revolv-hover-button($revolv-green, inherit);
+            }
+            &.alert {
+                @include revolv-hover-button($revolv-red, inherit);
             }
         }
     }
@@ -310,6 +371,18 @@ $sidebar-header-gray: #777;
             font-size: 18px;
             line-height: 20px;
         }
+        h3 {
+            font-size: 16px;
+        }
+        h4 {
+            font-size: 14px;
+        }
+        h5 {
+            font-size: 12px;
+        }
+        h6 {
+            font-size: 10px;
+        }
     }
 }
 
@@ -317,6 +390,149 @@ $sidebar-header-gray: #777;
     // HACK: have to use !important because .rows inside .rows have paddings/margins which have
     // a high specificity, do to their selector being ".row .row".
     padding: 0 !important;
-    margin: 13px 0 0 0 !important;
+    margin: 0 !important;
     height: 300px;
+    background-position: center;
+    background-size: cover;
+}
+
+@media #{$large-up} {
+    .dashboard-project {
+        .dashboard-projct-header {
+            .title-area {
+                .title {
+                    font-size: 22px;
+                    line-height: 22px;
+                }
+                // the project status is inside the title area on large screens,
+                // but outside it next to the location on tablets/phones
+                .project-status-large {
+                    display: inline-block;
+                }
+            }
+        }
+        .controls {
+            text-align: right;
+            form {
+                margin-right: 30px;
+            }
+        }
+    }
+}
+
+@media #{$medium-only} {
+    .dashboard-project {
+        .dashboard-project-header {
+            .project-status-medium {
+                display: inline-block;
+            }
+        }
+        .controls {
+            form {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+@mixin mobilfied-dashboard-sidebar {
+    position: fixed;
+    width: 300px;
+    z-index: 200;
+    height: 100%;
+    box-shadow: 0px 0px 22px #222; // to give the "floating" appearance
+    transition: width 0.3s;
+
+    .sidebar-close-button {
+        display: block;
+    }
+}
+
+@mixin mobilified-dashboard-project {
+    .dashboard-sidebar-back-overlay {
+        display: block;
+    }
+    .dashboard-project-header {
+        .title-area {
+            .sidebar-toggle {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+@media #{$medium-only} and (orientation:portrait) {
+    .dashboard-sidebar {
+        @include mobilfied-dashboard-sidebar;
+    }
+
+    .dashboard-project {
+        @include mobilified-dashboard-project;
+        // this is a slight hack: we want ths project header row (and the project
+        // container itself) to take up 100% (all 12 columns) in portrait
+        // orientation since the screen is now too small to fit the controls and
+        // the title info in one row, and we've now moved them to separate rows.
+        // however, we can't add a medium-12 class since that would interfere with
+        // medium landscape orientation. so, we hack it by making this element 100%
+        // width, as if it were 12 columns. controls-large, which was taking
+        // up the rest of the columns on tablet landscape and larger, is now
+        // not displayed, so the title-area can take up all the space.
+        width: 100%;
+
+        .dashboard-project-header {
+            .title-area {
+                .project-header-inner-wrap {
+                    max-width: 85%;
+                }
+            }
+        }
+    }
+}
+
+@media #{$small-only} {
+    .dashboard-sidebar {
+        @include mobilfied-dashboard-sidebar;
+    }
+
+    .dashboard-project {
+        @include mobilified-dashboard-project;
+
+        .dashboard-project-header {
+            .title-area  {
+                .project-header-inner-wrap {
+                    // long project titles flow on to the next line on phones. to stop this, we
+                    // set a max-width.
+                    max-width: 85%;
+                }
+            }
+        }
+        .controls-large {
+            display: none;
+        }
+
+        .controls-small {
+            display: inline-block;
+        }
+
+        .controls {
+            .button {
+                font-size: 11px;
+                line-height: 12px;
+            }
+        }
+
+        .project-tabs {
+            .tabs {
+                .tab-title {
+                    margin-right: 5px;
+
+                    a {
+                        font-size: 11px;
+                        line-height: 28px; // large line height to separate from blue border
+                        padding: 5px;
+                    }
+                }
+            }
+        }
+    }
 }
