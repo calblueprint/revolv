@@ -76,10 +76,6 @@ class AdminReinvestmentFactories(object):
     base = AdminReinvestmentFactory
 
 
-completed_project = Project.factories.base.create()
-completed_project.complete_project()
-
-
 class RepaymentFragmentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = RepaymentFragment
@@ -88,7 +84,7 @@ class RepaymentFragmentFactory(factory.django.DjangoModelFactory):
     project = factory.SubFactory("revolv.project.factories.ProjectFactory")
     admin_repayment = factory.SubFactory(
         "revolv.payments.factories.AdminRepaymentFactory",
-        project=completed_project)
+        project=factory.LazyAttribute(lambda l: Project.factories.completed.create()))
     amount = 20.00
     created_at = datetime.datetime.now()
 

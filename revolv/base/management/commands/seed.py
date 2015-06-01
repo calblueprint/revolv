@@ -5,6 +5,7 @@ from optparse import make_option
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from revolv.base.models import RevolvUserProfile
+from revolv.payments.models import Payment
 from revolv.project.models import Project
 
 
@@ -179,19 +180,62 @@ class ProjectSeedSpec(SeedSpec):
                 print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
 
 
-SPECS_TO_RUN = [
-    RevolvUserProfileSeedSpec(),
-    ProjectSeedSpec()
-]
+class PaymentSeedSpec(SeedSpec):
+    """
+    Database seed specification for revolv.payments.models.Payment.
+
+    Makes 6 dummy payments. For details, see the seed() method.
+    """
+
+    def seed(self):
+        donor = RevolvUserProfile.objects.get(user__username="donor")
+        ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
+        administrator = RevolvUserProfile.objects.get(user__username="administrator")
+        studio = Project.objects.get(tagline=ProjectSeedSpec.studio["tagline"])
+        dairy = Project.objects.get(tagline=ProjectSeedSpec.dairy["tagline"])
+
+        Payment.factories.base.create(project=studio, user=donor, entrant=donor, amount=50.0)
+        Payment.factories.base.create(project=dairy, user=donor, entrant=administrator, amount=50.0)
+        Payment.factories.base.create(project=studio, user=donor, entrant=administrator, amount=50.0)
+        Payment.factories.base.create(project=studio, user=donor, entrant=administrator, amount=50.0)
+        Payment.factories.base.create(project=dairy, user=administrator, entrant=administrator, amount=50.0)
+        Payment.factories.base.create(project=studio, user=ambassador, entrant=ambassador, amount=50.0)
+
+    def clear(self):
+        try:
+            donor = RevolvUserProfile.objects.get(user__username="donor")
+            ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
+            administrator = RevolvUserProfile.objects.get(user__username="administrator")
+            Payment.objects.payments(user=donor).delete()
+            Payment.objects.payments(user=ambassador).delete()
+            Payment.objects.payments(user=administrator).delete()
+        except RevolvUserProfile.DoesNotExist as e:
+            print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+
+
+SPECS_TO_RUN = (
+    ("revolvuserprofile", RevolvUserProfileSeedSpec()),
+    ("project", ProjectSeedSpec()),
+    ("payment", PaymentSeedSpec()),
+)
 
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
-        make_option('--clear',
-                    action='store_true',
-                    dest='clear',
-                    default=False,
-                    help='Clear the seeded data instead of seeding it.'),
+        make_option(
+            '--clear',
+            action='store_true',
+            dest='clear',
+            default=False,
+            help='Clear the seeded data instead of seeding it.'
+        ),
+        make_option(
+            "-s",
+            "--spec",
+            action="store",
+            type="string",
+            dest="spec"
+        ),
     )
 
     def handle(self, *args, **options):
@@ -206,14 +250,28 @@ class Command(BaseCommand):
         sometimes cause problems, especially if the models they're loading have signals
         associated with them. This function fully expects signals to be enabled, and will
         create objects knowing that signals will be run on the creation of some of them.
+
+        Options:
+            --spec [spec name]: run only the specified SeedSpec
+            --clear: clear the seed data instead of seed it
         """
         if options["clear"]:
             verb = "Clearing"
         else:
             verb = "Seeding"
 
-        print "[Seed:Info] %s objects from %i seed spec(s)..." % (verb, len(SPECS_TO_RUN))
-        for spec in SPECS_TO_RUN:
+        specs_to_run = []
+        if options["spec"]:
+            spec = dict(SPECS_TO_RUN).get(options["spec"])
+            if spec is not None:
+                specs_to_run.append(spec)
+            else:
+                print "[Seed:Warning] Trying to run only spec %s, but it doesn't exist." % options["spec"]
+        else:
+            specs_to_run.extend([tup[1] for tup in SPECS_TO_RUN])
+
+        print "[Seed:Info] %s objects from %i seed spec(s)..." % (verb, len(specs_to_run))
+        for spec in specs_to_run:
             if options["clear"]:
                 spec.clear()
             else:
