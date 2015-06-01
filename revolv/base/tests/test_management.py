@@ -1,9 +1,9 @@
+from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
-from revolv.project.models import Project
 from revolv.payments.models import Payment
-from django.contrib.auth.models import User
+from revolv.project.models import Project
 
 
 class SeedTest(TestCase):
