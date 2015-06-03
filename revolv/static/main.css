@@ -5642,6 +5642,10 @@ th.hide-for-touch {
       padding-bottom: 0.9375rem; }
     .modal-content .modal-section.table {
       padding: 0; }
+    .modal-content .modal-section.share-buttons {
+      margin-bottom: 10px; }
+      .modal-content .modal-section.share-buttons .share-button-table-cell {
+        text-align: center; }
   .modal-content .modal-footer-button-group {
     list-style: none;
     margin: 0; }

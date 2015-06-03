@@ -103,6 +103,14 @@
         &.table {
             padding: 0;
         }
+
+        &.share-buttons {
+            margin-bottom: 10px;
+
+            .share-button-table-cell {
+                text-align: center;
+            }
+        }
     }
 
     .modal-footer-button-group {
