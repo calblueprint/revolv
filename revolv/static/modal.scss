@@ -106,9 +106,15 @@
 
         &.share-buttons {
             margin-bottom: 10px;
+            padding-top: 5px;
 
             .share-button-table-cell {
                 text-align: center;
+
+                .share-button-group {
+                    width: 108px;
+                    margin: auto;
+                }
             }
         }
     }
