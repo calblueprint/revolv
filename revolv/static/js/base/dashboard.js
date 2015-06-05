@@ -20,7 +20,14 @@ $(document).ready(function () {
             $this.addClass("fa-rotate-180");
         }
     });
-
+    
+    /**
+     * This function defines what happens when the different categories are clicked in the
+     * 'my impact' section on the dashboard. The category that is clicked is made active, 
+     * and then an AJAX request is made. The view this AJAX reqest is sent to updates the
+     * preferred_categories attribute of this user.
+     * 
+     */
     $(".category-option-container").click(function() {
         $(this).toggleClass("active");
         var allActiveCategories = $(".category-option-container.active");
@@ -33,13 +40,13 @@ $(document).ready(function () {
 
         for (var i = 0; i < allActiveCategories.length; i += 1) {
             var categoryText = $(allActiveCategories[i]).children().last().text();
-            dict[categoryText] = true
+            dict[categoryText] = true;
         }
         makeAJAXCall(dict);
     })
 
     /**
-     * Makes the AJAX Call
+     * Makes an AJAX Call.
      * @param {Object} changed_data - An object with either 0 or 1 keys that maps a selector to its new value.
      */
     function makeAJAXCall(changedData) {

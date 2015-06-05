@@ -9,11 +9,11 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
 from django.core.urlresolvers import reverse
 from revolv.base.forms import SignupForm
+from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
 from revolv.project.models import Project, Category
-from revolv.base.models import RevolvUserProfile
 
 class HomePageView(UserDataMixin, TemplateView):
     """
