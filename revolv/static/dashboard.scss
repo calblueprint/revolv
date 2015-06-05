@@ -409,6 +409,7 @@ $dark-gray: #555555;
 
     .category-preferences-container {
         height: 100%;
+        padding: 0;
 
         .gray-bar-container {
             height: 100%;
@@ -573,6 +574,7 @@ $dark-gray: #555555;
 }
 
 @media #{$medium-only} and (orientation:portrait) {
+
     .dashboard-sidebar {
         @include mobilfied-dashboard-sidebar;
     }
@@ -601,6 +603,7 @@ $dark-gray: #555555;
 }
 
 @media #{$small-only} {
+
     .dashboard-sidebar {
         @include mobilfied-dashboard-sidebar;
     }
@@ -649,7 +652,7 @@ $dark-gray: #555555;
 }
 
 @media #{$small-only}, #{$medium-only} {
-    .gray-bar {
-        visibility: hidden;
+    .gray-bar-container {
+        display: none;
     }
 }
