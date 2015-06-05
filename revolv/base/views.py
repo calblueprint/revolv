@@ -70,7 +70,7 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
 class CategoryPreferenceSetterView(UserDataMixin, View):
     
     def dispatch(self, request, *args, **kwargs):
-        super(CategoryPreferenceSetterView, self).dispatch(request, *args, **kwargs)
+        standard_response = super(CategoryPreferenceSetterView, self).dispatch(request, *args, **kwargs)
         user = self.user_profile
         user.preferred_categories.clear()
         info_dict = request.GET.dict()
@@ -78,13 +78,7 @@ class CategoryPreferenceSetterView(UserDataMixin, View):
             if info_dict[category_string] == 'true':
                 category = Category.objects.get(title=category_string)
                 user.preferred_categories.add(category)
-        if not self.is_authenticated:
-            return redirect('home')
-        if self.is_administrator:
-            return redirect('administrator:dashboard')
-        if self.is_ambassador:
-            return redirect('ambassador:dashboard')
-        return redirect('donor:dashboard')
+        return standard_response
 
 class SignInView(TemplateView):
     """Signup and login page. Has three submittable forms: login, signup,
