@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^$', base_views.HomePageView.as_view(), name='home'),
     url(r'^project/', include('revolv.project.urls', namespace='project')),
     url(r'^dashboard/$', base_views.DashboardRedirect.as_view(), name='dashboard'),
+    url(r'^dashboard/categories/$', base_views.CategoryPreferenceSetterView.as_view(), name='dashboard_category_setter'),
     url(r'^dashboard/admin/', include('revolv.administrator.urls', namespace='administrator')),
     url(r'^dashboard/ambassador/', include('revolv.ambassador.urls', namespace='ambassador')),
     url(r'^dashboard/donor/', include('revolv.donor.urls', namespace='donor')),

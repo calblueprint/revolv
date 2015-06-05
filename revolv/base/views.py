@@ -7,12 +7,13 @@ from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
+from django.core.urlresolvers import reverse
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
-from revolv.project.models import Project
-
+from revolv.project.models import Project, Category
+from revolv.base.models import RevolvUserProfile
 
 class HomePageView(UserDataMixin, TemplateView):
     """
@@ -59,9 +60,31 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         context["project_dict"] = project_dict
         context["role"] = self.role or "donor"
 
+        context['category_setter_url'] = reverse('dashboard_category_setter')
+        context['categories'] = Category.objects.all().order_by('title')
+        context['preferred_categories'] = RevolvUserProfile.objects.get(user=self.user).preferred_categories.all()
+
         # TODO (noah): add in support for autoshowing a project based on the active_project GET parameter
         return context
 
+class CategoryPreferenceSetterView(UserDataMixin, View):
+    
+    def dispatch(self, request, *args, **kwargs):
+        super(CategoryPreferenceSetterView, self).dispatch(request, *args, **kwargs)
+        user = self.user_profile
+        user.preferred_categories.clear()
+        info_dict = request.GET.dict()
+        for category_string in info_dict:
+            if info_dict[category_string] == 'true':
+                category = Category.objects.get(title=category_string)
+                user.preferred_categories.add(category)
+        if not self.is_authenticated:
+            return redirect('home')
+        if self.is_administrator:
+            return redirect('administrator:dashboard')
+        if self.is_ambassador:
+            return redirect('ambassador:dashboard')
+        return redirect('donor:dashboard')
 
 class SignInView(TemplateView):
     """Signup and login page. Has three submittable forms: login, signup,

@@ -58,7 +58,7 @@
             <div class="dashboard-header">{{ project_group.display }}</div>
             {% with outer_counter=forloop.counter %}
                 {% for project in project_list %}
-                    <div class="dashboard-sidebar-project-container dashboard-sidebar-project-container-{{project.pk}} dashboard-data-link {% if outer_counter == 1 and forloop.counter == 1 %} active{% endif %}" data-section="project-{{project.pk}}">
+                    <div class="dashboard-sidebar-project-container dashboard-sidebar-project-container-{{project.pk}} dashboard-data-link" data-section="project-{{project.pk}}">
                         <div class="dashboard-sidebar-bullet-point {{project_group.key}}"></div>
                         <div class="dashboard-sidebar-project project-{{project.pk}} project-status-{{project.pk}}-{{project.project_status}} {{project_group.key}} dashboard-data-link">{{project.title}}</div>
                     </div>
@@ -66,6 +66,11 @@
             {% endwith %}
         {% endfor %}
     {% endif %}
+</div>
+<div class="dashboard-section my-impact-and-category-preferences">
+    <div class="dashboard-sidebar-project-container dashboard-data-link active" data-section="my-impact">
+        <div class="dashboard-data-link dashboard-sidebar-project">My Impact</div>
+    </div>
 </div>
 <div class="dashboard-section manage">
     <div class="dashboard-header">Manage</div>
