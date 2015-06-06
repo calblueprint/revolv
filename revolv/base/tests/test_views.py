@@ -1,8 +1,32 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.testing import TestUserMixin, UserTestingMixin
 
+
+class CategorySetterTestCase(TestUserMixin, UserTestingMixin, TestCase):
+    
+    def test_category_setting(self):
+        self.test_profile.make_administrator()
+        response = self.send_test_user_login_request()
+
+        # checks to see that the user has no pre-existing preferences
+        self.assertEqual(len(self.test_profile.preferred_categories.all()), 0)
+        
+        self.client.post(reverse('dashboard_category_setter'), {'1': '', '2': ''}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        
+        # checks to see that categories 1 and 2 have been added
+        self.assertEqual(len(self.test_profile.preferred_categories.all()), 2)
+        self.assertTrue(self.test_profile.preferred_categories.all().filter(id=1).exists())
+        self.assertTrue(self.test_profile.preferred_categories.all().filter(id=2).exists())
+
+        self.client.post(reverse('dashboard_category_setter'), {'3': ''}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        # checks to see that categories 1 and 2 have been removed and category 3 has been added
+        self.assertEqual(len(self.test_profile.preferred_categories.all()), 1)
+        self.assertFalse(self.test_profile.preferred_categories.all().filter(id=1).exists())
+        self.assertFalse(self.test_profile.preferred_categories.all().filter(id=2).exists())
 
 class AuthPagesTestCase(UserTestingMixin, TestUserMixin, TestCase):
     SIGNIN_URL = "/signin/"
