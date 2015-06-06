@@ -1,4 +1,5 @@
 @import "utils";
+@import "mixins";
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
 @import "fontawesome-settings";
@@ -440,18 +441,13 @@ $dark-gray: #555555;
                 height: 40px;
                 border: 1px solid $light-gray;
                 margin: 5px auto 0 auto;
-                transition: all 0.3s;
-                -moz-transition: all 0.3s;
-                -webkit-transition: all 0.3s;
+                @include transition(border 0.3s);
 
                 .checkmark {
                     visibility: hidden;
                     height: 20px;
                     margin: 10px 10px;
                     position: absolute;
-                    transition: all 0.3s;
-                    -moz-transition: all 0.3s;
-                    -webkit-transition: all 0.3s;
                 }
 
                 .category-title {
@@ -459,9 +455,7 @@ $dark-gray: #555555;
                     color: $dark-gray;
                     text-align: center;
                     line-height: 40px;
-                    transition: all 0.3s;
-                    -moz-transition: all 0.3s;
-                    -webkit-transition: all 0.3s;
+                    @include transition(color 0.3s);
                 }
 
                 &.active, &:hover {
@@ -654,5 +648,16 @@ $dark-gray: #555555;
 @media #{$small-only}, #{$medium-only} {
     .gray-bar-container {
         display: none;
+    }
+    .dashboard-data-section-my-impact {
+        .category-preferences-container {
+            .choice-container {
+                .explanation, .explanation-header, .choice-header {
+                    // this much nesting is necessary because if it is not nested in this far, it does not take precedence
+                    width: 75%;
+                    margin-left: 12.5%; 
+                }
+            }
+        }
     }
 }

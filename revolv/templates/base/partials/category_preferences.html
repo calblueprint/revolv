@@ -6,7 +6,7 @@
 <div class="large-11 columns choice-container">
     <div class="choice-header">What type of projects should we invest your repayments in next?</div>
     {% for category in categories %}
-        <div class="category-option-container {% if category in preferred_categories %}active{% endif %}">
+        <div class="category-option-container {% if category in preferred_categories %}active{% endif %}" id="{{ category.id }}">
             <img class="checkmark" src="{% static "images/checkmark.png" %}"/>
             <p class="category-title">{{ category.title }}</p>
         </div>

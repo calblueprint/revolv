@@ -3,13 +3,13 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
 from django.core.urlresolvers import reverse
 from revolv.base.forms import SignupForm
-from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
@@ -62,23 +62,21 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
 
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')
-        context['preferred_categories'] = RevolvUserProfile.objects.get(user=self.user).preferred_categories.all()
+        context['preferred_categories'] = self.user_profile.preferred_categories.all()
 
         # TODO (noah): add in support for autoshowing a project based on the active_project GET parameter
         return context
 
 class CategoryPreferenceSetterView(UserDataMixin, View):
     
-    def dispatch(self, request, *args, **kwargs):
-        standard_response = super(CategoryPreferenceSetterView, self).dispatch(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
         user = self.user_profile
         user.preferred_categories.clear()
-        info_dict = request.GET.dict()
+        info_dict = request.POST.dict()
         for category_string in info_dict:
-            if info_dict[category_string] == 'true':
-                category = Category.objects.get(title=category_string)
-                user.preferred_categories.add(category)
-        return standard_response
+            category = Category.objects.get(id=category_string)
+            user.preferred_categories.add(category)
+        return HttpResponse()
 
 class SignInView(TemplateView):
     """Signup and login page. Has three submittable forms: login, signup,

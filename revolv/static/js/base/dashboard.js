@@ -23,44 +23,36 @@ $(document).ready(function () {
     
     /**
      * This function defines what happens when the different categories are clicked in the
-     * 'my impact' section on the dashboard. The category that is clicked is made active, 
+     * 'my impact' section on the dashboard. The category that is clicked is made inactive or active, 
      * and then an AJAX request is made. The view this AJAX reqest is sent to updates the
      * preferred_categories attribute of this user.
-     * 
      */
     $(".category-option-container").click(function() {
         $(this).toggleClass("active");
         var allActiveCategories = $(".category-option-container.active");
-        var allCategories = $(".category-option-container");
-        var dict = {};
-        for (var i = 0; i < allCategories.length; i += 1) {
-            var categoryText = $(allCategories[i]).children().last().text();
-            dict[categoryText] = false;
-        }
+        var categoryData = {};
 
         for (var i = 0; i < allActiveCategories.length; i += 1) {
-            var categoryText = $(allActiveCategories[i]).children().last().text();
-            dict[categoryText] = true;
+            var categoryID = $(allActiveCategories[i]).attr('id');
+            categoryData[categoryID] = '';
         }
-        makeAJAXCall(dict);
-    })
 
-    /**
-     * Makes an AJAX Call.
-     * @param {Object} changed_data - An object with either 0 or 1 keys that maps a selector to its new value.
-     */
-    function makeAJAXCall(changedData) {
         var csrftoken = getCookie('csrftoken');
         $.ajax({
             url: window.categoryURL,
-            method: "GET",
-            data: changedData,
+            method: "POST",
+            data: categoryData,
             headers: {"X-CSRFToken": csrftoken},
+            error: function (xhr, textStatus, thrownError){
+                $(this).toggleClass("active");
+                alert("Sorry, something went wrong! Try again?");
+            },
         });
-    }
+    })
 
     /**
      * Copied from the Django documentation. Checks if a method needs a csrf token.
+     * Copied from: https://docs.djangoproject.com/en/1.6/ref/contrib/csrf/
      * @param {String} method - The name of a method.
      */
     function csrfSafeMethod(method) {
@@ -70,6 +62,7 @@ $(document).ready(function () {
 
     /**
      * Copied from the Django documentation. Returns an appropriate cookie.
+     * Copied from: https://docs.djangoproject.com/en/1.6/ref/contrib/csrf/
      * @param {String} name - type of cookie. In this case, we will always use 'csrftoken'.
      */
     function getCookie(name) {

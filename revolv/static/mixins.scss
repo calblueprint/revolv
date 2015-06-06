@@ -31,3 +31,11 @@
     -webkit-transform: $transforms;
     transform: $transforms;
 }
+
+@mixin transition($transition) {
+    transition: $transition;
+    -moz-transition: $transition;
+    -webkit-transition: $transition;
+    -o-transition: $transition;
+    -ms-transition: $transition;
+}
