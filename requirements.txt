@@ -30,7 +30,7 @@ django-sekizai==0.7
 django-classy-tags==0.5
 djangocms-admin-style==0.2.2
 html5lib==0.999
-six==1.3.0
+six
 django-filer==0.9.5
 cmsplugin-filer==0.9.5
 django-reversion==1.7
