@@ -71,6 +71,9 @@ class CategoryPreferenceSetterView(UserDataMixin, View):
     
     http_methods = ['post']
     
+    def http_method_not_allowed(request, *args, **kwargs):
+        return redirect("dashboard")
+
     def post(self, request, *args, **kwargs):
         user = self.user_profile
         user.preferred_categories.clear()

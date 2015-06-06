@@ -8,6 +8,21 @@ from revolv.project.models import Category
 
 class CategorySetterTestCase(TestUserMixin, UserTestingMixin, TestCase):
     
+    def test_http_redirect(self):
+        """
+        This test checks to make sure that the CategoryPreferenceSetterView in revolv.base.views 
+        redirects to the dashboard when called with an HTTP method that is not allowed (any method except
+        POST).
+
+        This test sends a get request to the CategoryPreferenceSetterView, follows the chain of redirects,
+        and ensures that the template used in the final view is base/dashboard.html.
+        """
+        self.test_profile.make_administrator()
+        response = self.send_test_user_login_request()
+        response = self.client.get(reverse('dashboard_category_setter'), HTTP_X_REQUESTED_WITH='XMLHttpRequest', follow=True)
+        self.assertTemplateUsed(response, "base/dashboard.html")
+
+
     def test_category_setting(self):
         """
         This test checks to make sure that the CategoryPreferenceSetterView in revolv.base.views works.
