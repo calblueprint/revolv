@@ -54,6 +54,12 @@
                 {% endfor %}
             {% endwith %}
         {% endfor %}
+        <div class="small-12 large-10 medium-9 columns dashboard-data-section dashboard-data-section-my-impact dashboard-data-section-current">
+            <div class="large-7 columns my-impact-container"></div>
+            <div class="large-5 columns category-preferences-container">
+                {% include "base/partials/category_preferences.html" with preferred_categories=preferred_categories categories=categories %}
+            </div>
+        </div>
     </div>
 
     {% block body %}
@@ -85,6 +91,9 @@
 
     {% render_block "js" %}
     {% block javascripts %}
+        <script type="text/javascript">
+            window.categoryURL = "{{ category_setter_url }}";
+        </script>
     {% endblock %}
 </body>
 

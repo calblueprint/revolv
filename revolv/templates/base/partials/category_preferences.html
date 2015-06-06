@@ -1,0 +1,17 @@
+{% load staticfiles %}
+
+<div class="large-1 columns gray-bar-container">
+    <div class="gray-bar"></div>
+</div>
+<div class="large-11 columns choice-container">
+    <div class="choice-header">What type of projects should we invest your repayments in next?</div>
+    {% for category in categories %}
+        <div class="category-option-container {% if category in preferred_categories %}active{% endif %}" data-category-id="{{ category.id }}">
+            <img class="checkmark" src="{% static "images/checkmark.png" %}"/>
+            <p class="category-title">{{ category.title }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="explanation-header">What's going on?</div>
+    <div class="explanation">Your donation to RE-volv has been invested in a revolving fund. Money from the fund is used to place solar equipment on community buildings. Over time, the community pays RE-volv back. These repayments are invested in even more solar projects. A fraction of the repayments from a solar investment originates from your investment. Your preferences directly affect where that chunk of money is invested.</div>
+</div>

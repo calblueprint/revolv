@@ -7727,6 +7727,71 @@ html, body, .main-row {
   .dashboard-project .project-tabs-content h6 {
     font-size: 10px; }
 
+.dashboard-data-section-my-impact {
+  height: 100%; }
+  .dashboard-data-section-my-impact .category-preferences-container {
+    height: 100%;
+    padding: 0; }
+    .dashboard-data-section-my-impact .category-preferences-container .gray-bar-container {
+      height: 100%;
+      padding: 0; }
+      .dashboard-data-section-my-impact .category-preferences-container .gray-bar-container .gray-bar {
+        position: absolute;
+        height: 84%;
+        top: 8%;
+        background-color: #c6c6c6;
+        width: 1px; }
+    .dashboard-data-section-my-impact .category-preferences-container .choice-container {
+      padding: 0; }
+      .dashboard-data-section-my-impact .category-preferences-container .choice-container .choice-header {
+        font-weight: 800;
+        color: #555555;
+        text-align: center;
+        margin: 30px 15px;
+        font-size: 1.1rem; }
+      .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container {
+        width: 75%;
+        height: 40px;
+        border: 1px solid #c6c6c6;
+        margin: 5px auto 0 auto;
+        transition: border 0.3s;
+        -moz-transition: border 0.3s;
+        -webkit-transition: border 0.3s;
+        -o-transition: border 0.3s;
+        -ms-transition: border 0.3s; }
+        .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container .checkmark {
+          visibility: hidden;
+          height: 20px;
+          margin: 10px 10px;
+          position: absolute; }
+        .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container .category-title {
+          font-weight: 300;
+          color: #555555;
+          text-align: center;
+          line-height: 40px;
+          transition: color 0.3s;
+          -moz-transition: color 0.3s;
+          -webkit-transition: color 0.3s;
+          -o-transition: color 0.3s;
+          -ms-transition: color 0.3s; }
+        .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container.active, .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container:hover {
+          border: 1px solid #11ade5; }
+          .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container.active .category-title, .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container:hover .category-title {
+            font-weight: 800;
+            color: #11ade5; }
+        .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container.active .checkmark {
+          visibility: visible; }
+      .dashboard-data-section-my-impact .category-preferences-container .choice-container .explanation-header {
+        font-weight: 500;
+        color: #555555;
+        font-size: 1.05rem;
+        margin-left: 15px;
+        margin-top: 45px; }
+      .dashboard-data-section-my-impact .category-preferences-container .choice-container .explanation {
+        margin: 0 15px;
+        font-weight: 300;
+        margin-bottom: 40px; }
+
 .cover-photo {
   padding: 0 !important;
   margin: 0 !important;
@@ -7799,3 +7864,10 @@ html, body, .main-row {
       font-size: 11px;
       line-height: 28px;
       padding: 5px; } }
+
+@media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
+  .gray-bar-container {
+    display: none; }
+  .dashboard-data-section-my-impact .category-preferences-container .choice-container .explanation, .dashboard-data-section-my-impact .category-preferences-container .choice-container .explanation-header, .dashboard-data-section-my-impact .category-preferences-container .choice-container .choice-header {
+    width: 75%;
+    margin-left: 12.5%; } }

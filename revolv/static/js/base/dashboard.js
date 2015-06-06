@@ -20,6 +20,66 @@ $(document).ready(function () {
             $this.addClass("fa-rotate-180");
         }
     });
+    
+    /**
+     * This function defines what happens when the different categories are clicked in the
+     * 'my impact' section on the dashboard. The category that is clicked is made inactive or active, 
+     * and then an AJAX request is made. The view this AJAX reqest is sent to updates the
+     * preferred_categories attribute of this user.
+     */
+    $(".category-option-container").click(function() {
+        $(this).toggleClass("active");
+        var allActiveCategories = $(".category-option-container.active");
+        var categoryData = {};
+
+        for (var i = 0; i < allActiveCategories.length; i += 1) {
+            var categoryID = $(allActiveCategories[i]).data("category-id");
+            categoryData[categoryID] = '';
+        }
+
+        var csrftoken = getCookie('csrftoken');
+        $.ajax({
+            url: window.categoryURL,
+            method: "POST",
+            data: categoryData,
+            headers: {"X-CSRFToken": csrftoken},
+            error: function (xhr, textStatus, thrownError){
+                $(this).toggleClass("active");
+                alert("Please try again.");
+            },
+        });
+    })
+
+    /**
+     * Copied from the Django documentation. Checks if a method needs a csrf token.
+     * Copied from: https://docs.djangoproject.com/en/1.6/ref/contrib/csrf/
+     * @param {String} method - The name of a method.
+     */
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    /**
+     * Copied from the Django documentation. Returns an appropriate cookie.
+     * Copied from: https://docs.djangoproject.com/en/1.6/ref/contrib/csrf/
+     * @param {String} name - type of cookie. In this case, we will always use 'csrftoken'.
+     */
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
     /**
      * This function defines what happens when a dashboard data link is clicked. A data
@@ -94,15 +154,4 @@ $(document).ready(function () {
             $(".dashboard-sidebar").removeAttr("style");
         }
     });
-
-    /**
-     * When the document is ready, find the first dashboard project and make it selected. This is done to make
-     * sure that a project is always selected when we load the page: if this was not enforced, then it would
-     * be possible to close the dashboard sidebar and be left stuck at an empty screen.
-     */
-    var $firstProject = $(".dashboard-project").first();
-    if ($firstProject.length) {
-        $firstProject.addClass("dashboard-data-section-current");
-        $(".dashboard-sidebar-project-container-" + $firstProject.data("project-id")).addClass("active");
-    }
 });
