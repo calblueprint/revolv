@@ -81,15 +81,7 @@ INSTALLED_APPS = (
     'ckeditor',
 
     # django-cms
-    'djangocms_text_ckeditor',
-    'cms',  # django CMS itself
-    'mptt',  # utilities for implementing a modified pre-order traversal tree
-    'menus',  # helper for model independent hierarchical website navigation
-    'sekizai',  # for javascript and css management
-    'djangocms_picture',
-    'djangocms_googlemap',
-    'djangocms_file',
-    'djangocms_video',
+    'wagtail'
 )
 
 MIDDLEWARE_CLASSES = (
