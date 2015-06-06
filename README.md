@@ -12,6 +12,12 @@ Who We Are
 ![bp](http://bptech.berkeley.edu/assets/logo-full-large-d6419503b443e360bc6c404a16417583.png "BP Banner")
 **[Cal Blueprint](http://www.calblueprint.org/)** is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.
 
+Contributing
+------------
+All of Blueprint's work is open source and we welcome contributions. If you would like to contribute to work on this project, please open an issue and we'll work to get your environment set up.
+
+### Task tracking and priority
+All task tracking is done via the github issues page, and every issue will be triaged when it's opened. Please use [Zenhub](https://www.zenhub.io/) to view issue pipelines. For non-chrome users, each issue is tagged with a priority of 1, 2, 3, 4, or 5, with 1 being highest priority. In general, higher priority issues should always be worked on first.
 
 Installation
 ------------
@@ -45,7 +51,3 @@ Development
 1. Running `grunt watch` will start a process which will watch for changes to specific SCSS files (defined in `Gruntfile`) and will autocompile them to CSS.
 2. You can use the `vmanage.py` script to run manage.py commands on the running vagrant machine without having to `vagrant ssh` in. For example: `python vmanage.py runserver`, `python vmanage.py migrate`, `python vmanage.py makemigrations --empty`, etc.
 3. You can run `manage.py seed` to seed the database, and you can run `manage.py seed --clear` to clear the seeded data (useful for when something goes wrong and you want to regenerate all the seed data from scratch). You can also run `manage.py seed revolvuserprofile` to seed specific data (replace `revolvuserprofile` with any of the strings from `revolv/base/management/commands/seed.py`).
-
-Contributing
-------------
-All of Blueprint's work is open source and we welcome contributions. If you would like to contribute to work on this project, please open an issue and we'll work to get your environment set up.
