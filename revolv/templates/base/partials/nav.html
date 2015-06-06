@@ -4,7 +4,6 @@
     http://stackoverflow.com/questions/22650371/django-is-it-impossible-to-static-tag-into-block-tag
 {% endcomment %}
 {% load staticfiles %}
-{% load menu_tags %}
 {% spaceless %}
 <div class="nav-bg-wrap">
    <nav class="row header top-bar" data-topbar role="navigation">
@@ -17,9 +16,8 @@
            <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
        </ul>
        <section class="top-bar-section">
-           <ul class="left">
-               {% show_menu 0 100 100 100 "base/partials/menu.html" %}
-           </ul>
+<!--       <ul class="left">
+           </ul> -->
 
            <ul class="right header-small-text">
                {% if request.user.is_authenticated %}

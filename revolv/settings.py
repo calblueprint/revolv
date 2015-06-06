@@ -41,18 +41,11 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.request',
-    'django_facebook.context_processors.facebook',
-)
-
 SITE_ID = 1
 
 # Application definition
 
 INSTALLED_APPS = (
-    'djangocms_admin_style',  # must go before 'django.contrib.admin'.
-
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -60,7 +53,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'djangobower',
     'django.contrib.humanize',
 
@@ -79,9 +71,22 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'djcelery',
     'ckeditor',
+    'sekizai',
 
-    # django-cms
-    'wagtail'
+    # wagtail cms: see http://wagtail.readthedocs.org/en/v1.0b2/howto/settings.html
+    'compressor',
+    'taggit',
+    'modelcluster',
+    'wagtail.wagtailcore',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailredirects',
+    'revolv.revolv_cms'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,10 +101,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'cms.middleware.user.CurrentUserMiddleware',
-    'cms.middleware.page.CurrentPageMiddleware',
-    'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware',
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -127,6 +130,8 @@ CMS_TEMPLATES = (
 )
 CMS_PERMISSION = True
 CMS_PUBLIC_FOR = "staff"
+WAGTAIL_SITE_NAME = 'RE-volv'
+WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = 'content-management-bot@re-volv.org'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -137,9 +142,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
+    'django_facebook.context_processors.facebook',
 
     'sekizai.context_processors.sekizai',
-    'cms.context_processors.cms_settings',
 )
 
 # Database

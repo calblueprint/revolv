@@ -1,6 +1,9 @@
 from django.conf.urls import include, patterns, url
 from django.contrib import admin
 from revolv.base import views as base_views
+from wagtail.wagtailadmin import urls as wagtailadmin_urls
+from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtaildocs import urls as wagtaildocs_urls
 
 urlpatterns = patterns(
     '',
@@ -26,5 +29,12 @@ urlpatterns = patterns(
     url(r'^password_reset/complete/$', base_views.password_reset_complete, name="password_reset_complete"),
     url(r'^password_change/$', base_views.password_change, name="password_change"),
 
-    url(r'^', include('cms.urls')),
+    # wagtail urls, see http://wagtail.readthedocs.org/en/v1.0b2/howto/settings.html
+    # note: we're not including the search module for public users, so we don't define it here
+    url(r'^cms/', include(wagtailadmin_urls)),
+    url(r'^documents/', include(wagtaildocs_urls)),
+
+    # For anything not caught by a more specific rule above, hand over to
+    # Wagtail's serving mechanism
+    url(r'', include(wagtail_urls)),
 )
