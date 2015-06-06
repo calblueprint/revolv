@@ -9,6 +9,19 @@ from revolv.project.models import Category
 class CategorySetterTestCase(TestUserMixin, UserTestingMixin, TestCase):
     
     def test_category_setting(self):
+        """
+        This test checks to make sure that the CategoryPreferenceSetterView in revolv.base.views works.
+        What the view should do is take in a dictionary of category ids matched to empty strings,
+        clear the user's preferred categories, and then add every category corresponding to the ids
+        in the dictionary to the user's preferred categories.
+
+        This test creates a user and then verifies that the user has 0 categories in their preferred categories.
+        It then passes a dictionary with 2 category ids to the CategoryPreferenceSetterView, and then checks that
+        both of those categories and no other categories are in the user's preferred categories.
+
+        It then passes in a dictionary with 1 category id to the CategoryPreferenceSetterView, and then checks that
+        the original 2 ids were removed from the preferred categories, and the newly passed in one was added.
+        """
         self.test_profile.make_administrator()
         response = self.send_test_user_login_request()
 

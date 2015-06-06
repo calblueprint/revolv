@@ -69,6 +69,8 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
 
 class CategoryPreferenceSetterView(UserDataMixin, View):
     
+    http_methods = ['post']
+    
     def post(self, request, *args, **kwargs):
         user = self.user_profile
         user.preferred_categories.clear()
