@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.testing import TestUserMixin, UserTestingMixin
+from revolv.project.models import Category
 
 
 class CategorySetterTestCase(TestUserMixin, UserTestingMixin, TestCase):
@@ -13,20 +14,26 @@ class CategorySetterTestCase(TestUserMixin, UserTestingMixin, TestCase):
 
         # checks to see that the user has no pre-existing preferences
         self.assertEqual(len(self.test_profile.preferred_categories.all()), 0)
+
+        all_category_objects = Category.objects.all()
+        id_one = all_category_objects[0].id
+        id_two = all_category_objects[1].id
+        id_three = all_category_objects[2].id
         
-        self.client.post(reverse('dashboard_category_setter'), {'1': '', '2': ''}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.client.post(reverse('dashboard_category_setter'), {id_one: '', id_two: ''}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         
         # checks to see that categories 1 and 2 have been added
         self.assertEqual(len(self.test_profile.preferred_categories.all()), 2)
-        self.assertTrue(self.test_profile.preferred_categories.all().filter(id=1).exists())
-        self.assertTrue(self.test_profile.preferred_categories.all().filter(id=2).exists())
+        self.assertTrue(self.test_profile.preferred_categories.all().filter(id=id_one).exists())
+        self.assertTrue(self.test_profile.preferred_categories.all().filter(id=id_two).exists())
 
-        self.client.post(reverse('dashboard_category_setter'), {'3': ''}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.client.post(reverse('dashboard_category_setter'), {id_three: ''}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
         # checks to see that categories 1 and 2 have been removed and category 3 has been added
         self.assertEqual(len(self.test_profile.preferred_categories.all()), 1)
-        self.assertFalse(self.test_profile.preferred_categories.all().filter(id=1).exists())
-        self.assertFalse(self.test_profile.preferred_categories.all().filter(id=2).exists())
+        self.assertTrue(self.test_profile.preferred_categories.all().filter(id=id_three).exists())
+        self.assertFalse(self.test_profile.preferred_categories.all().filter(id=id_one).exists())
+        self.assertFalse(self.test_profile.preferred_categories.all().filter(id=id_two).exists())
 
 class AuthPagesTestCase(UserTestingMixin, TestUserMixin, TestCase):
     SIGNIN_URL = "/signin/"

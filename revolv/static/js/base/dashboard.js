@@ -33,7 +33,7 @@ $(document).ready(function () {
         var categoryData = {};
 
         for (var i = 0; i < allActiveCategories.length; i += 1) {
-            var categoryID = $(allActiveCategories[i]).attr('id');
+            var categoryID = $(allActiveCategories[i]).data("category-id");
             categoryData[categoryID] = '';
         }
 
@@ -45,7 +45,7 @@ $(document).ready(function () {
             headers: {"X-CSRFToken": csrftoken},
             error: function (xhr, textStatus, thrownError){
                 $(this).toggleClass("active");
-                alert("Sorry, something went wrong! Try again?");
+                alert("Please try again.");
             },
         });
     })
