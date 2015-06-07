@@ -7774,15 +7774,14 @@ html, body, .main-row {
           transform: translate(-50%, -50%);
           -moz-transform: translate(-50%, -50%);
           -webkit-transform: translate(-50%, -50%); }
-    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container {
-      color: #064f7e; }
-      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .completion-text {
-        font-size: 2em;
-        font-weight: 500;
-        padding-bottom: 10px;
-        padding-top: 10px; }
-      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .detail-text {
-        font-size: 1.5em; }
+    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .detail-text {
+      margin-bottom: 0em;
+      color: #bbbbbb;
+      font-size: 2em;
+      font-weight: 200; }
+    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .amount-text {
+      margin-bottom: 0em;
+      font-size: 2em; }
 
 .dashboard-data-section-my-impact {
   height: 100%; }

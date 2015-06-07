@@ -467,16 +467,16 @@ $sidebar-icon-gray: #999;
                 }
             }
             .repayment-details-container {
-                color: $revolv-dark-blue;
-                .completion-text {
+                .detail-text {
+                    margin-bottom:0em;
+                    color: #bbb;
                     font-size:2em;
-                    font-weight:500;
-                    padding-bottom:10px;
-                    padding-top:10px;
+                    font-weight:200;
                 }
 
-                .detail-text {
-                    font-size:1.5em;
+                .amount-text {
+                    margin-bottom:0em;
+                    font-size:2em;
                 }
             }
         }

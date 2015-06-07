@@ -73,10 +73,22 @@
             <div class="small-8 columns">
                 <div class="repayment-details-container">
                     <div class="text-container">
-                    <p class="completion-text">This project has been completed!<p>
-                    <p class="detail-text">${{ project.amount_repaid|floatformat:2 }} Repaid</p>
-                    <p class="detail-text">${{ project.amount_donated|floatformat:2 }} Donated</p>
-                    <p class="detail-text">{{ project.actual_energy }} kwH saved</p>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><p class="detail-text">Amount Repaid</p></td>
+                                    <td><p class="amount-text">${{ project.amount_repaid|floatformat:2 }}</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p class="detail-text">Amount Donated</p></td>
+                                    <td><p class="amount-text">${{ project.amount_donated|floatformat:2 }}</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p class="detail-text">kwH saved</p></td>
+                                    <td><p class="amount-text">{{ project.actual_energy }}</p></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
