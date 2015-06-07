@@ -1,0 +1,34 @@
+{% comment %}
+    This partial defines a ul menu for the navigation bar, which may be present on
+    many RE-volv application pages. It expects to be passed a RevolvCustomPage or
+    a RevolvLinkPage, which specifies the root of the menu that should be displayed.
+
+    For example, if the page passed in had two children and each of those children
+    had two children, then the resulting menu would have two top level items, each
+    of which would have dropdowns wich two more (second level) items. Note that even
+    if the second level pages have more children, they will not be displayed beyond
+    the second level.
+
+    This template should be rendered with the following context:
+
+    :page:
+        The root page to display a menu for.
+
+    TODO: Should probably make this a template tag instead of a partial.
+{% endcomment %}
+<ul class="left">
+    {# Here each li is a top level dropdown menu #}
+    
+    {% for root_child in page.get_menuable_children %}
+        <li {% if root_child.has_menu_children %}class="has-dropdown"{% endif %}>
+            <a href="{{ root_child.get_href }}">{{ root_child.title }}</a>
+            {% if root_child.has_menu_children %}
+                <ul class="dropdown">
+                    {% for second_level_child in root_child.get_menuable_children %}
+                        <li><a href="{{ second_level_child.get_href }}"></a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

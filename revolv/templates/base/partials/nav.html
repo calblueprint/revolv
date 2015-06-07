@@ -16,10 +16,10 @@
            <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
        </ul>
        <section class="top-bar-section">
-<!--       <ul class="left">
-           </ul> -->
-
-           <ul class="right header-small-text">
+            {% if request.site.root_page %}
+                {% include "base/partials/nav/page_menu.html" with page=request.site.root_page %}
+            {% endif %}
+            <ul class="right header-small-text">
                {% if request.user.is_authenticated %}
                <li class="user-controls has-dropdown">
                    <a href="#">{{user.username}}</a>
@@ -36,7 +36,7 @@
                    <a class="component-link" data-component="login" href="{% url "signin" %}#login">Sign In</a>
                </li>
                {% endif %}
-           </ul>
+            </ul>
        </section>
    </nav>
 </div>
