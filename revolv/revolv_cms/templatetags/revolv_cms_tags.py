@@ -1,4 +1,5 @@
 from django import template
+from revolv.revolv_cms.models import RevolvLinkPage
 
 register = template.Library()
 
@@ -38,8 +39,8 @@ def get_menu_children_with_template_data(parent_page):
     return children
 
 
-@register.inclusion_tag("revolv_cms/tags/partial_nav_menu.html")
-def partial_nav_menu(parent_page):
+@register.inclusion_tag("revolv_cms/tags/partial_nav_menu.html", takes_context=True)
+def partial_nav_menu(context, parent_page):
     """
     A tag which renders a nav bar <ul> to two levels of child pages for
     a given parent page. See the template (partial_nav_menu.html) for
@@ -51,10 +52,14 @@ def partial_nav_menu(parent_page):
         Note that the root page itself will not be rendered, and instead
         the children of the root page of the menu will be treated as the
         menu items.
+
+    :context: necessary for tags within partial_nav_menu.html that have
+        takes_context=True.
     """
     child_pages = get_menu_children_with_template_data(parent_page)
     return {
         "menu_pages": child_pages,
+        "request": context["request"]  # we must pass this along for other tags that need it
     }
 
 
@@ -65,3 +70,19 @@ def get_menu_children(parent_page):
     rendering menus.
     """
     return get_menu_children_with_template_data(parent_page)
+
+
+@register.assignment_tag(takes_context=True)
+def link_href(context, page):
+    """
+    Return the url that this page defines. If it is a RevolvCustomPage,
+    this will return the page's url as defined by its link_href. If not,
+    it will simply return the page's regular url.
+    """
+    # see http://www.danieleverard.com/2011/05/battling-with-django-inheritance-subclass-casting/
+    model_subclass = page.content_type.model_class()
+    if model_subclass is RevolvLinkPage:
+        return RevolvLinkPage.objects.get(pk=page.id).link_href
+    else:
+        # see https://github.com/torchbox/wagtail/blob/master/wagtail/wagtailcore/templatetags/wagtailcore_tags.py#L12
+        return page.relative_url(context['request'].site)

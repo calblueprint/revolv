@@ -1,8 +1,6 @@
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-hey
-</body>
-</html>
+{% extends "base/base.html" %}
+{% load wagtailcore_tags %}
+{% block title %}{{ self.title }}{% endblock title %}
+{% block body %}
+    {{ self.body|richtext }}
+{% endblock body %}

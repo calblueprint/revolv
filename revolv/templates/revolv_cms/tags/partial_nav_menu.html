@@ -20,12 +20,14 @@
     {# Here each li is a top level dropdown menu #}
     {% for top_level_page in menu_pages %}
         <li {% if top_level_page.has_menu_children %}class="has-dropdown"{% endif %}>
-            <a href="{{ top_level_page.get_href }}">{{ top_level_page.title }}</a>
+            {% link_href top_level_page as top_level_href %}
+            <a href="{{ top_level_href }}">{{ top_level_page.title }}</a>
             {% if top_level_page.has_menu_children %}
                 <ul class="dropdown">
                     {% get_menu_children top_level_page as second_level_pages %}
                     {% for second_level_page in second_level_pages %}
-                        <li><a href="{{ second_level_page.get_href }}">{{ second_level_page.title }}</a></li>
+                        {% link_href second_level_page as href %}
+                        <li><a href="{{ href }}">{{ second_level_page.title }}</a></li>
                     {% endfor %}
                 </ul>
             {% endif %}
