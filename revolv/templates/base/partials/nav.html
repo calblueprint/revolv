@@ -3,7 +3,7 @@
     in the base template, because of how django does staticfile processing:
     http://stackoverflow.com/questions/22650371/django-is-it-impossible-to-static-tag-into-block-tag
 {% endcomment %}
-{% load staticfiles %}
+{% load staticfiles revolv_cms_tags %}
 {% spaceless %}
 <div class="nav-bg-wrap">
    <nav class="row header top-bar" data-topbar role="navigation">
@@ -16,9 +16,8 @@
            <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
        </ul>
        <section class="top-bar-section">
-            {% if request.site.root_page %}
-                {% include "base/partials/nav/page_menu.html" with page=request.site.root_page %}
-            {% endif %}
+            {% get_cms_root_page as root_page %}
+            {% partial_nav_menu root_page %}
             <ul class="right header-small-text">
                {% if request.user.is_authenticated %}
                <li class="user-controls has-dropdown">

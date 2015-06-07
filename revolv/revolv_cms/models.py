@@ -4,15 +4,7 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
 
 
-class MenuableMixin(object):
-    def has_menuable_children(self):
-        return self.get_children.filter(live=True, show_in_menus=True).exists()
-
-    def get_menuable_children(self):
-        return self.get_children.filter(live=True, show_in_menus=True)
-
-
-class RevolvCustomPage(Page, MenuableMixin):
+class RevolvCustomPage(Page):
     body = RichTextField()
     search_name = "Custom Page"
 
@@ -26,7 +18,7 @@ class RevolvCustomPage(Page, MenuableMixin):
         return self.url
 
 
-class RevolvLinkPage(Page, MenuableMixin):
+class RevolvLinkPage(Page):
     """
     A page that represents a link to another page. Since it is technically
     a "Page", it can go into menus and have children, but it does not have
