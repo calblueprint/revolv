@@ -1,6 +1,16 @@
 {% extends "base/base.html" %}
-{% load wagtailcore_tags %}
-{% block title %}{{ self.title }}{% endblock title %}
+{% load wagtailcore_tags staticfiles %}
+{% block title %}{{ self.title }} | {% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "cms-page.css" %}">
+{% endblock head %}
+
 {% block body %}
-    {{ self.body|richtext }}
+<div class="cms-content-row row">
+    <div class="small-12 columns">
+        <h1>{{ self.title }}</h1>
+        {{ self.body|richtext }}
+    </div>
+</div>
 {% endblock body %}
