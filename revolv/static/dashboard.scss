@@ -399,6 +399,87 @@ $sidebar-icon-gray: #999;
         h6 {
             font-size: 10px;
         }
+
+        .repayment-progress-container {
+            height: 260px;
+            .statistics-graphics-container {
+                height: 260px;
+                width: 100%;
+                position: absolute;
+
+                .svg-graphics-container {
+                // this contains the formatting for the white outside circle - this works
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                }
+
+                .internal-graphics-container {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    -moz-transform: translate(-50%, -50%);
+                    -webkit-transform: translate(-50%, -50%);
+                }
+
+                .project-badge-line, .project-badge-circle {
+                    fill: none;
+                }
+
+                .project-badge-line {
+                    stroke: $revolv-green;
+                }
+
+                .project-badge-circle {
+                    stroke: white;
+                }
+
+                .text-container {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    -moz-transform: translate(-50%, -50%);
+                    -webkit-transform: translate(-50%, -50%);
+                    height: 220px;
+                    width: 220px;
+                    color: $revolv-dark-blue;
+
+                    .percentage-text {
+                        position: absolute;
+                        left: 50%;
+                        top: 45%;
+                        transform: translate(-50%, -50%);
+                        -moz-transform: translate(-50%, -50%);
+                        -webkit-transform: translate(-50%, -50%);
+                    }
+
+                    .repaid {
+                        position: absolute;
+                        font-weight: 800;
+                        left: 50%;
+                        top: 60%;
+                        transform: translate(-50%, -50%);
+                        -moz-transform: translate(-50%, -50%);
+                        -webkit-transform: translate(-50%, -50%);
+                    }
+                }
+            }
+            .repayment-details-container {
+                color: $revolv-dark-blue;
+                .completion-text {
+                    font-size:2em;
+                    font-weight:500;
+                    padding-bottom:10px;
+                    padding-top:10px;
+                }
+
+                .detail-text {
+                    font-size:1.5em;
+                }
+            }
+        }
     }
 }
 
@@ -415,7 +496,7 @@ $dark-gray: #555555;
         .gray-bar-container {
             height: 100%;
             padding: 0;
-            
+
             .gray-bar {
                 position: absolute;
                 height: 84%;
@@ -468,7 +549,7 @@ $dark-gray: #555555;
                 }
 
                 &.active {
-                    
+
                     .checkmark {
                         visibility: visible;
                     }
@@ -655,7 +736,7 @@ $dark-gray: #555555;
                 .explanation, .explanation-header, .choice-header {
                     // this much nesting is necessary because if it is not nested in this far, it does not take precedence
                     width: 75%;
-                    margin-left: 12.5%; 
+                    margin-left: 12.5%;
                 }
             }
         }

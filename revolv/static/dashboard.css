@@ -7726,6 +7726,63 @@ html, body, .main-row {
     font-size: 12px; }
   .dashboard-project .project-tabs-content h6 {
     font-size: 10px; }
+  .dashboard-project .project-tabs-content .repayment-progress-container {
+    height: 260px; }
+    .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container {
+      height: 260px;
+      width: 100%;
+      position: absolute; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .svg-graphics-container {
+        position: absolute;
+        height: 100%;
+        width: 100%; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .internal-graphics-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%); }
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .project-badge-line, .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .project-badge-circle {
+        fill: none; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .project-badge-line {
+        stroke: #4cb032; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .project-badge-circle {
+        stroke: white; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .text-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        height: 220px;
+        width: 220px;
+        color: #064f7e; }
+        .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .text-container .percentage-text {
+          position: absolute;
+          left: 50%;
+          top: 45%;
+          transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%); }
+        .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .text-container .repaid {
+          position: absolute;
+          font-weight: 800;
+          left: 50%;
+          top: 60%;
+          transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%); }
+    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container {
+      color: #064f7e; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .completion-text {
+        font-size: 2em;
+        font-weight: 500;
+        padding-bottom: 10px;
+        padding-top: 10px; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .detail-text {
+        font-size: 1.5em; }
 
 .dashboard-data-section-my-impact {
   height: 100%; }

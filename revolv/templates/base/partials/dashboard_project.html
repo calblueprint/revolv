@@ -32,6 +32,9 @@
         {% if project.updates.count > 0 %}
             <dd class="tab-title"><a href="#updates">Updates</a></dd>
         {% endif %}
+        {% if project.is_completed %}
+            <dd class="tab-title"><a href="#repayment-{{project.pk}}">Repayment</a></dd>
+        {% endif %}
     </dl>
 </div>
 <div class="project-tabs-content tabs-content">
@@ -53,4 +56,31 @@
             </div>
         </div>
     </div>
+    {% if project.is_completed %}
+    <div class="content repayment" id="repayment-{{project.pk}}">
+        <div class="row repayment-progress-container">
+            <div class="small-3 small-offset-1 columns">
+                <div class="statistics-graphics-container">
+                    <svg class="svg-graphics-container"></svg>
+                    <svg class="internal-graphics-container"></svg>
+                    <div class="text-container">
+                        <p class="percentage-text">{{ project.percent_repaid }}%</p>
+                        <p class="repaid">REPAID</p>
+                    </div>
+                    <div class="percentage-container hide">{{ project.partial_repayment_as_js }}</div>
+                </div>
+            </div>
+            <div class="small-8 columns">
+                <div class="repayment-details-container">
+                    <div class="text-container">
+                    <p class="completion-text">This project has been completed!<p>
+                    <p class="detail-text">${{ project.amount_repaid|floatformat:2 }} Repaid</p>
+                    <p class="detail-text">${{ project.amount_donated|floatformat:2 }} Donated</p>
+                    <p class="detail-text">{{ project.actual_energy }} kwH saved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>

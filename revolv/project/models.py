@@ -2,9 +2,10 @@
 import datetime
 from itertools import chain
 
-from ckeditor.fields import RichTextField
 from django.core.urlresolvers import reverse
 from django.db import models
+
+from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -396,6 +397,15 @@ class Project(models.Model):
         return self.adminrepayment_set.aggregate(models.Sum('amount'))["amount__sum"] or 0.0
 
     @property
+    def total_amount_to_be_repaid(self):
+        """
+        :return: the total amount of money to be repaid by the project to RE-volv.
+        """
+        # TODO : Actually calculate this amount based off of interest, but using
+        # the project's funding goal is sufficient for now.
+        return self.funding_goal
+
+    @property
     def rounded_amount_left(self):
         """
         :return: The amount needed to complete this project, floored to the nearest
@@ -427,6 +437,28 @@ class Project(models.Model):
 
     def partial_completeness_as_js(self):
         return unicode(self.partial_completeness)
+
+    @property
+    def percent_repaid(self):
+        """
+        :return: a floored int between 0 and 100, representing the amount repaid
+        in respect to its repayment goal (100 if exactly the goal amount, or
+        more, has been donated, 0 if nothing has been donated).
+        """
+        return int(self.partial_repayment * 100)
+
+    @property
+    def partial_repayment(self):
+        """
+        :return: a float between 0 and 1, representing the repayment progress
+        of this project with respect to the repayment goal (1 if exactly the
+        goal amount, or more, has been donated, 0 if nothing has been donated).
+        """
+        ratio = self.amount_repaid / float(self.total_amount_to_be_repaid)
+        return min(ratio, 1.0)
+
+    def partial_repayment_as_js(self):
+        return unicode(self.partial_repayment)
 
     @property
     def days_until_end(self):
