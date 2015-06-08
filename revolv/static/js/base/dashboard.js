@@ -102,13 +102,13 @@ $(document).ready(function () {
         $(".dashboard-data-link.active").removeClass("active");
         $(this).addClass("active");
         // deletes repayment progress for the current project
-        deleteCurrentCircles();
+        dashboard.deleteCurrentCircles();
         $(".dashboard-data-section-current").removeClass("dashboard-data-section-current");
         var sectionToShow = $(".dashboard-data-section-" + $(this).data("section"));
         sectionToShow.addClass("dashboard-data-section-current");
 
         // draws repayment progress for the project we are switching to
-        draw();
+        dashboard.draw();
 
         // if we're in an orientation where we should collapse the sidebar, collapse it.
         if ($(window).width() < TABLET_PORTRAIT_BREAKPOINT) {
