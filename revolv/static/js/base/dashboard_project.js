@@ -3,10 +3,10 @@ function DashboardCircles() {
      * Deletes circles for the currently active project. Called when switching projects on the dashboard.
      */
     this.deleteCurrentCircles = function() {
-        $(".dashboard-data-section-current .project-badge-circle-grouping").remove();
-        $(".dashboard-data-section-current .project-badge-partial-grouping").remove();
-        $(".dashboard-data-section-current .project-badge-circle").remove();
-        $(".dashboard-data-section-current .project-badge-line" ).remove();
+        $(".dashboard-data-section-current .repayment-badge-circle-grouping").remove();
+        $(".dashboard-data-section-current .repayment-badge-partial-grouping").remove();
+        $(".dashboard-data-section-current .repayment-badge-circle").remove();
+        $(".dashboard-data-section-current .repayment-badge-line" ).remove();
         $(".dashboard-data-section-current .outside-circle" ).remove();
     };
 
@@ -22,7 +22,7 @@ function DashboardCircles() {
     };
 
     /**
-     * Dynamically resizes text inside the speedometer, resizes the iframe, draws an outside circle, and draws an inner
+     * Dynamically resizes text inside the speedometer, draws an outside circle, and draws an inner
      * partial circle based on the width of the existing screen.
      */
     this.draw = function() {
@@ -76,11 +76,11 @@ function DashboardCircles() {
                 .append("g");
 
             var stroke = radius * 0.2;
-            var circleGrouping = svg.append("g").attr("class", "project-badge-circle-grouping").attr("stroke-width", stroke + "px");
-            var partialGrouping = svg.append("g").attr("class", "project-badge-partial-grouping").attr("stroke-width", stroke + "px");
+            var circleGrouping = svg.append("g").attr("class", "repayment-badge-circle-grouping").attr("stroke-width", stroke + "px");
+            var partialGrouping = svg.append("g").attr("class", "repayment-badge-partial-grouping").attr("stroke-width", stroke + "px");
 
-            drawD3PartialCircle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
-            drawD3PartialCircle(partialGrouping, ["project-badge-line"], radius, padding, partialCompleteness);
+            drawD3PartialCircle(circleGrouping, ["repayment-badge-circle"], radius, padding, 1);
+            drawD3PartialCircle(partialGrouping, ["repayment-badge-line"], radius, padding, partialCompleteness);
         }
     };
 }

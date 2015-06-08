@@ -7743,11 +7743,11 @@ html, body, .main-row {
         transform: translate(-50%, -50%);
         -moz-transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%); }
-      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .project-badge-line, .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .project-badge-circle {
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .repayment-badge-line, .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .repayment-badge-circle {
         fill: none; }
-      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .project-badge-line {
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .repayment-badge-line {
         stroke: #4cb032; }
-      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .project-badge-circle {
+      .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .repayment-badge-circle {
         stroke: white; }
       .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .text-container {
         position: absolute;

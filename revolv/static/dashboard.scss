@@ -408,7 +408,7 @@ $sidebar-icon-gray: #999;
                 position: absolute;
 
                 .svg-graphics-container {
-                // this contains the formatting for the white outside circle - this works
+                    // formatting for the white outside circle in repayment progress
                     position: absolute;
                     height: 100%;
                     width: 100%;
@@ -423,15 +423,15 @@ $sidebar-icon-gray: #999;
                     -webkit-transform: translate(-50%, -50%);
                 }
 
-                .project-badge-line, .project-badge-circle {
+                .repayment-badge-line, .repayment-badge-circle {
                     fill: none;
                 }
 
-                .project-badge-line {
+                .repayment-badge-line {
                     stroke: $revolv-green;
                 }
 
-                .project-badge-circle {
+                .repayment-badge-circle {
                     stroke: white;
                 }
 
