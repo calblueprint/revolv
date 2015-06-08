@@ -125,11 +125,7 @@ TEMPLATE_DIRS = (
 
 CKEDITOR_UPLOAD_PATH = "ckeditor_uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
-CMS_TEMPLATES = (
-    ('base/cms_templates/template_1.html', 'Template One'),
-)
-CMS_PERMISSION = True
-CMS_PUBLIC_FOR = "staff"
+
 WAGTAIL_SITE_NAME = 'RE-volv'
 WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = 'content-management-bot@re-volv.org'
 
@@ -166,17 +162,11 @@ if IS_HEROKU:
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 USE_THOUSAND_SEPARATOR = True
 
 
