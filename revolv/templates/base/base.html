@@ -1,12 +1,10 @@
-{% load cms_tags sekizai_tags %}
+{% load sekizai_tags %}
 <!DOCTYPE html>
 <html>
-
-
 <head>
     {% load staticfiles %}
 
-    <title>{% block title %}RE-volv{% endblock %}</title>
+    <title>{% block title %}{% endblock %}RE-volv</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block meta %}
@@ -25,15 +23,7 @@
 </head>
 
 <body>
-    {% cms_toolbar %}
-
     {% include "base/partials/nav.html" %}
-
-    <div class='row'>
-        <div class='small-12 columns'>
-            {% placeholder base_content %}
-        </div>
-    </div>
 
     <div id="skrollr-body">
     {% block body %}

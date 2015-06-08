@@ -9,11 +9,11 @@
     includes many different partials conditionally based on the projects and the logged in user.
 
 {% endcomment %}
-{% load cms_tags sekizai_tags %}
+{% load sekizai_tags %}
 {% load staticfiles %}
 <html>
 <head>
-    <title>{% block title %}RE-volv - Dashboard{% endblock %}</title>
+    <title>{% block title %}{% endblock %}RE-volv Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block meta %}
@@ -31,8 +31,6 @@
 </head>
 
 <body>
-    {% cms_toolbar %}
-
     <div class='row main-row'>
         <div class="small-3 large-2 columns dashboard-sidebar">
             {% include "base/partials/dashboard_sidebar.html" with user=user %}

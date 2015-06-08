@@ -93,10 +93,12 @@ class RevolvUserProfile(FacebookModel):
         self.user.groups.add(get_group_by_name(self.AMBASSADOR_GROUP))
         self.user.groups.add(get_group_by_name(self.ADMIN_GROUP))
         self.user.is_staff = True
+        self.user.is_superuser = True
         self.user.save()
 
     def make_ambassador(self):
         self.user.is_staff = False
+        self.user.is_superuser = False
         self.user.groups.remove(get_group_by_name(self.ADMIN_GROUP))
         self.user.groups.add(get_group_by_name(self.AMBASSADOR_GROUP))
         self.user.save()
@@ -104,6 +106,7 @@ class RevolvUserProfile(FacebookModel):
     def make_donor(self):
         """Take away all the user's permissions."""
         self.user.is_staff = False
+        self.user.is_superuser = False
         self.user.groups.remove(get_group_by_name(self.ADMIN_GROUP))
         self.user.groups.remove(get_group_by_name(self.AMBASSADOR_GROUP))
         self.user.save()

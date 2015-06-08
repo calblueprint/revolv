@@ -1,0 +1,36 @@
+{% comment %}
+    This tag defines a ul menu for the navigation bar, which may be present on
+    many RE-volv application pages. It expects to be passed a list of RevolvCustomPages
+    or RevolvLinkPages which represent the top level menu items.
+
+    For example, if two pages were passed in and each of those wagtail pages
+    had two children, then the resulting menu would have two top level items, each
+    of which would have dropdowns wich two more (second level) items. Note that even
+    if the second level pages have more children, they will not be displayed beyond
+    the second level.
+
+    This template is rendered with the following contest from revolv_cms/templatetags:
+
+    :menu_pages:
+        The top level menu pages to display
+
+{% endcomment %}
+{% load revolv_cms_tags %}
+<ul class="left">
+    {# Here each li is a top level dropdown menu #}
+    {% for top_level_page in menu_pages %}
+        <li {% if top_level_page.has_menu_children %}class="has-dropdown"{% endif %}>
+            {% link_href top_level_page as top_level_href %}
+            <a href="{{ top_level_href }}">{{ top_level_page.title }}</a>
+            {% if top_level_page.has_menu_children %}
+                <ul class="dropdown">
+                    {% get_menu_children top_level_page as second_level_pages %}
+                    {% for second_level_page in second_level_pages %}
+                        {% link_href second_level_page as href %}
+                        <li><a href="{{ href }}">{{ second_level_page.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
