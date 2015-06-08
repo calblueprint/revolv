@@ -37,7 +37,7 @@ function DashboardCircles() {
                 .attr("class", "outside-circle")
                 .attr("cx", "50%")
                 .attr("cy", "50%")
-                .attr("stroke", "#bbb")
+                .attr("stroke", "#ddd")
                 .attr("stroke-width", "3")
                 .attr("fill", "white")
                 .attr("r", outsideCircleRadius);

@@ -7740,9 +7740,11 @@ html, body, .main-row {
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
         -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%); }
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); }
       .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .repayment-badge-line, .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .repayment-badge-circle {
         fill: none; }
       .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .repayment-badge-line {
@@ -7753,9 +7755,11 @@ html, body, .main-row {
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
         -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
         height: 220px;
         width: 220px;
         color: #064f7e; }
@@ -7763,17 +7767,21 @@ html, body, .main-row {
           position: absolute;
           left: 50%;
           top: 45%;
-          transform: translate(-50%, -50%);
           -moz-transform: translate(-50%, -50%);
-          -webkit-transform: translate(-50%, -50%); }
+          -o-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
         .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container .text-container .repaid {
           position: absolute;
           font-weight: 800;
           left: 50%;
           top: 60%;
-          transform: translate(-50%, -50%);
           -moz-transform: translate(-50%, -50%);
-          -webkit-transform: translate(-50%, -50%); }
+          -o-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
     .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .detail-text {
       margin-bottom: 0em;
       color: #bbbbbb;

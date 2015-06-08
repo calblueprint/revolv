@@ -409,6 +409,8 @@ $sidebar-icon-gray: #999;
 
                 .svg-graphics-container {
                     // formatting for the white outside circle in repayment progress
+                    // fits to the size of the parent element, position:absolute needed so
+                    // height and width are actually 100% of parent element
                     position: absolute;
                     height: 100%;
                     width: 100%;
@@ -418,9 +420,7 @@ $sidebar-icon-gray: #999;
                     position: absolute;
                     left: 50%;
                     top: 50%;
-                    transform: translate(-50%, -50%);
-                    -moz-transform: translate(-50%, -50%);
-                    -webkit-transform: translate(-50%, -50%);
+                    @include transform(translate(-50%, -50%));
                 }
 
                 .repayment-badge-line, .repayment-badge-circle {
@@ -439,9 +439,7 @@ $sidebar-icon-gray: #999;
                     position: absolute;
                     left: 50%;
                     top: 50%;
-                    transform: translate(-50%, -50%);
-                    -moz-transform: translate(-50%, -50%);
-                    -webkit-transform: translate(-50%, -50%);
+                    @include transform(translate(-50%, -50%));
                     height: 220px;
                     width: 220px;
                     color: $revolv-dark-blue;
@@ -450,9 +448,7 @@ $sidebar-icon-gray: #999;
                         position: absolute;
                         left: 50%;
                         top: 45%;
-                        transform: translate(-50%, -50%);
-                        -moz-transform: translate(-50%, -50%);
-                        -webkit-transform: translate(-50%, -50%);
+                        @include transform(translate(-50%, -50%));
                     }
 
                     .repaid {
@@ -460,9 +456,7 @@ $sidebar-icon-gray: #999;
                         font-weight: 800;
                         left: 50%;
                         top: 60%;
-                        transform: translate(-50%, -50%);
-                        -moz-transform: translate(-50%, -50%);
-                        -webkit-transform: translate(-50%, -50%);
+                        @include transform(translate(-50%, -50%));
                     }
                 }
             }
