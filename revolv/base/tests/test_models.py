@@ -69,9 +69,8 @@ class UserPermissionsTestCase(TestCase):
         amb_group_check(user, RevolvUserProfile.AMBASSADOR_GROUP)
         ad_group_check(user, RevolvUserProfile.ADMIN_GROUP)
 
-        if ambassador or admin:
-            self.assertEqual(user.is_staff, True)
         if admin:
+            self.assertEqual(user.is_staff, True)
             self.assertEqual(user.is_superuser, True)
         if not admin:
             self.assertEqual(user.is_staff, False)
