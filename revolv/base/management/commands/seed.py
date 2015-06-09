@@ -3,8 +3,9 @@ from exceptions import NotImplementedError
 from optparse import make_option
 
 from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.management.base import BaseCommand
+from wagtail.wagtailcore.models import Site, Page
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import Payment
 from revolv.project.models import Project
@@ -216,16 +217,96 @@ class PaymentSeedSpec(SeedSpec):
 
 
 class CMSPageSeedSpec(SeedSpec):
-    def publish_wagtail_page(self, title, body, parent=None):
-        pass
+    """
+    TODO: add test for --list
+    TODO: add docs to this spec
+    """
+    page_hierarchy = [
+        ("page", "About Us", [
+            ("link", "Our Mission", "/about-us/"),
+            ("page", "Our Team", []),
+            ("page", "Partners", []),
+            ("page", "Jobs", []),
+        ]),
+        ("page", "What We Do", [
+            ("page", "How It Works", []),
+            ("page", "Projects", []),
+            ("link", "Solar In Your Community", "/what-we-do/"),
+        ]),
+        ("page", "Get Involved", [
+            ("link", "Donate to the Solar Seed Fund", "/get-involved/"),
+            ("page", "Solar Ambassador Program", []),
+            ("page", "Support Us", []),
+            ("page", "Join Our Mailing List", []),
+            ("page", "Volunteer", []),
+        ]),
+        ("page", "Solar Education", [
+            ("link", "Educational Resources", "/solar-education/"),
+            ("page", "Solar Education Week", []),
+        ]),
+        ("page", "Media", [
+            ("link", "Blog", "/media/"),
+            ("page", "Press Room", []),
+            ("page", "RE-volv in the News", []),
+        ]),
+        ("page", "Contact", [
+            ("link", "Contact Us", "/contact/"),
+        ]),
+    ]
+
+    def publish_page_for_parent(self, page, parent, user):
+        if parent:
+            page_parent = parent
+        else:
+            only_site = Site.objects.all()[0]
+            page_parent = only_site.root_page
+        # this actually saves the page
+        page_parent.add_child(instance=page)
+        page.save_revision(user=user, submitted_for_moderation=False).publish()
+        return page
+
+    def publish_page(self, title, body, user, parent=None):
+        page = RevolvCustomPage(
+            title=title,
+            body=body,
+            slug=title.lower().replace(" ", "-"),
+            seo_title=title,
+            show_in_menus=True,
+            live=True
+        )
+        return self.publish_page_for_parent(page, parent, user)
+
+    def publish_link_page(self, title, link_href, user, parent=None):
+        page = RevolvLinkPage(
+            title=title,
+            link_href=link_href,
+            slug=title.lower().replace(" ", "-"),
+            seo_title=title,
+            show_in_menus=True,
+            live=True
+        )
+        return self.publish_page_for_parent(page, parent, user)
+
+    def recursively_seed_pages(self, pages, user, parent=None):
+        for page_tuple in pages:
+            page_type, title, data = page_tuple
+            if page_type == "link":
+                self.publish_link_page(title, data, user, parent)
+            else:
+                new_page = self.publish_page(title, "This is the body of the page", user, parent)
+                self.recursively_seed_pages(data, user, new_page)
 
     def seed(self):
-        pass
+        user = User.objects.get(username="administrator")
+        self.recursively_seed_pages(self.page_hierarchy, user)
 
     def clear(self):
         try:
-            RevolvCustomPage.objects.all().delete()
-            RevolvLinkPage.objects.all().delete()
+            only_site = Site.objects.all()[0]
+            only_site.root_page.delete()
+            new_root_page = Page.add_root(title="RE-volv Main Site Root")
+            only_site.root_page = new_root_page
+            only_site.save()
         except ObjectDoesNotExist as e:
             print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
 

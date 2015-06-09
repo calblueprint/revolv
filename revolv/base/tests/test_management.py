@@ -38,3 +38,19 @@ class SeedTest(TestCase):
         self.assertEqual(RevolvUserProfile.objects.count(), profile_count)
         self.assertEqual(Project.objects.count(), project_count)
         self.assertEqual(Payment.objects.count(), payment_count)
+
+    def test_cms_seed(self):
+        """
+        Test that the CMS seed specifically works without erroring. The CMS seeding
+        is a little bit finnicky because the wagtail Page model is part of a treebeard
+        tree, so we have to jump through some hoops to clear the seed data (see the
+        docstrings for the CMSSeedSpec in revolv.page.manage.ment.commands.seed).
+
+        We call seed, then clear, then seed again on the cms spec, and make sure it
+        doesn't IntegrityError due to treebeard's internal tree constraints being
+        violated.
+        """
+        call_command("seed", spec="revolvuserprofile", quiet=True)
+        call_command("seed", spec="cms", quiet=True)
+        call_command("seed", spec="cms", quiet=True, clear=True)
+        call_command("seed", spec="cms", quiet=True)
