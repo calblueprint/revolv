@@ -20,7 +20,7 @@ $topbar-margin-bottom: 10px;
 
 // Style the top bar dropdown elements
 $topbar-dropdown-bg: $revolv-header-color;
-$topbar-dropdown-link-color: $revolv-logo-color-dark;
+$topbar-dropdown-link-color: white;
 $topbar-dropdown-link-bg: $revolv-header-color;
 // $topbar-dropdown-link-weight: $font-weight-normal;
 // $topbar-dropdown-toggle-size: 5px;
@@ -28,14 +28,14 @@ $topbar-dropdown-link-bg: $revolv-header-color;
 // $topbar-dropdown-toggle-alpha: 0.4;
 
 // Set the link colors and styles for top-level nav
-$topbar-link-color: $revolv-logo-color-dark;
+$topbar-link-color: white;
 // $topbar-link-color-hover: $white;
 // $topbar-link-color-active: $white;
 // $topbar-link-color-active-hover: $white;
 // $topbar-link-weight: $font-weight-normal;
 $topbar-link-font-size: 0.9rem;
 // $topbar-link-hover-lightness: -10%; // Darken by 10%
-// $topbar-link-bg: $topbar-bg;
+$topbar-link-bg: transparent;
 // $topbar-link-bg-color-hover: $revolv-header-color;
 $topbar-link-bg-hover: darken($revolv-header-color, 10%);
 // $topbar-link-bg-active: $primary-color;

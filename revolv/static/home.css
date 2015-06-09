@@ -4080,7 +4080,7 @@ meta.foundation-mq-topbar {
       margin: 0; }
       .top-bar .name h1 a {
         font-weight: normal;
-        color: #2c398c;
+        color: white;
         width: 75%;
         display: block;
         padding: 0 21.66667px; }
@@ -4089,7 +4089,7 @@ meta.foundation-mq-topbar {
     right: 0;
     top: 0; }
     .top-bar .toggle-topbar a {
-      color: #2c398c;
+      color: white;
       text-transform: uppercase;
       font-size: 0.8125rem;
       font-weight: bold;
@@ -4151,7 +4151,7 @@ meta.foundation-mq-topbar {
     .top-bar-section ul li > a {
       display: block;
       width: 100%;
-      color: #2c398c;
+      color: white;
       padding: 12px 0 12px 0;
       padding-left: 21.66667px;
       font-family: "Lato", sans-serif;
@@ -4309,7 +4309,7 @@ meta.foundation-mq-topbar {
         margin-top: 0;
         font-size: 1.125rem; }
         .top-bar-section .dropdown li.title h5 a, .top-bar-section .dropdown li.parent-link a {
-          color: #2c398c;
+          color: white;
           display: block; }
           .top-bar-section .dropdown li.title h5 a:hover, .top-bar-section .dropdown li.parent-link a:hover {
             background: none; }
@@ -4371,7 +4371,7 @@ meta.foundation-mq-topbar {
     .top-bar-section li:not(.has-form) a:not(.button) {
       padding: 0 21.66667px;
       line-height: 65px;
-      background: rgba(4, 78, 126, 0.75); }
+      background: transparent; }
       .top-bar-section li:not(.has-form) a:not(.button):hover {
         background-color: #555555;
         background: rgba(2, 48, 77, 0.75); }
@@ -4433,13 +4433,13 @@ meta.foundation-mq-topbar {
       background: transparent;
       min-width: 100%; }
       .top-bar-section .dropdown li a {
-        color: #2c398c;
+        color: white;
         line-height: 65px;
         white-space: nowrap;
         padding: 12px 21.66667px;
         background: rgba(4, 78, 126, 0.75); }
       .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
-        color: #2c398c;
+        color: white;
         background: rgba(4, 78, 126, 0.75); }
       .top-bar-section .dropdown li:not(.has-form):not(.active):hover > a:not(.button) {
         color: white;
@@ -4459,7 +4459,7 @@ meta.foundation-mq-topbar {
       height: 65px;
       width: 0; }
     .top-bar-section .has-form {
-      background: rgba(4, 78, 126, 0.75);
+      background: transparent;
       padding: 0 21.66667px;
       height: 65px; }
     .top-bar-section .right li .dropdown {
