@@ -52,19 +52,6 @@ nav.header {
     .user-controls > .dropdown a.js-generated {
         display: none;
     }
-
-    /**
-     * By default, Foundation will make all the visited menu items a dark purple
-     * color, so we want to change this to white even after links are visited
-     * so they remain visible. One selector gets all first-level links, while
-     * the other covers dropdown menu items.
-    */
-    .top-bar-section li:not(.has-form) a:not(.button),
-    .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
-        // color: white;
-        // background: red;
-    }
-
 }
 
 nav.row.header.top-bar, .top-bar-section ul li {

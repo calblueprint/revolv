@@ -5759,13 +5759,7 @@ nav.header {
      * Foundation will by default show all the menu items on the mobile version
      * of the top bar, but we want to prevent it from showing the user's username
      * at the second level, since they've already clicked on it.
-     */
-  /**
-     * By default, Foundation will make all the visited menu items a dark purple
-     * color, so we want to change this to white even after links are visited
-     * so they remain visible. One selector gets all first-level links, while
-     * the other covers dropdown menu items.
-    */ }
+     */ }
   nav.header .logo-container {
     display: inline-block;
     margin: 0 20px 0 0; }
