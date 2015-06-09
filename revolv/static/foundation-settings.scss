@@ -1,4 +1,6 @@
 @import "revolv-settings";
+// a little hacky but we need access to the $large-range variable
+@import "bower_components/foundation/scss/foundation/components/_global.scss";
 
 /**
  * This file overrides specific foundation settings in order to make foundation
@@ -68,7 +70,7 @@ $topbar-dropdown-label-bg: $revolv-header-color;
 // $topbar-transition-speed: 300ms;
 // Using rem-calc for the below breakpoint causes issues with top bar
 // $topbar-breakpoint: #{lower-bound($medium-range)}; // Change to 9999px for always mobile layout
-// $topbar-media-query: $medium-up;
+$topbar-media-query: $large-up;
 
 // Divider Styles
 // $topbar-divider-border-bottom: solid 1px  scale-color($topbar-bg-color, $lightness: 13%);

@@ -52,6 +52,15 @@ nav.header {
     .user-controls > .dropdown a.js-generated {
         display: none;
     }
+
+    .top-bar-section li.has-dropdown:not(.user-controls):not(.has-form) > a:not(.button) {
+        padding-right: 15px !important;
+        padding-left: 15px !important;
+        font-size: 13px;
+        &:after {
+            display: none;
+        }
+    }
 }
 
 nav.row.header.top-bar, .top-bar-section ul li {

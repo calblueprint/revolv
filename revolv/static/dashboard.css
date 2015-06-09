@@ -1,9 +1,3 @@
-/**
- * This file overrides specific foundation settings in order to make foundation
- * work nicely with revolv's design. Note that only some, but not all, of
- * foundation's settings are overriden here: for the full list, see _settings.scss
- * in revolv/static/bower_components/foundation/scss/foundation.
- */
 meta.foundation-version {
   font-family: "/5.4.7/"; }
 
@@ -100,6 +94,12 @@ textarea {
 select {
   width: 100%; }
 
+/**
+ * This file overrides specific foundation settings in order to make foundation
+ * work nicely with revolv's design. Note that only some, but not all, of
+ * foundation's settings are overriden here: for the full list, see _settings.scss
+ * in revolv/static/bower_components/foundation/scss/foundation.
+ */
 .row {
   width: 100%;
   margin-left: auto;
@@ -4010,7 +4010,7 @@ table {
     margin-top: -5px; } }
 
 meta.foundation-mq-topbar {
-  font-family: "/only screen and (min-width:40.063em)/";
+  font-family: "/only screen and (min-width:64.063em)/";
   width: 40.063em; }
 
 /* Wrapped around .top-bar to contain to grid width */
@@ -4328,7 +4328,7 @@ meta.foundation-mq-topbar {
 .js-generated {
   display: block; }
 
-@media only screen and (min-width:40.063em) {
+@media only screen and (min-width:64.063em) {
   .top-bar {
     background: rgba(4, 78, 126, 0.75);
     overflow: visible; }
@@ -7317,6 +7317,12 @@ nav.header {
         line-height: 20px; }
   nav.header .user-controls > .dropdown a.js-generated {
     display: none; }
+  nav.header .top-bar-section li.has-dropdown:not(.user-controls):not(.has-form) > a:not(.button) {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    font-size: 13px; }
+    nav.header .top-bar-section li.has-dropdown:not(.user-controls):not(.has-form) > a:not(.button):after {
+      display: none; }
 
 nav.row.header.top-bar, .top-bar-section ul li {
   background: transparent !important;
