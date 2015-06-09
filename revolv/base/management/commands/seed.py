@@ -218,8 +218,17 @@ class PaymentSeedSpec(SeedSpec):
 
 class CMSPageSeedSpec(SeedSpec):
     """
-    TODO: add test for --list
-    TODO: add docs to this spec
+    Database seed specification for Wagtail CMS pages. Creates a bunch of
+    RevolvCustomPages and RevolvLinkPages that comprise the nav and footer
+    menus for the RE-volv app (or at least, the pages that did when this
+    spec was written). You can see the page hierarchy in the page_hierarchy,
+    where one page is represented by a tuple of <type (link or page)>, <title>,
+    and <data (either children or href, depending on type)>.
+
+    At this time, there's no easy one-liner for publishing a wagtail page
+    programatically, so this class contains a few helper functions to publish
+    pages and also to recursively traverse page_hierarchy so as to keep this code
+    as DRY as possible.
     """
     page_hierarchy = [
         ("page", "About Us", [
@@ -255,6 +264,21 @@ class CMSPageSeedSpec(SeedSpec):
     ]
 
     def publish_page_for_parent(self, page, parent, user):
+        """
+        Publish a wagtail Page (or one of its subclasses, like RevolvCustomPage
+        or RevolvLinkPage, as the given user as a child of the given parent.
+
+        Note that the parent passed to this function may be None: if so, then the
+        page will be published as a child of the root page of the site. Note that
+        there is only one Site object that we care about here, since the RE-volv
+        app doesn't have a notion of multiple "sites" to publish pages on - there's
+        only one. If for some reason we needed more than one "site", then we would
+        need to heavily modify this code.
+
+        References:
+            wagtail Site: https://github.com/torchbox/wagtail/blob/e937d7a1a32052966b6dfa9768168ea990f7916a/wagtail/wagtailcore/models.py#L52
+            publishing a wagtail page: https://github.com/torchbox/wagtail/blob/e937d7a1a32052966b6dfa9768168ea990f7916a/wagtail/wagtailadmin/views/pages.py#L122
+        """
         if parent:
             page_parent = parent
         else:
@@ -266,6 +290,11 @@ class CMSPageSeedSpec(SeedSpec):
         return page
 
     def publish_page(self, title, body, user, parent=None):
+        """
+        Publish a RevolvCustomPage with the given title and body, as the given
+        user, under the given parent Page. If parent is None, publish under the
+        root page of the site instead.
+        """
         page = RevolvCustomPage(
             title=title,
             body=body,
@@ -277,6 +306,11 @@ class CMSPageSeedSpec(SeedSpec):
         return self.publish_page_for_parent(page, parent, user)
 
     def publish_link_page(self, title, link_href, user, parent=None):
+        """
+        Publish a RevolvLinkPage with the given title and href, as the given
+        user, under the given parent Page. If parent is None, publish under the
+        root page of the site instead.
+        """
         page = RevolvLinkPage(
             title=title,
             link_href=link_href,
@@ -288,6 +322,12 @@ class CMSPageSeedSpec(SeedSpec):
         return self.publish_page_for_parent(page, parent, user)
 
     def recursively_seed_pages(self, pages, user, parent=None):
+        """
+        Given a list of pages to seed as in self.page_hierarchy, recursively
+        publish the pages as the given user, under the given parent. If the
+        parent is None, as in the other methods of this class, publish under
+        the root page of the site instead.
+        """
         for page_tuple in pages:
             page_type, title, data = page_tuple
             if page_type == "link":
@@ -297,10 +337,29 @@ class CMSPageSeedSpec(SeedSpec):
                 self.recursively_seed_pages(data, user, new_page)
 
     def seed(self):
+        """
+        Publish all the pages in page_hierarchy as the administrator user.
+        Because we have to publish as the administrator, this requires the
+        revolvuserprofile seed spec to be run before this in order to succeed.
+        """
         user = User.objects.get(username="administrator")
         self.recursively_seed_pages(self.page_hierarchy, user)
 
     def clear(self):
+        """
+        Clear all the RevolvCustomPages and RevolvLinkPages and reset the site
+        root page. We need to reset the site root page because of how django-treebeard
+        works. In order to keep a tree of related models, the parent Pages store
+        meta information about their children, including paths.
+
+        This means that we can't actually just delete all the Page models that
+        we created in seed(): we instead have to do that AND delete the root page
+        and reset it.
+
+        References:
+            wagtail Site model: https://github.com/torchbox/wagtail/blob/e937d7a1a32052966b6dfa9768168ea990f7916a/wagtail/wagtailcore/models.py#L52
+            treebeard add_root() docs: https://tabo.pe/projects/django-treebeard/docs/1.61/api.html#treebeard.models.Node.add_root
+        """
         try:
             only_site = Site.objects.all()[0]
             only_site.root_page.delete()
@@ -368,6 +427,8 @@ class Command(BaseCommand):
             --spec [spec name]: run only the specified SeedSpec
             --clear: clear the seed data instead of seed it
             --list: list available seed specs and stop.
+            --quiet: don't print warnings, info notices, etc. Used mostly for keeping test
+                output clean.
         """
         if options["list"]:
             print "[Seed:Info] The following seeds are available: "

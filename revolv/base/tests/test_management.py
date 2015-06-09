@@ -41,10 +41,12 @@ class SeedTest(TestCase):
 
     def test_cms_seed(self):
         """
-        Test that the CMS seed specifically works without erroring. The CMS seeding
-        is a little bit finnicky because the wagtail Page model is part of a treebeard
-        tree, so we have to jump through some hoops to clear the seed data (see the
-        docstrings for the CMSSeedSpec in revolv.page.manage.ment.commands.seed).
+        Test that the CMS seed specifically works without erroring.
+
+        The CMS seeding is a little bit finnicky because the wagtail Page
+        model is part of a treebeard tree, so we have to jump through some
+        hoops to clear the seed data (see the docstrings for the CMSSeedSpec
+        in revolv.page.manage.ment.commands.seed).
 
         We call seed, then clear, then seed again on the cms spec, and make sure it
         doesn't IntegrityError due to treebeard's internal tree constraints being
