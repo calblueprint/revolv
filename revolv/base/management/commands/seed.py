@@ -4,9 +4,11 @@ from optparse import make_option
 
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
+from django.core.exceptions import ObjectDoesNotExist
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import Payment
 from revolv.project.models import Project
+from revolv.revolv_cms.models import RevolvCustomPage, RevolvLinkPage
 
 
 class SeedSpec(object):
@@ -213,10 +215,26 @@ class PaymentSeedSpec(SeedSpec):
             print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
 
 
+class CMSPageSeedSpec(SeedSpec):
+    def publish_wagtail_page(self, title, body, parent=None):
+        pass
+
+    def seed(self):
+        pass
+
+    def clear(self):
+        try:
+            RevolvCustomPage.objects.all().delete()
+            RevolvLinkPage.objects.all().delete()
+        except ObjectDoesNotExist as e:
+            print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+
+
 SPECS_TO_RUN = (
     ("revolvuserprofile", RevolvUserProfileSeedSpec()),
     ("project", ProjectSeedSpec()),
     ("payment", PaymentSeedSpec()),
+    ("cms", CMSPageSeedSpec()),
 )
 
 
@@ -243,6 +261,13 @@ class Command(BaseCommand):
             default=False,
             help="Don't print warnings or logging information."
         ),
+        make_option(
+            "-l", "--list",
+            action="store_true",
+            dest="list",
+            default=False,
+            help="Show available seeds and exit."
+        ),
     )
 
     def handle(self, *args, **options):
@@ -261,7 +286,14 @@ class Command(BaseCommand):
         Options:
             --spec [spec name]: run only the specified SeedSpec
             --clear: clear the seed data instead of seed it
+            --list: list available seed specs and stop.
         """
+        if options["list"]:
+            print "[Seed:Info] The following seeds are available: "
+            print "[Seed:Info]    " + ", ".join([spec_data[0] for spec_data in SPECS_TO_RUN])
+            print "[Seed:Info] Done."
+            return
+
         if options["clear"]:
             verb = "Clearing"
         else:

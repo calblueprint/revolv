@@ -102,9 +102,9 @@ def link_href(context, page):
     this will return the page's url as defined by its link_href. If not,
     it will simply return the page's regular url.
     """
-    # see http://www.danieleverard.com/2011/05/battling-with-django-inheritance-subclass-casting/
-    model_subclass = page.content_type.model_class()
-    if model_subclass is RevolvLinkPage:
+    # specific_class gives us the page as the most specific subclass (in this case,
+    # either RevolvCustomPage or RevolvLinkPage)
+    if page.specific_class is RevolvLinkPage:
         return RevolvLinkPage.objects.get(pk=page.id).link_href
     else:
         # see https://github.com/torchbox/wagtail/blob/master/wagtail/wagtailcore/templatetags/wagtailcore_tags.py#L12
