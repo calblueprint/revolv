@@ -54,3 +54,17 @@ class SeedTest(TestCase):
         call_command("seed", spec="cms", quiet=True)
         call_command("seed", spec="cms", quiet=True, clear=True)
         call_command("seed", spec="cms", quiet=True)
+
+    def test_list(self):
+        """Test that the seed --list command does not actually seed any data."""
+        user_count = User.objects.count()
+        profile_count = RevolvUserProfile.objects.count()
+        project_count = Project.objects.count()
+        payment_count = Payment.objects.count()
+
+        call_command("seed", list=True, quiet=True)
+
+        self.assertEqual(User.objects.count(), user_count)
+        self.assertEqual(RevolvUserProfile.objects.count(), profile_count)
+        self.assertEqual(Project.objects.count(), project_count)
+        self.assertEqual(Payment.objects.count(), payment_count)

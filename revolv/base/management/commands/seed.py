@@ -5,11 +5,11 @@ from optparse import make_option
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
-from wagtail.wagtailcore.models import Site, Page
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import Payment
 from revolv.project.models import Project
 from revolv.revolv_cms.models import RevolvCustomPage, RevolvLinkPage
+from wagtail.wagtailcore.models import Page, Site
 
 
 class SeedSpec(object):
