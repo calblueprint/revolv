@@ -1,20 +1,12 @@
-{% load staticfiles %}
+{% load staticfiles revolv_cms_tags %}
 
 <div class="footer">
     <div class="row">
         <div class="section large-6 medium-7 small-8 columns">
-            <div class="columns">
-                <section class="small-3 columns">
-                    <div class="left">
-                        <h3>Explore</h3>
-                        <ul>
-                            <li><a href="/">Home</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Volunteer</a></li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="small-3 columns show-for-medium-up">
+            <div class="row">
+                {% get_cms_root_page as root_page %}
+                {% partial_footer_menu root_page %}
+                <section class="small-12 medium-3 columns show-for-medium-up">
                     <div class="left">
                         <h3>Account</h3>
                         <ul>
@@ -27,7 +19,7 @@
                         </ul>
                     </div>
                 </section>
-                <section class="medium-6 small-9 columns end">
+                <section class="medium-6 small-12 columns end">
                     <div class="left">
                         <h3>Contact</h3>
                         <p>info@<!-- this comment here to break spam email parsers -->re-volv.org</p>

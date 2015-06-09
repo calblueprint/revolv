@@ -12,6 +12,13 @@
             text-align: right;
         }
 
+        a, a:active, a:visited {
+            color: inherit;
+        }
+        a:hover, a.underline {
+            text-decoration: underline;
+        }
+
         h3 {
             font-size: $revolv-footer-heading-font-size;
             font-weight: 300;
@@ -33,12 +40,6 @@
             margin-top: 0;
             margin-bottom: 0;
 
-            a, a:active, a:visited {
-                color: inherit;
-            }
-            a:hover, a.underline {
-                text-decoration: underline;
-            }
 
             .logo {
                 display: inline-block;

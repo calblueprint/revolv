@@ -39,6 +39,18 @@ def get_menu_children_with_template_data(parent_page):
     return children
 
 
+def partial_menu_context(context, parent_page):
+    """
+    Render a context to pass to a two-level menu of wagtail pages.
+    This is used both by partial_nav_menu and partial_footer_menu.
+    """
+    child_pages = get_menu_children_with_template_data(parent_page)
+    return {
+        "menu_pages": child_pages,
+        "request": context["request"]  # we must pass this along for other tags that need it
+    }
+
+
 @register.inclusion_tag("revolv_cms/tags/partial_nav_menu.html", takes_context=True)
 def partial_nav_menu(context, parent_page):
     """
@@ -56,11 +68,22 @@ def partial_nav_menu(context, parent_page):
     :context: necessary for tags within partial_nav_menu.html that have
         takes_context=True.
     """
-    child_pages = get_menu_children_with_template_data(parent_page)
-    return {
-        "menu_pages": child_pages,
-        "request": context["request"]  # we must pass this along for other tags that need it
-    }
+    return partial_menu_context(context, parent_page)
+
+
+@register.inclusion_tag("revolv_cms/tags/partial_footer_menu.html", takes_context=True)
+def partial_footer_menu(context, parent_page):
+    """
+    A tag which renders the footer bar as a series of <div>s which are
+    assumed to be columns in a foundation row. See partial_footer_menu.html
+    Can be used as:
+
+    {% partial_nav_menu request.site.root_page %}
+
+    See partial_nav_menu for documentation on arguments - the only difference
+    between the nav menu and the footer menu is the HTML structure/formatting.
+    """
+    return partial_menu_context(context, parent_page)
 
 
 @register.assignment_tag()

@@ -5826,6 +5826,10 @@ input.error, select.error, textarea.error {
     padding: 20px; }
     .footer section .right-aligned-text {
       text-align: right; }
+    .footer section a, .footer section a:active, .footer section a:visited {
+      color: inherit; }
+    .footer section a:hover, .footer section a.underline {
+      text-decoration: underline; }
     .footer section h3 {
       font-size: 16px;
       font-weight: 300;
@@ -5841,10 +5845,6 @@ input.error, select.error, textarea.error {
       font-weight: 100;
       margin-top: 0;
       margin-bottom: 0; }
-      .footer section li a, .footer section li a:active, .footer section li a:visited, .footer section p a, .footer section p a:active, .footer section p a:visited {
-        color: inherit; }
-      .footer section li a:hover, .footer section li a.underline, .footer section p a:hover, .footer section p a.underline {
-        text-decoration: underline; }
       .footer section li .logo, .footer section p .logo {
         display: inline-block;
         width: 120px; }

@@ -1,0 +1,32 @@
+{% comment %}
+    This template defines a group of sibling columns, part of a foundation
+    row in the footer bar of the RE-volv application. See base/foot.html for
+    the structure surrounding the tag that this template is called from. Additionally,
+    see partial_nav_menu.html for documentation about how the structure of wagtail
+    pages affects this template.
+
+    This template is rendered with the following contest from revolv_cms/templatetags:
+
+    :menu_pages:
+        The top level menu pages to display
+
+    The tag for this template can be used as such:
+
+    {% partial_footer_menu parent_page %}
+{% endcomment %}
+{% load revolv_cms_tags %}
+{% for top_level_page in menu_pages %}
+    <section class="small-3 columns">
+        {% link_href top_level_page as top_level_href %}
+        <h3><a href="{{ top_level_href }}">{{ top_level_page.title }}</a></h3>
+        {% if top_level_page.has_menu_children %}
+            <ul>
+                {% get_menu_children top_level_page as second_level_pages %}
+                {% for second_level_page in second_level_pages %}
+                    {% link_href second_level_page as href %}
+                    <li><a href="{{ href }}">{{ second_level_page.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
+{% endfor %}
