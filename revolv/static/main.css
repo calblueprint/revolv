@@ -5772,7 +5772,7 @@ nav.header {
       vertical-align: middle;
       color: white;
       font-size: 12px;
-      font-weight: 300;
+      font-weight: 400;
       display: inline-block;
       margin-right: 10px;
       height: 40px; }
@@ -5830,6 +5830,10 @@ input.error, select.error, textarea.error {
   bottom: 0; }
   .footer section {
     padding: 20px; }
+    .footer section.clear {
+      clear: both; }
+    .footer section:first-child.clear {
+      clear: inherit; }
     .footer section .right-aligned-text {
       text-align: right; }
     .footer section a, .footer section a:active, .footer section a:visited {
@@ -5838,7 +5842,7 @@ input.error, select.error, textarea.error {
       text-decoration: underline; }
     .footer section h3 {
       font-size: 16px;
-      font-weight: 300;
+      font-weight: 400;
       margin: 20px 0 10px 0;
       color: white; }
     .footer section ul {
@@ -5850,17 +5854,7 @@ input.error, select.error, textarea.error {
       color: #eeeeee;
       font-weight: 100;
       margin-top: 0;
-      margin-bottom: 0; }
+      margin-bottom: 5px; }
       .footer section li .logo, .footer section p .logo {
         display: inline-block;
         width: 120px; }
-
-@media only screen and (max-width: 40em) {
-  .footer section h3, .footer section li, .footer section p {
-    font-size: 14px; }
-  .footer section {
-    width: 200px; } }
-
-@media only screen and (max-width: 40em) and (orientation: portrait) {
-  .footer section h3, .footer section li, .footer section p {
-    font-size: 12px; } }

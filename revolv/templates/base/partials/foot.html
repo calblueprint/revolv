@@ -2,7 +2,17 @@
 
 <div class="footer">
     <div class="row">
-        <div class="section large-6 medium-7 small-8 columns">
+        <section class="small-4 small-offset-8 columns">
+            <div class="right right-aligned-text">
+                <h3></h3>
+                <p class="show-for-medium-up">All solar projects have been vetted and approved by RE-volv.</p>
+                <p><a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo-white.png' %}"></a></p>
+                <p class="show-for-medium-up">Developed with care by <a class="underline" href="http://calblueprint.org">Blueprint</a>.</p>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="section small-12 columns">
             <div class="row">
                 {% get_cms_root_page as root_page %}
                 {% partial_footer_menu root_page %}
@@ -19,7 +29,7 @@
                         </ul>
                     </div>
                 </section>
-                <section class="medium-6 small-12 columns end">
+                <section class="medium-3 small-12 columns end">
                     <div class="left">
                         <h3>Contact</h3>
                         <p>info@<!-- this comment here to break spam email parsers -->re-volv.org</p>
@@ -30,13 +40,5 @@
                 </section>
             </div>
         </div>
-        <section class="large-4 medium-4 small-3 columns">
-            <div class="right right-aligned-text">
-                <h3></h3>
-                <p class="show-for-medium-up">All solar projects have been vetted and approved by RE-volv.</p>
-                <p><a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo-white.png' %}"></a></p>
-                <p class="show-for-medium-up">Developed with care by <a class="underline" href="http://calblueprint.org">Blueprint</a>.</p>
-            </div>
-        </section>
     </div>
 </div>
