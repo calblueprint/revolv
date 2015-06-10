@@ -7764,7 +7764,8 @@ html, body, .main-row {
         -moz-transition: border 0.3s;
         -webkit-transition: border 0.3s;
         -o-transition: border 0.3s;
-        -ms-transition: border 0.3s; }
+        -ms-transition: border 0.3s;
+        cursor: pointer; }
         .dashboard-data-section-my-impact .category-preferences-container .choice-container .category-option-container .checkmark {
           visibility: hidden;
           height: 20px;
