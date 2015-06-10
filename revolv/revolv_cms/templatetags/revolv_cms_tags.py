@@ -51,6 +51,18 @@ def partial_menu_context(context, parent_page):
     }
 
 
+@register.assignment_tag()
+def num_menu_pages(parent_page):
+    """
+    Return the number of top level pages for the nav and footer menus.
+
+    Usage:
+        {% num_menu_pages request.site.root_page as menu_pages_count %}
+        ... do something with menu_pages count ...
+    """
+    return get_menu_children_with_template_data(parent_page).count()
+
+
 @register.inclusion_tag("revolv_cms/tags/partial_nav_menu.html", takes_context=True)
 def partial_nav_menu(context, parent_page):
     """

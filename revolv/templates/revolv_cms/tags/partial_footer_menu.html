@@ -16,7 +16,7 @@
 {% endcomment %}
 {% load revolv_cms_tags %}
 {% for top_level_page in menu_pages %}
-    <section class="small-12 medium-3 columns{% cycle ' clear' '' '' '' %}">
+    <section class="small-12 medium-4 columns{% cycle ' clear' '' '' %}">
         {% link_href top_level_page as top_level_href %}
         <h3><a href="{{ top_level_href }}">{{ top_level_page.title }}</a></h3>
         {% if top_level_page.has_menu_children %}

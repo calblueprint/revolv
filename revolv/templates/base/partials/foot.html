@@ -2,21 +2,38 @@
 
 <div class="footer">
     <div class="row">
-        <section class="small-4 small-offset-8 columns">
-            <div class="right right-aligned-text">
-                <h3></h3>
-                <p class="show-for-medium-up">All solar projects have been vetted and approved by RE-volv.</p>
-                <p><a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo-white.png' %}"></a></p>
-                <p class="show-for-medium-up">Developed with care by <a class="underline" href="http://calblueprint.org">Blueprint</a>.</p>
-            </div>
-        </section>
-    </div>
-    <div class="row">
-        <div class="section small-12 columns">
+        <div class="section small-8 columns">
             <div class="row">
                 {% get_cms_root_page as root_page %}
                 {% partial_footer_menu root_page %}
-                <section class="small-12 medium-3 columns show-for-medium-up">
+                {% num_menu_pages root_page as cms_pages_count %}
+                {% comment %}
+                    Note: we don't know the number of sections that will comprise the cms menu,
+                    but we want every third section to have clear: both so that it's gauranteed to
+                    start on a new line, not get scrunched up next to other sections, no matter how
+                    small it is.
+
+                    To illustrate: if an inline block is too small, this could happen:
+
+                    [  large block  ][  large block  ][  smaller block  ]
+                    [      (#1)     ][      (#2)     ][      (#3)       ]
+                    [               ][               ]
+                    [               ][               ][  smaller block  ]
+                    [               ]                 [      (#4)       ]
+
+                    In this case, we don't want block number 4 to go under block number 3, because it
+                    would look weird, graphically. We want it on the next line under block number 1, so
+                    we set clear: both on it. In this situation, the next block (account) is block #4,
+                    but we don't know how many blocks have come before it. Thus, since we're in a three
+                    column layout, we set clear on the account block if the number of cms generated blocks
+                    is divisible by three, and clear on the next (contact) block if the number of cms
+                    generated blocks PLUS ONE is divisible by three.
+
+                    Otherwise, the number of cms generated blocks PLUS TWO will be divisible by three, so
+                    provably our two extra blocks will fit nicely into the grid. Who knew that modular math
+                    would come in so handy here?
+                {% endcomment %}
+                <section class="small-12 medium-4 columns{% if cms_pages_count|divisibleby:'3' %} clear{% endif %}">
                     <div class="left">
                         <h3>Account</h3>
                         <ul>
@@ -29,13 +46,25 @@
                         </ul>
                     </div>
                 </section>
-                <section class="medium-3 small-12 columns end">
+                <section class="medium-4 small-12 columns end{% if cms_pages_count|add:'1'|divisibleby:'3' %} clear{% endif %}">
                     <div class="left">
                         <h3>Contact</h3>
                         <p>info@<!-- this comment here to break spam email parsers -->re-volv.org</p>
                         <p>415.314.7719</p>
                         <p>972 Mission St. Suite 500</p>
                         <p>San Francisco, CA 94103</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="small-4 columns">
+            <div class="row">
+                <section class="small-12 columns">
+                    <div class="right right-aligned-text">
+                        <h3></h3>
+                        <p class="show-for-medium-up">All solar projects have been vetted and approved by RE-volv.</p>
+                        <p><a href="{% url "home" %}"><img class="logo" src="{% static 'images/revolv-logo-white.png' %}"></a></p>
+                        <p class="show-for-medium-up">Developed with care by <a class="underline" href="http://calblueprint.org">Blueprint</a>.</p>
                     </div>
                 </section>
             </div>
