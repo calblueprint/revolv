@@ -39,6 +39,30 @@ def get_menu_children_with_template_data(parent_page):
     return children
 
 
+def partial_menu_context(context, parent_page):
+    """
+    Render a context to pass to a two-level menu of wagtail pages.
+    This is used both by partial_nav_menu and partial_footer_menu.
+    """
+    child_pages = get_menu_children_with_template_data(parent_page)
+    return {
+        "menu_pages": child_pages,
+        "request": context["request"]  # we must pass this along for other tags that need it
+    }
+
+
+@register.assignment_tag()
+def num_menu_pages(parent_page):
+    """
+    Return the number of top level pages for the nav and footer menus.
+
+    Usage:
+        {% num_menu_pages request.site.root_page as menu_pages_count %}
+        ... do something with menu_pages count ...
+    """
+    return get_menu_children_with_template_data(parent_page).count()
+
+
 @register.inclusion_tag("revolv_cms/tags/partial_nav_menu.html", takes_context=True)
 def partial_nav_menu(context, parent_page):
     """
@@ -56,11 +80,22 @@ def partial_nav_menu(context, parent_page):
     :context: necessary for tags within partial_nav_menu.html that have
         takes_context=True.
     """
-    child_pages = get_menu_children_with_template_data(parent_page)
-    return {
-        "menu_pages": child_pages,
-        "request": context["request"]  # we must pass this along for other tags that need it
-    }
+    return partial_menu_context(context, parent_page)
+
+
+@register.inclusion_tag("revolv_cms/tags/partial_footer_menu.html", takes_context=True)
+def partial_footer_menu(context, parent_page):
+    """
+    A tag which renders the footer bar as a series of <div>s which are
+    assumed to be columns in a foundation row. See partial_footer_menu.html
+    Can be used as:
+
+    {% partial_nav_menu request.site.root_page %}
+
+    See partial_nav_menu for documentation on arguments - the only difference
+    between the nav menu and the footer menu is the HTML structure/formatting.
+    """
+    return partial_menu_context(context, parent_page)
 
 
 @register.assignment_tag()
@@ -79,9 +114,9 @@ def link_href(context, page):
     this will return the page's url as defined by its link_href. If not,
     it will simply return the page's regular url.
     """
-    # see http://www.danieleverard.com/2011/05/battling-with-django-inheritance-subclass-casting/
-    model_subclass = page.content_type.model_class()
-    if model_subclass is RevolvLinkPage:
+    # specific_class gives us the page as the most specific subclass (in this case,
+    # either RevolvCustomPage or RevolvLinkPage)
+    if page.specific_class is RevolvLinkPage:
         return RevolvLinkPage.objects.get(pk=page.id).link_href
     else:
         # see https://github.com/torchbox/wagtail/blob/master/wagtail/wagtailcore/templatetags/wagtailcore_tags.py#L12

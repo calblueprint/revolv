@@ -415,7 +415,7 @@ $dark-gray: #555555;
         .gray-bar-container {
             height: 100%;
             padding: 0;
-
+            
             .gray-bar {
                 position: absolute;
                 height: 84%;
@@ -469,7 +469,7 @@ $dark-gray: #555555;
                 }
 
                 &.active {
-
+                    
                     .checkmark {
                         visibility: visible;
                     }
@@ -656,7 +656,7 @@ $dark-gray: #555555;
                 .explanation, .explanation-header, .choice-header {
                     // this much nesting is necessary because if it is not nested in this far, it does not take precedence
                     width: 75%;
-                    margin-left: 12.5%;
+                    margin-left: 12.5%; 
                 }
             }
         }

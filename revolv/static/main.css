@@ -1,9 +1,3 @@
-/**
- * This file overrides specific foundation settings in order to make foundation
- * work nicely with revolv's design. Note that only some, but not all, of
- * foundation's settings are overriden here: for the full list, see _settings.scss
- * in revolv/static/bower_components/foundation/scss/foundation.
- */
 meta.foundation-version {
   font-family: "/5.4.7/"; }
 
@@ -100,6 +94,12 @@ textarea {
 select {
   width: 100%; }
 
+/**
+ * This file overrides specific foundation settings in order to make foundation
+ * work nicely with revolv's design. Note that only some, but not all, of
+ * foundation's settings are overriden here: for the full list, see _settings.scss
+ * in revolv/static/bower_components/foundation/scss/foundation.
+ */
 .row {
   width: 100%;
   margin-left: auto;
@@ -4010,7 +4010,7 @@ table {
     margin-top: -5px; } }
 
 meta.foundation-mq-topbar {
-  font-family: "/only screen and (min-width:40.063em)/";
+  font-family: "/only screen and (min-width:64.063em)/";
   width: 40.063em; }
 
 /* Wrapped around .top-bar to contain to grid width */
@@ -4037,12 +4037,12 @@ meta.foundation-mq-topbar {
       z-index: 99; }
     .fixed.expanded:not(.top-bar) .top-bar-section {
       z-index: 98;
-      margin-top: 60px; }
+      margin-top: 65px; }
 
 .top-bar {
   overflow: hidden;
-  height: 60px;
-  line-height: 60px;
+  height: 65px;
+  line-height: 65px;
   position: relative;
   background: rgba(4, 78, 126, 0.75);
   margin-bottom: 10px; }
@@ -4071,40 +4071,40 @@ meta.foundation-mq-topbar {
     position: relative;
     margin: 0; }
   .top-bar .name {
-    height: 60px;
+    height: 65px;
     margin: 0;
     font-size: 16px; }
     .top-bar .name h1 {
-      line-height: 60px;
+      line-height: 65px;
       font-size: 1.0625rem;
       margin: 0; }
       .top-bar .name h1 a {
         font-weight: normal;
-        color: #2c398c;
+        color: white;
         width: 75%;
         display: block;
-        padding: 0 20px; }
+        padding: 0 21.66667px; }
   .top-bar .toggle-topbar {
     position: absolute;
     right: 0;
     top: 0; }
     .top-bar .toggle-topbar a {
-      color: #2c398c;
+      color: white;
       text-transform: uppercase;
       font-size: 0.8125rem;
       font-weight: bold;
       position: relative;
       display: block;
-      padding: 0 20px;
-      height: 60px;
-      line-height: 60px; }
+      padding: 0 21.66667px;
+      height: 65px;
+      line-height: 65px; }
     .top-bar .toggle-topbar.menu-icon {
       top: 50%;
       margin-top: -16px; }
       .top-bar .toggle-topbar.menu-icon a {
         height: 34px;
         line-height: 33px;
-        padding: 0 45px 0 20px;
+        padding: 0 46.66667px 0 21.66667px;
         color: white;
         position: relative; }
         .top-bar .toggle-topbar.menu-icon a span::after {
@@ -4114,7 +4114,7 @@ meta.foundation-mq-topbar {
           height: 0;
           top: 50%;
           margin-top: -8px;
-          right: 20px;
+          right: 21.66667px;
           box-shadow: 0 0px 0 1px white, 0 7px 0 1px white, 0 14px 0 1px white;
           width: 16px; }
         .top-bar .toggle-topbar.menu-icon a span:hover:after {
@@ -4151,17 +4151,17 @@ meta.foundation-mq-topbar {
     .top-bar-section ul li > a {
       display: block;
       width: 100%;
-      color: #2c398c;
+      color: white;
       padding: 12px 0 12px 0;
-      padding-left: 20px;
+      padding-left: 21.66667px;
       font-family: "Lato", sans-serif;
       font-size: 0.9rem;
       font-weight: normal;
       text-transform: none; }
       .top-bar-section ul li > a.button {
         font-size: 0.9rem;
-        padding-right: 20px;
-        padding-left: 20px;
+        padding-right: 21.66667px;
+        padding-left: 21.66667px;
         background-color: #008cba;
         border-color: #007295;
         color: white; }
@@ -4203,8 +4203,8 @@ meta.foundation-mq-topbar {
           color: white; }
     .top-bar-section ul li > button {
       font-size: 0.9rem;
-      padding-right: 20px;
-      padding-left: 20px;
+      padding-right: 21.66667px;
+      padding-left: 21.66667px;
       background-color: #008cba;
       border-color: #007295;
       color: white; }
@@ -4255,7 +4255,7 @@ meta.foundation-mq-topbar {
         background: #007ba0;
         color: white; }
   .top-bar-section .has-form {
-    padding: 20px; }
+    padding: 21.66667px; }
   .top-bar-section .has-dropdown {
     position: relative; }
     .top-bar-section .has-dropdown > a:after {
@@ -4266,7 +4266,7 @@ meta.foundation-mq-topbar {
       border: inset 5px;
       border-color: transparent transparent transparent rgba(255, 255, 255, 0.4);
       border-left-style: solid;
-      margin-right: 20px;
+      margin-right: 21.66667px;
       margin-top: -4.5px;
       position: absolute;
       top: 50%;
@@ -4301,7 +4301,7 @@ meta.foundation-mq-topbar {
       height: auto; }
       .top-bar-section .dropdown li a {
         font-weight: normal;
-        padding: 8px 20px; }
+        padding: 8px 21.66667px; }
         .top-bar-section .dropdown li a.parent-link {
           font-weight: normal; }
       .top-bar-section .dropdown li.title h5, .top-bar-section .dropdown li.parent-link {
@@ -4309,16 +4309,16 @@ meta.foundation-mq-topbar {
         margin-top: 0;
         font-size: 1.125rem; }
         .top-bar-section .dropdown li.title h5 a, .top-bar-section .dropdown li.parent-link a {
-          color: #2c398c;
+          color: white;
           display: block; }
           .top-bar-section .dropdown li.title h5 a:hover, .top-bar-section .dropdown li.parent-link a:hover {
             background: none; }
       .top-bar-section .dropdown li.has-form {
-        padding: 8px 20px; }
+        padding: 8px 21.66667px; }
       .top-bar-section .dropdown li .button, .top-bar-section .dropdown li button {
         top: auto; }
     .top-bar-section .dropdown label {
-      padding: 8px 20px 2px;
+      padding: 8px 21.66667px 2px;
       margin-bottom: 0;
       text-transform: uppercase;
       color: rgba(4, 78, 126, 0.75);
@@ -4328,7 +4328,7 @@ meta.foundation-mq-topbar {
 .js-generated {
   display: block; }
 
-@media only screen and (min-width:40.063em) {
+@media only screen and (min-width:64.063em) {
   .top-bar {
     background: rgba(4, 78, 126, 0.75);
     overflow: visible; }
@@ -4369,22 +4369,22 @@ meta.foundation-mq-topbar {
       background: rgba(2, 48, 77, 0.75);
       color: white; }
     .top-bar-section li:not(.has-form) a:not(.button) {
-      padding: 0 20px;
-      line-height: 60px;
-      background: rgba(4, 78, 126, 0.75); }
+      padding: 0 21.66667px;
+      line-height: 65px;
+      background: transparent; }
       .top-bar-section li:not(.has-form) a:not(.button):hover {
         background-color: #555555;
         background: rgba(2, 48, 77, 0.75); }
     .top-bar-section li.active:not(.has-form) a:not(.button) {
-      padding: 0 20px;
-      line-height: 60px;
+      padding: 0 21.66667px;
+      line-height: 65px;
       color: white;
       background: #008cba; }
       .top-bar-section li.active:not(.has-form) a:not(.button):hover {
         background: #007ba0;
         color: white; }
     .top-bar-section .has-dropdown > a {
-      padding-right: 40px !important; }
+      padding-right: 41.66667px !important; }
       .top-bar-section .has-dropdown > a:after {
         content: "";
         display: block;
@@ -4394,7 +4394,7 @@ meta.foundation-mq-topbar {
         border-color: rgba(255, 255, 255, 0.4) transparent transparent transparent;
         border-top-style: solid;
         margin-top: -2.5px;
-        top: 30px; }
+        top: 32.5px; }
     .top-bar-section .has-dropdown.moved {
       position: relative; }
       .top-bar-section .has-dropdown.moved > .dropdown {
@@ -4433,13 +4433,13 @@ meta.foundation-mq-topbar {
       background: transparent;
       min-width: 100%; }
       .top-bar-section .dropdown li a {
-        color: #2c398c;
-        line-height: 60px;
+        color: white;
+        line-height: 65px;
         white-space: nowrap;
-        padding: 12px 20px;
+        padding: 12px 21.66667px;
         background: rgba(4, 78, 126, 0.75); }
       .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
-        color: #2c398c;
+        color: white;
         background: rgba(4, 78, 126, 0.75); }
       .top-bar-section .dropdown li:not(.has-form):not(.active):hover > a:not(.button) {
         color: white;
@@ -4456,12 +4456,12 @@ meta.foundation-mq-topbar {
       border-top: none;
       border-right: solid 1px rgba(6, 109, 174, 0.75);
       clear: none;
-      height: 60px;
+      height: 65px;
       width: 0; }
     .top-bar-section .has-form {
-      background: rgba(4, 78, 126, 0.75);
-      padding: 0 20px;
-      height: 60px; }
+      background: transparent;
+      padding: 0 21.66667px;
+      height: 65px; }
     .top-bar-section .right li .dropdown {
       left: auto;
       right: 0; }
@@ -5606,18 +5606,18 @@ th.hide-for-touch {
       border-radius: initial !important; } }
   .modal-content .modal-header {
     background-color: #e9f6fc;
-    min-height: 50px; }
+    min-height: 54.16667px; }
     .modal-content .modal-header > .modal-title {
       padding: 0 0.9375rem;
       display: block;
-      height: 50px;
-      line-height: 50px; }
+      height: 54.16667px;
+      line-height: 54.16667px; }
     .modal-content .modal-header > .modal-errors {
       padding: 0 0.9375rem;
       display: none;
       visibility: hidden;
       background-color: #dddde3;
-      min-height: 50px;
+      min-height: 54.16667px;
       padding-top: 0.9375rem;
       padding-bottom: 0.9375rem; }
       .modal-content .modal-header > .modal-errors .error-list {
@@ -5748,40 +5748,46 @@ label.checkmark {
 
 .header-small-text {
   font-size: 14px;
-  line-height: 60px;
+  line-height: 65px;
   color: white; }
 
 .spacer {
-  height: 60px; }
+  height: 65px; }
 
 nav.header {
   /**
      * Foundation will by default show all the menu items on the mobile version
      * of the top bar, but we want to prevent it from showing the user's username
      * at the second level, since they've already clicked on it.
-     */
-  /**
-     * By default, Foundation will make all the visited menu items a dark purple
-     * color, so we want to change this to white even after links are visited
-     * so they remain visible. One selector gets all first-level links, while 
-     * the other covers dropdown menu items.
-    */ }
+     */ }
   nav.header .logo-container {
     display: inline-block;
     margin: 0 20px 0 0; }
     nav.header .logo-container .logo {
+      vertical-align: middle;
       display: inline-block;
-      width: 60px;
+      width: 65px;
       margin: 0 10px 0 10px; }
     nav.header .logo-container .tagline {
+      vertical-align: middle;
       color: white;
       font-size: 12px;
-      font-weight: 300; }
+      font-weight: 400;
+      display: inline-block;
+      margin-right: 10px;
+      height: 40px; }
+      nav.header .logo-container .tagline .line {
+        display: block;
+        height: 20px;
+        line-height: 20px; }
   nav.header .user-controls > .dropdown a.js-generated {
     display: none; }
-  nav.header .top-bar-section li:not(.has-form) a:not(.button), nav.header .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
-    color: white;
-    background: rgba(4, 78, 126, 0.75); }
+  nav.header .top-bar-section li.has-dropdown:not(.user-controls):not(.has-form) > a:not(.button) {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    font-size: 13px; }
+    nav.header .top-bar-section li.has-dropdown:not(.user-controls):not(.has-form) > a:not(.button):after {
+      display: none; }
 
 nav.row.header.top-bar, .top-bar-section ul li {
   background: transparent !important;
@@ -5824,11 +5830,19 @@ input.error, select.error, textarea.error {
   bottom: 0; }
   .footer section {
     padding: 20px; }
+    .footer section.clear {
+      clear: both; }
+    .footer section:first-child.clear {
+      clear: inherit; }
     .footer section .right-aligned-text {
       text-align: right; }
+    .footer section a, .footer section a:active, .footer section a:visited {
+      color: inherit; }
+    .footer section a:hover, .footer section a.underline {
+      text-decoration: underline; }
     .footer section h3 {
       font-size: 16px;
-      font-weight: 300;
+      font-weight: 400;
       margin: 20px 0 10px 0;
       color: white; }
     .footer section ul {
@@ -5840,21 +5854,7 @@ input.error, select.error, textarea.error {
       color: #eeeeee;
       font-weight: 100;
       margin-top: 0;
-      margin-bottom: 0; }
-      .footer section li a, .footer section li a:active, .footer section li a:visited, .footer section p a, .footer section p a:active, .footer section p a:visited {
-        color: inherit; }
-      .footer section li a:hover, .footer section li a.underline, .footer section p a:hover, .footer section p a.underline {
-        text-decoration: underline; }
+      margin-bottom: 5px; }
       .footer section li .logo, .footer section p .logo {
         display: inline-block;
         width: 120px; }
-
-@media only screen and (max-width: 40em) {
-  .footer section h3, .footer section li, .footer section p {
-    font-size: 14px; }
-  .footer section {
-    width: 200px; } }
-
-@media only screen and (max-width: 40em) and (orientation: portrait) {
-  .footer section h3, .footer section li, .footer section p {
-    font-size: 12px; } }

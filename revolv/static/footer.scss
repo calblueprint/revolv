@@ -8,13 +8,27 @@
     section {
         padding: 20px;
 
+        &.clear {
+            clear: both;
+        }
+        &:first-child.clear {
+            clear: inherit;
+        }
+
         .right-aligned-text {
             text-align: right;
         }
 
+        a, a:active, a:visited {
+            color: inherit;
+        }
+        a:hover, a.underline {
+            text-decoration: underline;
+        }
+
         h3 {
             font-size: $revolv-footer-heading-font-size;
-            font-weight: 300;
+            font-weight: 400;
             margin: 20px 0 10px 0;
             color: white;
         }
@@ -31,34 +45,13 @@
             color: $revolv-footer-text-color;
             font-weight: 100;
             margin-top: 0;
-            margin-bottom: 0;
+            margin-bottom: 5px;
 
-            a, a:active, a:visited {
-                color: inherit;
-            }
-            a:hover, a.underline {
-                text-decoration: underline;
-            }
 
             .logo {
                 display: inline-block;
                 width: $logo-dimension;
             }
         }
-    }
-}
-
-@media #{$small-only} {
-    .footer section h3, .footer section li, .footer section p {
-        font-size: $revolv-footer-heading-font-size - 2px;
-    }
-    .footer section {
-        width: 200px;
-    }
-}
-
-@media #{$small-only} and (orientation: portrait) {
-    .footer section h3, .footer section li, .footer section p {
-        font-size: $revolv-footer-heading-font-size - 4px;
     }
 }
