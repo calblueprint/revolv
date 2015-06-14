@@ -37,7 +37,7 @@ FACEBOOK_APP_ID = os.environ.get("REVOLV_FACEBOOK_APP_ID")
 FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = IS_LOCAL
 
 TEMPLATE_DEBUG = True
 
