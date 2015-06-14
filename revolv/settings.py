@@ -239,8 +239,14 @@ else:
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
+# Allow host headers only for our actual sites - see
+# https://docs.djangoproject.com/en/1.7/ref/settings/#allowed-hosts
+if IS_PROD:
+    ALLOWED_HOSTS = ["revolv-prod.herokuapp.com", ".re-volv.org"]
+elif IS_STAGE:
+    ALLOWED_HOSTS = ["revolv-stage.herokuapp.com"]
+else:
+    ALLOWED_HOSTS = ['*']
 
 # The backend used to store task results - because we're going to be
 # using RabbitMQ as a broker, this sends results back as AMQP messages
