@@ -142,6 +142,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django_facebook.context_processors.facebook',
 
     'sekizai.context_processors.sekizai',
+    'wagtailsettings.context_processors.settings',
 )
 
 # Database

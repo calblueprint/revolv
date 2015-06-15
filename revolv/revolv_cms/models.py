@@ -45,6 +45,11 @@ class RevolvLinkPage(Page):
 
 @register_setting
 class MainPageSettings(BaseSetting):
+    """
+    Editable settings for the homepage.
+
+    See https://wagtailsettings.readthedocs.org/en/latest/settings.html
+    """
     site_tagline = models.CharField(
         max_length=100,
         help_text="The tagline for the site, which will be shown large and centered over the animated cover video.",
