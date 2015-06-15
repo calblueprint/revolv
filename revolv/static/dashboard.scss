@@ -401,9 +401,9 @@ $sidebar-icon-gray: #999;
         }
 
         .repayment-progress-container {
-            height: 260px;
+            height: 180px;
             .statistics-graphics-container {
-                height: 260px;
+                height: 180px;
                 width: 100%;
                 position: absolute;
 
@@ -461,13 +461,32 @@ $sidebar-icon-gray: #999;
                 }
             }
             .repayment-details-container {
+                .statistics-table {
+                    display: table;
+                    height: 180px;
+                }
+                .statistics-row {
+                    display: table-row;
+                    .statistics-row-cell {
+                        display: table-cell;
+                        vertical-align: middle;
+                        border-color: #ddd;
+                        border-width: thin;
+                        padding: 10px;
+                    }
+                }
+                .bottom-border {
+                    border-bottom: solid;
+                }
+                .right-border {
+                    border-right: solid;
+                }
                 .detail-text {
                     margin-bottom:0em;
                     color: #bbb;
                     font-size:2em;
                     font-weight:200;
                 }
-
                 .amount-text {
                     margin-bottom:0em;
                     font-size:2em;

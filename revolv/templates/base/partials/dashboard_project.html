@@ -74,23 +74,33 @@
             </div>
             <div class="small-8 columns">
                 <div class="repayment-details-container">
-                    <div class="text-container">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td><p class="detail-text">Amount Repaid</p></td>
-                                    <td><p class="amount-text">${{ project.amount_repaid|floatformat:2 }}</p></td>
-                                </tr>
-                                <tr>
-                                    <td><p class="detail-text">Amount Donated</p></td>
-                                    <td><p class="amount-text">${{ project.amount_donated|floatformat:2 }}</p></td>
-                                </tr>
-                                <tr>
-                                    <td><p class="detail-text">kwH saved</p></td>
-                                    <td><p class="amount-text">{{ project.actual_energy }}</p></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="statistics-table">
+                        <span style="height:10px"></span>
+                        <div class="statistics-row">
+                            <div class="right-border bottom-border statistics-row-cell">
+                                <p class="detail-text">Amount Repaid</p>
+                            </div>
+                            <div class="bottom-border statistics-row-cell">
+                                <p class="amount-text">${{ project.amount_repaid|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                        <div class="statistics-row">
+                            <div class="right-border bottom-border statistics-row-cell">
+                                <p class="detail-text">Amount Donated</p>
+                            </div>
+                            <div class="bottom-border statistics-row-cell">
+                                <p class="amount-text">${{ project.amount_donated|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                        <div class="statistics-row">
+                            <div class="right-border statistics-row-cell">
+                                <p class="detail-text">kwH saved</p>
+                            </div>
+                            <div class="statistics-row-cell">
+                                <p class="amount-text">{{ project.actual_energy }}</p>
+                            </div>
+                        </div>
+                        <span style="height:10px"></span>
                     </div>
                 </div>
             </div>

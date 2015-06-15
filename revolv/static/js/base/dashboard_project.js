@@ -42,8 +42,8 @@ function DashboardCircles() {
                 .attr("fill", "white")
                 .attr("r", outsideCircleRadius);
 
-            if (radius > 100 ) {
-                radius = 100;
+            if (radius > 80 ) {
+                radius = 80;
                 outsideCircleRadius = 1.1 * radius;
                 outsideCircle.attr("r", outsideCircleRadius);
             }
