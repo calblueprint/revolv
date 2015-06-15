@@ -123,7 +123,7 @@ def link_href(context, page):
         return page.relative_url(context['request'].site)
 
 
-@register.simple_tag
+@register.filter
 def commented_email(email):
     """
     Given an email, return that email interspersed with an html in order
