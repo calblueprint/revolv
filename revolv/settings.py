@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailembeds',
     'wagtail.wagtailsearch',
     'wagtail.wagtailredirects',
+    'wagtailsettings',
     'revolv.revolv_cms'
 )
 

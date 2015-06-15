@@ -2,6 +2,7 @@ from django.db import models
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
+from wagtailsettings import BaseSetting, register_setting
 
 
 class RevolvCustomPage(Page):
@@ -40,3 +41,50 @@ class RevolvLinkPage(Page):
         FieldPanel('title', classname="full title"),
         FieldPanel('link_href', classname="full")
     ]
+
+
+@register_setting
+class MainPageSettings(BaseSetting):
+    site_tagline = models.CharField(
+        max_length=100,
+        help_text="The tagline for the site, which will be shown large and centered over the animated cover video.",
+        default="WE'RE SAVING TOMORROW"
+    )
+    site_subheading = models.TextField(
+        help_text="The description text that will be shown after the site tagline - a brief (one sentence) introduction to what RE-volv is and how donors can help.",
+        default="When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you."
+    )
+    learn_button_text = models.CharField(
+        max_length=50,
+        help_text="The label on the 'Learn more button'. E.g. 'Learn about how RE-volv works'",
+        default="Learn about how RE-volv works"
+    )
+    current_project_heading = models.CharField(
+        max_length=50,
+        help_text="The heading to display above the featured project on the homepage, e.g. 'Our current project'",
+        default="OUR CURRENT PROJECT"
+    )
+    how_it_works_heading = models.CharField(
+        max_length=50,
+        help_text="The heading to display above the 'Learn about how RE-volv works' section on the homepage, e.g. 'Learn about how RE-volv works'",
+        default="HOW RE-VOLV WORKS"
+    )
+    how_it_works_intro = models.TextField(
+        help_text="Intro paragraph for the 'Learn about how RE-volv works' section of the homepage.",
+        default="Climate change is among the most alarming environmental issues the world faces today."
+    )
+    how_it_works_tagline = models.CharField(
+        max_length=200,
+        help_text="Large heading directly before the infograph portion of the homepage. e.g. 'How would your donation help?'",
+        default="How would your donation to RE-volv help?"
+    )
+    how_it_works_pitch = models.CharField(
+        max_length=200,
+        help_text="Large text directly before the call to action donation button at the bottom of the hompage, e.g. 'Be part of something great.'",
+        default="Be a part of something great."
+    )
+    call_to_action_button_text = models.CharField(
+        max_length=50,
+        help_text="The label on the green call to action button at the bottom of the homepage.",
+        default="Start contributing"
+    )

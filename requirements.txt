@@ -23,4 +23,5 @@ factory_boy==2.5.2
 django-sslify>=0.2.0
 django-ckeditor==4.4.8
 wagtail==1.0b2
+wagtailsettings==0.4.1
 django-sekizai==0.8.1
