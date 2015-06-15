@@ -93,3 +93,33 @@ class MainPageSettings(BaseSetting):
         help_text="The label on the green call to action button at the bottom of the homepage.",
         default="Start contributing"
     )
+
+
+@register_setting
+class FooterSettings(BaseSetting):
+    """Editable settings for the RE-volv footer."""
+    contact_heading = models.CharField(
+        max_length=50,
+        help_text="The heading to display in the footer menu above the contact information. Probably just 'Contact'",
+        default="Contact"
+    )
+    contact_email = models.EmailField(
+        max_length=200,
+        help_text="The email address to display in the contact info section of the footer menu.",
+        default="info@re-volv.org"
+    )
+    contact_phone_number = models.CharField(
+        max_length=30,
+        help_text="The phone number to display in the contact info section of the footer menu. e.g. 415.314.7719",
+        default="415.314.7719"
+    )
+    contact_address_line_1 = models.CharField(
+        max_length=150,
+        help_text="The first line of the address to display in the contact info section of the footer menu.",
+        default="972 Mission St. Suite 500"
+    )
+    contact_address_line_2 = models.CharField(
+        max_length=150,
+        help_text="The second line of the address to display in the contact info section of the footer menu.",
+        default="San Francisco, CA 94103"
+    )
