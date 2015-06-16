@@ -103,6 +103,10 @@
         &.table {
             padding: 0;
         }
+
+        .confirm-text p:last-child {
+            margin-bottom: 0;
+        }
     }
 
     .modal-footer-button-group {

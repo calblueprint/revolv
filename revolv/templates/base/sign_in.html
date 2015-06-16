@@ -25,10 +25,10 @@
     <div class='component-container medium-offset-2 medium-4 small-12 columns'>
         {% if reason and reason == "donate" %}
             <h1>{{ settings.revolv_cms.LoginPageSettings.heading_for_donation }}</h1>
-            {{ settings.revolv_cms.LoginPageSettings.login_paragraph_for_donation }}
+            {{ settings.revolv_cms.LoginPageSettings.login_paragraph_for_donation|safe }}
         {% else %}
             <h1>{{ settings.revolv_cms.LoginPageSettings.heading }}</h1>
-            {{ settings.revolv_cms.LoginPageSettings.login_paragraph }}
+            {{ settings.revolv_cms.LoginPageSettings.login_paragraph|safe }}
         {% endif %}
         <p>If you're new here, please <a class="component-link" data-component="signup">create an account</a>.</p>
         <p>If you forgot your password, you can <a id="password_reset_link" href="/password_reset/">reset it here</a>.</p>
@@ -52,7 +52,7 @@
 <div class='row component-row signup' {% if referring_endpoint == "login" or referring_endpoint == "" %}style="display: none"{% endif %}>
     <div class='component-container medium-offset-2 medium-4 small-12 columns'>
         <h1>{{ settings.revolv_cms.SignupPageSettings.heading }}</h1>
-        {{ settings.revolv_cms.SignupPageSettings.signup_paragraph }}
+        {{ settings.revolv_cms.SignupPageSettings.signup_paragraph|safe }}
         <p>Already have an account? Log in <a class="component-link" data-component="login">here</a>.</p>
     </div>
     <div class="component-container medium-4 small-12 columns end">

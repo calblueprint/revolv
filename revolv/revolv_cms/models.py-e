@@ -127,7 +127,7 @@ class FooterSettings(BaseSetting):
 
 
 @register_setting
-class LoginPageSettings(BaseSetting):
+class LoginPageSettings(BaseSetting):   
     """Editable settings for the RE-volv login page."""
     heading = models.CharField(
         max_length=50,
