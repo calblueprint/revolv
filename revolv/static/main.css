@@ -5642,6 +5642,8 @@ th.hide-for-touch {
       padding-bottom: 0.9375rem; }
     .modal-content .modal-section.table {
       padding: 0; }
+    .modal-content .modal-section .confirm-text p:last-child {
+      margin-bottom: 0; }
   .modal-content .modal-footer-button-group {
     list-style: none;
     margin: 0; }

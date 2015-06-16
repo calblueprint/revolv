@@ -121,3 +121,16 @@ def link_href(context, page):
     else:
         # see https://github.com/torchbox/wagtail/blob/master/wagtail/wagtailcore/templatetags/wagtailcore_tags.py#L12
         return page.relative_url(context['request'].site)
+
+
+@register.filter
+def commented_email(email):
+    """
+    Given an email, return that email interspersed with an html in order
+    to break spam email parsers.
+    """
+    if not email or len(email) < 2:
+        return ""
+    else:
+        halfway = len(email) / 2  # floor to integer
+        return email[:halfway] + "<!-- this comment here to break email parsers -->" + email[halfway:]

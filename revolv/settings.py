@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailembeds',
     'wagtail.wagtailsearch',
     'wagtail.wagtailredirects',
+    'wagtailsettings',
     'revolv.revolv_cms'
 )
 
@@ -141,6 +142,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django_facebook.context_processors.facebook',
 
     'sekizai.context_processors.sekizai',
+    'wagtailsettings.context_processors.settings',
 )
 
 # Database

@@ -54,10 +54,10 @@
     <a target="_blank" href="https://youtu.be/eSADOAxjcPU" class="cover-video-link">
         <div class="shade"></div>
         <div class="cover-inset">
-            <h1>WE'RE SAVING TOMORROW</h1>
-            <p>When you donate to RE-volv's solar projects, you are making a lasting impact on the environment and the world around you.</p>
+            <h1>{{ settings.revolv_cms.MainPageSettings.site_tagline }}</h1>
+            <p>{{ settings.revolv_cms.MainPageSettings.site_subheading }}</p>
             <a href="#how-revolv-works">
-                <div class="learn-more button">Learn how RE-volv works</div>
+                <div class="learn-more button">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</div>
             </a>
         </div>
         <!-- Background video to play on desktop view -->
@@ -71,7 +71,7 @@
 </div>
 
 {% if first_project %}
-<div class="divider-title">OUR CURRENT PROJECT</div>
+<div class="divider-title">{{ settings.revolv_cms.MainPageSettings.current_project_heading }}</div>
 {% if first_project.cover_photo %}
 <div class="row current-project" style="background-image: url({{first_project.cover_photo.url}})">
     <a href="{% url "project:view" pk=first_project.pk %}">
@@ -95,11 +95,11 @@
 {% endif %}
 
 {% include "base/animations/nav_spine.html" %}
-<div id="how-revolv-works" class="divider-title">HOW RE-VOLV WORKS</div>
+<div id="how-revolv-works" class="divider-title">{{ settings.revolv_cms.MainPageSettings.how_it_works_heading }}</div>
 <div class="row about">
     <div class="about-inset">
-        <p>Climate change is among the most alarming environmental issues the world faces today.</p>
-        <h1>How would your donation to RE-volv help?</h1>
+        <p>{{ settings.revolv_cms.MainPageSettings.how_it_works_intro }}</p>
+        <h1>{{ settings.revolv_cms.MainPageSettings.how_it_works_tagline }}</h1>
 
         <!-- Man, coin, and Woman -->
         <img class="person" src="{% static "images/revolv-man.svg" %}" />
@@ -161,11 +161,11 @@
     </div>
 
     <!-- Call to action -->
-    <h2>Be a part of something great.</h2>
+    <h2>{{ settings.revolv_cms.MainPageSettings.how_it_works_pitch }}</h2>
     {% if first_project %}
-        <a href="{% url "project:view" pk=first_project.pk %}" class="donate button">START CONTRIBUTING</a>
+        <a href="{% url "project:view" pk=first_project.pk %}" class="donate button">{{ settings.revolv_cms.MainPageSettings.call_to_action_button_text }}</a>
     {% else %}
-        <a href="{% url "signin" %}#signup" class="donate button">START CONTRIBUTING</a>
+        <a href="{% url "signin" %}#signup" class="donate button">{{ settings.revolv_cms.MainPageSettings.call_to_action_button_text }}</a>
     {% endif %}
 </div>
 {% endspaceless %}
