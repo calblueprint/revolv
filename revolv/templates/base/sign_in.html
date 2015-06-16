@@ -51,8 +51,8 @@
 </div>
 <div class='row component-row signup' {% if referring_endpoint == "login" or referring_endpoint == "" %}style="display: none"{% endif %}>
     <div class='component-container medium-offset-2 medium-4 small-12 columns'>
-        <h1>Welcome!</h1>
-        <p>Start investing in renewable solar energy by signing up for an account.</p>
+        <h1>{{ settings.revolv_cms.SignupPageSettings.heading }}</h1>
+        {{ settings.revolv_cms.SignupPageSettings.signup_paragraph }}
         <p>Already have an account? Log in <a class="component-link" data-component="login">here</a>.</p>
     </div>
     <div class="component-container medium-4 small-12 columns end">
@@ -70,7 +70,7 @@
             <label class="checkbox-field-label">
             {{ signup_form.subscribed_to_newsletter }}<span>{{signup_form.subscribed_to_newsletter.label}}</span>
             </label>
-            <button class="submit-button medium" type="submit" value="Log in">Sign up</button>
+            <button class="submit-button medium" type="submit" value="Log in">{{ settings.revolv_cms.SignupPageSettings.button_text }}</button>
         </form>
     </div>
 </div>

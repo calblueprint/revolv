@@ -151,3 +151,22 @@ class LoginPageSettings(BaseSetting):
         help_text="The text on the actual login button, e.g. 'Log in'",
         default="Log in"
     )
+
+
+@register_setting
+class SignupPageSettings(BaseSetting):
+    """Editable settings for the RE-volv signup (user regisration) page."""
+    heading = models.CharField(
+        max_length=50,
+        help_text="The heading text of the sign up page. e.g. 'Welcome!'",
+        default="Welcome!"
+    )
+    signup_paragraph = RichTextField(
+        help_text="The paragraph of text to be shown under the heading on the sign up page, but before the link to the login page.",
+        default="<p>Start investing in renewable solar energy by signing up for an account.</p>"
+    )
+    button_text = models.CharField(
+        max_length=30,
+        help_text="The text on the actual sign up button, e.g. 'Sign up'",
+        default="Sign Up"
+    )
