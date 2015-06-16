@@ -170,3 +170,13 @@ class SignupPageSettings(BaseSetting):
         help_text="The text on the actual sign up button, e.g. 'Sign up'",
         default="Sign Up"
     )
+
+
+@register_setting
+class ProjectPageSettings(BaseSetting):
+    """Editable settings for the RE-volv project page."""
+    donors_wording = models.CharField(
+        max_length=20,
+        help_text="The wording that will be displayed after the number of donors to the project the use is viewing. For example, 'donors' or 'contributors'.",
+        default="donors"
+    )
