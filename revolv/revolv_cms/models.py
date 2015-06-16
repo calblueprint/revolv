@@ -123,3 +123,31 @@ class FooterSettings(BaseSetting):
         help_text="The second line of the address to display in the contact info section of the footer menu.",
         default="San Francisco, CA 94103"
     )
+
+
+@register_setting
+class LoginPageSettings(BaseSetting):
+    """Editable settings for the RE-volv login page."""
+    heading = models.CharField(
+        max_length=50,
+        help_text="The heading text of the login page. e.g. 'Welcome back!'",
+        default="Welcome back!"
+    )
+    heading_for_donation = models.CharField(
+        max_length=30,
+        help_text="The heading text of the login page when specifically directed there as a consequence of clicking a donate button when not logged in. e.g. 'Please log in to donate'",
+        default="Login to donate"
+    )
+    login_paragraph = RichTextField(
+        help_text="The paragraph of text to be shown under the heading on the login page, but before the links to the register page and the forgot password page.",
+        default="<p>Log in to see the impact you've had on communities that use renewable solar energy.</p>"
+    )
+    login_paragraph_for_donation = RichTextField(
+        help_text="The paragraph of text to be shown under the heading on the login page, but specifically when the user is directed to the login page as a result of clicking a donate button when not logged in.",
+        default=""
+    )
+    button_text = models.CharField(
+        max_length=30,
+        help_text="The text on the actual login button, e.g. 'Log in'",
+        default="Log in"
+    )
