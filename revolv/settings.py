@@ -37,7 +37,10 @@ FACEBOOK_APP_ID = os.environ.get("REVOLV_FACEBOOK_APP_ID")
 FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = IS_LOCAL
+# TODO: static files will not serve with debug turned off, so we need
+# to move staticfile serving to Amazon in order to turn off DEBUG.
+# see https://github.com/calblueprint/revolv/issues/135
+DEBUG = IS_LOCAL or IS_STAGE
 
 TEMPLATE_DEBUG = IS_LOCAL
 
