@@ -37,9 +37,9 @@ FACEBOOK_APP_ID = os.environ.get("REVOLV_FACEBOOK_APP_ID")
 FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = IS_LOCAL
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = IS_LOCAL
 
 SITE_ID = 1
 
@@ -239,8 +239,14 @@ else:
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
+# Allow host headers only for our actual sites - see
+# https://docs.djangoproject.com/en/1.7/ref/settings/#allowed-hosts
+if IS_PROD:
+    ALLOWED_HOSTS = ["revolv-prod.herokuapp.com", ".re-volv.org"]
+elif IS_STAGE:
+    ALLOWED_HOSTS = ["revolv-stage.herokuapp.com"]
+else:
+    ALLOWED_HOSTS = ['*']
 
 # The backend used to store task results - because we're going to be
 # using RabbitMQ as a broker, this sends results back as AMQP messages
@@ -266,17 +272,6 @@ CELERYBEAT_SCHEDULE = {
 }
 
 GOOGLEMAPS_API_KEY = "AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE"
-
-# django-cms
-MIGRATION_MODULES = {
-    'cms': 'cms.migrations_django',
-    'menus': 'menus.migrations_django',
-    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
-    'djangocms_picture': 'djangocms_picture.migrations_django',
-    'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
-    'djangocms_file': 'djangocms_file.migrations_django',
-    'djangocms_video': 'djangocms_video.migrations_django',
-}
 
 LANGUAGES = [
     ('en-us', 'English'),
