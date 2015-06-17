@@ -15,6 +15,11 @@
                 autocomplete="on">
                 {% csrf_token %}
                 <div class="modal-section">
+                    <div class="row payment-pitch">
+                        <div class="small-12 columns">
+                            {{ settings.revolv_cms.PaymentModalSettings.payment_modal_paragraph|safe }}
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="medium-12 columns">
                             <ul class="cc-type-list">

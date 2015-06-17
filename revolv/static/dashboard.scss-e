@@ -1,0 +1,664 @@
+@import "utils";
+@import "mixins";
+@import "foundation-settings";
+@import "bower_components/foundation/scss/foundation";
+@import "fontawesome-settings";
+@import "bower_components/fontawesome/scss/font-awesome";
+
+@import "revolv-settings";
+@import "nav";
+@import "placeholder-formfield";
+
+html, body, .main-row {
+    height: 100%;
+}
+
+.main-row {
+    width: 100%;
+    min-width: 100%;
+}
+
+.header, .spacer {
+    // the header is now a row within a row, so we need to override foundation styles
+    margin: 0 !important;
+}
+
+$sidebar-header-gray: #777;
+$sidebar-icon-gray: #999;
+.dashboard-sidebar {
+    padding: 0;
+    background-color: $oil;
+    height: 100%;
+    font-family: $lato-font-family;
+    overflow: scroll;
+
+    .sidebar-close-button {
+        display: none;
+        color: $sidebar-icon-gray;
+        font-size: 19px;
+        position: absolute;
+        right: 9px;
+        top: 0;
+    }
+
+    .dashboard-section {
+        padding: 10px 0;
+
+        .dashboard-header {
+            padding: 0 20px;
+        }
+        .dashboard-sidebar-project-container {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: $sidebar-header-gray;
+        }
+    }
+
+    .dashboard-header {
+        font-size: 13px;
+        line-height: 16px;
+        color: $sidebar-header-gray;
+        text-transform: uppercase;
+        margin: 10px auto;
+    }
+
+    .role-select {
+        color: white;
+        width: 100%; // of the sidebar itself
+        text-align: center;
+
+        font-weight: bold;
+
+        border-bottom: 1px solid lighten($oil, 10%);
+
+        .role-select-inner {
+            display: inline-block;
+            font-size: 22px;
+            line-height: $revolv-dashboard-header-height;
+        }
+
+        .dashboard-sidebar-chevron {
+            display: inline-block;
+            color: $sidebar-icon-gray;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    }
+
+    .create-new {
+        padding: 10px 20px;
+        a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            @include revolv-hover-button($revolv-blue, white);
+        }
+    }
+
+    .role-select-options {
+        padding: 10px 20px;
+        border-bottom: 1px solid lighten($oil, 10%);
+        display: none; // initially hidden
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .role-select-option {
+            margin-left: 10px;
+            font-size: 15px;
+            line-height: 18px;
+            color: #bbb;
+            cursor: pointer;
+        }
+    }
+
+    .dashboard-sidebar-bullet-point {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+        background-color: red;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+
+        &.drafted {
+            background-color: $revolv-red;
+        }
+        &.proposed {
+            background-color: $revolv-yellow;
+        }
+        &.active {
+            background-color: $revolv-green;
+        }
+        &.completed {
+            background-color: $revolv-blue;
+        }
+    }
+    .dashboard-sidebar-project {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 13px;
+        line-height: 15px;
+        max-width: 80%;
+        color: inherit;
+    }
+
+    .dashboard-manage-link {
+        cursor: pointer;
+        padding: 5px 20px 5px 36px;
+        font-size: 13px;
+        line-height: 16px;
+        color: lighten($sidebar-header-gray, 10%);
+        &:hover {
+            color: lighten($sidebar-header-gray, 20%);
+        }
+
+        a, a:visited, a:active, a:hover {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+
+    .dashboard-sidebar-project-container, .dashboard-manage-link {
+        &.active {
+            background-color: $revolv-blue;
+            color: white;
+
+            .dashboard-sidebar-bullet-point {
+                visibility: hidden;
+            }
+        }
+    }
+}
+
+.no-donations {
+    h2, p {
+        width: 300px;
+        margin: 0 auto;
+        font-size: 20px;
+        line-height: 22px;
+        font-weight: 300;
+        margin-top: 50px;
+    }
+}
+
+.dashboard-data-section {
+    display: none;
+    &.dashboard-data-section-current {
+        display: block;
+    }
+}
+
+.dashboard-project {
+    padding: 0;
+
+    // the dashboard project page should scroll instead of extending
+    // down past the sidebar
+    max-height: 100%;
+    overflow: scroll;
+
+    // the dashboard sidebar back overlay is active when the sidebar is expanded at low
+    // screen sizes. it covers the entier project container, in order to facilitate the
+    // action which closes the dashboard sidebar when the background behind it is clicked.
+    .dashboard-sidebar-back-overlay {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .dashboard-project-header {
+        height: auto;
+        min-height: $revolv-dashboard-header-height;
+        width: 100%;
+        padding: 15px;
+        font-family: $lato-font-family;
+
+        .project-header-inner-wrap {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            height: $revolv-dashboard-header-height;
+            vertical-align: top;
+            margin-right: 10px;
+            color: $revolv-dark-blue;
+            cursor: pointer;
+        }
+
+        .project-status {
+            margin-left: 10px;
+
+            font-size: 13px;
+            line-height: 16px;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        .project-status-large {
+            display: none; // will only be displayed in $large-up
+        }
+
+        .project-status-medium {
+            display: inline-block;
+            margin-left: 0;
+            margin-right: 10px;
+        }
+
+        .title-area {
+            display: inline-block;
+            height: 100%;
+
+            .title {
+                display: inline-block;
+                font-size: 18px;
+                font-weight: bold;
+                line-height: 20px;
+            }
+
+            .location {
+                display: inline-block;
+                color: #777;
+                font-size: 11px;
+                line-height: 15px;
+
+                .location-text {
+                    display: inline-block;
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+
+    .controls-large {
+        // controls-large is shown by default, and in medium portrait and smaller
+        // screens, we hide it and make controls-medium visible instead (it's in
+        // another row)
+        display: inline-block;
+    }
+
+    .controls-small {
+        display: none;
+        padding: 0 0 15px 15px;
+    }
+
+    .controls {
+        text-align: left; // when buttons overflow one line, make them at least look nice
+        line-height: 36px;
+
+        form {
+            padding: 0;
+        }
+        form, .button {
+            display: inline-block;
+            margin-right: 10px;
+            &:last-child {
+                margin-right: 0;
+            }
+
+            input {
+                margin-bottom: 0; // foundation override
+            }
+        }
+
+        .button {
+            display: inline-block;
+
+            font-size: 13px;
+            line-height: 16px;
+            color: #555;
+            text-transform: uppercase;
+            padding: 7px 20px;
+
+            @include revolv-hover-button($revolv-blue, inherit);
+            &.success {
+                @include revolv-hover-button($revolv-green, inherit);
+            }
+            &.alert {
+                @include revolv-hover-button($revolv-red, inherit);
+            }
+        }
+    }
+
+    .project-tabs {
+        margin: 0; // foundation override
+        margin-top: 10px;
+        text-align: center;
+
+        .tabs {
+            display: inline-block;
+
+            .tab-title {
+                @include revolv-sliding-border($revolv-blue, 2px, .3s);
+                a {
+                    font-size: 13px;
+                    line-height: 16px;
+                    text-transform: uppercase;
+                    color: #555;
+                    background-color: transparent; // foundation override
+                }
+            }
+        }
+    }
+
+    .project-tabs-content {
+        .days-remaining {
+            // more padding than a normal row
+            padding: 0 40px;
+            text-align: center;
+
+            .num-days-remaining {
+                font-size: 40px;
+                font-weight: 700;
+            }
+            .days-remaining-label {
+                font-size: 25px;
+                line-height: 27px;
+                font-weight: 300;
+            }
+        }
+        .row {
+            margin: 0;
+        }
+
+        p, h2 {
+            font-family: $lato-font-family;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 22px;
+            font-weight: 300;
+            white-space: pre-wrap;
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 20px;
+        }
+        h3 {
+            font-size: 16px;
+        }
+        h4 {
+            font-size: 14px;
+        }
+        h5 {
+            font-size: 12px;
+        }
+        h6 {
+            font-size: 10px;
+        }
+    }
+}
+
+$light-gray: #c6c6c6;
+$dark-gray: #555555;
+
+.dashboard-data-section-my-impact {
+    height: 100%;
+
+    .category-preferences-container {
+        height: 100%;
+        padding: 0;
+
+        .gray-bar-container {
+            height: 100%;
+            padding: 0;
+            
+            .gray-bar {
+                position: absolute;
+                height: 84%;
+                top: 8%;
+                background-color: $light-gray;
+                width: 1px;
+            }
+        }
+
+        .choice-container {
+            padding: 0;
+
+            .choice-header {
+                font-weight: 800;
+                color: $dark-gray;
+                text-align: center;
+                margin: 30px 15px;
+                font-size: 1.1rem;
+            }
+
+            .category-option-container {
+                width: 75%;
+                height: 40px;
+                border: 1px solid $light-gray;
+                margin: 5px auto 0 auto;
+                @include transition(border 0.3s);
+                cursor: pointer;
+
+                .checkmark {
+                    visibility: hidden;
+                    height: 20px;
+                    margin: 10px 10px;
+                    position: absolute;
+                }
+
+                .category-title {
+                    font-weight: 300;
+                    color: $dark-gray;
+                    text-align: center;
+                    line-height: 40px;
+                    @include transition(color 0.3s);
+                }
+
+                &.active, &:hover {
+                    border: 1px solid $revolv-blue;
+
+                    .category-title {
+                        font-weight: 800;
+                        color: $revolv-blue;
+                    }
+                }
+
+                &.active {
+                    
+                    .checkmark {
+                        visibility: visible;
+                    }
+                }
+            }
+
+            .explanation-header {
+                font-weight: 500;
+                color: $dark-gray;
+                font-size: 1.05rem;
+                margin-left: 15px;
+                margin-top: 45px;
+            }
+
+            .explanation {
+                margin: 0 15px;
+                font-weight: 300;
+                margin-bottom: 40px;
+            }
+        }
+    }
+}
+
+.cover-photo {
+    // HACK: have to use !important because .rows inside .rows have paddings/margins which have
+    // a high specificity, do to their selector being ".row .row".
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+}
+
+@media #{$large-up} {
+    .dashboard-project {
+        .dashboard-projct-header {
+            .title-area {
+                .title {
+                    font-size: 22px;
+                    line-height: 22px;
+                }
+                // the project status is inside the title area on large screens,
+                // but outside it next to the location on tablets/phones
+                .project-status-large {
+                    display: inline-block;
+                }
+            }
+        }
+        .controls {
+            text-align: right;
+            form {
+                margin-right: 30px;
+            }
+        }
+    }
+}
+
+@media #{$medium-only} {
+    .dashboard-project {
+        .dashboard-project-header {
+            .project-status-medium {
+                display: inline-block;
+            }
+        }
+        .controls {
+            form {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+@mixin mobilfied-dashboard-sidebar {
+    position: fixed;
+    width: 300px;
+    z-index: 200;
+    height: 100%;
+    box-shadow: 0px 0px 22px #222; // to give the "floating" appearance
+    transition: width 0.3s;
+
+    .sidebar-close-button {
+        display: block;
+    }
+}
+
+@mixin mobilified-dashboard-project {
+    .dashboard-sidebar-back-overlay {
+        display: block;
+    }
+    .dashboard-project-header {
+        .title-area {
+            .sidebar-toggle {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+@media #{$medium-only} and (orientation:portrait) {
+
+    .dashboard-sidebar {
+        @include mobilfied-dashboard-sidebar;
+    }
+
+    .dashboard-project {
+        @include mobilified-dashboard-project;
+        // this is a slight hack: we want ths project header row (and the project
+        // container itself) to take up 100% (all 12 columns) in portrait
+        // orientation since the screen is now too small to fit the controls and
+        // the title info in one row, and we've now moved them to separate rows.
+        // however, we can't add a medium-12 class since that would interfere with
+        // medium landscape orientation. so, we hack it by making this element 100%
+        // width, as if it were 12 columns. controls-large, which was taking
+        // up the rest of the columns on tablet landscape and larger, is now
+        // not displayed, so the title-area can take up all the space.
+        width: 100%;
+
+        .dashboard-project-header {
+            .title-area {
+                .project-header-inner-wrap {
+                    max-width: 85%;
+                }
+            }
+        }
+    }
+}
+
+@media #{$small-only} {
+
+    .dashboard-sidebar {
+        @include mobilfied-dashboard-sidebar;
+    }
+
+    .dashboard-project {
+        @include mobilified-dashboard-project;
+
+        .dashboard-project-header {
+            .title-area  {
+                .project-header-inner-wrap {
+                    // long project titles flow on to the next line on phones. to stop this, we
+                    // set a max-width.
+                    max-width: 85%;
+                }
+            }
+        }
+        .controls-large {
+            display: none;
+        }
+
+        .controls-small {
+            display: inline-block;
+        }
+
+        .controls {
+            .button {
+                font-size: 11px;
+                line-height: 12px;
+            }
+        }
+
+        .project-tabs {
+            .tabs {
+                .tab-title {
+                    margin-right: 5px;
+
+                    a {
+                        font-size: 11px;
+                        line-height: 28px; // large line height to separate from blue border
+                        padding: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media #{$small-only}, #{$medium-only} {
+    .gray-bar-container {
+        display: none;
+    }
+    .dashboard-data-section-my-impact {
+        .category-preferences-container {
+            .choice-container {
+                .explanation, .explanation-header, .choice-header {
+                    // this much nesting is necessary because if it is not nested in this far, it does not take precedence
+                    width: 75%;
+                    margin-left: 12.5%; 
+                }
+            }
+        }
+    }
+}

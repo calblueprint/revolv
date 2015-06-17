@@ -53,7 +53,8 @@ class UserPermissionsTestCase(TestCase):
         """
         Given a User: if ambassador is True, assert that the user is an
         ambassador. Additionally, if admin is True, also assert that the
-        user is an administrator.
+        user is an administrator. If neither are true, assert that the user
+        is neiter an ambassador nor an administrator.
         """
         if ambassador:
             amb_group_check = self._assert_in_group
@@ -67,6 +68,13 @@ class UserPermissionsTestCase(TestCase):
 
         amb_group_check(user, RevolvUserProfile.AMBASSADOR_GROUP)
         ad_group_check(user, RevolvUserProfile.ADMIN_GROUP)
+
+        if admin:
+            self.assertEqual(user.is_staff, True)
+            self.assertEqual(user.is_superuser, True)
+        if not admin:
+            self.assertEqual(user.is_staff, False)
+            self.assertEqual(user.is_superuser, False)
 
     def test_correct_groups_exist(self):
         get_group_by_name(RevolvUserProfile.AMBASSADOR_GROUP)

@@ -21,11 +21,11 @@ class DonationLevelFormSetMixin(object):
     the Create Project and Update Project page.
     """
 
-    def get_donation_level_formset(self, extra = 2):
+    def get_donation_level_formset(self, extra=2):
         """ Checks if the request is a POST, and populates the formset with current object as the instance
         """
         ProjectDonationLevelFormSet = forms.make_donation_level_formset(extra)
-        
+
         if self.request.POST:
             return ProjectDonationLevelFormSet(self.request.POST, instance=self.object)
         else:
@@ -47,7 +47,7 @@ class CreateProjectView(DonationLevelFormSetMixin, CreateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-        
+
         formset = self.get_donation_level_formset()
         if formset.is_valid():
             new_project = Project.objects.create_from_form(form, self.request.user.revolvuserprofile)
@@ -91,9 +91,9 @@ class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-        
+
         formset = self.get_donation_level_formset()
-        
+
         if formset.is_valid():
             project = self.get_object()
             project.update_categories(form.cleaned_data['categories_select'])
@@ -110,16 +110,6 @@ class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
         context['donation_level_formset'] = self.get_donation_level_formset()
         return context
 
-class TemplateProjectUpdateView(UserDataMixin, UpdateView):
-    form_class = forms.EditProjectUpdateForm
-    template_name = 'project/edit_project_update.html'
-
-
-    def dispatch(self, request, *args, **kwargs):
-        response = super(TemplateProjectUpdateView, self).dispatch(request, args, kwargs)
-        if not self.is_ambassador:
-            return self.deny_access()
-        return response
 
 class ReviewProjectView(UserDataMixin, UpdateView):
     """
@@ -129,7 +119,6 @@ class ReviewProjectView(UserDataMixin, UpdateView):
     Accessed through /project/{project_id}/review
     """
     model = Project
-    template_name = 'project/review_project.html'
     form_class = forms.ProjectStatusForm
     http_method_names = [u'post']
 
@@ -168,6 +157,7 @@ class ReviewProjectView(UserDataMixin, UpdateView):
         context = super(ReviewProjectView, self).get_context_data(**kwargs)
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         return context
+
 
 class TemplateProjectUpdateView(UserDataMixin, UpdateView):
     form_class = forms.EditProjectUpdateForm

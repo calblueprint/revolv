@@ -546,6 +546,7 @@ $dark-gray: #555555;
                 border: 1px solid $light-gray;
                 margin: 5px auto 0 auto;
                 @include transition(border 0.3s);
+                cursor: pointer;
 
                 .checkmark {
                     visibility: hidden;

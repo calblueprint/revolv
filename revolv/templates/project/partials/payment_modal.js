@@ -391,6 +391,7 @@ $('#donate-form').submit(function(e) {
         $donateModalErrors.addClass('error');
         $donateModalErrors.children('.error-msg')
             .text('Your card information is invalid. Please correct it.');
+        $(".payment-pitch").hide();
         $('#donate-modal').foundation('reveal', 'open');
     }).always(function () {
         paymentSpinner.stop();

@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+{% block head %}
+    <meta http-equiv="refresh" content="0; URL='{{ self.link_href }}'" />
+{% endblock head %}
+{% block body %}
+    <div class="row">
+        <div class="small-12 columns">
+            <p>You should be redirected from this page. If you are not, please <a href="{{self.link_href}}">click here</a>.</p>
+        </div>
+    </div>
+{% endblock body %}

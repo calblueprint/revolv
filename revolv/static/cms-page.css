@@ -1,0 +1,35 @@
+.cms-content-row {
+  margin-top: 50px;
+  margin-bottom: 50px; }
+  .cms-content-row img {
+    padding: 10px 20px; }
+    .cms-content-row img.left {
+      padding-left: 0; }
+    .cms-content-row img.right {
+      padding-right: 0; }
+  .cms-content-row h1, .cms-content-row h2, .cms-content-row h3, .cms-content-row h4, .cms-content-row h5, .cms-content-row h6 {
+    margin-bottom: 20px;
+    font-weight: bold; }
+  .cms-content-row h1 {
+    font-size: 32px;
+    line-height: 36px;
+    color: #064f7e; }
+  .cms-content-row h2, .cms-content-row h3, .cms-content-row h4, .cms-content-row h5, .cms-content-row h6 {
+    color: #11ade5; }
+  .cms-content-row h2 {
+    font-size: 28px;
+    line-height: 30px; }
+  .cms-content-row h3 {
+    font-size: 24px;
+    line-height: 28px; }
+  .cms-content-row h4 {
+    font-size: 20px;
+    line-height: 24px; }
+  .cms-content-row h5 {
+    font-size: 18px;
+    line-height: 20px; }
+  .cms-content-row h6 {
+    font-size: 28px;
+    line-height: 30px; }
+  .cms-content-row p {
+    max-width: 800px; }
