@@ -61,7 +61,7 @@
     {% if project.is_completed %}
     <div class="content repayment active" id="repayment-{{project.pk}}">
         <div class="row repayment-progress-container">
-            <div class="large-3 large-offset-2 columns" style="height:180px">
+            <div class="large-3 large-offset-3 columns" style="height:180px">
                 <div class="statistics-graphics-container">
                     <svg class="svg-graphics-container"></svg>
                     <svg class="internal-graphics-container"></svg>
@@ -72,7 +72,7 @@
                     <div class="percentage-container hide">{{ project.partial_repayment_as_js }}</div>
                 </div>
             </div>
-            <div class="large-7 columns">
+            <div class="large-6 columns">
                 <div class="repayment-details-container">
                     <div class="statistics-table">
                         <span class="statistics-table-spacer"></span>
