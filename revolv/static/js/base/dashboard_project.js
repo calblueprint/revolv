@@ -1,3 +1,9 @@
+/**
+ * This file renders the svg circles for the repayment modules for the project view
+ * on the user dashboards. It defines and then creates a DashboardCircles object
+ * that handles the logic for drawing repayment progress. The DashboardCircles object is
+ * used in dashboard.js, where the logic for switching tabs and projects is taken care of.
+ */
 function DashboardCircles() {
     /**
      * Deletes circles for the currently active project. Called when switching projects on the dashboard.
@@ -85,8 +91,10 @@ function DashboardCircles() {
     };
 }
 
+// initializes a dashboard circles object
 var dashboard = new DashboardCircles();
 
+// binds events and listeners to properly render svg circles
 $(document).ready(function () {
     dashboard.draw();
 });

@@ -7782,29 +7782,35 @@ html, body, .main-row {
           -ms-transform: translate(-50%, -50%);
           -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%); }
+    @media only screen and (max-width: 64.063em) {
+      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table {
+        margin-left: auto;
+        margin-right: auto; } }
     .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table {
       display: table;
       height: 180px; }
-    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-row {
-      display: table-row; }
-      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-row .statistics-row-cell {
-        display: table-cell;
-        vertical-align: middle;
-        border-color: #dddddd;
-        border-width: thin;
-        padding: 10px; }
-    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .bottom-border {
-      border-bottom: solid; }
-    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .right-border {
-      border-right: solid; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-table-spacer {
+        height: 10px; }
+      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-row {
+        display: table-row; }
+        .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-row .bottom-border {
+          border-bottom: solid; }
+        .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-row .right-border {
+          border-right: solid; }
+        .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-row .statistics-row-cell {
+          display: table-cell;
+          vertical-align: middle;
+          border-color: #dddddd;
+          border-width: thin;
+          padding: 10px; }
     .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .detail-text {
       margin-bottom: 0em;
       color: #bbbbbb;
-      font-size: 2em;
+      font-size: 1.5em;
       font-weight: 200; }
     .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .amount-text {
       margin-bottom: 0em;
-      font-size: 2em; }
+      font-size: 1.5em; }
 
 .dashboard-data-section-my-impact {
   height: 100%; }

@@ -461,35 +461,45 @@ $sidebar-icon-gray: #999;
                 }
             }
             .repayment-details-container {
+                @media only screen and (max-width:64.063em) {
+                    // for centering the statistics table on mobile
+                    .statistics-table {
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
                 .statistics-table {
                     display: table;
                     height: 180px;
-                }
-                .statistics-row {
-                    display: table-row;
-                    .statistics-row-cell {
-                        display: table-cell;
-                        vertical-align: middle;
-                        border-color: #ddd;
-                        border-width: thin;
-                        padding: 10px;
+                    .statistics-table-spacer {
+                        height: 10px;
                     }
-                }
-                .bottom-border {
-                    border-bottom: solid;
-                }
-                .right-border {
-                    border-right: solid;
+                    .statistics-row {
+                        display: table-row;
+                        .bottom-border {
+                            border-bottom: solid;
+                        }
+                        .right-border {
+                            border-right: solid;
+                        }
+                        .statistics-row-cell {
+                            display: table-cell;
+                            vertical-align: middle;
+                            border-color: #ddd;
+                            border-width: thin;
+                            padding: 10px;
+                        }
+                    }
                 }
                 .detail-text {
                     margin-bottom:0em;
                     color: #bbb;
-                    font-size:2em;
+                    font-size:1.5em;
                     font-weight:200;
                 }
                 .amount-text {
                     margin-bottom:0em;
-                    font-size:2em;
+                    font-size:1.5em;
                 }
             }
         }
