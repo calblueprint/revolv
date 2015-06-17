@@ -60,6 +60,11 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         context["project_dict"] = project_dict
         context["role"] = self.role or "donor"
 
+        # TODO FILL THIS IN
+        context['donated_projects'] = 
+        context['statistics'] =
+        # NOTE DO THIS RIGHT AFTER 
+
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')
         context['preferred_categories'] = self.user_profile.preferred_categories.all()

@@ -1,0 +1,18 @@
+{% load staticfiles %}
+
+<div class="large-12 columns">
+	<div class="row statistics-container">
+
+	</div>
+	<div class="row my-projects-container">
+		<p class="my-projects-header">My projects</p>
+		{% if donated_projects %}
+			{% for project in donated_projects %}
+				<div class="project-row row">
+					<p class="{{ project.id }}-project-title {{project.project_status}}">{{ project.title }}</p>
+					<p class="{{ project.id }}-project-status {{project.project_status}}">{{ project.project_status }}</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>
