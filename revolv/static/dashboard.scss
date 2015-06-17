@@ -399,6 +399,110 @@ $sidebar-icon-gray: #999;
         h6 {
             font-size: 10px;
         }
+
+        .repayment-progress-container {
+            height: 180px;
+            .statistics-graphics-container {
+                height: 180px;
+                width: 100%;
+                position: absolute;
+
+                .svg-graphics-container {
+                    // formatting for the white outside circle in repayment progress
+                    // fits to the size of the parent element, position:absolute needed so
+                    // height and width are actually 100% of parent element
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                }
+
+                .internal-graphics-container {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    @include transform(translate(-50%, -50%));
+                }
+
+                .repayment-badge-line, .repayment-badge-circle {
+                    fill: none;
+                }
+
+                .repayment-badge-line {
+                    stroke: $revolv-green;
+                }
+
+                .repayment-badge-circle {
+                    stroke: white;
+                }
+
+                .text-container {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    @include transform(translate(-50%, -50%));
+                    height: 220px;
+                    width: 220px;
+                    color: $revolv-dark-blue;
+
+                    .percentage-text {
+                        position: absolute;
+                        left: 50%;
+                        top: 45%;
+                        @include transform(translate(-50%, -50%));
+                    }
+
+                    .repaid {
+                        position: absolute;
+                        font-weight: 800;
+                        left: 50%;
+                        top: 60%;
+                        @include transform(translate(-50%, -50%));
+                    }
+                }
+            }
+            .repayment-details-container {
+                @media only screen and (max-width:64.063em) {
+                    // for centering the statistics table on mobile
+                    .statistics-table {
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+                .statistics-table {
+                    display: table;
+                    height: 180px;
+                    .statistics-table-spacer {
+                        height: 12px;
+                    }
+                    .statistics-row {
+                        display: table-row;
+                        .bottom-border {
+                            border-bottom: solid;
+                        }
+                        .right-border {
+                            border-right: solid;
+                        }
+                        .statistics-row-cell {
+                            display: table-cell;
+                            vertical-align: middle;
+                            border-color: #ddd;
+                            border-width: thin;
+                            padding: 10px;
+                        }
+                    }
+                }
+                .detail-text {
+                    margin-bottom:0em;
+                    color: #bbb;
+                    font-size:18px;
+                    font-weight:200;
+                }
+                .amount-text {
+                    margin-bottom:0em;
+                    font-size:18px;
+                }
+            }
+        }
     }
 }
 

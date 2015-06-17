@@ -20,10 +20,10 @@ $(document).ready(function () {
             $this.addClass("fa-rotate-180");
         }
     });
-    
+
     /**
      * This function defines what happens when the different categories are clicked in the
-     * 'my impact' section on the dashboard. The category that is clicked is made inactive or active, 
+     * 'my impact' section on the dashboard. The category that is clicked is made inactive or active,
      * and then an AJAX request is made. The view this AJAX reqest is sent to updates the
      * preferred_categories attribute of this user.
      */
@@ -48,7 +48,7 @@ $(document).ready(function () {
                 alert("Please try again.");
             },
         });
-    })
+    });
 
     /**
      * Copied from the Django documentation. Checks if a method needs a csrf token.
@@ -67,7 +67,7 @@ $(document).ready(function () {
      */
     function getCookie(name) {
         var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
+        if (document.cookie && document.cookie !== '') {
             var cookies = document.cookie.split(';');
             for (var i = 0; i < cookies.length; i++) {
                 var cookie = jQuery.trim(cookies[i]);
@@ -101,9 +101,14 @@ $(document).ready(function () {
     $(".dashboard-data-link").click(function() {
         $(".dashboard-data-link.active").removeClass("active");
         $(this).addClass("active");
+        // deletes repayment progress for the current project
+        dashboard.deleteCurrentCircles();
         $(".dashboard-data-section-current").removeClass("dashboard-data-section-current");
         var sectionToShow = $(".dashboard-data-section-" + $(this).data("section"));
         sectionToShow.addClass("dashboard-data-section-current");
+
+        // draws repayment progress for the project we are switching to
+        dashboard.draw();
 
         // if we're in an orientation where we should collapse the sidebar, collapse it.
         if ($(window).width() < TABLET_PORTRAIT_BREAKPOINT) {

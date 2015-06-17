@@ -27,15 +27,20 @@
 <div class="row cover-photo"{% if project.cover_photo %} style="background-image: url({{project.cover_photo.url}});"{% endif %}></div>
 <div class="row project-tabs">
     <dl class="tabs" data-tab>
-        <dd class="tab-title"><a href="#description">Description</a></dd>
-        <dd class="tab-title active"><a href="#funding">Funding &amp; Statistics</a></dd>
+        <dd class="tab-title"><a href="#description-{{project.pk}}">Description</a></dd>
+        <dd class="tab-title{% if not project.is_completed %} active{% endif %}">
+            <a href="#funding-{{project.pk}}">Funding &amp; Statistics</a>
+        </dd>
         {% if project.updates.count > 0 %}
-            <dd class="tab-title"><a href="#updates">Updates</a></dd>
+            <dd class="tab-title"><a href="#updates-{{project.pk}}">Updates</a></dd>
+        {% endif %}
+        {% if project.is_completed %}
+            <dd class="tab-title active"><a href="#repayment-{{project.pk}}">Repayment</a></dd>
         {% endif %}
     </dl>
 </div>
 <div class="project-tabs-content tabs-content">
-    <div class="content description" id="description">
+    <div class="content description" id="description-{{project.pk}}">
         <div class="row project-tagline">
             <h2 class="small-10 small-offset-1 columns">{{project.tagline}}</h2>
         </div>
@@ -45,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="content active funding" id="funding">
+    <div class="content funding{% if not project.is_completed %} active{% endif %}" id="funding-{{project.pk}}">
         <div class="row donation-stats">
             <div class="days-remaining small-6 medium-3 large-2 columns">
                 <div class="num-days-remaining">{{project.days_left}}</div>
@@ -53,4 +58,53 @@
             </div>
         </div>
     </div>
+    {% if project.is_completed %}
+    <div class="content repayment active" id="repayment-{{project.pk}}">
+        <div class="row repayment-progress-container">
+            <div class="large-3 large-offset-3 columns" style="height:180px">
+                <div class="statistics-graphics-container">
+                    <svg class="svg-graphics-container"></svg>
+                    <svg class="internal-graphics-container"></svg>
+                    <div class="text-container">
+                        <p class="percentage-text">{{ project.percent_repaid }}%</p>
+                        <p class="repaid">REPAID</p>
+                    </div>
+                    <div class="percentage-container hide">{{ project.partial_repayment_as_js }}</div>
+                </div>
+            </div>
+            <div class="large-6 columns">
+                <div class="repayment-details-container">
+                    <div class="statistics-table">
+                        <span class="statistics-table-spacer"></span>
+                        <div class="statistics-row">
+                            <div class="right-border bottom-border statistics-row-cell">
+                                <p class="detail-text">Amount Repaid</p>
+                            </div>
+                            <div class="bottom-border statistics-row-cell">
+                                <p class="amount-text">${{ project.amount_repaid|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                        <div class="statistics-row">
+                            <div class="right-border bottom-border statistics-row-cell">
+                                <p class="detail-text">Amount Donated</p>
+                            </div>
+                            <div class="bottom-border statistics-row-cell">
+                                <p class="amount-text">${{ project.amount_donated|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                        <div class="statistics-row">
+                            <div class="right-border statistics-row-cell">
+                                <p class="detail-text">kwH saved</p>
+                            </div>
+                            <div class="statistics-row-cell">
+                                <p class="amount-text">{{ project.actual_energy }}</p>
+                            </div>
+                        </div>
+                        <span class="statistics-table-spacer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
