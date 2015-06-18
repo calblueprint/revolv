@@ -26,10 +26,10 @@ from storages.backends.s3boto import S3BotoStorage
 
 
 class RevolvProductionStaticStorage(S3BotoStorage):
-    """Storage that tells boto to collect files into the staging directory in our S3 bucket."""
+    """Storage that tells boto to collect files into the production directory in our S3 bucket."""
     location = settings.STATICFILES_PRODUCTION_LOCATION
 
 
 class RevolvStagingStaticStorage(S3BotoStorage):
-    """Storage that tells boto to collect files into the production directory in our S3 bucket."""
+    """Storage that tells boto to collect files into the staging directory in our S3 bucket."""
     location = settings.STATICFILES_STAGING_LOCATION
