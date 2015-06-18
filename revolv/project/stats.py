@@ -55,6 +55,11 @@ class KilowattStatsAggregator(object):
         self.kilowatts = float(kilowatts)
 
     @property
+    def kilowatt_hours_per_month(self):
+        """Return the number of kilowatt hours outputted per month, given this aggregator's kilowatt value."""
+        return self.kilowatts * self.NUM_HOURS_IN_MONTH * self.SOLAR_PANEL_USE_FACTOR_PER_DAY
+
+    @property
     def pounds_carbon_saved_per_month(self):
         """
         Return the pounds of carbon emissions per month equivalent to the aggregator's kilowatt value.
@@ -115,4 +120,5 @@ class KilowattStatsAggregator(object):
             "dollars_saved_per_month": self.dollars_saved_per_month,
             "acres_of_trees_saved_per_year": self.acres_of_trees_saved_per_year,
             "automobile_miles_per_month": self.automobile_miles_per_month,
+            "kilowatt_hours_per_month": self.kilowatt_hours_per_month
         }

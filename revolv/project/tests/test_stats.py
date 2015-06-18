@@ -15,6 +15,7 @@ class StatsAggregatorTestCase(TestCase):
         self.assert_stat_okay(aggregator.acres_of_trees_saved_per_year)
         self.assert_stat_okay(aggregator.dollars_saved_per_month)
         self.assert_stat_okay(aggregator.automobile_miles_per_month)
+        self.assert_stat_okay(aggregator.kilowatt_hours_per_month)
 
     def test_auto_instantiations(self):
         """Test that we can create a StatsAggregator from projects or querysets."""
