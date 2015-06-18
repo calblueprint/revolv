@@ -1,7 +1,7 @@
 """
 Custom storage settings used to ensure that static files collected
 to Amazon s3 aren't just dropped in the root of the bucket (and instead
-are collected to a bucket's subdirectory).
+are collected to a subdirectory of the bucket).
 
 See https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/
 
