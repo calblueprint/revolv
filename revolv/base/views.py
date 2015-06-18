@@ -3,6 +3,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
@@ -49,6 +50,12 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         """
         return []
 
+    def make_statistics_dictionary(self):
+        stat_dict = {}
+        stat_dict['project_count'] = Project.donated_projects(self.user_profile).count()
+        stat_dict['repayments'] = Payment.repayments(user=self.user_profile).aggregate(Sum('amount'))
+        return stat_dict
+
     def get_context_data(self, **kwargs):
         context = super(BaseStaffDashboardView, self).get_context_data(**kwargs)
 
@@ -60,10 +67,11 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         context["project_dict"] = project_dict
         context["role"] = self.role or "donor"
 
-        # TODO FILL THIS IN
-        context['donated_projects'] = 
-        context['statistics'] =
-        # NOTE DO THIS RIGHT AFTER 
+        context['donated_projects'] = Project.donated_projects(self.user_profile)
+        statistics_dictionary = self.make_statistics_dictionary()
+        statistics['number_of_projects_donated_to'] = Project.donated_projects(self.user_profile).count()
+        context['statistics'] = statistics_dictionary
+
 
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')
