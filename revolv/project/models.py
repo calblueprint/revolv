@@ -11,6 +11,7 @@ from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
 from revolv.payments.models import Payment
+from revolv.project.stats import KilowattStatsAggregator
 
 
 class ProjectManager(models.Manager):
@@ -92,6 +93,16 @@ class ProjectManager(models.Manager):
             project_status=Project.DRAFTED
         ).order_by('updated_at')
         return drafted_projects
+
+    def statistics(self, queryset=None):
+        """
+        Return a revolv.project.stats.KilowattStatsAggregator to
+        aggregate statistics about the impact of the given queryset of
+        projects.
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        return KilowattStatsAggregator.from_project_queryset(queryset)
 
     def owned_projects(self, user_profile):
         """ Get all projects owned by a RevolvUserProfile.
@@ -401,8 +412,9 @@ class Project(models.Model):
         """
         :return: the total amount of money to be repaid by the project to RE-volv.
         """
-        # TODO : Actually calculate this amount based off of interest, but using
-        # the project's funding goal is sufficient for now.
+        # TODO (https://github.com/calblueprint/revolv/issues/291): Actually
+        # calculate this amount based off of interest, but using the project's
+        # funding goal is sufficient for now.
         return self.funding_goal
 
     @property
@@ -515,6 +527,15 @@ class Project(models.Model):
         :return: The set of all DonationLevel models associated with this project.
         """
         return self.donationlevel_set.all()
+
+    @property
+    def statistics(self):
+        """
+        Return a revolv.project.stats.KilowattStatsAggregator for this project.
+        Having this as a property is usefule in templates where we need to display
+        statistics about the project (e.g. lbs carbon saved, $ saved, etc).
+        """
+        return KilowattStatsAggregator.from_project(self)
 
     def add_update(self, text):
         update = ProjectUpdate(update_text=text, project=self)

@@ -2,6 +2,11 @@
 Module for encapsulating functions related to project statistics (aka
 computing the effects of projects based on their stated kilowatt output).
 """
+from django.db.models import Sum
+
+
+class KilowattStatsAggregatorException(Exception):
+    pass
 
 
 class KilowattStatsAggregator(object):
@@ -17,11 +22,16 @@ class KilowattStatsAggregator(object):
 
     @classmethod
     def from_project(cls, project):
-        pass
+        return cls(project.impact_power)
 
     @classmethod
     def from_project_queryset(cls, queryset):
-        pass
+        total_kilowatts = queryset.aggregate(Sum("impact_power"))["impact_power__sum"]
+
+        if total_kilowatts is None:
+            raise KilowattStatsAggregatorException("Could not determine total kilowatt output of Project queryset.")
+
+        return cls(queryset.aggregate(Sum("impact_power"))["impact_power__sum"])
 
     def __init__(self, kilowatts):
         self.kilowatts = float(kilowatts)
