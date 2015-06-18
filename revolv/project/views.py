@@ -132,8 +132,11 @@ class ReviewProjectView(UserDataMixin, UpdateView):
     def form_valid(self, form):
         project = self.object
         if '_approve' in self.request.POST:
-            messages.success(self.request, project.title + ' has been approved')
+            messages.success(self.request, project.title + ' has been approved and is live.')
             project.approve_project()
+        elif '_unapprove' in self.request.POST:
+            messages.success(self.request, project.title + ' is no longer live.')
+            project.unapprove_project()
         elif '_propose' in self.request.POST:
             messages.success(self.request, project.title + ' is now pending approval')
             project.propose_project()
