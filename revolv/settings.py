@@ -37,10 +37,7 @@ FACEBOOK_APP_ID = os.environ.get("REVOLV_FACEBOOK_APP_ID")
 FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# TODO: static files will not serve with debug turned off, so we need
-# to move staticfile serving to Amazon in order to turn off DEBUG.
-# see https://github.com/calblueprint/revolv/issues/135
-DEBUG = IS_LOCAL or IS_STAGE
+DEBUG = IS_LOCAL
 
 TEMPLATE_DEBUG = IS_LOCAL
 
@@ -178,37 +175,54 @@ USE_THOUSAND_SEPARATOR = True
 # Login settings
 LOGIN_URL = '/signin'
 
-# Static asset configuration
-STATIC_ROOT = 'staticfiles'
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'djangobower.finders.BowerFinder',
-)
-
-# djangobower settings
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
-BOWER_INSTALLED_APPS = (
-    'foundation',
-)
-
+# Default media file (uploads) storage on Amazon S3
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 AWS_ACCESS_KEY_ID = os.environ.get('REVOLV_AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.environ.get('REVOLV_AWS_SECRET_KEY', '')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('REVOLV_S3_BUCKET', '')
 
-S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+S3_URL = 'https://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 MEDIA_DIRECTORY = '/media/'
 MEDIA_URL = S3_URL + MEDIA_DIRECTORY
+
+STATIC_ROOT = 'staticfiles'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+if IS_LOCAL:
+    # On local, we use django's built in static files app, which will serve
+    # static files (css, js, etc) directly from the project directory called
+    # "static" (that directory is a sibling of this file in the directory tree)
+    # See https://docs.djangoproject.com/en/1.7/howto/static-files/
+    STATIC_URL = '/static/'
+else:
+    # on staging/production, we use Amazon S3 for storage.
+    # See https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/
+
+    # the bucket directory in which to collect static files for staging
+    STATICFILES_STAGING_LOCATION = "static_staging"
+    # the corresponding bucket directory for static files on prod
+    STATICFILES_PRODUCTION_LOCATION = "static_production"
+    if IS_PROD:
+        staticfiles_location = STATICFILES_PRODUCTION_LOCATION
+        STATICFILES_STORAGE = 'revolv.custom_storages.RevolvProductionStaticStorage'
+    else:
+        staticfiles_location = STATICFILES_STAGING_LOCATION
+        STATICFILES_STORAGE = 'revolv.custom_storages.RevolvStagingStaticStorage'
+    STATIC_URL = "%s/%s/" % (S3_URL, staticfiles_location)
+
+# djangobower settings
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
+BOWER_INSTALLED_APPS = (
+    'foundation',
+)
 
 # email settings
 # see http://stackoverflow.com/questions/9723494/setting-up-email-with-sendgrid-in-heroku-for-a-django-app
