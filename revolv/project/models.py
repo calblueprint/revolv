@@ -2,10 +2,9 @@
 import datetime
 from itertools import chain
 
+from ckeditor.fields import RichTextField
 from django.core.urlresolvers import reverse
 from django.db import models
-
-from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
