@@ -34,7 +34,7 @@ class KilowattStatsAggregator(object):
     AVERAGE_AMERICAN_MPG = 24.1
     # percentage of day the solar panels produce power
     # roughly 11.5 hours a day in CA: http://aa.usno.navy.mil/cgi-bin/aa_durtablew.pl?form=1&year=2015&task=-1&state=CA&place=San+Francisco
-    SOLAR_PANEL_USE_PERCENTAGE_PER_DAY = 11.5 / 24
+    SOLAR_PANEL_USE_FACTOR_PER_DAY = 11.5 / 24
 
     @classmethod
     def from_project(cls, project):
@@ -64,7 +64,7 @@ class KilowattStatsAggregator(object):
         pounds of carbon saved per month is the number of kilowatt hours produced in a month times
         1.845.
         """
-        return self.kilowatts * self.NUM_HOURS_IN_MONTH * self.SOLAR_PANEL_USE_PERCENTAGE_PER_DAY * self.POUNDS_CARBON_PER_KWH
+        return self.kilowatts * self.NUM_HOURS_IN_MONTH * self.SOLAR_PANEL_USE_FACTOR_PER_DAY * self.POUNDS_CARBON_PER_KWH
 
     @property
     def dollars_saved_per_month(self):
@@ -77,7 +77,7 @@ class KilowattStatsAggregator(object):
         730.484 hours in a month. This means that the money that a n kilowatt solar panel will save
         is equal to n * 730.484 * 0.152.
         """
-        return self.kilowatts * self.NUM_HOURS_IN_MONTH * self.SOLAR_PANEL_USE_PERCENTAGE_PER_DAY * self.ELECTRICITY_PRICE_PER_KWH
+        return self.kilowatts * self.NUM_HOURS_IN_MONTH * self.SOLAR_PANEL_USE_FACTOR_PER_DAY * self.ELECTRICITY_PRICE_PER_KWH
 
     @property
     def acres_of_trees_saved_per_year(self):
@@ -90,7 +90,7 @@ class KilowattStatsAggregator(object):
         to https://www.google.com/search?q=hours+in+a+uyear&ie=utf-8&oe=utf-8#safe=off&q=hours+in+a+year
         there are 8765.81 hours in a year, so (acres of trees) = (kilowatts) * (hours in a year) / 5125
         """
-        return self.kilowatts * self.NUM_HOURS_IN_YEAR * self.SOLAR_PANEL_USE_PERCENTAGE_PER_DAY / self.KWH_PER_ACRE_OF_TREES
+        return self.kilowatts * self.NUM_HOURS_IN_YEAR * self.SOLAR_PANEL_USE_FACTOR_PER_DAY / self.KWH_PER_ACRE_OF_TREES
 
     @property
     def automobile_miles_per_month(self):
@@ -106,7 +106,7 @@ class KilowattStatsAggregator(object):
 
         TODO: could take into account old cars as well as 2015 cars when calculating the average MPG.
         """
-        return self.kilowatts * self.NUM_HOURS_IN_MONTH * self.SOLAR_PANEL_USE_PERCENTAGE_PER_DAY / self.KWH_PER_GALLON_GAS * self.AVERAGE_AMERICAN_MPG
+        return self.kilowatts * self.NUM_HOURS_IN_MONTH * self.SOLAR_PANEL_USE_FACTOR_PER_DAY / self.KWH_PER_GALLON_GAS * self.AVERAGE_AMERICAN_MPG
 
     def as_dict(self):
         """Return all statistics as a dict."""
