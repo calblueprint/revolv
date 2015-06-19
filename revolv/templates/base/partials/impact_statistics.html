@@ -1,12 +1,47 @@
 {% load staticfiles %}
+{% load humanize %}
 
 <div class="large-12 columns">
 	<div class="row statistics-container">
-		<div class="row statistics-row">
+		<div class="row">
+			<p class="contribution-text">Thank you for contributing! Your contribution has...</p>
 		</div>
 		<div class="row statistics-row">
+			<div class="medium-6 columns col-1">
+			</div>
+			<div class="medium-6 columns col-2">
+			</div>
 		</div>
 		<div class="row statistics-row">
+			<div class="medium-6 columns statistic col-1">
+				<div class="medium-4 small-5 columns icon-container">
+					<img class="icon repayments-icon" src="{% static "images/coin.svg" %}" />
+				</div>
+				<div class="medium-8 small-7 columns">
+					<div class="text-container repayments">
+						<p class="top-description description">earned</p>
+						<p class="emphasized-text repayments">${{ statistics.repayments|floatformat:2|intcomma }}</p>
+						<p class="bottom-description description">in repayments</p>
+					</div>
+				</div>
+			</div>
+			<div class="medium-6 columns statistic col-2">
+				<div class="medium-4 small-5 columns icon-container">
+					<img class="icon projects-donated-to-icon" src="{% static "images/house.svg" %}" />
+				</div>
+				<div class="medium-8 small-7 columns">
+					<div class="text-container number-of-projects">
+						<p class="description">contributed to</p>
+						<p class="emphasized-text number-of-projects">{{ statistics.project_count }} project{{ statistics.project_count|pluralize }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row statistics-row">
+			<div class="small-6 columns col-1">
+			</div>
+			<div class="small-6 columns col-2">
+			</div>
 		</div>
 	</div>
 	<div class="row my-projects-container">
@@ -14,8 +49,12 @@
 		{% if donated_projects %}
 			{% for project in donated_projects %}
 				<div class="project-row row">
-					<p class="{{ project.id }}-project-title {{project.project_status}}">{{ project.title }}</p>
-					<p class="{{ project.id }}-project-status {{project.project_status}}">{{ project.project_status }}</p>
+					<div class="medium-9 small-7 columns">
+						<a href="{% url "project:view" pk=project.pk %}"><p class="project-title">{{ project.title }}</p></a>
+					</div>
+					<div class="medium-3 small-5 columns">
+						<p class="project-status {% if project.is_active %}active{% endif %}">{{ project.get_project_status_display }}</p>
+					</div>
 				</div>
 			{% endfor %}
 		{% endif %}

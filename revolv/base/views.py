@@ -52,8 +52,8 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
 
     def make_statistics_dictionary(self):
         stat_dict = {}
-        stat_dict['project_count'] = Project.donated_projects(self.user_profile).count()
-        stat_dict['repayments'] = Payment.repayments(user=self.user_profile).aggregate(Sum('amount'))
+        stat_dict['project_count'] = Project.objects.donated_projects(self.user_profile).count()
+        stat_dict['repayments'] = Payment.objects.repayment_fragments(user=self.user_profile).aggregate(Sum('amount'))['amount__sum'] or 0
         return stat_dict
 
     def get_context_data(self, **kwargs):
@@ -67,9 +67,8 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         context["project_dict"] = project_dict
         context["role"] = self.role or "donor"
 
-        context['donated_projects'] = Project.donated_projects(self.user_profile)
+        context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
         statistics_dictionary = self.make_statistics_dictionary()
-        statistics['number_of_projects_donated_to'] = Project.donated_projects(self.user_profile).count()
         context['statistics'] = statistics_dictionary
 
 

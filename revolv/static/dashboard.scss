@@ -512,6 +512,86 @@ $dark-gray: #555555;
 .dashboard-data-section-my-impact {
     height: 100%;
 
+    .my-impact-container {
+
+        .statistics-container {
+
+            .icon-container {
+                padding: 0;
+            }
+
+            .contribution-text {
+                font-weight: 800;
+                margin: 0 10% 40px 10%;
+                text-align: center;
+                font-size: 1.05rem;
+                margin-top: 50px;
+                color: $dark-gray;
+            }
+
+            .icon {
+                height: 100px;
+                margin: 0;
+            }
+
+            .statistics-row {
+
+                .description  {
+                    font-weight: 300;
+                    line-height: 1rem;
+                    margin: 0;
+                }
+
+                .emphasized-text {
+                    font-weight: 800;
+                    font-size: 1.3rem;
+                    margin: 0;
+
+                    &.repayments {
+                        color: $revolv-blue;
+                    }
+
+                    &.number-of-projects {
+                        color: #fdb131;
+                    }
+                }
+
+                .text-container {
+                    &.repayments {
+                        margin-top: 15px;
+                    }
+
+                    &.number-of-projects {
+                        margin-top: 25px;
+                    }
+                }
+            }
+        }
+
+        .my-projects-container {
+            .my-projects-header {
+                font-weight: 800;
+                text-align: center;
+                font-size: 1.05rem;
+                margin-top: 50px;
+                color: $dark-gray;
+            }
+
+            .project-title {
+                color: $revolv-blue;
+                font-weight: 300;
+            }
+
+            .project-status {
+                font-weight: 300;
+
+                &.active {
+                    color: $revolv-blue;
+                }
+            }
+        }
+    }
+
     .category-preferences-container {
         height: 100%;
         padding: 0;
@@ -743,6 +823,48 @@ $dark-gray: #555555;
                         font-size: 11px;
                         line-height: 28px; // large line height to separate from blue border
                         padding: 5px;
+                    }
+                }
+            }
+        }
+    }
+
+    // this is nested this deeply so that sass gives it priority
+    .dashboard-data-section-my-impact {
+        .my-impact-container {
+            .statistics-container {
+                .statistics-row {
+                    .statistic {
+                        
+                        margin-bottom: 20px;
+                        
+                        .icon-container {
+                            .icon {
+                                margin: auto; 
+                            }
+                        }
+
+                        .text-container {
+                            .description {
+                                margin-right: auto;
+                                margin-left: auto;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .my-projects-container {
+                .project-title {
+                    color: $revolv-blue;
+                    font-weight: 300;
+                }
+
+                .project-status {
+                    font-weight: 300;
+
+                    &.active {
+                        color: $revolv-blue;
                     }
                 }
             }

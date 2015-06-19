@@ -3,7 +3,6 @@ from django.db import models
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
 
-
 class AdminRepaymentManager(models.Manager):
     """
     Manager for AdminRepayment.
@@ -317,11 +316,20 @@ class PaymentManager(models.Manager):
             payment_type__name=PaymentType._REINVESTMENT
         )
 
+    def repayment_fragments(self, user=None):
+        """
+        :return:
+            Returns all the repayment_fragment payments that are associated with
+            this user.
+        """
+        return RepaymentFragment.objects.filter(user=user)
+
     def repayments(self, user, admin=None, project=None, queryset=None):
         """
         :return:
             Returns all the repayments that are associated with this user.
         """
+
         return AdminRepayment.objects.filter(
             revolvuserprofiles__in=user, projects__in=project
         ).distinct()

@@ -18,6 +18,12 @@ class DonorDashboardView(UserDataMixin, TemplateView):
 
         return super(DonorDashboardView, self).dispatch(request, *args, **kwargs)
 
+    def make_statistics_dictionary(self):
+        stat_dict = {}
+        stat_dict['project_count'] = Project.objects.donated_projects(self.user_profile).count()
+        stat_dict['repayments'] = Payment.objects.repayment_fragments(user=self.user_profile).aggregate(Sum('amount'))['amount__sum'] or 0
+        return stat_dict
+
     def get_context_data(self, **kwargs):
         context = super(DonorDashboardView, self).get_context_data(**kwargs)
 
@@ -29,6 +35,10 @@ class DonorDashboardView(UserDataMixin, TemplateView):
         context["first_project"] = active[0] if active.count() > 0 else None
         context["role"] = "donor"
         context["donor_has_no_donated_projects"] = Project.objects.donated_projects(self.user_profile).count() == 0
+
+        context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
+        statistics_dictionary = self.make_statistics_dictionary()
+        context['statistics'] = statistics_dictionary
 
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')

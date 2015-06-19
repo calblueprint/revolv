@@ -53,8 +53,9 @@
             {% endwith %}
         {% endfor %}
         <div class="small-12 large-10 medium-9 columns dashboard-data-section dashboard-data-section-my-impact dashboard-data-section-current">
-            <div class="large-7 columns my-impact-container"></div>
+            <div class="large-7 columns my-impact-container">
                 {% include "base/partials/impact_statistics.html" with statistics=statistics user=user donated_projecs=donated_projects %}
+            </div>
             <div class="large-5 columns category-preferences-container">
                 {% include "base/partials/category_preferences.html" with preferred_categories=preferred_categories categories=categories %}
             </div>

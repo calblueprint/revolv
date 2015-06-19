@@ -7820,6 +7820,47 @@ html, body, .main-row {
 
 .dashboard-data-section-my-impact {
   height: 100%; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .icon-container {
+    padding: 0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .contribution-text {
+    font-weight: 800;
+    margin: 0 10% 40px 10%;
+    text-align: center;
+    font-size: 1.05rem;
+    margin-top: 50px;
+    color: #555555; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .icon {
+    height: 100px;
+    margin: 0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .description {
+    font-weight: 300;
+    line-height: 1rem;
+    margin: 0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text {
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 0; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.repayments {
+      color: #11ade5; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.number-of-projects {
+      color: #fdb131; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-container.repayments {
+    margin-top: 15px; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-container.number-of-projects {
+    margin-top: 25px; }
+  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .my-projects-header {
+    font-weight: 800;
+    text-align: center;
+    font-size: 1.05rem;
+    margin-top: 50px;
+    color: #555555; }
+  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-title {
+    color: #11ade5;
+    font-weight: 300; }
+  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status {
+    font-weight: 300; }
+    .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status.active {
+      color: #11ade5; }
   .dashboard-data-section-my-impact .category-preferences-container {
     height: 100%;
     padding: 0; }
@@ -7955,7 +7996,21 @@ html, body, .main-row {
     .dashboard-project .project-tabs .tabs .tab-title a {
       font-size: 11px;
       line-height: 28px;
-      padding: 5px; } }
+      padding: 5px; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic {
+    margin-bottom: 20px; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .icon-container .icon {
+      margin: auto; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .text-container .description {
+      margin-right: auto;
+      margin-left: auto; }
+  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-title {
+    color: #11ade5;
+    font-weight: 300; }
+  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status {
+    font-weight: 300; }
+    .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status.active {
+      color: #11ade5; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   .gray-bar-container {
