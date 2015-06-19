@@ -329,7 +329,6 @@ class PaymentManager(models.Manager):
         :return:
             Returns all the repayments that are associated with this user.
         """
-
         return AdminRepayment.objects.filter(
             revolvuserprofiles__in=user, projects__in=project
         ).distinct()
