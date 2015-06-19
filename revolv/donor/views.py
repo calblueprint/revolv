@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.db.models import Sum
 from django.views.generic import TemplateView
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
+from revolv.payments.models import Payment
 from revolv.project.models import Project, Category
 
 
