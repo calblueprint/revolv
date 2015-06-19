@@ -71,7 +71,6 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         statistics_dictionary = self.make_statistics_dictionary()
         context['statistics'] = statistics_dictionary
 
-
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')
         context['preferred_categories'] = self.user_profile.preferred_categories.all()
