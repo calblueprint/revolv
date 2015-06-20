@@ -7856,9 +7856,11 @@ html, body, .main-row {
     color: #555555; }
   .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-title {
     color: #11ade5;
-    font-weight: 300; }
+    font-weight: 300;
+    margin-bottom: 0; }
   .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status {
-    font-weight: 300; }
+    font-weight: 300;
+    margin-bottom: 0; }
     .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status.active {
       color: #11ade5; }
   .dashboard-data-section-my-impact .category-preferences-container {
@@ -8003,14 +8005,7 @@ html, body, .main-row {
       margin: auto; }
     .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .text-container .description {
       margin-right: auto;
-      margin-left: auto; }
-  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-title {
-    color: #11ade5;
-    font-weight: 300; }
-  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status {
-    font-weight: 300; }
-    .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status.active {
-      color: #11ade5; } }
+      margin-left: auto; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   .gray-bar-container {

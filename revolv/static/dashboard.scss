@@ -580,10 +580,12 @@ $dark-gray: #555555;
             .project-title {
                 color: $revolv-blue;
                 font-weight: 300;
+                margin-bottom: 0;
             }
 
             .project-status {
                 font-weight: 300;
+                margin-bottom: 0;
 
                 &.active {
                     color: $revolv-blue;
@@ -850,21 +852,6 @@ $dark-gray: #555555;
                                 margin-left: auto;
                             }
                         }
-                    }
-                }
-            }
-
-            .my-projects-container {
-                .project-title {
-                    color: $revolv-blue;
-                    font-weight: 300;
-                }
-
-                .project-status {
-                    font-weight: 300;
-
-                    &.active {
-                        color: $revolv-blue;
                     }
                 }
             }

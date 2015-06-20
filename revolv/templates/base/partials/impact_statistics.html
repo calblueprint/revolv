@@ -56,6 +56,14 @@
 						<p class="project-status {% if project.is_active %}active{% endif %}">{{ project.get_project_status_display }}</p>
 					</div>
 				</div>
+				<div class="project-row row">
+					<div class="medium-9 small-7 columns">
+						<a href="{% url "project:view" pk=project.pk %}"><p class="project-title">{{ project.title }}</p></a>
+					</div>
+					<div class="medium-3 small-5 columns">
+						<p class="project-status {% if project.is_active %}active{% endif %}">{{ project.get_project_status_display }}</p>
+					</div>
+				</div>
 			{% endfor %}
 		{% endif %}
 	</div>
