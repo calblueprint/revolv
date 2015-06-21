@@ -3,7 +3,6 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
-from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
@@ -15,6 +14,7 @@ from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
 from revolv.project.models import Project, Category
+from revolv.project.utils import aggregate_stats
 
 class HomePageView(UserDataMixin, TemplateView):
     """
@@ -50,12 +50,6 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         """
         return []
 
-    def make_statistics_dictionary(self):
-        stat_dict = {}
-        stat_dict['project_count'] = Project.objects.donated_projects(self.user_profile).count()
-        stat_dict['repayments'] = Payment.objects.repayment_fragments(user=self.user_profile).aggregate(Sum('amount'))['amount__sum'] or 0
-        return stat_dict
-
     def get_context_data(self, **kwargs):
         context = super(BaseStaffDashboardView, self).get_context_data(**kwargs)
 
@@ -68,7 +62,7 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         context["role"] = self.role or "donor"
 
         context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
-        statistics_dictionary = self.make_statistics_dictionary()
+        statistics_dictionary = aggregate_stats(self.user_profile)
         context['statistics'] = statistics_dictionary
 
         context['category_setter_url'] = reverse('dashboard_category_setter')

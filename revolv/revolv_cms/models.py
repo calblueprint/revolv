@@ -190,7 +190,7 @@ class ProjectPageSettings(BaseSetting):
     """Editable settings for the RE-volv project page."""
     donors_wording = models.CharField(
         max_length=20,
-        help_text="The wording that will be displayed after the number of donors to the project the use is viewing. For example, 'donors' or 'contributors'.",
+        help_text="The wording that will be displayed after the number of donors to the project the user is viewing. For example, 'donors' or 'contributors'.",
         default="donors"
     )
 
@@ -212,3 +212,12 @@ class PaymentModalSettings(BaseSetting):
     content_panels = [
         FieldPanel('payment_modal_paragraph', classname="full"),
     ]
+
+@register_setting
+class DashboardSettings(BaseSetting):
+    """Editable settings for the dashboard page."""
+    impact_statistics_header_text = models.CharField(
+        max_length = 100,
+        help_text = "The heading above the impact statistics on the dashboard, e.g. 'Thank you for contributing! Your contribution has...'.",
+        default= 'Thank you for contributing! Your contribution has...'
+    )

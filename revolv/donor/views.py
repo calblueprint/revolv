@@ -1,11 +1,10 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.db.models import Sum
 from django.views.generic import TemplateView
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
-from revolv.payments.models import Payment
 from revolv.project.models import Project, Category
+from revolv.project.utils import aggregate_stats
 
 
 class DonorDashboardView(UserDataMixin, TemplateView):
@@ -20,12 +19,6 @@ class DonorDashboardView(UserDataMixin, TemplateView):
 
         return super(DonorDashboardView, self).dispatch(request, *args, **kwargs)
 
-    def make_statistics_dictionary(self):
-        stat_dict = {}
-        stat_dict['project_count'] = Project.objects.donated_projects(self.user_profile).count()
-        stat_dict['repayments'] = Payment.objects.repayment_fragments(user=self.user_profile).aggregate(Sum('amount'))['amount__sum'] or 0
-        return stat_dict
-
     def get_context_data(self, **kwargs):
         context = super(DonorDashboardView, self).get_context_data(**kwargs)
 
@@ -39,7 +32,7 @@ class DonorDashboardView(UserDataMixin, TemplateView):
         context["donor_has_no_donated_projects"] = Project.objects.donated_projects(self.user_profile).count() == 0
 
         context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
-        statistics_dictionary = self.make_statistics_dictionary()
+        statistics_dictionary = aggregate_stats(self.user_profile)
         context['statistics'] = statistics_dictionary
 
         context['category_setter_url'] = reverse('dashboard_category_setter')

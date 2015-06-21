@@ -536,6 +536,10 @@ $dark-gray: #555555;
 
             .statistics-row {
 
+                .statistic {
+                    margin-bottom: 20px;
+                }
+
                 .description  {
                     font-weight: 300;
                     line-height: 1rem;
@@ -563,6 +567,10 @@ $dark-gray: #555555;
 
                     &.number-of-projects {
                         margin-top: 25px;
+                    }
+
+                    &.save-world {
+                        margin-top: 30px;
                     }
                 }
             }
@@ -836,10 +844,7 @@ $dark-gray: #555555;
         .my-impact-container {
             .statistics-container {
                 .statistics-row {
-                    .statistic {
-                        
-                        margin-bottom: 20px;
-                        
+                    .statistic {                        
                         .icon-container {
                             .icon {
                                 margin: auto; 

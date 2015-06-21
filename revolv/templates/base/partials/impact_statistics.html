@@ -1,15 +1,16 @@
 {% load staticfiles %}
 {% load humanize %}
+{% load revolv_cms_tags %}
 
 <div class="large-12 columns">
 	<div class="row statistics-container">
 		<div class="row">
-			<p class="contribution-text">Thank you for contributing! Your contribution has...</p>
+			<p class="contribution-text">{{ settings.revolv_cms.DashboardSettings.impact_statistics_header_text }}</p>
 		</div>
 		<div class="row statistics-row">
-			<div class="medium-6 columns col-1">
+			<div class="medium-6 columns statistic col-1">
 			</div>
-			<div class="medium-6 columns col-2">
+			<div class="medium-6 columns statistic col-2">
 			</div>
 		</div>
 		<div class="row statistics-row">
@@ -38,9 +39,18 @@
 			</div>
 		</div>
 		<div class="row statistics-row">
-			<div class="small-6 columns col-1">
+			<div class="medium-6 columns statistic col-1">
 			</div>
-			<div class="small-6 columns col-2">
+			<div class="medium-6 columns statistic col-2">
+				<div class="medium-4 small-5 columns icon-container">
+					<img class="icon last-icon" src="{% static "images/revolv-man.svg" %}" />
+				</div>
+				<div class="medium-8 small-7 columns">
+					<div class="text-container save-world">
+						<p class="description last-icon">Helped us save</p>
+						<p class="description last-icon">the world!</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -7832,6 +7832,8 @@ html, body, .main-row {
   .dashboard-data-section-my-impact .my-impact-container .statistics-container .icon {
     height: 100px;
     margin: 0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic {
+    margin-bottom: 20px; }
   .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .description {
     font-weight: 300;
     line-height: 1rem;
@@ -7848,6 +7850,8 @@ html, body, .main-row {
     margin-top: 15px; }
   .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-container.number-of-projects {
     margin-top: 25px; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-container.save-world {
+    margin-top: 30px; }
   .dashboard-data-section-my-impact .my-impact-container .my-projects-container .my-projects-header {
     font-weight: 800;
     text-align: center;
@@ -7999,13 +8003,11 @@ html, body, .main-row {
       font-size: 11px;
       line-height: 28px;
       padding: 5px; }
-  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic {
-    margin-bottom: 20px; }
-    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .icon-container .icon {
-      margin: auto; }
-    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .text-container .description {
-      margin-right: auto;
-      margin-left: auto; } }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .icon-container .icon {
+    margin: auto; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .text-container .description {
+    margin-right: auto;
+    margin-left: auto; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   .gray-bar-container {
