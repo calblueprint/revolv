@@ -2,10 +2,9 @@
 import datetime
 from itertools import chain
 
+from ckeditor.fields import RichTextField
 from django.core.urlresolvers import reverse
 from django.db import models
-
-from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -270,6 +269,16 @@ class Project(models.Model):
 
     def approve_project(self):
         self.project_status = Project.ACTIVE
+        self.save()
+        return self
+
+    def unapprove_project(self):
+        """
+        TODO (https://github.com/calblueprint/revolv/issues/255): when we add
+        a STAGED project status, the "unapprove" action should make the project
+        STAGED, not PROPOSED.
+        """
+        self.project_status = Project.PROPOSED
         self.save()
         return self
 

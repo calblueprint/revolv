@@ -34,6 +34,7 @@
             <form id="complete_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="complete_project" class="small button success" name="_complete" type="submit" value="Complete" />
+                <input id="complete_project" class="small button alert" name="_unapprove" type="submit" value="Mark as proposed" />
             </form>
         {% endif %}
         {% if project.is_completed or project.is_active %}
