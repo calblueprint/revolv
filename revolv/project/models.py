@@ -283,6 +283,16 @@ class Project(models.Model):
         self.save()
         return self
 
+    def unapprove_project(self):
+        """
+        TODO (https://github.com/calblueprint/revolv/issues/255): when we add
+        a STAGED project status, the "unapprove" action should make the project
+        STAGED, not PROPOSED.
+        """
+        self.project_status = Project.PROPOSED
+        self.save()
+        return self
+
     def propose_project(self):
         self.project_status = Project.PROPOSED
         self.save()

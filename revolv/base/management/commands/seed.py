@@ -27,10 +27,10 @@ class SeedSpec(object):
         should do nothing.
     """
 
-    def seed(self):
+    def seed(self, quiet=False):
         raise NotImplementedError("Abstract SeedSpec class tried to call seed()")
 
-    def clear(self):
+    def clear(self, quiet=False):
         raise NotImplementedError("Abstract SeedSpec class tried to call clear()")
 
 
@@ -43,7 +43,7 @@ class RevolvUserProfileSeedSpec(SeedSpec):
     """
     usernames_to_clear = ["donor", "ambassador", "administrator"]
 
-    def seed(self):
+    def seed(self, quiet=False):
         RevolvUserProfile.objects.create_user(
             username="donor",
             email="donor@re-volv.org",
@@ -66,14 +66,15 @@ class RevolvUserProfileSeedSpec(SeedSpec):
             password="password"
         )
 
-    def clear(self):
+    def clear(self, quiet=False):
         for username in self.usernames_to_clear:
             try:
                 user = User.objects.get(username=username)
                 RevolvUserProfile.objects.get(user=user).delete()
                 user.delete()
             except User.DoesNotExist as e:
-                print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+                if not quiet:
+                    print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
 
 
 class ProjectSeedSpec(SeedSpec):
@@ -168,19 +169,20 @@ class ProjectSeedSpec(SeedSpec):
     }
     projects_to_clear = [studio, dairy, educathing, emblem]
 
-    def seed(self):
+    def seed(self, quiet=False):
         ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
         Project.factories.active.create(ambassador=ambassador, **self.studio)
         Project.factories.completed.create(ambassador=ambassador, **self.dairy)
         Project.factories.proposed.create(ambassador=ambassador, **self.educathing)
         Project.factories.drafted.create(ambassador=ambassador, **self.emblem)
 
-    def clear(self):
+    def clear(self, quiet=False):
         for project in self.projects_to_clear:
             try:
                 Project.objects.get(tagline=project["tagline"]).delete()
             except Project.DoesNotExist as e:
-                print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+                if not quiet:
+                    print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
 
 
 class PaymentSeedSpec(SeedSpec):
@@ -190,7 +192,7 @@ class PaymentSeedSpec(SeedSpec):
     Makes 6 dummy payments. For details, see the seed() method.
     """
 
-    def seed(self):
+    def seed(self, quiet=False):
         donor = RevolvUserProfile.objects.get(user__username="donor")
         ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
         administrator = RevolvUserProfile.objects.get(user__username="administrator")
@@ -204,7 +206,7 @@ class PaymentSeedSpec(SeedSpec):
         Payment.factories.base.create(project=dairy, user=administrator, entrant=administrator, amount=50.0)
         Payment.factories.base.create(project=studio, user=ambassador, entrant=ambassador, amount=50.0)
 
-    def clear(self):
+    def clear(self, quiet=False):
         try:
             donor = RevolvUserProfile.objects.get(user__username="donor")
             ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
@@ -213,7 +215,8 @@ class PaymentSeedSpec(SeedSpec):
             Payment.objects.payments(user=ambassador).delete()
             Payment.objects.payments(user=administrator).delete()
         except RevolvUserProfile.DoesNotExist as e:
-            print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+            if not quiet:
+                print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
 
 
 class CMSPageSeedSpec(SeedSpec):
@@ -336,7 +339,7 @@ class CMSPageSeedSpec(SeedSpec):
                 new_page = self.publish_page(title, "This is the body of the page", user, parent)
                 self.recursively_seed_pages(data, user, new_page)
 
-    def seed(self):
+    def seed(self, quiet=False):
         """
         Publish all the pages in page_hierarchy as the administrator user.
         Because we have to publish as the administrator, this requires the
@@ -345,7 +348,7 @@ class CMSPageSeedSpec(SeedSpec):
         user = User.objects.get(username="administrator")
         self.recursively_seed_pages(self.page_hierarchy, user)
 
-    def clear(self):
+    def clear(self, quiet=False):
         """
         Clear all the RevolvCustomPages and RevolvLinkPages and reset the site
         root page. We need to reset the site root page because of how django-treebeard
@@ -367,7 +370,8 @@ class CMSPageSeedSpec(SeedSpec):
             only_site.root_page = new_root_page
             only_site.save()
         except ObjectDoesNotExist as e:
-            print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+            if not quiet:
+                print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
 
 
 SPECS_TO_RUN = (
@@ -430,10 +434,15 @@ class Command(BaseCommand):
             --quiet: don't print warnings, info notices, etc. Used mostly for keeping test
                 output clean.
         """
+        def log(message):
+            """Log a message if the --quiet flag was not passed."""
+            if not options["quiet"]:
+                print message
+
         if options["list"]:
-            print "[Seed:Info] The following seeds are available: "
-            print "[Seed:Info]    " + ", ".join([spec_data[0] for spec_data in SPECS_TO_RUN])
-            print "[Seed:Info] Done."
+            log("[Seed:Info] The following seeds are available: ")
+            log("[Seed:Info]    " + ", ".join([spec_data[0] for spec_data in SPECS_TO_RUN]))
+            log("[Seed:Info] Done.")
             return
 
         if options["clear"]:
@@ -447,14 +456,14 @@ class Command(BaseCommand):
             if spec is not None:
                 specs_to_run.append(spec)
             else:
-                print "[Seed:Warning] Trying to run only spec %s, but it doesn't exist." % options["spec"]
+                log("[Seed:Warning] Trying to run only spec %s, but it doesn't exist." % options["spec"])
         else:
             specs_to_run.extend([tup[1] for tup in SPECS_TO_RUN])
 
-        print "[Seed:Info] %s objects from %i seed spec(s)..." % (verb, len(specs_to_run))
+        log("[Seed:Info] %s objects from %i seed spec(s)..." % (verb, len(specs_to_run)))
         for spec in specs_to_run:
             if options["clear"]:
-                spec.clear()
+                spec.clear(quiet=options["quiet"])
             else:
-                spec.seed()
-        print "[Seed:Info] Done!"
+                spec.seed(quiet=options["quiet"])
+        log("[Seed:Info] Done!")
