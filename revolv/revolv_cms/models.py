@@ -174,6 +174,11 @@ class SignupPageSettings(BaseSetting):
         help_text="The paragraph of text to be shown under the heading on the sign up page, but before the link to the login page.",
         default="<p>Start investing in renewable solar energy by signing up for an account.</p>"
     )
+    tos_paragraph = RichTextField(
+        blank=True,
+        help_text="The paragraph to display directly after the form but before the sign up button. Should include a link to the Terms of Service page.",
+        default="<p>Signing up for an account means joining the RE-volv community and agreeing to the <a href='/tos'>terms of service</a>. RE-volv will never store credit card information and will never give your information to third parties. Welcome!</p>"
+    )
     button_text = models.CharField(
         max_length=30,
         help_text="The text on the actual sign up button, e.g. 'Sign up'",

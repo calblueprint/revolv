@@ -33,6 +33,13 @@ small.field-error { // extra qualifiers to override foundation
     color: $revolv-error-color;
 }
 
+.paragraph-field-label p {
+    font-family: inherit;
+    font-weight: normal;
+    color: #555;
+    font-size: 14px;
+}
+
 .submit-button {
     margin: 0;
     width: 100%;
