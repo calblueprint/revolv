@@ -508,6 +508,7 @@ $sidebar-icon-gray: #999;
 
 $light-gray: #c6c6c6;
 $dark-gray: #555555;
+$icon-height: 100px;
 
 .dashboard-data-section-my-impact {
     height: 100%;
@@ -530,7 +531,7 @@ $dark-gray: #555555;
             }
 
             .icon {
-                height: 100px;
+                height: $icon-height;
                 margin: 0;
             }
 
@@ -560,17 +561,14 @@ $dark-gray: #555555;
                     }
                 }
 
-                .text-container {
-                    &.repayments {
-                        margin-top: 15px;
-                    }
+                .text-area {
+                    height: $icon-height;
 
-                    &.number-of-projects {
-                        margin-top: 25px;
-                    }
-
-                    &.save-world {
-                        margin-top: 30px;
+                    .text-container {
+                        margin-top: 50%;
+                        transform: translateY(-50%);
+                        -moz-transform: translateY(-50%);
+                        -webkit-transform: translateY(-50%);
                     }
                 }
             }
@@ -850,12 +848,14 @@ $dark-gray: #555555;
                                 margin: auto; 
                             }
                         }
-
-                        .text-container {
-                            .description {
-                                margin-right: auto;
-                                margin-left: auto;
-                            }
+                        
+                        .text-area {
+                            .text-container {
+                                .description {
+                                    margin-right: auto;
+                                    margin-left: auto;
+                                }
+                            }   
                         }
                     }
                 }

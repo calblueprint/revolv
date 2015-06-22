@@ -7846,12 +7846,13 @@ html, body, .main-row {
       color: #11ade5; }
     .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.number-of-projects {
       color: #fdb131; }
-  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-container.repayments {
-    margin-top: 15px; }
-  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-container.number-of-projects {
-    margin-top: 25px; }
-  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-container.save-world {
-    margin-top: 30px; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area {
+    height: 100px; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area .text-container {
+      margin-top: 50%;
+      transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -webkit-transform: translateY(-50%); }
   .dashboard-data-section-my-impact .my-impact-container .my-projects-container .my-projects-header {
     font-weight: 800;
     text-align: center;
@@ -8005,7 +8006,7 @@ html, body, .main-row {
       padding: 5px; }
   .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .icon-container .icon {
     margin: auto; }
-  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .text-container .description {
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .text-area .text-container .description {
     margin-right: auto;
     margin-left: auto; } }
 

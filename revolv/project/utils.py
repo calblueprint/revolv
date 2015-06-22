@@ -12,6 +12,10 @@ def get_solar_csv_url(csv_id, mode):
     return url
 
 def aggregate_stats(user_profile):
+    """Aggregates statistics about a Re-volv user's impact and returns a dictionary with 
+    these values. These values are later presented on the user's dashboard.
+    """
+
     stat_dict = {}
     stat_dict['project_count'] = Project.objects.donated_projects(user_profile).count()
     stat_dict['repayments'] = Payment.objects.repayment_fragments(user=user_profile).aggregate(Sum('amount'))['amount__sum'] or 0

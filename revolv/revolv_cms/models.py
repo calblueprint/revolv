@@ -216,8 +216,56 @@ class PaymentModalSettings(BaseSetting):
 @register_setting
 class DashboardSettings(BaseSetting):
     """Editable settings for the dashboard page."""
+    
     impact_statistics_header_text = models.CharField(
         max_length = 100,
-        help_text = "The heading above the impact statistics on the dashboard, e.g. 'Thank you for contributing! Your contribution has...'.",
+        help_text = "The heading above the statistics in the 'My Impact' section of the dashboard, e.g. 'Thank you for contributing! Your contribution has...'.",
         default= 'Thank you for contributing! Your contribution has...'
+    )
+
+    repayment_statistic_top_description_text = models.CharField(
+        max_length = 20,
+        help_text = "The top section of the description of the repayments statistic on the 'My Impact' section of the dashboard.",
+        default= 'earned'
+    )
+
+    repayment_statistic_bottom_description_text = models.CharField(
+        max_length = 20,
+        help_text = "The bottom section of the description of the repayments statistic on the 'My Impact' section of the dashboard.",
+        default= 'in repayments'
+    )
+
+    project_count_statistic_top_description_text = models.CharField(
+        max_length = 20,
+        help_text = "The top section of the description of the project count statistic on the 'My Impact' section of the dashboard.",
+        default= 'contributed to'
+    )
+
+    project_count_statistic_bottom_description_text = models.CharField(
+        max_length = 20,
+        help_text = "The bottom section of the description of the project count statistic on the 'My Impact' section of the dashboard.",
+        default= ''
+    )
+
+    last_statistic_description_text = models.CharField(
+        max_length = 100,
+        help_text = "The description of the bottom right icon on the 'My Impact' section of the dashboard.",
+        default= 'Help us save the world by going solar!'
+    )
+
+    category_preferences_header_text = models.CharField(
+        max_length = 100,
+        help_text = "The heading of category preferences section in the 'My Impact' section of the dashboard.",
+        default= 'What type of projects should we invest your repayments in next?'
+    )
+
+    category_preferences_explanation_header_text = models.CharField(
+        max_length = 50,
+        help_text = "The header of the category preference explanation in the 'My Impact' section of the dashboard.",
+        default= "What's going on?"
+    )
+
+    category_preferences_explanation_text = RichTextField(
+        help_text="A paragraph which will appear below the category preference options on the 'My Impact' section on the dashboard to explain to the user what category preferences mean.",
+        default="Your donation to RE-volv has been invested in a revolving fund. Money from the fund is used to place solar equipment on community buildings. Over time, the community pays RE-volv back. These repayments are invested in even more solar projects. A fraction of the repayments from a solar investment originates from your investment. Your preferences directly affect where that chunk of money is invested."
     )
