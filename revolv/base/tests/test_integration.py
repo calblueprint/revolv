@@ -172,13 +172,13 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
 
         self.assertEqual(Project.objects.get(id=project.pk).project_status, Project.PROPOSED)
 
-    def test_admin_can_approve_or_deny_proposed_project(self):
+    def test_admin_can_approve_unapprove_or_deny_proposed_project(self):
         """
-        Test that an admin can approve and deny proposed projects from the dashboard.
+        Test that an admin can approve, unapprove, and deny proposed projects from the dashboard.
 
         Creates two projects, both proposed, and tests that the admin can use the buttons
-        on the dashboard to approve and deny, respectively, each one. Then, tests that
-        the ambassador that created the projects can see
+        on the dashboard to approve/unapprove and deny, respectively, each one. Then, tests that
+        the ambassador that created the projects can see them in their resulting state.
         """
         amb_user = User.objects.create_user(username="amb", password="amb_pass")
         admin_user = User.objects.create_user(username="admin", password="admin_pass")
@@ -197,6 +197,11 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         # we'll need to check that project 1 is staged here instead of active.
         self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.ACTIVE)
 
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        unapproved_resp = dash_resp.forms["complete_form_%i" % project1.pk].submit("_unapprove").maybe_follow()
+        self.assertEqual(unapproved_resp.status_code, 200)
+        self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.PROPOSED)
+
         denied_resp = dash_resp.forms["approve_deny_form_%i" % project2.pk].submit("_deny").maybe_follow()
         self.assertEqual(denied_resp.status_code, 200)
         self.assertEqual(Project.objects.get(id=project2.pk).project_status, Project.DRAFTED)
@@ -204,7 +209,7 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.app.get("/logout/")
         self.send_user_login_request(amb_user, "amb_pass", webtest=True)
         amb_dash_resp = self.app.get("/dashboard/").maybe_follow()
-        self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project1.pk, Project.ACTIVE))
+        self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project1.pk, Project.PROPOSED))
         self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project2.pk, Project.DRAFTED))
 
     def test_admin_can_complete_and_incomplete_active_project(self):

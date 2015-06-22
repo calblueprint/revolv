@@ -7947,8 +7947,11 @@ html, body, .main-row {
     display: inline-block; }
   .dashboard-project .controls {
     text-align: right; }
-    .dashboard-project .controls form {
-      margin-right: 30px; } }
+    .dashboard-project .controls form, .dashboard-project .controls form.input {
+      margin-right: 0;
+      margin-left: 10px; }
+      .dashboard-project .controls form:first-child, .dashboard-project .controls form.input:first-child {
+        margin-left: 0; } }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) {
   .dashboard-project .dashboard-project-header .project-status-medium {

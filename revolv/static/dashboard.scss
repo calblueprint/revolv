@@ -712,8 +712,12 @@ $icon-height: 100px;
         }
         .controls {
             text-align: right;
-            form {
-                margin-right: 30px;
+            form, form.input {
+                margin-right: 0;
+                margin-left: 10px;
+                &:first-child {
+                    margin-left: 0;
+                }
             }
         }
     }

@@ -162,15 +162,37 @@ class ProjectTests(TestCase):
         self.assertEqual(project.days_left, 0)
         self.assertEqual(project.formatted_days_left(), Project.NO_DAYS_LEFT_STATEMENT)
 
+    def test_statistics(self):
+        """Test project.statistics correctly gets impact_power."""
+        project = Project.factories.base.create(impact_power=10.0)
+        self.assertEqual(project.statistics.kilowatts, 10.0)
+
 
 class ProjectManagerTests(TestCase):
     """Tests for the Project manager"""
 
     def setUp(self):
-        Project.factories.base.create(org_name="The Community Dance Studio", project_status=Project.ACTIVE)
-        Project.factories.base.create(org_name="Comoonity Dairy", project_status=Project.COMPLETED)
-        Project.factories.base.create(org_name="Educathing", project_status=Project.PROPOSED)
-        Project.factories.base.create(org_name="Fire Emblem", project_status=Project.DRAFTED)
+        proj1 = Project.factories.base.create(
+            org_name="The Community Dance Studio",
+            project_status=Project.ACTIVE,
+            impact_power=10.0
+        )
+        proj2 = Project.factories.base.create(
+            org_name="Comoonity Dairy",
+            project_status=Project.COMPLETED,
+            impact_power=10.0
+        )
+        proj3 = Project.factories.base.create(
+            org_name="Educathing",
+            project_status=Project.PROPOSED,
+            impact_power=10.0
+        )
+        proj4 = Project.factories.base.create(
+            org_name="Fire Emblem",
+            project_status=Project.DRAFTED,
+            impact_power=10.0
+        )
+        self.projects = [proj1, proj2, proj3, proj4]
 
     def test_get_featured(self):
         context = Project.objects.get_featured(1)
@@ -200,6 +222,13 @@ class ProjectManagerTests(TestCase):
         context = Project.objects.get_drafted()
         self.assertEqual(len(context), 1)
         self.assertEqual(context[0].org_name, "Fire Emblem")
+
+    def test_statistics(self):
+        """Test that objects.statistics() correctly aggregates impact_power."""
+        aggregator = Project.objects.statistics(
+            Project.objects.filter(id__in=[p.pk for p in self.projects])
+        )
+        self.assertEqual(aggregator.kilowatts, 40.0)
 
 
 class CategoryTest(TestCase):
