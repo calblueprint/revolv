@@ -7711,6 +7711,8 @@ html, body, .main-row {
     margin: 0; }
   .dashboard-project .project-tabs-content .donation-stats {
     margin-bottom: 40px; }
+    .dashboard-project .project-tabs-content .donation-stats > * {
+      vertical-align: middle; }
     .dashboard-project .project-tabs-content .donation-stats .days-remaining {
       padding: 0 40px;
       text-align: center; }
