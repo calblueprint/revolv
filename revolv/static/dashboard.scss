@@ -565,10 +565,8 @@ $icon-height: 100px;
                     height: $icon-height;
 
                     .text-container {
-                        margin-top: 50%;
-                        transform: translateY(-50%);
-                        -moz-transform: translateY(-50%);
-                        -webkit-transform: translateY(-50%);
+                        margin-top: 35%;
+                        @include transform(translateY(-50%));
                     }
                 }
             }
@@ -678,8 +676,11 @@ $icon-height: 100px;
 
             .explanation {
                 margin: 0 15px;
-                font-weight: 300;
                 margin-bottom: 40px;
+
+                p {
+                    font-weight: 300;
+                }
             }
         }
     }

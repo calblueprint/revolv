@@ -5,7 +5,7 @@
 <div class="large-12 columns">
     <div class="row statistics-container">
         <div class="row">
-            <p class="contribution-text">{{ settings.revolv_cms.DashboardSettings.impact_statistics_header_text }}</p>
+            <p class="contribution-text">{{ settings.revolv_cms.DashboardImpactSettings.impact_statistics_header_text }}</p>
         </div>
         <div class="row statistics-row">
             <div class="medium-6 columns statistic col-1">
@@ -20,9 +20,9 @@
                 </div>
                 <div class="medium-8 small-7 text-area columns">
                     <div class="text-container repayments">
-                        <p class="top-description description">{{ settings.revolv_cms.DashboardSettings.repayment_statistic_top_description_text }}</p>
+                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.repayment_statistic_top_description_text }}</p>
                         <p class="emphasized-text repayments">${{ statistics.repayments|floatformat:2|intcomma }}</p>
-                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardSettings.repayment_statistic_bottom_description_text }}</p>
+                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.repayment_statistic_bottom_description_text }}</p>
                     </div>
                 </div>
             </div>
@@ -32,9 +32,9 @@
                 </div>
                 <div class="medium-8 small-7 text-area columns">
                     <div class="text-container number-of-projects">
-                        <p class="top-description description">{{ settings.revolv_cms.DashboardSettings.project_count_statistic_top_description_text }}</p>
+                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.project_count_statistic_top_description_text }}</p>
                         <p class="emphasized-text number-of-projects">{{ statistics.project_count }} project{{ statistics.project_count|pluralize }}</p>
-                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardSettings.project_count_statistic_bottom_description_text }}</p>
+                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.project_count_statistic_bottom_description_text }}</p>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="medium-8 small-7 text-area columns">
                     <div class="text-container save-world">
-                        <p class="description last-icon">{{ settings.revolv_cms.DashboardSettings.last_statistic_description_text }}</p>
+                        <p class="description last-icon">{{ settings.revolv_cms.DashboardImpactSettings.last_statistic_description_text }}</p>
                     </div>
                 </div>
             </div>

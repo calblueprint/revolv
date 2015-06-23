@@ -7849,10 +7849,12 @@ html, body, .main-row {
   .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area {
     height: 100px; }
     .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area .text-container {
-      margin-top: 50%;
-      transform: translateY(-50%);
+      margin-top: 35%;
       -moz-transform: translateY(-50%);
-      -webkit-transform: translateY(-50%); }
+      -o-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%); }
   .dashboard-data-section-my-impact .my-impact-container .my-projects-container .my-projects-header {
     font-weight: 800;
     text-align: center;
@@ -7929,8 +7931,9 @@ html, body, .main-row {
         margin-top: 45px; }
       .dashboard-data-section-my-impact .category-preferences-container .choice-container .explanation {
         margin: 0 15px;
-        font-weight: 300;
         margin-bottom: 40px; }
+        .dashboard-data-section-my-impact .category-preferences-container .choice-container .explanation p {
+          font-weight: 300; }
 
 .cover-photo {
   padding: 0 !important;
