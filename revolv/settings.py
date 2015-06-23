@@ -15,6 +15,10 @@ import dj_database_url
 import djcelery
 from celery.schedules import crontab
 
+ADMINS = (
+    ("Noah Gilmore", "noah.w.gilmore@gmail.com"),
+)
+
 # import celery for scheduled tasks
 djcelery.setup_loader()
 
