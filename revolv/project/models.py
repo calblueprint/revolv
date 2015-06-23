@@ -495,10 +495,13 @@ class Project(models.Model):
         """
         :return the total length of the campaign of this project,
         or None if the project hasn't started yet.
+
+        Note: if a project's campaign starts and ends on the same day, it is
+        defined to be one day long, not zero days long.
         """
         if self.start_date is None:
             return None
-        return max((self.end_date - self.start_date).days, 0)
+        return max((self.end_date - self.start_date).days + 1, 0)
 
     @property
     def days_until_end(self):

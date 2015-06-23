@@ -1,6 +1,6 @@
 import datetime
-from operator import add, sub
 from collections import namedtuple
+from operator import add, sub
 
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
@@ -212,7 +212,26 @@ class ProjectTests(TestCase):
             start_date=datetime.date.today() - datetime.timedelta(days=100),
             end_date=datetime.date.today() - datetime.timedelta(days=75),
         )
-        self.assertEqual(long_gone_project.days_so_far, 25)
+        self.assertEqual(long_gone_project.days_so_far, 26)
+
+    def test_total_days(self):
+        """Test that project.total_days() works correctly."""
+        Case = namedtuple("Case", ["kwargs_for_past_timedelta", "kwargs_for_future_timedelta", "expected_total_days"])
+        cases = [
+            Case({"days": 1}, {"days": 1}, 3),
+            Case({"days": 5}, {"days": -1}, 5),
+            Case({"days": 1}, {"days": -1}, 1),
+            Case({"days": 1}, {"days": -5}, 0),
+        ]
+        for case in cases:
+            project = Project.factories.active.build(
+                start_date=datetime.date.today() - datetime.timedelta(**case.kwargs_for_past_timedelta),
+                end_date=datetime.date.today() + datetime.timedelta(**case.kwargs_for_future_timedelta)
+            )
+            self.assertEqual(project.total_days, case.expected_total_days)
+
+        proposed_project = Project.factories.proposed.build()
+        self.assertIs(proposed_project.total_days, None)
 
     def test_statistics(self):
         """Test project.statistics correctly gets impact_power."""
