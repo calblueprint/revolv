@@ -7707,18 +7707,20 @@ html, body, .main-row {
           text-transform: uppercase;
           color: #555555;
           background-color: transparent; }
-  .dashboard-project .project-tabs-content .days-remaining {
-    padding: 0 40px;
-    text-align: center; }
-    .dashboard-project .project-tabs-content .days-remaining .num-days-remaining {
-      font-size: 40px;
-      font-weight: 700; }
-    .dashboard-project .project-tabs-content .days-remaining .days-remaining-label {
-      font-size: 25px;
-      line-height: 27px;
-      font-weight: 300; }
   .dashboard-project .project-tabs-content .row {
     margin: 0; }
+  .dashboard-project .project-tabs-content .donation-stats {
+    margin-bottom: 40px; }
+    .dashboard-project .project-tabs-content .donation-stats .days-remaining {
+      padding: 0 40px;
+      text-align: center; }
+      .dashboard-project .project-tabs-content .donation-stats .days-remaining .num-days-remaining {
+        font-size: 40px;
+        font-weight: 700; }
+      .dashboard-project .project-tabs-content .donation-stats .days-remaining .days-remaining-label {
+        font-size: 25px;
+        line-height: 27px;
+        font-weight: 300; }
   .dashboard-project .project-tabs-content p, .dashboard-project .project-tabs-content h2 {
     font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
   .dashboard-project .project-tabs-content p {
@@ -7738,6 +7740,15 @@ html, body, .main-row {
     font-size: 12px; }
   .dashboard-project .project-tabs-content h6 {
     font-size: 10px; }
+  .dashboard-project .project-tabs-content .project-stats-table-container .project-stats-table-row {
+    font-size: 16px;
+    line-height: 52px;
+    font-weight: 300;
+    color: #555555; }
+    .dashboard-project .project-tabs-content .project-stats-table-container .project-stats-table-row:first-child {
+      border-top: 1px solid #eeeeee; }
+    .dashboard-project .project-tabs-content .project-stats-table-container .project-stats-table-row.highlight {
+      background-color: #eeeeee; }
   .dashboard-project .project-tabs-content .repayment-progress-container {
     height: 180px; }
     .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container {
@@ -7964,7 +7975,11 @@ html, body, .main-row {
     .dashboard-project .project-tabs .tabs .tab-title a {
       font-size: 11px;
       line-height: 28px;
-      padding: 5px; } }
+      padding: 5px; }
+  .dashboard-project .project-tabs-content .project-stats-table-container .project-stats-table-row {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 20px 0; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   .gray-bar-container {

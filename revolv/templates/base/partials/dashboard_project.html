@@ -20,7 +20,7 @@
     beyond the order of 10-100 projects, this page may become very slow to load and/or a lot to work through
     easily in the sidebar UI, so we may have to rethink this design a little bit.
 {% endcomment %}
-
+{% load humanize %}
 <div class="dashboard-sidebar-back-overlay sidebar-toggle-close"></div>
 {% include "base/partials/nav.html" %}
 {% include "base/partials/dashboard_project_header.html" with user=user project=project %}
@@ -55,6 +55,30 @@
             <div class="days-remaining small-6 medium-3 large-2 columns">
                 <div class="num-days-remaining">{{project.days_left}}</div>
                 <div class="days-remaining-label">day{{project.days_left|pluralize}} left</div>
+            </div>
+        </div>
+        <div class="row project-stats">
+            <div class="project-stats-table-container small-12 large-10 large-offset-1 columns">
+                <div class="row project-stats-table-row">
+                    <div class="small-8 medium-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.kilowatt_description }}</div>
+                    <div class="small-4 medium-6 columns">{{ project.statistics.kilowatts|floatformat:"2"|intcomma }} kW</div>
+                </div>
+                <div class="row project-stats-table-row highlight">
+                    <div class="small-8 medium-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.dollars_saved_description }}</div>
+                    <div class="small-4 medium-6 columns">${{ project.statistics.dollars_saved_per_month|floatformat:"2"|intcomma }}</div>
+                </div>
+                <div class="row project-stats-table-row">
+                    <div class="small-8 medium-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.carbon_saved_description }}</div>
+                    <div class="small-4 medium-6 columns">{{ project.statistics.pounds_carbon_saved_per_month|floatformat:"2"|intcomma }} lbs C02</div>
+                </div>
+                <div class="row project-stats-table-row highlight">
+                    <div class="small-8 medium-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.trees_description }}</div>
+                    <div class="small-4 medium-6 columns">{{ project.statistics.acres_of_trees_saved_per_year|floatformat:"2"|intcomma }} acres</div>
+                </div>
+                <div class="row project-stats-table-row">
+                    <div class="small-8 medium-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.automobile_miles_description }}</div>
+                    <div class="small-4 medium-6 columns">{{ project.statistics.automobile_miles_per_month|floatformat:"2"|intcomma }} miles/month</div>
+                </div>
             </div>
         </div>
     </div>

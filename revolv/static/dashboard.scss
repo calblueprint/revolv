@@ -352,23 +352,27 @@ $sidebar-icon-gray: #999;
     }
 
     .project-tabs-content {
-        .days-remaining {
-            // more padding than a normal row
-            padding: 0 40px;
-            text-align: center;
-
-            .num-days-remaining {
-                font-size: 40px;
-                font-weight: 700;
-            }
-            .days-remaining-label {
-                font-size: 25px;
-                line-height: 27px;
-                font-weight: 300;
-            }
-        }
         .row {
             margin: 0;
+        }
+
+        .donation-stats {
+            margin-bottom: 40px;
+            .days-remaining {
+                // more padding than a normal row
+                padding: 0 40px;
+                text-align: center;
+
+                .num-days-remaining {
+                    font-size: 40px;
+                    font-weight: 700;
+                }
+                .days-remaining-label {
+                    font-size: 25px;
+                    line-height: 27px;
+                    font-weight: 300;
+                }
+            }
         }
 
         p, h2 {
@@ -398,6 +402,25 @@ $sidebar-icon-gray: #999;
         }
         h6 {
             font-size: 10px;
+        }
+
+        $stats-table-highlight-bg: #eee;
+        $stats-table-text-color: #555;
+        .project-stats-table-container {
+            .project-stats-table-row {
+                font-size: 16px;
+                line-height: 52px;
+                font-weight: 300;
+                color: $stats-table-text-color;
+
+                &:first-child {
+                    border-top: 1px solid $stats-table-highlight-bg;
+                }
+
+                &.highlight {
+                    background-color: $stats-table-highlight-bg;
+                }
+            }
         }
 
         .repayment-progress-container {
@@ -460,6 +483,7 @@ $sidebar-icon-gray: #999;
                     }
                 }
             }
+
             .repayment-details-container {
                 @media only screen and (max-width:64.063em) {
                     // for centering the statistics table on mobile
@@ -748,6 +772,16 @@ $dark-gray: #555555;
                         line-height: 28px; // large line height to separate from blue border
                         padding: 5px;
                     }
+                }
+            }
+        }
+
+        .project-tabs-content {
+            .project-stats-table-container {
+                .project-stats-table-row {
+                    font-size: 14px;
+                    line-height: 20px;
+                    padding: 20px 0;
                 }
             }
         }
