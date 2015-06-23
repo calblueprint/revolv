@@ -70,6 +70,9 @@
             <label class="checkbox-field-label">
             {{ signup_form.subscribed_to_newsletter }}<span>{{signup_form.subscribed_to_newsletter.label}}</span>
             </label>
+            <label class="paragraph-field-label">
+                {{ settings.revolv_cms.SignupPageSettings.tos_paragraph|safe }}
+            </label>
             <button class="submit-button medium" type="submit" value="Log in">{{ settings.revolv_cms.SignupPageSettings.button_text }}</button>
         </form>
     </div>

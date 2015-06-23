@@ -7367,6 +7367,12 @@ small.field-error {
   background-color: transparent;
   color: #f46b7b; }
 
+.paragraph-field-label p {
+  font-family: inherit;
+  font-weight: normal;
+  color: #555555;
+  font-size: 14px; }
+
 .submit-button {
   margin: 0;
   width: 100%;
