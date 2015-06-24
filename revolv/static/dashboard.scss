@@ -599,10 +599,9 @@ $icon-height: 100px;
                 }
 
                 .text-area {
-                    height: $icon-height;
 
                     .text-container {
-                        margin-top: 35%;
+                        margin-top: 30%;
                         @include transform(translateY(-50%));
                     }
                 }
@@ -831,7 +830,6 @@ $icon-height: 100px;
 }
 
 @media #{$small-only} {
-    $icon-height: 50px;
 
     .dashboard-sidebar {
         @include mobilfied-dashboard-sidebar;

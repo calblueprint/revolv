@@ -230,18 +230,21 @@ class DashboardImpactSettings(BaseSetting):
     description_section_explanation = ' There are three sections to every statistic description. The top section is the first line, the middle section is the actual statistic (which is calculated and not editable) and is shown bold and in color, and the bottom section is the last line.'
 
     repayment_statistic_top_description_text = models.CharField(
+        blank=True,
         max_length = 20,
         help_text = "The top section of the description of the repayments statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
         default= 'earned'
     )
 
     repayment_statistic_bottom_description_text = models.CharField(
+        blank=True,
         max_length = 20,
         help_text = "The bottom section of the description of the repayments statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
         default= 'in repayments'
     )
 
     project_count_statistic_top_description_text = models.CharField(
+        blank=True,
         max_length = 20,
         help_text = "The top section of the description of the project count statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
         default= 'contributed to'
@@ -255,24 +258,28 @@ class DashboardImpactSettings(BaseSetting):
     )
 
     carbon_dioxide_statistic_top_description_text = models.CharField(
+        blank=True,
         max_length = 20,
         help_text = "The top section of the description of the carbon dioxide statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
         default= 'saved'
     )
 
     carbon_dioxide_statistic_bottom_description_text = models.CharField(
+        blank=True,
         max_length = 20,
         help_text = "The bottom section of the description of the carbon dioxide statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
         default= 'of carbon dioxide'
     )
 
     last_statistic_description_text = models.CharField(
+        blank=True,
         max_length = 100,
         help_text = "The description of the bottom right icon on the 'My Impact' section of the dashboard. Unlike the other statistics on this page, this last section only has one text field.",
         default= 'Help us save the world by going solar!'
     )
 
     trees_saved_statistic_top_description_text = models.CharField(
+        blank=True,
         max_length = 20,
         help_text = "The top section of the description of the trees saved statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
         default= 'saved'
@@ -286,6 +293,7 @@ class DashboardImpactSettings(BaseSetting):
     )
 
     kwh_statistic_top_description_text = models.CharField(
+        blank=True,
         max_length = 20,
         help_text = "The top section of the description of the kilowatt-hours statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
         default= 'generated'

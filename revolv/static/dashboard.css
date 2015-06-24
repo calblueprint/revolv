@@ -7869,15 +7869,13 @@ html, body, .main-row {
       color: #efd700; }
     .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.co2 {
       color: #afd5e0; }
-  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area {
-    height: 100px; }
-    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area .text-container {
-      margin-top: 35%;
-      -moz-transform: translateY(-50%);
-      -o-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      -webkit-transform: translateY(-50%);
-      transform: translateY(-50%); }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area .text-container {
+    margin-top: 30%;
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); }
   .dashboard-data-section-my-impact .my-impact-container .my-projects-container .my-projects-header {
     font-weight: 800;
     text-align: center;
