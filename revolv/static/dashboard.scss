@@ -574,6 +574,7 @@ $icon-height: 100px;
                 .emphasized-text {
                     font-weight: 800;
                     font-size: 1.3rem;
+                    //line-height: 1.15rem;
                     margin: 0;
 
                     &.repayments {
@@ -582,6 +583,18 @@ $icon-height: 100px;
 
                     &.number-of-projects {
                         color: #fdb131;
+                    }
+
+                    &.trees {
+                        color: #0ca336;
+                    }
+
+                    &.kwh {
+                        color: #efd700;
+                    }
+
+                    &.co2 {
+                        color: #afd5e0;
                     }
                 }
 
@@ -790,7 +803,6 @@ $icon-height: 100px;
 }
 
 @media #{$medium-only} and (orientation:portrait) {
-
     .dashboard-sidebar {
         @include mobilfied-dashboard-sidebar;
     }
@@ -819,6 +831,7 @@ $icon-height: 100px;
 }
 
 @media #{$small-only} {
+    $icon-height: 50px;
 
     .dashboard-sidebar {
         @include mobilfied-dashboard-sidebar;

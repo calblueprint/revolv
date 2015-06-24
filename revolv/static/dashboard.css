@@ -7863,6 +7863,12 @@ html, body, .main-row {
       color: #11ade5; }
     .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.number-of-projects {
       color: #fdb131; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.trees {
+      color: #0ca336; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.kwh {
+      color: #efd700; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.co2 {
+      color: #afd5e0; }
   .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area {
     height: 100px; }
     .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area .text-container {

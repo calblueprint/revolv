@@ -9,8 +9,28 @@
         </div>
         <div class="row statistics-row">
             <div class="medium-6 columns statistic col-1">
+                <div class="medium-4 small-5 columns icon-container">
+                    <img class="icon trees-icon" src="{% static "images/trees.svg" %}" />
+                </div>
+                <div class="medium-8 small-7 text-area columns">
+                    <div class="text-container trees">
+                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.trees_saved_statistic_top_description_text }}</p>
+                        <p class="emphasized-text trees">{{ statistics.trees|floatformat:2 }} tree{{ statistics.trees|pluralize }}</p>
+                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.trees_saved_statistic_bottom_description_text }}</p>
+                    </div>
+                </div>
             </div>
             <div class="medium-6 columns statistic col-2">
+                <div class="medium-4 small-5 columns icon-container">
+                    <img class="icon kwh-icon" src="{% static "images/lightbulb.svg" %}" />
+                </div>
+                <div class="medium-8 small-7 text-area columns">
+                    <div class="text-container kwh">
+                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.kwh_statistic_top_description_text }}</p>
+                        <p class="emphasized-text kwh">{{ statistics.kwh|floatformat:0 }} kwH</p>
+                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.kwh_statistic_bottom_description_text }}</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row statistics-row">
@@ -41,6 +61,16 @@
         </div>
         <div class="row statistics-row">
             <div class="medium-6 columns statistic col-1">
+                <div class="medium-4 small-5 columns icon-container">
+                    <img class="icon cloud-icon" src="{% static "images/cloud.svg" %}" />
+                </div>
+                <div class="medium-8 small-7 text-area columns">
+                    <div class="text-container co2">
+                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.carbon_dioxide_statistic_top_description_text }}</p>
+                        <p class="emphasized-text co2">{{ statistics.carbon_dioxide|floatformat:2 }} lb{{ statistics.carbon_dioxide|pluralize }}</p>
+                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.carbon_dioxide_statistic_bottom_description_text }}</p>
+                    </div>
+                </div>
             </div>
             <div class="medium-6 columns statistic col-2">
                 <div class="medium-4 small-5 columns icon-container">

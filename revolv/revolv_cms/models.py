@@ -254,10 +254,48 @@ class DashboardImpactSettings(BaseSetting):
         default= ''
     )
 
+    carbon_dioxide_statistic_top_description_text = models.CharField(
+        max_length = 20,
+        help_text = "The top section of the description of the carbon dioxide statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'saved'
+    )
+
+    carbon_dioxide_statistic_bottom_description_text = models.CharField(
+        max_length = 20,
+        help_text = "The bottom section of the description of the carbon dioxide statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'of carbon dioxide'
+    )
+
     last_statistic_description_text = models.CharField(
         max_length = 100,
         help_text = "The description of the bottom right icon on the 'My Impact' section of the dashboard. Unlike the other statistics on this page, this last section only has one text field.",
         default= 'Help us save the world by going solar!'
+    )
+
+    trees_saved_statistic_top_description_text = models.CharField(
+        max_length = 20,
+        help_text = "The top section of the description of the trees saved statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'saved'
+    )
+
+    trees_saved_statistic_bottom_description_text = models.CharField(
+        blank = True,
+        max_length = 20,
+        help_text = "The bottom section of the description of the trees saved statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= ''
+    )
+
+    kwh_statistic_top_description_text = models.CharField(
+        max_length = 20,
+        help_text = "The top section of the description of the kilowatt-hours statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'generated'
+    )
+
+    kwh_statistic_bottom_description_text  = models.CharField(
+        blank = True,
+        max_length = 20,
+        help_text = "The bottom section of the description of the kilowatt-hours saved statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'of electricity'
     )
 
 @register_setting
