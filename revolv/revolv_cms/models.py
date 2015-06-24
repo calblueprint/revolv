@@ -280,3 +280,32 @@ class DashboardSettings(BaseSetting):
         help_text="A paragraph which will appear below the category preference options on the 'My Impact' section on the dashboard to explain to the user what category preferences mean.",
         default="<p>Your donation to RE-volv has been invested in a revolving fund. Money from the fund is used to place solar equipment on community buildings. Over time, the community pays RE-volv back. These repayments are invested in even more solar projects. A fraction of the repayments from a solar investment originates from your investment. Your preferences directly affect where that chunk of money is invested.</p>"
     )
+
+@register_setting
+class ProjectStatisticsSettings(BaseSetting):
+    """Editable settings for statistics about projects (see revolv.project.stats)"""
+    kilowatt_description = models.CharField(
+        max_length=50,
+        help_text="A description of the concept of kilowatts of power that a project generates, to be displayed as a statistic on the dashboard or project pages. e.g. 'Kilowatt power output'",
+        default="Kilowatt power output"
+    )
+    dollars_saved_description = models.CharField(
+        max_length=50,
+        help_text="A description of the dollars that a project will save in elctricity costs per month, to be displayed as a statistic on the dashboard or project pages. e.g. 'Dollars saved per month'",
+        default="Dollars saved per month"
+    )
+    carbon_saved_description = models.CharField(
+        max_length=50,
+        help_text="A description of the pounds of carbon that will be saved by a project per month, to be displayed as a statistic on the dashboard or project pages. e.g. 'Carbon emissions saved per month'",
+        default="Carbon emissions saved per month"
+    )
+    trees_description = models.CharField(
+        max_length=50,
+        help_text="A description of the acres of trees which, if planted, would provide equivalent savings to a project, to be displayed as a statistic on the dashboard or project pages. e.g. 'Equivalent carbon savings in trees'",
+        default="Equivalent carbon savings of trees"
+    )
+    automobile_miles_description = models.CharField(
+        max_length=50,
+        help_text="A description of the equivalent automobile miles which, if driven, would produce the same amount of carbon that a project will save per month, to be displayed as a statistic on the dashboard or project pages. e.g. 'Equivalent carbon in automobile miles'",
+        default="Equivalent carbon in automobile miles"
+    )

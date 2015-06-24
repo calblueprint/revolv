@@ -169,5 +169,6 @@ class KilowattStatsAggregator(object):
             "dollars_saved_per_month": self.dollars_saved_per_month,
             "acres_of_trees_saved_per_year": self.acres_of_trees_saved_per_year,
             "automobile_miles_per_month": self.automobile_miles_per_month,
-            "kilowatt_hours_per_month": self.kilowatt_hours_per_month
+            "kilowatt_hours_per_month": self.kilowatt_hours_per_month,
+            "kilowatts": self.kilowatts
         }
