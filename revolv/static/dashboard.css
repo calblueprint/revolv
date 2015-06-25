@@ -7981,7 +7981,9 @@ html, body, .main-row {
   .dashboard-project .dashboard-project-header .project-status-medium {
     display: inline-block; }
   .dashboard-project .controls form {
-    margin-right: 10px; } }
+    margin-right: 10px; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text {
+    font-size: 1.1rem; } }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) and (orientation: portrait) {
   .dashboard-sidebar {

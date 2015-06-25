@@ -240,7 +240,7 @@ class DashboardImpactSettings(BaseSetting):
         blank=True,
         max_length = 20,
         help_text = "The bottom section of the description of the repayments statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
-        default= 'in repayments'
+        default= 'to reinvest'
     )
 
     project_count_statistic_top_description_text = models.CharField(
@@ -289,7 +289,7 @@ class DashboardImpactSettings(BaseSetting):
         blank = True,
         max_length = 20,
         help_text = "The bottom section of the description of the trees saved statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
-        default= ''
+        default= 'of trees'
     )
 
     kwh_statistic_top_description_text = models.CharField(

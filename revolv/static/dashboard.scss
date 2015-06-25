@@ -574,7 +574,6 @@ $icon-height: 100px;
                 .emphasized-text {
                     font-weight: 800;
                     font-size: 1.3rem;
-                    //line-height: 1.15rem;
                     margin: 0;
 
                     &.repayments {
@@ -770,6 +769,18 @@ $icon-height: 100px;
         .controls {
             form {
                 margin-right: 10px;
+            }
+        }
+    }
+
+    .dashboard-data-section-my-impact {
+        .my-impact-container {
+            .statistics-container {
+                .statistics-row {
+                    .emphasized-text {
+                        font-size: 1.1rem;
+                    }
+                }
             }
         }
     }
