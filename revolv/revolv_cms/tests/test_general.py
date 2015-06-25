@@ -1,5 +1,5 @@
-from django_webtest import WebTest
 from django.test.utils import override_settings
+from django_webtest import WebTest
 
 
 class GeneralTest(WebTest):
