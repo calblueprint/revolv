@@ -3,7 +3,7 @@ from django.db import models
 from django_facebook.models import FacebookModel
 from revolv.base.utils import get_group_by_name, get_profile
 from revolv.lib.utils import ImportProxy
-
+from revolv.payments.models import Payment
 
 class RevolvUserProfileManager(models.Manager):
     def create_user(self, *args, **kwargs):
@@ -110,3 +110,18 @@ class RevolvUserProfile(FacebookModel):
         self.user.groups.remove(get_group_by_name(self.ADMIN_GROUP))
         self.user.groups.remove(get_group_by_name(self.AMBASSADOR_GROUP))
         self.user.save()
+
+    def get_statistic_for_user(self, attr):
+        """Calculates a user's individual impact by iterating through all the users payments, calculating
+        what fraction of that project comprises of this user's donation, and calculates individual
+        user impact using the statistics attribute (a KilowattStatsAggregator) and the fraction."""
+        all_payments = Payment.objects.payments(user=self)
+        user_impact = 0
+        for payment in all_payments:
+            project = payment.project
+            user_financial_contribution = payment.amount
+            project_funding_total = (int)(project.funding_goal)
+            project_impact = getattr(project.statistics, attr)
+            user_impact_for_project = project_impact * user_financial_contribution * 1.0 / project_funding_total
+            user_impact += user_impact_for_project
+        return user_impact

@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.project.models import Project, Category
+from revolv.project.utils import aggregate_stats
 
 
 class DonorDashboardView(UserDataMixin, TemplateView):
@@ -29,6 +30,10 @@ class DonorDashboardView(UserDataMixin, TemplateView):
         context["first_project"] = active[0] if active.count() > 0 else None
         context["role"] = "donor"
         context["donor_has_no_donated_projects"] = Project.objects.donated_projects(self.user_profile).count() == 0
+
+        context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
+        statistics_dictionary = aggregate_stats(self.user_profile)
+        context['statistics'] = statistics_dictionary
 
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')

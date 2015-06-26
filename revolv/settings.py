@@ -15,6 +15,10 @@ import dj_database_url
 import djcelery
 from celery.schedules import crontab
 
+ADMINS = (
+    ("Noah Gilmore", "noah.w.gilmore@gmail.com"),
+)
+
 # import celery for scheduled tasks
 djcelery.setup_loader()
 
@@ -38,6 +42,10 @@ FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = IS_LOCAL
+# disable django-compressor for wagtail admin pages. this is hacky
+# but necessary until we can get it to play nicer with s3.
+# see https://github.com/calblueprint/revolv/issues/363
+COMPRESS_ENABLED = False
 
 TEMPLATE_DEBUG = IS_LOCAL
 
@@ -191,6 +199,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'djangobower.finders.BowerFinder',
+    'compressor.finders.CompressorFinder'  # for the {% compress %} tags in wagtail to work
 )
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
