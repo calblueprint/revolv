@@ -4,7 +4,6 @@ computing the effects of projects based on their stated kilowatt output).
 """
 from django.db.models import Sum
 
-
 class KilowattStatsAggregatorException(Exception):
     """Exception for something that went wrong with the KilowattStatsAggregator."""
     pass

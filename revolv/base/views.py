@@ -14,6 +14,7 @@ from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
 from revolv.project.models import Project, Category
+from revolv.project.utils import aggregate_stats
 
 class HomePageView(UserDataMixin, TemplateView):
     """
@@ -59,6 +60,10 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
 
         context["project_dict"] = project_dict
         context["role"] = self.role or "donor"
+
+        context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
+        statistics_dictionary = aggregate_stats(self.user_profile)
+        context['statistics'] = statistics_dictionary
 
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')

@@ -4,7 +4,6 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
 from wagtailsettings import BaseSetting, register_setting
 
-
 class RevolvCustomPage(Page):
     """
     A CMS page representing a web page that the RE-volv administrators might
@@ -195,7 +194,7 @@ class ProjectPageSettings(BaseSetting):
     """Editable settings for the RE-volv project page."""
     donors_wording = models.CharField(
         max_length=20,
-        help_text="The wording that will be displayed after the number of donors to the project the use is viewing. For example, 'donors' or 'contributors'.",
+        help_text="The wording that will be displayed after the number of donors to the project the user is viewing. For example, 'donors' or 'contributors'.",
         default="donors"
     )
 
@@ -218,6 +217,114 @@ class PaymentModalSettings(BaseSetting):
         FieldPanel('payment_modal_paragraph', classname="full"),
     ]
 
+@register_setting
+class DashboardImpactSettings(BaseSetting):
+    """Editable settings for the 'My Impact' section of the dashboard page."""
+    impact_statistics_header_text = models.CharField(
+        max_length = 90,
+        help_text = "The heading above the statistics in the 'My Impact' section of the dashboard, e.g. 'Thank you for contributing! Your contribution has...'.",
+        default= 'Thank you for contributing! Your contribution has...'
+    )
+
+    description_section_explanation = ' There are three sections to every statistic description. The top section is the first line, the middle section is the actual statistic (which is calculated and not editable) and is shown bold and in color, and the bottom section is the last line.'
+
+    repayment_statistic_top_description_text = models.CharField(
+        blank=True,
+        max_length = 20,
+        help_text = "The top section of the description of the repayments statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'earned'
+    )
+
+    repayment_statistic_bottom_description_text = models.CharField(
+        blank=True,
+        max_length = 20,
+        help_text = "The bottom section of the description of the repayments statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'to reinvest'
+    )
+
+    project_count_statistic_top_description_text = models.CharField(
+        blank=True,
+        max_length = 20,
+        help_text = "The top section of the description of the project count statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'contributed to'
+    )
+
+    project_count_statistic_bottom_description_text = models.CharField(
+        blank=True,
+        max_length = 20,
+        help_text = "The bottom section of the description of the project count statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= ''
+    )
+
+    carbon_dioxide_statistic_top_description_text = models.CharField(
+        blank=True,
+        max_length = 20,
+        help_text = "The top section of the description of the carbon dioxide statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'saved'
+    )
+
+    carbon_dioxide_statistic_bottom_description_text = models.CharField(
+        blank=True,
+        max_length = 20,
+        help_text = "The bottom section of the description of the carbon dioxide statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'of carbon dioxide'
+    )
+
+    last_statistic_description_text = models.CharField(
+        blank=True,
+        max_length = 100,
+        help_text = "The description of the bottom right icon on the 'My Impact' section of the dashboard. Unlike the other statistics on this page, this last section only has one text field.",
+        default= 'Help us save the world by going solar!'
+    )
+
+    trees_saved_statistic_top_description_text = models.CharField(
+        blank=True,
+        max_length = 20,
+        help_text = "The top section of the description of the trees saved statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'saved'
+    )
+
+    trees_saved_statistic_bottom_description_text = models.CharField(
+        blank = True,
+        max_length = 20,
+        help_text = "The bottom section of the description of the trees saved statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'of trees'
+    )
+
+    kwh_statistic_top_description_text = models.CharField(
+        blank=True,
+        max_length = 20,
+        help_text = "The top section of the description of the kilowatt-hours statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'generated'
+    )
+
+    kwh_statistic_bottom_description_text  = models.CharField(
+        blank = True,
+        max_length = 20,
+        help_text = "The bottom section of the description of the kilowatt-hours saved statistic on the 'My Impact' section of the dashboard." + description_section_explanation,
+        default= 'of electricity'
+    )
+
+@register_setting
+class DashboardSettings(BaseSetting):
+    """Editable settings for the dashboard page."""
+
+    category_preferences_header_text = models.CharField(
+        max_length = 100,
+        help_text = "The heading of category preferences section in the 'My Impact' section of the dashboard.",
+        default= 'What type of projects should we invest your repayments in next?'
+    )
+
+    category_preferences_explanation_header_text = models.CharField(
+        max_length = 50,
+        help_text = "The header of the category preference explanation in the 'My Impact' section of the dashboard.",
+        default= "What's going on?"
+    )
+
+    category_preferences_explanation_paragraph = RichTextField(
+        help_text="A paragraph which will appear below the category preference options on the 'My Impact' section on the dashboard to explain to the user what category preferences mean.",
+        default="<p>Your donation to RE-volv has been invested in a revolving fund. Money from the fund is used to place solar equipment on community buildings. Over time, the community pays RE-volv back. These repayments are invested in even more solar projects. A fraction of the repayments from a solar investment originates from your investment. Your preferences directly affect where that chunk of money is invested.</p>"
+    )
 
 @register_setting
 class ProjectStatisticsSettings(BaseSetting):

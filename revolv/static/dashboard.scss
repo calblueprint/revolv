@@ -532,9 +532,106 @@ $sidebar-icon-gray: #999;
 
 $light-gray: #c6c6c6;
 $dark-gray: #555555;
+$icon-height: 100px;
 
 .dashboard-data-section-my-impact {
     height: 100%;
+
+    .my-impact-container {
+
+        .statistics-container {
+
+            .icon-container {
+                padding: 0;
+            }
+
+            .contribution-text {
+                font-weight: 800;
+                margin: 0 10% 40px 10%;
+                text-align: center;
+                font-size: 1.05rem;
+                margin-top: 50px;
+                color: $dark-gray;
+            }
+
+            .icon {
+                height: $icon-height;
+                margin: 0;
+            }
+
+            .statistics-row {
+
+                .statistic {
+                    margin-bottom: 20px;
+                }
+
+                .description  {
+                    font-weight: 300;
+                    line-height: 1rem;
+                    margin: 0;
+                }
+
+                .emphasized-text {
+                    font-weight: 800;
+                    font-size: 1.3rem;
+                    margin: 0;
+
+                    &.repayments {
+                        color: $revolv-blue;
+                    }
+
+                    &.number-of-projects {
+                        color: $revolv-dashboard-orange;
+                    }
+
+                    &.trees {
+                        color: $revolv-dashboard-green;
+                    }
+
+                    &.kwh {
+                        color: $revolv-dashboard-yellow;
+                    }
+
+                    &.co2 {
+                        color: $revolv-dashboard-light-blue;
+                    }
+                }
+
+                .text-area {
+
+                    .text-container {
+                        margin-top: 30%;
+                        @include transform(translateY(-50%));
+                    }
+                }
+            }
+        }
+
+        .my-projects-container {
+            .my-projects-header {
+                font-weight: 800;
+                text-align: center;
+                font-size: 1.05rem;
+                margin-top: 50px;
+                color: $dark-gray;
+            }
+
+            .project-title {
+                color: $revolv-blue;
+                font-weight: 300;
+                margin-bottom: 0;
+            }
+
+            .project-status {
+                font-weight: 300;
+                margin-bottom: 0;
+
+                &.active {
+                    color: $revolv-blue;
+                }
+            }
+        }
+    }
 
     .category-preferences-container {
         height: 100%;
@@ -614,8 +711,11 @@ $dark-gray: #555555;
 
             .explanation {
                 margin: 0 15px;
-                font-weight: 300;
                 margin-bottom: 40px;
+
+                p {
+                    font-weight: 300;
+                }
             }
         }
     }
@@ -672,6 +772,18 @@ $dark-gray: #555555;
             }
         }
     }
+
+    .dashboard-data-section-my-impact {
+        .my-impact-container {
+            .statistics-container {
+                .statistics-row {
+                    .emphasized-text {
+                        font-size: 1.1rem;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @mixin mobilfied-dashboard-sidebar {
@@ -701,7 +813,6 @@ $dark-gray: #555555;
 }
 
 @media #{$medium-only} and (orientation:portrait) {
-
     .dashboard-sidebar {
         @include mobilfied-dashboard-sidebar;
     }
@@ -782,6 +893,32 @@ $dark-gray: #555555;
                     font-size: 14px;
                     line-height: 20px;
                     padding: 20px 0;
+                }
+            }
+        }
+    }
+
+    // this is nested this deeply so that sass gives it priority
+    .dashboard-data-section-my-impact {
+        .my-impact-container {
+            .statistics-container {
+                .statistics-row {
+                    .statistic {                        
+                        .icon-container {
+                            .icon {
+                                margin: auto; 
+                            }
+                        }
+                        
+                        .text-area {
+                            .text-container {
+                                .description {
+                                    margin-right: auto;
+                                    margin-left: auto;
+                                }
+                            }   
+                        }
+                    }
                 }
             }
         }

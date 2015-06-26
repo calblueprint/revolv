@@ -5727,7 +5727,7 @@ label.checkmark {
     -ms-transform: scaleX(-1) rotate(135deg);
     -webkit-transform: scaleX(-1) rotate(135deg);
     transform: scaleX(-1) rotate(135deg);
-    moz-transform-origin: left top;
+    -moz-transform-origin: left top;
     -o-transform-origin: left top;
     -ms-transform-origin: left top;
     -webkit-transform-origin: left top;

@@ -7837,6 +7837,60 @@ html, body, .main-row {
 
 .dashboard-data-section-my-impact {
   height: 100%; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .icon-container {
+    padding: 0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .contribution-text {
+    font-weight: 800;
+    margin: 0 10% 40px 10%;
+    text-align: center;
+    font-size: 1.05rem;
+    margin-top: 50px;
+    color: #555555; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .icon {
+    height: 100px;
+    margin: 0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic {
+    margin-bottom: 20px; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .description {
+    font-weight: 300;
+    line-height: 1rem;
+    margin: 0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text {
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 0; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.repayments {
+      color: #11ade5; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.number-of-projects {
+      color: #fdb131; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.trees {
+      color: #0ca336; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.kwh {
+      color: #efd700; }
+    .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text.co2 {
+      color: #afd5e0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .text-area .text-container {
+    margin-top: 30%;
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); }
+  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .my-projects-header {
+    font-weight: 800;
+    text-align: center;
+    font-size: 1.05rem;
+    margin-top: 50px;
+    color: #555555; }
+  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-title {
+    color: #11ade5;
+    font-weight: 300;
+    margin-bottom: 0; }
+  .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status {
+    font-weight: 300;
+    margin-bottom: 0; }
+    .dashboard-data-section-my-impact .my-impact-container .my-projects-container .project-status.active {
+      color: #11ade5; }
   .dashboard-data-section-my-impact .category-preferences-container {
     height: 100%;
     padding: 0; }
@@ -7898,8 +7952,9 @@ html, body, .main-row {
         margin-top: 45px; }
       .dashboard-data-section-my-impact .category-preferences-container .choice-container .explanation {
         margin: 0 15px;
-        font-weight: 300;
         margin-bottom: 40px; }
+        .dashboard-data-section-my-impact .category-preferences-container .choice-container .explanation p {
+          font-weight: 300; }
 
 .cover-photo {
   padding: 0 !important;
@@ -7926,7 +7981,9 @@ html, body, .main-row {
   .dashboard-project .dashboard-project-header .project-status-medium {
     display: inline-block; }
   .dashboard-project .controls form {
-    margin-right: 10px; } }
+    margin-right: 10px; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .emphasized-text {
+    font-size: 1.1rem; } }
 
 @media only screen and (min-width:40.063em) and (max-width:64em) and (orientation: portrait) {
   .dashboard-sidebar {
@@ -7979,7 +8036,12 @@ html, body, .main-row {
   .dashboard-project .project-tabs-content .project-stats-table-container .project-stats-table-row {
     font-size: 14px;
     line-height: 20px;
-    padding: 20px 0; } }
+    padding: 20px 0; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .icon-container .icon {
+    margin: auto; }
+  .dashboard-data-section-my-impact .my-impact-container .statistics-container .statistics-row .statistic .text-area .text-container .description {
+    margin-right: auto;
+    margin-left: auto; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
   .gray-bar-container {
