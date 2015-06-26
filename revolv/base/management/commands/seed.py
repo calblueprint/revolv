@@ -5,11 +5,13 @@ from optparse import make_option
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
+from django.db import IntegrityError
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import Payment
 from revolv.project.models import Project
 from revolv.revolv_cms.models import RevolvCustomPage, RevolvLinkPage
 from wagtail.wagtailcore.models import Page, Site
+from wagtailsettings.registry import registry as settings_registry
 
 
 class SeedSpec(object):
@@ -374,11 +376,52 @@ class CMSPageSeedSpec(SeedSpec):
                 print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
 
 
+class CMSSettingSeedSpec(SeedSpec):
+    """
+    Database seed specification for Wagtail settings. There are many parts
+    of the app which are not full Wagtail CMS pages (and as such should not
+    be seeded by the CMSPageSeedSpec) but should be editable: the titles of
+    the homepage and auth pages, etc. See revolv.revolv_cms.models for
+    documentation on Wagtail settings.
+
+    The problem is that we currently define defaults for these settings, but
+    they don't actually take effect without there being an object in the
+    database for them. So, this seedspec looks at all the Wagtail settings
+    and creates instances of them with the default values.
+
+    We find all registered settings by looking at the Wagtailsettings registry.
+    See https://bitbucket.org/takeflight/wagtailsettings/src/ab3e1fcf87db561417ca1fb65756d943153bdc3b/wagtailsettings/registry.py?at=master
+    for info.
+    """
+
+    def seed(self, quiet=False):
+        """Publish all settings with default values."""
+        only_site = Site.objects.all()[0]
+        for registered_settings_model in settings_registry.models:
+            try:
+                registered_settings_model.objects.create(site=only_site)
+            except IntegrityError:
+                if not quiet:
+                    print "[Seed:Warning] Error in %s when trying to seed: %s already exists." % (
+                        self.__class__.__name__, str(registered_settings_model)
+                    )
+
+    def clear(self, quiet=False):
+        """Delete all registered settings."""
+        for registered_settings_model in settings_registry.models:
+            try:
+                registered_settings_model.objects.all().delete()
+            except ObjectDoesNotExist as e:
+                if not quiet:
+                    print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+
+
 SPECS_TO_RUN = (
     ("revolvuserprofile", RevolvUserProfileSeedSpec()),
     ("project", ProjectSeedSpec()),
     ("payment", PaymentSeedSpec()),
     ("cms", CMSPageSeedSpec()),
+    ("cms_settings", CMSSettingSeedSpec())
 )
 
 
