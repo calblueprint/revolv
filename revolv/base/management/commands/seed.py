@@ -100,7 +100,8 @@ class ProjectSeedSpec(SeedSpec):
         "location_latitude": 37.8670289,
         "location_longitude": -122.2561597,
         "start_date": datetime.date(2014, 1, 1),
-        "end_date": datetime.date(2015, 1, 1),
+        # community dance studio is in progress, two months til deadline
+        "end_date": datetime.date.today() + datetime.timedelta(weeks=8),
         "cover_photo": "covers/box.jpg",
         "org_start_date": datetime.date(1995, 10, 9),
         "mission_statement": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n",
@@ -121,7 +122,7 @@ class ProjectSeedSpec(SeedSpec):
         "location_latitude": 37.87968940000000,
         "location_longitude": -122.30289330000000,
         "start_date": datetime.date(2014, 1, 1),
-        "end_date": datetime.date(2015, 1, 1),
+        "end_date": datetime.date(2015, 1, 1),  # this project is already complete
         "cover_photo": "covers/Dairy-Products-vitamin-D-foods.jpg",
         "org_start_date": datetime.date(1997, 10, 9),
         "mission_statement": "With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",

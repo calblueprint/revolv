@@ -539,6 +539,8 @@ class Project(models.Model):
         :return: the number of days left in this project's campaign, formatted
         according to how many days left there are. This includes a default message
         when there are 0 days left instead of just saying "0".
+
+        TODO: this should probably be moved to the template logic.
         """
         days_left = self.days_until_end
         if days_left == 1:
