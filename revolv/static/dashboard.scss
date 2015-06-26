@@ -351,6 +351,8 @@ $sidebar-icon-gray: #999;
         }
     }
 
+    $stats-table-highlight-bg: #eee;
+    $stats-table-text-color: #555;
     .project-tabs-content {
         .row {
             margin: 0;
@@ -382,7 +384,7 @@ $sidebar-icon-gray: #999;
 
             .donor-stats-table {
                 .donor-stats-table-row {
-                    border-bottom: 1px solid #eee;
+                    border-bottom: 1px solid $stats-table-highlight-bg;
 
                     &:last-child {
                         border-bottom: none;
@@ -395,7 +397,7 @@ $sidebar-icon-gray: #999;
                     .description {
                         font-size: 16px;
                         font-weight: 300;
-                        border-right: 1px solid #eee;
+                        border-right: 1px solid $stats-table-highlight-bg;
                     }
                     .table-value {
                         font-size: 18px;
@@ -434,8 +436,6 @@ $sidebar-icon-gray: #999;
             font-size: 10px;
         }
 
-        $stats-table-highlight-bg: #eee;
-        $stats-table-text-color: #555;
         .project-stats-table-container {
             .project-stats-table-row {
                 font-size: 16px;
