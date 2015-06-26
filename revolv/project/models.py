@@ -508,7 +508,7 @@ class Project(models.Model):
         :return: the difference between today and the end date of this project.
         May be negative.
         """
-        return (datetime.date.today() - self.end_date).days
+        return (self.end_date - datetime.date.today()).days
 
     @property
     def days_so_far(self):

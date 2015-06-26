@@ -379,6 +379,30 @@ $sidebar-icon-gray: #999;
                     font-weight: 300;
                 }
             }
+
+            .donor-stats-table {
+                .donor-stats-table-row {
+                    border-bottom: 1px solid #eee;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    .description, .table-value {
+                        line-height: 20px;
+                        padding: 10px;
+                    }
+                    .description {
+                        font-size: 16px;
+                        font-weight: 300;
+                        border-right: 1px solid #eee;
+                    }
+                    .table-value {
+                        font-size: 18px;
+                        padding-left: 10px;
+                    }
+                }
+            }
         }
 
         p, h2 {
@@ -909,20 +933,20 @@ $icon-height: 100px;
         .my-impact-container {
             .statistics-container {
                 .statistics-row {
-                    .statistic {                        
+                    .statistic {
                         .icon-container {
                             .icon {
-                                margin: auto; 
+                                margin: auto;
                             }
                         }
-                        
+
                         .text-area {
                             .text-container {
                                 .description {
                                     margin-right: auto;
                                     margin-left: auto;
                                 }
-                            }   
+                            }
                         }
                     }
                 }

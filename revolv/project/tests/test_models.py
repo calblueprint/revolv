@@ -167,16 +167,19 @@ class ProjectTests(TestCase):
         Test that the functions related to the amount of time remaning in
         the project work correctly.
         """
-        project = Project.factories.base.build(end_date=datetime.date.today() - datetime.timedelta(days=10))
+        project = Project.factories.base.build(end_date=datetime.date.today() + datetime.timedelta(days=10))
         self.assertEqual(project.days_left, 10)
+        self.assertEqual(project.days_until_end, 10)
         self.assertEqual(project.formatted_days_left(), "10 days left")
-        project = Project.factories.base.build(end_date=datetime.date.today() - datetime.timedelta(days=1))
-        self.assertEqual(project.days_left, 1)
-        self.assertEqual(project.formatted_days_left(), "1 day left")
-        project = Project.factories.base.build(end_date=datetime.date.today() - datetime.timedelta(minutes=10, days=0))
-        self.assertEqual(project.days_left, 0)
-        self.assertEqual(project.formatted_days_left(), Project.LESS_THAN_ONE_DAY_LEFT_STATEMENT)
         project = Project.factories.base.build(end_date=datetime.date.today() + datetime.timedelta(days=1))
+        self.assertEqual(project.days_left, 1)
+        self.assertEqual(project.days_until_end, 1)
+        self.assertEqual(project.formatted_days_left(), "1 day left")
+        project = Project.factories.base.build(end_date=datetime.date.today() + datetime.timedelta(minutes=10, days=0))
+        self.assertEqual(project.days_left, 0)
+        self.assertEqual(project.days_until_end, 0)
+        self.assertEqual(project.formatted_days_left(), Project.LESS_THAN_ONE_DAY_LEFT_STATEMENT)
+        project = Project.factories.base.build(end_date=datetime.date.today() - datetime.timedelta(days=1))
         self.assertEqual(project.days_left, 0)
         self.assertEqual(project.formatted_days_left(), Project.NO_DAYS_LEFT_STATEMENT)
 
