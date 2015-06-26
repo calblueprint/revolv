@@ -4,7 +4,6 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
 from wagtailsettings import BaseSetting, register_setting
 
-
 class RevolvCustomPage(Page):
     """
     A CMS page representing a web page that the RE-volv administrators might

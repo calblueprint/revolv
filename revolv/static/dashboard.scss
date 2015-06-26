@@ -581,19 +581,19 @@ $icon-height: 100px;
                     }
 
                     &.number-of-projects {
-                        color: #fdb131;
+                        color: $revolv-dashboard-orange;
                     }
 
                     &.trees {
-                        color: #0ca336;
+                        color: $revolv-dashboard-green;
                     }
 
                     &.kwh {
-                        color: #efd700;
+                        color: $revolv-dashboard-yellow;
                     }
 
                     &.co2 {
-                        color: #afd5e0;
+                        color: $revolv-dashboard-light-blue;
                     }
                 }
 

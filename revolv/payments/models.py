@@ -1,6 +1,4 @@
 from django.db import models
-
-from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
 
 class AdminRepaymentManager(models.Manager):
@@ -53,7 +51,7 @@ class AdminRepayment(models.Model):
         contribution to the project.
     """
     amount = models.FloatField()
-    admin = models.ForeignKey(RevolvUserProfile)
+    admin = models.ForeignKey('base.RevolvUserProfile')
     project = models.ForeignKey("project.Project")
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -118,7 +116,7 @@ class AdminReinvestment(models.Model):
         !!! TODO: actually prioritize by Category
     """
     amount = models.FloatField()
-    admin = models.ForeignKey(RevolvUserProfile)
+    admin = models.ForeignKey('base.RevolvUserProfile')
     project = models.ForeignKey("project.Project")
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -240,7 +238,7 @@ class RepaymentFragment(models.Model):
         Before a RepaymentFragment is deleted, we decrement the reinvest_pool in
         the related user.
     """
-    user = models.ForeignKey(RevolvUserProfile)
+    user = models.ForeignKey('base.RevolvUserProfile')
     project = models.ForeignKey("project.Project")
     admin_repayment = models.ForeignKey(AdminRepayment)
 
@@ -387,10 +385,10 @@ class Payment(models.Model):
         user. Reinvestment money originates from repayments made by
         already completed projects.
     """
-    user = models.ForeignKey(RevolvUserProfile, blank=True, null=True)
+    user = models.ForeignKey('base.RevolvUserProfile', blank=True, null=True)
     project = models.ForeignKey("project.Project")
 
-    entrant = models.ForeignKey(RevolvUserProfile, related_name='entrant')
+    entrant = models.ForeignKey('base.RevolvUserProfile', related_name='entrant')
     payment_type = models.ForeignKey(PaymentType)
     created_at = models.DateTimeField(auto_now_add=True)
 
