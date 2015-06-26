@@ -4,6 +4,7 @@ from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import Payment
 from revolv.project.models import Project
+from revolv.revolv_cms.models import MainPageSettings
 
 
 class SeedTest(TestCase):
@@ -38,6 +39,13 @@ class SeedTest(TestCase):
         self.assertEqual(RevolvUserProfile.objects.count(), profile_count)
         self.assertEqual(Project.objects.count(), project_count)
         self.assertEqual(Payment.objects.count(), payment_count)
+
+    def test_seed_cms_settings(self):
+        """Assert the seed for the cms settings works."""
+        call_command("seed", quiet=True)
+        # for MainPageSettings, there can be only one, so we just want to assert
+        # that it's there.
+        self.assertEqual(MainPageSettings.objects.count(), 1)
 
     def test_cms_seed(self):
         """
