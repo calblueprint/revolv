@@ -1,6 +1,7 @@
 .cms-content-row {
   margin-top: 50px;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  font-weight: 400; }
   .cms-content-row img {
     padding: 10px 20px; }
     .cms-content-row img.left {
