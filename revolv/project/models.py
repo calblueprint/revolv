@@ -245,6 +245,7 @@ class Project(models.Model):
     )
 
     people_affected = models.PositiveIntegerField(
+        default=0,
         help_text='How many people will be impacted by this project?'
     )
 
