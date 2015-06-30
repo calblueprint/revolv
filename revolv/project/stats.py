@@ -78,7 +78,7 @@ class KilowattStatsAggregator(object):
     @classmethod
     def from_project(cls, project):
         """Instantage an aggregator from a Project models."""
-        return cls(project.impact_power, project.people_affected)
+        return cls(project.impact_power)
 
     @classmethod
     def from_project_queryset(cls, queryset):
@@ -90,7 +90,7 @@ class KilowattStatsAggregator(object):
 
         return cls(queryset.aggregate(Sum("impact_power"))["impact_power__sum"])
 
-    def __init__(self, kilowatts, people_affected):
+    def __init__(self, kilowatts):
         """
         Instantiate the aggregator with a certain number of kilowatts.
 
@@ -102,7 +102,6 @@ class KilowattStatsAggregator(object):
         name of this class, so we should be good on that front.
         """
         self.kilowatts = float(kilowatts)
-        self.people_affected = int(people_affected)
 
     @property
     def kilowatt_hours_per_month(self):
