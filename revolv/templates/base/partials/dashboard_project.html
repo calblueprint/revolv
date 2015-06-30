@@ -93,6 +93,10 @@
                     <div class="small-8 medium-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.automobile_miles_description }}</div>
                     <div class="small-4 medium-6 columns">{{ project.statistics.automobile_miles_per_month|floatformat:"2"|intcomma }} miles/month</div>
                 </div>
+                <div class="row project-stats-table-row highlight">
+                    <div class="small-8 medium-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.people_affected_description }}</div>
+                    <div class="small-4 medium-6 columns">{{ project.statistics.people_affected }} people</div>
+                </div>
             </div>
         </div>
     </div>

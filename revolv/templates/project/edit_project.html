@@ -98,12 +98,14 @@
 
             <div class="row organization-overview section">
                 <p class="section-title">Organization Overview</p>
-                <div class="medium-6 small-12 columns">
+                <div class="medium-12 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_name %}
                 </div>
                 <div class="medium-6 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.org_start_date %}
                 </div>
+                <div class="medium-6 small-12 columns">
+                    {% include "base/partials/tooltip_formfield.html" with field=form.people_affected %}                </div>
                 <div class="medium-12 small-12 columns">
                     {% include "base/partials/tooltip_formfield.html" with field=form.location %}
                     <div id="map-canvas"></div>

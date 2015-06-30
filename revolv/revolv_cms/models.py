@@ -373,3 +373,8 @@ class ProjectStatisticsSettings(BaseSetting):
         help_text="The description to be displayed next to the 'days so far' statistic in the dashboard project statistics area. e.g. 'Days so far' or 'Days since start'",
         default="Days so far"
     )
+    people_affected_description = models.CharField(
+        max_length=30,
+        help_text="The description to be displayed next to the 'people affected' statistic in the dashboard project statistics area. e.g. 'Number of people affected' or 'People affected'",
+        default="Number of people affected"
+    )

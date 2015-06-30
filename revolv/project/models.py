@@ -244,6 +244,10 @@ class Project(models.Model):
         help_text='What is the name of the organization being helped?'
     )
 
+    people_affected = models.PositiveIntegerField(
+        help_text='How many people will be impacted by this project?'
+    )
+
     mission_statement = models.TextField(
         'Organization Mission',
         help_text='What is the mission statement of the organization being helped by this project?',
