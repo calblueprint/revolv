@@ -49,7 +49,6 @@
     <a href="{% url "project:new" %}" class="create-new-button" id="create_project">Create Project</a>
 </div>
 {% endif %}
-
 <div class="dashboard-section projects">
     {% if donor_has_no_donated_projects %}
         <div class="dashboard-header">No projects found.</div>
@@ -67,13 +66,9 @@
         {% endfor %}
     {% endif %}
 </div>
-<div class="dashboard-section my-impact-and-category-preferences">
-    <div class="dashboard-sidebar-project-container dashboard-data-link active" data-section="my-impact">
-        <div class="dashboard-data-link dashboard-sidebar-project">My Impact</div>
-    </div>
-</div>
 <div class="dashboard-section manage">
     <div class="dashboard-header">Manage</div>
+    <div class="dashboard-manage-link my-impact-and-category-preferences"><a id="my_impact" href="{% url "dashboard" %}">My Impact</a></div>
     <div class="dashboard-manage-link"><a id="change_password_link" href="/password_change/">Change Password</a></div>
     <div class="dashboard-manage-link"><a id="logout_link" href="/logout/">Logout</a></div>
 </div>

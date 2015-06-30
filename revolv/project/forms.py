@@ -35,6 +35,7 @@ class ProjectForm(forms.ModelForm):
             'org_about': forms.Textarea(attrs={'placeholder': 'e.g. Other Avenues is a worker-owned cooperative that seeks to maintain a thriving business while providing food and supplies for sustainable living, supporting organic and local farms and to serve as a model of workplace democracy for the community.'}),
             'location': forms.TextInput(attrs={'placeholder': 'e.g. 3930 Judah Street San Francisco, CA 94122'}),
             'description': forms.Textarea(attrs={'placeholder': "e.g. The solar energy system will be a 36kW project that provides 33% of Other Avenue's electricity needs."}),
+            'people_affected': forms.NumberInput(attrs={'placeholder': 'e.g. 12'}),
         }
 
         fields = (
@@ -53,6 +54,7 @@ class ProjectForm(forms.ModelForm):
             'location_longitude',
             'categories_select',
             'description',
+            'people_affected'
         )
 
     def clean_categories_select(self):
