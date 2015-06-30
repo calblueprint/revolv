@@ -24,12 +24,12 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     video_url = "https://www.youtube.com/watch?v=9bZkp7q19f0"
     impact_power = 50.5
     location = "Berkeley"
-    end_date = datetime.date.today() - datetime.timedelta(days=1)  # tomorrow
+    end_date = datetime.date.today() + datetime.timedelta(days=1)  # tomorrow
     mission_statement = "We do solar!"
     cover_photo = None
     org_name = "Power for Community Center"
     org_about = "Community Center is a center for communities."
-    org_start_date = datetime.date.today() + datetime.timedelta(days=1)  # today
+    org_start_date = datetime.date.today() - datetime.timedelta(days=1)  # yesterday
     actual_energy = 25.5
     amount_repaid = 29.25
     ambassador = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
@@ -38,7 +38,15 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     solar_url = "http://home.solarlog-web.net/1445.html",
 
 
-class ActiveProjectFactory(ProjectFactory):
+class ProjectWithStartDateFactory(ProjectFactory):
+    """
+    Factory with a non-null start_date. Inherited by
+    active and completed project factories.
+    """
+    start_date = datetime.date.today() - datetime.timedelta(days=1)  # yesterday
+
+
+class ActiveProjectFactory(ProjectWithStartDateFactory):
     """Factory for default active projects."""
     project_status = Project.ACTIVE
 
@@ -53,7 +61,7 @@ class ProposedProjectFactory(ProjectFactory):
     project_status = Project.PROPOSED
 
 
-class CompletedProjectFactory(ProjectFactory):
+class CompletedProjectFactory(ProjectWithStartDateFactory):
     """Factory for default completed projects."""
     project_status = Project.COMPLETED
 

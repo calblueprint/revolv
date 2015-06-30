@@ -204,6 +204,13 @@ class Project(models.Model):
     end_date = models.DateField(
         help_text='When will this crowdfunding project end?'
     )
+    # the start date of a project is whenever the project becomes live,
+    # so we have to set it dynamically. Accordingly, the start_date
+    # field is blank=True.
+    start_date = models.DateField(
+        blank=True,
+        null=True
+    )
     project_status = models.CharField(
         max_length=2,
         choices=PROJECT_STATUS_CHOICES,
@@ -279,6 +286,7 @@ class Project(models.Model):
 
     def approve_project(self):
         self.project_status = Project.ACTIVE
+        self.start_date = datetime.date.today()
         self.save()
         return self
 
@@ -289,6 +297,7 @@ class Project(models.Model):
         STAGED, not PROPOSED.
         """
         self.project_status = Project.PROPOSED
+        self.start_date = None
         self.save()
         return self
 
@@ -481,14 +490,58 @@ class Project(models.Model):
         return unicode(self.partial_repayment)
 
     @property
+    def total_days(self):
+        """
+        :return the total length of the campaign of this project,
+        or None if the project hasn't started yet.
+
+        Note: if a project's campaign starts and ends on the same day, it is
+        defined to be one day long, not zero days long.
+        """
+        if self.start_date is None:
+            return None
+        return max((self.end_date - self.start_date).days + 1, 0)
+
+    @property
     def days_until_end(self):
-        return (datetime.date.today() - self.end_date).days
+        """
+        :return: the difference between today and the end date of this project.
+        May be negative.
+        """
+        return (self.end_date - datetime.date.today()).days
+
+    @property
+    def days_so_far(self):
+        """
+        :return: the integer number of days that have passed since
+        this project's campaign began, or None if it has not started
+        yet.
+        """
+        if self.start_date is None:
+            return None
+        difference = (datetime.date.today() - self.start_date).days
+        if difference < 0:
+            return 0
+        if difference > self.total_days:
+            return self.total_days
+        return difference
 
     @property
     def days_left(self):
+        """
+        :return: the integer number of days until the end of this project,
+        or 0 if the project's campaign has finished.
+        """
         return max(self.days_until_end, 0)
 
     def formatted_days_left(self):
+        """
+        :return: the number of days left in this project's campaign, formatted
+        according to how many days left there are. This includes a default message
+        when there are 0 days left instead of just saying "0".
+
+        TODO: this should probably be moved to the template logic.
+        """
         days_left = self.days_until_end
         if days_left == 1:
             return "1 day left"

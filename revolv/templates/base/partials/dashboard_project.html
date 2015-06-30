@@ -56,6 +56,20 @@
                 <div class="num-days-remaining">{{project.days_left}}</div>
                 <div class="days-remaining-label">day{{project.days_left|pluralize}} left</div>
             </div>
+            <div class="donor-stats-table small-6 medium-3 large-4 columns end">
+                <div class="row donor-stats-table-row">
+                    <div class="description small-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.donor_stats_table_donors_description}}</div>
+                    <div class="table-value small-6 columns">{{ project.donors.count }}</div>
+                </div>
+                <div class="row donor-stats-table-row">
+                    <div class="description small-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.donor_stats_table_timeline_description}}</div>
+                    <div class="table-value small-6 columns">{{ project.total_days }} days</div>
+                </div>
+                <div class="row donor-stats-table-row">
+                    <div class="description small-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.donor_stats_table_days_so_far_description}}</div>
+                    <div class="table-value small-6 columns">{{ project.days_so_far }}</div>
+                </div>
+            </div>
         </div>
         <div class="row project-stats">
             <div class="project-stats-table-container small-12 large-10 large-offset-1 columns">

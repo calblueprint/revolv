@@ -351,6 +351,8 @@ $sidebar-icon-gray: #999;
         }
     }
 
+    $stats-table-highlight-bg: #eee;
+    $stats-table-text-color: #555;
     .project-tabs-content {
         .row {
             margin: 0;
@@ -358,6 +360,12 @@ $sidebar-icon-gray: #999;
 
         .donation-stats {
             margin-bottom: 40px;
+
+            // make sure all children are aligned vertically to the center
+            & > * {
+                vertical-align: middle;
+            }
+
             .days-remaining {
                 // more padding than a normal row
                 padding: 0 40px;
@@ -371,6 +379,30 @@ $sidebar-icon-gray: #999;
                     font-size: 25px;
                     line-height: 27px;
                     font-weight: 300;
+                }
+            }
+
+            .donor-stats-table {
+                .donor-stats-table-row {
+                    border-bottom: 1px solid $stats-table-highlight-bg;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    .description, .table-value {
+                        line-height: 20px;
+                        padding: 10px;
+                    }
+                    .description {
+                        font-size: 16px;
+                        font-weight: 300;
+                        border-right: 1px solid $stats-table-highlight-bg;
+                    }
+                    .table-value {
+                        font-size: 18px;
+                        padding-left: 10px;
+                    }
                 }
             }
         }
@@ -404,8 +436,6 @@ $sidebar-icon-gray: #999;
             font-size: 10px;
         }
 
-        $stats-table-highlight-bg: #eee;
-        $stats-table-text-color: #555;
         .project-stats-table-container {
             .project-stats-table-row {
                 font-size: 16px;
@@ -903,20 +933,20 @@ $icon-height: 100px;
         .my-impact-container {
             .statistics-container {
                 .statistics-row {
-                    .statistic {                        
+                    .statistic {
                         .icon-container {
                             .icon {
-                                margin: auto; 
+                                margin: auto;
                             }
                         }
-                        
+
                         .text-area {
                             .text-container {
                                 .description {
                                     margin-right: auto;
                                     margin-left: auto;
                                 }
-                            }   
+                            }
                         }
                     }
                 }

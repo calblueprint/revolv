@@ -1,4 +1,6 @@
 import datetime
+from collections import namedtuple
+from operator import add, sub
 
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
@@ -83,6 +85,22 @@ class ProjectTests(TestCase):
         self.assertEqual(project.amount_left, 200.0 - 110.5)
         self.assertEqual(project.rounded_amount_left, int(200.0 - 110.5))
 
+    def test_start_date(self):
+        """
+        A project should not have a start date until after it is approved.
+
+        TODO: When we add a STAGED status for projects, we will probably
+        have to alter this test.
+        """
+        project = Project.factories.drafted.create()
+        self.assertIs(project.start_date, None)
+        project = Project.factories.proposed.create()
+        self.assertIs(project.start_date, None)
+        project.approve_project()
+        self.assertEqual(project.start_date, datetime.date.today())
+        project.unapprove_project()
+        self.assertIs(project.start_date, None)
+
     def test_donors_relation(self):
         """
         Make sure that a user isn't removed from the donors relation of a
@@ -149,18 +167,74 @@ class ProjectTests(TestCase):
         Test that the functions related to the amount of time remaning in
         the project work correctly.
         """
-        project = Project.factories.base.build(end_date=datetime.date.today() - datetime.timedelta(days=10))
+        project = Project.factories.base.build(end_date=datetime.date.today() + datetime.timedelta(days=10))
         self.assertEqual(project.days_left, 10)
+        self.assertEqual(project.days_until_end, 10)
         self.assertEqual(project.formatted_days_left(), "10 days left")
-        project = Project.factories.base.build(end_date=datetime.date.today() - datetime.timedelta(days=1))
-        self.assertEqual(project.days_left, 1)
-        self.assertEqual(project.formatted_days_left(), "1 day left")
-        project = Project.factories.base.build(end_date=datetime.date.today() - datetime.timedelta(minutes=10, days=0))
-        self.assertEqual(project.days_left, 0)
-        self.assertEqual(project.formatted_days_left(), Project.LESS_THAN_ONE_DAY_LEFT_STATEMENT)
         project = Project.factories.base.build(end_date=datetime.date.today() + datetime.timedelta(days=1))
+        self.assertEqual(project.days_left, 1)
+        self.assertEqual(project.days_until_end, 1)
+        self.assertEqual(project.formatted_days_left(), "1 day left")
+        project = Project.factories.base.build(end_date=datetime.date.today() + datetime.timedelta(minutes=10, days=0))
+        self.assertEqual(project.days_left, 0)
+        self.assertEqual(project.days_until_end, 0)
+        self.assertEqual(project.formatted_days_left(), Project.LESS_THAN_ONE_DAY_LEFT_STATEMENT)
+        project = Project.factories.base.build(end_date=datetime.date.today() - datetime.timedelta(days=1))
         self.assertEqual(project.days_left, 0)
         self.assertEqual(project.formatted_days_left(), Project.NO_DAYS_LEFT_STATEMENT)
+
+    def test_days_so_far(self):
+        """
+        Test that the functions related to the amount of time passed so far
+        in a project work correctly. Note that only active and completed projects
+        have non-null start_dates, so days_so_far should return None if the project
+        doesnt have a start_date.
+        """
+        Case = namedtuple("Case", ["kwargs_for_timedelta", "operator", "expected_days_so_far"])
+        cases = [
+            Case({"days": 10}, sub, 10),
+            Case({"days": 1}, sub, 1),
+            Case({"days": 0, "minutes": 10}, sub, 0),
+            # days_so_far should be 0 if start_date is in future. this should
+            # never happen, but there's no harm in asserting that this function
+            # would handle it correctly
+            Case({"days": 10}, add, 0),
+        ]
+        for case in cases:
+            project = Project.factories.active.build(
+                start_date=case.operator(
+                    datetime.date.today(), datetime.timedelta(**case.kwargs_for_timedelta)
+                )
+            )
+            self.assertEqual(project.days_so_far, case.expected_days_so_far)
+
+        proposed_project = Project.factories.proposed.build()
+        self.assertIs(proposed_project.days_so_far, None)
+
+        long_gone_project = Project.factories.completed.build(
+            start_date=datetime.date.today() - datetime.timedelta(days=100),
+            end_date=datetime.date.today() - datetime.timedelta(days=75),
+        )
+        self.assertEqual(long_gone_project.days_so_far, 26)
+
+    def test_total_days(self):
+        """Test that project.total_days() works correctly."""
+        Case = namedtuple("Case", ["kwargs_for_past_timedelta", "kwargs_for_future_timedelta", "expected_total_days"])
+        cases = [
+            Case({"days": 1}, {"days": 1}, 3),
+            Case({"days": 5}, {"days": -1}, 5),
+            Case({"days": 1}, {"days": -1}, 1),
+            Case({"days": 1}, {"days": -5}, 0),
+        ]
+        for case in cases:
+            project = Project.factories.active.build(
+                start_date=datetime.date.today() - datetime.timedelta(**case.kwargs_for_past_timedelta),
+                end_date=datetime.date.today() + datetime.timedelta(**case.kwargs_for_future_timedelta)
+            )
+            self.assertEqual(project.total_days, case.expected_total_days)
+
+        proposed_project = Project.factories.proposed.build()
+        self.assertIs(proposed_project.total_days, None)
 
     def test_statistics(self):
         """Test project.statistics correctly gets impact_power."""

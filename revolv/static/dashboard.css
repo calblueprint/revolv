@@ -7711,6 +7711,8 @@ html, body, .main-row {
     margin: 0; }
   .dashboard-project .project-tabs-content .donation-stats {
     margin-bottom: 40px; }
+    .dashboard-project .project-tabs-content .donation-stats > * {
+      vertical-align: middle; }
     .dashboard-project .project-tabs-content .donation-stats .days-remaining {
       padding: 0 40px;
       text-align: center; }
@@ -7721,6 +7723,20 @@ html, body, .main-row {
         font-size: 25px;
         line-height: 27px;
         font-weight: 300; }
+    .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row {
+      border-bottom: 1px solid #eeeeee; }
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row:last-child {
+        border-bottom: none; }
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value {
+        line-height: 20px;
+        padding: 10px; }
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description {
+        font-size: 16px;
+        font-weight: 300;
+        border-right: 1px solid #eeeeee; }
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value {
+        font-size: 18px;
+        padding-left: 10px; }
   .dashboard-project .project-tabs-content p, .dashboard-project .project-tabs-content h2 {
     font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
   .dashboard-project .project-tabs-content p {
