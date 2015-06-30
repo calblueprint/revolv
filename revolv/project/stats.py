@@ -107,7 +107,7 @@ class KilowattStatsAggregator(object):
     def kilowatt_hours_per_month(self):
         """Return the number of kilowatt hours outputted per month, given this aggregator's kilowatt value."""
         return self.kilowatts * self.NUM_HOURS_IN_MONTH * self.SOLAR_PANEL_USE_FACTOR_PER_DAY
-    
+
     @property
     def pounds_carbon_saved_per_month(self):
         """
