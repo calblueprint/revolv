@@ -63,10 +63,6 @@ class AdminRepayment(models.Model):
     objects = AdminRepaymentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminRepaymentFactories")
 
-    @property
-    def reinvestable_amount(self):
-        return self.amount - self.organizational_cost
-
 
 class AdminReinvestmentManager(models.Manager):
     """

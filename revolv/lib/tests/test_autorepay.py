@@ -11,27 +11,33 @@ from revolv.project.models import (MonthlyOrganizationalCost,
 
 class AutoRepayTestCase(TestCase):
     def test_off_day(self):
+        """
+        Tests that the `autorepay` command only runs successfully on the 1st and
+        15th of every month. The command must fail on any other day *unless* the
+        --override flag is given from the command line.
+        """
         with mock.patch.object(timezone, 'now', return_value=datetime.datetime(2016, 3, 4)):
-            err_stream_fail = StringIO()
             try:
-                call_command('autorepay', override=False, stderr=err_stream_fail)
-                self.fail("shouldn't succeed")
-            except SystemExit:
-                pass
+                call_command('autorepay', override=False, stderr=StringIO())
+                self.fail("autorepay command shouldn't succeed on an off day if the `override` flag is not set")
+            except SystemExit as e:
+                self.assertEqual(1, e.code)
 
             call_command('autorepay', override=True)
 
     def test_amount(self):
+        """
+        Tests that the `autorepay` command repays the correct amount. Since the
+        command runs twice per month, on any given run of the command, it should
+        repay all qualified projects by (MonthlyReinvestableAmount / 2).
+        """
         project = Project.factories.completed.create(funding_goal=1200)
-        cur_year = timezone.now().year
-        MonthlyReinvestableAmount(
+        MonthlyReinvestableAmount.factories.base.create(
             project=project,
-            year=cur_year,
             amount=200
-        ).save()
-        MonthlyOrganizationalCost(
+        )
+        MonthlyOrganizationalCost.factories.base.create(
             project=project,
-            year=cur_year,
             amount=100
         ).save()
 
@@ -42,16 +48,16 @@ class AutoRepayTestCase(TestCase):
         self.assertEquals(project.amount_repaid, 200)
 
         a_long_time_ago_in_a_galaxy_far_far_away = 2100
-        MonthlyReinvestableAmount(
+        MonthlyReinvestableAmount.factories.base.create(
             project=project,
             year=a_long_time_ago_in_a_galaxy_far_far_away,
             amount=1000
-        ).save()
-        MonthlyOrganizationalCost(
+        )
+        MonthlyOrganizationalCost.factories.base.create(
             project=project,
             year=a_long_time_ago_in_a_galaxy_far_far_away,
             amount=10000
-        ).save()
+        )
 
         with mock.patch.object(timezone, 'now', return_value=datetime.datetime(a_long_time_ago_in_a_galaxy_far_far_away, 3, 4)):
             call_command('autorepay', override=True)

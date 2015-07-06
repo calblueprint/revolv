@@ -673,6 +673,15 @@ class MonthlyReinvestableAmount(models.Model):
     """
     Part of the money to be repaid to RE-volv per month for a particular project
     that can be made available for reinvestment.
+
+    Once a project is completed, that project begins to make bi-monthly
+    repayments to RE-volv. These payments continue until the entire project has
+    been repayed, plus interest.
+
+    RE-volv determines the monthly amount for these reinvestments--in other
+    words, a project must repay RE-volv a pre-determined amount every month.
+    This model represents that amount. Furthermore, the monthly amount stays the
+    same for an entire year, hence the `year` field.
     """
     project = models.ForeignKey(Project)
     year = models.IntegerField()
@@ -680,12 +689,23 @@ class MonthlyReinvestableAmount(models.Model):
         max_digits=8,
         decimal_places=3
     )
+
+    factories = ImportProxy("revolv.project.factories", "MonthlyReinvestableAmountFactories")
 
 
 class MonthlyOrganizationalCost(models.Model):
     """
     Part of the money to be repaid to RE-volv per month for a particular project
     that will be used for organizational costs.
+
+    Once a project is completed, that project begins to make bi-monthly
+    repayments to RE-volv. These payments continue until the entire project has
+    been repayed, plus interest.
+
+    RE-volv determines the monthly amount for these reinvestments--in other
+    words, a project must repay RE-volv a pre-determined amount every month.
+    This model represents that amount. Furthermore, the monthly amount stays the
+    same for an entire year, hence the `year` field.
     """
     project = models.ForeignKey(Project)
     year = models.IntegerField()
@@ -693,3 +713,5 @@ class MonthlyOrganizationalCost(models.Model):
         max_digits=8,
         decimal_places=3
     )
+
+    factories = ImportProxy("revolv.project.factories", "MonthlyOrganizationalCostFactories")
