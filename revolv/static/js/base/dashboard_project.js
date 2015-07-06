@@ -1,7 +1,7 @@
 /**
- * This file renders the svg circles for the repayment modules for the project view
- * on the user dashboards. It defines and then creates a DashboardCircles object
- * that handles the logic for drawing repayment progress. The DashboardCircles object is
+ * This class renders the svg circles for the repayment modules for the project view
+ * on the user dashboards. It defines and initializes a DashboardRepaymentCircles object
+ * that handles the logic for drawing repayment progress. The DashboardRepaymentCircles object is
  * used in dashboard.js, where the logic for switching tabs and projects is taken care of.
  */
 function DashboardRepaymentCircles() {
@@ -91,6 +91,12 @@ function DashboardRepaymentCircles() {
     };
 }
 
+/**
+ * This class renders the svg circles for the funding modules for the project view
+ * on the user dashboards. It defines and initializes a DashboardFundingCircles object
+ * that handles the logic for drawing repayment progress. The DashboardFundingCircles object is
+ * used in dashboard.js, where the logic for switching tabs and projects is taken care of.
+ */
 function DashboardFundingCircles() {
     /**
      * Deletes circles for the currently active project. Called when switching projects on the dashboard.

@@ -101,14 +101,14 @@ $(document).ready(function () {
     $(".dashboard-data-link").click(function() {
         $(".dashboard-data-link.active").removeClass("active");
         $(this).addClass("active");
-        // deletes repayment progress for the current project
+        // deletes repayment and funding progress for the current project
         dashboardRepayment.deleteCurrentCircles();
         dashboardFunding.deleteCurrentCircles();
         $(".dashboard-data-section-current").removeClass("dashboard-data-section-current");
         var sectionToShow = $(".dashboard-data-section-" + $(this).data("section"));
         sectionToShow.addClass("dashboard-data-section-current");
 
-        // draws repayment progress for the project we are switching to
+        // draws repayment and funding progress for the project we are switching to
         dashboardRepayment.draw();
         dashboardFunding.draw();
 
