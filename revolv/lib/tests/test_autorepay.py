@@ -1,8 +1,9 @@
 import datetime
-from cStringIO import StringIO
+import os
 
 import mock
 from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.test import TestCase
 from django.utils import timezone
 from revolv.project.models import (MonthlyOrganizationalCost,
@@ -14,14 +15,15 @@ class AutoRepayTestCase(TestCase):
         """
         Tests that the `autorepay` command only runs successfully on the 1st and
         15th of every month. The command must fail on any other day *unless* the
-        --override flag is given from the command line.
+        `--override` flag is given from the command line.
         """
         with mock.patch.object(timezone, 'now', return_value=datetime.datetime(2016, 3, 4)):
             try:
-                call_command('autorepay', override=False, stderr=StringIO())
+                with open(os.devnull, 'w') as f:
+                    call_command('autorepay', stderr=f, override=False)
                 self.fail("autorepay command shouldn't succeed on an off day if the `override` flag is not set")
-            except SystemExit as e:
-                self.assertEqual(1, e.code)
+            except CommandError:
+                pass
 
             call_command('autorepay', override=True)
 

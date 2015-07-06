@@ -1,7 +1,6 @@
-import sys
 from optparse import make_option
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 from revolv.payments.models import AdminRepayment
 from revolv.project.models import Project
@@ -32,10 +31,7 @@ class Command(BaseCommand):
         """
         day = timezone.now().day
         if not any([day == 1, day == 15, options['override']]):
-            print >> sys.stderr, ("autorepay command can only be run on the 1st "
-                                  "or 15th of every month unless the `--override` "
-                                  "flag is supplied. use with caution")
-            sys.exit(1)
+            raise CommandError("autorepay command can only be run on the 1st or 15th of every month unless the `--override` flag is supplied. use with caution")
 
         cur_year = timezone.now().year
         for proj in Project.objects.get_completed():

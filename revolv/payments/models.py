@@ -1,5 +1,4 @@
 from django.db import models
-from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
 
 
@@ -55,7 +54,7 @@ class AdminRepayment(models.Model):
     reinvestable = models.FloatField()
     organizational_cost = models.FloatField()
 
-    admin = models.ForeignKey(RevolvUserProfile, blank=True, null=True)
+    admin = models.ForeignKey('base.RevolvUserProfile', blank=True, null=True)
     project = models.ForeignKey("project.Project")
 
     created_at = models.DateTimeField(auto_now_add=True)

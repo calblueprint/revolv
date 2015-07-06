@@ -3,7 +3,6 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_all_administrator_emails
 from revolv.lib.mailer import send_revolv_email
@@ -41,7 +40,7 @@ class Command(BaseCommand):
 
         """
         if timezone.now().day == 1 or options['override']:  # checks if the it is the first day of the month
-            print "Running monthlydonationemail command on " + str(timezone.now()) + "."
+            print >> self.stdout, "Running monthlydonationemail command on " + str(timezone.now()) + "."
             revolv_user_profiles = RevolvUserProfile.objects.all()
             num_emails_sent = 0
             for revolv_user_profile in revolv_user_profiles:
@@ -66,7 +65,7 @@ class Command(BaseCommand):
                     context, get_all_administrator_emails()
                 )
         else:
-            print "monthlydonationemail command was not run. Use --override to run it if it is currently not the first of the month."
+            print >> self.stdout, "monthlydonationemail command was not run. Use --override to run it if it is currently not the first of the month."
 
 
 def get_last_month_donations(donation_set):

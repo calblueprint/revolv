@@ -1,11 +1,11 @@
 import datetime
+import os
 
 import mock
 from django.core import mail
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils import timezone
-
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.models import Payment
@@ -83,10 +83,11 @@ class MonthlyDonationEmailTestCase(TestCase):
         # creates an administrator user
         RevolvUserProfile.factories.admin.create()
 
-        call_command('monthlydonationemail', override=True, silence_admin_notifications=True)
-        self.assertEqual(len(mail.outbox), 0)
-        call_command('monthlydonationemail', override=True)
-        self.assertEqual(len(mail.outbox), 1)
+        with open(os.devnull, 'w') as f:
+            call_command('monthlydonationemail', override=True, stdout=f, silence_admin_notifications=True)
+            self.assertEqual(len(mail.outbox), 0)
+            call_command('monthlydonationemail', override=True, stdout=f)
+            self.assertEqual(len(mail.outbox), 1)
 
     def test_monthly_donation_email(self):
         """
@@ -105,8 +106,9 @@ class MonthlyDonationEmailTestCase(TestCase):
             created_at=date_of_last_month
         )
 
-        call_command('monthlydonationemail', override=True)
-        self.assertEqual(len(mail.outbox), 2)
+        with open(os.devnull, 'w') as f:
+            call_command('monthlydonationemail', override=True, stdout=f)
+            self.assertEqual(len(mail.outbox), 2)
 
     def test_monthly_donation_email_no_donations_in_past_month(self):
         """
@@ -125,8 +127,9 @@ class MonthlyDonationEmailTestCase(TestCase):
             created_at=date_from_last_year
         )
 
-        call_command('monthlydonationemail', override=True)
-        self.assertEqual(len(mail.outbox), 0)
+        with open(os.devnull, 'w') as f:
+            call_command('monthlydonationemail', override=True, stdout=f)
+            self.assertEqual(len(mail.outbox), 0)
 
     def test_monthly_donation_email_not_first_day_of_month_override(self):
         """
@@ -145,8 +148,9 @@ class MonthlyDonationEmailTestCase(TestCase):
             Payment.factories.base.create(
                 created_at=march_payment
             )
-            call_command('monthlydonationemail', override=True)
-            self.assertEqual(len(mail.outbox), 1)
+            with open(os.devnull, 'w') as f:
+                call_command('monthlydonationemail', override=True, stdout=f)
+                self.assertEqual(len(mail.outbox), 1)
 
     def test_monthly_donation_email_first_day_of_month(self):
         """
@@ -159,5 +163,6 @@ class MonthlyDonationEmailTestCase(TestCase):
                 created_at=payment_created_at
             )
 
-            call_command('monthlydonationemail')
-            self.assertEqual(len(mail.outbox), 1)
+            with open(os.devnull, 'w') as f:
+                call_command('monthlydonationemail', stdout=f)
+                self.assertEqual(len(mail.outbox), 1)
