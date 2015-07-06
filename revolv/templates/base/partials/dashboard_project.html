@@ -52,11 +52,20 @@
     </div>
     <div class="content funding{% if not project.is_completed %} active{% endif %}" id="funding-{{project.pk}}">
         <div class="row donation-stats">
-            <div class="days-remaining small-6 medium-3 large-2 columns">
-                <div class="num-days-remaining">{{project.days_left}}</div>
-                <div class="days-remaining-label">day{{project.days_left|pluralize}} left</div>
+            <div class="small-6 medium-4 large-2 columns" style="height:140px">
+                <div class="funding-progress-container">
+                    <div class="statistics-graphics-container">
+                        <svg class="svg-graphics-container"></svg>
+                        <svg class="internal-graphics-container"></svg>
+                        <div class="text-container">
+                            <p class="percentage-text">{{ project.percent_complete }}%</p>
+                            <p class="funded">FUNDED</p>
+                        </div>
+                        <div class="percentage-container hide">{{ project.partial_completeness_as_js }}</div>
+                    </div>
+                </div>
             </div>
-            <div class="donor-stats-table small-6 medium-3 large-4 columns end">
+            <div class="donor-stats-table small-6 medium-3 large-4 columns">
                 <div class="row donor-stats-table-row">
                     <div class="description small-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.donor_stats_table_donors_description}}</div>
                     <div class="table-value small-6 columns">{{ project.donors.count }}</div>
@@ -69,6 +78,10 @@
                     <div class="description small-6 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.donor_stats_table_days_so_far_description}}</div>
                     <div class="table-value small-6 columns">{{ project.days_so_far }}</div>
                 </div>
+            </div>
+            <div class="days-remaining small-6 medium-6 large-2 columns end">
+                <div class="num-days-remaining">{{project.days_left}}</div>
+                <div class="days-remaining-label">day{{project.days_left|pluralize}} left</div>
             </div>
         </div>
         <div class="row project-stats">

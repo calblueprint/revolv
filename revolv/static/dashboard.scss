@@ -453,6 +453,68 @@ $sidebar-icon-gray: #999;
             }
         }
 
+        .funding-progress-container {
+            height: 140px;
+            .statistics-graphics-container {
+                height: 140px;
+                width: 100%;
+                position: absolute;
+
+                .svg-graphics-container {
+                    // formatting for the white outside circle in repayment progress
+                    // fits to the size of the parent element, position:absolute needed so
+                    // height and width are actually 100% of parent element
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                }
+
+                .internal-graphics-container {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    @include transform(translate(-50%, -50%));
+                }
+
+                .funding-badge-line, .funding-badge-circle {
+                    fill: none;
+                }
+
+                .funding-badge-line {
+                    stroke: $revolv-blue;
+                }
+
+                .funding-badge-circle {
+                    stroke: white;
+                }
+
+                .text-container {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    @include transform(translate(-50%, -50%));
+                    height: 165px;
+                    width: 165px;
+                    color: $revolv-dark-blue;
+
+                    .percentage-text {
+                        position: absolute;
+                        left: 50%;
+                        top: 40%;
+                        @include transform(translate(-50%, -50%));
+                    }
+
+                    .funded {
+                        position: absolute;
+                        font-weight: 800;
+                        left: 50%;
+                        top: 60%;
+                        @include transform(translate(-50%, -50%));
+                    }
+                }
+            }
+        }
+
         .repayment-progress-container {
             height: 180px;
             .statistics-graphics-container {
