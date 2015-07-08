@@ -53,6 +53,7 @@ coverage.xml
 *.pot
 staticfiles/
 uploads/
+celerybeat-schedule
 
 # Sphinx documentation
 docs/_build/
