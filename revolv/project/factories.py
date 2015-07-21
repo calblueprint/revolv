@@ -66,12 +66,18 @@ class CompletedProjectFactory(ProjectWithStartDateFactory):
     project_status = Project.COMPLETED
 
 
+class StagedProjectFactory(ProjectWithStartDateFactory):
+    """Factory for default staged projects."""
+    project_status = Project.STAGED
+
+
 class ProjectFactories(object):
     base = ProjectFactory
     active = ActiveProjectFactory
     drafted = DraftedProjectFactory
     proposed = ProposedProjectFactory
     completed = CompletedProjectFactory
+    staged = StagedProjectFactory
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):

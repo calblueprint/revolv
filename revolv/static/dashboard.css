@@ -7521,7 +7521,7 @@ html, body, .main-row {
       background-color: #f0ad4e; }
     .dashboard-sidebar .dashboard-sidebar-bullet-point.active {
       background-color: #4cb032; }
-    .dashboard-sidebar .dashboard-sidebar-bullet-point.completed {
+    .dashboard-sidebar .dashboard-sidebar-bullet-point.completed, .dashboard-sidebar .dashboard-sidebar-bullet-point.staged {
       background-color: #11ade5; }
   .dashboard-sidebar .dashboard-sidebar-project {
     display: inline-block;

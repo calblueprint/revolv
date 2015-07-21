@@ -1,21 +1,20 @@
 from collections import OrderedDict
-
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
+from django.core.urlresolvers import reverse
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
-from revolv.project.models import Category, Project
+from revolv.project.models import Project, Category
 from revolv.project.utils import aggregate_stats
 
 
@@ -77,7 +76,7 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         return context
 
 
-class CategoryPreferenceSetterView(UserDataMixin, View):
+class CategoryPreferenceSetterView(UserDataMixin, View): 
     http_methods = ['post']
 
     def http_method_not_allowed(request, *args, **kwargs):

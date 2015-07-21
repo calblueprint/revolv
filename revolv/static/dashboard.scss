@@ -136,7 +136,7 @@ $sidebar-icon-gray: #999;
         &.active {
             background-color: $revolv-green;
         }
-        &.completed {
+        &.completed, &.staged {
             background-color: $revolv-blue;
         }
     }
