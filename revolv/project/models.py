@@ -92,6 +92,19 @@ class ProjectManager(models.Manager):
         ).order_by('updated_at')
         return drafted_projects
 
+    def get_staged(self, queryset=None):
+        """ Get all the projects that are staged in the queryset.
+
+        :queryset: The queryset in which to search for projects
+        :return: A list of in review project objects
+        """
+        if queryset is None:
+            queryset = super(ProjectManager, self).get_queryset()
+        staged_projects = queryset.filter(
+            project_status=Project.STAGED
+        ).order_by('updated_at')
+        return staged_projects
+
     def statistics(self, queryset=None):
         """
         Return a revolv.project.stats.KilowattStatsAggregator to
@@ -134,13 +147,34 @@ class Project(models.Model):
     """
     Project model. Stores basic metadata, information about the project,
     donations, energy impact, goals, and info about the organization.
+
+    Note about project statuses: there are five kinds of statuses that a
+    project can have, and we show projects to different users in different
+    ways based on their status.
+
+    When an ambassador or admin first creates a project, it becomes DRAFTED,
+    which means that it's a draft and can be edited, but is not in a complete
+    state yet (description may need editing, etc). Eventualy the ambassador
+    can propose the project for review from the admins, at which time it becomes
+    PROPOSED. A proposed project is viewable by admins in their dashboard, as
+    well as by the ambassadors that created it.
+
+    When an admin approves a project, it becomes STAGED, which means it is ready
+    to go but is not active yet, and as such is not viewable by the public. Staged
+    projects are also visible to all admins in their dashboards. When it's time
+    for the project to go live and start accepting donations, the admin can mark
+    it as ACTIVE, which means it will actually be public and people can donate to
+    it. When a project is done, the admin can mark it as COMPLETED, at which point
+    it will stop accepting donations and start using repayments.
     """
     ACTIVE = 'AC'
+    STAGED = 'ST'
     PROPOSED = 'PR'
     COMPLETED = 'CO'
     DRAFTED = 'DR'
     PROJECT_STATUS_CHOICES = (
         (ACTIVE, 'Active'),
+        (STAGED, 'Staged'),
         (PROPOSED, 'Proposed'),
         (COMPLETED, 'Completed'),
         (DRAFTED, 'Drafted'),
@@ -291,17 +325,21 @@ class Project(models.Model):
 
     def approve_project(self):
         self.project_status = Project.ACTIVE
-        self.start_date = datetime.date.today()
+        if self.start_date is None:
+            self.start_date = datetime.date.today()
+        self.save()
+        return self
+
+    # TODO(noah): change this verbiage. we should probably call the STAGED -> ACTIVE
+    # transition "activate_project" and the PROPOSED -> STAGED transition "approve_project"
+    # instead.
+    def stage_project(self):
+        self.project_status = Project.STAGED
         self.save()
         return self
 
     def unapprove_project(self):
-        """
-        TODO (https://github.com/calblueprint/revolv/issues/255): when we add
-        a STAGED project status, the "unapprove" action should make the project
-        STAGED, not PROPOSED.
-        """
-        self.project_status = Project.PROPOSED
+        self.project_status = Project.STAGED
         self.start_date = None
         self.save()
         return self
@@ -567,6 +605,10 @@ class Project(models.Model):
     @property
     def is_drafted(self):
         return self.project_status == Project.DRAFTED
+
+    @property
+    def is_staged(self):
+        return self.project_status == Project.STAGED
 
     @property
     def is_completed(self):

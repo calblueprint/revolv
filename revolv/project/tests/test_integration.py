@@ -26,6 +26,12 @@ class ProjectIntegrationTest(WebTest):
         resp = (resp.click(linkid="donate-button")).maybe_follow()
         self.assertTemplateUsed(resp, "base/sign_in.html")
 
+    def test_staged_project_not_public(self):
+        """Test that staged projects are not viewable by the public."""
+        project = Project.factories.staged.create()
+        resp = self.app.get(project.get_absolute_url(), auto_follow=True, status=404)
+        self.assertEqual(resp.status_code, 404)
+
 
 class PostProjectUpdatesTest(TestUserMixin, UserTestingMixin, TestCase):
 

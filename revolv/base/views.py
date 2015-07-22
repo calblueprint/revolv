@@ -1,20 +1,23 @@
+from collections import OrderedDict
+
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
-from django.core.urlresolvers import reverse
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
-from revolv.project.models import Project, Category
+from revolv.project.models import Category, Project
 from revolv.project.utils import aggregate_stats
+
 
 class HomePageView(UserDataMixin, TemplateView):
     """
@@ -53,8 +56,9 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BaseStaffDashboardView, self).get_context_data(**kwargs)
 
-        project_dict = {}
+        project_dict = OrderedDict()
         project_dict[ProjectGroup('Proposed Projects', "proposed")] = Project.objects.get_proposed(*self.get_filter_args())
+        project_dict[ProjectGroup('Staged projects', "staged")] = Project.objects.get_staged(*self.get_filter_args())
         project_dict[ProjectGroup('Active Projects', "active")] = Project.objects.get_active(*self.get_filter_args())
         project_dict[ProjectGroup('Completed Projects', "completed")] = Project.objects.get_completed(*self.get_filter_args())
 
@@ -72,10 +76,10 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         # TODO (noah): add in support for autoshowing a project based on the active_project GET parameter
         return context
 
+
 class CategoryPreferenceSetterView(UserDataMixin, View):
-    
     http_methods = ['post']
-    
+
     def http_method_not_allowed(request, *args, **kwargs):
         return redirect("dashboard")
 
@@ -87,6 +91,7 @@ class CategoryPreferenceSetterView(UserDataMixin, View):
             category = Category.objects.get(id=category_string)
             user.preferred_categories.add(category)
         return HttpResponse()
+
 
 class SignInView(TemplateView):
     """Signup and login page. Has three submittable forms: login, signup,

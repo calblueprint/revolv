@@ -24,17 +24,23 @@
             </form>
         {% endif %}
         {% if project.is_proposed %}
-            <form id="approve_deny_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+            <form id="stage_deny_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
-                <input id="approve_project" class="small button success" name="_approve" type="submit" value="Approve" />
+                <input id="stage_project" class="small button success" name="_stage" type="submit" value="Approve" />
                 <input id="deny_project" class="small button alert" name="_deny" type="submit" value="Deny" />
+            </form>
+        {% endif %}
+        {% if project.is_staged %}
+            <form id="approve_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
+                {% csrf_token %}
+                <input id="approve_project" class="small button success" name="_approve" type="submit" value="Start campaign" />
             </form>
         {% endif %}
         {% if project.is_active %}
             <form id="complete_form_{{project.pk}}" enctype="multipart/form-data" method="POST" action="{% url "project:review" pk=project.id %}">
                 {% csrf_token %}
                 <input id="complete_project" class="small button success" name="_complete" type="submit" value="Complete" />
-                <input id="complete_project" class="small button alert" name="_unapprove" type="submit" value="Mark as proposed" />
+                <input id="stage_project" class="small button alert" name="_unapprove" type="submit" value="Pause campaign" />
             </form>
         {% endif %}
         {% if project.is_completed or project.is_active %}

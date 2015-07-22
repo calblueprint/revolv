@@ -191,25 +191,28 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
 
         self.send_user_login_request(admin_user, "admin_pass", webtest=True)
         dash_resp = self.app.get("/dashboard/").maybe_follow()
-        approved_resp = dash_resp.forms["approve_deny_form_%i" % project1.pk].submit("_approve").maybe_follow()
+        staged_resp = dash_resp.forms["stage_deny_form_%i" % project1.pk].submit("_stage").maybe_follow()
+        self.assertEqual(staged_resp.status_code, 200)
+        self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.STAGED)
+
+        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        approved_resp = dash_resp.forms["approve_form_%i" % project1.pk].submit("_approve").maybe_follow()
         self.assertEqual(approved_resp.status_code, 200)
-        # TODO(#255): when we add a STAGED project status as per https://github.com/calblueprint/revolv/issues/255,
-        # we'll need to check that project 1 is staged here instead of active.
         self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.ACTIVE)
 
         dash_resp = self.app.get("/dashboard/").maybe_follow()
         unapproved_resp = dash_resp.forms["complete_form_%i" % project1.pk].submit("_unapprove").maybe_follow()
         self.assertEqual(unapproved_resp.status_code, 200)
-        self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.PROPOSED)
+        self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.STAGED)
 
-        denied_resp = dash_resp.forms["approve_deny_form_%i" % project2.pk].submit("_deny").maybe_follow()
+        denied_resp = dash_resp.forms["stage_deny_form_%i" % project2.pk].submit("_deny").maybe_follow()
         self.assertEqual(denied_resp.status_code, 200)
         self.assertEqual(Project.objects.get(id=project2.pk).project_status, Project.DRAFTED)
 
         self.app.get("/logout/")
         self.send_user_login_request(amb_user, "amb_pass", webtest=True)
         amb_dash_resp = self.app.get("/dashboard/").maybe_follow()
-        self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project1.pk, Project.PROPOSED))
+        self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project1.pk, Project.STAGED))
         self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project2.pk, Project.DRAFTED))
 
     def test_admin_can_complete_and_incomplete_active_project(self):
