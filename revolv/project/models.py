@@ -679,9 +679,8 @@ class Category(models.Model):
     FAITH = 'Faith'
     EDUCATION = 'Education'
     COMMUNITY = 'Community'
-    GEOGRAPHIC = 'Geographic'
 
-    valid_categories = [HEALTH, ARTS, FAITH, EDUCATION, COMMUNITY, GEOGRAPHIC]
+    valid_categories = [HEALTH, ARTS, FAITH, EDUCATION, COMMUNITY]
 
     factories = ImportProxy("revolv.project.factories", "CategoryFactories")
 
