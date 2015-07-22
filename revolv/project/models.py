@@ -330,6 +330,9 @@ class Project(models.Model):
         self.save()
         return self
 
+    # TODO(noah): change this verbiage. we should probably call the STAGED -> ACTIVE
+    # transition "activate_project" and the PROPOSED -> STAGED transition "approve_project"
+    # instead.
     def stage_project(self):
         self.project_status = Project.STAGED
         self.save()
