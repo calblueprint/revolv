@@ -369,6 +369,7 @@ $sidebar-icon-gray: #999;
             .days-remaining {
                 // more padding than a normal row
                 padding: 0 40px;
+                padding-top: 15px;
                 text-align: center;
 
                 .num-days-remaining {
@@ -381,7 +382,11 @@ $sidebar-icon-gray: #999;
                     font-weight: 300;
                 }
             }
-
+            @media #{$small-only}, #{$medium-only} {
+                .donor-stats-table {
+                    padding-top:12px;
+                }
+            }
             .donor-stats-table {
                 .donor-stats-table-row {
                     border-bottom: 1px solid $stats-table-highlight-bg;

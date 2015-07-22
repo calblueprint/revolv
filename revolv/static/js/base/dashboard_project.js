@@ -17,11 +17,10 @@ function DashboardCircles(minRadius, maxRadius, htmlClassNames) {
      * Deletes circles for the currently active project. Called when switching projects on the dashboard.
      */
     this.deleteCurrentCircles = function() {
-        $(this.generateSelector(htmlClassNames["badgeCircleGrouping"])).remove();
-        $(this.generateSelector(htmlClassNames["badgePartialGrouping"])).remove();
         $(this.generateSelector(htmlClassNames["badgeCircle"])).remove();
         $(this.generateSelector(htmlClassNames["badgeLine"])).remove();
         $(this.generateSelector(htmlClassNames["outsideCircle"])).remove();
+        $(this.generateSelector(htmlClassNames["badgeGroupingContainer"])).remove();
     };
 
     /**
@@ -99,7 +98,7 @@ function DashboardCircles(minRadius, maxRadius, htmlClassNames) {
         if (!svg.empty()) {
             svg = svg.attr("width", dimension)
                 .attr("height", dimension)
-                .append("g");
+                .append("g").attr("class", htmlClassNames["badgeGroupingContainer"].substring(1));
 
             var stroke = radius * 0.2;
             var circleGrouping = svg.append("g").attr("class", htmlClassNames["badgeCircleGrouping"].substring(1)).attr("stroke-width", stroke + "px");
@@ -117,6 +116,7 @@ var repaymentClassNames = {
     "badgeLine": ".repayment-badge-line",
     "badgeCircleGrouping": ".repayment-badge-circle-grouping",
     "badgePartialGrouping": ".repayment-badge-partial-grouping",
+    "badgeGroupingContainer": ".badge-grouping-container",
     "currentSection": ".dashboard-data-section-current ",
     "container": ".repayment-progress-container ",
     "svgContainer": ".svg-graphics-container",
@@ -134,6 +134,7 @@ var fundingClassNames = {
     "badgeLine": ".funding-badge-line",
     "badgeCircleGrouping": ".funding-badge-circle-grouping",
     "badgePartialGrouping": ".funding-badge-partial-grouping",
+    "badgeGroupingContainer": ".badge-grouping-container",
     "currentSection": ".dashboard-data-section-current ",
     "container": ".funding-progress-container ",
     "svgContainer": ".svg-graphics-container",
@@ -143,7 +144,7 @@ var fundingClassNames = {
     "circleText": ".funded",
     "percentageText": ".percentage-text",
 };
-var dashboardFunding = new DashboardCircles(45, 60, fundingClassNames);
+var dashboardFunding = new DashboardCircles(60, 60, fundingClassNames);
 
 // binds events and listeners to properly render svg circles
 $(document).ready(function () {

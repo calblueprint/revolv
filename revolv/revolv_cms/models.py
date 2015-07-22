@@ -358,6 +358,21 @@ class ProjectStatisticsSettings(BaseSetting):
         help_text="A description of the equivalent automobile miles which, if driven, would produce the same amount of carbon that a project will save per month, to be displayed as a statistic on the dashboard or project pages. e.g. 'Equivalent carbon in automobile miles'",
         default="Equivalent carbon in automobile miles"
     )
+    donor_stats_table_funding_goal_description = models.CharField(
+        max_length=30,
+        help_text="The description to be displayed next to the funding goal statistic in the dashboard project statistics area.",
+        default="Funding Goal"
+    )
+    donor_stats_table_amount_donated_description = models.CharField(
+        max_length=30,
+        help_text="The description to be displayed next to the amount donated statistic in the dashboard project statistics area.",
+        default="Amount Donated"
+    )
+    donor_stats_table_amount_remaining_description = models.CharField(
+        max_length=30,
+        help_text="The description to be displayed next to the amount remaining statistic in the dashboard project statistics area.",
+        default="Amount Remaining"
+    )
     donor_stats_table_donors_description = models.CharField(
         max_length=30,
         help_text="The description to be displayed next to the number of donors statistic in the dashboard project statistics area. e.g. 'Donors' or 'Total Donors'",

@@ -7715,6 +7715,7 @@ html, body, .main-row {
       vertical-align: middle; }
     .dashboard-project .project-tabs-content .donation-stats .days-remaining {
       padding: 0 40px;
+      padding-top: 15px;
       text-align: center; }
       .dashboard-project .project-tabs-content .donation-stats .days-remaining .num-days-remaining {
         font-size: 40px;
@@ -7723,6 +7724,9 @@ html, body, .main-row {
         font-size: 25px;
         line-height: 27px;
         font-weight: 300; }
+    @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table {
+        padding-top: 12px; } }
     .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row {
       border-bottom: 1px solid #eeeeee; }
       .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row:last-child {
