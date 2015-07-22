@@ -323,3 +323,28 @@ Consequently, it's safe to always enable charging, since in development nothing
 is actually being charged on the PayPal side.
 """
 ENABLE_PAYMENT_CHARGING = True
+
+# Used for error logging. See https://docs.djangoproject.com/en/1.7/topics/logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django_facebook.models': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        }
+    },
+}
