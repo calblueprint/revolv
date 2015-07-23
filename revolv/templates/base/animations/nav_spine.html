@@ -1,3 +1,4 @@
+{% if first_project %}
 <div 
     data-1150="margin-left: -100px;"
     data-1200="margin-left: 100px;"
@@ -29,3 +30,36 @@
             Finally, we reinvest the money saved to fund more worthy solar energy projects.
         </figure>
 </div>
+{% else %}
+<div 
+    data-300="margin-left: -100px;"
+    data-700="margin-left: 100px;"
+    data-1750="margin-left: 100px;"
+    data-1850="margin-left: -100px;"
+    class="nav-spine">
+        <div class="first nav-spine-item">1</div>
+        <figure
+            data-400="opacity[outCubic]: 0;" 
+            data-900="opacity[outCubic]: 1;"
+            data-950="opacity[outCubic]: 0;">
+            <figcaption class="first-caption">FUNDRAISE</figcaption>
+            RE-volv raises money through crowdfunding from amazing people like you.
+        </figure>
+        <div class="second nav-spine-item">2</div>
+        <figure
+            data-1050="opacity[outCubic]: 0;" 
+            data-1400="opacity[outCubic]: 1;"
+            data-1450="opacity[outCubic]: 0;">
+            <figcaption class="second-caption">INVEST</figcaption>
+            We then invest in community-based solar energy projects.
+        </figure>
+        <div class="third nav-spine-item">3</div>
+        <figure
+            data-1450="opacity[outCubic]: 0;" 
+            data-1700="opacity[outCubic]: 1;"
+            data-1800="opacity[outCubic]: 0;">
+            <figcaption class="third-caption">PAY IT FORWARD</figcaption>
+            Finally, we reinvest the money saved to fund more worthy solar energy projects.
+        </figure>
+</div>
+{% endif %}

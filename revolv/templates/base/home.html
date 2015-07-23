@@ -94,7 +94,7 @@
 {% endif %}
 {% endif %}
 
-{% include "base/animations/nav_spine.html" %}
+{% include "base/animations/nav_spine.html" with first_project=first_project %}
 <div id="how-revolv-works" class="divider-title">{{ settings.revolv_cms.MainPageSettings.how_it_works_heading }}</div>
 <div class="row about">
     <div class="about-inset">
@@ -104,10 +104,17 @@
         <!-- Man, coin, and Woman -->
         <img class="person" src="{% static "images/revolv-man.svg" %}" />
         <img 
-            data-1250="margin-bottom: -60px;"
-            data-1600="margin-bottom: -660px;"
-            data-1601="opacity[begin]: 1;"
-            data-1602="opacity[end]: 0;"
+            {% if first_project %}
+                data-1250="margin-bottom: -60px;"
+                data-1600="margin-bottom: -660px;"
+                data-1601="opacity[begin]: 1;"
+                data-1602="opacity[end]: 0;"
+            {% else %}
+                data-400="margin-bottom: -60px;"
+                data-800="margin-bottom: -660px;"
+                data-801="opacity[begin]: 1;"
+                data-802="opacity[end]: 0;"
+            {% endif %}
             class="coin" src="{% static "images/coin.svg" %}" />
         <img class="person" src="{% static "images/revolv-woman.svg" %}" />
 
@@ -117,16 +124,26 @@
             class="step" src="{% static "images/step1.png" %}" />
 
         <!-- RE-volv "factory" animation -->
-        {% include "base/animations/factory.html" %}
+        {% include "base/animations/factory.html" with first_project=first_project %}
         <img 
-            data-1200="opacity: 0;"
-            data-1300="opacity: 1;"
+            {% if first_project %}
+                data-1200="opacity: 0;"
+                data-1300="opacity: 1;"
+            {% else %}
+                data-350="opacity: 0;"
+                data-450="opacity: 1;"
+            {% endif %}
             class="step" src="{% static "images/step2.png" %}" />
 
         <!-- Main solar panel and house -->
         <img 
-            data-1900="top: 890px; transform: scale(0.2); opacity: 0.1;"
-            data-2100="top: 1200px; transform: scale(1); opacity: 1;"
+            {% if first_project %}
+                data-1900="top: 890px; transform: scale(0.2); opacity: 0.1;"
+                data-2100="top: 1200px; transform: scale(1); opacity: 1;"
+            {% else %}
+                data-1050="top: 890px; transform: scale(0.2); opacity: 0.1;"
+                data-1250="top: 1200px; transform: scale(1); opacity: 1;"
+            {% endif %}
             class="main-panel" src="{% static "images/main-panel.svg" %}">
         <img class="main-house" src="{% static "images/main-house.svg" %}">
         <br>
@@ -138,23 +155,38 @@
             class="step" src="{% static "images/step3.png" %}" />
         <div class="grouping">
             <img 
-                data-2300="opacity: 0;"
-                data-2500="opacity: 1;"
+                {% if first_project %}
+                    data-2300="opacity: 0;"
+                    data-2500="opacity: 1;"
+                {% else %}
+                    data-1450="opacity: 0;"
+                    data-1650="opacity: 1;"
+                {% endif %}
                 class="solar-panel" src="{% static "images/main-panel.svg" %}">
             <img class="house" src="{% static "images/house.svg" %}">
         </div>
 
         <div class="grouping">
             <img 
-                data-2300="opacity: 0;"
-                data-2500="opacity: 1;"
+                {% if first_project %}
+                    data-2300="opacity: 0;"
+                    data-2500="opacity: 1;"
+                {% else %}
+                    data-1450="opacity: 0;"
+                    data-1650="opacity: 1;"
+                {% endif %}
                 class="solar-panel" src="{% static "images/main-panel.svg" %}">
             <img class="house" src="{% static "images/house.svg" %}">
         </div>
         <div class="grouping">
             <img
-                data-2300="opacity: 0;"
-                data-2500="opacity: 1;"
+                {% if first_project %}
+                    data-2300="opacity: 0;"
+                    data-2500="opacity: 1;"
+                {% else %}
+                    data-1450="opacity: 0;"
+                    data-1650="opacity: 1;"
+                {% endif %}
                 class="solar-panel" src="{% static "images/main-panel.svg" %}">
             <img class="house" src="{% static "images/house.svg" %}">
         </div>
