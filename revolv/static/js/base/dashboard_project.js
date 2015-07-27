@@ -5,9 +5,9 @@
  * used in dashboard.js, where the logic for switching tabs and projects is taken care of.
  *
  * Parameters:
- * minRadius : the minimum radius of the svg circle
- * maxRadius : the maximum radius of the svg circle
- * htmlClassNames : an object mapping specific component names of an svg circle
+ * @param int minRadius - the minimum radius of the svg circle
+ * @param int maxRadius - the maximum radius of the svg circle
+ * @param Object htmlClassNames - an object mapping specific component names of an svg circle
  * to the html class name of that component. Used for assigning class names for HTML
  * HTML components and to generate CSS selectors for HTML components.
  * (Look at how they're used in the class and to construct objects for better reference)
@@ -28,22 +28,22 @@ function DashboardCircles(minRadius, maxRadius, htmlClassNames) {
      * the DashboardCircles object are prepended with the current section and the
      * container for that specific circle.
      *
-     * NOTE : This method assumes that htmlClassNames["currentSection"] and
-     * htmlClassNames["contaienr"] have spaces.
      */
     this.generateSelector = function(className) {
-        return htmlClassNames["currentSection"] + htmlClassNames["container"] + className;
+        return "." + htmlClassNames["currentSection"] + " ." + htmlClassNames["container"] + " ." + className;
     };
 
     /**
      * Resizes the text inside the speedometer.
      */
     this.setTextSize = function(radius) {
-        var percentage_size = 3 * radius / 100;
-        var circle_text_size = percentage_size * 0.5;
+        var percentageSize = 3 * radius / 100;
+        var circleTextSize = percentageSize * 0.5;
 
-        d3.selectAll(htmlClassNames["percentageText"]).attr("style", "font-size:" + percentage_size + "rem");
-        d3.selectAll(htmlClassNames["circleText"]).attr("font-size", "font-size:" + circle_text_size + "rem");
+        d3.selectAll(this.generateSelector(htmlClassNames["percentageText"]))
+            .attr("style", "font-size:" + percentageSize + "rem");
+        d3.selectAll(this.generateSelector(htmlClassNames["circleText"]))
+            .attr("font-size", "font-size:" + circleTextSize + "rem");
     };
 
     /**
@@ -98,51 +98,51 @@ function DashboardCircles(minRadius, maxRadius, htmlClassNames) {
         if (!svg.empty()) {
             svg = svg.attr("width", dimension)
                 .attr("height", dimension)
-                .append("g").attr("class", htmlClassNames["badgeGroupingContainer"].substring(1));
+                .append("g").attr("class", htmlClassNames["badgeGroupingContainer"]);
 
             var stroke = radius * 0.2;
-            var circleGrouping = svg.append("g").attr("class", htmlClassNames["badgeCircleGrouping"].substring(1)).attr("stroke-width", stroke + "px");
-            var partialGrouping = svg.append("g").attr("class", htmlClassNames["badgePartialGrouping"].substring(1)).attr("stroke-width", stroke + "px");
+            var circleGrouping = svg.append("g").attr("class", htmlClassNames["badgeCircleGrouping"]).attr("stroke-width", stroke + "px");
+            var partialGrouping = svg.append("g").attr("class", htmlClassNames["badgePartialGrouping"]).attr("stroke-width", stroke + "px");
 
-            drawD3PartialCircle(circleGrouping, [htmlClassNames["badgeCircle"].substring(1)], radius, padding, 1);
-            drawD3PartialCircle(partialGrouping, [htmlClassNames["badgeLine"].substring(1)], radius, padding, partialCompleteness);
+            drawD3PartialCircle(circleGrouping, [htmlClassNames["badgeCircle"]], radius, padding, 1);
+            drawD3PartialCircle(partialGrouping, [htmlClassNames["badgeLine"]], radius, padding, partialCompleteness);
         }
     };
 }
 
 // initializes a dashboard circles object for rendering Repayment circles.
 var repaymentClassNames = {
-    "badgeCircle": ".repayment-badge-circle",
-    "badgeLine": ".repayment-badge-line",
-    "badgeCircleGrouping": ".repayment-badge-circle-grouping",
-    "badgePartialGrouping": ".repayment-badge-partial-grouping",
-    "badgeGroupingContainer": ".badge-grouping-container",
-    "currentSection": ".dashboard-data-section-current ",
-    "container": ".repayment-progress-container ",
-    "svgContainer": ".svg-graphics-container",
-    "percentageContainer": ".percentage-container",
-    "internalGraphicsContainer": ".internal-graphics-container",
-    "outsideCircle": ".outside-circle",
-    "circleText": ".repaid",
-    "percentageText": ".percentage-text",
+    "badgeCircle": "repayment-badge-circle",
+    "badgeLine": "repayment-badge-line",
+    "badgeCircleGrouping": "repayment-badge-circle-grouping",
+    "badgePartialGrouping": "repayment-badge-partial-grouping",
+    "badgeGroupingContainer": "badge-grouping-container",
+    "currentSection": "dashboard-data-section-current ",
+    "container": "repayment-progress-container ",
+    "svgContainer": "svg-graphics-container",
+    "percentageContainer": "percentage-container",
+    "internalGraphicsContainer": "internal-graphics-container",
+    "outsideCircle": "outside-circle",
+    "circleText": "repaid",
+    "percentageText": "percentage-text",
 };
 var dashboardRepayment = new DashboardCircles(60, 80, repaymentClassNames);
 
 // initializes a dashboard circles object for rendering Funding circles.
 var fundingClassNames = {
-    "badgeCircle": ".funding-badge-circle",
-    "badgeLine": ".funding-badge-line",
-    "badgeCircleGrouping": ".funding-badge-circle-grouping",
-    "badgePartialGrouping": ".funding-badge-partial-grouping",
-    "badgeGroupingContainer": ".badge-grouping-container",
-    "currentSection": ".dashboard-data-section-current ",
-    "container": ".funding-progress-container ",
-    "svgContainer": ".svg-graphics-container",
-    "percentageContainer": ".percentage-container",
-    "internalGraphicsContainer": ".internal-graphics-container",
-    "outsideCircle": ".outside-circle",
-    "circleText": ".funded",
-    "percentageText": ".percentage-text",
+    "badgeCircle": "funding-badge-circle",
+    "badgeLine": "funding-badge-line",
+    "badgeCircleGrouping": "funding-badge-circle-grouping",
+    "badgePartialGrouping": "funding-badge-partial-grouping",
+    "badgeGroupingContainer": "badge-grouping-container",
+    "currentSection": "dashboard-data-section-current ",
+    "container": "funding-progress-container ",
+    "svgContainer": "svg-graphics-container",
+    "percentageContainer": "percentage-container",
+    "internalGraphicsContainer": "internal-graphics-container",
+    "outsideCircle": "outside-circle",
+    "circleText": "funded",
+    "percentageText": "percentage-text",
 };
 var dashboardFunding = new DashboardCircles(60, 60, fundingClassNames);
 

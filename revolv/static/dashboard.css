@@ -7727,18 +7727,18 @@ html, body, .main-row {
     @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
       .dashboard-project .project-tabs-content .donation-stats .donor-stats-table {
         padding-top: 12px; } }
-    .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row {
+    .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row {
       border-bottom: 1px solid #eeeeee; }
-      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row:last-child {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row:last-child, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row:last-child, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row:last-child, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row:last-child {
         border-bottom: none; }
-      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .table-value {
         line-height: 20px;
         padding: 10px; }
-      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .description {
         font-size: 16px;
         font-weight: 300;
         border-right: 1px solid #eeeeee; }
-      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .table-value {
         font-size: 18px;
         padding-left: 10px; }
   .dashboard-project .project-tabs-content p, .dashboard-project .project-tabs-content h2 {

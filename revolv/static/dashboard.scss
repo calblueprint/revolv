@@ -387,8 +387,8 @@ $sidebar-icon-gray: #999;
                     padding-top:12px;
                 }
             }
-            .donor-stats-table {
-                .donor-stats-table-row {
+            .donor-stats-table, .funding-stats-table {
+                .donor-stats-table-row, .funding-stats-table-row {
                     border-bottom: 1px solid $stats-table-highlight-bg;
 
                     &:last-child {
