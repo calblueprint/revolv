@@ -7715,6 +7715,7 @@ html, body, .main-row {
       vertical-align: middle; }
     .dashboard-project .project-tabs-content .donation-stats .days-remaining {
       padding: 0 40px;
+      padding-top: 15px;
       text-align: center; }
       .dashboard-project .project-tabs-content .donation-stats .days-remaining .num-days-remaining {
         font-size: 40px;
@@ -7723,18 +7724,21 @@ html, body, .main-row {
         font-size: 25px;
         line-height: 27px;
         font-weight: 300; }
-    .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row {
+    @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table {
+        padding-top: 12px; } }
+    .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row {
       border-bottom: 1px solid #eeeeee; }
-      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row:last-child {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row:last-child, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row:last-child, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row:last-child, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row:last-child {
         border-bottom: none; }
-      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .table-value {
         line-height: 20px;
         padding: 10px; }
-      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .description, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .description {
         font-size: 16px;
         font-weight: 300;
         border-right: 1px solid #eeeeee; }
-      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value {
+      .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .table-value {
         font-size: 18px;
         padding-left: 10px; }
   .dashboard-project .project-tabs-content p, .dashboard-project .project-tabs-content h2 {
@@ -7765,6 +7769,62 @@ html, body, .main-row {
       border-top: 1px solid #eeeeee; }
     .dashboard-project .project-tabs-content .project-stats-table-container .project-stats-table-row.highlight {
       background-color: #eeeeee; }
+  .dashboard-project .project-tabs-content .funding-progress-container {
+    height: 140px; }
+    .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container {
+      height: 140px;
+      width: 100%;
+      position: absolute; }
+      .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .svg-graphics-container {
+        position: absolute;
+        height: 100%;
+        width: 100%; }
+      .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .internal-graphics-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); }
+      .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .funding-badge-line, .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .funding-badge-circle {
+        fill: none; }
+      .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .funding-badge-line {
+        stroke: #11ade5; }
+      .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .funding-badge-circle {
+        stroke: white; }
+      .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .text-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -moz-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        height: 165px;
+        width: 165px;
+        color: #064f7e; }
+        .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .text-container .percentage-text {
+          position: absolute;
+          left: 50%;
+          top: 40%;
+          -moz-transform: translate(-50%, -50%);
+          -o-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
+        .dashboard-project .project-tabs-content .funding-progress-container .statistics-graphics-container .text-container .funded {
+          position: absolute;
+          font-weight: 800;
+          left: 50%;
+          top: 60%;
+          -moz-transform: translate(-50%, -50%);
+          -o-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
   .dashboard-project .project-tabs-content .repayment-progress-container {
     height: 180px; }
     .dashboard-project .project-tabs-content .repayment-progress-container .statistics-graphics-container {
