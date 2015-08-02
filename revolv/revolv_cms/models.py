@@ -389,6 +389,21 @@ class ProjectStatisticsSettings(BaseSetting):
         help_text="The description to be displayed next to the 'days so far' statistic in the dashboard project statistics area. e.g. 'Days so far' or 'Days since start'",
         default="Days so far"
     )
+    repayment_stats_table_amount_repaid_description = models.CharField(
+        max_length=30,
+        help_text="The description to be displayed next to the amount repaid statistic in the dashboard project repayment statistics area.",
+        default="Amount Repaid"
+    )
+    repayment_stats_table_amount_donated_description = models.CharField(
+        max_length=30,
+        help_text="The description to be displayed next to the amount donated statistic in the dashboard project repayment statistics area.",
+        default="Amount Donated"
+    )
+    repayment_stats_table_kwh_saved_description = models.CharField(
+        max_length=30,
+        help_text="The description to be displayed next to the kwh saved statistic in the dashboard project repayment statistics area.",
+        default="Amount Remaining"
+    )
     people_affected_description = models.CharField(
         max_length=30,
         help_text="The description to be displayed next to the 'people affected' statistic in the dashboard project statistics area. e.g. 'Number of people affected' or 'People affected'",
