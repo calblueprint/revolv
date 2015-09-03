@@ -81,6 +81,7 @@ class ProjectStatusForm(forms.ModelForm):
         # fields that need to be filled out, empty on purpose
         fields = ()
 
+
 class EditProjectUpdateForm(forms.ModelForm):
     """ 
     A form used to edit updates about a project

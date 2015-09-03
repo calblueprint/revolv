@@ -81,17 +81,20 @@ class UpdateProjectView(DonationLevelFormSetMixin, UpdateView):
     template_name = 'project/edit_project.html'
     form_class = forms.ProjectForm
 
-    # initializes the already selected categories for a given project
     def get_initial(self):
+        """
+        Initializes the already selected categories for a given project.
+        """
         return {'categories_select': self.get_object().categories}
 
     def get_success_url(self):
         messages.success(self.request, 'Project details updated')
         return reverse('project:view', kwargs={'pk': self.get_object().id})
 
-    # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
-
+        """
+        Validates project, formset of donation levels, and adds categories as well
+        """
         formset = self.get_donation_level_formset()
 
         if formset.is_valid():
@@ -116,6 +119,7 @@ class ReviewProjectView(UserDataMixin, UpdateView):
     The view to review a project. Shows the same view as ProjectView, but at
     the top, has a button group through which an ambassador or admin can
     update the project status.
+
     Accessed through /project/{project_id}/review
     """
     model = Project

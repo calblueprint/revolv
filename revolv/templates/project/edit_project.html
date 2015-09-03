@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{% static "typeahead/typeahead.css" %}" />
 <link rel="stylesheet" href="{% static "chosen/chosen.css" %}" />
 <link rel="stylesheet" href="{% static "project-edit.css" %}" />
-<link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
 <style type="text/css">
     #map-canvas { width: 100%; height: 300px; margin-bottom: 20px; padding: 0;}
     #map-canvas img {max-width: none;}
@@ -127,7 +127,7 @@
 {% block javascripts %}
 <!-- Initializes the Google Map / Location Selection Typeahead -->
 <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}&libraries=places">
+    src="//maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}&libraries=places">
 </script>
 <script src="{% static 'typeahead/typeahead.bundle.js' %}"></script>
 <script src="{% static 'typeahead/typeahead-addresspicker.js' %}"></script>

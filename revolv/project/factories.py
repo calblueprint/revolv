@@ -1,14 +1,15 @@
 import datetime
 
-import factory
 from revolv.project.models import Category, Project, ProjectUpdate
+
+import factory
 
 
 class ProjectFactory(factory.django.DjangoModelFactory):
     """
     Factory for default projects (drafted). Note: the cover_photo will be
     None for a default factory, because there doesn't seem to be a good way
-    to import a defulat picture without having one in static files. Also, doing
+    to import a default picture without having one in static files. Also, doing
     so would upload it to s3 every time a test used this factory.
 
     So, be careful about accessing cover_photo when using projects created

@@ -15,8 +15,11 @@ import dj_database_url
 import djcelery
 from celery.schedules import crontab
 
+# If you'd like to possibly receive error status emails, add yourself
+# to this list:
 ADMINS = (
     ("Noah Gilmore", "noah.w.gilmore@gmail.com"),
+    ("Philip Neustrom", "philipn+revolv@gmail.com"),
 )
 
 # import celery for scheduled tasks
@@ -72,7 +75,7 @@ INSTALLED_APPS = (
     'revolv.donor',
     'revolv.payments',
 
-    # vendor apps
+    # 3rd-party apps
     'django_facebook',
     'storages',
     'imagekit',
@@ -183,16 +186,24 @@ USE_THOUSAND_SEPARATOR = True
 # Login settings
 LOGIN_URL = '/signin'
 
-# Default media file (uploads) storage on Amazon S3
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
 AWS_ACCESS_KEY_ID = os.environ.get('REVOLV_AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.environ.get('REVOLV_AWS_SECRET_KEY', '')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('REVOLV_S3_BUCKET', '')
 
+# Default media file (uploads) storage on Amazon S3
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 S3_URL = 'https://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-MEDIA_DIRECTORY = '/media/'
-MEDIA_URL = S3_URL + MEDIA_DIRECTORY
+MEDIA_PATH = '/media/'
+MEDIA_URL = S3_URL + MEDIA_PATH
+
+MEDIA_SERVE_LOCALLY = False
+if not AWS_ACCESS_KEY_ID and IS_LOCAL:
+    # Local developer hasn't gotten our official AWS keys, so let's
+    # allow them to 
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    MEDIA_URL = MEDIA_PATH
+    MEDIA_SERVE_LOCALLY = False
 
 STATIC_ROOT = 'staticfiles'
 STATICFILES_FINDERS = (
