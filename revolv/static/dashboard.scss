@@ -412,6 +412,43 @@ $sidebar-icon-gray: #999;
             }
         }
 
+        .repayment-stats {
+            // make sure all children are aligned vertically to the center
+            & > * {
+                vertical-align: middle;
+            }
+
+            @media #{$small-only}, #{$medium-only} {
+                .repayment-stats-table {
+                    padding-top:12px;
+                }
+            }
+            .repayment-stats-table {
+                float: left; // So repayment table follows the repayment progress circle
+                .repayment-stats-table-row {
+                    border-bottom: 1px solid $stats-table-highlight-bg;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    .description, .table-value {
+                        line-height: 32px;
+                        padding: 10px;
+                    }
+                    .description {
+                        font-size: 16px;
+                        font-weight: 300;
+                        border-right: 1px solid $stats-table-highlight-bg;
+                    }
+                    .table-value {
+                        font-size: 18px;
+                        padding-left: 10px;
+                    }
+                }
+            }
+        }
+
         p, h2 {
             font-family: $lato-font-family;
         }
@@ -578,49 +615,6 @@ $sidebar-icon-gray: #999;
                         top: 60%;
                         @include transform(translate(-50%, -50%));
                     }
-                }
-            }
-
-            .repayment-details-container {
-                @media only screen and (max-width:64.063em) {
-                    // for centering the statistics table on mobile
-                    .statistics-table {
-                        margin-left: auto;
-                        margin-right: auto;
-                    }
-                }
-                .statistics-table {
-                    display: table;
-                    height: 180px;
-                    .statistics-table-spacer {
-                        height: 12px;
-                    }
-                    .statistics-row {
-                        display: table-row;
-                        .bottom-border {
-                            border-bottom: solid;
-                        }
-                        .right-border {
-                            border-right: solid;
-                        }
-                        .statistics-row-cell {
-                            display: table-cell;
-                            vertical-align: middle;
-                            border-color: #ddd;
-                            border-width: thin;
-                            padding: 10px;
-                        }
-                    }
-                }
-                .detail-text {
-                    margin-bottom:0em;
-                    color: #bbb;
-                    font-size:18px;
-                    font-weight:200;
-                }
-                .amount-text {
-                    margin-bottom:0em;
-                    font-size:18px;
                 }
             }
         }

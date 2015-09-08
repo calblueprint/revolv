@@ -7741,6 +7741,27 @@ html, body, .main-row {
       .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .donor-stats-table .funding-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .donor-stats-table-row .table-value, .dashboard-project .project-tabs-content .donation-stats .funding-stats-table .funding-stats-table-row .table-value {
         font-size: 18px;
         padding-left: 10px; }
+  .dashboard-project .project-tabs-content .repayment-stats > * {
+    vertical-align: middle; }
+  @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
+    .dashboard-project .project-tabs-content .repayment-stats .repayment-stats-table {
+      padding-top: 12px; } }
+  .dashboard-project .project-tabs-content .repayment-stats .repayment-stats-table {
+    float: left; }
+    .dashboard-project .project-tabs-content .repayment-stats .repayment-stats-table .repayment-stats-table-row {
+      border-bottom: 1px solid #eeeeee; }
+      .dashboard-project .project-tabs-content .repayment-stats .repayment-stats-table .repayment-stats-table-row:last-child {
+        border-bottom: none; }
+      .dashboard-project .project-tabs-content .repayment-stats .repayment-stats-table .repayment-stats-table-row .description, .dashboard-project .project-tabs-content .repayment-stats .repayment-stats-table .repayment-stats-table-row .table-value {
+        line-height: 32px;
+        padding: 10px; }
+      .dashboard-project .project-tabs-content .repayment-stats .repayment-stats-table .repayment-stats-table-row .description {
+        font-size: 16px;
+        font-weight: 300;
+        border-right: 1px solid #eeeeee; }
+      .dashboard-project .project-tabs-content .repayment-stats .repayment-stats-table .repayment-stats-table-row .table-value {
+        font-size: 18px;
+        padding-left: 10px; }
   .dashboard-project .project-tabs-content p, .dashboard-project .project-tabs-content h2 {
     font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
   .dashboard-project .project-tabs-content p {
@@ -7881,35 +7902,6 @@ html, body, .main-row {
           -ms-transform: translate(-50%, -50%);
           -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%); }
-    @media only screen and (max-width: 64.063em) {
-      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table {
-        margin-left: auto;
-        margin-right: auto; } }
-    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table {
-      display: table;
-      height: 180px; }
-      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-table-spacer {
-        height: 12px; }
-      .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-row {
-        display: table-row; }
-        .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-row .bottom-border {
-          border-bottom: solid; }
-        .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-row .right-border {
-          border-right: solid; }
-        .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .statistics-table .statistics-row .statistics-row-cell {
-          display: table-cell;
-          vertical-align: middle;
-          border-color: #dddddd;
-          border-width: thin;
-          padding: 10px; }
-    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .detail-text {
-      margin-bottom: 0em;
-      color: #bbbbbb;
-      font-size: 18px;
-      font-weight: 200; }
-    .dashboard-project .project-tabs-content .repayment-progress-container .repayment-details-container .amount-text {
-      margin-bottom: 0em;
-      font-size: 18px; }
 
 .dashboard-data-section-my-impact {
   height: 100%; }

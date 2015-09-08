@@ -129,48 +129,32 @@
     </div>
     {% if project.is_completed %}
     <div class="content repayment active" id="repayment-{{project.pk}}">
-        <div class="row repayment-progress-container">
-            <div class="large-3 large-offset-3 columns" style="height:180px">
-                <div class="statistics-graphics-container">
-                    <svg class="svg-graphics-container"></svg>
-                    <svg class="internal-graphics-container"></svg>
-                    <div class="text-container">
-                        <p class="percentage-text">{{ project.percent_repaid }}%</p>
-                        <p class="repaid">REPAID</p>
+        <div class="row repayment-stats">
+            <div class="small-12 medium-12 large-3 large-offset-3 columns" style="height:180px">
+                <div class="repayment-progress-container">
+                    <div class="statistics-graphics-container">
+                        <svg class="svg-graphics-container"></svg>
+                        <svg class="internal-graphics-container"></svg>
+                        <div class="text-container">
+                            <p class="percentage-text">{{ project.percent_repaid }}%</p>
+                            <p class="repaid">REPAID</p>
+                        </div>
+                        <div class="percentage-container hide">{{ project.partial_repayment_as_js }}</div>
                     </div>
-                    <div class="percentage-container hide">{{ project.partial_repayment_as_js }}</div>
                 </div>
             </div>
-            <div class="large-6 columns">
-                <div class="repayment-details-container">
-                    <div class="statistics-table">
-                        <span class="statistics-table-spacer"></span>
-                        <div class="statistics-row">
-                            <div class="right-border bottom-border statistics-row-cell">
-                                <p class="detail-text">Amount Repaid</p>
-                            </div>
-                            <div class="bottom-border statistics-row-cell">
-                                <p class="amount-text">${{ project.amount_repaid|floatformat:2 }}</p>
-                            </div>
-                        </div>
-                        <div class="statistics-row">
-                            <div class="right-border bottom-border statistics-row-cell">
-                                <p class="detail-text">Amount Donated</p>
-                            </div>
-                            <div class="bottom-border statistics-row-cell">
-                                <p class="amount-text">${{ project.amount_donated|floatformat:2 }}</p>
-                            </div>
-                        </div>
-                        <div class="statistics-row">
-                            <div class="right-border statistics-row-cell">
-                                <p class="detail-text">kwH saved</p>
-                            </div>
-                            <div class="statistics-row-cell">
-                                <p class="amount-text">{{ project.actual_energy }}</p>
-                            </div>
-                        </div>
-                        <span class="statistics-table-spacer"></span>
-                    </div>
+            <div class="repayment-stats-table small-12 medium-8 large-3 medium-offset-2 large-offset-0 columns">
+                <div class="row repayment-stats-table-row">
+                    <div class="description small-6 medium-6 large-7 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.repayment_stats_table_amount_repaid_description }}</div>
+                    <div class="table-value small-6 medium-6 large-5 columns">${{ project.funding_goal|floatformat:"2"|intcomma }}</div>
+                </div>
+                <div class="row repayment-stats-table-row">
+                    <div class="description small-6 medium-6 large-7 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.repayment_stats_table_amount_donated_description }}</div>
+                    <div class="table-value small-6 medium-6 large-5 columns">${{ project.amount_donated|floatformat:"2"|intcomma }}</div>
+                </div>
+                <div class="row repayment-stats-table-row">
+                    <div class="description small-6 medium-6 large-7 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.repayment_stats_table_kwh_saved_description }}</div>
+                    <div class="table-value small-6 medium-6 large-5 columns">${{ project.amount_left|floatformat:"2"|intcomma }}</div>
                 </div>
             </div>
         </div>
