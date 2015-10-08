@@ -43,5 +43,5 @@ urlpatterns = patterns(
     url(r'', include(wagtail_urls)),
 )
 
-#if settings.MEDIA_SERVE_LOCALLY:
-#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
+if settings.MEDIA_SERVE_LOCALLY:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
