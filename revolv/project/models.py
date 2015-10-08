@@ -406,7 +406,7 @@ class Project(models.Model):
     def amount_donated_organically(self):
         """
         :return: the current total amount that has been organically donated to
-        this project, as a float
+        this project, as a float.
         """
         return self.get_organic_donations().aggregate(
             models.Sum('amount')
@@ -443,7 +443,7 @@ class Project(models.Model):
     def amount_donated(self):
         """
         :return: the current total amount that has been donated to this project,
-            as a float
+            as a float.
         """
         return self.payment_set.aggregate(
             models.Sum('amount')

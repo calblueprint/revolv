@@ -1,5 +1,7 @@
 from django.db import models
+
 from revolv.lib.utils import ImportProxy
+
 
 class AdminRepaymentManager(models.Manager):
     """

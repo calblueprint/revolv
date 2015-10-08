@@ -1,9 +1,12 @@
 from django.conf.urls import include, patterns, url
+from django.conf import settings
 from django.contrib import admin
-from revolv.base import views as base_views
+
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
+
+from revolv.base import views as base_views
 
 urlpatterns = patterns(
     '',
@@ -39,3 +42,6 @@ urlpatterns = patterns(
     # Wagtail's serving mechanism
     url(r'', include(wagtail_urls)),
 )
+
+#if settings.MEDIA_SERVE_LOCALLY:
+#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
