@@ -1,13 +1,13 @@
 from django.conf.urls import patterns, url
-from revolv.base.users import is_ambassador
-from revolv.project.views import (CreateProjectView,
-                                  ProjectView,
-                                  SubmitDonationView, UpdateProjectView, ReviewProjectView,
-                                  PostProjectUpdateView, EditProjectUpdateView)
+from revolv.base.users import is_ambassador, is_logged_in
+from revolv.project.views import (CreateProjectView, EditProjectUpdateView,
+                                  PostProjectUpdateView, ProjectView,
+                                  ReviewProjectView, SubmitDonationView,
+                                  UpdateProjectView)
 
 urlpatterns = patterns(
     '',
-    url(r'^create$', is_ambassador(CreateProjectView.as_view()), name='new'),
+    url(r'^create$', is_logged_in(CreateProjectView.as_view()), name='new'),
     url(r'^(?P<pk>\d+)/edit$', is_ambassador(UpdateProjectView.as_view()), name='edit'),
     url(r'^(?P<pk>\d+)/$', ProjectView.as_view(), name='view'),
     url(r'^(?P<pk>\d+)/review$', is_ambassador(ReviewProjectView.as_view()), name='review'),

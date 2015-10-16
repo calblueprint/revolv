@@ -34,6 +34,7 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     actual_energy = 25.5
     amount_repaid = 29.25
     ambassador = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
+    created_by_user = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
     location_latitude = 42.0
     location_longitude = 42.0
     solar_url = "http://home.solarlog-web.net/1445.html",

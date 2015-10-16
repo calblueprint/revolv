@@ -2,7 +2,7 @@
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
 @import "revolv-settings";
-
+@import "common/active-project";
 @mixin vertically-centered() {
     display: inline-block;
     vertical-align: middle;
@@ -110,8 +110,27 @@ body {
     height: 0px !important;
 }
 
-// --- Current Project Styles ------------------------------------------------------------
 
+.view-active-projects{
+    width: 100%;
+    text-align: center;
+    color: white;
+    margin-top: 10px;
+    p{
+        display: inline;
+        background-color: #11ade5;
+         padding: 15px 20px;
+         border-radius:5px;
+        &:hover{
+             background-color:#064f7e;
+        }
+    }
+    a{
+        color:white;
+
+    }
+}
+// --- Current Project Styles ------------------------------------------------------------
 .current-project {
     position: relative;
     width: 75%;
@@ -212,6 +231,7 @@ body {
         background: rgba(0, 0, 0, .5);
     }
 }
+
 
 .divider-title {
     font-size: 24px;
@@ -372,7 +392,7 @@ body {
 
 .button {
     height: auto;
-    line-height: auto;
+    line-height: initial;
     font-size: 24px;
     border-radius: 5px;
     color: white;
@@ -571,6 +591,7 @@ body {
             margin: 70px 8px 140px;
         }
     }
+
 }
 
 @media #{$medium-only} {

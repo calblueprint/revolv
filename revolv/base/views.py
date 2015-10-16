@@ -27,14 +27,14 @@ class HomePageView(UserDataMixin, TemplateView):
     used anymore. Should be cleaned up.
     """
     template_name = 'base/home.html'
-    NUM_PROJECTS_SHOWN = 1000
+    FEATURED_PROJECT_TO_SHOW = 6
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
-        active = Project.objects.get_active()
-        context["first_project"] = active[0] if active.count() > 0 else None
-        context["featured_projects"] = Project.objects.get_featured(
-            HomePageView.NUM_PROJECTS_SHOWN)
+        featured_projects = Project.objects.get_featured(HomePageView.FEATURED_PROJECT_TO_SHOW)
+        context["first_project"] = featured_projects[0] if len(featured_projects) > 0 else None
+        # Get top 6 featured projects
+        context["featured_projects"] = featured_projects
         context["completed_projects_count"] = Project.objects.get_completed().count()
         context["total_donors_count"] = Payment.objects.total_distinct_organic_donors()
         return context
@@ -69,6 +69,7 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
         statistics_dictionary = aggregate_stats(self.user_profile)
         context['statistics'] = statistics_dictionary
 
+
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')
         context['preferred_categories'] = self.user_profile.preferred_categories.all()
@@ -91,6 +92,18 @@ class CategoryPreferenceSetterView(UserDataMixin, View):
             category = Category.objects.get(id=category_string)
             user.preferred_categories.add(category)
         return HttpResponse()
+
+
+class ProjectListView(UserDataMixin, TemplateView):
+    """ Base View of all active projects
+    """
+    template_name = 'base/projects-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        active = Project.objects.get_active()
+        context["active_projects"] = active
+        return context
 
 
 class SignInView(TemplateView):

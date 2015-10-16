@@ -1,0 +1,212 @@
+@import "../utils";
+@import "../foundation-settings";
+@import "../bower_components/foundation/scss/foundation";
+@import "../revolv-settings";
+.active-projects-block{
+    @include  display-flex();
+    @include  justify-content(center);
+    @include  flex-wrap(wrap);
+
+}
+
+.active-project {
+    position: relative;
+    width: 32%;
+    height: 473px;
+    box-sizing: border-box;
+    color: white;
+    margin-right:2%;
+    margin-bottom:20px;
+    a {
+        color: white;
+    }
+    &.last-active-project-in-row{
+        margin-right: 0px;
+    }
+    .active-project-cover{
+        height: 55%;
+        display: table;
+        width:100%;
+    }
+    h3 {
+        color: white;
+    }
+    .heading-top-margin{
+        //margin-top: 25%;
+    }
+    .active-project-inset {
+        padding: 10px 10px 80px 10px;
+        box-sizing: border-box;
+        white-space: pre-wrap;
+        text-align: center;
+        display: table-cell;
+        vertical-align: bottom;
+        width: 100%;
+    }
+
+    // Progress circle styles
+    .graphics-container {
+        z-index:2;
+        position: absolute;
+        width: 140px;
+        height: 140px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        top: 40%;
+        .svg-graphics-container {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+        }
+
+        .internal-graphics-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+        }
+
+        .project-badge-line, .project-badge-circle {
+          fill: none;
+        }
+
+        .project-badge-line {
+          stroke: $revolv-blue;
+        }
+
+        .project-badge-circle {
+          stroke: white;
+        }
+
+        .text-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            height: 220px;
+            width: 220px;
+            color: $revolv-dark-blue;
+
+            .percentage-text {
+                position: absolute;
+                left: 50%;
+                top: 45%;
+                transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+            }
+
+            .funded {
+                position: absolute;
+                font-weight: 800;
+                left: 50%;
+                top: 60%;
+                transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+            }
+        }
+    }
+    .statistics-graphics-container {
+        height: 45%;
+        width: 100%;
+        position:absolute;
+        background-color: white;
+        .bar {
+            width: 80%;
+            left:10%;
+
+            height: 40px;
+            position: absolute;
+            font-weight: 300;
+
+            &.top-bar {
+                background-color: $revolv-blue;
+                top: 40%;
+                margin: 0;
+
+                .amount-donated {
+                    width: 30%;
+                }
+            }
+
+            &.bottom-bar {
+                position: absolute;
+                background-color: #064f7e;
+                top: 60%;
+                margin-top:15px;
+            }
+
+            .container {
+                position: relative;
+                color: white;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                .statistic {
+                    line-height: 40px;
+                    font-size: 1.0rem;
+                    font-weight: 400;
+
+                    &.left-text {
+                        float: left;
+                        height: 100%;
+                        margin: 0 0 0 20px;
+
+                    }
+
+                    &.right-text {
+                        float: right;
+                        height: 100%;
+                        margin: 0 20px 0 0;
+                    }
+                }
+            }
+        }
+
+    }
+    .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .5);
+    }
+}
+@media #{$medium-only} {
+
+    .active-project {
+        position: relative;
+        width: 45%;
+        height: 420px;
+        .statistics-graphics-container .bar .container {
+            .statistic{
+                line-height: 40px;
+                font-size: 0.8rem;
+                font-weight: 400;
+            }
+        }
+    }
+}
+@media #{$small-only} {
+    .active-project {
+        position: relative;
+        width: 75%;
+        height: 420px;
+        .statistics-graphics-container .bar .container {
+            .statistic{
+                line-height: 40px;
+                font-size: 0.8rem;
+                font-weight: 400;
+            }
+        }
+    }
+}

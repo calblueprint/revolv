@@ -65,10 +65,15 @@ class MainPageSettings(BaseSetting):
         help_text="The label on the 'Learn more button'. E.g. 'Learn about how RE-volv works'",
         default="Learn about how RE-volv works"
     )
-    current_project_heading = models.CharField(
+    single_project_heading = models.CharField(
         max_length=50,
-        help_text="The heading to display above the featured project on the homepage, e.g. 'Our current project'",
+        help_text="The heading to display above the featured project on the homepage when there is only one featured project, e.g. 'Our current project'",
         default="OUR CURRENT PROJECT"
+    )
+    multiple_projects_heading = models.CharField(
+        max_length=50,
+        help_text="The heading to display above the featured project on the homepage when there are multiple featured projects, e.g. 'Our current projects'",
+        default="OUR CURRENT PROJECTS"
     )
     how_it_works_heading = models.CharField(
         max_length=50,
@@ -408,4 +413,33 @@ class ProjectStatisticsSettings(BaseSetting):
         max_length=30,
         help_text="The description to be displayed next to the 'people affected' statistic in the dashboard project statistics area. e.g. 'Number of people affected' or 'People affected'",
         default="Number of people affected"
+    )
+
+@register_setting
+class ActiveProjectsPageSettings(BaseSetting):
+    """
+    Editable settings for the Projects List Page.
+
+    See https://wagtailsettings.readthedocs.org/en/latest/settings.html
+    """
+    join_the_movement = models.CharField(
+        max_length=200,
+        help_text="Large text directly before the call to action donation button at the bottom of the projects page, e.g. 'Join the movement.'",
+        default="Join the movement."
+    )
+
+    start_funding_button_text = models.CharField(
+        max_length=50,
+        help_text="The label on the green call to action button at the bottom of the homepage.",
+        default="Fund a new project"
+    )
+    single_project_heading = models.CharField(
+        max_length=50,
+        help_text="The heading to display above the featured project on the projects list page when there is only one active project, e.g. 'Our current project'",
+        default="OUR CURRENT PROJECT"
+    )
+    multiple_projects_heading = models.CharField(
+        max_length=50,
+        help_text="The heading to display above the featured project on the projects list when there are multiple active projects, e.g. 'Our current projects'",
+        default="OUR CURRENT PROJECTS"
     )

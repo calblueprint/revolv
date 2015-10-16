@@ -43,7 +43,7 @@ class CreateProjectView(DonationLevelFormSetMixin, CreateView):
     form_class = forms.ProjectForm
 
     def get_success_url(self):
-        return reverse('ambassador:dashboard')
+        return reverse('project:view', kwargs={'pk': self.object.id})
 
     # validates project, formset of donation levels, and adds categories as well
     def form_valid(self, form):
@@ -222,6 +222,7 @@ class ProjectView(UserDataMixin, DetailView):
         context['updates'] = self.get_object().updates.order_by('date').reverse()
         context['donor_count'] = self.get_object().donors.count()
         context['project_donation_levels'] = self.get_object().donation_levels.order_by('amount')
+        context["is_draft_mode"]=self.get_object().project_status == self.get_object().DRAFTED
         return context
 
     def dispatch(self, request, *args, **kwargs):

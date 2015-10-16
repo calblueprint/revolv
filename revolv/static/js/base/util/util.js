@@ -1,0 +1,76 @@
+
+
+/**
+ * Resizes the text inside the speedometer.
+ */
+var setTextSize = function(radius) {
+
+    var percentage_size = 3 * radius / 100;
+    var funded_size = percentage_size * 0.5;
+
+  //Select All projects and set there "% funded" font size
+    d3.selectAll(".percentage-text").attr("style", "font-size:" + percentage_size + "rem");
+    d3.selectAll(".funded").attr("font-size", "font-size:" + funded_size + "rem");
+
+};
+
+/**
+ * Resizes the iframe.
+ */
+var resizeIframe = function() {
+    d3.select("iframe").attr("height", $(document).width() * 0.38 + "");
+
+    if ($(document).width() < 500) {
+        d3.select("iframe").attr("height", $(document).width() * 0.45 + "");
+    }
+};
+
+/**
+ * This function is copied from previous project.js and moved here as a common utility
+ * This function draws an outside circle, and draws an inner partial circle based on the given radius and radiusRatio
+ * @param radius
+ * @param radiusRatio higher the radiusRation lesser is the radius, ratioRatio comes into picture when there are multiple
+ * active projects. Otherwise the behaviour remains same.
+ */
+var drawCircle = function(radius,radiusRatio){
+    var outsideCircles = d3.selectAll(".svg-graphics-container");
+    outsideCircles =outsideCircles.append("circle")
+        .attr("class", "outside-circle")
+        .attr("cx", "50%")
+        .attr("cy", "50%")
+        .attr("r", radius + $(document).width() * 0.03 + "")
+        .attr("fill", "white");
+
+
+    if (radius > 100/radiusRatio){
+        radius = 100/radiusRatio;
+        outsideCircles.attr("r", 125/radiusRatio);
+    }
+
+    if (radius < 60/radiusRatio ) {
+        radius = 60/radiusRatio;
+        outsideCircles.attr("r", 75/radiusRatio);
+    }
+
+    setTextSize(radius);
+    var padding = radius * 0.1;
+
+    // this line will get actual partial completeness - set this variable to something else if you want to test.
+    var partialCompleteness = window.PARTIAL_COMPLETENESS;
+
+    var dimension = (2 * radius) + (2 * padding);
+    var translateVar = (radius + padding) * 0.5;
+
+    var svgs = d3.selectAll(".internal-graphics-container")
+        .attr("width", dimension)
+        .attr("height", dimension)
+        .append("g");
+
+    var stroke = radius * 0.2;
+    var circleGroupings = svgs.append("g").attr("class", "project-badge-circle-grouping").attr("stroke-width", stroke + "px");
+    var partialGroupings = svgs.append("g").attr("class", "project-badge-partial-grouping").attr("stroke-width", stroke + "px");
+
+    drawD3PartialCircle(circleGroupings, ["project-badge-circle"], radius, padding, 1);
+    drawD3PartialCircle(partialGroupings, ["project-badge-line"], radius, padding, partialCompleteness);
+
+};

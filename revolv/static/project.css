@@ -5749,6 +5749,21 @@ body {
         -moz-transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%); }
 
+.draft-mode-div {
+  text-align: right;
+  margin-right: 15%;
+  margin-left: 15%;
+  max-width: 70%;
+  margin-top: 30px; }
+  .draft-mode-div .draft-mode-title {
+    padding: 10px 20px;
+    background-color: #11ade5;
+    display: inline;
+    color: white; }
+  .draft-mode-div .draft-mode-detail-text {
+    margin-top: 20px;
+    font-size: 1.2rem; }
+
 .about {
   margin-top: 50px; }
   .about .header-text p {

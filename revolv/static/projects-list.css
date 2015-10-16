@@ -6175,137 +6175,8 @@ th.hide-for-touch {
 body {
   background-color: #ebece7; }
 
-.cover {
-  width: 100%;
-  height: 600px;
-  overflow: hidden;
-  position: relative; }
-  .cover h1 {
-    color: white;
-    text-align: center;
-    text-shadow: 2px 2px black; }
-  .cover p {
-    font-size: 20px;
-    line-height: 26px;
-    text-align: center;
-    text-shadow: 2px 2px black;
-    font-weight: 200;
-    color: white;
-    padding-top: 30px;
-    line-height: 30px;
-    margin: 0; }
-  .cover .shade {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); }
-  .cover .cover-inset {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    height: 50%;
-    width: 600px;
-    z-index: 1;
-    text-align: center; }
-  .cover .cover-video {
-    width: 100%; }
-  .cover .mobile-cover {
-    display: none; }
-
 .spacer {
   height: 0px !important; }
-
-.view-active-projects {
-  width: 100%;
-  text-align: center;
-  color: white;
-  margin-top: 10px; }
-  .view-active-projects p {
-    display: inline;
-    background-color: #11ade5;
-    padding: 15px 20px;
-    border-radius: 5px; }
-    .view-active-projects p:hover {
-      background-color: #064f7e; }
-  .view-active-projects a {
-    color: white; }
-
-.current-project {
-  position: relative;
-  width: 75%;
-  height: 450px;
-  padding: 30px;
-  box-sizing: border-box;
-  color: white; }
-  .current-project a {
-    color: white; }
-  .current-project h1 {
-    color: white; }
-  .current-project .current-project-inset {
-    width: 50%;
-    padding: 30px;
-    box-sizing: border-box;
-    white-space: pre-wrap; }
-  .current-project .graphics-container {
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    top: calc(50% - 125px);
-    right: 60px; }
-    .current-project .graphics-container .svg-graphics-container {
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      top: 0; }
-    .current-project .graphics-container .internal-graphics-container {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      -moz-transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%); }
-    .current-project .graphics-container .project-badge-line, .current-project .graphics-container .project-badge-circle {
-      fill: none; }
-    .current-project .graphics-container .project-badge-line {
-      stroke: #11ade5; }
-    .current-project .graphics-container .project-badge-circle {
-      stroke: white; }
-    .current-project .graphics-container .text-container {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      -moz-transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
-      height: 220px;
-      width: 220px;
-      color: #064f7e; }
-      .current-project .graphics-container .text-container .percentage-text {
-        position: absolute;
-        left: 50%;
-        top: 45%;
-        transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%); }
-      .current-project .graphics-container .text-container .funded {
-        position: absolute;
-        font-weight: 800;
-        left: 50%;
-        top: 60%;
-        transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%); }
-  .current-project .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5); }
 
 .divider-title {
   font-size: 24px;
@@ -6313,6 +6184,7 @@ body {
   width: 75%;
   color: #064f7e;
   font-weight: 100;
+  margin-top: 110px;
   display: block;
   height: 0.5em;
   line-height: 1em;
@@ -6350,101 +6222,15 @@ body {
       display: inline;
       content: "\a0\a0\a0"; }
 
-.nav-spine {
-  position: fixed;
-  top: 0px;
-  width: 5px;
-  height: 400px;
-  margin-top: 100px;
-  background-color: #adada9; }
-  .nav-spine .nav-spine-item {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 50%;
-    background-color: #adada9;
-    color: white;
-    left: -18px;
-    text-align: center; }
-  .nav-spine .first {
-    top: 0px;
-    background-color: #044e7e; }
-  .nav-spine .second {
-    top: 180px;
-    background-color: #1db0e6; }
-  .nav-spine .third {
-    top: 360px;
-    background-color: #f0ad4e; }
-  .nav-spine .first-caption {
-    color: rgba(4, 78, 126, 0.75); }
-  .nav-spine .second-caption {
-    color: #1db0e6; }
-  .nav-spine .third-caption {
-    color: #f0ad4e; }
-  .nav-spine figure {
-    height: 150px;
-    width: 200px; }
-  .nav-spine figcaption {
-    font-size: 24px; }
-
 .about {
   position: relative;
   width: 600px;
   text-align: center;
-  color: #adada9; }
-  .about h1 {
-    font-size: 48px;
-    line-height: 48px;
-    color: #adada9;
-    margin-bottom: 30px; }
-  .about h2 {
-    font-size: 36px;
-    line-height: 36px;
-    color: #adada9; }
-  .about p {
-    font-size: 20px; }
+  color: #adada9;
+  padding-top: 150px; }
   .about .about-inset {
     margin: 0 auto;
     padding: 30px 30px; }
-  .about .person {
-    height: 144px; }
-  .about .coin {
-    height: 72px;
-    margin: 0px 10px;
-    margin-bottom: -84px; }
-  .about .factory {
-    margin-top: 248px;
-    height: 400px;
-    width: 205px; }
-  .about .main-panel {
-    position: absolute;
-    height: 100px;
-    width: 190px;
-    top: 890px;
-    left: 50%;
-    margin-left: -95px;
-    z-index: -1;
-    transform: scale(0.2); }
-  .about .main-house {
-    margin-top: 254px;
-    height: 254px; }
-  .about .solar-panel {
-    position: absolute;
-    height: 50px;
-    top: -50px;
-    left: 50px;
-    margin-left: -25px; }
-  .about .step {
-    display: none; }
-  .about .house {
-    height: 84px; }
-  .about .grouping {
-    display: inline-block;
-    position: relative;
-    height: 140px;
-    width: 140px;
-    margin: 140px 20px; }
 
 .button {
   height: auto;
@@ -6453,17 +6239,6 @@ body {
   border-radius: 5px;
   color: white;
   margin: 30px auto; }
-
-.learn-more {
-  line-height: 16px;
-  font-size: 16px;
-  border-width: 2px;
-  border-color: white;
-  background: transparent; }
-
-.learn-more:hover {
-  color: white;
-  background: rgba(4, 78, 126, 0.75); }
 
 .donate {
   background-color: #1bb580; }
@@ -6474,114 +6249,15 @@ body {
 @media only screen and (max-width: 40em) {
   .about {
     width: 100%; }
-    .about h1 {
-      font-size: 28px;
-      line-height: 36px; }
-    .about h2 {
-      font-size: 20px;
-      line-height: 30px; }
-    .about .grouping {
-      margin-bottom: 0px; }
   .button {
     margin-top: 10px;
     font-size: 16px;
     width: 80%; }
   .divider-title {
     font-size: 18px;
-    width: 90%; }
-  .current-project {
-    height: 400px;
-    width: 100%;
-    margin: 50px auto; }
-    .current-project .current-project-inset {
-      width: 100%; }
-    .current-project .current-project-inset h1 {
-      text-align: center; }
-    .current-project .current-project-inset p {
-      display: none; }
-    .current-project .graphics-container {
-      width: 100%;
-      top: 45%;
-      right: 0%; }
-  .learn-more {
-    margin-top: 15px; } }
-
-@media only screen and (max-width: 40em) and (orientation: portrait) {
-  .about .grouping {
-    height: 70px;
-    width: 70px;
-    margin: 140px 5px; }
-  .about .person {
-    height: 100px; }
-  .about .coin {
-    height: 50px; }
-  .about .main-panel {
-    height: 95px; }
-  .about .main-house {
-    height: 200px; }
-  .about .solar-panel {
-    top: -28px;
-    margin-left: -45px; } }
-
-@media only screen and (max-width: 40em) and (orientation: landscape) {
-  .about .grouping {
-    height: 70px;
-    width: 100px;
-    margin: 140px 10px; }
-  .about .main-panel {
-    height: 70px; }
-  .about .main-house {
-    height: 200px; }
-  .about .solar-panel {
-    top: -46px;
-    margin-left: -45px; }
-  .cover {
-    height: 400px; }
-  .current-project {
-    height: 300px; }
-    .current-project .graphics-container {
-      top: 25%; } }
+    width: 90%;
+    margin-top: 110px; } }
 
 @media only screen and (max-width: 40em), only screen and (min-width:40.063em) and (max-width:64em) {
-  .cover h1 {
-    color: white;
-    text-align: center;
-    text-shadow: 2px 2px black; }
-  .cover p {
-    font-size: 18px;
-    line-height: 26px; }
-  .cover .learn-more {
-    width: 100%;
-    font-size: 15px; }
-  .cover .cover-inset {
-    width: 75%; }
-  .cover .cover-video {
-    display: none; }
-  .cover .cover-video-link {
-    pointer-events: none;
-    cursor: default; }
-  .cover .mobile-cover {
-    display: block;
-    height: 100%;
-    object-fit: cover; }
-  .cover .shade {
-    height: 600px; }
   body {
-    height: 100% !important; }
-  .nav-spine {
-    display: none; }
-  .about .factory {
-    margin-top: 48px; }
-  .about .main-house {
-    margin-top: 54px; }
-  .about .step {
-    display: block;
-    height: 150px;
-    margin: 25px auto; }
-  .about .grouping {
-    margin: 70px 8px 140px; } }
-
-@media only screen and (min-width:40.063em) and (max-width:64em) {
-  .cover .learn-more {
-    width: 50%;
-    font-size: 15px; } }
+    height: 100% !important; } }

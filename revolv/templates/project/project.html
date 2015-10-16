@@ -63,9 +63,19 @@
         </div>
     {% endif %}
 </div>
-
+    {%  if is_draft_mode == True %}
+        <div class="draft-mode-div">
+          <p class="draft-mode-title">
+            Pending
+          </p>
+          <p class="draft-mode-detail-text">
+            This project is currently pending approval. For assistance, please email sarah at re-volv.org
+          </p>
+        </div>
+    {% endif %}
 {% if project_donation_levels|length > 0 %}
     <div class="row about">
+
         <div class="header-text">
             <p class="header">{{ project.tagline }}</p>
         </div>
@@ -182,6 +192,7 @@
 </script>
 
 <script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
 <script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
 
 {# jQuery.payment necessary for sexy card info validation #}

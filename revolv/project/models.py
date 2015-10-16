@@ -130,15 +130,15 @@ class ProjectManager(models.Manager):
         """
         return user_profile.project_set.all()
 
-    def create_from_form(self, form, ambassador):
-        """ Creates project from form and sets ambassador to a RevolvUserProfile.
+    def create_from_form(self, form, creator):
+        """ Creates project from form and sets created_by_user to a RevolvUserProfile.
 
         :form: The form
-        :ambassador: The RevolvUserProfile of the ambassador of the project
+        :creator: The RevolvUserProfile of the creator of the project
         :return: Project created and saved
         """
         project = form.save(commit=False)
-        project.ambassador = ambassador
+        project.created_by_user = creator
         project.save()
         return project
 
@@ -300,7 +300,9 @@ class Project(models.Model):
 
     donors = models.ManyToManyField(RevolvUserProfile, blank=True)
 
-    ambassador = models.ForeignKey(RevolvUserProfile, related_name='ambassador')
+    created_by_user = models.ForeignKey(RevolvUserProfile, related_name='created_by_user')
+
+    ambassador = models.ForeignKey(RevolvUserProfile, related_name='ambassador', null=True)
 
     # energy produced in kilowatt hours
     actual_energy = models.FloatField(default=0.0)
@@ -320,8 +322,8 @@ class Project(models.Model):
     objects = ProjectManager()
     factories = ImportProxy("revolv.project.factories", "ProjectFactories")
 
-    def has_owner(self, ambassador):
-        return self.ambassador == ambassador
+    def has_owner(self, creator):
+        return self.created_by_user == creator
 
     def approve_project(self):
         self.project_status = Project.ACTIVE

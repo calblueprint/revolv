@@ -6,28 +6,16 @@
 
 {% block head %}
 
-<link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
 
-<script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/vendor/svg4everybody.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
-<script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
-<script type="text/javascript">
-    window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
-</script>
-
-<script type="text/javascript">
-    window.HOMEPAGE_PROJECT_DATA = [
-        {% for project in featured_projects %}
-            {
-                "id": "{{ project.pk }}",
-                "partialCompleteness": {{ project.partial_completeness_as_js }},
-                "url": "{% url "project:view" project.pk %}"
-            }{% if not forloop.last %},{% endif %}
-        {% endfor %}
-    ];
-</script>
+    <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/svg4everybody.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
+    <script type="text/javascript">
+        window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
+    </script>
 
 {% endblock %}
 
@@ -70,28 +58,79 @@
     </a>
 </div>
 
-{% if first_project %}
-<div class="divider-title">{{ settings.revolv_cms.MainPageSettings.current_project_heading }}</div>
-{% if first_project.cover_photo %}
-<div class="row current-project" style="background-image: url({{first_project.cover_photo.url}})">
-    <a href="{% url "project:view" pk=first_project.pk %}">
-    <div class="overlay">
-        <div class="current-project-inset">
-            <h1>{{ first_project.title }}</h1>
-            <p>{{ first_project.description|safe|truncatewords:"25"|linebreaks }}</p>
+{% if featured_projects|length == 1%}
+    <div class="divider-title">{{ settings.revolv_cms.MainPageSettings.single_project_heading }}</div>
+    {% if first_project.cover_photo %}
+        <div class="row current-project" style="background-image: url({{first_project.cover_photo.url}})">
+            <a href="{% url "project:view" pk=first_project.pk %}">
+                <div class="overlay">
+                    <div class="current-project-inset">
+                        <h1>{{ first_project.title }}</h1>
+                        <p>{{ first_project.description|safe|truncatewords:"25"|linebreaks }}</p>
+                    </div>
+                    <div class="graphics-container">
+                        <svg class="svg-graphics-container"></svg>
+                        <svg class="internal-graphics-container"></svg>
+                        <div class="text-container">
+                            <p class="percentage-text">{{ first_project.percent_complete }}%</p>
+                            <p class="funded">FUNDED</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
-        <div class="graphics-container">
-            <svg class="svg-graphics-container"></svg>
-            <svg class="internal-graphics-container"></svg>
-            <div class="text-container">
-                <p class="percentage-text">{{ first_project.percent_complete }}%</p>
-                <p class="funded">FUNDED</p>
-            </div>
-        </div>
+    {% endif %}
+
+
+{% elif featured_projects|length > 1 %}
+    <div class="divider-title">{{ settings.revolv_cms.MainPageSettings.multiple_projects_heading}}</div>
+    <div class="row active-projects-block">
+        {% for active_project in featured_projects %}
+            {% if active_project.cover_photo %}
+                <div class="active-project {% if forloop.counter|divisibleby:3 %}last-active-project-in-row{% endif %}" >
+                    <a href="{% url "project:view" pk=active_project.pk %}">
+                        <div class="overlay">
+
+                            <div class="active-project-cover" style="background-image: url({{active_project.cover_photo.url}})">
+
+
+                                <div class="active-project-inset">
+                                    <h3 class="heading-top-margin">{{ active_project.title }}</h3>
+                                </div>
+                                <div class="graphics-container">
+                                    <svg class="svg-graphics-container"></svg>
+                                    <svg class="internal-graphics-container"></svg>
+                                    <div class="text-container">
+                                        <p class="percentage-text">{{ active_project.percent_complete }}%</p>
+                                        <p class="funded">FUNDED</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="statistics-graphics-container">
+                                <div class="bar top-bar">
+                                    <div class="container">
+                                        <p class="left-text statistic amount-donated">${{ active_project.amount_donated }} donated</p>
+                                        <p class="right-text statistic days-left">{{ active_project.days_left }} days left</p>
+                                    </div>
+                                </div>
+                                <div class="bar bottom-bar">
+                                    <div class="container">
+                                        <p class ="left-text statistic amount-saved">{{ active_project.actual_energy }} kwH saved</p>
+                                        <p class ="right-text statistic num-donors">{{ active_project.donors.count }} {{ settings.revolv_cms.ProjectPageSettings.donors_wording }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
-    </a>
-</div>
-{% endif %}
+    <div class="view-active-projects">
+
+        <p><a href="{% url "projects_list" %}">View Projects</a> </p>
+
+    </div>
 {% endif %}
 
 {% include "base/animations/nav_spine.html" with first_project=first_project %}
@@ -103,7 +142,7 @@
 
         <!-- Man, coin, and Woman -->
         <img class="person" src="{% static "images/revolv-man.svg" %}" />
-        <img 
+        <img
             {% if first_project %}
                 data-1250="margin-bottom: -60px;"
                 data-1600="margin-bottom: -660px;"
@@ -118,14 +157,14 @@
             class="coin" src="{% static "images/coin.svg" %}" />
         <img class="person" src="{% static "images/revolv-woman.svg" %}" />
 
-        <img 
+        <img
             data-570="opacity: 0;"
             data-670="opacity: 1;"
             class="step" src="{% static "images/step1.png" %}" />
 
         <!-- RE-volv "factory" animation -->
         {% include "base/animations/factory.html" with first_project=first_project %}
-        <img 
+        <img
             {% if first_project %}
                 data-1200="opacity: 0;"
                 data-1300="opacity: 1;"
@@ -136,7 +175,7 @@
             class="step" src="{% static "images/step2.png" %}" />
 
         <!-- Main solar panel and house -->
-        <img 
+        <img
             {% if first_project %}
                 data-1900="top: 890px; transform: scale(0.2); opacity: 0.1;"
                 data-2100="top: 1200px; transform: scale(1); opacity: 1;"
@@ -149,12 +188,12 @@
         <br>
 
         <!-- Subsidiary houses and solar panels in "groupings" -->
-        <img 
+        <img
             data-1700="opacity: 0;"
             data-1800="opacity: 1;"
             class="step" src="{% static "images/step3.png" %}" />
         <div class="grouping">
-            <img 
+            <img
                 {% if first_project %}
                     data-2300="opacity: 0;"
                     data-2500="opacity: 1;"
@@ -167,7 +206,7 @@
         </div>
 
         <div class="grouping">
-            <img 
+            <img
                 {% if first_project %}
                     data-2300="opacity: 0;"
                     data-2500="opacity: 1;"
