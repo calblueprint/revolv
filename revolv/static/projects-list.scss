@@ -40,6 +40,11 @@ body {
         margin: 0 auto;
         padding: 30px 30px;
     }
+    h2{
+        font-size: 36px;
+        line-height: 36px;
+        color: $revolv-about-font-color;
+    }
 }
 
 .button {
@@ -62,6 +67,10 @@ body {
 @media #{$small-only} {
     .about {
         width: 100%;
+        h2 {
+            font-size: 20px;
+            line-height: 30px;
+        }
     }
     .button {
         margin-top: 10px;

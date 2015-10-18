@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='project',
             name='ambassador',
-            field=models.ForeignKey(related_name='ambassador', to='base.RevolvUserProfile', null=True),
+            field=models.ForeignKey(related_name='ambassador', to='base.RevolvUserProfile', null=True, default=None),
             preserve_default=True,
         ),
     ]

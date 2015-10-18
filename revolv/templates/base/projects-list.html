@@ -13,9 +13,7 @@
     <script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
     <script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
     <script type="text/javascript" src="{% static "js/base/projects-list.js" %}"></script>
-    <script type="text/javascript">
-        window.PARTIAL_COMPLETENESS = {{ active_projects.0.partial_completeness_as_js }};
-    </script>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -43,6 +41,7 @@
             {% for active_project in active_projects %}
                 {% if active_project.cover_photo %}
                     <div class="active-project {% if forloop.counter|divisibleby:3 %}last-active-project-in-row{% endif %}" >
+
                         <a href="{% url "project:view" pk=active_project.pk %}">
                             <div class="overlay">
 
@@ -52,6 +51,7 @@
                                         <h3 class="heading-top-margin">{{ active_project.title }}</h3>
                                     </div>
                                     <div class="graphics-container">
+                                        <span class="partial-completeness">{{ active_project.partial_completeness_as_js }}</span>
                                         <svg class="svg-graphics-container"></svg>
                                         <svg class="internal-graphics-container"></svg>
                                         <div class="text-container">

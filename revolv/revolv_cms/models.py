@@ -1,5 +1,4 @@
 from django.db import models
-
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
@@ -431,7 +430,7 @@ class ActiveProjectsPageSettings(BaseSetting):
     start_funding_button_text = models.CharField(
         max_length=50,
         help_text="The label on the green call to action button at the bottom of the homepage.",
-        default="Fund a new project"
+        default="Create a new project"
     )
     single_project_heading = models.CharField(
         max_length=50,

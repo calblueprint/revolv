@@ -4,17 +4,24 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
+from revolv.base.utils import ProjectGroup
 from revolv.base.views import BaseStaffDashboardView
+from revolv.project.models import Project
 
 
 class AdministratorDashboardView(BaseStaffDashboardView):
     """
     Basic view for the Administrator dashboard. Shows the list of projects that this
-    ambassador owns.
+    ambassador owns. Also, shows drafted projects.
     """
     template_name = 'base/dashboard.html'
     role = "admin"
 
+    def get_context_data(self, **kwargs):
+        context = super(AdministratorDashboardView, self).get_context_data(**kwargs)
+
+        context["project_dict"][ProjectGroup('Drafted Projects', "drafted")] = Project.objects.get_drafted()
+        return context
 
 class AdministratorEmailView(UserDataMixin, TemplateView):
     """View for the list of newsletter subscribers for the dashboard.

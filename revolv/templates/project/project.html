@@ -22,8 +22,17 @@
 
 {% include "project/partials/payment_modal.html" %}
 {% include "project/partials/confirm_modal.html" %}
-{% include "project/partials/success_modal.html" with project=project %}
-
+    {% include "project/partials/success_modal.html" with project=project %}
+    {%  if is_draft_mode == True %}
+        <div class="draft-mode-div">
+            <span class="draft-mode-title">
+                Pending
+            </span>
+            <span class="draft-mode-detail-text">
+                This project is currently pending approval. For assistance, please email sarah at re-volv.org
+            </span>
+        </div>
+    {% endif %}
 <div class="row dashboard">
     <div class="statistics-graphics-container">
         <div class="bar top-bar">
@@ -63,16 +72,6 @@
         </div>
     {% endif %}
 </div>
-    {%  if is_draft_mode == True %}
-        <div class="draft-mode-div">
-          <p class="draft-mode-title">
-            Pending
-          </p>
-          <p class="draft-mode-detail-text">
-            This project is currently pending approval. For assistance, please email sarah at re-volv.org
-          </p>
-        </div>
-    {% endif %}
 {% if project_donation_levels|length > 0 %}
     <div class="row about">
 

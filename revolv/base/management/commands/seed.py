@@ -179,7 +179,7 @@ class ProjectSeedSpec(SeedSpec):
         Project.factories.active.create(ambassador=ambassador, **self.studio)
         Project.factories.completed.create(ambassador=ambassador, **self.dairy)
         Project.factories.proposed.create(ambassador=ambassador, **self.educathing)
-        Project.factories.drafted.create(ambassador=ambassador, **self.emblem)
+        Project.factories.drafted.create(**self.emblem)
 
     def clear(self, quiet=False):
         for project in self.projects_to_clear:

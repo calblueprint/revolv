@@ -230,10 +230,10 @@ class ProjectView(UserDataMixin, DetailView):
         super_response = super(ProjectView, self).dispatch(request, *args, **kwargs)
         project = self.get_object()
         if (project.is_active or project.is_completed or
-                (self.user.is_authenticated() and (project.has_owner(self.user_profile) or self.is_administrator))):
+                (self.user.is_authenticated() and (project.has_owner(self.user_profile) or self.is_administrator or self.is_ambassador))):
             return super_response
         else:
-            return self.deny_access_via_404("Requested project not found.")
+            return self.deny_access()
 
 
 class SubmitDonationView(UserDataMixin, FormView):

@@ -56,21 +56,32 @@ var drawCircle = function(radius,radiusRatio){
     var padding = radius * 0.1;
 
     // this line will get actual partial completeness - set this variable to something else if you want to test.
-    var partialCompleteness = window.PARTIAL_COMPLETENESS;
+    var partialCompleteness = [];
+    var partialCompleteElements=document.getElementsByClassName("partial-completeness");
+    for(var i=0;i<partialCompleteElements.length;i++){
+        var partialComplete=Number(partialCompleteElements[i].innerHTML)===NaN?0:
+            Number(partialCompleteElements[i].innerHTML);
+
+        partialCompleteness.push(partialComplete);
+    }
 
     var dimension = (2 * radius) + (2 * padding);
     var translateVar = (radius + padding) * 0.5;
 
-    var svgs = d3.selectAll(".internal-graphics-container")
-        .attr("width", dimension)
-        .attr("height", dimension)
-        .append("g");
+    var internalGraphicContainers=document.getElementsByClassName("internal-graphics-container");
+    for(var i=0;i<internalGraphicContainers.length;i++){
+        var svg = d3.select(internalGraphicContainers[i])
+            .attr("width", dimension)
+            .attr("height", dimension)
+            .append("g");
 
-    var stroke = radius * 0.2;
-    var circleGroupings = svgs.append("g").attr("class", "project-badge-circle-grouping").attr("stroke-width", stroke + "px");
-    var partialGroupings = svgs.append("g").attr("class", "project-badge-partial-grouping").attr("stroke-width", stroke + "px");
+        var stroke = radius * 0.2;
+        var circleGrouping = svg.append("g").attr("class", "project-badge-circle-grouping").attr("stroke-width", stroke + "px");
+        var partialGrouping = svg.append("g").attr("class", "project-badge-partial-grouping").attr("stroke-width", stroke + "px");
 
-    drawD3PartialCircle(circleGroupings, ["project-badge-circle"], radius, padding, 1);
-    drawD3PartialCircle(partialGroupings, ["project-badge-line"], radius, padding, partialCompleteness);
+        drawD3PartialCircle(circleGrouping, ["project-badge-circle"], radius, padding, 1);
+        drawD3PartialCircle(partialGrouping, ["project-badge-line"], radius, padding, partialCompleteness[i]);
+
+    }
 
 };

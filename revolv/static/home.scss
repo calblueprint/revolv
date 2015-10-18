@@ -161,7 +161,9 @@ body {
         height: 250px;
         top: calc(50% - 125px);
         right: 60px;
-
+        .partial-completeness{
+            display:none;
+        }
         .svg-graphics-container {
             position: absolute;
             height: 100%;

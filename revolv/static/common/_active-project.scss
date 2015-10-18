@@ -17,6 +17,7 @@
     color: white;
     margin-right:2%;
     margin-bottom:20px;
+
     a {
         color: white;
     }
@@ -55,6 +56,9 @@
         left: 0;
         right: 0;
         top: 40%;
+        .partial-completeness{
+            display:none;
+        }
         .svg-graphics-container {
             position: absolute;
             height: 100%;

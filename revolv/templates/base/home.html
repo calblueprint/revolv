@@ -69,6 +69,8 @@
                         <p>{{ first_project.description|safe|truncatewords:"25"|linebreaks }}</p>
                     </div>
                     <div class="graphics-container">
+                        <span class="partial-completeness">{{ first_project.partial_completeness_as_js }}</span>
+
                         <svg class="svg-graphics-container"></svg>
                         <svg class="internal-graphics-container"></svg>
                         <div class="text-container">
@@ -98,6 +100,8 @@
                                     <h3 class="heading-top-margin">{{ active_project.title }}</h3>
                                 </div>
                                 <div class="graphics-container">
+                                    <span class="partial-completeness">{{ active_project.partial_completeness_as_js }}</span>
+
                                     <svg class="svg-graphics-container"></svg>
                                     <svg class="internal-graphics-container"></svg>
                                     <div class="text-container">

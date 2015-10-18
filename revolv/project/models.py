@@ -4,6 +4,7 @@ from itertools import chain
 from ckeditor.fields import RichTextField
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Q
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
@@ -120,9 +121,9 @@ class ProjectManager(models.Manager):
 
         :user: The user of interest
         :return: A list of projects for which user's RevolvUserProfile
-        is the ambassador
+        is the ambassador or creator.
         """
-        return Project.objects.filter(ambassador=user_profile)
+        return Project.objects.filter(Q(ambassador=user_profile) | Q(created_by_user=user_profile))
 
     def donated_projects(self, user_profile):
         """
