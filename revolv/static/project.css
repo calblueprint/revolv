@@ -5754,15 +5754,12 @@ body {
   margin-right: 15%;
   margin-left: 15%;
   max-width: 70%;
-  margin-top: 30px; }
+  margin-top: 30px;
+  background-color: yellow;
+  padding: 10px;
+  box-shadow: 1px 1px 1px #888888; }
   .draft-mode-div .draft-mode-title {
-    padding: 10px 20px;
-    background-color: #11ade5;
-    display: inline;
-    color: white; }
-  .draft-mode-div .draft-mode-detail-text {
-    margin-top: 20px;
-    font-size: 1.2rem; }
+    display: block; }
 
 .about {
   margin-top: 50px; }

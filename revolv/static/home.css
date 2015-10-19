@@ -6061,6 +6061,8 @@ th.hide-for-touch {
     left: 0;
     right: 0;
     top: 40%; }
+    .active-project .graphics-container .partial-completeness {
+      display: none; }
     .active-project .graphics-container .svg-graphics-container {
       position: absolute;
       height: 100%;
@@ -6256,6 +6258,8 @@ body {
     height: 250px;
     top: calc(50% - 125px);
     right: 60px; }
+    .current-project .graphics-container .partial-completeness {
+      display: none; }
     .current-project .graphics-container .svg-graphics-container {
       position: absolute;
       height: 100%;

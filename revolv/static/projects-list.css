@@ -6061,6 +6061,8 @@ th.hide-for-touch {
     left: 0;
     right: 0;
     top: 40%; }
+    .active-project .graphics-container .partial-completeness {
+      display: none; }
     .active-project .graphics-container .svg-graphics-container {
       position: absolute;
       height: 100%;
@@ -6231,6 +6233,10 @@ body {
   .about .about-inset {
     margin: 0 auto;
     padding: 30px 30px; }
+  .about h2 {
+    font-size: 36px;
+    line-height: 36px;
+    color: #adada9; }
 
 .button {
   height: auto;
@@ -6249,6 +6255,9 @@ body {
 @media only screen and (max-width: 40em) {
   .about {
     width: 100%; }
+    .about h2 {
+      font-size: 20px;
+      line-height: 30px; }
   .button {
     margin-top: 10px;
     font-size: 16px;
