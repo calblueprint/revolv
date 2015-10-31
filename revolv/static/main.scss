@@ -37,3 +37,44 @@ input, select, textarea {
 }
 
 @import "footer";
+
+@media #{$medium-up} {
+    .table-social-accounts button.submit-button {
+        margin-left: 25%;
+        width: 50%;
+    }
+}
+
+.social-title {
+  font-size: 24px;
+  margin: 30px auto;
+  width: 75%;
+  color: #064f7e;
+  font-weight: 100;
+  display: block;
+  height: 0.5em;
+  line-height: 1em;
+  border: none;
+  text-align: center;
+  font-size: 25px;
+  margin-bottom: 1.5em;
+}
+table.table-social-accounts {
+    width: 50%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 110px;
+}
+button.submit-button.gray {
+    background-color: transparent;
+    color: #b3b3c0;
+    border: 1px solid #b3b3c0;
+}
+button.submit-button.gray:hover {
+    background-color: #b3b3c0;
+    color: white;
+}
+.table-social-accounts th{
+  text-align: center;
+}

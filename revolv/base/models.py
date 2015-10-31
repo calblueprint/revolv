@@ -73,6 +73,7 @@ class RevolvUserProfile(FacebookModel):
 
     user = models.OneToOneField(User)
     subscribed_to_newsletter = models.BooleanField(default=False)
+    subscribed_to_updates = models.BooleanField(default=True)
 
     reinvest_pool = models.FloatField(default=0.0)
     preferred_categories = models.ManyToManyField("project.Category")

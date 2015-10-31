@@ -1,8 +1,8 @@
 import datetime
 
 import factory
-from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
-                                    PaymentType, RepaymentFragment)
+from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment, ProjectMontlyRepaymentConfig,
+                                    PaymentType, RepaymentFragment, UserReinvestment)
 from revolv.project.models import Project
 
 
@@ -91,3 +91,29 @@ class RepaymentFragmentFactory(factory.django.DjangoModelFactory):
 
 class RepaymentFragmentFactories(object):
     base = RepaymentFragmentFactory
+
+
+class UserReinvestmentFactory(factory.django.DjangoModelFactory):
+    """
+    Factory for default UserReinvestment.
+    """
+    class Meta:
+        model = UserReinvestment
+
+    user = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
+    project = factory.SubFactory("revolv.project.factories.ProjectFactory")
+    amount = 20.00
+    created_at = datetime.datetime.now()
+
+
+class ProjectMontlyRepaymentConfigFactory(factory.django.DjangoModelFactory):
+    """
+    Factory for default ProjectMontlyRepaymentConfig.
+    """
+    class Meta:
+        model = ProjectMontlyRepaymentConfig
+    project = factory.SubFactory("revolv.project.factories.ProjectFactory")
+    year = 2015
+    amount = 100.0
+    repayment_type = 'SSF'
+

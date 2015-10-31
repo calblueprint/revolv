@@ -4,14 +4,13 @@ from itertools import chain
 from ckeditor.fields import RichTextField
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Sum
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
-from revolv.payments.models import Payment
+from revolv.payments.models import Payment, PaymentType
 from revolv.project.stats import KilowattStatsAggregator
-
 
 class ProjectManager(models.Manager):
     """
@@ -142,6 +141,18 @@ class ProjectManager(models.Manager):
         project.created_by_user = creator
         project.save()
         return project
+
+    def get_eligible_projects_for_reinvestment(self, queryset=None):
+        """
+        :return list(queryset) of eligible project to receive reinvestement
+        """
+        return self.get_active(queryset).filter(monthly_reinvestment_cap__gt=0.0)
+
+    def get_completed_unpaid_off_projects(self, queryset=None):
+        """
+        :return list(queryset) of completes project which do monthly repayment.
+        """
+        return self.get_completed(queryset).filter(is_paid_off=True)
 
 
 class Project(models.Model):
@@ -319,6 +330,9 @@ class Project(models.Model):
     daily_solar_data = models.FileField(blank=True, null=True, upload_to="projects/daily/")
     monthly_solar_data = models.FileField(blank=True, null=True, upload_to="projects/monthly/")
     annual_solar_data = models.FileField(blank=True, null=True, upload_to="projects/annual/")
+
+    monthly_reinvestment_cap = models.FloatField(blank=True, default=0.0)
+    is_paid_off = models.BooleanField(blank=True, default=False)
 
     objects = ProjectManager()
     factories = ImportProxy("revolv.project.factories", "ProjectFactories")
@@ -652,6 +666,18 @@ class Project(models.Model):
         update = ProjectUpdate(update_text=text, project=self)
         update.save()
 
+    @property
+    def reinvest_amount_left(self):
+        """
+        :return max reinvestment can be receive
+        """
+        return min(self.amount_left, self.monthly_reinvestment_cap)
+
+    def paid_off(self):
+        """Set the project PAID_OFF flag
+        """
+        self.is_paid_off = True
+        self.save()
 
 class ProjectUpdate(models.Model):
     factories = ImportProxy("revolv.project.factories", "ProjectUpdateFactories")

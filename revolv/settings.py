@@ -15,6 +15,8 @@ import dj_database_url
 import djcelery
 from celery.schedules import crontab
 
+from datetime import datetime
+
 # If you'd like to possibly receive error status emails, add yourself
 # to this list:
 ADMINS = (
@@ -45,6 +47,8 @@ FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = IS_LOCAL
+#DEBUG = False
+
 # disable django-compressor for wagtail admin pages. this is hacky
 # but necessary until we can get it to play nicer with s3.
 # see https://github.com/calblueprint/revolv/issues/363
@@ -83,6 +87,7 @@ INSTALLED_APPS = (
     'djcelery',
     'ckeditor',
     'sekizai',
+    'social.apps.django_app.default',
 
     # wagtail cms: see http://wagtail.readthedocs.org/en/v1.0b2/howto/settings.html
     'compressor',
@@ -115,11 +120,18 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'sesame.middleware.AuthenticationMiddleware',
+    'revolv.base.users.RevolvSocialAuthExceptionMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'sesame.backends.ModelBackend',
 )
+
+
 
 ROOT_URLCONF = 'revolv.urls'
 
@@ -151,7 +163,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     'django_facebook.context_processors.facebook',
-
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
     'sekizai.context_processors.sekizai',
     'wagtailsettings.context_processors.settings',
 )
@@ -203,7 +216,8 @@ if not AWS_ACCESS_KEY_ID and IS_LOCAL:
     # allow them to 
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     MEDIA_URL = MEDIA_PATH
-    MEDIA_SERVE_LOCALLY = False
+    MEDIA_SERVE_LOCALLY = True
+    MEDIA_ROOT = BASE_DIR + '/media/'
 
 STATIC_ROOT = 'staticfiles'
 STATICFILES_FINDERS = (
@@ -267,7 +281,7 @@ EMAIL_TEMPLATES_PATH = os.path.join(
 
 # Hard-coded urls: kind of ugly but we need these for when we
 # want to send links in emails
-SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
+SITE_URL = os.environ.get('SITE_URL', 'http://revolv.local.com:8000')
 
 if IS_HEROKU:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -287,6 +301,17 @@ elif IS_STAGE:
 else:
     ALLOWED_HOSTS = ['*']
 
+#username admin will assign when automatic reinvest task run
+ADMIN_PAYMENT_USERNAME = 'administrator'
+#date of the month when user can execute reinvest
+USER_REINVESTMENT_DATE = {'day': 1, 'hour': 00, 'minute': 00}
+#date of the month when automatic reinvest execute
+ADMIN_REINVESTMENT_DATE = {'day': 15, 'hour': 00, 'minute': 00}
+
+now = datetime.now()
+#Datetime object when automatic reinvest run, we need to increase a little to prevent overlap with user reinvestment
+ADMIN_REINVESTMENT_DATE_DT = datetime(now.year, now.month, **ADMIN_REINVESTMENT_DATE)
+
 # The backend used to store task results - because we're going to be
 # using RabbitMQ as a broker, this sends results back as AMQP messages
 CELERY_RESULT_BACKEND = "amqp"
@@ -297,8 +322,9 @@ BROKER_HOST = "localhost"
 BROKER_PORT = 5672
 BROKER_PASSWORD = "revolv"
 BROKER_USER = "revolv"
-BROKER_URL = "amqp://revolv:revolv@localhost:5672//revolv"
+BROKER_URL = "amqp://revolv:revolv@localhost:5672/revolv"
 
+CELERY_IMPORTS = ('revolv.tasks.reinvestment_allocation', 'revolv.tasks.reinvestment_rollover',)
 # The default Django db scheduler
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
@@ -307,7 +333,18 @@ CELERYBEAT_SCHEDULE = {
         # Every Sunday at 4:30AM
         "schedule": crontab(hour=4, minute=30, day_of_week=0),
         "args": (2, 4),
+
     },
+    "reinvestment_allocation": {
+        "task": "revolv.tasks.reinvestment_allocation.calculate_montly_reinvesment_allocation",
+        "schedule": crontab(hour=USER_REINVESTMENT_DATE['hour'], minute=USER_REINVESTMENT_DATE['minute'],
+                            day_of_month=USER_REINVESTMENT_DATE['day']),
+    },
+    "reinvestment_rollover": {
+        "task": "revolv.tasks.reinvestment_rollover.distribute_reinvestment_fund",
+        "schedule": crontab(hour=ADMIN_REINVESTMENT_DATE['hour'], minute=ADMIN_REINVESTMENT_DATE['minute'],
+                            day_of_month=ADMIN_REINVESTMENT_DATE['day']),
+    }
 }
 
 GOOGLEMAPS_API_KEY = "AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE"
@@ -315,6 +352,8 @@ GOOGLEMAPS_API_KEY = "AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE"
 LANGUAGES = [
     ('en-us', 'English'),
 ]
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 # SSL Settings for Heroku
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -335,6 +374,41 @@ is actually being charged on the PayPal side.
 """
 ENABLE_PAYMENT_CHARGING = True
 
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'revolv.base.users.get_username_from_social',
+    'social.pipeline.social_auth.associate_by_email',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+)
+SOCIAL_AUTH_DISCONNECT_PIPELINE = (
+    'social.pipeline.disconnect.allowed_to_disconnect',
+    'social.pipeline.disconnect.get_entries',
+    'social.pipeline.disconnect.revoke_tokens',
+    'social.pipeline.disconnect.disconnect'
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['public_profile', 'email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'fields': 'id, name, email'
+}
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['profile', 'email']
+
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/social_connect_failed/'
+SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email', 'first_name', 'last_name']
+
+SHARETHIS_PUBLISHER_ID = os.environ.get('SHARETHIS_PUBLISHER_ID')
+
 # Used for error logging. See https://docs.djangoproject.com/en/1.7/topics/logging
 LOGGING = {
     'version': 1,
@@ -344,6 +418,17 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
+            'formatter': 'simple',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(name)s.%(funcName)s:%(message)s'
         },
     },
     'loggers': {
@@ -355,6 +440,16 @@ LOGGING = {
         'django_facebook.models': {
             'handlers': ['file'],
             'level': 'ERROR',
+            'propagate': True,
+        },
+        'revolv': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'social': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
             'propagate': True,
         }
     },

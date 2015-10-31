@@ -25,3 +25,5 @@ django-ckeditor==4.4.8
 wagtail==1.0b2
 wagtailsettings==0.4.1
 django-sekizai==0.8.1
+django-sesame==1.1
+python-social-auth==0.2

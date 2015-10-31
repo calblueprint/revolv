@@ -442,3 +442,12 @@ class ActiveProjectsPageSettings(BaseSetting):
         help_text="The heading to display above the featured project on the projects list when there are multiple active projects, e.g. 'Our current projects'",
         default="OUR CURRENT PROJECTS"
     )
+
+@register_setting
+class ShareThisSettings(BaseSetting):
+    """
+    ShareThis default Settings
+    """
+    image = models.URLField(verbose_name='Image Url', help_text='The Url of image that will be used in ShareThis widget')
+    description = models.CharField(max_length=200, help_text="The description that will be used in ShareThis widget")
+

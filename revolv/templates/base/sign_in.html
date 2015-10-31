@@ -5,6 +5,7 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" >
 {% endblock %}
 
 {% block javascripts %}
@@ -46,7 +47,26 @@
                 <input type="hidden" name="next" value="{{ login_redirect_url }}">
             {% endif %}
             <button class="submit-button medium" type="submit" value="Log in">{{ settings.revolv_cms.LoginPageSettings.button_text }}</button>
+
         </form>
+
+        <div class="social-login-buttons">
+                <p class="slb-title">Or login with your social account below</p>
+            <a href="{% url "social:begin" "google-oauth2" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
+                        {% else %}{% url "home" %}{% endif %}" class="slb-btn-google">
+                <button class="row slb_socialButtons slb-google">
+                    <i class="fa fa-google-plus visible-xs"></i>
+                    <span class="hidden-xs">Google</span>
+                </button>
+            </a>
+            <a href="{% url "social:begin" "facebook" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
+                        {% else %}{% url "home" %}{% endif %}" class="slb-btn-facebook">
+                <button class="row slb_socialButtons slb-facebook">
+                    <i class="fa fa-facebook visible-xs"></i>
+                    <span class="hidden-xs">Facebook</span>
+                </button>
+            </a>
+        </div>
     </div>
 </div>
 <div class='row component-row signup' {% if referring_endpoint == "login" or referring_endpoint == "" %}style="display: none"{% endif %}>
@@ -54,6 +74,23 @@
         <h1>{{ settings.revolv_cms.SignupPageSettings.heading }}</h1>
         {{ settings.revolv_cms.SignupPageSettings.signup_paragraph|safe }}
         <p>Already have an account? Log in <a class="component-link" data-component="login">here</a>.</p>
+        <p>Or you can login with your social account below</p>
+        <div class="social-login-buttons">
+                <a href="{% url "social:begin" "google-oauth2" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
+                        {% else %}{% url "home" %}{% endif %}" class="slb-btn-google">
+                    <button class="row slb_socialButtons slb-google">
+                        <i class="fa fa-google-plus visible-xs"></i>
+                        <span class="hidden-xs">Google</span>
+                    </button>
+                </a>
+                <a href="{% url "social:begin" "facebook" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
+                        {% else %}{% url "home" %}{% endif %}" class="slb-btn-facebook">
+                    <button class="row slb_socialButtons slb-facebook">
+                        <i class="fa fa-facebook visible-xs"></i>
+                        <span class="hidden-xs">Facebook</span>
+                    </button>
+                </a>
+            </div>
     </div>
     <div class="component-container medium-4 small-12 columns end">
         <form action="/signup/" method="post" id="login_form">

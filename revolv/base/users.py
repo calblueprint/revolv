@@ -6,6 +6,8 @@ from django.shortcuts import redirect
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_profile
 
+from social.apps.django_app.middleware import SocialAuthExceptionMiddleware
+
 
 def is_ambassador(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
     """
@@ -97,3 +99,33 @@ class UserDataMixin(object):
         context['is_ambassador'] = self.is_ambassador
         context['is_administrator'] = self.is_administrator
         return context
+
+
+def get_username_from_social(strategy, details, user=None, *args, **kwargs):
+    """
+    Custom Social Auth pipeline to get username from email social account.
+    First get username from email's user (without domain). If that name already been taken
+    we'll use full email as username
+    """
+    USER_FIELDS = ['username', 'email']
+    if 'username' not in strategy.setting('USER_FIELDS', USER_FIELDS):
+        return
+
+    storage = strategy.storage
+
+    if not user:
+        username, _ = details['email'].split('@')
+        if storage.user.user_exists(username=username):
+            username = details['email']
+    else:
+        username = storage.user.get_username(user)
+    print {'username': username, 'details': details}
+    return {'username': username}
+
+
+class RevolvSocialAuthExceptionMiddleware(SocialAuthExceptionMiddleware):
+    def get_redirect_uri(self, request, exception):
+        message = self.get_message(request, exception)
+        request.session['has_social_exception'] = True
+        url = super(RevolvSocialAuthExceptionMiddleware, self).get_redirect_uri(request, exception)
+        return '{0}?message={1}'.format(url, message)

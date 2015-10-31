@@ -1,6 +1,15 @@
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
 
+#reinvest-modal .payment-modal-content {
+    width: 400px;
+}
+#success-reinvest-modal .modal-footer-button-group {
+    text-align: center;
+}
+#success-reinvest-modal .modal-footer-button-group, #reinvest-modal .modal-footer-button-group {
+    text-align: center;
+}
 .payment-modal-content {
     width: 300px;
 }

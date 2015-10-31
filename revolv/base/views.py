@@ -4,13 +4,17 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import views as auth_views
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import redirect, render_to_response
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.http import require_http_methods
 from django.views.generic import FormView, TemplateView, View
+from django.template.context import RequestContext
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
@@ -18,6 +22,8 @@ from revolv.payments.models import Payment
 from revolv.project.models import Category, Project
 from revolv.project.utils import aggregate_stats
 
+from social.apps.django_app.default.models import UserSocialAuth
+from social.actions import do_disconnect
 
 class HomePageView(UserDataMixin, TemplateView):
     """
@@ -104,6 +110,7 @@ class ProjectListView(UserDataMixin, TemplateView):
         context = super(ProjectListView, self).get_context_data(**kwargs)
         active = Project.objects.get_active()
         context["active_projects"] = active
+        context["is_reinvestment"] = False
         return context
 
 
@@ -140,7 +147,10 @@ class SignInView(TemplateView):
         signup_form = self.signup_form_class()
         context["signup_form"] = signup_form
         context["login_form"] = login_form
-        context["login_redirect_url"] = self.request.GET.get("next")
+        if self.request.GET.get("next"):
+            context["login_redirect_url"] = self.request.GET.get("next")
+        else:
+            context["login_redirect_url"] = reverse('home')
         context["referring_endpoint"] = ""
         context["reason"] = self.request.GET.get("reason")
         return context
@@ -298,3 +308,54 @@ def password_reset_confirm(request, *args, **kwargs):
 
 def password_reset_complete(request):
     return auth_views.password_reset_complete(request, template_name="base/auth/forgot_password_complete.html")
+
+
+@login_required
+@require_http_methods(['GET'])
+def unsubscribe(request, action):
+    """
+    View handle unsubscribe email update
+    """
+    data = {}
+    if action and action.lower() == 'updates':
+        user_profile = request.user.revolvuserprofile
+        user_profile.subscribed_to_updates = False
+        user_profile.save()
+        data = {'msg': "You have successfully unsubscribed"}
+    else:
+        data = {'msg': 'Please specify which section you want to unsubscribe'}
+
+    return render_to_response('base/minimal_message.html',
+                              context_instance=RequestContext(request, data))
+
+@login_required
+def social_connection(request):
+    """
+    View handle my social connection page
+    """
+    backend_map = {'facebook': {'name': 'facebook', 'connected': False,
+                                'dc_url': reverse('social:disconnect', kwargs={'backend': 'facebook'})},
+                   'google': {'name': 'google-oauth2', 'connected': False,
+                              'dc_url': reverse('social:disconnect', kwargs={'backend': 'google-oauth2'})}
+                   }
+    accounts = UserSocialAuth.objects.filter(user=request.user)
+
+    for account in accounts:
+        for k, v in backend_map.iteritems():
+                if v['name'] == account.provider:
+                    backend_map[k]['connected'] = True
+
+    return render_to_response('base/social_account.html',
+                              context_instance=RequestContext(request, {'accounts': backend_map}))
+
+
+def social_exception(request):
+    has_social_exception = request.session.get('has_social_exception')
+    if not has_social_exception:
+        return redirect(reverse('home'))
+
+    del request.session['has_social_exception']
+
+    message = request.GET.get('message')
+    return render_to_response('base/minimal_message.html',
+                              context_instance=RequestContext(request, {'msg': message}))
