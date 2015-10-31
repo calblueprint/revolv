@@ -23,3 +23,35 @@
         </div>
     </div>
 </div>
+{% if is_reinvestment and reinvestment_amount > 0.0 %}
+    <div id="success-reinvest-modal" class="revolv-reveal-modal-table" data-reveal>
+    <div class="modal-cell">
+        <div class="modal-content success-modal-content">
+            <div class="modal-header">
+                <span class="modal-title">Success!</span>
+            </div>
+            <div class="modal-section text-center">
+                <label for="checkmark" class="checkmark"></label>
+            </div>
+            <div class="modal-section table">
+                <div class="table-cell-middle confirm-text">
+                    <span>Thank you! You've successfully pledged your revolving fund of
+                        <span id="amount-donated">${{ reinvesment_amount }}</span> to <br/>{{ project.title }}.
+                    Want to help project event more?Make a donation too!</span>
+                </div>
+            </div>
+            <div class="modal-section">
+                <div class="medium-12 columns">
+                    <div class="modal-footer-button-group center">
+                        <ul class="modal-footer-button-group ">
+                            <li><button class="submit-button reinvest-donate">Donate!</button></li>
+                            <li><button class="close-revolv-reveal-modal submit-button gray">Not Now</button></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

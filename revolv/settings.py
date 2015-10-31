@@ -15,6 +15,8 @@ import dj_database_url
 import djcelery
 from celery.schedules import crontab
 
+from datetime import datetime
+
 # If you'd like to possibly receive error status emails, add yourself
 # to this list:
 ADMINS = (
@@ -162,9 +164,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'revolv_db',
-        'USER': 'revolv',
-        'PASSWORD': 'revolv',
+        'NAME': 'revolv',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '',
     }
@@ -286,6 +288,11 @@ elif IS_STAGE:
     ALLOWED_HOSTS = ["revolv-stage.herokuapp.com"]
 else:
     ALLOWED_HOSTS = ['*']
+
+from revolv.base.utils import get_admin_reinvestment_date
+BASE_URL = 'http://'
+ADMIN_REINVESTMENT_DATE = (15, 0, 0,)
+IS_USER_REINVESTMENT_PERIOD = True if datetime.now() < get_admin_reinvestment_date(ADMIN_REINVESTMENT_DATE) else False
 
 # The backend used to store task results - because we're going to be
 # using RabbitMQ as a broker, this sends results back as AMQP messages

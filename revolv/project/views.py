@@ -4,12 +4,15 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
+from django.http.response import HttpResponseBadRequest
 from django.shortcuts import redirect
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, TemplateView
 from django.views.generic.edit import FormView
+from django.views.decorators.http import require_http_methods
 from revolv.base.users import UserDataMixin
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
+from revolv.payments.models import UserReinvestment
 from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate
@@ -222,7 +225,18 @@ class ProjectView(UserDataMixin, DetailView):
         context['updates'] = self.get_object().updates.order_by('date').reverse()
         context['donor_count'] = self.get_object().donors.count()
         context['project_donation_levels'] = self.get_object().donation_levels.order_by('amount')
-        context["is_draft_mode"]=self.get_object().project_status == self.get_object().DRAFTED
+        context["is_draft_mode"] = self.get_object().project_status == self.get_object().DRAFTED
+        if self.user.revolvuserprofile and self.user.revolvuserprofile.reinvest_pool > 0.0:
+            if self.get_object().is_eligible_for_reinvestment():
+                context["is_reinvestment"] = True
+                amount_left = self.get_object().reinvest_amount_left()
+                if amount_left < self.user_profile.reinvest_pool:
+                    context["reinvestment_amount"] = amount_left
+                else:
+                    context["reinvestment_amount"] = self.user_profile.reinvest_pool
+                context["reinvestment_url"] = reverse('project:reinvest', kwargs={'pk': self.object.id})
+        else:
+            context["is_reinvestment"] = False
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -260,3 +274,36 @@ class SubmitDonationView(UserDataMixin, FormView):
         return JsonResponse({
             'error': form.errors,
         }, status=400)
+
+class ProjectListReinvestmentView(UserDataMixin, TemplateView):
+    """ Base View of all active projects
+    """
+    template_name = 'base/projects-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListReinvestmentView, self).get_context_data(**kwargs)
+        active = Project.objects.get_eligible_projects_for_reinvestment()
+        context["active_projects"] = active
+        if self.user.revolvuserprofile and self.user.revolvuserprofile.reinvest_pool > 0.0:
+            context["is_reinvestment"] = True
+            context["reinvestment_amount"] = self.user.revolvuserprofile.reinvest_pool
+            context["reinvestment_url"] = self.user.revolvuserprofile.reinvest_pool
+        else:
+            return redirect()
+        return context
+
+
+@require_http_methods(['POST'])
+def reinvest(request, project_id):
+    amount = request.POST.get('amount')
+    if not amount:
+        return HttpResponseBadRequest()
+    try:
+        project = Project.objects.get(id=project_id)
+    except (project.DoesNotExist, project.MultipleObjectsReturned):
+        return HttpResponseBadRequest()
+
+    UserReinvestment.objects.create(user=request.user.revolvuserprofile,
+                                    amount=amount,
+                                    project=project)
+    return JsonResponse({'success': True})

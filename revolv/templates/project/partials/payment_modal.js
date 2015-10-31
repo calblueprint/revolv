@@ -1,5 +1,34 @@
 $(function() {
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
 
 if (!String.prototype.format) {
     /**
@@ -299,7 +328,8 @@ var populateConfirmModal = function(formValues) {
 var confirmModalButtons = [
     $('button.donation-submit'),
     $('button.donation-change'),
-    $('button.cancel-confirm')
+    $('button.cancel-confirm'),
+    $('button.submit-button')
 ];
 var paymentSpinner = new Spinner();
 $('button.donation-continue').click(function(e) {
@@ -425,4 +455,43 @@ $('.revolv-reveal-modal-table').click(function (e) {
     }
 });
 
+});
+
+$('#reinvest-button').click(function(e){
+    $('#reinvest-modal').foundation('reveal','open');
+});
+
+$('#reinvest-button .close-revolv-reveal-modal').click(function(e){
+    $('#reinvest-modal').foundation('reveal','close');
+});
+$('#reinvest-modal .reinvest-continue').click(function(e){
+    e.preventDefault();
+    $.each(confirmModalButtons, function (i, btn) {
+        btn.prop('disabled', true);
+    });
+    paymentSpinner.spin();
+    $('#reinvest-continue').append(paymentSpinner.el);
+
+    $.post({{ reinvestment_url}},
+        {'amount': {{ reinvestment_amount }} }
+        ).done(function(data) {
+            $('#success-reinvest-modal').foundation('reveal', 'open');
+        }).fail(function(jqXHR) {
+            $modelError = $('#reinvest-modal').find('.modal-errors')
+
+            $modelError.addClass('error');
+            $modelError.children('.error-msg')
+                .text('Error while processing your request, try again later');
+        }).always(function () {
+            paymentSpinner.stop();
+            // timeout is for cosmetic purposes only; buttons flicker and look
+            // weird without it, due to animation overlap
+            setTimeout(function() {
+                $.each(confirmModalButtons, function (i, btn) {
+                    btn.prop('disabled', false);
+                });
+            }, 500);
+
+        });
+    return false;
 });

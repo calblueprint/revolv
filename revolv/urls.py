@@ -27,6 +27,7 @@ urlpatterns = patterns(
     url(r'^login/$', base_views.LoginView.as_view(), name='login'),
     url(r'^signup/$', base_views.SignupView.as_view(), name='signup'),
     url(r'^logout/$', base_views.LogoutView.as_view(), name='logout'),
+    url(r'^unsubscribe_updates/$', 'revolv.base.views.unsubscribe_update', name='unsubscribe_updates'),
 
     url(r'^password_reset/$', base_views.password_reset_initial, name="password_reset"),
     url(r'^password_reset/done/$', base_views.password_reset_done, name="password_reset_done"),

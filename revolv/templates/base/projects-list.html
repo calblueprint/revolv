@@ -32,10 +32,14 @@
 
 {% block body %}
     {% spaceless %}
-        {% if active_projects|length == 1%}
-            <div class="divider-title ">{{ settings.revolv_cms.ActiveProjectsPageSettings.single_project_heading}}</div>
-        {% elif active_projects|length > 1 %}
-            <div class="divider-title">{{ settings.revolv_cms.ActiveProjectsPageSettings.multiple_projects_heading}}</div>
+        {% if is_reinvestment %}
+            <div class="divider-title ">You have ${{ reinvestment_amount }} to reinvest. Pick a project below to back!!</div>
+        {% else %}
+            {% if active_projects|length == 1%}
+                <div class="divider-title ">{{ settings.revolv_cms.ActiveProjectsPageSettings.single_project_heading}}</div>
+            {% elif active_projects|length > 1 %}
+                <div class="divider-title">{{ settings.revolv_cms.ActiveProjectsPageSettings.multiple_projects_heading}}</div>
+            {% endif %}
         {% endif %}
         <div class="row active-projects-block">
             {% for active_project in active_projects %}
@@ -84,8 +88,10 @@
         <div class="row about">
             <div class="about-inset">
                 <!-- Call to action -->
+                {% if not is_reinvestment %}
                 <h2>{{ settings.revolv_cms.ActiveProjectsPageSettings.join_the_movement }}</h2>
                 <a href="{% url "project:new" %}" class="donate button">{{ settings.revolv_cms.ActiveProjectsPageSettings.start_funding_button_text }}</a>
+                {% endif %}
             </div>
         </div>
     {% endspaceless %}

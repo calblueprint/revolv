@@ -2,6 +2,8 @@ from django.db import models
 
 from revolv.lib.utils import ImportProxy
 
+from datetime import date
+
 
 class AdminRepaymentManager(models.Manager):
     """
@@ -316,6 +318,23 @@ class PaymentManager(models.Manager):
             payment_type__name=PaymentType._REINVESTMENT
         )
 
+    def project_reinvestment_from_date(self, project=None, from_date=None,
+                                       queryset=None):
+        """
+        :return:
+            Returns all reinvestment_fragment payments that are associated with
+            this user.
+        """
+        q = self.payments(
+            project=project,
+            queryset=queryset
+        ).filter(
+            payment_type__name=PaymentType._REINVESTMENT
+        )
+        if from_date:
+            q = q.filter(created_at__gte=from_date)
+        return q
+
     def repayment_fragments(self, user=None):
         """
         :return:
@@ -366,6 +385,91 @@ class PaymentManager(models.Manager):
         else:
             return total_amount
 
+    def total_project_reinvestment_from_date(self, project=None, from_date=None,
+                                             queryset=None):
+        """
+        :kwargs:
+            user: filter donations by this user
+            project: filter donations by this project
+            queryset: further filtering of Payments
+
+        :return:
+            Returns the total amount reinvested for a specified user or project or both.
+        """
+        total_amount = self.project_reinvestment_from_date(project=project,
+                                                           from_date=from_date,
+                                                           queryset=queryset)\
+            .aggreate(models.Sum('amount'))['amount__sum']
+
+        if total_amount is None:
+            return 0
+        else:
+            return total_amount
+
+class UserReinvestmentManager(models.Manager):
+    """
+    Manager for AdminReinvestment.
+    """
+
+    def reinvestments(self, user=None, project=None, queryset=None):
+        """
+        :return: AdminReinvestment associated with this admin and project.
+        """
+        if queryset is None:
+            queryset = super(UserReinvestment, self).get_queryset()
+        if user:
+            queryset = queryset.filter(user=user).order_by('created_at')
+        if project:
+            queryset = queryset.filter(project=project).order_by('created_at')
+        return queryset
+
+
+class UserReinvestment(models.Model):
+    """
+    Model representing a single, admin-controlled "contact point" for a
+    reinvestment into an ongoing RE-volv project.
+
+    RE-volv usually only reinvests into a project at its launch, but it is still
+    possible for an admin to put in a reinvestment at any time.
+
+    Creating an AdminReinvestment automatically pools money from users with a
+    non-zero pool of reinvestable money, prioritizing users that have a
+    preference for the Category of the project being reinvested into. (A user's
+    pool of reinvestable money consists of the sum of unspent repayment
+    fragments to that user.)
+
+    We generate a Payment of type 'reinvestment_fragment' for each user that we
+    pooled money from with the amount of money that we pooled from that user,
+    and also decrement that user's pool of reinvestable money.
+
+    An AdminReinvestment cannot be created if there are insufficient funds.
+
+    We need a single "contact point" representing a reinvestment so that admins
+    have the ability to "revoke" a reinvestment, if it was entered falsely.
+    Deleting an AdminReinvestment also deletes any "reinvestment_fragment"-type
+    Payments associated with it, effectively erasing any trace of the
+    reinvestment.
+
+    ::Signals::
+    pre_init
+        Raises a NotEnoughFundingException before __init__ if there are not
+        enough funds for this AdminReinvestment.
+    post_save
+        When an AdminReinvestment is saved, we pool as many donors as we need to
+        fund the reinvestment, prioritizing users that have a preference for the
+        Category of the project begin invested into. We only consider users that
+        have a non-zero pool of investable money.
+        !!! TODO: actually prioritize by Category
+    """
+    amount = models.FloatField()
+    user = models.ForeignKey('base.RevolvUserProfile')
+    project = models.ForeignKey("project.Project")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    objects = UserReinvestmentManager()
+    #factories = ImportProxy("revolv.payments.factories", "AdminReinvestmentFactories")
+
 
 class Payment(models.Model):
     """
@@ -395,6 +499,7 @@ class Payment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     admin_reinvestment = models.ForeignKey(AdminReinvestment, blank=True, null=True)
+    user_reinvestment = models.ForeignKey(UserReinvestment, blank=True, null=True)
 
     amount = models.FloatField()
 
@@ -404,3 +509,17 @@ class Payment(models.Model):
     @property
     def is_organic(self):
         return self.user == self.entrant
+
+class ProjectMontlyRepaymentConfigManager(models.Model):
+    pass
+
+class ProjectMontlyRepaymentConfig(models.Model):
+    SOLAR_SEED_FUND = 'SSF'
+    REVOLVE_OVERHEAD = 'REV'
+    REPAYMENT_TYPE_CHOICES = ((SOLAR_SEED_FUND, 'Solar Seed Fund'), (REVOLVE_OVERHEAD, 'RE-volv Overhead'))
+
+    project = models.ForeignKey("project.Project")
+    year = models.PositiveSmallIntegerField(default=date.today().year)
+    repayment_type = models.CharField(max_length=3, choices=REPAYMENT_TYPE_CHOICES)
+    amount = models.FloatField()
+

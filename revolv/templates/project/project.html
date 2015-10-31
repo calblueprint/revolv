@@ -62,7 +62,11 @@
             <div class="overlay">
                 <div class="donate-button-header">
                     {% if user.is_authenticated %}
-                        <a class="donate-link" id="donate-button" href="#donate" data-reveal-id="donate-modal"><p>DONATE</p></a>
+                        {% if is_reinvestment and reinvestment_amount > 0.0 %}
+                            <a class="donate-link" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
+                        {% else %}
+                            <a class="donate-link" id="donate-button" href="#donate" data-reveal-id="donate-modal"><p>DONATE</p></a>
+                        {% endif %}
                     {% else %}
                         <a class="donate-link" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
                     {% endif %}
