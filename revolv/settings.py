@@ -117,11 +117,15 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'sesame.middleware.AuthenticationMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
+    'sesame.backends.ModelBackend',
 )
+
+
 
 ROOT_URLCONF = 'revolv.urls'
 
@@ -164,9 +168,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'revolv',
-        'USER': '',
-        'PASSWORD': '',
+        'NAME': 'revlov2',
+        'USER': 'deedee',
+        'PASSWORD': 'syefria',
         'HOST': '127.0.0.1',
         'PORT': '',
     }
@@ -289,10 +293,20 @@ elif IS_STAGE:
 else:
     ALLOWED_HOSTS = ['*']
 
-from revolv.base.utils import get_admin_reinvestment_date
-BASE_URL = 'http://'
-ADMIN_REINVESTMENT_DATE = (15, 0, 0,)
-IS_USER_REINVESTMENT_PERIOD = True if datetime.now() < get_admin_reinvestment_date(ADMIN_REINVESTMENT_DATE) else False
+#username admin will assign when automatic reinvest task run
+ADMIN_PAYMENT_USERNAME = 'administrator'
+#date of the month when user can execute reinvest
+USER_REINVESTMENT_DATE = {'day': 1, 'hour': 13, 'minute': 00}
+#date of the month when automatic reinvest execute
+ADMIN_REINVESTMENT_DATE = {'day': 10, 'hour': 13, 'minute': 50}
+
+now = datetime.now()
+#Datetime object when automatic reinvest run, we need to increase a little to prevent overlap with user reinvestment
+ADMIN_REINVESTMENT_DATE_DT = datetime(now.year, now.month,
+                                      ADMIN_REINVESTMENT_DATE['day'],
+                                      ADMIN_REINVESTMENT_DATE['hour'],
+                                      ADMIN_REINVESTMENT_DATE['minute'] + 1)
+USER_REINVESTMENT_DATE_DT = datetime(now.year, now.month, **USER_REINVESTMENT_DATE)
 
 # The backend used to store task results - because we're going to be
 # using RabbitMQ as a broker, this sends results back as AMQP messages
@@ -304,8 +318,9 @@ BROKER_HOST = "localhost"
 BROKER_PORT = 5672
 BROKER_PASSWORD = "revolv"
 BROKER_USER = "revolv"
-BROKER_URL = "amqp://revolv:revolv@localhost:5672//revolv"
+BROKER_URL = "amqp://revolv:revolv@localhost:5672/revolv"
 
+CELERY_IMPORTS = ('revolv.tasks.reinvestment_allocation', 'revolv.tasks.reinvestment_rollover',)
 # The default Django db scheduler
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 CELERYBEAT_SCHEDULE = {
@@ -314,7 +329,18 @@ CELERYBEAT_SCHEDULE = {
         # Every Sunday at 4:30AM
         "schedule": crontab(hour=4, minute=30, day_of_week=0),
         "args": (2, 4),
+
     },
+    "reinvestment_allocation": {
+        "task": "revolv.tasks.reinvestment_allocation.calculate_montly_reinvesment_allocation",
+        "schedule": crontab(hour=USER_REINVESTMENT_DATE['hour'], minute=USER_REINVESTMENT_DATE['minute'],
+                            day_of_month=USER_REINVESTMENT_DATE['day']),
+    },
+    "reinvestment_rollover": {
+        "task": "revolv.tasks.reinvestment_rollover.distribute_reinvestment_fund",
+        "schedule": crontab(hour=ADMIN_REINVESTMENT_DATE['hour'], minute=ADMIN_REINVESTMENT_DATE['minute'],
+                            day_of_month=ADMIN_REINVESTMENT_DATE['day']),
+    }
 }
 
 GOOGLEMAPS_API_KEY = "AIzaSyDVDPi1SXm3qKyvmE5i9XeO1Gs5WjK7SJE"
@@ -351,6 +377,17 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
+            'formatter': 'simple',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(name)s.%(funcName)s:%(message)s'
         },
     },
     'loggers': {
@@ -362,6 +399,11 @@ LOGGING = {
         'django_facebook.models': {
             'handlers': ['file'],
             'level': 'ERROR',
+            'propagate': True,
+        },
+        'revolv': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
             'propagate': True,
         }
     },

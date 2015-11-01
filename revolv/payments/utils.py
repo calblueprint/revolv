@@ -1,3 +1,8 @@
+"""
+Some interesting exceptions
+"""
+
+
 class NotEnoughFundingException(Exception):
     pass
 
@@ -5,8 +10,14 @@ class NotEnoughFundingException(Exception):
 class ProjectNotCompleteException(Exception):
     pass
 
-class NotInUserReinvestmentPeriod(Exception):
+
+class NotInUserReinvestmentPeriodException(Exception):
     pass
 
-class NotInAdminReinvestmentPeriod(Exception):
+
+class NotInAdminReinvestmentPeriodException(Exception):
+    pass
+
+
+class ProjectNotEligibleException(Exception):
     pass

@@ -11,7 +11,7 @@ from revolv.base.models import RevolvUserProfile
 from revolv.lib.utils import ImportProxy
 from revolv.payments.models import Payment, PaymentType
 from revolv.project.stats import KilowattStatsAggregator
-from revolv.base.utils import get_first_date_of_month
+from revolv.settings import USER_REINVESTMENT_DATE_DT
 
 class ProjectManager(models.Manager):
     """
@@ -144,20 +144,18 @@ class ProjectManager(models.Manager):
         return project
 
     def get_eligible_projects_for_reinvestment(self, queryset=None):
-        return self.get_active(queryset).filter(projectproperty__name=ProjectProperty.ELIGIBLE_FOR_REINVESTMENT) \
-                                .filter(projectproperty__value='1')
-
-    def get_project_reinvested_amount_by_user(self, queryset=None):
-        now = datetime.datetime.now()
-        first_day = datetime.datetime(now.year, now.month, 1)
-        return self.get_eligible_projects_for_reinvestment(queryset)\
-            .filter(payment__create_at__gte=first_day)\
-            .filter(payment__payment_type=PaymentType.objects.get_reinvestment_fragment())\
-            .annotate(amount_reinvested=models.Sum('payment__amount'))
+        """
+        :return list(queryset) of eligible project to receive reinvestement
+        """
+        return self.get_active(queryset).filter(projectproperty__name=ProjectProperty.ELIGIBLE_FOR_REINVESTMENT,
+                                                projectproperty__value='1')
 
     def get_completed_unpaid_off_projects(self, queryset=None):
-        return self.get_completed(queryset).filter(projectproperty__name=ProjectProperty.PAID_OFF)\
-            .exclude(projectproperty__value='1')
+        """
+        :return list(queryset) of completes project which do monthly repayment.
+        """
+        return self.get_completed(queryset).filter(projectproperty__name=ProjectProperty.PAID_OFF,
+                                                   projectproperty__value='1')
 
 
 class Project(models.Model):
@@ -667,53 +665,78 @@ class Project(models.Model):
     def add_update(self, text):
         update = ProjectUpdate(update_text=text, project=self)
         update.save()
-    #
-    # @property
-    # def get_property(self, name):
-    #     return self.additional_properties.filter(name=name)
-    #
-    # @property
-    # def get_boolean_property(self, name):
-    #     try:
-    #         if self.get_property(name)[0] == '1':
-    #             return True
-    #     except IndexError:
-    #         pass
-    #     return False
-    #
+
     @property
     def is_eligible_for_reinvestment(self):
+        """
+        :return True this eligible for reinvestment
+        """
         return True if self.projectproperty_set.filter(name=ProjectProperty.ELIGIBLE_FOR_REINVESTMENT,
                                                        value='1') else False
 
     @property
     def is_paid_off(self):
+        """
+        :return True all investment is already paid
+        """
         return True if self.projectproperty_set.filter(name=ProjectProperty.PAID_OFF, value='1') else False
 
-    @property
     def get_reinvestment_cap(self):
-        _cap = self.projectproperty_set.filter(name=ProjectProperty.REINVESTMENT_CAP) or '0.0'
-        return float(_cap)
+        """
+        :return max fund that a project can receive on reivesment
+        """
+        _cap = self.projectproperty_set.filter(name=ProjectProperty.REINVESTMENT_CAP)
+        if _cap:
+            return float(_cap[0].value)
+        else:
+            return 0.0
 
     def disable_reinvestment(self):
+        """
+        Action to disable reinvestment flag property
+        We did this if a project reach the limit
+        """
         self.projectproperty_set.filter(name=ProjectProperty.ELIGIBLE_FOR_REINVESTMENT).update(value='0')
 
     def enable_reinvestment(self):
+        """
+        Action to enable reinvestment flag property
+        Maybe some payment cancel so the the project eligible again
+        """
         self.projectproperty_set.filter(name=ProjectProperty.ELIGIBLE_FOR_REINVESTMENT).update(value='1')
 
+    @property
     def reinvest_amount_left(self):
-        reinvested_amount = Payment.objects.total_project_reinvestment_from_date(project=self,
-                                                                                 from_date=get_first_date_of_month())
-        return  min(self.amount_left(), self.get_reinvestment_cap() - reinvested_amount)
+        """
+        :return max reinvestment can be receive
+        """
+        reinvested_amount = Payment.objects.total_project_reinvestment_from_date(
+            project=self, from_date=USER_REINVESTMENT_DATE_DT)
+        return min(self.amount_left, self.get_reinvestment_cap() - reinvested_amount)
+
+    def paid_off(self):
+        """Set the project PAID_OFF flag
+        """
+        self.projectproperty_set.filter(name=ProjectProperty.PAID_OFF).update(value='1')
 
 
 class ProjectProperty(models.Model):
-    ELIGIBLE_FOR_REINVESTMENT = '0'
-    PAID_OFF = '1'
-    REINVESTMENT_CAP = '2'
-    name = models.CharField(max_length=1)
+    """
+    This model  to contain any project related (key, value) property
+    Right now we have 3 known properties for each project:
+
+    ELIGIBLE_FOR_REINVESTMENT set 1 for project that is eligible for reinvestment
+    PAID_OFF set 1 if project already paid off, so don't include it on calculating monthly
+            reinvestment
+    REINVESTMENT_CAP set max reinvestment that this project can receive
+    """
+    ELIGIBLE_FOR_REINVESTMENT = 'ELIG'
+    PAID_OFF = 'PAID'
+    REINVESTMENT_CAP = 'RCAP'
+    name = models.CharField(max_length=4)
     value = models.CharField(max_length=100)
     project = models.ForeignKey(Project)
+    factories = ImportProxy('revolv.project.factories', 'ProjectProperty')
 
 
 class ProjectUpdate(models.Model):

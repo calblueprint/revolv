@@ -1,47 +1,73 @@
-__author__ = 'deedee'
-
 from revolv.project.models import Project, ProjectProperty
 from revolv.payments.models import ProjectMontlyRepaymentConfig, AdminRepayment
 from revolv.base.models import RevolvUserProfile
-from revolv.settings import ADMIN_PAYMENT_ID
-
+from revolv.settings import ADMIN_PAYMENT_USERNAME
+from revolv.tasks.monthly_reminders import user_reinvestment_reminder
 from django.db.models import Sum
 from celery.task import task
 from datetime import date
 
+import logging
+import sys
+import time
+
+logger = logging.getLogger(__name__)
+
+
 @task
 def calculate_montly_reinvesment_allocation():
+    """
+    This task to handle month reinvestment calculation
+
+    This is how it do:
+    1. Calculate money in out hand: balance + sum of incomming installment
+    2. Calculate max money to re-allocate to each active project
+    3. Set the project reinvestment flag
+    4. Send email alert to user
+    """
+    logger.info('Calculate monthly allocation')
     try:
-        admin = RevolvUserProfile.objects.get(id=ADMIN_PAYMENT_ID)
-    except admin.DoesNotExist:
-        pass#exit
+        admin = RevolvUserProfile.objects.get(user__username=ADMIN_PAYMENT_USERNAME)
+    except RevolvUserProfile.DoesNotExist:
+        logger.error("Can't find admin user: {0}. System exiting!".format(ADMIN_PAYMENT_USERNAME))
+        sys.exit()
 
-    reinvest_balance = RevolvUserProfile.objects.all().aggregate(total=Sum('reinvest_pool'))
-
+    reinvest_balance = RevolvUserProfile.objects.all().aggregate(total=Sum('reinvest_pool'))['total']
+    logger.info('Current reinvestment balance: %s' % reinvest_balance)
     for project in Project.objects.get_completed_unpaid_off_projects():
         try:
             repayment_config = project.projectmontlyrepaymentconfig_set\
                 .get(year=date.today().year, repayment_type=ProjectMontlyRepaymentConfig.SOLAR_SEED_FUND)
-        except repayment_config.DoesNotExist:
-            #log
-            pass
+        except ProjectMontlyRepaymentConfig.DoesNotExist:
+            logger.error("Project {0} - {%} doesn't have repayment config!".format(project.id, project.title))
 
         AdminRepayment.objects.create(amount=repayment_config.amount,
                                       project=project,
                                       admin=admin)
         reinvest_balance += repayment_config.amount
 
-    recipient = Project.objects.get_eligible_projects_for_reinvestment()
+    if reinvest_balance < 0.0:
+        logger.info("We don't have any balance. Exiting")
+        sys.exit()
+
+    logger.info('Total reinvestment balance: %s' % reinvest_balance)
+
+    recipient = Project.objects.get_active()
+    logger.info('Total project active: %s' % recipient.count())
+
     fund_per_recipient = reinvest_balance / recipient.count()
+    logger.info('Fund allocated to each project: %s' % fund_per_recipient)
     str_fund_per_recipient = str(fund_per_recipient)
     for project in recipient:
-        try:
-            asset = project.projectproperty_set.get(name=ProjectProperty.REINVESTMENT_CAP)
-        except asset.DoesNotExist:
-            asset = ProjectProperty(name=ProjectProperty.REINVESTMENT_CAP)
-        except asset.MultipleObjectsReturned:
-            project.projectproperty_set.all().delete()
-            asset = ProjectProperty(name=ProjectProperty.REINVESTMENT_CAP)
+        if project.amount_left <= 0.0:
+            logger.info("Project {0}-{1} can't receive reinvestment since "
+                        "already fullyu funded".format(project.id,project.title))
+            continue
+        ProjectProperty.objects.filter(project=project, name=ProjectProperty.REINVESTMENT_CAP).\
+            update(value=str_fund_per_recipient)
+        #enabled reinvestment flag
+        project.enable_reinvestment()
+    #wait for 30s and the send mail
+    time.sleep(30)
 
-        asset.value = str_fund_per_recipient
-        asset.save()
+    user_reinvestment_reminder()

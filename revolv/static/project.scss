@@ -1,6 +1,9 @@
 @import "foundation-settings";
 @import "bower_components/foundation/scss/foundation";
 
+#reinvest-modal .payment-modal-content {
+    width: 400px;
+}
 .payment-modal-content {
     width: 300px;
 }

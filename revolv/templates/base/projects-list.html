@@ -33,7 +33,11 @@
 {% block body %}
     {% spaceless %}
         {% if is_reinvestment %}
-            <div class="divider-title ">You have ${{ reinvestment_amount }} to reinvest. Pick a project below to back!!</div>
+            {% if error_msg %}
+                <div class="divider-title "><h5>{{ error_msg }}</h5></div>
+            {% else %}
+                <div class="divider-title ">You have ${{ reinvestment_amount }} to reinvest. Pick a project below to back!!</div>
+            {% endif %}
         {% else %}
             {% if active_projects|length == 1%}
                 <div class="divider-title ">{{ settings.revolv_cms.ActiveProjectsPageSettings.single_project_heading}}</div>
@@ -41,6 +45,7 @@
                 <div class="divider-title">{{ settings.revolv_cms.ActiveProjectsPageSettings.multiple_projects_heading}}</div>
             {% endif %}
         {% endif %}
+            {% if not error_msg %}
         <div class="row active-projects-block">
             {% for active_project in active_projects %}
                 {% if active_project.cover_photo %}
@@ -85,6 +90,7 @@
                 {% endif %}
             {% endfor %}
         </div>
+        {% endif %}
         <div class="row about">
             <div class="about-inset">
                 <!-- Call to action -->

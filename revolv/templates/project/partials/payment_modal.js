@@ -1,35 +1,4 @@
 $(function() {
-
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-var csrftoken = getCookie('csrftoken');
-
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
-
 if (!String.prototype.format) {
     /**
      * Python style string formatting for Javascript Strings.
@@ -403,7 +372,7 @@ $('#donate-form').submit(function(e) {
     }, {
         'name': 'amount',
         'value': formValues['donation-amount'].slice(2)
-    },
+    }
     ];
 
     var formURL = form.attr('action');
@@ -446,6 +415,14 @@ $(document).on('closed.fndtn.reveal', '#success-modal', function() {
     $('#success-modal').find('label.checkmark').removeClass('animate');
 });
 
+$(document).on('opened.fndtn.reveal', '#success-reinvest-modal', function() {
+    setTimeout(function() {
+        $('#success-reinvest-modal').find('label.checkmark').addClass('animate');
+    }, 200);
+});
+$(document).on('closed.fndtn.reveal', '#success-reinvest-modal', function() {
+    $('#success-reinvest-modal').find('label.checkmark').removeClass('animate');
+});
 // Hack to close modal on modal-table click
 // (i.e., when the dimmed background is clicked)
 $('.revolv-reveal-modal-table').click(function (e) {
@@ -455,13 +432,8 @@ $('.revolv-reveal-modal-table').click(function (e) {
     }
 });
 
-});
 
-$('#reinvest-button').click(function(e){
-    $('#reinvest-modal').foundation('reveal','open');
-});
-
-$('#reinvest-button .close-revolv-reveal-modal').click(function(e){
+$('#reinvest-modal .close-revolv-reveal-modal').click(function(e){
     $('#reinvest-modal').foundation('reveal','close');
 });
 $('#reinvest-modal .reinvest-continue').click(function(e){
@@ -470,18 +442,30 @@ $('#reinvest-modal .reinvest-continue').click(function(e){
         btn.prop('disabled', true);
     });
     paymentSpinner.spin();
-    $('#reinvest-continue').append(paymentSpinner.el);
+    $('#reinvest-modal').append(paymentSpinner.el);
 
-    $.post({{ reinvestment_url}},
-        {'amount': {{ reinvestment_amount }} }
+    //Maybe it's not cool, but it woks!! just use csrftoken use on donate paypal for:)
+    //instead setting up ajax header
+    var formValues = getDonateFormValues();
+    data = {'csrfmiddlewaretoken': formValues['csrfmiddlewaretoken'], 'amount': reinvestment_amount}
+    $.post(reinvestment_url, data
         ).done(function(data) {
+            var p = data.project;
+            $('p.amount-donated').text('$' + p.amount_donated + ' donated');
+            $('p.percentage-text').text(Math.round(p.partial_completeness * 100) + '%');
+            $('p.num-donors').text(p.num_donors + ' donors');
+            $('#reinvest-button').hide();
+            $('#donate-button').show();
             $('#success-reinvest-modal').foundation('reveal', 'open');
         }).fail(function(jqXHR) {
             $modelError = $('#reinvest-modal').find('.modal-errors')
-
             $modelError.addClass('error');
             $modelError.children('.error-msg')
                 .text('Error while processing your request, try again later');
+            setTimeout(function() {
+                $modelError.removeClass('error');
+                $('#reinvest-modal').foundation('reveal', 'close');
+            }, 1500);
         }).always(function () {
             paymentSpinner.stop();
             // timeout is for cosmetic purposes only; buttons flicker and look
@@ -494,4 +478,32 @@ $('#reinvest-modal .reinvest-continue').click(function(e){
 
         });
     return false;
+});
+$('#success-reinvest-modal .reinvest-donate').click(function(){
+   $('#donate-modal').foundation('reveal', 'open');
+});
+});
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+$(document).ready(function(){
+    if (!is_reinvestment){
+        $('#reinvest-button').hide();
+    }else{
+        $('#donate-button').hide();
+    }
+
 });

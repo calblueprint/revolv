@@ -12,6 +12,7 @@ from django.shortcuts import redirect, render_to_response
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView, View
+from django.template.context import RequestContext
 from revolv.base.forms import SignupForm
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
@@ -301,9 +302,12 @@ def password_reset_confirm(request, *args, **kwargs):
 def password_reset_complete(request):
     return auth_views.password_reset_complete(request, template_name="base/auth/forgot_password_complete.html")
 
-@login_required()
+@login_required
 def unsubscribe_update(request):
+    """
+    View handle unsubscribe email update
+    """
     user_profile = request.user.revolvuserprofile
     user_profile.subscribed_to_updates = False
     user_profile.save()
-    return render_to_response('base/unsubscribe_update_success.html')
+    return render_to_response('base/unsubscribe_update_success.html', context_instance=RequestContext(request) )

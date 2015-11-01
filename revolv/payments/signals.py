@@ -2,13 +2,15 @@ from django.db.models import signals, Sum
 from django.dispatch import receiver
 
 from revolv.base.models import RevolvUserProfile
-from revolv.base.utils import get_first_date_of_month
+from revolv.base.utils import is_user_reinvestment_period
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType, RepaymentFragment, UserReinvestment)
-from revolv.payments.utils import (NotEnoughFundingException, NotInUserReinvestmentPeriod,
-                                   ProjectNotCompleteException, NotInAdminReinvestmentPeriod)
+from revolv.payments.utils import (NotEnoughFundingException, NotInUserReinvestmentPeriodException,
+                                   ProjectNotCompleteException, NotInAdminReinvestmentPeriodException,
+                                   ProjectNotEligibleException)
 
-from revolv.settings import IS_USER_REINVESTMENT_PERIOD
+from revolv.settings import USER_REINVESTMENT_DATE_DT
+
 
 @receiver(signals.pre_init, sender=AdminRepayment)
 def pre_init_admin_repayment(**kwargs):
@@ -53,8 +55,8 @@ def pre_init_admin_reinvestment(**kwargs):
     Raises a NotEnoughFundingException before __init__ if there are not enough
     funds for this AdminReinvestment.
     """
-    if IS_USER_REINVESTMENT_PERIOD:
-        raise NotInAdminReinvestmentPeriod()
+    if is_user_reinvestment_period():
+        raise NotInAdminReinvestmentPeriodException()
 
     init_kwargs = kwargs.get('kwargs')
     # can't initialize admin_repayment without required 'amount' kwarg
@@ -81,8 +83,8 @@ def post_save_admin_reinvestment(**kwargs):
     """
     When an AdminReinvestment is saved, we pool as many donors as we need to
     fund the reinvestment, prioritizing users that have a preference for the
-    Category of the project begin invested into. We only consider users that
-    have a non-zero pool of investable money.
+    Category of the project begin invested into and the by order them by thier
+    last name. We only consider users that have a non-zero pool of investable money.
 
     """
     if not kwargs.get('created'):
@@ -134,7 +136,7 @@ def post_save_repayment_fragment(**kwargs):
     if not kwargs.get('created'):
         return
     instance = kwargs.get('instance')
-    instance.user.reinvest_pool += instance.amount
+    instance.user.reinvest_pool += float(instance.amount)
     instance.user.save()
 
 
@@ -145,7 +147,7 @@ def pre_delete_repayment_fragment(**kwargs):
     related user.
     """
     instance = kwargs.get('instance')
-    instance.user.reinvest_pool -= instance.amount
+    instance.user.reinvest_pool -= float(instance.amount)
     instance.user.save()
 
 
@@ -162,13 +164,13 @@ def post_save_payment(**kwargs):
     #if instance.is_organic:
     instance.project.donors.add(instance.user)
     if instance.payment_type == PaymentType.objects.get_reinvestment_fragment():
-        instance.user.reinvest_pool -= instance.amount
+        instance.user.reinvest_pool -= float(instance.amount)
         instance.user.save()
-    if IS_USER_REINVESTMENT_PERIOD and instance.project.is_eligible_for_reinvestment():
-        reinvested_amount = Payment.objects.total_project_reinvestment_from_date(project=instance.project,
-                                                                             from_date=get_first_date_of_month())
+    if is_user_reinvestment_period() and instance.project.is_eligible_for_reinvestment:
+        reinvested_amount = Payment.objects.total_project_reinvestment_from_date(
+            project=instance.project, from_date=USER_REINVESTMENT_DATE_DT)
         if reinvested_amount >= instance.project.get_reinvestment_cap() or \
-                instance.project.amount_left() <= 0.0:
+                instance.project.amount_left <= 0.0:
             instance.project.disable_reinvestment()
 
 
@@ -176,36 +178,50 @@ def post_save_payment(**kwargs):
 def pre_delete_payment(**kwargs):
     """
     Before a Payment is deleted, if it is a reinvestment, we increment the
-    reinvest_pool in the related user
+    reinvest_pool in the related user.
     """
     instance = kwargs.get('instance')
     # if instance.is_organic:
     donation_count = instance.project.payment_set.filter(
-            user=instance.user
-        ).count()
+                user=instance.user).count()
     if donation_count == 1:
         instance.project.donors.remove(instance.user)
     if instance.payment_type == PaymentType.objects.get_reinvestment_fragment():
-        instance.user.reinvest_pool += instance.amount
+        instance.user.reinvest_pool += float(instance.amount)
         instance.user.save()
+
+    if is_user_reinvestment_period() and not instance.project.is_eligible_for_reinvestment:
+        reinvested_amount = Payment.objects.total_project_reinvestment_from_date(
+            project=instance.project, from_date=USER_REINVESTMENT_DATE_DT)
+        if reinvested_amount < instance.project.get_reinvestment_cap() and \
+                instance.project.amount_left > 0.0:
+            instance.project.enable_reinvestment()
+
+
+@receiver(signals.post_delete, sender=Payment)
+def post_delete_payment(**kwargs):
+    """
+    We need to cleanup here. If this related to UserReinvestment then just delete it.
+    For AdminReinvestment we need some checking
+    """
+    instance = kwargs.get('instance')
     if instance.user_reinvestment:
         instance.user_reinvestment.delete()
+    if instance.admin_reinvestment:
+        admin_reinvestment = instance.admin_reinvestment
+        admin_reinvestment.amount -= float(instance.amount)
+        if admin_reinvestment.payment_set.all().count() == 0:
+            admin_reinvestment.delete()
 
-    if IS_USER_REINVESTMENT_PERIOD and not instance.project.is_eligible_for_reinvestment():
-        reinvested_amount = Payment.objects.total_project_reinvestment_from_date(project=instance.project,
-                                                                                 from_date=get_first_date_of_month())
-        if reinvested_amount < instance.project.get_reinvestment_cap() and \
-                instance.project.amount_left() > 0.0:
-            instance.project.enable_reinvestment()
 
 @receiver(signals.pre_init, sender=UserReinvestment)
 def pre_init_user_reinvestment(**kwargs):
     """
     Raises a NotEnoughFundingException before __init__ if there are not enough
-    funds for this AdminReinvestment.
+    funds for this UserReinvestment.
     """
-    if not IS_USER_REINVESTMENT_PERIOD:
-        raise NotInUserReinvestmentPeriod()
+    if not is_user_reinvestment_period():
+        raise NotInUserReinvestmentPeriodException()
 
     init_kwargs = kwargs.get('kwargs')
     # can't initialize admin_repayment without required 'project' kwarg
@@ -215,13 +231,20 @@ def pre_init_user_reinvestment(**kwargs):
     if not user.reinvest_pool:
         raise NotEnoughFundingException()
 
+
 @receiver(signals.pre_save, sender=UserReinvestment)
 def pre_save_user_reinvestment(**kwargs):
+    """
+    We cap the amount here by monthly allocation and funding goal itself
+    We'll pick the minimum. Any balance we'll keep for the next cycle
+    """
     instance = kwargs.get('instance')
     project = instance.project
 
-    total_left = project.reinvest_amount_left()
-    if total_left < instance.amount:
+    total_left = project.reinvest_amount_left
+    if total_left <= 0.0:
+        raise ProjectNotEligibleException()
+    if total_left < float(instance.amount):
         instance.amount = total_left
         project.disable_reinvestment()
 
@@ -238,9 +261,6 @@ def post_save_user_reinvestment(**kwargs):
     if not kwargs.get('created'):
         return
     instance = kwargs.get('instance')
-
-    instance.user.reinvest_pool -= instance.amount
-    instance.user.save()
     reinvestment = Payment(user=instance.user,
                            project=instance.project,
                            entrant=instance.user,

@@ -2,10 +2,35 @@
 {% load staticfiles %}
 
 {% block title %}Unsubscribe update newsletter{% endblock %}
+{% block head %}
 
+    <link rel="stylesheet" type="text/css" href="{% static "projects-list.css" %}">
+
+    <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/projects-list.js" %}"></script>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript" src="{% static "js/vendor/skrollr.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/skrollr.menu.min.js" %}"></script>
+    <script type="text/javascript">
+        var s = skrollr.init();
+
+        skrollr.menu.init(s, {
+            animate: true,
+            easing: 'sqrt'
+        });
+    </script>
+{% endblock %}
 
 
 {% block body %}
-<h2>You have succussfully unsubscribe from aou update newletter</h2>
+    <div class="divider-title "><h5>You have successfully unsubscribe from our update newletter</h5></div>
+    <div class="row about"><div class="about-inset"><!-- Call to action --></div></div>
 
 {% endblock %}
