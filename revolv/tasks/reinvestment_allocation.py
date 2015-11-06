@@ -1,4 +1,4 @@
-from revolv.project.models import Project, ProjectProperty
+from revolv.project.models import Project
 from revolv.payments.models import ProjectMontlyRepaymentConfig, AdminRepayment
 from revolv.base.models import RevolvUserProfile
 from revolv.settings import ADMIN_PAYMENT_USERNAME
@@ -22,7 +22,7 @@ def calculate_montly_reinvesment_allocation():
     This is how it do:
     1. Calculate money in out hand: balance + sum of incomming installment
     2. Calculate max money to re-allocate to each active project
-    3. Set the project reinvestment flag
+    3. Set project monthly_reinvestment_cap with above value
     4. Send email alert to user
     """
     logger.info('Calculate monthly allocation')
@@ -52,21 +52,15 @@ def calculate_montly_reinvesment_allocation():
 
     logger.info('Total reinvestment balance: %s' % reinvest_balance)
 
-    recipient = Project.objects.get_active()
-    logger.info('Total project active: %s' % recipient.count())
+    recipient = filter(lambda p: p.amount_left > 0.0, Project.objects.get_active())
 
-    fund_per_recipient = reinvest_balance / recipient.count()
+    logger.info('Total project active: %s' % len(recipient))
+
+    fund_per_recipient = reinvest_balance / len(recipient)
     logger.info('Fund allocated to each project: %s' % fund_per_recipient)
-    str_fund_per_recipient = str(fund_per_recipient)
     for project in recipient:
-        if project.amount_left <= 0.0:
-            logger.info("Project {0}-{1} can't receive reinvestment since "
-                        "already fullyu funded".format(project.id,project.title))
-            continue
-        ProjectProperty.objects.filter(project=project, name=ProjectProperty.REINVESTMENT_CAP).\
-            update(value=str_fund_per_recipient)
-        #enabled reinvestment flag
-        project.enable_reinvestment()
+        project.monthly_reinvestment_cap = fund_per_recipient
+        project.save()
     #wait for 30s and the send mail
     time.sleep(30)
 

@@ -93,20 +93,10 @@ class RepaymentFragmentFactories(object):
     base = RepaymentFragmentFactory
 
 
-class RepaymentFragmentFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = RepaymentFragment
-
-    user = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
-    project = factory.SubFactory("revolv.project.factories.ProjectFactory")
-    admin_repayment = factory.SubFactory(
-        "revolv.payments.factories.AdminRepaymentFactory",
-        project=factory.LazyAttribute(lambda l: Project.factories.completed.create()))
-    amount = 20.00
-    created_at = datetime.datetime.now()
-
-
 class UserReinvestmentFactory(factory.django.DjangoModelFactory):
+    """
+    Factory for default UserReinvestment.
+    """
     class Meta:
         model = UserReinvestment
 
@@ -117,6 +107,9 @@ class UserReinvestmentFactory(factory.django.DjangoModelFactory):
 
 
 class ProjectMontlyRepaymentConfigFactory(factory.django.DjangoModelFactory):
+    """
+    Factory for default ProjectMontlyRepaymentConfig.
+    """
     class Meta:
         model = ProjectMontlyRepaymentConfig
     project = factory.SubFactory("revolv.project.factories.ProjectFactory")

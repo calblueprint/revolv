@@ -278,7 +278,7 @@ class UserReinvestment(models.Model):
     reinvestment by user himself.
 
     User only can do reinvestment if he is on reinvestment period (usually before
-    date 15 on running month).
+    15th day of a running month).
 
     And An UserReinvestment cannot be created if there are insufficient funds.
 

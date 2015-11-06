@@ -54,10 +54,10 @@ small.field-error {
   .submit-button.gray {
     cursor: pointer;
     background-color: transparent;
-    color: #b3b3c0;
-    border: 1px solid #b3b3c0; }
+    color: #b3b4c0;
+    border: 1px solid #b3b4c0; }
     .submit-button.gray:hover {
-      background-color: #b3b3c0;
+      background-color: #b3b4c0;
       color: white;
       transition: background-color 0.2s;
       transition: color 0.1s;

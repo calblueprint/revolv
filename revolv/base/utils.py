@@ -32,4 +32,7 @@ def get_all_administrator_emails():
 
 
 def is_user_reinvestment_period():
+    """
+    :return: True if now is in user reinvestment period
+    """
     return True if datetime.datetime.now() < ADMIN_REINVESTMENT_DATE_DT else False

@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.http import require_http_methods
 from django.views.generic import FormView, TemplateView, View
 from django.template.context import RequestContext
 from revolv.base.forms import SignupForm
@@ -303,11 +304,19 @@ def password_reset_complete(request):
     return auth_views.password_reset_complete(request, template_name="base/auth/forgot_password_complete.html")
 
 @login_required
-def unsubscribe_update(request):
+@require_http_methods(['GET'])
+def unsubscribe(request, action):
     """
     View handle unsubscribe email update
     """
-    user_profile = request.user.revolvuserprofile
-    user_profile.subscribed_to_updates = False
-    user_profile.save()
-    return render_to_response('base/unsubscribe_update_success.html', context_instance=RequestContext(request) )
+    data = {}
+    if action and action.lower() == 'updates':
+        user_profile = request.user.revolvuserprofile
+        user_profile.subscribed_to_updates = False
+        user_profile.save()
+        data = {'msg': "You have successfully unsubscribed"}
+    else:
+        data = {'msg': 'Please specify which section you want to unsubscribe'}
+
+    return render_to_response('base/unsubscribe_update_success.html',
+                              context_instance=RequestContext(request, data))

@@ -1,6 +1,15 @@
 #!/bin/bash
 
 # Script to set up a Django project on Vagrant.
+
+cat >> /etc/apt/sources.list <<EOT
+deb http://www.rabbitmq.com/debian/ testing main
+EOT
+
+wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+apt-key add rabbitmq-signing-key-public.asc
+
+
 DATABASE_USERNAME="revolv"
 DATABASE_PASSWORD="revolv"
 DATABASE_NAME="revolv_db"
@@ -18,7 +27,7 @@ export LC_ALL=en_GB.UTF-8
 # Install essential packages from Apt
 apt-get update -y
 # Python dev packages
-apt-get install -y build-essential python python-dev
+apt-get install -y build-essential python python-dev rabbitmq-server
 # python-setuptools being installed manually
 wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python
 # Dependencies for image processing with Pillow (drop-in replacement for PIL)
@@ -70,3 +79,9 @@ cd /vagrant && npm install
 sudo npm install -g bower
 cd /vagrant && bower install --allow-root
 cd /vagrant && grunt sass
+
+# RabbitMQ
+sudo service rabbitmq-server restart
+sudo rabbitmqctl add_vhost revolv
+sudo rabbitmqctl add_user revolv revolv
+sudo rabbitmqctl set_permissions -p revolv revolv ".*" ".*" ".*"

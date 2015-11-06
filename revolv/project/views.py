@@ -228,7 +228,9 @@ class ProjectView(UserDataMixin, DetailView):
         context['donor_count'] = self.get_object().donors.count()
         context['project_donation_levels'] = self.get_object().donation_levels.order_by('amount')
         context["is_draft_mode"] = self.get_object().project_status == self.get_object().DRAFTED
-        if self.user_profile.reinvest_pool > 0.0 and self.get_object().is_eligible_for_reinvestment:
+        if self.user_profile and self.user_profile.reinvest_pool > 0.0 \
+                and self.get_object().monthly_reinvestment_cap > 0.0 \
+                and self.get_object().amount_left > 0.0:
             context["is_reinvestment"] = True
             context["reinvestment_amount"] = min(self.get_object().reinvest_amount_left,
                                                  self.user_profile.reinvest_pool)
@@ -293,11 +295,11 @@ class ProjectListReinvestmentView(UserDataMixin, TemplateView):
             else:
                 context["error_msg"] = "User reinvest period has been end for this month. " \
                                        "Please came back before date {0} in current month"\
-                    .format(settings.ADMIN_REINVESTMENT_DATE[0])
+                    .format(settings.ADMIN_REINVESTMENT_DATE['day'])
 
         else:
             active = Project.objects.get_eligible_projects_for_reinvestment()
-            context["active_projects"] = active
+            context["active_projects"] = filter(lambda p: p.amount_left > 0.0, active)
             if self.user_profile.reinvest_pool > 0.0:
                 context["reinvestment_amount"] = self.user_profile.reinvest_pool
             else:
@@ -317,12 +319,12 @@ def reinvest(request, pk):
         project = Project.objects.get(pk=pk)
     except (Project.DoesNotExist, Project.MultipleObjectsReturned):
         return HttpResponseBadRequest()
-    try:
-        UserReinvestment.objects.create(user=request.user.revolvuserprofile,
+    #try:
+    UserReinvestment.objects.create(user=request.user.revolvuserprofile,
                                         amount=amount,
                                         project=project)
-    except Exception:
-        return HttpResponseBadRequest()
+    # except Exception:
+    #     return HttpResponseBadRequest()
     res = {'amount_donated': project.amount_donated,
            'partial_completeness': project.partial_completeness_as_js(),
            'num_donors': project.donors.count()}

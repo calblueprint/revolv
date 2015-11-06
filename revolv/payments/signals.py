@@ -9,8 +9,6 @@ from revolv.payments.utils import (NotEnoughFundingException, NotInUserReinvestm
                                    ProjectNotCompleteException, NotInAdminReinvestmentPeriodException,
                                    ProjectNotEligibleException)
 
-from revolv.settings import USER_REINVESTMENT_DATE_DT
-
 
 @receiver(signals.pre_init, sender=AdminRepayment)
 def pre_init_admin_repayment(**kwargs):
@@ -165,13 +163,8 @@ def post_save_payment(**kwargs):
     instance.project.donors.add(instance.user)
     if instance.payment_type == PaymentType.objects.get_reinvestment_fragment():
         instance.user.reinvest_pool -= float(instance.amount)
+        instance.project.monthly_reinvestment_cap -= float(instance.amount)
         instance.user.save()
-    if is_user_reinvestment_period() and instance.project.is_eligible_for_reinvestment:
-        reinvested_amount = Payment.objects.total_project_reinvestment_from_date(
-            project=instance.project, from_date=USER_REINVESTMENT_DATE_DT)
-        if reinvested_amount >= instance.project.get_reinvestment_cap() or \
-                instance.project.amount_left <= 0.0:
-            instance.project.disable_reinvestment()
 
 
 @receiver(signals.pre_delete, sender=Payment)
@@ -188,14 +181,8 @@ def pre_delete_payment(**kwargs):
         instance.project.donors.remove(instance.user)
     if instance.payment_type == PaymentType.objects.get_reinvestment_fragment():
         instance.user.reinvest_pool += float(instance.amount)
+        instance.project.monthly_reinvestment_cap += float(instance.amount)
         instance.user.save()
-
-    if is_user_reinvestment_period() and not instance.project.is_eligible_for_reinvestment:
-        reinvested_amount = Payment.objects.total_project_reinvestment_from_date(
-            project=instance.project, from_date=USER_REINVESTMENT_DATE_DT)
-        if reinvested_amount < instance.project.get_reinvestment_cap() and \
-                instance.project.amount_left > 0.0:
-            instance.project.enable_reinvestment()
 
 
 @receiver(signals.post_delete, sender=Payment)
@@ -228,7 +215,7 @@ def pre_init_user_reinvestment(**kwargs):
     if not init_kwargs or not init_kwargs.get('user'):
         raise NotEnoughFundingException()
     user = init_kwargs['user']
-    if not user.reinvest_pool:
+    if user.reinvest_pool < 0.0:
         raise NotEnoughFundingException()
 
 
@@ -246,7 +233,8 @@ def pre_save_user_reinvestment(**kwargs):
         raise ProjectNotEligibleException()
     if total_left < float(instance.amount):
         instance.amount = total_left
-        project.disable_reinvestment()
+    if instance.user.reinvest_pool < float(instance.amount):
+        raise NotEnoughFundingException()
 
 
 @receiver(signals.post_save, sender=UserReinvestment)

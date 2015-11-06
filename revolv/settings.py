@@ -168,9 +168,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'revlov2',
-        'USER': 'deedee',
-        'PASSWORD': 'syefria',
+        'NAME': 'revolv_db',
+        'USER': 'revolv',
+        'PASSWORD': 'revolv',
         'HOST': '127.0.0.1',
         'PORT': '',
     }
@@ -296,17 +296,13 @@ else:
 #username admin will assign when automatic reinvest task run
 ADMIN_PAYMENT_USERNAME = 'administrator'
 #date of the month when user can execute reinvest
-USER_REINVESTMENT_DATE = {'day': 1, 'hour': 0, 'minute': 0}
+USER_REINVESTMENT_DATE = {'day': 1, 'hour': 00, 'minute': 00}
 #date of the month when automatic reinvest execute
-ADMIN_REINVESTMENT_DATE = {'day': 15, 'hour': 0, 'minute': 0}
+ADMIN_REINVESTMENT_DATE = {'day': 15, 'hour': 00, 'minute': 00}
 
 now = datetime.now()
 #Datetime object when automatic reinvest run, we need to increase a little to prevent overlap with user reinvestment
-ADMIN_REINVESTMENT_DATE_DT = datetime(now.year, now.month,
-                                      ADMIN_REINVESTMENT_DATE['day'],
-                                      ADMIN_REINVESTMENT_DATE['hour'],
-                                      ADMIN_REINVESTMENT_DATE['minute'])
-USER_REINVESTMENT_DATE_DT = datetime(now.year, now.month, **USER_REINVESTMENT_DATE)
+ADMIN_REINVESTMENT_DATE_DT = datetime(now.year, now.month, **ADMIN_REINVESTMENT_DATE)
 
 # The backend used to store task results - because we're going to be
 # using RabbitMQ as a broker, this sends results back as AMQP messages
