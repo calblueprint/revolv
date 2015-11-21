@@ -279,7 +279,8 @@ class SubmitDonationView(UserDataMixin, FormView):
 
 
 class ProjectListReinvestmentView(UserDataMixin, TemplateView):
-    """ View List Project that eligible to receive reivestment
+    """
+    View List Project that are eligible to receive reinvestment funds.
     """
     template_name = 'base/projects-list.html'
 
@@ -289,13 +290,12 @@ class ProjectListReinvestmentView(UserDataMixin, TemplateView):
         if not is_user_reinvestment_period():
             if self.user_profile.reinvest_pool > 0.0:
                     context["error_msg"] = "You have ${0} to reinvest, " \
-                                           "but user reinvest period has been end for this month. " \
-                                           "Please came back before date {1} in current month"\
-                        .format(self.user_profile.reinvest_pool, settings.ADMIN_REINVESTMENT_DATE['day'])
+                                           "but the reinvestment period has ended for this month. " \
+                                           "Please come back next month!" \
+                        .format(self.user_profile.reinvest_pool)
             else:
-                context["error_msg"] = "User reinvest period has been end for this month. " \
-                                       "Please came back before date {0} in current month"\
-                    .format(settings.ADMIN_REINVESTMENT_DATE['day'])
+                context["error_msg"] = "The reinvestment period has ended for this month. " \
+                                       "Please come back next month!"
 
         else:
             active = Project.objects.get_eligible_projects_for_reinvestment()
@@ -303,7 +303,7 @@ class ProjectListReinvestmentView(UserDataMixin, TemplateView):
             if self.user_profile.reinvest_pool > 0.0:
                 context["reinvestment_amount"] = self.user_profile.reinvest_pool
             else:
-                context["error_msg"] = "You don't have fund to reinvest"
+                context["error_msg"] = "You don't have funds to reinvest."
         return context
 
 
@@ -319,12 +319,10 @@ def reinvest(request, pk):
         project = Project.objects.get(pk=pk)
     except (Project.DoesNotExist, Project.MultipleObjectsReturned):
         return HttpResponseBadRequest()
-    #try:
+
     UserReinvestment.objects.create(user=request.user.revolvuserprofile,
                                         amount=amount,
                                         project=project)
-    # except Exception:
-    #     return HttpResponseBadRequest()
     res = {'amount_donated': project.amount_donated,
            'partial_completeness': project.partial_completeness_as_js(),
            'num_donors': project.donors.count()}
