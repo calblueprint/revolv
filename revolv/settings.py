@@ -18,7 +18,7 @@ from celery.schedules import crontab
 # If you'd like to possibly receive error status emails, add yourself
 # to this list:
 ADMINS = (
-    ("Noah Gilmore", "noah.w.gilmore@gmail.com"),
+    #("Noah Gilmore", "noah.w.gilmore@gmail.com"),
     ("Philip Neustrom", "philipn+revolv@gmail.com"),
 )
 
@@ -283,7 +283,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 if IS_PROD:
     ALLOWED_HOSTS = ["revolv-prod.herokuapp.com", ".re-volv.org"]
 elif IS_STAGE:
-    ALLOWED_HOSTS = ["revolv-stage.herokuapp.com"]
+    ALLOWED_HOSTS = ["revolv-stage.herokuapp.com", "revolv-test-site.herokuapp.com"]
 else:
     ALLOWED_HOSTS = ['*']
 
