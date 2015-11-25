@@ -4,11 +4,10 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import views as auth_views
-from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -21,9 +20,10 @@ from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
 from revolv.project.models import Category, Project
 from revolv.project.utils import aggregate_stats
+from revolv.tasks.sfdc import send_signup_info
 
 from social.apps.django_app.default.models import UserSocialAuth
-from social.actions import do_disconnect
+
 
 class HomePageView(UserDataMixin, TemplateView):
     """
@@ -235,8 +235,11 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
 
     def form_valid(self, form):
         form.save()
+        u = form.ensure_authenticated_user()
+        name = u.revolvuserprofile.get_full_name()
+        send_signup_info.delay(name, u.email, u.revolvuserprofile.address)
         # log in the newly created user model. if there is a problem, error
-        auth_login(self.request, form.ensure_authenticated_user())
+        auth_login(self.request, u)
         messages.success(self.request, 'Signed up successfully!')
         return redirect("home")
 

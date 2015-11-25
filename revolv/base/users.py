@@ -5,7 +5,9 @@ from django.http import Http404
 from django.shortcuts import redirect
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_profile
+from revolv.tasks.sfdc import send_signup_info
 
+from social.pipeline.user import create_user
 from social.apps.django_app.middleware import SocialAuthExceptionMiddleware
 
 
@@ -123,7 +125,27 @@ def get_username_from_social(strategy, details, user=None, *args, **kwargs):
     return {'username': username}
 
 
+def create_user_revolv(strategy, details, user=None, **kwargs):
+    """
+    Custom psa pipeline to serve create user
+
+    :param strategy:
+    :param details:
+    :param user:
+    :param kwargs:
+    :return:
+    """
+    user = create_user(strategy, details, user, kwargs)
+    if user['is_new']:
+        _user = user['user']
+        send_signup_info.delay(_user.revolvuserprofile.get_full_name(), _user.email)
+    return user
+
+
 class RevolvSocialAuthExceptionMiddleware(SocialAuthExceptionMiddleware):
+    """
+    Custom Exception for social
+    """
     def get_redirect_uri(self, request, exception):
         message = self.get_message(request, exception)
         request.session['has_social_exception'] = True

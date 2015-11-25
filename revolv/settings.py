@@ -381,7 +381,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_user',
     'revolv.base.users.get_username_from_social',
     'social.pipeline.social_auth.associate_by_email',
-    'social.pipeline.user.create_user',
+    'revolv.base.users.create_user_revolv',
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details'
@@ -408,6 +408,14 @@ SOCIAL_AUTH_LOGIN_ERROR_URL = '/social_connect_failed/'
 SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email', 'first_name', 'last_name']
 
 SHARETHIS_PUBLISHER_ID = os.environ.get('SHARETHIS_PUBLISHER_ID')
+
+#Salesforce
+SFDC_ACCOUNT = os.environ.get('SFDC_ACCOUNT')
+SFDC_PASSWORD = os.environ.get('SFDC_PASSWORD')
+SFDC_TOKEN = os.environ.get('SFDC_TOKEN')
+
+SFDC_REVOLV_SIGNUP = 'login'
+SFDC_REVOLV_DONATION = 'donation'
 
 # Used for error logging. See https://docs.djangoproject.com/en/1.7/topics/logging
 LOGGING = {
