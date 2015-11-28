@@ -46,6 +46,26 @@ If *using* vagrant:
 5. `python vmanage.py runserver`
 6. `python vmanage.py seed`
 
+Additional Environment Variables
+--------------------------------
+There are some additional environment variables need to be configured. See `revolv_bash_profile.example`.
+They are all about third-party service integration like social login integration.
+
+Variable | Description
+------- | -----------
+**SOCIAL_AUTH_FACEBOOK_KEY** | Facebook App ID
+**SOCIAL_AUTH_FACEBOOK_SECRET** | Facebook App Secret
+**SOCIAL_AUTH_GOOGLE_OAUTH2_KEY** | Google Oauth2 Client ID
+**SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET** | Google Oauth2 Client Secret
+**SHARETHIS_PUBLISHER_ID** | ShareThis Publisher ID
+**SFDC_ACCOUNT** | Salesforce username
+**SFDC_PASSWORD** | Salesforce password
+**SFDC_TOKEN** | Salesforce Security Token
+
+Just copy `revolv_bash_profile.example` to `.revolv_bash_profile`, and make change to that file. If *not*
+using vagrant execute `source .revolv_bash_profile` before running `python manage.py runserver`
+
+
 Development
 -----------
 1. Running `grunt watch` will start a process which will watch for changes to specific SCSS files (defined in `Gruntfile`) and will autocompile them to CSS.
