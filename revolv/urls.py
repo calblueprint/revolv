@@ -1,6 +1,7 @@
 from django.conf.urls import include, patterns, url
 from django.conf import settings
 from django.contrib import admin
+from django.conf.urls.static import static
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
@@ -27,6 +28,9 @@ urlpatterns = patterns(
     url(r'^login/$', base_views.LoginView.as_view(), name='login'),
     url(r'^signup/$', base_views.SignupView.as_view(), name='signup'),
     url(r'^logout/$', base_views.LogoutView.as_view(), name='logout'),
+    url(r'^unsubscribe/(?P<action>\w+)/$', 'revolv.base.views.unsubscribe', name='unsubscribe'),
+    url(r'^my_social_account/$', 'revolv.base.views.social_connection', name='social-connection'),
+    url(r'^social_connect_failed/$', 'revolv.base.views.social_exception', name='social-exception'),
 
     url(r'^password_reset/$', base_views.password_reset_initial, name="password_reset"),
     url(r'^password_reset/done/$', base_views.password_reset_done, name="password_reset_done"),
@@ -38,11 +42,13 @@ urlpatterns = patterns(
     # note: we're not including the search module for public users, so we don't define it here
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-
+    url(r'social/', include('social.apps.django_app.urls', namespace='social')),
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's serving mechanism
+
     url(r'', include(wagtail_urls)),
+
 )
 
 if settings.MEDIA_SERVE_LOCALLY:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

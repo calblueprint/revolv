@@ -1,6 +1,4 @@
 $(function() {
-
-
 if (!String.prototype.format) {
     /**
      * Python style string formatting for Javascript Strings.
@@ -295,11 +293,25 @@ var populateConfirmModal = function(formValues) {
 
     $('span.confirm-info-amount').text('{0} USD'.format(
         formValues['donation-amount']));
+    $('#share-modal #sharethis-button').remove();
+    $('#share-modal .sharethis-placeholder').append('<span id="sharethis-button"></span>');
+    stWidget.addEntry({
+                 "service":"sharethis",
+                 "element":document.getElementById('sharethis-button'),
+                 "url":document.URL,
+                 "title":$('p.project-title').text(),
+                 "type":"large",
+                 "text":"ShareThis" ,
+                 "image":$('meta[property="og:image"]').attr("content"),
+                 "summary":"I just donated {0} to RE-volv in support of clean energy! Join me!".format(
+                            formValues['donation-amount'])
+         });
 };
 var confirmModalButtons = [
     $('button.donation-submit'),
     $('button.donation-change'),
-    $('button.cancel-confirm')
+    $('button.cancel-confirm'),
+    $('button.submit-button')
 ];
 var paymentSpinner = new Spinner();
 $('button.donation-continue').click(function(e) {
@@ -373,7 +385,7 @@ $('#donate-form').submit(function(e) {
     }, {
         'name': 'amount',
         'value': formValues['donation-amount'].slice(2)
-    },
+    }
     ];
 
     var formURL = form.attr('action');
@@ -416,6 +428,14 @@ $(document).on('closed.fndtn.reveal', '#success-modal', function() {
     $('#success-modal').find('label.checkmark').removeClass('animate');
 });
 
+$(document).on('opened.fndtn.reveal', '#success-reinvest-modal', function() {
+    setTimeout(function() {
+        $('#success-reinvest-modal').find('label.checkmark').addClass('animate');
+    }, 200);
+});
+$(document).on('closed.fndtn.reveal', '#success-reinvest-modal', function() {
+    $('#success-reinvest-modal').find('label.checkmark').removeClass('animate');
+});
 // Hack to close modal on modal-table click
 // (i.e., when the dimmed background is clicked)
 $('.revolv-reveal-modal-table').click(function (e) {
@@ -424,5 +444,67 @@ $('.revolv-reveal-modal-table').click(function (e) {
         $(document).foundation('reveal', 'close');
     }
 });
+
+
+$('#reinvest-modal .close-revolv-reveal-modal').click(function(e){
+    $('#reinvest-modal').foundation('reveal','close');
+});
+$('#reinvest-modal .reinvest-continue').click(function(e){
+    e.preventDefault();
+    $.each(confirmModalButtons, function (i, btn) {
+        btn.prop('disabled', true);
+    });
+    paymentSpinner.spin();
+    $('#reinvest-modal').append(paymentSpinner.el);
+
+    //Maybe it's not cool, but it woks!! just use csrftoken use on donate paypal for:)
+    //instead setting up ajax header
+    var formValues = getDonateFormValues();
+    data = {'csrfmiddlewaretoken': formValues['csrfmiddlewaretoken'], 'amount': reinvestment_amount}
+    $.post(reinvestment_url, data
+        ).done(function(data) {
+            var p = data.project;
+            $('p.amount-donated').text('$' + p.amount_donated + ' donated');
+            $('p.percentage-text').text(Math.round(p.partial_completeness * 100) + '%');
+            $('p.num-donors').text(p.num_donors + ' donors');
+            $('#reinvest-button').hide();
+            $('#donate-button').show();
+            $('#success-reinvest-modal').foundation('reveal', 'open');
+        }).fail(function(jqXHR) {
+            $modelError = $('#reinvest-modal').find('.modal-errors')
+            $modelError.addClass('error');
+            $modelError.children('.error-msg')
+                .text('Error while processing your request, try again later');
+            setTimeout(function() {
+                $modelError.removeClass('error');
+                $('#reinvest-modal').foundation('reveal', 'close');
+            }, 1500);
+        }).always(function () {
+            paymentSpinner.stop();
+            // timeout is for cosmetic purposes only; buttons flicker and look
+            // weird without it, due to animation overlap
+            setTimeout(function() {
+                $.each(confirmModalButtons, function (i, btn) {
+                    btn.prop('disabled', false);
+                });
+            }, 500);
+
+        });
+    return false;
+});
+$('#success-reinvest-modal .reinvest-donate').click(function(){
+   $('#donate-modal').foundation('reveal', 'open');
+});
+$('#success-modal .submit-button').click(function(){
+    $('#share-modal').foundation('reveal', 'open');
+})
+});
+
+$(document).ready(function(){
+    if (!is_reinvestment){
+        $('#reinvest-button').hide();
+    }else{
+        $('#donate-button').hide();
+    }
 
 });

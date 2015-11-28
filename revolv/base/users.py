@@ -5,6 +5,10 @@ from django.http import Http404
 from django.shortcuts import redirect
 from revolv.base.models import RevolvUserProfile
 from revolv.base.utils import get_profile
+from revolv.tasks.sfdc import send_signup_info
+
+from social.pipeline.user import create_user
+from social.apps.django_app.middleware import SocialAuthExceptionMiddleware
 
 
 def is_ambassador(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
@@ -97,3 +101,53 @@ class UserDataMixin(object):
         context['is_ambassador'] = self.is_ambassador
         context['is_administrator'] = self.is_administrator
         return context
+
+
+def get_username_from_social(strategy, details, user=None, *args, **kwargs):
+    """
+    Custom Social Auth pipeline to get username from email social account.
+    First get username from email's user (without domain). If that name already been taken
+    we'll use full email as username
+    """
+    USER_FIELDS = ['username', 'email']
+    if 'username' not in strategy.setting('USER_FIELDS', USER_FIELDS):
+        return
+
+    storage = strategy.storage
+
+    if not user:
+        username, _ = details['email'].split('@')
+        if storage.user.user_exists(username=username):
+            username = details['email']
+    else:
+        username = storage.user.get_username(user)
+    print {'username': username, 'details': details}
+    return {'username': username}
+
+
+def create_user_revolv(strategy, details, user=None, **kwargs):
+    """
+    Custom psa pipeline to serve create user
+
+    :param strategy:
+    :param details:
+    :param user:
+    :param kwargs:
+    :return:
+    """
+    user = create_user(strategy, details, user, kwargs)
+    if user['is_new']:
+        _user = user['user']
+        send_signup_info.delay(_user.revolvuserprofile.get_full_name(), _user.email)
+    return user
+
+
+class RevolvSocialAuthExceptionMiddleware(SocialAuthExceptionMiddleware):
+    """
+    Custom Exception for social
+    """
+    def get_redirect_uri(self, request, exception):
+        message = self.get_message(request, exception)
+        request.session['has_social_exception'] = True
+        url = super(RevolvSocialAuthExceptionMiddleware, self).get_redirect_uri(request, exception)
+        return '{0}?message={1}'.format(url, message)

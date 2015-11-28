@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 from revolv.base.models import RevolvUserProfile
-from revolv.payments.models import Payment
+from revolv.payments.models import Payment, ProjectMontlyRepaymentConfig
 from revolv.project.models import Project
 from revolv.revolv_cms.models import RevolvCustomPage, RevolvLinkPage
 from wagtail.wagtailcore.models import Page, Site
@@ -40,10 +40,10 @@ class RevolvUserProfileSeedSpec(SeedSpec):
     """
     The database seed specification for revolv.base.models.RevolvUserProfile.
 
-    Creates three users: one donor, one ambassador, and one administrator. Logins are
-    donor/password, ambassador/password, administrator/password respectively.
+    Creates 7 users: 5 donor, one ambassador, and one administrator. Logins are
+    donorX/password, ambassador/password, administrator/password respectively.
     """
-    usernames_to_clear = ["donor", "ambassador", "administrator"]
+    usernames_to_clear = []
 
     def seed(self, quiet=False):
         RevolvUserProfile.objects.create_user(
@@ -53,6 +53,35 @@ class RevolvUserProfileSeedSpec(SeedSpec):
             last_name="Donor",
             password="password"
         )
+        RevolvUserProfile.objects.create_user(
+            username="donor2",
+            email="donor2@re-volv.org",
+            first_name="Joe2",
+            last_name="Donor2",
+            password="password"
+        )
+        RevolvUserProfile.objects.create_user(
+            username="donor3",
+            email="donor3@re-volv.org",
+            first_name="Joe3",
+            last_name="Donor3",
+            password="password"
+        )
+        RevolvUserProfile.objects.create_user(
+            username="donor4",
+            email="donor4@re-volv.org",
+            first_name="Joe4",
+            last_name="Donor4",
+            password="password"
+        )
+        RevolvUserProfile.objects.create_user(
+            username="donor5",
+            email="donor5@re-volv.org",
+            first_name="Joe5",
+            last_name="Donor5",
+            password="password"
+        )
+
         RevolvUserProfile.objects.create_user_as_ambassador(
             username="ambassador",
             email="ambassador@re-volv.org",
@@ -69,22 +98,25 @@ class RevolvUserProfileSeedSpec(SeedSpec):
         )
 
     def clear(self, quiet=False):
-        for username in self.usernames_to_clear:
-            try:
-                user = User.objects.get(username=username)
-                RevolvUserProfile.objects.get(user=user).delete()
-                user.delete()
-            except User.DoesNotExist as e:
-                if not quiet:
-                    print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+        if self.usernames_to_clear:
+            for username in self.usernames_to_clear:
+                try:
+                    user = User.objects.get(username=username)
+                    RevolvUserProfile.objects.get(user=user).delete()
+                    user.delete()
+                except User.DoesNotExist as e:
+                    if not quiet:
+                        print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))
+        else:
+            RevolvUserProfile.objects.all().delete()
+            User.objects.all().delete()
 
 
 class ProjectSeedSpec(SeedSpec):
     """
     Database seed specification for revolv.project.models.Project
 
-    Creates 4 projects with various settings: Comoonity Dairy, Community Dance Studio,
-    Educathing, and Fire Emblem.
+    Creates 3 completed projects, 3 active projects, and 1 draft
 
     TODO: Make this spec create projects that mirror the projects that RE-volv has already
     completed.
@@ -111,6 +143,53 @@ class ProjectSeedSpec(SeedSpec):
         "org_about": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n",
         "internal_rate_return": 7.8
     }
+
+    studio2 = {
+        "funding_goal": 14000.0,
+        "title": "Power Community Dance Studio 2",
+        "tagline": "Dance forever, dance until dawn. 2",
+        "video_url": "https://www.youtube.com/watch?v=fzShzO2pk-E",
+        "solar_url": "http://home.solarlog-web.net/1445.html",
+        "org_name": "The Community Dance Studio 2",
+        "impact_power": 11.0,
+        "actual_energy": 0.0,
+        "location": "2415 Bowditch St, Berkeley, CA 94704, United States",
+        "location_latitude": 37.8670289,
+        "location_longitude": -122.2561597,
+        "start_date": datetime.date(2014, 1, 1),
+        # community dance studio is in progress, two months til deadline
+        "end_date": datetime.date.today() + datetime.timedelta(weeks=7),
+        "cover_photo": "covers/box.jpg",
+        "org_start_date": datetime.date(1995, 10, 9),
+        "mission_statement": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n",
+        "org_about": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n",
+        "internal_rate_return": 7.8
+    }
+
+    studio3 = {
+        "funding_goal": 10000.0,
+        "title": "Power Community Dance Studio 3",
+        "tagline": "Dance forever, dance until dawn. 3",
+        "video_url": "https://www.youtube.com/watch?v=fzShzO2pk-E",
+        "solar_url": "http://home.solarlog-web.net/1445.html",
+        "org_name": "The Community Dance Studio 3",
+        "impact_power": 11.0,
+        "actual_energy": 0.0,
+        "location": "2415 Bowditch St, Berkeley, CA 94704, United States",
+        "location_latitude": 37.8670289,
+        "location_longitude": -122.2561597,
+        "start_date": datetime.date(2014, 1, 1),
+        # community dance studio is in progress, two months til deadline
+        "end_date": datetime.date.today() + datetime.timedelta(weeks=7),
+        "cover_photo": "covers/box.jpg",
+        "org_start_date": datetime.date(1995, 10, 9),
+        "mission_statement": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n",
+        "org_about": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n",
+        "internal_rate_return": 7.8
+    }
+
     dairy = {
         "funding_goal": 14000.00,
         "title": "Power for Comoonity Dairy",
@@ -130,6 +209,48 @@ class ProjectSeedSpec(SeedSpec):
         "mission_statement": "With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",
         "description": "With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",
         "org_about": "The idea that companies should prioritize phones and tablets over old-school PCs isn't new, and companies like Google claim to have been doing it for years. But what they're finally realizing is that mobile-first means more than just making a finely polished app for touch screens. User behavior isn't the same on phones as it is on PCs, which means the app itself must be fundamentally different.\r\n\r\nMicrosoft's Sway, for instance, throws out most of the robust tools that PowerPoint offers, and instead focuses on letting people throw things together quickly, even on a smartphone. It's sort of like using templates in PowerPoint, except that each slide can adapt to the amount of photos and text you put in it, and will format itself automatically for any screen size.",
+        "internal_rate_return": 7.5,
+    }
+    dairy2 = {
+        "funding_goal": 20000.00,
+        "title": "Music rulezz",
+        "tagline": "Some say that music is power.",
+        "video_url": "https://www.youtube.com/watch?v=JtA8gqWA6PE",
+        "solar_url": "http://home.solarlog-web.net/1445.html",
+        "org_name": "Indie",
+        "impact_power": 15.0,
+        "actual_energy": 0.0,
+        "location": "1238 10th Street, Berkeley, CA, United States",
+        "location_latitude": 37.88968940000000,
+        "location_longitude": -122.30289330000000,
+        "start_date": datetime.date(2014, 1, 1),
+        "end_date": datetime.date(2015, 1, 1),  # this project is already complete
+        "cover_photo": "covers/Dairy-Products-vitamin-D-foods.jpg",
+        "org_start_date": datetime.date(1990, 10, 9),
+        "mission_statement": "Copy from Diary: With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",
+        "description": "Copy from Diary: With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",
+        "org_about": "Copy from Diary: The idea that companies should prioritize phones and tablets over old-school PCs isn't new, and companies like Google claim to have been doing it for years. But what they're finally realizing is that mobile-first means more than just making a finely polished app for touch screens. User behavior isn't the same on phones as it is on PCs, which means the app itself must be fundamentally different.\r\n\r\nMicrosoft's Sway, for instance, throws out most of the robust tools that PowerPoint offers, and instead focuses on letting people throw things together quickly, even on a smartphone. It's sort of like using templates in PowerPoint, except that each slide can adapt to the amount of photos and text you put in it, and will format itself automatically for any screen size.",
+        "internal_rate_return": 7.5,
+    }
+    dairy3 = {
+        "funding_goal": 10000.00,
+        "title": "Karate kid",
+        "tagline": "I'll kick you.",
+        "video_url": "https://www.youtube.com/watch?v=JtA8gqWA6PE",
+        "solar_url": "http://home.solarlog-web.net/1445.html",
+        "org_name": "Karate Inc",
+        "impact_power": 19.0,
+        "actual_energy": 0.0,
+        "location": "1238 11th Street, Berkeley, CA, United States",
+        "location_latitude": 37.88868940000000,
+        "location_longitude": -122.30289330000000,
+        "start_date": datetime.date(2014, 1, 1),
+        "end_date": datetime.date(2015, 1, 1),  # this project is already complete
+        "cover_photo": "covers/Dairy-Products-vitamin-D-foods.jpg",
+        "org_start_date": datetime.date(1970, 10, 9),
+        "mission_statement": "Copy from Diary 2: With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",
+        "description": "Copy from Diary 2 : With Paper, Facebook has effectively rebooted its core News Feed product on the iPhone. Although Paper is built largely around the same photos and status updates you get from Facebook's main app, it doesn't feel like something that was merely retrofitted to the phone. It emphasizes large photos and swipe gestures, and lets you add general news sections for when you need a break from your friends. It could easily stand in for the main Facebook experience, even if it doesn't have all the same features.\r\n\r\nFacebook isn't alone. Last week, Google announced Inbox, which is built around Gmail but with a different approach to displaying and handling messages. Instead of showing every email in reverse-chronological order, Inbox intelligently sorts messages into groups like \u201cTravel\u201d and \u201cPurchases,\u201d and in a nod to Dropbox's Mailbox, lets you snooze or pin important emails for later.",
+        "org_about": "Copy from Diary 2: The idea that companies should prioritize phones and tablets over old-school PCs isn't new, and companies like Google claim to have been doing it for years. But what they're finally realizing is that mobile-first means more than just making a finely polished app for touch screens. User behavior isn't the same on phones as it is on PCs, which means the app itself must be fundamentally different.\r\n\r\nMicrosoft's Sway, for instance, throws out most of the robust tools that PowerPoint offers, and instead focuses on letting people throw things together quickly, even on a smartphone. It's sort of like using templates in PowerPoint, except that each slide can adapt to the amount of photos and text you put in it, and will format itself automatically for any screen size.",
         "internal_rate_return": 7.5,
     }
     educathing = {
@@ -172,14 +293,31 @@ class ProjectSeedSpec(SeedSpec):
         "org_about": "Embark with our heroes on a quest to save the world!",
         "internal_rate_return": 7.0,
     }
-    projects_to_clear = [studio, dairy, educathing, emblem]
+    projects_to_clear = [studio, studio2, studio3, dairy, dairy2, dairy3, educathing, emblem]
 
     def seed(self, quiet=False):
         ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
         Project.factories.active.create(ambassador=ambassador, **self.studio)
-        Project.factories.completed.create(ambassador=ambassador, **self.dairy)
+        Project.factories.active.create(ambassador=ambassador, **self.studio2)
+        Project.factories.active.create(ambassador=ambassador, **self.studio3)
+        p_complete1 = Project.factories.completed.create(ambassador=ambassador, **self.dairy)
+        p_complete2 = Project.factories.completed.create(ambassador=ambassador, **self.dairy2)
+        p_complete3 = Project.factories.completed.create(ambassador=ambassador, **self.dairy3)
         Project.factories.proposed.create(ambassador=ambassador, **self.educathing)
         Project.factories.drafted.create(**self.emblem)
+
+        ProjectMontlyRepaymentConfig.objects.create(project=p_complete1,
+                                                           year=2015, repayment_type='SSF',
+                                                           amount=150)
+        ProjectMontlyRepaymentConfig.objects.create(project=p_complete2,
+                                                           year=2015, repayment_type='SSF',
+                                                           amount=200)
+        ProjectMontlyRepaymentConfig.objects.create(project=p_complete3,
+                                                           year=2015, repayment_type='SSF',
+                                                           amount=100)
+        p_complete1.paid_off()
+        p_complete2.paid_off()
+        p_complete3.paid_off()
 
     def clear(self, quiet=False):
         for project in self.projects_to_clear:
@@ -194,31 +332,43 @@ class PaymentSeedSpec(SeedSpec):
     """
     Database seed specification for revolv.payments.models.Payment.
 
-    Makes 6 dummy payments. For details, see the seed() method.
+    Makes 8 dummy payments. For details, see the seed() method.
     """
 
     def seed(self, quiet=False):
         donor = RevolvUserProfile.objects.get(user__username="donor")
-        ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
-        administrator = RevolvUserProfile.objects.get(user__username="administrator")
+        donor2 = RevolvUserProfile.objects.get(user__username="donor2")
+        donor3 = RevolvUserProfile.objects.get(user__username="donor3")
+        donor4 = RevolvUserProfile.objects.get(user__username="donor4")
         studio = Project.objects.get(tagline=ProjectSeedSpec.studio["tagline"])
+        studio2 = Project.objects.get(tagline=ProjectSeedSpec.studio2["tagline"])
         dairy = Project.objects.get(tagline=ProjectSeedSpec.dairy["tagline"])
+        dairy2 = Project.objects.get(tagline=ProjectSeedSpec.dairy2["tagline"])
+        dairy3 = Project.objects.get(tagline=ProjectSeedSpec.dairy3["tagline"])
 
-        Payment.factories.base.create(project=studio, user=donor, entrant=donor, amount=50.0)
-        Payment.factories.base.create(project=dairy, user=donor, entrant=administrator, amount=50.0)
-        Payment.factories.base.create(project=studio, user=donor, entrant=administrator, amount=50.0)
-        Payment.factories.base.create(project=studio, user=donor, entrant=administrator, amount=50.0)
-        Payment.factories.base.create(project=dairy, user=administrator, entrant=administrator, amount=50.0)
-        Payment.factories.base.create(project=studio, user=ambassador, entrant=ambassador, amount=50.0)
+        Payment.factories.base.create(project=dairy, user=donor, entrant=donor, amount=0.3 * float(dairy.funding_goal))
+        Payment.factories.base.create(project=dairy, user=donor2, entrant=donor2, amount=0.7 * float(dairy.funding_goal))
+
+        Payment.factories.base.create(project=dairy2, user=donor2, entrant=donor2, amount=0.3 * float(dairy2.funding_goal))
+        Payment.factories.base.create(project=dairy2, user=donor3, entrant=donor3, amount=0.7 * float(dairy2.funding_goal))
+
+        Payment.factories.base.create(project=dairy3, user=donor3, entrant=donor3, amount=0.3 * float(dairy3.funding_goal))
+        Payment.factories.base.create(project=dairy3, user=donor4, entrant=donor4, amount=0.7 * float(dairy3.funding_goal))
+
+        Payment.factories.base.create(project=studio, user=donor, entrant=donor, amount=11910.0)
+        Payment.factories.base.create(project=studio2, user=donor3, entrant=donor3, amount=500.0)
 
     def clear(self, quiet=False):
         try:
             donor = RevolvUserProfile.objects.get(user__username="donor")
-            ambassador = RevolvUserProfile.objects.get(user__username="ambassador")
-            administrator = RevolvUserProfile.objects.get(user__username="administrator")
+            donor2 = RevolvUserProfile.objects.get(user__username="donor2")
+            donor3 = RevolvUserProfile.objects.get(user__username="donor3")
+            donor4 = RevolvUserProfile.objects.get(user__username="donor4")
+
             Payment.objects.payments(user=donor).delete()
-            Payment.objects.payments(user=ambassador).delete()
-            Payment.objects.payments(user=administrator).delete()
+            Payment.objects.payments(user=donor2).delete()
+            Payment.objects.payments(user=donor3).delete()
+            Payment.objects.payments(user=donor4).delete()
         except RevolvUserProfile.DoesNotExist as e:
             if not quiet:
                 print "[Seed:Warning] Error in %s when trying to clear: %s" % (self.__class__.__name__, str(e))

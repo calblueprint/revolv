@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% extends "base/projects-list.html" %}
+{% load sekizai_tags %}
+{% load staticfiles %}
 {% comment %}
     Dashboard
 
@@ -9,32 +11,26 @@
     includes many different partials conditionally based on the projects and the logged in user.
 
 {% endcomment %}
-{% load sekizai_tags %}
-{% load staticfiles %}
-<html>
-<head>
-    <title>{% block title %}{% endblock %}RE-volv Dashboard</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block meta %}
-    {% endblock %}
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css" />
-    <link rel="stylesheet" href="{% static "dashboard.css" %}" />
-    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-    {% render_block "css" %}
+{% block title %}Dashboard - {% endblock %}
+{% block head %}
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "projects-list.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}">
+    <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base/projects-list.js" %}"></script>
 
-    {% block head %}
-    {% endblock %}
-</head>
-
-<body>
+{% endblock %}
+{% block body %}
     <div class='row main-row'>
+    {% if role == 'ambassador' or role == 'admin' %}
         <div class="small-3 large-2 columns dashboard-sidebar">
             {% include "base/partials/dashboard_sidebar.html" with user=user %}
         </div>
+    {% endif %}
         {% if donor_has_no_donated_projects %}
             <div class="large-10 medium-9 columns no-donations dashboard-data-section dashboard-data-section-current">
                 <h2>Thanks for signing up with RE-volv! Looks like you haven't supported any solar projects yet.</h2>
@@ -53,22 +49,16 @@
             {% endwith %}
         {% endfor %}
         <div class="small-12 large-10 medium-9 columns dashboard-data-section dashboard-data-section-my-impact dashboard-data-section-current">
-            <div class="large-7 columns my-impact-container">
+            <div class="large-10 columns my-impact-container">
                 {% include "base/partials/impact_statistics.html" with statistics=statistics user=user donated_projecs=donated_projects %}
-            </div>
-            <div class="large-5 columns category-preferences-container">
-                {% include "base/partials/category_preferences.html" with preferred_categories=preferred_categories categories=categories %}
             </div>
         </div>
     </div>
 
-    {% block body %}
-    {% endblock %}
 
     {% block body-bottom %}
     {% endblock %}
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/js/foundation.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 
@@ -77,8 +67,6 @@
     </script>
 
     <script src="{% static "js/base/dashboard.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
     <script src="{% static "js/base/dashboard_project.js" %}"></script>
 
     {% if messages %}
@@ -91,15 +79,4 @@
         </script>
         {% endfor %}
     {% endif %}
-
-    {% render_block "js" %}
-    {% block javascripts %}
-        <script type="text/javascript">
-            window.categoryURL = "{{ category_setter_url }}";
-        </script>
-    {% endblock %}
-</body>
-
-</html>
-
-
+{% endblock %}

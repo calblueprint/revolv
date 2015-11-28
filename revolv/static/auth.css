@@ -1,3 +1,35 @@
+meta.foundation-version {
+  font-family: "/5.4.7/"; }
+
+meta.foundation-mq-small {
+  font-family: "/only screen/";
+  width: 0em; }
+
+meta.foundation-mq-medium {
+  font-family: "/only screen and (min-width:40.063em)/";
+  width: 40.063em; }
+
+meta.foundation-mq-large {
+  font-family: "/only screen and (min-width:64.063em)/";
+  width: 64.063em; }
+
+meta.foundation-mq-xlarge {
+  font-family: "/only screen and (min-width:90.063em)/";
+  width: 90.063em; }
+
+meta.foundation-mq-xxlarge {
+  font-family: "/only screen and (min-width:120.063em)/";
+  width: 120.063em; }
+
+meta.foundation-data-attribute-namespace {
+  font-family: false; }
+
+/**
+ * This file overrides specific foundation settings in order to make foundation
+ * work nicely with revolv's design. Note that only some, but not all, of
+ * foundation's settings are overriden here: for the full list, see _settings.scss
+ * in revolv/static/bower_components/foundation/scss/foundation.
+ */
 .placeholder-tooltip-entry {
   position: absolute;
   background-color: white;
@@ -54,10 +86,10 @@ small.field-error {
   .submit-button.gray {
     cursor: pointer;
     background-color: transparent;
-    color: #b3b4c0;
-    border: 1px solid #b3b4c0; }
+    color: #b3b3c0;
+    border: 1px solid #b3b3c0; }
     .submit-button.gray:hover {
-      background-color: #b3b4c0;
+      background-color: #b3b3c0;
       color: white;
       transition: background-color 0.2s;
       transition: color 0.1s;
@@ -124,3 +156,49 @@ small.field-error {
     .component-row h1.heading-error:after {
       display: inline;
       content: "\a0\a0\a0"; }
+
+@media only screen {
+  .social-login-buttons .hidden-xs {
+    display: none; }
+  .social-login-buttons .visible-xs {
+    display: block; } }
+
+@media only screen and (min-width:40.063em) {
+  .social-login-buttons .visible-xs {
+    display: none; }
+  .social-login-buttons .hidden-xs {
+    display: block; } }
+
+.social-login-buttons {
+  padding-top: 1em;
+  margin-left: 1em;
+  width: 100%; }
+
+.row.slb_socialButtons {
+  height: 50px;
+  border: 1px solid;
+  padding: 0.8em;
+  margin-bottom: 0.5em;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  background-color: transparent; }
+
+.row.slb_socialButtons.slb-google {
+  color: #c32f10; }
+
+.row.slb_socialButtons.slb-google:hover {
+  background-color: #c32f10;
+  color: white;
+  border: 1px #c32f10 solid; }
+
+.row.slb_socialButtons.slb-facebook {
+  color: #3b5998; }
+
+.row.slb_socialButtons.slb-facebook:hover {
+  background-color: #3b5998;
+  color: white;
+  border: 1px #3b5998 solid; }
+
+.slb_socialButtons span {
+  margin-left: 10px; }
