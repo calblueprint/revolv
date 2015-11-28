@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+{% block body %}
+    <div class="social-title "><h3>Social Connections</h3></div>
+    <table class="table-social-accounts">
+    <thead><tr>
+        <th>Social Account</th><th>Action</th></tr></thead>
+    <tbody>
+    <form method="post" action="" id="dc-form">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{% url "social-connection" %}">
+    {% for k,v in accounts.items %}
+    <tr><td>{{ k|capfirst }}</td><td><button class="submit-button
+                                            {% if v.connected %}gray dc" type="submit"
+                                                data-disconnect-url="{{ v.dc_url }}">DISCONNECT
+                                            {% else %}conn" data-connect-url="{% url "social:begin" v.name %}?next={% url "social-connection" %}">
+                                            CONNECT{% endif %}
+                                    </button></td></tr>
+    {% endfor %}
+    </form>
+    </tbody>
+    </table>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('table .dc').click(function(){
+
+            $('form#dc-form').attr('action',$(this).data('disconnect-url'));
+            $('form#dc-form').submit()
+        });
+        $('table .conn').click(function(){
+            location.href= $(this).data('connect-url');
+            return false;
+        })
+    })
+    </script>
+{% endblock %}

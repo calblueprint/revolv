@@ -21,8 +21,6 @@
     easily in the sidebar UI, so we may have to rethink this design a little bit.
 {% endcomment %}
 {% load humanize %}
-<div class="dashboard-sidebar-back-overlay sidebar-toggle-close"></div>
-{% include "base/partials/nav.html" %}
 {% include "base/partials/dashboard_project_header.html" with user=user project=project %}
 <div class="row cover-photo"{% if project.cover_photo %} style="background-image: url({{project.cover_photo.url}});"{% endif %}></div>
 <div class="row project-tabs">
@@ -55,8 +53,8 @@
             <div class="small-12 medium-12 large-2 large-offset-1 columns" style="height:140px">
                 <div class="funding-progress-container">
                     <div class="statistics-graphics-container">
-                        <svg class="svg-graphics-container"></svg>
-                        <svg class="internal-graphics-container"></svg>
+                        <svg class="dashboard-svg-graphics-container"></svg>
+                        <svg class="dashboard-internal-graphics-container"></svg>
                         <div class="text-container">
                             <p class="percentage-text">{{ project.percent_complete }}%</p>
                             <p class="funded">FUNDED</p>
@@ -133,8 +131,8 @@
             <div class="small-12 medium-12 large-3 large-offset-3 columns" style="height:180px">
                 <div class="repayment-progress-container">
                     <div class="statistics-graphics-container">
-                        <svg class="svg-graphics-container"></svg>
-                        <svg class="internal-graphics-container"></svg>
+                        <svg class="dashboard-svg-graphics-container"></svg>
+                        <svg class="dashboard-internal-graphics-container"></svg>
                         <div class="text-container">
                             <p class="percentage-text">{{ project.percent_repaid }}%</p>
                             <p class="repaid">REPAID</p>

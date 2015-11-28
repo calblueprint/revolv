@@ -32,6 +32,7 @@ class RevolvUserProfileFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = RevolvUserProfile
     user = factory.SubFactory(UserFactory)
+    subscribed_to_updates = True
 
 
 class RevolvUserProfileAdminFactory(factory.django.DjangoModelFactory):

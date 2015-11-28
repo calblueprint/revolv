@@ -1,6 +1,9 @@
 from collections import namedtuple
 
 from django.contrib.auth.models import Group, User
+from revolv.settings import ADMIN_REINVESTMENT_DATE_DT
+import datetime
+
 
 """
 An abstraction for a classification of grouped projects which have a string that
@@ -26,3 +29,10 @@ def get_all_administrators():
 
 def get_all_administrator_emails():
     return [data["email"] for data in get_all_administrators().values("email")]
+
+
+def is_user_reinvestment_period():
+    """
+    :return: True if now is in user reinvestment period
+    """
+    return True if datetime.datetime.now() < ADMIN_REINVESTMENT_DATE_DT else False

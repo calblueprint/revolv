@@ -1,4 +1,5 @@
 {% load sekizai_tags %}
+{% load mediaurl %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,10 @@
     <title>{% block title %}{% endblock %}RE-volv</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="{% if project.cover_photo %}{{ project.cover_photo.url |fullmediaurl }}{% else %}{{ settings.revolv_cms.ShareThisSettings.image|fullmediaurl }}{% endif %}" />
+    <meta property="og:description" content="{% if project.description %} {{ project.description }}
+                                            {% else %} {{ settings.revolv_cms.ShareThisSettings.description }}{% endif %}" />
+
     {% block meta %}
     {% endblock %}
 
@@ -17,7 +22,9 @@
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
     {% block head %}
     {% endblock %}
 </head>
@@ -48,7 +55,6 @@
         </script>
         {% endfor %}
     {% endif %}
-
     <script>
       $(document).foundation({
           reveal: {
@@ -79,6 +85,10 @@
     {% render_block "js" %}
     {% block javascripts %}
     {% endblock %}
+<script>
+var options={ "publisher": "{% sharethis_pub_id  %} ", "position": "left", "ad": { "visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": { "items": ["", "sharethis"]}};
+var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
+</script>
 </body>
 
 </html>

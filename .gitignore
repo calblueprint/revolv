@@ -68,6 +68,6 @@ revolv/static/bower_components/
 node_modules/
 .revolv_bash_profile
 .vagrant
-
+celerybeat.pid
 # IDEA
 .idea

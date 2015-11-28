@@ -73,9 +73,12 @@ class RevolvUserProfile(FacebookModel):
 
     user = models.OneToOneField(User)
     subscribed_to_newsletter = models.BooleanField(default=False)
+    subscribed_to_updates = models.BooleanField(default=True)
 
     reinvest_pool = models.FloatField(default=0.0)
     preferred_categories = models.ManyToManyField("project.Category")
+
+    address = models.CharField(max_length=255, null=True, blank=True)
 
     def is_donor(self):
         """Return whether the associated user can donate."""
@@ -125,3 +128,9 @@ class RevolvUserProfile(FacebookModel):
             user_impact_for_project = project_impact * user_financial_contribution * 1.0 / project_funding_total
             user_impact += user_impact_for_project
         return user_impact
+
+    def get_full_name(self):
+        name = '{0} {1}'.format(self.user.first_name.strip(), self.user.last_name.strip())
+        if len(name.strip()) == 0:
+            name = self.user.username
+        return name

@@ -2,6 +2,8 @@ from django.db import models
 
 from revolv.lib.utils import ImportProxy
 
+from datetime import date
+
 
 class AdminRepaymentManager(models.Manager):
     """
@@ -252,6 +254,53 @@ class RepaymentFragment(models.Model):
     factories = ImportProxy("revolv.payments.factories", "RepaymentFragmentFactories")
 
 
+class UserReinvestmentManager(models.Manager):
+    """
+    Manager for UserReinvestment.
+    """
+
+    def reinvestments(self, user=None, project=None, queryset=None):
+        """
+        :return: UserReinvestment associated with this project.
+        """
+        if queryset is None:
+            queryset = super(UserReinvestment, self).get_queryset()
+        if user:
+            queryset = queryset.filter(user=user).order_by('created_at')
+        if project:
+            queryset = queryset.filter(project=project).order_by('created_at')
+        return queryset
+
+
+class UserReinvestment(models.Model):
+    """
+    Model representing a single, "contact point" for a
+    reinvestment by user himself.
+
+    User only can do reinvestment if he is on reinvestment period (usually before
+    15th day of a running month).
+
+    And An UserReinvestment cannot be created if there are insufficient funds.
+
+    ::Signals::
+    pre_init
+        Raises a NotEnoughFundingException before __init__ if there are not
+        enough funds for this UserReinvestment or not in reinvestment period.
+    pre_save
+        We'll cap the investment here, by monthly allocation and founding_goal
+    post_save
+        Send to payment
+    """
+    amount = models.FloatField()
+    user = models.ForeignKey('base.RevolvUserProfile')
+    project = models.ForeignKey("project.Project")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    objects = UserReinvestmentManager()
+    factories = ImportProxy("revolv.payments.factories", "UserReinvestmentFactory")
+
+
 class PaymentManager(models.Manager):
     """
     Simple manager for the Payment model.
@@ -316,6 +365,23 @@ class PaymentManager(models.Manager):
             payment_type__name=PaymentType._REINVESTMENT
         )
 
+    def project_reinvestment_from_date(self, project=None, from_date=None,
+                                       queryset=None):
+        """
+        :return:
+            Returns all reinvestment_fragment payments that are associated with
+            this user.
+        """
+        q = self.payments(
+            project=project,
+            queryset=queryset
+        ).filter(
+            payment_type__name=PaymentType._REINVESTMENT
+        )
+        if from_date:
+            q = q.filter(created_at__gte=from_date)
+        return q
+
     def repayment_fragments(self, user=None):
         """
         :return:
@@ -366,6 +432,27 @@ class PaymentManager(models.Manager):
         else:
             return total_amount
 
+    def total_project_reinvestment_from_date(self, project=None, from_date=None,
+                                             queryset=None):
+        """
+        :kwargs:
+            user: filter donations by this user
+            project: filter donations by this project
+            queryset: further filtering of Payments
+
+        :return:
+            Returns the total amount reinvested for a specified user or project or both.
+        """
+        total_amount = self.project_reinvestment_from_date(project=project,
+                                                           from_date=from_date,
+                                                           queryset=queryset)\
+            .aggregate(models.Sum('amount'))['amount__sum']
+
+        if total_amount is None:
+            return 0
+        else:
+            return total_amount
+
 
 class Payment(models.Model):
     """
@@ -395,6 +482,7 @@ class Payment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     admin_reinvestment = models.ForeignKey(AdminReinvestment, blank=True, null=True)
+    user_reinvestment = models.ForeignKey(UserReinvestment, blank=True, null=True)
 
     amount = models.FloatField()
 
@@ -404,3 +492,21 @@ class Payment(models.Model):
     @property
     def is_organic(self):
         return self.user == self.entrant
+
+
+class ProjectMontlyRepaymentConfig(models.Model):
+    """
+    A Model contains configuration distribution of repayment.
+
+    Repayment will be spilt by 2: for Solar Seed fund(SSF) and for RE-volv overhead.
+    We'll used value on SSF for calculating fund to reinvestmentm each month
+    """
+    SOLAR_SEED_FUND = 'SSF'
+    REVOLVE_OVERHEAD = 'REV'
+    REPAYMENT_TYPE_CHOICES = ((SOLAR_SEED_FUND, 'Solar Seed Fund'), (REVOLVE_OVERHEAD, 'RE-volv Overhead'))
+
+    project = models.ForeignKey("project.Project")
+    year = models.PositiveSmallIntegerField(default=date.today().year)
+    repayment_type = models.CharField(max_length=3, choices=REPAYMENT_TYPE_CHOICES)
+    amount = models.FloatField()
+    factories = ImportProxy('revolv.payments.factories', 'ProjectMontlyRepaymentConfigFactory')
