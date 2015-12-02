@@ -216,7 +216,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-if IS_LOCAL:
+if TRUE:
     # On local, we use django's built in static files app, which will serve
     # static files (css, js, etc) directly from the project directory called
     # "static" (that directory is a sibling of this file in the directory tree)
