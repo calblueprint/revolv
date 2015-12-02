@@ -204,6 +204,7 @@ if not AWS_ACCESS_KEY_ID and IS_LOCAL:
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     MEDIA_URL = MEDIA_PATH
     MEDIA_SERVE_LOCALLY = False
+MEDIA_SERVE_LOCALLY = True
 
 STATIC_ROOT = 'staticfiles'
 STATICFILES_FINDERS = (
