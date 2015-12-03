@@ -16,6 +16,8 @@ class SFDCException(Exception):
 
 @task
 def send_signup_info( name, email, address=''):
+    if not settings.SFDC_ACCOUNT:
+        return
     try:
         res = None
         payload = {'donorName': name, 'email': email, 'donorAddress': address}
@@ -32,6 +34,8 @@ def send_signup_info( name, email, address=''):
 
 @task
 def send_donation_info(name, amount, project, address=''):
+    if not settings.SFDC_ACCOUNT:
+        return
     try:
         res = None
         payload = {'donorName': name, 'projectName': project, 'donationAmount': amount, 'donorAddress': address}
