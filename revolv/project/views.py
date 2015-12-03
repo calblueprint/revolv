@@ -18,7 +18,7 @@ from revolv.payments.models import UserReinvestment
 from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate
-
+from revolv.tasks.sfdc import send_donation_info
 
 class DonationLevelFormSetMixin(object):
     """
@@ -264,10 +264,18 @@ class SubmitDonationView(UserDataMixin, FormView):
         context['user'] = self.user
         context['project'] = project
         context['amount'] = form.cleaned_data.get('amount')
+
         send_revolv_email(
             'post_donation',
             context, [self.user.email]
         )
+        try:
+            amount = form.cleaned_data.get('amount')
+            send_donation_info.delay(self.user_profile.get_full_name(), float(amount),
+                                     project.title, self.user_profile.address)
+        except:
+            pass
+
         return JsonResponse({
             'amount': form.data['amount'],
         })
@@ -296,7 +304,6 @@ class ProjectListReinvestmentView(UserDataMixin, TemplateView):
             else:
                 context["error_msg"] = "The reinvestment period has ended for this month. " \
                                        "Please come back next month!"
-
         else:
             active = Project.objects.get_eligible_projects_for_reinvestment()
             context["active_projects"] = filter(lambda p: p.amount_left > 0.0, active)

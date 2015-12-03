@@ -16,11 +16,7 @@ html, body, .main-row {
 .main-row {
     width: 100%;
     min-width: 100%;
-}
-
-.header, .spacer {
-    // the header is now a row within a row, so we need to override foundation styles
-    margin: 0 !important;
+    margin-top: 64px;
 }
 
 $sidebar-header-gray: #777;
@@ -30,7 +26,7 @@ $sidebar-icon-gray: #999;
     background-color: $oil;
     height: 100%;
     font-family: $lato-font-family;
-    overflow: scroll;
+    overflow-y: scroll;
 
     .sidebar-close-button {
         display: none;
@@ -192,6 +188,7 @@ $sidebar-icon-gray: #999;
     display: none;
     &.dashboard-data-section-current {
         display: block;
+        margin-left: 8.33%;
     }
 }
 
@@ -502,7 +499,7 @@ $sidebar-icon-gray: #999;
                 width: 100%;
                 position: absolute;
 
-                .svg-graphics-container {
+                .dashboard-svg-graphics-container {
                     // formatting for the white outside circle in funding progress
                     // fits to the size of the parent element, position:absolute needed so
                     // height and width are actually 100% of parent element
@@ -511,7 +508,7 @@ $sidebar-icon-gray: #999;
                     width: 100%;
                 }
 
-                .internal-graphics-container {
+                .dashboard-internal-graphics-container {
                     position: absolute;
                     left: 50%;
                     top: 50%;
@@ -564,7 +561,7 @@ $sidebar-icon-gray: #999;
                 width: 100%;
                 position: absolute;
 
-                .svg-graphics-container {
+                .dashboard-svg-graphics-container {
                     // formatting for the white outside circle in repayment progress
                     // fits to the size of the parent element, position:absolute needed so
                     // height and width are actually 100% of parent element
@@ -573,7 +570,7 @@ $sidebar-icon-gray: #999;
                     width: 100%;
                 }
 
-                .internal-graphics-container {
+                .dashboard-internal-graphics-container {
                     position: absolute;
                     left: 50%;
                     top: 50%;
@@ -635,16 +632,6 @@ $icon-height: 100px;
             .icon-container {
                 padding: 0;
             }
-
-            .contribution-text {
-                font-weight: 800;
-                margin: 0 10% 40px 10%;
-                text-align: center;
-                font-size: 1.05rem;
-                margin-top: 50px;
-                color: $dark-gray;
-            }
-
             .icon {
                 height: $icon-height;
                 margin: 0;
@@ -811,7 +798,14 @@ $icon-height: 100px;
         }
     }
 }
-
+p.contribution-text {
+    font-weight: 800;
+    margin: 0 10% 40px 10%;
+    text-align: center;
+    font-size: 1.05rem;
+    margin-top: 15px;
+    color: $dark-gray;
+}
 .cover-photo {
     // HACK: have to use !important because .rows inside .rows have paddings/margins which have
     // a high specificity, do to their selector being ".row .row".
@@ -850,6 +844,14 @@ $icon-height: 100px;
     }
 }
 
+@media #{$medium-up} {
+    h1, h2, h3, h4, h5, h6 {
+        line-height: 1.4;
+    }
+    h3 {
+        font-size: 1.25rem;
+    }
+}
 @media #{$medium-only} {
     .dashboard-project {
         .dashboard-project-header {
@@ -1031,4 +1033,15 @@ $icon-height: 100px;
             }
         }
     }
+}
+.dashboard-reinvest-button {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.dashboard-reinvest-button button{
+  width: 60%;
+  left: 20%;
+}
+.sharethis-placeholder{
+    margin-top: 20px;
 }

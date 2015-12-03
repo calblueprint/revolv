@@ -47,6 +47,8 @@ FACEBOOK_APP_SECRET = os.environ.get("REVOLV_FACEBOOK_APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = IS_LOCAL
+#DEBUG = False
+
 # disable django-compressor for wagtail admin pages. this is hacky
 # but necessary until we can get it to play nicer with s3.
 # see https://github.com/calblueprint/revolv/issues/363
@@ -85,6 +87,7 @@ INSTALLED_APPS = (
     'djcelery',
     'ckeditor',
     'sekizai',
+    'social.apps.django_app.default',
 
     # wagtail cms: see http://wagtail.readthedocs.org/en/v1.0b2/howto/settings.html
     'compressor',
@@ -118,9 +121,12 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'sesame.middleware.AuthenticationMiddleware',
+    'revolv.base.users.RevolvSocialAuthExceptionMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'sesame.backends.ModelBackend',
 )
@@ -157,7 +163,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     'django_facebook.context_processors.facebook',
-
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
     'sekizai.context_processors.sekizai',
     'wagtailsettings.context_processors.settings',
 )
@@ -209,7 +216,8 @@ if not AWS_ACCESS_KEY_ID and IS_LOCAL:
     # allow them to 
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     MEDIA_URL = MEDIA_PATH
-    MEDIA_SERVE_LOCALLY = False
+    MEDIA_SERVE_LOCALLY = True
+    MEDIA_ROOT = BASE_DIR + '/media/'
 
 STATIC_ROOT = 'staticfiles'
 STATICFILES_FINDERS = (
@@ -273,7 +281,7 @@ EMAIL_TEMPLATES_PATH = os.path.join(
 
 # Hard-coded urls: kind of ugly but we need these for when we
 # want to send links in emails
-SITE_URL = os.environ.get('SITE_URL', 'http://localhost:8000')
+SITE_URL = os.environ.get('SITE_URL', 'http://revolv.local.com:8000')
 
 if IS_HEROKU:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -345,6 +353,8 @@ LANGUAGES = [
     ('en-us', 'English'),
 ]
 
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 # SSL Settings for Heroku
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SSLIFY_DISABLE = IS_LOCAL
@@ -363,6 +373,49 @@ Consequently, it's safe to always enable charging, since in development nothing
 is actually being charged on the PayPal side.
 """
 ENABLE_PAYMENT_CHARGING = True
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'revolv.base.users.get_username_from_social',
+    'social.pipeline.social_auth.associate_by_email',
+    'revolv.base.users.create_user_revolv',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+)
+SOCIAL_AUTH_DISCONNECT_PIPELINE = (
+    'social.pipeline.disconnect.allowed_to_disconnect',
+    'social.pipeline.disconnect.get_entries',
+    'social.pipeline.disconnect.revoke_tokens',
+    'social.pipeline.disconnect.disconnect'
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['public_profile', 'email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'fields': 'id, name, email'
+}
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['profile', 'email']
+
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/social_connect_failed/'
+SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email', 'first_name', 'last_name']
+
+SHARETHIS_PUBLISHER_ID = os.environ.get('SHARETHIS_PUBLISHER_ID')
+
+#Salesforce
+SFDC_ACCOUNT = os.environ.get('SFDC_ACCOUNT')
+SFDC_PASSWORD = os.environ.get('SFDC_PASSWORD')
+SFDC_TOKEN = os.environ.get('SFDC_TOKEN')
+
+SFDC_REVOLV_SIGNUP = 'login'
+SFDC_REVOLV_DONATION = 'donation'
 
 # Used for error logging. See https://docs.djangoproject.com/en/1.7/topics/logging
 LOGGING = {
@@ -398,6 +451,11 @@ LOGGING = {
             'propagate': True,
         },
         'revolv': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'social': {
             'handlers': ['file', 'console'],
             'level': 'DEBUG',
             'propagate': True,

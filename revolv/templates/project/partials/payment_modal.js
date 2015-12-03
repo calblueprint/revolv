@@ -293,6 +293,19 @@ var populateConfirmModal = function(formValues) {
 
     $('span.confirm-info-amount').text('{0} USD'.format(
         formValues['donation-amount']));
+    $('#share-modal #sharethis-button').remove();
+    $('#share-modal .sharethis-placeholder').append('<span id="sharethis-button"></span>');
+    stWidget.addEntry({
+                 "service":"sharethis",
+                 "element":document.getElementById('sharethis-button'),
+                 "url":document.URL,
+                 "title":$('p.project-title').text(),
+                 "type":"large",
+                 "text":"ShareThis" ,
+                 "image":$('meta[property="og:image"]').attr("content"),
+                 "summary":"I just donated {0} to RE-volv in support of clean energy! Join me!".format(
+                            formValues['donation-amount'])
+         });
 };
 var confirmModalButtons = [
     $('button.donation-submit'),
@@ -482,22 +495,9 @@ $('#reinvest-modal .reinvest-continue').click(function(e){
 $('#success-reinvest-modal .reinvest-donate').click(function(){
    $('#donate-modal').foundation('reveal', 'open');
 });
-});
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
+$('#success-modal .submit-button').click(function(){
+    $('#share-modal').foundation('reveal', 'open');
+})
 
 $(document).ready(function(){
     if (!is_reinvestment){
