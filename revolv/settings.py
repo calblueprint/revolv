@@ -297,7 +297,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 if IS_PROD:
     ALLOWED_HOSTS = ["revolv-prod.herokuapp.com", ".re-volv.org"]
 elif IS_STAGE:
-    ALLOWED_HOSTS = ["revolv-stage.herokuapp.com", "revolv-test-site.herokuapp.com"]
+    ALLOWED_HOSTS = ["revolv-stage.herokuapp.com", "revolv-test-site.herokuapp.com", "revolv-test-design.herokuapp.com"]
 else:
     ALLOWED_HOSTS = ['*']
 
