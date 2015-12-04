@@ -81,7 +81,7 @@ time,
 mark,
 audio,
 video {
-	font-family: 'source_sans_proregular', Arial, Helvetica, sans-serif;
+	font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -117,7 +117,8 @@ a:focus {
 
 /* btn */
 .btn-blue {
-	font-family: 'source_sans_problack';
+	font-family: 'Source Sans Pro';
+    font-weight: 900;
 	font-size: 14px;
 	color: #fff;
 	height: 53px;
@@ -174,7 +175,8 @@ a:focus {
 /* title */
 .title-white-border,
 .title-blue-border {
-	font-family: 'source_sans_probold';
+	font-family: 'Source Sans Pro';
+    font-weight: 700;
 	font-size: 18px;
 	letter-spacing: 8px;
 	height: 43px;
@@ -261,7 +263,8 @@ a:focus {
 			.dropdown-default .dropdown-menu>li>a:active,
 			.dropdown-default .dropdown-menu>li>a:focus,
 			.dropdown-default .dropdown-menu>li>a.active {
-				font-family: 'source_sans_probold';
+				font-family: 'Source Sans Pro';
+                font-weight: 700;
 				background: #f0f0f0;
 				background-image: none;
 				filter: none;
@@ -418,7 +421,8 @@ a:focus {
 				margin: 0 auto;
 			}
 				.top-section .carousel .item-info .titles {
-					font-family: 'source_sans_problack';
+					font-family: 'Source Sans Pro';
+                    font-weight: 900;
 					font-size: 48px;
 					text-transform: uppercase;
 					line-height: 58px;
@@ -558,7 +562,8 @@ a:focus {
 									z-index: 99;
 								}
 									.active-projects-module .img-main .txt {
-										font-family: 'source_sans_probold';
+										font-family: 'Source Sans Pro';
+                                        font-weight: 700;
 										font-size: 30px;
 										line-height: 32px;
 										color: #fff;
@@ -580,7 +585,8 @@ a:focus {
 							z-index: 99;
 						}
 							.active-projects-module .img-main .funded-round .round-depict {
-								font-family: 'source_sans_probold';
+								font-family: 'Source Sans Pro';
+                                font-weight: 700;
 								font-size: 14px;
 								color: #039;
 								display: block;
@@ -618,7 +624,8 @@ a:focus {
 					}
 						.active-projects-module .info-main .blue-bar,
 						.active-projects-module .info-main .dark-blue-bar {
-							font-family: 'source_sans_probold';
+							font-family: 'Source Sans Pro';
+                            font-weight: 700;
 							font-size: 16px;
 							color: #fff;
 							height: 60px;
@@ -635,7 +642,8 @@ a:focus {
 							}
 								.active-projects-module .info-main .blue-bar span,
 								.active-projects-module .info-main .dark-blue-bar span {
-									font-family: 'source_sans_probold';
+									font-family: 'Source Sans Pro';
+                                    font-weight: 700;
 								}
 
 	/* .our-impacts-module */
@@ -703,7 +711,8 @@ a:focus {
 					background-position: -504px -178px;
 				}
 					.our-impacts-module .module-box .titles {
-						font-family: 'source_sans_problack';
+						font-family: 'Source Sans Pro';
+                        font-weight: 900;
 						color: #282828;
 						line-height: 66px;
 						display: block;
@@ -718,7 +727,8 @@ a:focus {
 							font-size: 72px;
 						}
 							.our-impacts-module .module-box .titles .font20 {
-								font-family: 'source_sans_problack';
+								font-family: 'Source Sans Pro';
+                                font-weight: 900;
 							}
 					.our-impacts-module .module-box .txt {
 						font-size: 18px;
@@ -878,7 +888,8 @@ a:focus {
 								margin: 0 55px 0 100px;
 							}
 								.how-it-works-module .step-row .info-txt h4 {
-									font-family: 'source_sans_probold';
+									font-family: 'Source Sans Pro';
+                                    font-weight: 700;
 									font-size: 18px;
 									font-weight: normal;
 									line-height: 20px;
@@ -982,12 +993,14 @@ a:focus {
 							padding-top: 14px;
 						}
 							.testimonial-module .user-group .link-blue {
-								font-family: 'source_sans_problack';
+								font-family: 'Source Sans Pro';
+                                font-weight: 700;
 								font-size: 18px;
 								color: #00a1d9;
 							}
 							.testimonial-module .user-group .txt {
-								font-family: 'source_sans_probold';
+								font-family: 'Source Sans Pro';
+                                font-weight: 700;
 								font-size: 14px;
 								color: rgba(121,121,121,0.5);
 								line-height: 25px;
@@ -1241,7 +1254,8 @@ a:focus {
 			padding-left: 20px;
 		}
 		.title-h1 {
-			font-family: 'source_sans_problack';
+			font-family: 'Source Sans Pro';
+            font-weight: 900;
 			font-size: 48px;
 			color: #2c3691;
 			line-height: 56px;
@@ -1269,7 +1283,8 @@ a:focus {
 			padding-top: 71px;
 		}
 			.sign-in .sign-in-left h2 {				
-				font-family: 'source_sans_problack';
+				font-family: 'Source Sans Pro';
+                font-weight: 900;
 				font-size: 48px;
 				line-height: 52px;
 				color: #2e3192;
@@ -1357,7 +1372,8 @@ a:focus {
 			padding-top: 76px;
 		}
 			.sign-up .sign-up-left h2 {				
-				font-family: 'source_sans_problack';
+				font-family: 'Source Sans Pro';
+                font-weight: 900;
 				font-size: 48px;
 				line-height: 52px;
 				color: #2e3192;
@@ -1475,7 +1491,8 @@ a:focus {
 					height: 100%;
 				}
 			.article-detail .detail-left h2 {
-				font-family: 'source_sans_problack';
+				font-family: 'Source Sans Pro';
+                font-weight: 900;
 				font-size: 48px;
 				line-height: 56px;
 				color: #2c3691;
@@ -1496,7 +1513,8 @@ a:focus {
 				.article-detail .detail-left .btn-group .btn-blue {
 					display: block;
 					float: left;
-					font-family: 'source_sans_probold';
+					font-family: 'Source Sans Pro';
+                    font-weight: 700;
 					font-size: 14px;
 					line-height: 43px;
 					height: 43px;
@@ -1540,7 +1558,8 @@ a:focus {
 			padding-top: 73px;
 		}
 		.about-us .about-us-left h2 {
-			font-family: 'source_sans_problack';
+			font-family: 'Source Sans Pro';
+            font-weight: 700;
 			font-size: 48px;
 			line-height: 60px;
 			color: #2c3691;
@@ -1554,7 +1573,8 @@ a:focus {
 			padding-right: 140px;
 		}
 		.about-us .about-us-left .btn-works {
-			font-family: 'source_sans_probold';
+			font-family: 'Source Sans Pro';
+            font-weight: 700;
 			font-size: 14px;
 			line-height: 43px;
 			height: 43px;
@@ -1574,7 +1594,8 @@ a:focus {
 			}
 			.mains-tabs .tab-index .row .col-lg-3 a {
 				display: block;
-				font-family: 'source_sans_probold';
+				font-family: 'Source Sans Pro';
+                font-weight: 700;
 				font-size: 16px;
 				height: 53px;
 				line-height: 53px;
@@ -1651,7 +1672,8 @@ a:focus {
 						float: left;
 						margin-right: 70px;
 						margin-bottom: 25px;
-						font-family: 'source_sans_probold';
+						font-family: 'Source Sans Pro';
+                        font-weight: 700;
 						font-size: 14px;
 						line-height: 43px;
 						width: 300px;
@@ -1730,7 +1752,8 @@ a:focus {
 								margin: 1px 0 0 -2px;
 							}
 							.get-involved-contents .funded-round .round-depict {
-								font-family: 'source_sans_probold';
+								font-family: 'Source Sans Pro';
+                                font-weight: 700;
 								font-size: 14px;
 								color: #039;
 								text-align: center;
@@ -1769,11 +1792,12 @@ a:focus {
 							}
 								.list-area .info-main .blue-bar span,
 								.list-area .info-main .dark-blue-bar span {
-									font-family: 'source_sans_proregular';
+									font-family: 'Source Sans Pro';
 								}
 									.list-area .info-main .blue-bar .bold,
 									.list-area .info-main .dark-blue-bar .bold {
-										font-family: 'source_sans_probold';
+										font-family: 'Source Sans Pro';
+                                        font-weight: 700;
 									}
 				/* .list-area  .rights */
 				.list-area .row .rights {
@@ -1784,7 +1808,7 @@ a:focus {
 						margin-top: -3px;
 					}
 						.list-area .row .rights h2 a {
-							font-family: 'source_sans_probold';
+							font-family: 'Source Sans Pro'; font-weight: 700;
 							font-size: 30px;
 							color: #4b4b4b;
 						}
@@ -1792,7 +1816,7 @@ a:focus {
 								color: #14b1e7;
 							}
 					.list-area .row .rights .time {
-						font-family: 'source_sans_probold';
+						font-family: 'Source Sans Pro'; font-weight: 700;
 						font-size: 16px;
 						color: #4b4b4b;
 						padding: 3px 0 13px 0;
@@ -1922,7 +1946,7 @@ a:focus {
 												line-height: 35px;
 											}
 												.past-projects-module .info-main h2 a {
-													font-family: 'source_sans_probold';
+													font-family: 'Source Sans Pro'; font-weight: 700;
 													font-size: 24px;
 													color: #282828;
 												}
@@ -1930,7 +1954,7 @@ a:focus {
 														color: #14b1e7;
 													}
 											.past-projects-module .info-main .time {
-												font-family: 'source_sans_probold';
+												font-family: 'Source Sans Pro'; font-weight: 700;
 												font-size: 16px;
 												color: #4b4b4b;
 												padding: 3px 0 13px 0;
@@ -2051,7 +2075,7 @@ a:focus {
 							z-index: 299;
 						}
 							.details-active-project-module .banner-section .funded-round .round-depict {
-								font-family: 'source_sans_probold';
+								font-family: 'Source Sans Pro'; font-weight: 700;
 								font-size: 27.19px;
 								color: #039;
 								display: block;
@@ -2097,11 +2121,11 @@ a:focus {
 								}
 									.details-active-project-module .info-main .blue-bar span,
 									.details-active-project-module .info-main .dark-blue-bar span {
-										font-family: 'source_sans_proregular';
+										font-family: 'Source Sans Pro';
 									}
 										.details-active-project-module .info-main .blue-bar .bold,
 										.details-active-project-module .info-main .dark-blue-bar .bold {
-											font-family: 'source_sans_probold';
+											font-family: 'Source Sans Pro'; font-weight: 700;
 										}
 						/* .details-active-project-module .video-main */
 						.details-active-project-module .video-main {
@@ -2217,7 +2241,7 @@ a:focus {
 						}
 							 .project-updates-module .list-area .left-date .date-txt,
 							 .project-updates-module .list-area .left-date .month-txt {
-								 font-family: 'source_sans_probold';
+								 font-family: 'Source Sans Pro'; font-weight: 700;
 								 color: #00a1d9;
 								 display: block;
 								 padding: 0 50px 0 28px;
@@ -2239,7 +2263,7 @@ a:focus {
 								 line-height: 30px;
 							}
 								 .project-updates-module .list-area .main-info .title-h4 a {
-									 font-family: 'source_sans_probold';
+									 font-family: 'Source Sans Pro'; font-weight: 700;
 									 font-size: 18px;
 									 color: #4b4b4b;
 								 }
@@ -2274,7 +2298,7 @@ a:focus {
 						margin: 0 0 32px 0;
 					}
 						.project-updates-module .right-aside .module-box .type-txt {
-							font-family: 'source_sans_probold';
+							font-family: 'Source Sans Pro'; font-weight: 700;
 							font-size: 18px;
 							text-transform: uppercase;
 							line-height: 30px;
@@ -2282,14 +2306,14 @@ a:focus {
 							padding: 11px 0 13px 0;
 						}
 						.project-updates-module .right-aside .module-box .value-txt {
-							font-family: 'source_sans_problack';
+							font-family: 'Source Sans Pro'; font-weight: 900;
 							font-size: 60px;
 							line-height: 65px;
 							color: #282828;
 							padding: 0 0 20px 0;
 						}
 						.project-updates-module .right-aside .module-box .title-h5 {
-							font-family: 'source_sans_probold';
+							font-family: 'Source Sans Pro'; font-weight: 700;
 							font-size: 16px;
 							color: #4b4b4b;
 							border-top: 1px solid #c3c3c3;
@@ -2302,7 +2326,7 @@ a:focus {
 							padding: 34px 0 25px 0;
 						}
 							.project-updates-module .right-aside .module-box li {
-								font-family: 'source_sans_probold';
+								font-family: 'Source Sans Pro'; font-weight: 700;
 								font-size: 14px;
 								color: rgba(75,75,75,0.8);
 								line-height: 32px;
@@ -2336,7 +2360,7 @@ a:focus {
 							 padding: 22px 0 0 0;
 						 }
 							 .project-updates-module .main-area .venue-bottom .title-h4 {
-								 font-family: 'source_sans_probold';
+								 font-family: 'Source Sans Pro'; font-weight: 700;
 								 font-size: 18px;
 								 color: #4b4b4b;
 								 text-transform: uppercase;
@@ -2407,7 +2431,7 @@ a:focus {
 						padding: 0 0 4px 0;
 					}
 						.donors-module .info-box .title-h4 a {
-							font-family: 'source_sans_probold';
+							font-family: 'Source Sans Pro'; font-weight: 700;
 							font-size: 18px;
 							color: #282828;
 							text-transform: uppercase;
@@ -2438,14 +2462,14 @@ a:focus {
 			margin-bottom: 34px;
 		} 
 			.partners-contents .titles .title-primary {
-				font-family: 'source_sans_problack';
+				font-family: 'Source Sans Pro'; font-weight: 900;
 				font-size: 48px;
 				line-height: 52px;
 				color: #2c3691;
 				margin-bottom: 22px;
 			}
 			.partners-contents .titles .title-sub {
-				font-family: 'source_sans_proregular';
+				font-family: 'Source Sans Pro';
 				font-size: 14px;
 				line-height: 28px;
 				color: #4b4b4b;
@@ -2479,14 +2503,14 @@ a:focus {
 				overflow: hidden;
 			}
 				.partners-contents .content-info h4 {
-					font-family: 'source_sans_probold';
+					font-family: 'Source Sans Pro'; font-weight: 700;
 					font-size: 30px;
 					line-height: 42px;
 					color: #4b4b4b;
 					margin-bottom: 4px;
 				}
 				.partners-contents .content-info h4 a {
-					font-family: 'source_sans_probold';
+					font-family: 'Source Sans Pro'; font-weight: 700;
 					font-size: 30px;
 					color: #4b4b4b;
 				}
@@ -2494,7 +2518,7 @@ a:focus {
 					color: #14b1e7;
 				}
 				.partners-contents .content-info p {
-					font-family: 'source_sans_proregular';
+					font-family: 'Source Sans Pro';
 					font-size: 14px;
 					line-height: 28px;
 					color: #4b4b4b;
@@ -2524,7 +2548,7 @@ a:focus {
 					.partners-contents .pager-info li a {
 						display: inline-block;
 						padding: 0 20px;
-						font-family: 'source_sans_probold';
+						font-family: 'Source Sans Pro'; font-weight: 700;
 						font-size: 16px;
 						line-height: 39px;
 						color: #4b4b4b;
@@ -2858,7 +2882,7 @@ a:focus {
 					padding: 36px 0 30px 0;
 				}
 				 .grid-area.row .info-main .title-h2 a {
-					font-family: 'source_sans_probold';
+					font-family: 'Source Sans Pro'; font-weight: 700;
 					font-size: 30px;
 					color: #4b4b4b;
 				}
@@ -2866,12 +2890,12 @@ a:focus {
 					color: #14b1e7;
 				}
 					.grid-area.row .info-main .title-h2 {
-						font-family: 'source_sans_probold';
+						font-family: 'Source Sans Pro'; font-weight: 700;
 						font-size: 30px;
 						line-height: 35px;
 					}
 					.grid-area.row .info-main .date-txt {
-						font-family: 'source_sans_probold';
+						font-family: 'Source Sans Pro'; font-weight: 700;
 						font-size: 16px;
 						text-transform: uppercase;
 						line-height: 22px;
@@ -2929,7 +2953,7 @@ a:focus {
 					padding: 14px 0 17px 0;
 				}
 					.blog-details-data.container .title-bar .date-txt {
-						font-family: 'source_sans_probold';
+						font-family: 'Source Sans Pro'; font-weight: 700;
 						font-size: 16px;
 						color: #4b4b4b;
 						line-height: 32px;
@@ -2972,7 +2996,7 @@ a:focus {
 							padding-left: 18px;
 						}
 							.blog-details-data.container .info-box .info-main .font20 {
-								font-family: 'source_sans_probold';
+								font-family: 'Source Sans Pro'; font-weight: 700;
 								font-size: 20px;
 								line-height: 36px;
 							}
@@ -3094,7 +3118,7 @@ a:focus {
 								padding: 3px 0 11px 0;
 							}
 								.comments-module .comments-area .comments-list .info-box .title-h4 a {
-									font-family: 'source_sans_probold';
+									font-family: 'Source Sans Pro'; font-weight: 700;
 									font-size: 18px;
 									color: #282828;
 									text-transform: uppercase;
@@ -3126,7 +3150,7 @@ a:focus {
 							cursor: pointer;
 						}
 							.comments-module .comments-area .comments-list .comments-apply a {
-								font-family: 'source_sans_probold';
+								font-family: 'Source Sans Pro'; font-weight: 700;
 								font-size: 14px;
 								color: #898989;
 								display: block;
@@ -3148,7 +3172,7 @@ a:focus {
 					}
 						.comments-module .comments-area .quick-reply .quick-reply-txt .title-h4 {
 							padding: 25px 0 22px 0;
-							font-family: 'source_sans_probold';
+							font-family: 'Source Sans Pro'; font-weight: 700;
 							font-size: 18px;
 							color: #282828;
 							text-transform: uppercase;
@@ -3201,7 +3225,7 @@ a:focus {
 						letter-spacing: 4px;
 					}
 						.comments-module .comments-area .quick-reply .comments-post a {
-							font-family: 'source_sans_probold';
+							font-family: 'Source Sans Pro'; font-weight: 700;
 							font-size: 14px;
 							color: #898989;
 							display: block;
@@ -3246,7 +3270,7 @@ a:focus {
 			}
 				.footer .row .col-menu dt a,
 				.footer .row .col-info dt a {
-					font-family: 'source_sans_probold';
+					font-family: 'Source Sans Pro'; font-weight: 700;
 					color: #14b1e7;
 					font-size: 14px;
 					text-transform: uppercase;
@@ -3461,7 +3485,7 @@ a:focus {
 						  margin: 0 55px 0 100px;
 					  }
 						  #modal-how-it-works .step-area .info-txt h4 {
-							  font-family: 'source_sans_probold';
+							  font-family: 'Source Sans Pro'; font-weight: 700;
 							  font-size: 18px;
 							  font-weight: normal;
 							  line-height: 20px;
@@ -4999,7 +5023,7 @@ a:focus {
 					margin-bottom: 8px;
 				}
 				.partners-contents .content-info h4 a {
-    					font-family: 'source_sans_probold';
+    					font-family: 'Source Sans Pro'; font-weight: 700;
     					font-size: 25px;
     					color: #4b4b4b;
 				}
@@ -6933,7 +6957,7 @@ a:focus {
 						z-index: 299;
 					}
 						.list-area .mobile-show.txt-table .txt {
-							font-family: 'source_sans_probold';
+							font-family: 'Source Sans Pro'; font-weight: 700;
 							font-size: 43.01px;
 							color: #fff;
 							text-align: center;
@@ -6987,7 +7011,7 @@ a:focus {
 						display: none;
 					}
 					.list-area .row .rights .share-txt {
-						font-family: 'source_sans_probold';
+						font-family: 'Source Sans Pro'; font-weight: 700;
 						font-size: 16.38px;
 						color: #292929;
 						position: absolute;
@@ -7253,7 +7277,7 @@ a:focus {
 										margin-right: 18px;
 									}
 									.details-active-project-module .mobile-bottom-bar .share-txt {
-										font-family: 'source_sans_probold';
+										font-family: 'Source Sans Pro'; font-weight: 700;
 										font-size: 16.38px;
 										color: #292929;
 										float: left;
