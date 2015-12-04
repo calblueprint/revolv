@@ -1,5 +1,85 @@
 {% load staticfiles revolv_cms_tags %}
 
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <nav class="col-menu">
+        <dl>
+          <dt><a href="home.html">Home</a></dt>
+          <dt><a href="about-us.html">About us</a></dt>
+          <dt><a href="blog.html">Blog</a></dt>
+          <dt><a href="javascript:;">Contact us</a></dt>
+          <dd class="hide"></dd>
+        </dl>
+      </nav>
+      <!-- end .col-menu -->
+      <nav class="col-info">
+        <dl>
+          <dt><a href="what-we-do.html">what we do</a></dt>
+            <dd><a href="javascript:;">How It Works</a></dd>
+            <dd><a href="javascript:;">Projects</a></dd>
+            <dd><a href="javascript:;">Solar In Your Community</a></dd>
+        </dl>
+      </nav>
+      <!-- end .col-info -->
+      <nav class="col-info">
+        <dl>
+          <dt><a href="get-involved.html">get involved</a></dt>
+            <dd><a href="javascript:;">Donate to the Solar Seed Fund</a></dd>
+            <dd><a href="solar-ambassador-program.html">Solar Ambassador Program</a></dd>
+            <dd><a href="javascript:;">Support Us</a></dd>
+            <dd><a href="javascript:;">Join Our Mailing List</a></dd>
+            <dd><a href="javascript:;">Volunteer</a></dd>
+        </dl>
+      </nav>
+      <!-- end .col-info -->
+      <nav class="col-info">
+        <dl>
+          <dt><a href="javascript:;">solar education</a></dt>
+            <dd><a href="javascript:;">Educational Resources</a></dd>
+            <dd><a href="javascript:;">Solar Education Week</a></dd>
+        </dl>
+      </nav>
+      <!-- end .col-info -->
+      <nav class="col-info">
+        <dl>
+          <dt><a href="javascript:;">whom is re-volv?</a></dt>
+          <dd class="hide"></dd>
+        </dl>
+        <p>
+          We are a nonprofit organization with a 
+          mission to empower people and com-
+          munities to invest collectively in renew-
+          able energy. Through crowdfunding, 
+          RE-volv lets individuals who support 
+          clean energy chip in a few dollars to help 
+          create solar powered communities 
+          around the United States.
+        </p>
+      </nav>
+      <!-- end .col-info -->
+    </div>
+    <!-- end .row -->
+    <div class="bottoms">
+      <div class="lefts pull-left">
+        <a href="javascript:;" class="logo"></a>
+      </div>
+      <!-- end .lefts -->
+      <div class="rights pull-right">
+        <ul class="social-ul">
+          <li><a href="javascript:;" class="icon-fb icons"></a></li>
+          <li><a href="javascript:;" class="icon-tw icons"></a></li>
+          <li><a href="javascript:;" class="icon-gg icons"></a></li>
+        </ul>
+      </div>
+      <!-- end .rights -->
+    </div>
+    <!-- end .bottoms -->
+  </div>
+</footer>
+<!-- end .footer -->
+
+{% comment %}
 <div class="footer">
     <div class="row">
         <div class="section small-8 columns">
@@ -7,32 +87,6 @@
                 {% get_cms_root_page as root_page %}
                 {% partial_footer_menu root_page %}
                 {% num_menu_pages root_page as cms_pages_count %}
-                {% comment %}
-                    Note: we don't know the number of sections that will comprise the cms menu,
-                    but we want every third section to have clear: both so that it's gauranteed to
-                    start on a new line, not get scrunched up next to other sections, no matter how
-                    small it is.
-
-                    To illustrate: if an inline block is too small, this could happen:
-
-                    [  large block  ][  large block  ][  smaller block  ]
-                    [      (#1)     ][      (#2)     ][      (#3)       ]
-                    [               ][               ]
-                    [               ][               ][  smaller block  ]
-                    [               ]                 [      (#4)       ]
-
-                    In this case, we don't want block number 4 to go under block number 3, because it
-                    would look weird, graphically. We want it on the next line under block number 1, so
-                    we set clear: both on it. In this situation, the next block (account) is block #4,
-                    but we don't know how many blocks have come before it. Thus, since we're in a three
-                    column layout, we set clear on the account block if the number of cms generated blocks
-                    is divisible by three, and clear on the next (contact) block if the number of cms
-                    generated blocks PLUS ONE is divisible by three.
-
-                    Otherwise, the number of cms generated blocks PLUS TWO will be divisible by three, so
-                    provably our two extra blocks will fit nicely into the grid. Who knew that modular math
-                    would come in so handy here?
-                {% endcomment %}
                 <section class="small-12 medium-4 columns{% if cms_pages_count|divisibleby:'3' %} clear{% endif %}">
                     <div class="left">
                         <h3>Account</h3>
@@ -71,3 +125,4 @@
         </div>
     </div>
 </div>
+{% endcomment %}

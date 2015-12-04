@@ -15,16 +15,34 @@
     {% block meta %}
     {% endblock %}
 
-    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Lato:400,700,100' type='text/css' />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css" />
-    <link rel="stylesheet" href="{% static "main.css" %}" />
-    {% render_block "css" %}
+    <!-- Bootstrap -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link href="{% static 'css/font.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/jqtransform.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/screen.css' %}" rel="stylesheet" />
+      
+    <!-- jQuery library -->
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.knob.js' %}"></script>
+    <script src="{% static 'js/parallax.min.js' %}"></script>
+    <script src="{% static 'js/hammer.min.js' %}"></script>
+    <script src="{% static 'js/jquery.hammer.js' %}"></script>
+    <script src="{% static 'js/jquery.jqtransform.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
     
+    <!-- Main JS -->
+    <script src="{% static 'js/script.js' %}"></script>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script type="text/javascript">var switchTo5x=true;</script>
-<script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript" src="https://ss.sharethis.com/loader.js"></script>
+    <script type="text/javascript">var switchTo5x=true;</script>
+    <script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript" src="https://ss.sharethis.com/loader.js"></script>
+
     {% block head %}
     {% endblock %}
 </head>
