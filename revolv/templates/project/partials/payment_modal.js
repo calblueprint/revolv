@@ -1,4 +1,5 @@
 $(function() {
+
 if (!String.prototype.format) {
     /**
      * Python style string formatting for Javascript Strings.
@@ -498,6 +499,7 @@ $('#success-reinvest-modal .reinvest-donate').click(function(){
 $('#success-modal .submit-button').click(function(){
     $('#share-modal').foundation('reveal', 'open');
 })
+});
 
 $(document).ready(function(){
     if (!is_reinvestment){
