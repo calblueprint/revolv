@@ -1235,11 +1235,20 @@ a:focus {
 
 
 /* .contents */
+.edit-project .header-container {
+    height: 0;
+}
+.edit-project .form-section {
+    margin-top: 40px;
+}
 .contents {
 	min-height: 450px;
 }
 	.top150 {
 		margin-top: 150px;
+	}
+    .top100 {
+		margin-top: 100px;
 	}
 	
 	/* .titles */
