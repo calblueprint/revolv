@@ -1,6 +1,5 @@
-from django.db.models import signals, Sum
+from django.db.models import Sum, signals
 from django.dispatch import receiver
-
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
                                     PaymentType, RepaymentFragment)
@@ -35,7 +34,7 @@ def post_save_admin_repayment(**kwargs):
         return
     instance = kwargs.get('instance')
     for donor in instance.project.donors.all():
-        amount = instance.project.proportion_donated(donor) * instance.amount
+        amount = instance.project.proportion_donated(donor) * instance.reinvestable
         repayment = RepaymentFragment(user=donor,
                                       project=instance.project,
                                       admin_repayment=instance,
@@ -58,8 +57,8 @@ def pre_init_admin_reinvestment(**kwargs):
     invest_amount = init_kwargs['amount']
 
     global_repay_amount = AdminRepayment.objects.aggregate(
-        Sum('amount')
-    )['amount__sum'] or 0.0
+        Sum('reinvestable')
+    )['reinvestable__sum'] or 0.0
     global_reinvest_amount = AdminReinvestment.objects.aggregate(
         Sum('amount')
     )['amount__sum'] or 0.0

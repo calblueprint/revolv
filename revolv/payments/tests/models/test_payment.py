@@ -1,5 +1,5 @@
 import factory
-from django.db.models import signals, Sum
+from django.db.models import Sum, signals
 from django.test import TestCase
 from revolv.base.models import RevolvUserProfile
 from revolv.payments.models import (AdminReinvestment, AdminRepayment, Payment,
@@ -22,10 +22,8 @@ class PaymentTest(TestCase):
         return Payment(amount=amount, user=user, entrant=entrant,
                        payment_type=payment_type, project=project)
 
-    def _create_admin_repayment(self, admin, amount=10.00, project=None):
-        if project is None:
-            project = Project.factories.base.create()
-        return AdminRepayment(amount=amount, admin=admin, project=project)
+    def _create_admin_repayment(self, **kwargs):
+        return AdminRepayment.factories.base.create(**kwargs)
 
     def _create_admin_reinvestment(self, admin, amount, project=None):
         if project is None:
@@ -53,7 +51,7 @@ class PaymentTest(TestCase):
 
         self._create_payment(user1).save()
         self._create_admin_reinvestment(admin, 100.00).save()
-        self._create_admin_repayment(admin).save()
+        self._create_admin_repayment(admin=admin).save()
 
         self.assertEquals(Payment.objects.total_distinct_organic_donors(), 1)
 
@@ -144,7 +142,7 @@ class PaymentTest(TestCase):
         self.assertEquals(Payment.objects.donations(project=project1).count(), 5)
 
         project1.complete_project()
-        self._create_admin_repayment(admin, 100.00, project1).save()
+        self._create_admin_repayment(admin=admin, reinvestable=100.00, project=project1).save()
         self.assertEquals(user1.repaymentfragment_set.count(), 1)
         self.assertEquals(user2.repaymentfragment_set.count(), 1)
         self.assertEquals(RepaymentFragment.objects.repayments(user=user1).aggregate(
@@ -206,7 +204,7 @@ class PaymentTest(TestCase):
 
         project.complete_project()  # must complete project before repayment
 
-        self._create_admin_repayment(admin1, 100.00, project).save()
+        self._create_admin_repayment(admin=admin1, reinvestable=100.00, project=project).save()
         self._create_admin_reinvestment(admin1, 100.00, project).save()
         self.assertEquals(Payment.objects.donations(project=project).count(), 2)
         self.assertEquals(project.proportion_donated(user2), 10.0 / 40.0)
@@ -220,7 +218,7 @@ class PaymentTest(TestCase):
         admin = RevolvUserProfile.factories.admin.create()
         self.assertRaises(ProjectNotCompleteException,
                           self._create_admin_repayment,
-                          admin, 100.00, project  # *args
+                          admin=admin, reinvestable=100.00, project=project  # **kwargs
                           )
 
     def test_repayment_multiple_save(self):
@@ -234,7 +232,7 @@ class PaymentTest(TestCase):
         self._create_payment(user, project=project).save()
         project.complete_project()
 
-        repay = self._create_admin_repayment(admin, 100.00, project)
+        repay = self._create_admin_repayment(admin=admin, reinvestable=100.00, project=project)
         repay.save()
         self.assertEquals(user.repaymentfragment_set.filter(
             project=project
@@ -256,7 +254,7 @@ class PaymentTest(TestCase):
         self._create_payment(user, project=project).save()
         project.complete_project()
 
-        self._create_admin_repayment(admin, 100.00, project).save()
+        self._create_admin_repayment(admin=admin, reinvestable=100.00, project=project).save()
         self.assertRaises(NotEnoughFundingException,
                           self._create_admin_reinvestment,
                           admin, 200.00, project  # *args
@@ -273,7 +271,7 @@ class PaymentTest(TestCase):
         self._create_payment(user, project=project1).save()
         project1.complete_project()
 
-        self._create_admin_repayment(admin, 100.00, project1).save()
+        self._create_admin_repayment(admin=admin, reinvestable=100.00, project=project1).save()
         reinvest1 = self._create_admin_reinvestment(admin, 100.00, project=project2)
 
         reinvest1.save()
@@ -295,7 +293,7 @@ class PaymentTest(TestCase):
         self._create_payment(user2, amount=30.00, project=project1).save()
         project1.complete_project()
 
-        repay1 = self._create_admin_repayment(admin1, amount=100.00, project=project1)
+        repay1 = self._create_admin_repayment(admin=admin1, reinvestable=100.00, project=project1)
         repay1.save()
 
         self.assertEquals(user1.repaymentfragment_set.count(), 1)
@@ -317,7 +315,7 @@ class PaymentTest(TestCase):
         self._create_payment(user2, amount=10.00, project=project2).save()
         project2.complete_project()
 
-        self._create_admin_repayment(admin2, amount=200.00, project=project2).save()
+        self._create_admin_repayment(admin=admin2, reinvestable=200.00, project=project2).save()
 
         self.assertEquals(user1.repaymentfragment_set.count(), 2)
         self.assertEquals(user2.repaymentfragment_set.count(), 2)
@@ -382,7 +380,7 @@ class PaymentTest(TestCase):
         self._create_payment(user1, amount=25.00, project=project1).save()
         self._create_payment(user2, amount=75.00, project=project1).save()
         project1.complete_project()
-        self._create_admin_repayment(admin1, amount=200.00, project=project1).save()
+        self._create_admin_repayment(admin=admin1, reinvestable=200.00, project=project1).save()
 
         reinvest1 = self._create_admin_reinvestment(admin1, 200.00, project=project2)
         reinvest1.save()
@@ -439,7 +437,7 @@ class PaymentTest(TestCase):
         self._create_payment(user3, amount=100.00, project=project1).save()
         project1.complete_project()
 
-        self._create_admin_repayment(admin1, amount=400.00, project=project1).save()
+        self._create_admin_repayment(admin=admin1, reinvestable=400.00, project=project1).save()
 
         # verifies that reinvestment pools have values that we expect, must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
@@ -517,7 +515,7 @@ class PaymentTest(TestCase):
         self._create_payment(user3, amount=100.00, project=project1).save()
         project1.complete_project()
 
-        self._create_admin_repayment(admin1, amount=400.00, project=project1).save()
+        self._create_admin_repayment(admin=admin1, reinvestable=400.00, project=project1).save()
 
         # verifies that reinvestment pools have values that we expect, must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
@@ -593,7 +591,7 @@ class PaymentTest(TestCase):
         self._create_payment(user3, amount=100.00, project=project1).save()
         project1.complete_project()
 
-        self._create_admin_repayment(admin1, amount=400.00, project=project1).save()
+        self._create_admin_repayment(admin=admin1, reinvestable=400.00, project=project1).save()
 
         # verifies that reinvestment pools have values that we expect, must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)
@@ -670,7 +668,7 @@ class PaymentTest(TestCase):
         self._create_payment(user3, amount=100.00, project=project1).save()
         project1.complete_project()
 
-        self._create_admin_repayment(admin1, amount=400.00, project=project1).save()
+        self._create_admin_repayment(admin=admin1, reinvestable=400.00, project=project1).save()
 
         # verifies that reinvestment pools have values that we expect, must reload to get new reinvest_pool amount
         user1 = RevolvUserProfile.objects.get(pk=user1.pk)

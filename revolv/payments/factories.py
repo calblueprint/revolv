@@ -54,7 +54,8 @@ class AdminRepaymentFactory(factory.django.DjangoModelFactory):
 
     admin = factory.SubFactory("revolv.base.factories.RevolvUserProfileFactory")
     project = factory.SubFactory("revolv.project.factories.ProjectFactory")
-    amount = 20.00
+    reinvestable = 20.00
+    organizational_cost = 0
     created_at = datetime.datetime.now()
 
 

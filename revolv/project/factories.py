@@ -1,7 +1,10 @@
 import datetime
 
 import factory
-from revolv.project.models import Category, Project, ProjectUpdate
+from django.utils import timezone
+from revolv.project.models import (Category, MonthlyOrganizationalCost,
+                                   MonthlyReinvestableAmount, Project,
+                                   ProjectUpdate)
 
 
 class ProjectFactory(factory.django.DjangoModelFactory):
@@ -105,3 +108,29 @@ class ProjectUpdateFactory(factory.django.DjangoModelFactory):
 
 class ProjectUpdateFactories(object):
     base = ProjectUpdateFactory
+
+
+class MonthlyReinvestableAmountFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = MonthlyReinvestableAmount
+
+    project = factory.SubFactory(CompletedProjectFactory)
+    year = timezone.now().year
+    amount = 100.00
+
+
+class MonthlyReinvestableAmountFactories(object):
+    base = MonthlyReinvestableAmountFactory
+
+
+class MonthlyOrganizationalCostFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = MonthlyOrganizationalCost
+
+    project = factory.SubFactory(CompletedProjectFactory)
+    year = timezone.now().year
+    amount = 100.00
+
+
+class MonthlyOrganizationalCostFactories(object):
+    base = MonthlyOrganizationalCostFactory
