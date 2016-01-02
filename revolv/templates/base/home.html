@@ -8,241 +8,115 @@
 
     <link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
 
-    <script type="text/javascript" src="{% static "js/vendor/jquery.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/vendor/svg4everybody.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
     <script type="text/javascript">
         window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
     </script>
 
 {% endblock %}
 
-{% block javascripts %}
-<script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
-<script type="text/javascript" src="{% static "js/base/home.js" %}"></script>
-<script type="text/javascript" src="{% static "js/vendor/skrollr.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/vendor/skrollr.menu.min.js" %}"></script>
-<script type="text/javascript">
-  var s = skrollr.init();
-
-  skrollr.menu.init(s, {
-      animate: true,
-      easing: 'sqrt'
-  });
-</script>
-{% endblock %}
-
 {% block body %}
-
 {% spaceless %}
 
-<div class="cover">
-    <a target="_blank" href="https://youtu.be/eSADOAxjcPU" class="cover-video-link">
-        <div class="shade"></div>
-        <div class="cover-inset">
-            <h1>{{ settings.revolv_cms.MainPageSettings.site_tagline }}</h1>
-            <p>{{ settings.revolv_cms.MainPageSettings.site_subheading }}</p>
-            <a href="#how-revolv-works">
-                <div class="learn-more button">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</div>
-            </a>
+<body class="home-page-content">
+
+<div class="top-section min-height993">
+  <div class="section-video">
+    <div class="section-video-area">
+      <div class="video-opacity"></div>
+      <img src="i/top-section-video.jpg" class="hide" alt="Video">
+      <video id="video-player" autoplay preload="none">
+        <source type="video/youtube" src="http://www.youtube.com/watch?v=th_u9EdzCYw" />
+      </video>
+    </div>
+  </div>
+  <!-- end .section-video -->
+  <div class="container">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="">
+      <a class="down-arrow-button" href="javascript:;"><div class="icons icon-arrow-down"></div></a>
+  
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <div class="item-info">
+            <div class="titles">
+              {{ settings.revolv_cms.MainPageSettings.site_tagline|safe }}
+            </div>
+            <p>
+              {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
+            </p>
+            <a href="get-involved.html" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
+          </div>
         </div>
-        <!-- Background video to play on desktop view -->
-        <video autoplay loop muted poster="{% static "images/cover-video-poster.png" %}" class="cover-video">
-            <source src="{% static "videos/cover.mp4" %}" type="video/mp4">
-            <source src="{% static "videos/cover.webm" %}" type="video/webm">
-        </video>
-        <!-- Background image displayed on mobile devices -->
-        <img src="{% static "images/mobile-cover.png" %}" class="mobile-cover" />
-    </a>
+        <!-- end .item -->
+      </div>
+    </div>
+    <!-- end .carousel -->
+  </div>
 </div>
+<!-- end .top-section -->
 
-{% if featured_projects|length == 1%}
-    <div class="divider-title">{{ settings.revolv_cms.MainPageSettings.single_project_heading }}</div>
-    {% if first_project.cover_photo %}
-        <div class="row current-project" style="background-image: url({{first_project.cover_photo.url}})">
-            <a href="{% url "project:view" pk=first_project.pk %}">
-                <div class="overlay">
-                    <div class="current-project-inset">
-                        <h1>{{ first_project.title }}</h1>
-                        <p>{{ first_project.description|safe|truncatewords:"25"|linebreaks }}</p>
-                    </div>
-                    <div class="graphics-container">
-                        <span class="partial-completeness">{{ first_project.partial_completeness_as_js }}</span>
+<div class="active-projects-module animated">
+  <div class="container">
+    <div class="title-blue-border title-active-projects">ACTIVE PROJECTS</div>
+    <div class="row">
 
-                        <svg class="svg-graphics-container"></svg>
-                        <svg class="internal-graphics-container"></svg>
-                        <div class="text-container">
-                            <p class="percentage-text">{{ first_project.percent_complete }}%</p>
-                            <p class="funded">FUNDED</p>
-                        </div>
-                    </div>
-                </div>
+      {% for active_project in featured_projects %}
+      <div class="col-md-4">
+        <div class="module-box">
+          <div class="img-main">
+            <a href="{% url "project:view" pk=active_project.pk %}" class="img-link">
+              <span class="txt-table">
+                <span class="txt">
+                    {{ active_project.title }}
+                </span>
+              </span>
+              <img src="i/active-projects-img1.jpg" class="desktop-img" alt="Active Projects">
+              <img src="i/mobile/mobile-active-projects-img1.jpg" class="mobile-img" alt="Active Projects">
             </a>
+            <div class="funded-round">
+              <div class="status-circular">
+                <span class="status-text">
+                  <span class="round-depict">FUNDED</span>               
+                </span>
+                <!-- end .status-text -->
+                <div class="status-indicator desktop-circle">
+                  <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="105" data-height="105" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".24">
+                </div>   
+                <div class="status-indicator small-circle">
+                  <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="92" data-height="92" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".2">
+                </div>   
+                <div class="status-indicator tablet-circle">
+                  <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="200" data-height="200" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
+                </div>    
+                <div class="status-indicator mobile-circle">
+                  <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="98" data-height="98" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
+                </div>                              
+              </div>
+            </div>
+          </div>
+          <!-- end .img-main -->
+          <div class="info-main">
+            <div class="blue-bar">
+              <span class="pull-left">${{ active_project.amount_donated }}</span>
+              <span class="pull-right">{{ active_project.days_left }} Days Left</span>
+            </div>
+            <!-- end .blue-bar -->
+            <div class="dark-blue-bar">
+              <span class="pull-left">{{ active_project.actual_energy }} kwH Saved</span>
+              <span class="pull-right">{{ active_project.donors.count }} Donors</span>
+            </div>
+            <!-- end .blue-bar -->
+          </div>
+          <!-- end .info-main -->
         </div>
-    {% endif %}
-
-
-{% elif featured_projects|length > 1 %}
-    <div class="divider-title">{{ settings.revolv_cms.MainPageSettings.multiple_projects_heading}}</div>
-    <div class="row active-projects-block">
-        {% for active_project in featured_projects %}
-            {% if active_project.cover_photo %}
-                <div class="active-project {% if forloop.counter|divisibleby:3 %}last-active-project-in-row{% endif %}" >
-                    <a href="{% url "project:view" pk=active_project.pk %}">
-                        <div class="overlay">
-
-                            <div class="active-project-cover" style="background-image: url({{active_project.cover_photo.url}})">
-
-
-                                <div class="active-project-inset">
-                                    <h3 class="heading-top-margin">{{ active_project.title }}</h3>
-                                </div>
-                                <div class="graphics-container">
-                                    <span class="partial-completeness">{{ active_project.partial_completeness_as_js }}</span>
-
-                                    <svg class="svg-graphics-container"></svg>
-                                    <svg class="internal-graphics-container"></svg>
-                                    <div class="text-container">
-                                        <p class="percentage-text">{{ active_project.percent_complete }}%</p>
-                                        <p class="funded">FUNDED</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="statistics-graphics-container">
-                                <div class="bar top-bar">
-                                    <div class="container">
-                                        <p class="left-text statistic amount-donated">${{ active_project.amount_donated }} donated</p>
-                                        <p class="right-text statistic days-left">{{ active_project.days_left }} days left</p>
-                                    </div>
-                                </div>
-                                <div class="bar bottom-bar">
-                                    <div class="container">
-                                        <p class ="left-text statistic amount-saved">{{ active_project.actual_energy }} kwH saved</p>
-                                        <p class ="right-text statistic num-donors">{{ active_project.donors.count }} {{ settings.revolv_cms.ProjectPageSettings.donors_wording }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-    <div class="view-active-projects">
-
-        <p><a href="{% url "projects_list" %}">View Projects</a> </p>
+        <!-- end .module-box -->
+      </div>
+      {% endfor %}
 
     </div>
-{% endif %}
-
-{% include "base/animations/nav_spine.html" with first_project=first_project %}
-<div id="how-revolv-works" class="divider-title">{{ settings.revolv_cms.MainPageSettings.how_it_works_heading }}</div>
-<div class="row about">
-    <div class="about-inset">
-        <p>{{ settings.revolv_cms.MainPageSettings.how_it_works_intro }}</p>
-        <h1>{{ settings.revolv_cms.MainPageSettings.how_it_works_tagline }}</h1>
-
-        <!-- Man, coin, and Woman -->
-        <img class="person" src="{% static "images/revolv-man.svg" %}" />
-        <img
-            {% if first_project %}
-                data-1250="margin-bottom: -60px;"
-                data-1600="margin-bottom: -660px;"
-                data-1601="opacity[begin]: 1;"
-                data-1602="opacity[end]: 0;"
-            {% else %}
-                data-400="margin-bottom: -60px;"
-                data-800="margin-bottom: -660px;"
-                data-801="opacity[begin]: 1;"
-                data-802="opacity[end]: 0;"
-            {% endif %}
-            class="coin" src="{% static "images/coin.svg" %}" />
-        <img class="person" src="{% static "images/revolv-woman.svg" %}" />
-
-        <img
-            data-570="opacity: 0;"
-            data-670="opacity: 1;"
-            class="step" src="{% static "images/step1.png" %}" />
-
-        <!-- RE-volv "factory" animation -->
-        {% include "base/animations/factory.html" with first_project=first_project %}
-        <img
-            {% if first_project %}
-                data-1200="opacity: 0;"
-                data-1300="opacity: 1;"
-            {% else %}
-                data-350="opacity: 0;"
-                data-450="opacity: 1;"
-            {% endif %}
-            class="step" src="{% static "images/step2.png" %}" />
-
-        <!-- Main solar panel and house -->
-        <img
-            {% if first_project %}
-                data-1900="top: 890px; transform: scale(0.2); opacity: 0.1;"
-                data-2100="top: 1200px; transform: scale(1); opacity: 1;"
-            {% else %}
-                data-1050="top: 890px; transform: scale(0.2); opacity: 0.1;"
-                data-1250="top: 1200px; transform: scale(1); opacity: 1;"
-            {% endif %}
-            class="main-panel" src="{% static "images/main-panel.svg" %}">
-        <img class="main-house" src="{% static "images/main-house.svg" %}">
-        <br>
-
-        <!-- Subsidiary houses and solar panels in "groupings" -->
-        <img
-            data-1700="opacity: 0;"
-            data-1800="opacity: 1;"
-            class="step" src="{% static "images/step3.png" %}" />
-        <div class="grouping">
-            <img
-                {% if first_project %}
-                    data-2300="opacity: 0;"
-                    data-2500="opacity: 1;"
-                {% else %}
-                    data-1450="opacity: 0;"
-                    data-1650="opacity: 1;"
-                {% endif %}
-                class="solar-panel" src="{% static "images/main-panel.svg" %}">
-            <img class="house" src="{% static "images/house.svg" %}">
-        </div>
-
-        <div class="grouping">
-            <img
-                {% if first_project %}
-                    data-2300="opacity: 0;"
-                    data-2500="opacity: 1;"
-                {% else %}
-                    data-1450="opacity: 0;"
-                    data-1650="opacity: 1;"
-                {% endif %}
-                class="solar-panel" src="{% static "images/main-panel.svg" %}">
-            <img class="house" src="{% static "images/house.svg" %}">
-        </div>
-        <div class="grouping">
-            <img
-                {% if first_project %}
-                    data-2300="opacity: 0;"
-                    data-2500="opacity: 1;"
-                {% else %}
-                    data-1450="opacity: 0;"
-                    data-1650="opacity: 1;"
-                {% endif %}
-                class="solar-panel" src="{% static "images/main-panel.svg" %}">
-            <img class="house" src="{% static "images/house.svg" %}">
-        </div>
-    </div>
-
-    <!-- Call to action -->
-    <h2>{{ settings.revolv_cms.MainPageSettings.how_it_works_pitch }}</h2>
-    {% if first_project %}
-        <a href="{% url "project:view" pk=first_project.pk %}" class="donate button">{{ settings.revolv_cms.MainPageSettings.call_to_action_button_text }}</a>
-    {% else %}
-        <a href="{% url "signin" %}#signup" class="donate button">{{ settings.revolv_cms.MainPageSettings.call_to_action_button_text }}</a>
-    {% endif %}
+  </div>
 </div>
+<!-- end .active-projects-module -->
+
 {% endspaceless %}
-
 {% endblock %}
