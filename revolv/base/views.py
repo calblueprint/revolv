@@ -7,6 +7,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.utils.decorators import method_decorator
@@ -20,6 +21,7 @@ from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
 from revolv.project.models import Category, Project
 from revolv.project.utils import aggregate_stats
+from revolv.base.models import RevolvUserProfile
 from revolv.tasks.sfdc import send_signup_info
 
 from social.apps.django_app.default.models import UserSocialAuth
@@ -35,6 +37,23 @@ class HomePageView(UserDataMixin, TemplateView):
     template_name = 'base/home.html'
     FEATURED_PROJECT_TO_SHOW = 6
 
+    def get_global_impacts(self):
+        """
+        Returns: A dictionary of RE-volv wide impact figures.
+        """
+        carbon_saved_by_month = Project.objects.statistics().pounds_carbon_saved_per_month
+        # Assume 20 year lifetime.
+        # We use str() to avoid django adding commas to integer in the template.
+        carbon_saved = str(int(carbon_saved_by_month * 12 * 20))
+        global_impacts = {
+            # Users who have backed at least one project:
+            'num_people_donated': RevolvUserProfile.objects.exclude(project=None).count(),
+            'num_projects': Project.objects.all().count(),
+            'num_people_affected': Project.objects.aggregate(n=Sum('people_affected'))['n'],
+            'co2_avoided': carbon_saved,
+        }
+        return global_impacts
+
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
         featured_projects = Project.objects.get_featured(HomePageView.FEATURED_PROJECT_TO_SHOW)
@@ -44,6 +63,7 @@ class HomePageView(UserDataMixin, TemplateView):
         context["featured_projects"] = active_projects[:6]
         context["completed_projects_count"] = Project.objects.get_completed().count()
         context["total_donors_count"] = Payment.objects.total_distinct_organic_donors()
+        context["global_impacts"] = self.get_global_impacts()
         return context
 
 

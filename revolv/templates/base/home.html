@@ -118,5 +118,52 @@
 </div>
 <!-- end .active-projects-module -->
 
+<div class="our-impacts-module animated">
+  <div class="container">
+    <div class="title-blue-border title-our-impacts">OUR IMPACTS</div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="module-box">
+          <span class="icons icon-people"></span>
+          <span class="titles font72">{{ global_impacts.num_people_donated }}</span>
+          <p class="txt">people donate</p>
+        </div>
+        <!-- end .module-box -->
+      </div>
+      <div class="col-md-3">
+        <div class="module-box">
+          <span class="icons icon-home-ok"></span>
+          <span class="titles font72">{{ global_impacts.num_projects }}</span>
+          <p class="txt">projects done</p>
+        </div>
+        <!-- end .module-box -->
+      </div>
+      <div class="col-md-3">
+        <div class="module-box">
+          <span class="icons icon-tree"></span>
+          <span class="titles font48">{{ global_impacts.co2_avoided }}<span class="font20">lbs</span></span>
+          <p class="txt">CO<span class="position"><span class="font10">2</span></span> AVOIDED</p>
+        </div>
+        <!-- end .module-box -->
+      </div>
+      <div class="col-md-3">
+        <div class="module-box">
+          <span class="icons icon-user"></span>
+          <span class="titles font48">{{ global_impacts.num_people_affected }}</span>
+          <p class="txt">
+            COMMUNITY MEMBER
+            IMPACTED
+          </p>
+        </div>
+        <!-- end .module-box -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end .our-impacts-module -->
+
+
+
+
 {% endspaceless %}
 {% endblock %}
