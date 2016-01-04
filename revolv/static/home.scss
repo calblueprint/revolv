@@ -420,6 +420,22 @@ body {
     background-color: #137F5A;
 }
 
+.how-it-works-module {
+    .info-row {
+        max-width: none!important;
+    }
+}
+.testimonial-module {
+    .row, .info-area {
+        max-width: none!important;
+    }
+}
+.newsletter-module {
+    input {
+        box-shadow: none!important;
+    }
+}
+
 // --- Mobile Responsiveness Styles ------------------------------------------------------
 
 @media #{$small-only} {

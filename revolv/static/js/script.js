@@ -88,7 +88,7 @@ $(document).ready(function(){
 	
   //style the form elements
   if($(".form-container").length>0){
-    $('.form-container').jqTransform({imgPath:'i/'});
+    $('.form-container').jqTransform({imgPath:'/static/images/'});
   }
   
   //swipe on carousel
@@ -172,12 +172,12 @@ $(document).ready(function(){
   
   if(($(window).width()+17)>= 1200)
   {
-    $(".newsletter-module .img-area .desktop-img").parallax({imageSrc: 'i/newsletter-bg.jpg'});
+    $(".newsletter-module .img-area .desktop-img").parallax({imageSrc: '/static/images/newsletter-bg.jpg'});
     $(".newsletter-module .img-area img").addClass("hide");
   }
   else if(($(window).width()+17)<= 1199 && ($(window).width()+17)> 1024)
   {
-    $(".newsletter-module .img-area .small-img").parallax({imageSrc: 'i/small/small-newsletter-bg.jpg'});
+    $(".newsletter-module .img-area .small-img").parallax({imageSrc: '/static/images/small/small-newsletter-bg.jpg'});
     $(".newsletter-module .img-area img").addClass("hide");
   }
   else

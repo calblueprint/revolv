@@ -6475,6 +6475,15 @@ body {
 .donate:hover {
   background-color: #137f5a; }
 
+.how-it-works-module .info-row {
+  max-width: none !important; }
+
+.testimonial-module .row, .testimonial-module .info-area {
+  max-width: none !important; }
+
+.newsletter-module input {
+  box-shadow: none !important; }
+
 @media only screen and (max-width: 40em) {
   .about {
     width: 100%; }

@@ -77,12 +77,22 @@ class MainPageSettings(BaseSetting):
     how_it_works_heading = models.CharField(
         max_length=50,
         help_text="The heading to display above the 'Learn about how RE-volv works' section on the homepage, e.g. 'Learn about how RE-volv works'",
-        default="HOW RE-VOLV WORKS"
+        default="How it works"
     )
     how_it_works_intro = models.TextField(
         help_text="Intro paragraph for the 'Learn about how RE-volv works' section of the homepage.",
-        default="Climate change is among the most alarming environmental issues the world faces today."
+        default=(
+            "We believe that everyone should have the ability to support clean energy. So we "
+            "created a new way for people to take action. It's a pretty simple idea. We raise "
+            "money through crowdfunding to put solar panels on community-serving "
+            "nonprofit organizations and worker-owned cooperatives. As these organizations "
+            "pay us back, we reinvest the money into more solar projects in communities "
+            "across the country. This creates a revolving fund for solar energy that continually "
+            "perpetuates itself building more and more solar. It's a pay-it-forward model for "
+            "community solar. We call it the Solar Seed Fund."
+       )
     )
+    how_it_works_video_url = models.URLField(help_text="URL for 'how it works' video", default="https://www.youtube.com/embed/eSADOAxjcPU")
     how_it_works_tagline = models.CharField(
         max_length=200,
         help_text="Large heading directly before the infograph portion of the homepage. e.g. 'How would your donation help?'",

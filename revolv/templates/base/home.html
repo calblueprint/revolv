@@ -23,7 +23,7 @@
   <div class="section-video">
     <div class="section-video-area">
       <div class="video-opacity"></div>
-      <img src="i/top-section-video.jpg" class="hide" alt="Video">
+      <img src="/static/images/top-section-video.jpg" class="hide" alt="Video">
       <video id="video-player" autoplay preload="none">
         <source type="video/youtube" src="http://www.youtube.com/watch?v=th_u9EdzCYw" />
       </video>
@@ -70,8 +70,8 @@
                     {{ active_project.title }}
                 </span>
               </span>
-              <img src="i/active-projects-img1.jpg" class="desktop-img" alt="Active Projects">
-              <img src="i/mobile/mobile-active-projects-img1.jpg" class="mobile-img" alt="Active Projects">
+              <img src="/static/images/active-projects-img1.jpg" class="desktop-img" alt="Active Projects">
+              <img src="/static/images/mobile/mobile-active-projects-img1.jpg" class="mobile-img" alt="Active Projects">
             </a>
             <div class="funded-round">
               <div class="status-circular">
@@ -162,8 +162,416 @@
 </div>
 <!-- end .our-impacts-module -->
 
+<div class="how-it-works-module animated">
+  <div class="container">
+    <div class="title-blue-border title-how-it-works">{{ settings.revolv_cms.MainPageSettings.how_it_works_heading|upper }}</div>
+    <div class="row info-row">
+      <div class="video-area pull-right">
+        <div class="video">
+          <iframe src="{{ settings.revolv_cms.MainPageSettings.how_it_works_video_url }}" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="txt-area">
+        <div class="txt-table">
+          <div class="txt-td">
+              <p>{{ settings.revolv_cms.MainPageSettings.how_it_works_intro }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end .info-row -->
+    <div class="row step-row">
+      <div id="step-carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#step-carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#step-carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#step-carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+    
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <div class="module-box">
+              <div class="icon-blue-round icon-fundraise pull-left"><span class="icons"></span></div>
+              <div class="icons icon-arrow-right"></div>
+              <div class="info-txt">
+                <h4>FUNDRAISE</h4>
+                <p>
+                  RE-volv raises money 
+                  through crowdfunding from 
+                  amazing people like you.
+                </p>
+              </div>
+            </div>
+            <!-- end .module-box -->
+          </div>
+          <!-- end .item -->
+          <div class="item">
+            <div class="module-box">
+              <div class="icon-blue-round icon-invest pull-left"><span class="icons"></span></div>
+              <div class="icons icon-arrow-right"></div>
+              <div class="info-txt">
+                <h4>INVEST</h4>
+                <p>
+                  We then invest in 
+                  community-based solar 
+                  energy projects.
+                </p>
+              </div>
+            </div>
+            <!-- end .module-box -->
+          </div>
+          <!-- end .item -->
+          <div class="item">
+            <div class="module-box">
+              <div class="icon-blue-round icon-pay-it-forward pull-left"><span class="icons"></span></div>
+              <div class="info-txt">
+                <h4>PAY IT FORWARD</h4>
+                <p>
+                  Finally, we reinvest the 
+                  money saved to fund more 
+                  worthy solar energy projects.
+                </p>
+              </div>
+            </div>
+            <!-- end .module-box -->
+          </div>
+          <!-- end .item -->
+        </div>
+    
+        <!-- Controls -->
+        <a class="left carousel-control" href="#step-carousel-example-generic" role="button" data-slide="prev">
+          <span class="icons icon-arrow-left" aria-hidden="true"></span>
+        </a>
+        <a class="right carousel-control" href="#step-carousel-example-generic" role="button" data-slide="next">
+          <span class="icons icon-arrow-right" aria-hidden="true"></span>
+        </a>
+      </div>
+      <!-- end .carousel -->   
+    </div>
+    <!-- end .step-row -->    
+  </div>
+</div>
+<!-- end .how-it-works-module -->
 
+<div class="testimonial-module animated">
+  <div class="container">
+    <div class="title-blue-border title-testimonial">TESTIMONIAL</div>
+    <div class="row head-row">
+      <ul>
+        <li>
+          <a href="javascript:;" class="head-img">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/testimonial-img1.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img1.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="head-img">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/testimonial-img2.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img2.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="head-img">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/testimonial-img3.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img3.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="head-img active">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/testimonial-img4.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img4.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="head-img">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/testimonial-img5.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img5.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="head-img">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/testimonial-img6.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img6.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="head-img">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/testimonial-img7.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img7.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;" class="head-img">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/testimonial-img8.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img8.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+        <li class="mobile-show">
+          <a href="javascript:;" class="head-img">
+            <i class="icons icon-arrow-down"></i>
+            <img src="/static/images/mobile/mobile-testimonial-img9.jpg" class="desktop-head" alt="Head">
+            <img src="/static/images/mobile/mobile-testimonial-img9.jpg" class="mobile-head" alt="Head">
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- end .head-row -->
+    <div class="info-area hide">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe1</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+    <div class="info-area hide">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe2</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+    <div class="info-area hide">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe3</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+    <div class="info-area">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe4</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+    <div class="info-area hide">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe5</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+    <div class="info-area hide">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe6</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+    <div class="info-area hide">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe7</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+    <div class="info-area hide">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe8</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+    <div class="info-area hide">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
+        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+      </p>
+      <div class="user-group">
+        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe9</a></span>
+        <span class="txt block">First Volunteer</span>
+        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+      </div>
+    </div>
+    <!-- end .info-area -->
+  </div>
+</div>
+<!-- end .testimonial-module -->
 
+<div class="featured-on-module animated">
+  <div class="container">
+    <div class="title-blue-border title-featured-on">FEATURED ON</div>
+    <div class="carousel-main">
+      <div id="featured-on-example-generic" class="carousel slide desktop-show" data-ride="carousel" data-interval="">
+        <!-- Indicators -->
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <ul class="logo-ul">
+              <li><a href="javascript:;" class="logo logo-fast-mpany"></a></li>
+              <li><a href="javascript:;" class="logo logo-ehe-new-hork-eimes"></a></li>
+              <li><a href="javascript:;" class="logo logo-shareable"></a></li>
+              <li><a href="javascript:;" class="logo logo-philanthropy"></a></li>
+              <li><a href="javascript:;" class="logo logo-clean-technica"></a></li>
+            </ul>
+          </div>
+          <!-- end .item -->
+          <div class="item">
+            <ul class="logo-ul">
+              <li><a href="javascript:;" class="logo logo-shareable"></a></li>
+              <li><a href="javascript:;" class="logo logo-philanthropy"></a></li>
+              <li><a href="javascript:;" class="logo logo-fast-mpany"></a></li>
+              <li><a href="javascript:;" class="logo logo-ehe-new-hork-eimes"></a></li>
+              <li><a href="javascript:;" class="logo logo-clean-technica"></a></li>
+            </ul>
+          </div>
+          <!-- end .item -->
+        </div>
+        <!-- Controls -->
+        <a class="left carousel-control" href="#featured-on-example-generic" role="button" data-slide="prev">
+          <span class="icons icon-arrow-left" aria-hidden="true"></span>
+        </a>
+        <a class="right carousel-control" href="#featured-on-example-generic" role="button" data-slide="next">
+          <span class="icons icon-arrow-right" aria-hidden="true"></span>
+        </a>
+      </div>
+      <!-- end .carousel -->
+    
+      <div id="mobile-featured-on-example-generic" class="carousel slide desktop-show" data-ride="carousel" data-interval="">
+        <!-- Indicators -->
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <ul class="logo-ul">
+              <li><a href="javascript:;" class="logo logo-ehe-new-hork-eimes"></a></li>
+              <li><a href="javascript:;" class="logo logo-shareable"></a></li>
+              <li><a href="javascript:;" class="logo logo-philanthropy"></a></li>
+            </ul>
+          </div>
+          <!-- end .item -->
+          <div class="item">
+            <ul class="logo-ul">
+              <li><a href="javascript:;" class="logo logo-fast-mpany"></a></li>
+              <li><a href="javascript:;" class="logo logo-clean-technica"></a></li>
+              <li><a href="javascript:;" class="logo logo-shareable"></a></li>
+            </ul>
+          </div>
+          <!-- end .item -->
+          <div class="item">
+            <ul class="logo-ul">
+              <li><a href="javascript:;" class="logo logo-philanthropy"></a></li>
+              <li><a href="javascript:;" class="logo logo-fast-mpany"></a></li>
+              <li><a href="javascript:;" class="logo logo-ehe-new-hork-eimes"></a></li>
+            </ul>
+          </div>
+          <!-- end .item -->
+        </div>
+        <!-- Controls -->
+        <a class="left carousel-control" href="#mobile-featured-on-example-generic" role="button" data-slide="prev">
+          <span class="icons icon-arrow-left" aria-hidden="true"></span>
+        </a>
+        <a class="right carousel-control" href="#mobile-featured-on-example-generic" role="button" data-slide="next">
+          <span class="icons icon-arrow-right" aria-hidden="true"></span>
+        </a>
+      </div>
+      <!-- end .carousel -->
+    
+    
+    </div>
+    <!-- end .carousel-main -->
+  </div>
+</div>
+<!-- end .featured-on-module -->
+
+<div class="newsletter-module">
+  <div class="img-area">
+    <div class="img-opacity"></div>
+    <img src="/static/images/small/small-newsletter-bg.jpg" class="small-img" alt="">
+    <img src="/static/images/mobile/mobile-newsletter-bg.jpg" class="mobile-img" alt="">
+    <div class="desktop-img"></div>
+    <div class="small-img"></div>
+    <div class="mobile-img"></div>
+  </div>
+  <div class="container animated">
+    <div class="title-white-border title-newsletter">NEWSLETTER SIGNUP</div>
+    <div class="group-main">
+      <p>Get our all updates</p>
+      <div class="group">
+        <a href="javascript:;" class="btn-blue btn-sign-up">sign up</a>
+        <span class="inputs"><input type="email" value="" placeholder="youareawesome@example.com"></span>
+      </div>
+    </div>
+    <!-- end .group-main -->
+  </div>
+</div>
+<!-- end .newsletter-module -->
 
 {% endspaceless %}
 {% endblock %}
