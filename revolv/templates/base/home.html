@@ -5,19 +5,14 @@
 {% block title %}Home | {% endblock %}
 
 {% block head %}
-
-    <link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
-
     <script type="text/javascript">
         window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
     </script>
-
 {% endblock %}
 
-{% block body %}
-{% spaceless %}
+{% block body_class %}class="home-page-content"{% endblock %}
 
-<body class="home-page-content">
+{% block body %}
 
 <div class="top-section min-height993">
   <div class="section-video">
@@ -573,5 +568,4 @@
 </div>
 <!-- end .newsletter-module -->
 
-{% endspaceless %}
 {% endblock %}

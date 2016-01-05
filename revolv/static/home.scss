@@ -420,21 +420,31 @@ body {
     background-color: #137F5A;
 }
 
-.how-it-works-module {
-    .info-row {
-        max-width: none!important;
-    }
-}
-.testimonial-module {
-    .row, .info-area {
-        max-width: none!important;
-    }
-}
-.newsletter-module {
-    input {
-        box-shadow: none!important;
-    }
-}
+//.how-it-works-module {
+//    .info-row {
+//        max-width: none!important;
+//    }
+//}
+//.testimonial-module {
+//    .row, .info-area {
+//        max-width: none!important;
+//    }
+//}
+//.newsletter-module {
+//    input {
+//        box-shadow: none!important;
+//    }
+//}
+
+//// Fix for broken funded input text positioning
+//.active-projects-module .img-main .funded-round .status-indicator input {
+//    margin-left: 23px!important;
+//    margin-top: -83px!important;
+//    border: none!important;
+//    background: transparent!important;
+//    box-shadow: none!important;
+//    width: 57px!important;
+//}
 
 // --- Mobile Responsiveness Styles ------------------------------------------------------
 

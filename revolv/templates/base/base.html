@@ -40,8 +40,6 @@
     <!-- Main JS -->
     <script src="{% static 'js/script.js' %}"></script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-    <script type="text/javascript">var switchTo5x=true;</script>
     <script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
     <script type="text/javascript" src="https://ss.sharethis.com/loader.js"></script>
 
@@ -49,7 +47,7 @@
     {% endblock %}
 </head>
 
-<body>
+<body {% block body_class %}{% endblock%}>
     {% include "base/partials/nav.html" %}
 
     {% block body %}
@@ -60,7 +58,6 @@
 
     {% include "base/partials/foot.html" %}
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/js/foundation.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 
     {% if messages %}
@@ -73,32 +70,6 @@
         </script>
         {% endfor %}
     {% endif %}
-    <script>
-      $(document).foundation({
-          reveal: {
-              animation: 'fade',
-              dismiss_modal_class: 'close-revolv-reveal-modal',
-              css: {
-                  open: {
-                      'opacity': 0,
-                      'visibility': 'visible',
-                      // NOTE: we set display to 'table' because we use the
-                      // table method to vertically center the modal div. We
-                      // need to set this in the foundation javascript,
-                      // otherwise the modal "flickers" as a result of
-                      // momentarily changing `display` to 'block' before
-                      // closing
-                      'display': 'table',
-                  },
-                  close: {
-                      'opacity': 1,
-                      'visibility': 'hidden',
-                      'display': 'none'
-                  }
-              }
-          }
-      });
-    </script>
 
     {% render_block "js" %}
     {% block javascripts %}
