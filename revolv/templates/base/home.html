@@ -8,6 +8,8 @@
     <script type="text/javascript">
         window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
     </script>
+    <script src="{% static 'js/mediaelement-and-player.min.js' %}"></script>
+    <link href="{% static 'css/mediaelementplayer.min.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block body_class %}class="home-page-content"{% endblock %}
