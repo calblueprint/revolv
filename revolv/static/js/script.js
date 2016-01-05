@@ -224,7 +224,9 @@ $(document).ready(function(){
   //loading Home page
   if($(".home-page-content").length>0)
   {    
-    $("#video-player").mediaelementplayer();
+    $("#video-player").mediaelementplayer({
+        flashScriptAccess: 'always',    
+    });
   }
   
   
