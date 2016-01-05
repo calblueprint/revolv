@@ -53,7 +53,7 @@ class MainPageSettings(BaseSetting):
     site_tagline = models.CharField(
         max_length=100,
         help_text="The tagline for the site, which will be shown large and centered over the animated cover video.",
-        default="WE'RE SAVING TOMORROW"
+        default="STOP IMAGINING<i></i> A CLEAN ENERGY FUTURE. START CREATING IT."
     )
     site_subheading = models.TextField(
         help_text="The description text that will be shown after the site tagline - a brief (one sentence) introduction to what RE-volv is and how donors can help.",
@@ -62,7 +62,7 @@ class MainPageSettings(BaseSetting):
     learn_button_text = models.CharField(
         max_length=50,
         help_text="The label on the 'Learn more button'. E.g. 'Learn about how RE-volv works'",
-        default="Learn about how RE-volv works"
+        default="DONATE"
     )
     single_project_heading = models.CharField(
         max_length=50,
