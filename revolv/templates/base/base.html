@@ -48,7 +48,9 @@
 </head>
 
 <body {% block body_class %}{% endblock%}>
+    {% block nav %}
     {% include "base/partials/nav.html" %}
+    {% endblock %}
 
     {% block body %}
     {% endblock %}

@@ -341,6 +341,12 @@ a:focus {
 	.header.top-section-header {
 		position: absolute;
 	}
+    .home-page-content .header {
+        margin-top: 5px;
+    }
+    .home-page-content .header.after-scroll-header {
+        margin-top: inherit;
+    }
 
 
 

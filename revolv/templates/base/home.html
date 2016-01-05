@@ -14,6 +14,33 @@
 
 {% block body_class %}class="home-page-content"{% endblock %}
 
+{% block nav %}
+<header class="header top-section-header">
+  <div class="container">
+    <div class="lefts pull-left">
+      <a href="/" class="logo"></a>
+    </div>
+    <!-- end .logo -->
+    <div class="rights pull-right">
+      <div class="txt pull-left">
+
+        {% if request.user.is_authenticated %}
+          <li class="user-controls has-dropdown">
+            <span class="block"><a href="{% url "dashboard" %}">Dashboard</a></span>
+            <span class="block"><a href="{% url "logout" %}">Sign Out</a></li>
+          </li>
+          {% else %}
+            <span class="block"><a class="component-link" data-component="signup" href="{% url "signin" %}#signup">Sign Up</a> here</span>
+            <span class="block"><a class="component-link" data-component="login" href="{% url "signin" %}#login">Sign In</a></span>
+        {% endif %}
+
+      </div>
+      <a href="get-involved.html" class="btn-blue btn-donate pull-left">DONATE NOW</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
 {% block body %}
 
 <div class="top-section min-height993">
