@@ -7,6 +7,10 @@
 {% block head %}
     <script type="text/javascript">
         window.PARTIAL_COMPLETENESS = {{ first_project.partial_completeness_as_js }};
+        var js_urls = {
+            'newsletter-bg.jpg': '{% static "images/newsletter-bg.jpg" %}',
+            'small-newsletter-bg.jpg': '{% static "images/small/small-newsletter-bg.jpg" %}'
+        };
     </script>
     <script src="{% static 'js/mediaelement-and-player.min.js' %}"></script>
     <link href="{% static 'css/mediaelementplayer.min.css' %}" rel="stylesheet" />

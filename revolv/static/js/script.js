@@ -172,12 +172,12 @@ $(document).ready(function(){
   
   if(($(window).width()+17)>= 1200)
   {
-    $(".newsletter-module .img-area .desktop-img").parallax({imageSrc: '/static/images/newsletter-bg.jpg'});
+    $(".newsletter-module .img-area .desktop-img").parallax({imageSrc: js_urls['newsletter-bg.jpg']});
     $(".newsletter-module .img-area img").addClass("hide");
   }
   else if(($(window).width()+17)<= 1199 && ($(window).width()+17)> 1024)
   {
-    $(".newsletter-module .img-area .small-img").parallax({imageSrc: '/static/images/small/small-newsletter-bg.jpg'});
+    $(".newsletter-module .img-area .small-img").parallax({imageSrc: js_urls['small-newsletter-bg.jpg']});
     $(".newsletter-module .img-area img").addClass("hide");
   }
   else
