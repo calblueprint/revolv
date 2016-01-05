@@ -898,7 +898,6 @@ a:focus {
 									font-family: 'Source Sans Pro';
                                     font-weight: 700;
 									font-size: 18px;
-									font-weight: normal;
 									line-height: 20px;
 									padding-bottom: 10px;
 									margin-top: -4px;
@@ -2693,7 +2692,8 @@ a:focus {
 			padding: 43px 84px 75px 85px;
 		}
 		.solar-contents .article-detail .bold {
-			font-family: "source_sans_probold";
+	        font-family: 'Source Sans Pro';
+            font-weight: 700;
 		}
 		.solar-contents .article-detail .title-solar {
 			float: right;
@@ -3503,7 +3503,6 @@ a:focus {
 						  #modal-how-it-works .step-area .info-txt h4 {
 							  font-family: 'Source Sans Pro'; font-weight: 700;
 							  font-size: 18px;
-							  font-weight: normal;
 							  line-height: 20px;
 							  padding-bottom: 10px;
 							  margin-top: -4px;

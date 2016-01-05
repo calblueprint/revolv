@@ -55,13 +55,13 @@ a.jqTransformChecked {
 	background-position: -432px -19px !important;
 }
 .form-container label {
-	font-family: 'source_sans_probold';
+	font-family: 'Source Sans Pro';
 	font-size: 14px;
 	color: #4b4b4b;
 	line-height: 22px;
 	display: inline-block;
 	padding: 1px 0 0 5px;
-	font-weight: normal;
+	font-weight: 700;
 }
 
 /* -------------

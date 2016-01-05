@@ -285,7 +285,7 @@ $(document).ready(function(){
   $(".status-indicator input").knob({
     'draw' : function () {
        $(this.i).val(this.cv + '%');
-       $(this.i).css({"font-family" : "source_sans_probold", "font-size" : "30px", "color" : "#003399", "font-weight" : "normal"});
+       $(this.i).css({"font-family" : "Source Sans Pro", "font-size" : "30px", "color" : "#003399", "font-weight" : "700"});
        $(this.i).on("focus", function(){
         $(this.i).parent().click();
        });
