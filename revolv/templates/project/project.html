@@ -1,187 +1,203 @@
 {% extends "base/base.html" %}
+
 {% load staticfiles %}
+{% load humanize %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static "dashboard.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "project.css" %}">
-    <link href='//fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
-
-    <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
     <script type="text/javascript">
         window.PARTIAL_COMPLETENESS = {{ project.partial_completeness_as_js }};
         var is_reinvestment = {% if is_reinvestment %}true{% else %}false{% endif %};
         var reinvestment_amount = {{ reinvestment_amount }};
         var reinvestment_url = '{{ reinvestment_url }}';
     </script>
-
-    {% load humanize %}
-
 {% endblock %}
 
 {% block title %}Project | {% endblock %}
 
 {% block body %}
-
-{% include "project/partials/payment_modal.html" %}
-{% include "project/partials/confirm_modal.html" %}
-    {% include "project/partials/success_modal.html" with project=project %}
-    {%  if is_draft_mode == True %}
-        <div class="draft-mode-div">
-            <span class="draft-mode-title">
-                Pending
-            </span>
-            <span class="draft-mode-detail-text">
-                This project is currently pending approval. For assistance, please email sarah at re-volv.org
-            </span>
-        </div>
-    {% endif %}
-<div class="row dashboard">
-    <div class="statistics-graphics-container">
-        <div class="bar top-bar">
-            <div class="container">
-                <p class="left-text statistic amount-donated">${{ project.amount_donated }} donated</p>
-                <p class="right-text statistic days-left">{{ project.days_left }} days left</p>
-            </div>
-        </div>
-        <div class="bar bottom-bar">
-            <div class="container">
-                <p class ="left-text statistic amount-saved">{{ project.actual_energy }} kwH saved</p>
-                <p class ="right-text statistic num-donors">{{ donor_count }} {{ settings.revolv_cms.ProjectPageSettings.donors_wording }}</p>
-            </div>
-        </div>
-        <svg class="svg-graphics-container"></svg>
-        <svg class="internal-graphics-container"></svg>
-        <div class="text-container">
-            <p class="percentage-text">{{ project.percent_complete }}%</p>
-            <p class="funded">FUNDED</p>
-        </div>
+<div class="contents project-details-contents top150">
+  <div class="details-active-project-module">
+    <div class="banners min-height455">
+      <img src="{{project.cover_photo.url}}" class="desktop-banner" alt="Banner">
+      <img src="{{project.cover_photo.url}}" class="mobile-banner" alt="Banner">
     </div>
-</div>
-
-<div class="heading row">
-    {% if project.cover_photo %}
-        <div class="large-12 header-img-div" style='background-image: url("{{project.cover_photo.url}}")'>
-            <div class="overlay">
-                <div class="donate-button-header">
-                    {% if user.is_authenticated %}
-                        <a class="donate-link" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
-                        <a class="donate-link" id="donate-button" href="#donate" data-reveal-id="donate-modal"><p>DONATE</p></a>
-                    {% else %}
-                        <a class="donate-link" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
-                    {% endif %}
-                </div>
-                <p class="project-title" >{{ project.title }}</p>
-            </div>
+    <!-- end .banner -->  
+    <div class="banner-section">
+      <div class="container">
+        <div class="title-white-border title-active-project pull-right">ACTIVE PROJECT</div>
+        <h1 class="title-h1">
+            {{ project.title }}
+        </h1>
+        <div class="funded-round">
+          <span class="status-text">
+            <span class="round-depict">FUNDED</span>               
+          </span>
+          <!-- end .status-text -->
+            <div class="status-indicator desktop-circle">
+              <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="210" data-height="210" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
+            </div>   
+            <div class="status-indicator small-circle">
+              <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="175" data-height="175" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".13">
+            </div>   
+            <div class="status-indicator tablet-circle">
+              <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="152" data-height="152" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".16">
+            </div>    
+            <div class="status-indicator mobile-circle">
+              <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="75" data-height="75" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
+            </div> 
         </div>
-    {% endif %}
-</div>
-{% if project_donation_levels|length > 0 %}
-    <div class="row about">
-
-        <div class="header-text">
-            <p class="header">{{ project.tagline }}</p>
-        </div>
-        <div class="gray-bar"></div>
-        <div class="large-8 columns about-column">
-            <div class="row categories">
-            <div class="category-text"><p class="category-text-inside">CATEGORIES:   </p></div>
-            {% for category in project.categories %}
-                <div class="category-holder">
-                    <p class="category-label">{{ category }}</p>
-                </div>
-            {% endfor %}
-
-            </div>
-            {% if project.video_url %}
-                <iframe width="100%" height="500" type="text/html" class="project_video youtube-player" frameborder="0" allowfullscreen></iframe>
-            {% endif %}
-
-            <div class="about-text"><p>{{ project.description|safe }}</p>
-            </div>
-        </div>
-        <div class="large-4 columns rewards-container about-column">
-            <div class="rewards-text"><p class="rewards-text-inside">REWARDS</p></div>
-            <div class="gray-bar"></div>
-            {% for donation_level in project_donation_levels %}
-                <a class="donate-link" id="donate-button" href="#donate" data-reveal-id="donate-modal">
-                    <div class="donation-level-box">
-                        <div class="donation-level-header">${{ donation_level.amount|floatformat:"0"|intcomma }}</div>
-                        <div class="donation-level-text">{{ donation_level.description }}</div>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
+      </div>
     </div>
-{% else %}
-    <div class="row about">
-        <div class="header-text">
-            <p class="header">{{ project.tagline }}</p>
+    <!-- end .banner-section -->  
+    <div class="info-section">
+      <div class="container">
+        <div class="info-main">
+          <div class="blue-bar">
+            <span class="pull-left"><span class="bold">${{ project.amount_donated }}</span> Donated</span>
+            <span class="pull-right"><span class="bold">{{ project.days_left }}</span> Days Left</span>
+          </div>
+          <!-- end .blue-bar -->
+          <div class="dark-blue-bar">
+            <span class="pull-left"><span class="bold">{{ project.actual_energy }}</span> kwH Saved</span>
+            <span class="pull-right"><span class="bold">{{ donor_count }}</span> {{ settings.revolv_cms.ProjectPageSettings.donors_wording }}</span>
+          </div>
+          <!-- end .blue-bar -->
         </div>
-        <div class="gray-bar"></div>
-        {% if project.categories|length > 0 %}
-            <div class="row categories">
-                <div class="category-text"><p class="category-text-inside">CATEGORIES:   </p></div>
-                {% for category in project.categories %}
-                    <div class="category-holder">
-                        <p class="category-label">{{ category }}</p>
-                    </div>
-                {% endfor %}
+        <!-- end .info-main -->
+        <div class="video-main">
+          <div class="video-area pull-left">
+            <div class="video">
+              {% if project.video_url %}
+                <iframe class="project_video youtube-player" allowfullscreen></iframe>
+              {% endif %}
+            </div>
+          </div>
+          <div class="txt-area">
+            <div class="txt-table">
+              <div class="txt-td font20">
+                <div class="bottom-bar mobile-bottom-bar">
+                  <ul class="social-ul">
+                    <li><a href="javascript:;" class="btn-icon-gray"><i class="icon-fb icons"></i></a></li>
+                    <li><a href="javascript:;" class="btn-icon-gray"><i class="icon-tw icons"></i></a></li>
+                    <li><a href="javascript:;" class="btn-icon-gray"><i class="icon-gg icons"></i></a></li>
+                  </ul>
+                  <span class="mobile-show share-txt">Share With Love.</span>
+                </div>
+                <p class="font20">
+                  {{ project.tagline }}
+                </p>
+                <p class="font14">
+                  {{ project.description|safe }} 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end .video-main -->
+      </div>
+    </div>
+    <!-- end .info-section -->  
+  </div>
+  <!-- end .details-active-project-module -->
+  
+  <div class="project-updates-module">
+    <div class="container">
+      <div class="main-area">
+        {% if updates|length > 0 %}
+            <h2 class="title-blue-border title-project-updates pull-right">PROJECT UPDATES</h2>
+            <div class="clearfix"></div>
+            <div class="list-area">
+              {% for update in updates %}
+              <div class="row">
+                <div class="left-date">
+                  <span class="date-txt">{{ update.date|date:"o" }}</span>
+                  <span class="month-txt">{{ update.date|date:"M"|upper }}</span>
+                </div>
+                <div class="main-info">
+                    {{ update.update_text|safe }}
+                    <ul class="social-ul">
+                      <li><a href="javascript:;" class="btn-icon-gray"><i class="icon-fb icons"></i></a></li>
+                      <li><a href="javascript:;" class="btn-icon-gray"><i class="icon-tw icons"></i></a></li>
+                      <li><a href="javascript:;" class="btn-icon-gray"><i class="icon-gg icons"></i></a></li>
+                    </ul>
+                </div>
+              </div>
+              <!-- end .row -->
+              {% endfor %}
             </div>
         {% endif %}
-        {% if project.video_url %}
-            <iframe width="100%" height="500" type="text/html" class="project_video youtube-player" frameborder="0" allowfullscreen></iframe>
-        {% endif %}
-
-        <div class="about-text"><p>{{ project.org_about }}</p></div>
-    </div>
-{% endif %}
-
-{% if updates|length > 0 %}
-    <div class="row project-updates">
-        <div class="header-text">
-            <p class="header">Project Updates</p>
+        <!-- end .list-area -->
+        <div class="venue-area">
+          <h2 class="title-blue-border title-venue pull-right">VENUE</h2>
+          <div class="clearfix"></div>
+          <div class="venue-map" id="map-canvas">
+          </div>
+          <div class="venue-bottom">
+            <h4 class="title-h4">{{ project.title }}</h4>
+            <p>
+              <span>{{ project.location_street }}</span>
+              <span>{{ project.location_city_state_zip }}</span>
+            </p>
+          </div>
         </div>
-        <div class="gray-bar"></div>
-        {% for update in updates %}
-            <div class="update-container">
-                <div class="large-2 medium-3 small-12 columns update-column">
-                    <div class = "date-container">
-                        <p class="date-year">{{ update.date|date:"m" }}</p>
-                        <p class="date-month-day">{{ update.date|date:"M" }} {{ update.date|date:"o" }}<p>
-                    </div>
-                </div>
-                <div class="large-10 medium-9 small-12 columns update-column">
-                    <div class="update-text">{{ update.update_text|safe }}</div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
-
-<div class="row map">
-    <div id="map-canvas" class="map-canvas"></div>
-    <div class="columns large-5 small-6 overlay">
-        <div class="text-container">
-            <div class="title-container">
-                <p>{{ project.title }}</p>
-            </div>
-            <div class="address-container">
-                <p>{{ project.location_street }}</p>
-                <p>{{ project.location_city_state_zip }}</p>
-            </div>
-        </div>
-
-        <!-- TODO this donate button doesnt work because the model has a top attribute of like 4000 pixels -->
-        {% if user.is_authenticated %}
-            <a href="#donate" id="donate-button" data-reveal-id="donate-modal"><div class="donate-button-header"><p>DONATE</p></div></a>
-        {% else %}
-            <a id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><div class="donate-button-header"><p>DONATE</p></div></a>
+        <!-- end .venue-area -->
+      </div>
+      <!-- end .main-area -->
+      <aside class="right-aside">
+        {% if project_donation_levels|length > 0 %}
+          {% for donation_level in project_donation_levels %}
+          <div class="module-box">
+            <div class="value-txt">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
+            <h5 class="title-h5">OUR APPRECIATION</h5>
+              {{ donation_level.description }}
+            <a href="javascript:;" class="btn-blue btn-i-want-to-donate">I WANT TO DONATE</a>
+          </div>
+          {% endfor %}
+          <!-- end .module-box -->
         {% endif %}
+      </aside>
+      <!-- end .list-area -->
+    </div>    
+  </div>
+  <!-- end .project-updates-module -->
+  
+  <div class="donors-module">
+    <div class="mains-tabs">
+      <nav class="tab-index">
+        <div class="container">         
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6"><a href="javascript:;" class="active">DONORS</a></div>
+          </div>
+        </div>   
+        <!-- end .row -->
+      </nav>
+      <!-- end .nav -->
+      <div class="tab-content">
+        <div class="container">
+          <div class="tab-content-section active">
+            <div class="row">
+              {% for donor in project.donors.all %}
+              <div class="col-md-6">
+                <div class="info-box">
+                    <h4 class="title-h4">{{ donor.get_full_name }}</h4>
+                </div>
+              </div>
+              {% endfor %}
+              <!-- end .col-md-6 -->
+            </div>
+          </div>
+          <!-- end .tab-gold -->      
+        </div>
+      </div>
+      <!-- end .tab-content -->
     </div>
-    <div class="columns large-7 small-6 map-cover"></div>
+    <!-- end .tabs -->
+      
+  </div>
+  <!-- end .donors-module -->
+
 </div>
-
+<!-- end .contents -->
 {% endblock %}
 
 {% block javascripts %}
@@ -194,8 +210,7 @@
     src="//maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>
 
-<script type="text/javascript" src="{% static "js/base/partialcircle.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
+<script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
 <script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
 
 {# jQuery.payment necessary for sexy card info validation #}

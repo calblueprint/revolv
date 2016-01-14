@@ -2444,16 +2444,11 @@ a:focus {
 					}
 					.donors-module .info-box .title-h4 {
 						padding: 0 0 4px 0;
-					}
-						.donors-module .info-box .title-h4 a {
-							font-family: 'Source Sans Pro'; font-weight: 700;
-							font-size: 18px;
-							color: #282828;
-							text-transform: uppercase;
-						}
-							.donors-module .info-box .title-h4 a:hover {
-								color: #00a1d9;
-							}
+						font-family: 'Source Sans Pro'; font-weight: 700;
+						font-size: 18px;
+						color: #282828;
+						text-transform: uppercase;
+				    }
 					.donors-module .info-box p {
 						font-size: 14px;
 						color: #4b4b4b;
