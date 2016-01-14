@@ -1,3 +1,5 @@
+var js_urls = {};
+
 //count for 1st Number of "OUR IMPACTS" section in Home page
 function increaseCount1(currentValue1,step1,value1){
   if((currentValue1+step1)<=value1)
@@ -170,12 +172,12 @@ $(document).ready(function(){
   
   //set parallax images for NewLetter section in Home page
   
-  if(($(window).width()+17)>= 1200)
+  if(($(window).width()+17)>= 1200 && js_urls['newsletter-bg.jpg'])
   {
     $(".newsletter-module .img-area .desktop-img").parallax({imageSrc: js_urls['newsletter-bg.jpg']});
     $(".newsletter-module .img-area img").addClass("hide");
   }
-  else if(($(window).width()+17)<= 1199 && ($(window).width()+17)> 1024)
+  else if(($(window).width()+17)<= 1199 && ($(window).width()+17)> 1024 && js_urls['small-newsletter-bg.jpg'])
   {
     $(".newsletter-module .img-area .small-img").parallax({imageSrc: js_urls['small-newsletter-bg.jpg']});
     $(".newsletter-module .img-area img").addClass("hide");
