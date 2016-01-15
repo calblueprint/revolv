@@ -1,74 +1,81 @@
 {% load staticfiles %}
-<div id="donate-modal" class="revolv-reveal-modal-table" data-reveal>
-    <div class="modal-cell">
-        <div class="modal-content payment-modal-content">
-            <div class="modal-header">
-                <span class="modal-title">Donate to Project</span>
-                <div class="modal-errors">
-                    <span class="error-msg"></span>
+
+<div class="modal fade" id="donate-modal" class="revolv-reveal-modal-table" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content payment-modal-content">
+      <div class="modal-header">
+          <span class="modal-title">Donate to Project</span>
+          <div class="modal-errors">
+              <span class="error-msg"></span>
+          </div>
+      </div>
+      <div class="modal-body">
+        <form name="donate-form" id="donate-form" method="POST" action="donation/submit" autocomplete="on">
+            {% csrf_token %}
+
+            <div class="modal-section">
+                <div class="row payment-pitch">
+                    <div class="small-12 columns">
+                        {{ settings.revolv_cms.PaymentModalSettings.payment_modal_paragraph|safe }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="medium-12 columns">
+                        <ul class="cc-type-list">
+                            <li><img class="cc-type-visa" src="{% static 'images/cc_icons/visa_32.png' %}"></li>
+                            <li><img class="cc-type-mastercard" src="{% static 'images/cc_icons/mastercard_32.png' %}"></li>
+                            <li><img class="cc-type-discover" src="{% static 'images/cc_icons/discover_32.png' %}"></li>
+                            <li><img class="cc-type-amex" src="{% static 'images/cc_icons/amex_32.png' %}"></li>
+                        </ul>
+                        <label>Card number</label>
+                        <input name="cc-number" class="cc-number" type="tel">
+                    </div>
+                </div>
+                <div class="row condense">
+                    <div class="small-6 columns">
+                        <label>Expires on</label>
+                        <input name="cc-expiry" class="cc-expiry" type="tel" placeholder="MM / YYYY">
+                    </div>
+                    <div class="small-6 columns">
+                        <label>Security code</label>
+                        <input autocomplete="off" name="cc-cvc" class="cc-cvc" type="tel">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="medium-12 columns">
+                        <label>Name on card</label>
+                        <input name="cc-name" class="cc-name" type="text">
+                    </div>
                 </div>
             </div>
-            <form name="donate-form" 
-                id="donate-form" 
-                method="POST" 
-                action="donation/submit" 
-                autocomplete="on">
-                {% csrf_token %}
-                <div class="modal-section">
-                    <div class="row payment-pitch">
-                        <div class="small-12 columns">
-                            {{ settings.revolv_cms.PaymentModalSettings.payment_modal_paragraph|safe }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="medium-12 columns">
-                            <ul class="cc-type-list">
-                                <li><img class="cc-type-visa" src="{% static 'images/cc_icons/visa_32.png' %}"></li>
-                                <li><img class="cc-type-mastercard" src="{% static 'images/cc_icons/mastercard_32.png' %}"></li>
-                                <li><img class="cc-type-discover" src="{% static 'images/cc_icons/discover_32.png' %}"></li>
-                                <li><img class="cc-type-amex" src="{% static 'images/cc_icons/amex_32.png' %}"></li>
-                            </ul>
-                            <label>Card number</label>
-                            <input name="cc-number" class="cc-number" type="tel">
-                        </div>
-                    </div>
-                    <div class="row condense">
-                        <div class="small-6 columns">
-                            <label>Expires on</label>
-                            <input name="cc-expiry" class="cc-expiry" type="tel" placeholder="MM / YYYY">
-                        </div>
-                        <div class="small-6 columns">
-                            <label>Security code</label>
-                            <input autocomplete="off" name="cc-cvc" class="cc-cvc" type="tel">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="medium-12 columns">
-                            <label>Name on card</label>
-                            <input name="cc-name" class="cc-name" type="text">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-section">
-                    <div class="row">
-                        <div class="medium-12 columns">
-                          <label>Amount ($ USD)</label>
-                            <input name="donation-amount" class="donation-amount" type="text">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-section">
+
+
+            <div class="modal-section">
+                <div class="row">
                     <div class="medium-12 columns">
-                        <ul class="modal-footer-button-group right">
-                            <li><button class="close-revolv-reveal-modal submit-button gray">Cancel</button></li>
-                            <li><button class="submit-button donation-continue">Continue</button></li>
-                        </ul>
+                      <label>Amount ($ USD)</label>
+                        <input name="donation-amount" class="donation-amount" type="text">
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+
+
+            <div class="modal-section">
+                <div class="medium-12 columns">
+                    <ul class="modal-footer-button-group right">
+                        <li><button class="close-revolv-reveal-modal submit-button gray">Cancel</button></li>
+                        <li><button class="submit-button donation-continue">Continue</button></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+      </div>
+
     </div>
+  </div>
 </div>
+
+{% comment %}
 {% if is_reinvestment and reinvestment_amount > 0.0 %}
 <div id="reinvest-modal" class="revolv-reveal-modal-table" data-reveal>
     <div class="modal-cell">
@@ -99,3 +106,4 @@
     </div>
 </div>
 {% endif %}
+{% endcomment %}

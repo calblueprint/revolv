@@ -15,6 +15,22 @@
 {% block title %}Project | {% endblock %}
 
 {% block body %}
+{% include "project/partials/payment_modal.html" %}
+{% comment %}
+{% include "project/partials/confirm_modal.html" %}
+{% include "project/partials/success_modal.html" with project=project %}
+{% endcomment %}
+{%  if is_draft_mode == True %}
+    <div class="draft-mode-div">
+        <span class="draft-mode-title">
+            Pending
+        </span>
+        <span class="draft-mode-detail-text">
+            This project is currently pending approval. For assistance, please email sarah at re-volv.org
+        </span>
+    </div>
+{% endif %}
+
 <div class="contents project-details-contents top100">
   <div class="details-active-project-module">
     <div class="banners min-height455">
@@ -150,11 +166,23 @@
             <div class="value-txt">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
             <h5 class="title-h5">OUR APPRECIATION</h5>
               {{ donation_level.description }}
-            <a href="javascript:;" class="btn-blue btn-i-want-to-donate">I WANT TO DONATE</a>
+            <a href="#" class="btn-blue btn-i-want-to-donate" data-toggle="modal" data-target="#donate-modal">I WANT TO DONATE</a>
           </div>
           {% endfor %}
           <!-- end .module-box -->
-        {% endif %}
+        {% else %}
+          <div class="module-box">
+            <h5 class="title-h5">BACK THIS PROJECT</h5>
+              Back {{ project.title }} and support solar energy!
+              {% if user.is_authenticated %}
+                  <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
+                  <a class="btn-blue btn-i-want-to-donate" id="donate-button" data-toggle="modal" data-target="#donate-modal"><p>DONATE</p></a>
+              {% else %}
+                  <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
+              {% endif %}
+          </div>
+          {% endif %}
+          <!-- end .module-box -->
       </aside>
       <!-- end .list-area -->
     </div>    
@@ -209,9 +237,6 @@
 <script type="text/javascript"
     src="//maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
 </script>
-
-<script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
-<script type="text/javascript" src="{% static "js/base/project.js" %}"></script>
 
 {# jQuery.payment necessary for sexy card info validation #}
 <script type="text/javascript"
