@@ -1,47 +1,52 @@
-<div id="confirm-modal" class="revolv-reveal-modal-table" data-reveal>
-    <div class="modal-cell">
-        <div class="modal-content confirm-modal-content">
-            <div class="modal-header">
-                <span class="modal-title">Confirm Donation</span>
-            </div>
-            <div class="modal-section">
-                <div class="row">
-                    <div class="medium-6 columns confirm-column">
-                        <label>Card Info</label>
-                        <div class="table">
-                            <div class="table-cell-middle">
-                                <ul class="confirm-info-card">
-                                    <li><span class="type"></span> ending in <span class="lastfour"></span></li>
-                                    <li>Expires on: <span class="expiry"></span></li>
-                                    <li>Name on card: <span class="name"></span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="medium-6 columns confirm-column">
-                        <label>Donation Amount</label>
-                        <div class="table">
-                            <div class="table-cell-middle text-center">
-                                <span class="confirm-info-amount"></span>
-                            </div>
+<div class="modal fade" id="confirm-modal" class="revolv-reveal-modal-table" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content payment-modal-content">
+      <div class="modal-header">
+          <span class="modal-title">Confirm Donation</span>
+          <div class="modal-errors">
+              <span class="error-msg"></span>
+          </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+            <div class="row">
+                <div class="medium-6 columns confirm-column">
+                    <label>Card Info</label>
+                    <div class="table">
+                        <div class="table-cell-middle">
+                            <ul class="confirm-info-card">
+                                <li><span class="type"></span> ending in <span class="lastfour"></span></li>
+                                <li>Expires on: <span class="expiry"></span></li>
+                                <li>Name on card: <span class="name"></span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-section table">
-                <div class="table-cell-middle confirm-text">
-                    <span>{{ settings.revolv_cms.PaymentModalSettings.confirm_payment_paragraph|safe }}</span>
-                </div>
-            </div>
-            <div class="modal-section">
-                <div class="medium-12 columns">
-                    <ul class="modal-footer-button-group right">
-                        <li><button class="close-revolv-reveal-modal cancel-confirm submit-button gray">Cancel</button></li>
-                        <li><button class="submit-button donation-change yellow">Change</button></li>
-                        <li><button class="submit-button donation-submit">Confirm Donation</button></li>
-                    </ul>
+                <div class="medium-6 columns confirm-column">
+                    <label>Donation Amount</label>
+                    <div class="table">
+                        <div class="table-cell-middle text-center">
+                            <span class="confirm-info-amount"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="modal-section table">
+            <div class="table-cell-middle confirm-text">
+                <span>{{ settings.revolv_cms.PaymentModalSettings.confirm_payment_paragraph|safe }}</span>
+            </div>
+        </div>
+        <div class="modal-section">
+            <div class="medium-12 columns">
+                <ul class="modal-footer-button-group right">
+                    <li><button class="close-revolv-reveal-modal cancel-confirm submit-button gray">Cancel</button></li>
+                    <li><button class="submit-button donation-change yellow">Change</button></li>
+                    <li><button class="submit-button donation-submit">Confirm Donation</button></li>
+                </ul>
+            </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

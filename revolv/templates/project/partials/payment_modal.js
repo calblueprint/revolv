@@ -318,12 +318,13 @@ var paymentSpinner = new Spinner();
 $('button.donation-continue').click(function(e) {
     e.preventDefault();
     populateConfirmModal(getDonateFormValues());
-    $('#confirm-modal').foundation('reveal', 'open');
+    $('#donate-modal').modal('hide');
+    $('#confirm-modal').modal('show');
     return false;
 });
 $('button.donation-change').click(function(e) {
     e.preventDefault();
-    $('#donate-modal').foundation('reveal', 'open');
+    $('#donate-modal').modal('open');
     return false;
 });
 $('button.donation-submit').click(function(e) {
@@ -399,13 +400,13 @@ $('#donate-form').submit(function(e) {
         $('#amount-donated').text('${0}'.format(
             /*jshint -W053 */
             (new Number(data.amount)).toFixed(2)));
-        $('#success-modal').foundation('reveal', 'open');
+        $('#success-modal').modal('open');
     }).fail(function(jqXHR) {
         $donateModalErrors.addClass('error');
         $donateModalErrors.children('.error-msg')
             .text('Your card information is invalid. Please correct it.');
         $(".payment-pitch").hide();
-        $('#donate-modal').foundation('reveal', 'open');
+        $('#donate-modal').modal('open');
     }).always(function () {
         paymentSpinner.stop();
         // timeout is for cosmetic purposes only; buttons flicker and look
@@ -442,13 +443,13 @@ $(document).on('closed.fndtn.reveal', '#success-reinvest-modal', function() {
 $('.revolv-reveal-modal-table').click(function (e) {
     if (e.target === this ||
         e.target === $(this).children(':first')[0]) {
-        $(document).foundation('reveal', 'close');
+        $(document).modal('hide');
     }
 });
 
 
 $('#reinvest-modal .close-revolv-reveal-modal').click(function(e){
-    $('#reinvest-modal').foundation('reveal','close');
+    $('#reinvest-modal').modal('hide');
 });
 $('#reinvest-modal .reinvest-continue').click(function(e){
     e.preventDefault();
@@ -470,7 +471,7 @@ $('#reinvest-modal .reinvest-continue').click(function(e){
             $('p.num-donors').text(p.num_donors + ' donors');
             $('#reinvest-button').hide();
             $('#donate-button').show();
-            $('#success-reinvest-modal').foundation('reveal', 'open');
+            $('#success-reinvest-modal').modal('show');
         }).fail(function(jqXHR) {
             $modelError = $('#reinvest-modal').find('.modal-errors')
             $modelError.addClass('error');
@@ -478,7 +479,7 @@ $('#reinvest-modal .reinvest-continue').click(function(e){
                 .text('Error while processing your request, try again later');
             setTimeout(function() {
                 $modelError.removeClass('error');
-                $('#reinvest-modal').foundation('reveal', 'close');
+                $('#reinvest-modal').modal('hide');
             }, 1500);
         }).always(function () {
             paymentSpinner.stop();
@@ -494,10 +495,10 @@ $('#reinvest-modal .reinvest-continue').click(function(e){
     return false;
 });
 $('#success-reinvest-modal .reinvest-donate').click(function(){
-   $('#donate-modal').foundation('reveal', 'open');
+   $('#donate-modal').modal('show');
 });
 $('#success-modal .submit-button').click(function(){
-    $('#share-modal').foundation('reveal', 'open');
+    $('#share-modal').modal('show');
 })
 });
 
