@@ -324,7 +324,8 @@ $('button.donation-continue').click(function(e) {
 });
 $('button.donation-change').click(function(e) {
     e.preventDefault();
-    $('#donate-modal').modal('open');
+    $('#confirm-modal').modal('hide');
+    $('#donate-modal').modal('show');
     return false;
 });
 $('button.donation-submit').click(function(e) {
