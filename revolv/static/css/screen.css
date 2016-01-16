@@ -10993,3 +10993,12 @@ body {
 #donate-form .cc-type-list {
     margin-top: -10px;
 }
+
+.payment-modal-content .confirm-info-card {
+    margin-bottom: 1em;
+}
+
+.payment-modal-content .modal-header {
+    font-weight: bold;
+    font-size: 18px; 
+}
