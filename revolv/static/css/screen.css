@@ -10989,4 +10989,7 @@ body {
 	}
 }
 
-
+/* Donate / reinvestment modals */
+#donate-form .cc-type-list {
+    margin-top: -10px;
+}

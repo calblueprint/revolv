@@ -59,8 +59,8 @@ donationContinueBtnDOM.disabled = true;
  * @param {jQuery Element} inputEle - Element to apply class to
  */
 var validOrApplyErrorClass = function(fieldName, inputEle) {
-    inputEle.toggleClass(
-        'error',
+    inputEle.parent().toggleClass(
+        'has-error',
         !validObj[fieldName]
     );
 };
