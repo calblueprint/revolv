@@ -17,9 +17,7 @@
 {% block body %}
 {% include "project/partials/payment_modal.html" %}
 {% include "project/partials/confirm_modal.html" %}
-{% comment %}
 {% include "project/partials/success_modal.html" with project=project %}
-{% endcomment %}
 {%  if is_draft_mode == True %}
     <div class="draft-mode-div">
         <span class="draft-mode-title">

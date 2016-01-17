@@ -401,13 +401,15 @@ $('#donate-form').submit(function(e) {
         $('#amount-donated').text('${0}'.format(
             /*jshint -W053 */
             (new Number(data.amount)).toFixed(2)));
-        $('#success-modal').modal('open');
+        $('#confirm-modal').modal('hide');
+        $('#success-modal').modal('show');
     }).fail(function(jqXHR) {
         $donateModalErrors.addClass('error');
         $donateModalErrors.children('.error-msg')
             .text('Your card information is invalid. Please correct it.');
         $(".payment-pitch").hide();
-        $('#donate-modal').modal('open');
+        $('#confirm-modal').modal('hide');
+        $('#donate-modal').modal('show');
     }).always(function () {
         paymentSpinner.stop();
         // timeout is for cosmetic purposes only; buttons flicker and look
