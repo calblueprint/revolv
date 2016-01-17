@@ -424,23 +424,23 @@ $('#donate-form').submit(function(e) {
 });
 
 // Toggle animate class to checkmark on success modal
-$(document).on('opened.fndtn.reveal', '#success-modal', function() {
+$('#success-modal').on('shown.bs.modal', function() {
     setTimeout(function() {
         $('#success-modal').find('label.checkmark').addClass('animate');
     }, 200);
 });
-$(document).on('closed.fndtn.reveal', '#success-modal', function() {
+$('#success-modal').on('hidden.bs.modal', function() {
     $('#success-modal').find('label.checkmark').removeClass('animate');
 });
-
-$(document).on('opened.fndtn.reveal', '#success-reinvest-modal', function() {
+$('#success-reinvest-modal').on('shown.bs.modal', function() {
     setTimeout(function() {
         $('#success-reinvest-modal').find('label.checkmark').addClass('animate');
     }, 200);
 });
-$(document).on('closed.fndtn.reveal', '#success-reinvest-modal', function() {
-    $('#success-reinvest-modal').find('label.checkmark').removeClass('animate');
+$('#success-reinvest-modal').on('hidden.bs.modal', function() {
+    $('#success-modal').find('label.checkmark').removeClass('animate');
 });
+
 // Hack to close modal on modal-table click
 // (i.e., when the dimmed background is clicked)
 $('.revolv-reveal-modal-table').click(function (e) {
@@ -501,6 +501,7 @@ $('#success-reinvest-modal .reinvest-donate').click(function(){
    $('#donate-modal').modal('show');
 });
 $('#success-modal .submit-button').click(function(){
+    $('#success-modal').modal('hide');
     $('#share-modal').modal('show');
 })
 });

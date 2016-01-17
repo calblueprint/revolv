@@ -11002,3 +11002,47 @@ body {
     font-weight: bold;
     font-size: 18px; 
 }
+
+label.checkmark {
+  position: relative;
+  display: block;
+  height: 120px;
+  width: 120px;
+  border: 5px solid #c7eefb;
+  border-radius: 50%;
+  margin: 0 auto 0.9375rem auto; }
+  label.checkmark:after {
+    -moz-transform: scaleX(-1) rotate(135deg);
+    -o-transform: scaleX(-1) rotate(135deg);
+    -ms-transform: scaleX(-1) rotate(135deg);
+    -webkit-transform: scaleX(-1) rotate(135deg);
+    transform: scaleX(-1) rotate(135deg);
+    -moz-transform-origin: left top;
+    -o-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    border-right: 5px solid #11ade5;
+    border-top: 5px solid #11ade5;
+    content: '';
+    height: 60px;
+    left: 24px;
+    position: absolute;
+    top: 60px;
+    width: 30px;
+    display: none; }
+  label.checkmark.animate:after {
+    display: block;
+    -webkit-animation: check 0.8s;
+    -moz-animation: check 0.8s;
+    -o-animation: check 0.8s;
+    animation: check 0.8s; }
+
+.sharethis-placeholder {
+    font-weight: bold;
+    margin-top: 1em
+}
+#sharethis-button {
+    margin-top: 0.5em;
+    display: block;
+}
