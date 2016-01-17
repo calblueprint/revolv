@@ -21,9 +21,10 @@
 {% endblock %}
 
 {% block body %}
+<div class="contents top100">
 
-<div class='row component-row login' {% if referring_endpoint == "signup" or referring_endpoint == "" %}style="display: none"{% endif %}>
-    <div class='component-container medium-offset-2 medium-4 small-12 columns'>
+<div class="login" {% if referring_endpoint == "signup" or referring_endpoint == "" %}style="display: none"{% endif %}>
+
         {% if reason and reason == "donate" %}
             <h1>{{ settings.revolv_cms.LoginPageSettings.heading_for_donation }}</h1>
             {{ settings.revolv_cms.LoginPageSettings.login_paragraph_for_donation|safe }}
@@ -33,21 +34,23 @@
         {% endif %}
         <p>If you're new here, please <a class="component-link" data-component="signup">create an account</a>.</p>
         <p>If you forgot your password, you can <a id="password_reset_link" href="/password_reset/">reset it here</a>.</p>
-    </div>
-    <div class='component-container medium-4 small-12 columns end'>
+
         <form action="/login/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in login_form.non_field_errors %}
               <small class="error non-field-error">{{ error }}</small>
             {% endfor %}
             {% for login_field in login_form %}
+                <div class="form-group">
                 {% include "base/partials/placeholder_formfield.html" with field=login_field %}
+                </div>
             {% endfor %}
             {% if login_redirect_url %}
                 <input type="hidden" name="next" value="{{ login_redirect_url }}">
             {% endif %}
-            <button class="submit-button medium" type="submit" value="Log in">{{ settings.revolv_cms.LoginPageSettings.button_text }}</button>
-
+            <div class="form-group">
+              <button class="submit-button medium btn btn-primary" type="submit" value="Log in">{{ settings.revolv_cms.LoginPageSettings.button_text }}</button>
+            </div>
         </form>
 
         <div class="social-login-buttons">
@@ -67,10 +70,11 @@
                 </button>
             </a>
         </div>
-    </div>
+
 </div>
-<div class='row component-row signup' {% if referring_endpoint == "login" or referring_endpoint == "" %}style="display: none"{% endif %}>
-    <div class='component-container medium-offset-2 medium-4 small-12 columns'>
+
+<div class='signup' {% if referring_endpoint == "login" or referring_endpoint == "" %}style="display: none"{% endif %}>
+
         <h1>{{ settings.revolv_cms.SignupPageSettings.heading }}</h1>
         {{ settings.revolv_cms.SignupPageSettings.signup_paragraph|safe }}
         <p>Already have an account? Log in <a class="component-link" data-component="login">here</a>.</p>
@@ -90,9 +94,8 @@
                         <span class="hidden-xs">Facebook</span>
                     </button>
                 </a>
-            </div>
-    </div>
-    <div class="component-container medium-4 small-12 columns end">
+        </div>
+
         <form action="/signup/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in signup_form.non_field_errors %}
@@ -113,7 +116,8 @@
             </label>
             <button class="submit-button medium" type="submit" value="Log in">{{ settings.revolv_cms.SignupPageSettings.button_text }}</button>
         </form>
-    </div>
+
 </div>
 
+</div>
 {% endblock %}

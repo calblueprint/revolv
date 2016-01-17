@@ -5,12 +5,12 @@
  */
 var showComponent = function (key) {
     if (key === "signup") {
-        $(".component-row.login").slideUp(function () {
-            $(".component-row.signup").slideDown();
+        $(".login").slideUp(function () {
+            $(".signup").slideDown();
         });
     } else if (key === "login") {
-        $(".component-row.signup").slideUp(function () {
-            $(".component-row.login").slideDown();
+        $(".signup").slideUp(function () {
+            $(".login").slideDown();
         });
     }
 };

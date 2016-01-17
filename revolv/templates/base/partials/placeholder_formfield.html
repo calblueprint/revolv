@@ -5,11 +5,11 @@
         <span has-tooltip for="{{ field.id_for_label }}" data-tooltip class="placeholder-tooltip-entry has-tip tip-top tip-thin" title="{{ field.help_text }}">(?)</span>
     {% endif %}
     {% if field.errors %}
-        {{ field|add_class:"error" }}
+        {{ field|add_class:"error form-control" }}
     {% else %}
         {% with val=field.label|safe %}
             {% with to_append="placeholder:"|add:val %}
-                {{ field|attr:to_append }}
+                {{ field|add_class:"form-control"|attr:to_append }}
             {% endwith %}
         {% endwith %}
     {% endif %}
