@@ -24,7 +24,7 @@
 
 {% endblock %}
 {% block body %}
-    <div class='row main-row'>
+    <div class='main-row dashboard'>
     {% if role == 'ambassador' or role == 'admin' %}
         <div class="small-3 large-2 columns dashboard-sidebar">
             {% include "base/partials/dashboard_sidebar.html" with user=user %}

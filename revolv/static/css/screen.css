@@ -11071,3 +11071,8 @@ label.checkmark {
         display: none;
     }
 }
+
+/* Dashboard */
+.dashboard .active-projects-module {
+    background-color: #fff;
+}
