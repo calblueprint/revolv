@@ -11055,3 +11055,13 @@ label.checkmark {
 .signup .tos p {
     font-size: 85%;
 }
+
+/* ShareThis widget */
+
+/* Hide the sharethis left-size hover widget on small screens, or it will
+ * obscure the page */
+@media (max-width: 768px) {
+    #sthoverbuttons {
+        display: none;
+    }
+}
