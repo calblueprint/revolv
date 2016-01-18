@@ -21,10 +21,11 @@
 {% endblock %}
 
 {% block body %}
-<div class="contents top100">
+<div class="contents top150">
 
 <div class="login" {% if referring_endpoint == "signup" or referring_endpoint == "" %}style="display: none"{% endif %}>
-
+  <div class="row">
+    <div class="col-md-3 col-md-push-3 col-sm-3 col-sm-push-3">
         {% if reason and reason == "donate" %}
             <h1>{{ settings.revolv_cms.LoginPageSettings.heading_for_donation }}</h1>
             {{ settings.revolv_cms.LoginPageSettings.login_paragraph_for_donation|safe }}
@@ -32,9 +33,11 @@
             <h1>{{ settings.revolv_cms.LoginPageSettings.heading }}</h1>
             {{ settings.revolv_cms.LoginPageSettings.login_paragraph|safe }}
         {% endif %}
+        <br/>
         <p>If you're new here, please <a class="component-link" data-component="signup">create an account</a>.</p>
         <p>If you forgot your password, you can <a id="password_reset_link" href="/password_reset/">reset it here</a>.</p>
-
+    </div>
+    <div class="col-md-3 col-md-push-3 col-sm-3">
         <form action="/login/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in login_form.non_field_errors %}
@@ -70,6 +73,8 @@
                 </button>
             </a>
         </div>
+    </div>
+  </div>
 
 </div>
 

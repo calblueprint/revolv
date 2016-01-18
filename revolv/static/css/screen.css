@@ -11046,3 +11046,8 @@ label.checkmark {
     margin-top: 0.5em;
     display: block;
 }
+
+/* Login / sign up area */
+#login_form .placeholder-field-label {
+    width: 100%;
+}
