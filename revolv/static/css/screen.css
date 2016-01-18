@@ -606,6 +606,12 @@ a:focus {
 							.active-projects-module .img-main .funded-round .status-indicator input {
 								margin-top: 27px !important;
 							}
+                            .active-projects-module.embedded .img-main .funded-round .status-indicator input {
+                                margin-top: -88px !important;
+                                margin-left: 23px!important;
+                                box-shadow: none;
+							}
+
 						.status-indicator {
 							transform: rotateY(180deg);
 							-webkit-transform: rotateY(180deg);

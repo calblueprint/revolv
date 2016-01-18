@@ -1,44 +1,60 @@
-<div class="row active-projects-block">
-            {% for active_project in active_projects %}
-                {% if active_project.cover_photo %}
-                    <div class="active-project {% if forloop.counter|divisibleby:3 %}last-active-project-in-row{% endif %}" >
+{% load static %}
 
-                        <a href="{% url "project:view" pk=active_project.pk %}">
-                            <div class="overlay">
-
-                                <div class="active-project-cover" style="background-image: url({{active_project.cover_photo.url}})">
-
-                                    <div class="active-project-inset">
-                                        <h3 class="heading-top-margin">{{ active_project.title }}</h3>
-                                    </div>
-                                    <div class="graphics-container">
-                                        <span class="partial-completeness">{{ active_project.partial_completeness_as_js }}</span>
-                                        <svg class="svg-graphics-container"></svg>
-                                        <svg class="internal-graphics-container"></svg>
-                                        <div class="text-container">
-                                            <p class="percentage-text">{{ active_project.percent_complete }}%</p>
-                                            <p class="funded">FUNDED</p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="statistics-graphics-container">
-                                    <div class="bar top-bar">
-                                        <div class="container">
-                                            <p class="left-text statistic amount-donated">${{ active_project.amount_donated }} donated</p>
-                                            <p class="right-text statistic days-left">{{ active_project.days_left }} days left</p>
-                                        </div>
-                                    </div>
-                                    <div class="bar bottom-bar">
-                                        <div class="container">
-                                            <p class ="left-text statistic amount-saved">{{ active_project.actual_energy }} kwH saved</p>
-                                            <p class ="right-text statistic num-donors">{{ active_project.donors.count }} {{ settings.revolv_cms.ProjectPageSettings.donors_wording }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                {% endif %}
-            {% endfor %}
+<div class="active-projects-module animated embedded">
+  <div class="container">
+    <div class="row">
+      {% for active_project in active_projects %}
+      <div class="col-md-4">
+        <div class="module-box">
+          <div class="img-main">
+            <a href="{% url "project:view" pk=active_project.pk %}" class="img-link">
+              <span class="txt-table">
+                <span class="txt">
+                    {{ active_project.title }}
+                </span>
+              </span>
+              <img src="{% static 'images/active-projects-img1.jpg' %}" class="desktop-img" alt="Active Projects">
+              <img src="{% static 'images/mobile/mobile-active-projects-img1.jpg' %}" class="mobile-img" alt="Active Projects">
+            </a>
+            <div class="funded-round">
+              <div class="status-circular">
+                <span class="status-text">
+                  <span class="round-depict">FUNDED</span>               
+                </span>
+                <!-- end .status-text -->
+                <div class="status-indicator desktop-circle">
+                  <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="105" data-height="105" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".24">
+                </div>   
+                <div class="status-indicator small-circle">
+                  <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="92" data-height="92" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".2">
+                </div>   
+                <div class="status-indicator tablet-circle">
+                  <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="200" data-height="200" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
+                </div>    
+                <div class="status-indicator mobile-circle">
+                  <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="98" data-height="98" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
+                </div>                              
+              </div>
+            </div>
+          </div>
+          <!-- end .img-main -->
+          <div class="info-main">
+            <div class="blue-bar">
+              <span class="pull-left">${{ active_project.amount_donated }}</span>
+              <span class="pull-right">{{ active_project.days_left }} Days Left</span>
+            </div>
+            <!-- end .blue-bar -->
+            <div class="dark-blue-bar">
+              <span class="pull-left">{{ active_project.actual_energy }} kwH Saved</span>
+              <span class="pull-right">{{ active_project.donors.count }} Donors</span>
+            </div>
+            <!-- end .blue-bar -->
+          </div>
+          <!-- end .info-main -->
         </div>
+        <!-- end .module-box -->
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+ </div>
