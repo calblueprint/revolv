@@ -57,7 +57,8 @@
         </form>
 
         <div class="social-login-buttons">
-                <p class="slb-title">Or login with your social account below</p>
+                <p class="slb-title">Or login with your social account below:</p>
+                <br/>
             <a href="{% url "social:begin" "google-oauth2" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
                         {% else %}{% url "home" %}{% endif %}" class="slb-btn-google">
                 <button class="row slb_socialButtons slb-google">
@@ -79,10 +80,13 @@
 </div>
 
 <div class='signup' {% if referring_endpoint == "login" or referring_endpoint == "" %}style="display: none"{% endif %}>
-
+    <div class="row">
+      <div class="col-md-3 col-md-push-3 col-sm-3 col-sm-push-3">
         <h1>{{ settings.revolv_cms.SignupPageSettings.heading }}</h1>
         {{ settings.revolv_cms.SignupPageSettings.signup_paragraph|safe }}
+        <br/>
         <p>Already have an account? Log in <a class="component-link" data-component="login">here</a>.</p>
+        <br/>
         <p>Or you can login with your social account below</p>
         <div class="social-login-buttons">
                 <a href="{% url "social:begin" "google-oauth2" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
@@ -100,7 +104,9 @@
                     </button>
                 </a>
         </div>
+      </div>
 
+    <div class="col-md-3 col-md-push-3 col-sm-3">
         <form action="/signup/" method="post" id="login_form">
             {% csrf_token %}
             {% for error in signup_form.non_field_errors %}
@@ -131,7 +137,7 @@
               <label class="checkbox-field-label">
               {{ signup_form.subscribed_to_newsletter }}<span>{{signup_form.subscribed_to_newsletter.label}}</span>
               </label>
-              <label class="paragraph-field-label">
+              <label class="paragraph-field-label tos">
                   {{ settings.revolv_cms.SignupPageSettings.tos_paragraph|safe }}
               </label>
             </div>
@@ -139,8 +145,10 @@
               <button class="submit-button btn btn-primary" type="submit" value="Log in">{{ settings.revolv_cms.SignupPageSettings.button_text }}</button>
             </div>
         </form>
+    </div>
 
 </div>
 
+</div>
 </div>
 {% endblock %}

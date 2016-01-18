@@ -11048,6 +11048,10 @@ label.checkmark {
 }
 
 /* Login / sign up area */
-#login_form .placeholder-field-label {
+#login_form .placeholder-field-label, .signup .placeholder-field-label {
     width: 100%;
+}
+
+.signup .tos p {
+    font-size: 85%;
 }
