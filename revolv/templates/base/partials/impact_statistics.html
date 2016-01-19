@@ -2,95 +2,55 @@
 {% load humanize %}
 {% load revolv_cms_tags %}
 
-<div class="large-12 columns">
-    <div class="row statistics-container">
-        <div class="row">
-            <p class="contribution-text">{{ settings.revolv_cms.DashboardImpactSettings.impact_statistics_header_text }}</p>
+<div class="container top150 impact">
+  <h2>Thank you for investing in clean energy!</h2>
+  <h3>Your impact to date:</h3>
+
+  <div class="row stats">
+      <div class="col-md-2">
+        <img src="{% static "images/dashboard/solar-panel-desktop.png" %}" />
+        <div class="info">
+            Built <span class="val">{{ statistics.kwh }} <span class="units">kwH</span></span> of solar energy capacity
         </div>
-        <div class="row statistics-row">
-            <div class="medium-4 columns statistic col-1">
-                <div class="medium-4 small-5 columns icon-container">
-                    <img class="icon trees-icon" src="{% static "images/trees.svg" %}" />
-                </div>
-                <div class="medium-8 small-7 text-area columns">
-                    <div class="text-container trees">
-                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.trees_saved_statistic_top_description_text }}</p>
-                        <p class="emphasized-text trees">{{ statistics.trees|floatformat:2 }} acre{{ statistics.trees|pluralize }}</p>
-                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.trees_saved_statistic_bottom_description_text }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="medium-4 columns statistic col-2">
-                <div class="medium-4 small-5 columns icon-container">
-                    <img class="icon kwh-icon" src="{% static "images/lightbulb.svg" %}" />
-                </div>
-                <div class="medium-8 small-7 text-area columns">
-                    <div class="text-container kwh">
-                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.kwh_statistic_top_description_text }}</p>
-                        <p class="emphasized-text kwh">{{ statistics.kwh|floatformat:0 }} kwH</p>
-                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.kwh_statistic_bottom_description_text }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="medium-4 columns statistic col-1">
-                <div class="medium-4 small-5 columns icon-container">
-                    <img class="icon cloud-icon" src="{% static "images/cloud.svg" %}" />
-                </div>
-                <div class="medium-8 small-7 text-area columns">
-                    <div class="text-container co2">
-                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.carbon_dioxide_statistic_top_description_text }}</p>
-                        <p class="emphasized-text co2">{{ statistics.carbon_dioxide|floatformat:2 }} lb{{ statistics.carbon_dioxide|pluralize }}</p>
-                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.carbon_dioxide_statistic_bottom_description_text }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="medium-4 columns statistic col-2">
-                <div class="medium-4 small-5 columns icon-container">
-                    <img class="icon last-icon" src="{% static "images/revolv-man.svg" %}" />
-                </div>
-                <div class="medium-8 small-7 text-area columns">
-                    <div class="text-container save-world">
-                        <p class="description last-icon">{{ settings.revolv_cms.DashboardImpactSettings.last_statistic_description_text }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="medium-4 columns statistic col-1">
-                <div class="medium-4 small-5 columns icon-container">
-                    <img class="icon repayments-icon" src="{% static "images/coin.svg" %}" />
-                </div>
-                <div class="medium-8 small-7 text-area columns">
-                    <div class="text-container repayments">
-                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.repayment_statistic_top_description_text }}</p>
-                        <p class="emphasized-text repayments">${{ statistics.repayments|floatformat:2|intcomma }}</p>
-                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.repayment_statistic_bottom_description_text }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="medium-4 columns statistic col-2">
-                <div class="medium-4 small-5 columns icon-container">
-                    <img class="icon projects-donated-to-icon" src="{% static "images/house.svg" %}" />
-                </div>
-                <div class="medium-8 small-7 text-area columns">
-                    <div class="text-container number-of-projects">
-                        <p class="top-description description">{{ settings.revolv_cms.DashboardImpactSettings.project_count_statistic_top_description_text }}</p>
-                        <p class="emphasized-text number-of-projects">{{ statistics.project_count }} project{{ statistics.project_count|pluralize }}</p>
-                        <p class="bottom-description description">{{ settings.revolv_cms.DashboardImpactSettings.project_count_statistic_bottom_description_text }}</p>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="col-md-2">
+        <img src="{% static "images/dashboard/cloud-desktop.png" %}" />
+        <div class="info">
+            Avoided <span class="val">{{ statistics.carbon_dioxide }} <span class="units">lbs</span> </span> of carbon dioxide emissions
         </div>
-    </div>
-    {% if user.revolvuserprofile.reinvest_pool > 0 %}
-    <div class="row">
-        <div class="dashboard-reinvest-button">
-            <a href="{% url 'project:reinvest_list' %}"><button class="large">Reinvest your ${{ user.revolvuserprofile.reinvest_pool }} now!!</button></a>
+      </div>
+      <div class="col-md-2">
+        <img src="{% static "images/dashboard/trees-desktop.png" %}" />
+        <div class="info">
+            Equivalent to planting <span class="val">{{ statistics.trees }} <span class="units">acres</span></span> of trees
         </div>
-    </div>
-    {% endif %}
-            {% if donated_projects %}
-                <div class="row">
-                    <p class="contribution-text">Projects you've backed:</p>
-                </div>
-            {% include "base/partials/list_projects.html" with active_projects=donated_projects %}
-        {% endif %}
+      </div>
+      <div class="col-md-2">
+        <img src="{% static "images/dashboard/house-desktop.png" %}" />
+        <div class="info">
+            Supported <span class="val">{{ statistics.project_count }} </span> community-serving organizations
+        </div>
+      </div>
+      <div class="col-md-2">
+        <img src="{% static "images/dashboard/person-desktop.png" %}" />
+        <div class="info">
+            Provided solar energy to organizations serving <span class="val">{{ statistics.people_served }} <span class="units">people</span></span> in their community
+        </div>
+      </div>
+      <div class="col-md-2">
+        <img src="{% static "images/dashboard/money-desktop.png" %}" />
+        <div class="info">
+            Total amount donated <span class="val">{{ statistics.total_donated }}</span>
+        </div>
+      </div>
+  </div>
+
+{% if donated_projects %}
+  <div class="row">
+    <p class="title-blue-border title-active-projects">PROJECTS YOU'VE SUPPORTED:</p>
+  </div>
+  {% include "base/partials/list_projects.html" with active_projects=donated_projects %}
+{% endif %}
+
+
 </div>

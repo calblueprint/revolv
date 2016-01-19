@@ -11076,3 +11076,46 @@ label.checkmark {
 .dashboard .active-projects-module {
     background-color: #fff;
 }
+
+.dashboard .impact {
+    text-align: center;
+}
+.dashboard .impact h2 {
+    color: #2c3691;
+    font-weight: bold;
+	font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    font-size: 46px;
+}
+.dashboard .impact h3 {
+    font-weight: 300;
+	font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    font-size: 41px;
+    color: #2B2B2B;
+}
+
+.dashboard .stats {
+    margin-top: 70px;
+
+    font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+}
+.dashboard .stats .info {
+    text-transform: uppercase;
+    margin-top: 7px;
+    font-size: 11px;
+}
+.dashboard .stats .info .val {
+    display: block;
+    font-size: 52px;
+    line-height: 38px;
+    margin-bottom: -2px;
+    font-weight: bold;
+}
+.dashboard .stats .info .units {
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: -6px;
+}
+.dashboard .title-active-projects {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}

@@ -1,10 +1,36 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView
+from django.db.models import Sum
+
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.project.models import Project, Category
 from revolv.project.utils import aggregate_stats
+
+
+def humanize_int(n):
+    # NOTE: GPL licensed snipped c/o
+    # https://github.com/localwiki/localwiki-backend-server/blob/master/localwiki/users/views.py#L47
+    mag = 0
+    if n < 1000:
+        return str(n)
+    while n>= 1000:
+        mag += 1
+        n /= 1000.0
+    return '%.1f%s' % (n, ['', 'k', 'M', 'B', 'T', 'P'][mag])
+
+
+def humanize_integers(d):
+    for k in d:
+        d[k] = humanize_int(int(d[k]))
+
+
+def total_donations():
+    total = 0
+    for project in Project.objects.all():
+        total += project.amount_donated_organically
+    return total
 
 
 class DonorDashboardView(UserDataMixin, TemplateView):
@@ -33,6 +59,9 @@ class DonorDashboardView(UserDataMixin, TemplateView):
 
         context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
         statistics_dictionary = aggregate_stats(self.user_profile)
+        statistics_dictionary['total_donated'] = total_donations()
+        statistics_dictionary['people_served'] = Project.objects.aggregate(n=Sum('people_affected'))['n']
+        humanize_integers(statistics_dictionary)
         context['statistics'] = statistics_dictionary
 
         context['category_setter_url'] = reverse('dashboard_category_setter')
