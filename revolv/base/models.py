@@ -1,6 +1,9 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django_facebook.models import FacebookModel
+
 from revolv.base.utils import get_group_by_name, get_profile
 from revolv.lib.utils import ImportProxy
 from revolv.payments.models import Payment
@@ -134,3 +137,12 @@ class RevolvUserProfile(FacebookModel):
         if len(name.strip()) == 0:
             name = self.user.username
         return name
+
+
+class NewsletterUser(models.Model):
+    """
+    Tracks simple newsletter-without-signup users.
+    """
+    subscribed = models.BooleanField(default=True)
+    subscribed_date = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
+    email = models.EmailField()
