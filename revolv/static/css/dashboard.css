@@ -11,3 +11,11 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
+.dashboard-sidebar {
+    background-color: #BFBFBF;
+    padding-left: 38px;
+    padding-right: 38px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

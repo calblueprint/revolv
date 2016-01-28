@@ -28,24 +28,31 @@
 
     <div class="container-fluid top100">
       {% if role == 'ambassador' or role == 'admin' %}
-        <div class="small-3 large-2 columns dashboard-sidebar">
+          <div class="dashboard-sidebar col-md-2">
             {% include "base/partials/dashboard_sidebar.html" with user=user %}
-        </div>
-      {% endif %}
-
-      {% if donor_has_no_donated_projects %}
-      <div class="no-donations">
-          <div class="row">
-            <div class="col-md-12">
-                <h2>Thanks for signing up with RE-volv! Looks like you haven't supported any solar projects yet.</h2>
-                {% if first_project %}
-                    <p>Click <a href="{% url "project:view" pk=first_project.pk %}">here</a> to start contributing!</p>
-                {% endif %}
+          </div>
+          <div class="col-md-9 col-md-offset-1">
+            <div class="row">
+              {% include "base/partials/impact_statistics.html" with statistics=statistics user=user donated_projecs=donated_projects %}
             </div>
           </div>
-        </div>
       {% else %}
-        {% include "base/partials/impact_statistics.html" with statistics=statistics user=user donated_projecs=donated_projects %}
+
+        {% if donor_has_no_donated_projects %}
+          <div class="no-donations">
+            <div class="row">
+              <div class="col-md-12">
+                  <h2>Thanks for signing up with RE-volv! Looks like you haven't supported any solar projects yet.</h2>
+                  {% if first_project %}
+                      <p>Click <a href="{% url "project:view" pk=first_project.pk %}">here</a> to start contributing!</p>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          {% include "base/partials/impact_statistics.html" with statistics=statistics user=user donated_projecs=donated_projects %}
+        {% endif %}
+
       {% endif %}
     </div>
 

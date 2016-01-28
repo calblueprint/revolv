@@ -21,6 +21,7 @@ from revolv.base.utils import ProjectGroup
 from revolv.payments.models import Payment
 from revolv.project.models import Category, Project
 from revolv.project.utils import aggregate_stats
+from revolv.donor.views import humanize_integers, total_donations
 from revolv.base.models import RevolvUserProfile
 from revolv.tasks.sfdc import send_signup_info
 
@@ -94,14 +95,11 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
 
         context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
         statistics_dictionary = aggregate_stats(self.user_profile)
+        statistics_dictionary['total_donated'] = total_donations()
+        statistics_dictionary['people_served'] = Project.objects.aggregate(n=Sum('people_affected'))['n']
+        humanize_integers(statistics_dictionary)
         context['statistics'] = statistics_dictionary
 
-
-        context['category_setter_url'] = reverse('dashboard_category_setter')
-        context['categories'] = Category.objects.all().order_by('title')
-        context['preferred_categories'] = self.user_profile.preferred_categories.all()
-
-        # TODO (noah): add in support for autoshowing a project based on the active_project GET parameter
         return context
 
 
