@@ -611,6 +611,11 @@ a:focus {
                                 margin-left: 23px!important;
                                 box-shadow: none;
 							}
+                            .active-projects-module.embedded .img-main .funded-round .status-indicator input.smaller {
+                                margin-top: -80px !important;
+                                margin-left: 25px!important;
+                                box-shadow: none;
+							}
 
 						.status-indicator {
 							transform: rotateY(180deg);
@@ -9629,6 +9634,8 @@ body {
 							margin-top: -65px !important;
 							margin-left: -25px !important;
 						}
+						.get-involved-contents .past-projects-module .funded-round .status-indicator input.smaller {
+                        }
 					/* .list-area .info-main */
 					.list-area .info-main {
 						padding-top: 2px;

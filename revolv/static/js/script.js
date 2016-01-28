@@ -289,7 +289,14 @@ $(document).ready(function(){
   $(".status-indicator input").knob({
     'draw' : function () {
        $(this.i).val(this.cv + '%');
-       $(this.i).css({"font-family" : "Source Sans Pro", "font-size" : "30px", "color" : "#003399", "font-weight" : "700"});
+       if(this.cv === 100) {
+          // Three digits, not one or two, so we make it a bit smaller
+         $(this.i).css({"font-family" : "Source Sans Pro", "font-size" : "22px", "color" : "#003399", "font-weight" : "700"});
+         $(this.i).addClass('smaller');
+       }
+       else {
+         $(this.i).css({"font-family" : "Source Sans Pro", "font-size" : "30px", "color" : "#003399", "font-weight" : "700"});
+       }
        $(this.i).on("focus", function(){
         $(this.i).parent().click();
        });
