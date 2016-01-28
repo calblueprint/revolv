@@ -11130,3 +11130,17 @@ label.checkmark {
     margin-top: 3em;
     margin-bottom: 3em;
 }
+
+/* Project draft mode */
+.draft-mode-div {
+    position: fixed;
+    z-index: 1020;
+    width: 100%;
+    background-color: #14b1e7;
+    padding: 1em;
+    color: white;
+    font-weight: bold;
+    padding-left: 5em;
+    padding-right: 5em;
+    text-align: center;
+}
