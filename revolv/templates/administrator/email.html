@@ -1,21 +1,16 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
 
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static "email.css" %}" />
-    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-{% endblock %}
-
 {% block title %}Newsletter Subscribers | {% endblock %}
 
 {% block body %}
-
-<div class='main row'>
-    <div class="small-12 columns">
-        <h4>Newsletter Subscribers</h4>
-        <textarea rows="15">{% for email in subscribed_user_emails %}{{ email }}&#13;&#10;{% endfor %}</textarea>
-        <a class="download button" href="{% url "administrator:emailcsv" %}">Download as CSV</a>
+<div class="contents top150"> 
+  <div class="container"> 
+    <h1>Newsletter Subscribers</h1>
+    <div class="row">
+      <textarea rows="15">{% for email in subscribed_user_emails %}{{ email }}&#13;&#10;{% endfor %}</textarea>
+      <p><a class="download btn btn-blue" href="{% url "administrator:emailcsv" %}">Download as CSV</a></p>
     </div>
+  </div>
 </div>
-
 {% endblock %}
