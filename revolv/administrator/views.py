@@ -2,7 +2,7 @@ import csv
 
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from revolv.base.models import RevolvUserProfile, NewsletterUser
+from revolv.base.models import RevolvUserProfile
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
 from revolv.base.views import BaseStaffDashboardView
@@ -35,9 +35,6 @@ class AdministratorEmailView(UserDataMixin, TemplateView):
         user_profiles = RevolvUserProfile.objects.get_subscribed_to_newsletter()
         user_emails = list(user_profiles.values_list("user__email", flat=True))
 
-        newsletter_users = NewsletterUser.objects.filter(subscribed=True).order_by('subscribed_date')
-        user_emails += list(newsletter_users.values_list('email', flat=True))
-
         context['subscribed_user_emails'] = user_emails
         return context
 
@@ -52,10 +49,6 @@ def admin_email_csv_download(request):
 
     users_subscribed = RevolvUserProfile.objects.get_subscribed_to_newsletter()
     newsletter_rows = [(u.user.email, u.user.first_name, u.user.last_name, u.user.date_joined) for u in users_subscribed]
-
-    newsletter_users = NewsletterUser.objects.filter(subscribed=True).order_by('subscribed_date')
-    # First and last name aren't available here, so we leave the fields blank.
-    newsletter_rows += [(u.email, '', '', u.subscribed_date) for u in newsletter_users]
 
     writer = csv.writer(response)
     writer.writerow(['Email', 'FirstName', 'LastName', 'DateJoined'])

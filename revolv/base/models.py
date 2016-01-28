@@ -137,12 +137,3 @@ class RevolvUserProfile(FacebookModel):
         if len(name.strip()) == 0:
             name = self.user.username
         return name
-
-
-class NewsletterUser(models.Model):
-    """
-    Tracks simple newsletter-without-signup users.
-    """
-    subscribed = models.BooleanField(default=True)
-    subscribed_date = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
-    email = models.EmailField()

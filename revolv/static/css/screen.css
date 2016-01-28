@@ -1214,6 +1214,7 @@ a:focus {
 						text-transform: uppercase;
 						float: right;
 						width: 132px;
+                        border: none;
 					}
 					.newsletter-module .group-main .group .inputs {
 						margin-right: 147px;
@@ -4185,6 +4186,7 @@ a:focus {
 						height: 43px;
 						line-height: 43px;
 						width: 110px;
+                        border: none;
 					}
 					.newsletter-module .group-main .group .inputs {
 						margin-right: 120px;
@@ -6549,6 +6551,7 @@ a:focus {
 						width: 156px;
 						height: 53px;
 						line-height: 53px;
+                        border: none;
 					}
 					.newsletter-module .group-main .group .inputs {
 						margin-right: 171px;
@@ -9156,6 +9159,7 @@ body {
 						width: 78px;
 						height: 26px;
 						line-height: 26px;
+                        border: none;
 					}
 					.newsletter-module .group-main .group .inputs {
 						margin-right: 85px;
