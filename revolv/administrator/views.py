@@ -36,7 +36,7 @@ class AdministratorEmailView(UserDataMixin, TemplateView):
         user_emails = list(user_profiles.values_list("user__email", flat=True))
 
         newsletter_users = NewsletterUser.objects.filter(subscribed=True).order_by('subscribed_date')
-        user_emails += list(newsletter_user.values_list('email', flat=True))
+        user_emails += list(newsletter_users.values_list('email', flat=True))
 
         context['subscribed_user_emails'] = user_emails
         return context
