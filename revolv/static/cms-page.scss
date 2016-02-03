@@ -4,6 +4,10 @@
     margin-top: 50px;
     margin-bottom: 50px;
     font-weight: 400;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
 
     img {
         padding: 10px 20px;
