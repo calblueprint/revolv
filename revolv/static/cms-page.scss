@@ -96,5 +96,10 @@
             display: block;
             float: right;
         }
+        &.full-width {
+            width: 100% !important;
+            display: block !important;
+            float: none !important;
+        }
     }
 }

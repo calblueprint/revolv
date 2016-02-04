@@ -14,6 +14,7 @@ class ImageBlock(blocks.StructBlock):
         ('small', 'Small'),
         ('medium', 'Medium'),
         ('large', 'Large'),
+        ('full_width', 'Full Width'),
     ], default='medium', required=True)
     layout = blocks.ChoiceBlock(choices=[
         ('img-inline', 'Inline'),
