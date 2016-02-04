@@ -1,0 +1,7 @@
+<ul>
+    {% for block in self.list_content %}
+      <li class="{{ block.display_type }} {{ block.main_axis }} {{ block.perpendicular_axis }}">
+        {{ block.content }}
+      </li>
+    {% endfor %}
+</ul>
