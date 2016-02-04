@@ -7,14 +7,12 @@
 {% endblock head %}
 
 {% block body %}
-    <div class="cms-content-container container">
-        <div class="cms-content-row row">
-            <div class="col-sm-12">
-                <h1>{{ self.title }}</h1>
-                {% for block in self.body %}
-                    {{ block }}
-                {% endfor %}
-            </div>
+    <div class="cms-content-row row">
+        <div class="small-12 columns">
+            <h1>{{ self.title }}</h1>
+            {% for block in self.body %}
+                {{ block }}
+            {% endfor %}
         </div>
     </div>
 {% endblock body %}
