@@ -30,8 +30,10 @@
         }
 
         img {
-            padding: 0 20px;
-            box-sizing: content-box;
+            padding: 15px;
+            box-sizing: border-box;
+            max-width: 100%;
+            height: auto;
 
             &.left {
                 padding-left: 0;
@@ -178,6 +180,11 @@
                     -webkit-flex-wrap: nowrap;
                         -ms-flex-wrap: nowrap;
                             flex-wrap: nowrap;
+                    @media (max-width: 700px) {
+                        -webkit-flex-wrap: wrap;
+                            -ms-flex-wrap: wrap;
+                                flex-wrap: wrap;
+                    }
                 }
                 &.li_col {
                     -webkit-box-orient: vertical;
