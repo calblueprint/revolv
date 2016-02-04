@@ -231,6 +231,11 @@ img {
         display: block;
         float: right;
     }
+    &.img-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
     &.full-width {
         width: 100% !important;
         height: auto !important;

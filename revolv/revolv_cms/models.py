@@ -25,6 +25,7 @@ class ImageBlock(blocks.StructBlock):
         ('img-block', 'Block'),
         ('img-left', 'Float Left'),
         ('img-right', 'Float Right'),
+        ('img-center', 'Center'),
     ], default='inline', required=True)
 
     class Meta:
