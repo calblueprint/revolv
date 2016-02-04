@@ -1,0 +1,15 @@
+{% load wagtailimages_tags %}
+
+{% if self.size == 'tiny' %}
+    {% image self.image max-100x100 class=self.layout %}
+{% elif self.size == 'small' %}
+    {% image self.image max-300x200 class=self.layout %}
+{% elif self.size == 'medium' %}
+    {% image self.image max-800x600 class=self.layout %}
+{% elif self.size == 'large' %}
+    {% image self.image max-1280x768 class=self.layout %}
+{% elif self.size == 'full_width' %}
+    {% with class_val=self.layout|add:" full-width" %}
+        {% image self.image max-1280x768 class=class_val %}
+    {% endwith %}
+{% endif %}
