@@ -1,9 +1,29 @@
 from django.db import models
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtailsettings import BaseSetting, register_setting
 
+class ImageBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+    size = blocks.ChoiceBlock(choices=[
+        ('tiny', 'Tiny'),
+        ('small', 'Small'),
+        ('medium', 'Medium'),
+        ('large', 'Large'),
+    ], default='medium', required=True)
+    layout = blocks.ChoiceBlock(choices=[
+        ('img-inline', 'Inline'),
+        ('img-block', 'Block'),
+        ('img-left', 'Float Left'),
+        ('img-right', 'Float Right'),
+    ], default='inline', required=True)
+
+    class Meta:
+        template = 'revolv_cms/blocks/image_block.html'
 
 class RevolvCustomPage(Page):
     """
@@ -17,13 +37,17 @@ class RevolvCustomPage(Page):
     can be at any level in the menu hierarchy which we need for both the header
     and footer menus.
     """
-    body = RichTextField()
+    # body = RichTextField()
+    body = StreamField([
+        ('rich_text', blocks.RichTextBlock()),
+        ('image', ImageBlock()),
+    ])
     search_name = "Custom Page"
 
     indexed_fields = ('body', )
     content_panels = [
         FieldPanel('title', classname="full title"),
-        FieldPanel('body', classname="full"),
+        StreamFieldPanel('body'),
     ]
 
 
@@ -460,4 +484,3 @@ class ShareThisSettings(BaseSetting):
     """
     image = models.URLField(verbose_name='Image Url', help_text='The Url of image that will be used in ShareThis widget')
     description = models.CharField(max_length=200, help_text="The description that will be used in ShareThis widget")
-

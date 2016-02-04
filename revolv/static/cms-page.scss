@@ -80,4 +80,21 @@
             font-weight: 400;
         }
     }
+
+    img {
+        &.img-inline {
+            display: inline;
+        }
+        &.img-block {
+            display: block;
+        }
+        &.img-left {
+            display: block;
+            float: left;
+        }
+        &.img-right {
+            display: block;
+            float: right;
+        }
+    }
 }
