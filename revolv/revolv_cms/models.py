@@ -8,6 +8,10 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtailsettings import BaseSetting, register_setting
 
 class ImageBlock(blocks.StructBlock):
+    """
+    A block for images whose layout properties and size can be set to one of
+    a small number of useful values.
+    """
     image = ImageChooserBlock()
     size = blocks.ChoiceBlock(choices=[
         ('tiny', 'Tiny'),
@@ -26,6 +30,43 @@ class ImageBlock(blocks.StructBlock):
     class Meta:
         template = 'revolv_cms/blocks/image_block.html'
 
+
+class RichListBlock(blocks.StructBlock):
+    """
+    A list block with rich structure.
+    """
+    list_content = blocks.ListBlock(blocks.StructBlock([
+        # ('centered_row', blocks.BooleanBlock(default=False, required=False)),
+        ('display_type', blocks.ChoiceBlock(choices=[
+            ('li_block', 'Block'),
+            ('li_inline', 'Inline'),
+            ('li_row', 'Row'),
+            ('li_col', 'Column'),
+        ], required=True, default='li_block')),
+        ('main_axis', blocks.ChoiceBlock([
+            ('m_start', 'Start'),
+            ('m_end', 'End'),
+            ('m_center', 'Center'),
+            ('m_space_between', 'Space Between'),
+            ('m_space_around', 'Space Around'),
+        ], required=True, default='m_start')),
+        ('perpendicular_axis', blocks.ChoiceBlock([
+            ('p_start', 'Start'),
+            ('p_end', 'End'),
+            ('p_center', 'Center'),
+            ('p_baseline', 'Baseline'),
+            ('p_stretch', 'Stretch'),
+        ], required=True, default='p_start')),
+        ('content', blocks.StreamBlock([
+            ('rich_text', blocks.RichTextBlock()),
+            ('image', ImageBlock()),
+        ])),
+    ]))
+
+    class Meta:
+        template = 'revolv_cms/blocks/rich_list.html'
+
+
 class RevolvCustomPage(Page):
     """
     A CMS page representing a web page that the RE-volv administrators might
@@ -38,10 +79,10 @@ class RevolvCustomPage(Page):
     can be at any level in the menu hierarchy which we need for both the header
     and footer menus.
     """
-    # body = RichTextField()
     body = StreamField([
         ('rich_text', blocks.RichTextBlock()),
         ('image', ImageBlock()),
+        ('rich_list', RichListBlock()),
     ])
     search_name = "Custom Page"
 
