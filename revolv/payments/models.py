@@ -263,7 +263,7 @@ class RepaymentFragment(models.Model):
     factories = ImportProxy("revolv.payments.factories", "RepaymentFragmentFactories")
 
     def __unicode__(self):
-        return '%s from %s for %s' % (self.amount, self.user, self.project)
+        return '%s to %s for %s' % (self.amount, self.user, self.project)
 
 
 class UserReinvestmentManager(models.Manager):
