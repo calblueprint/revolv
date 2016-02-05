@@ -1,12 +1,12 @@
-@import "revolv-settings";
+@import "revolv-settings.scss";
 // a little hacky but we need access to the $large-range variable
-@import "bower_components/foundation/scss/foundation/components/_global.scss";
+@import "node_modules/foundation/scss/foundation/components/_global.scss";
 
 /**
  * This file overrides specific foundation settings in order to make foundation
  * work nicely with revolv's design. Note that only some, but not all, of
  * foundation's settings are overriden here: for the full list, see _settings.scss
- * in revolv/static/bower_components/foundation/scss/foundation.
+ * in revolv/static/node_modules/foundation/scss/foundation.
  */
 
 // 34. Top Bar

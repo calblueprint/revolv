@@ -1,5 +1,5 @@
-@import "utils";
-@import "revolv-settings";
+@import "utils.scss";
+@import "revolv-settings.scss";
 
 .button {
 	@include revolv-hover-button($revolv-dark-blue, $revolv-dark-blue)
