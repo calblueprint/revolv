@@ -208,9 +208,9 @@ footer {
             &.li_col {
                 -webkit-box-orient: vertical;
                 -webkit-box-direction: normal;
-                -webkit-flex-direction: col;
-                    -ms-flex-direction: col;
-                        flex-direction: col;
+                -webkit-flex-direction: column;
+                    -ms-flex-direction: column;
+                        flex-direction: column;
             }
         }
     }
