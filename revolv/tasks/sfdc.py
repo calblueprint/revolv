@@ -1,12 +1,12 @@
 from celery.task import task
 from simple_salesforce import Salesforce
 
-from revolv.settings import SFDC_ACCOUNT, SFDC_PASSWORD, SFDC_TOKEN, SFDC_REVOLV_DONATION, SFDC_REVOLV_SIGNUP
+from django.conf import settings
 from django.utils import log
 
 logger = log.getLogger(__name__)
 
-INTERVAL = 10 * 60 #10 minutes
+INTERVAL = 10 * 60  # 10 minutes
 MAX_RETRIES = 100
 
 
@@ -15,15 +15,18 @@ class SFDCException(Exception):
 
 
 @task
-def send_signup_info( name, email, address=''):
+def send_signup_info(name, email, address=''):
     if not settings.SFDC_ACCOUNT:
         return
     try:
         res = None
         payload = {'donorName': name, 'email': email, 'donorAddress': address}
-        sf = Salesforce(username=SFDC_ACCOUNT, password=SFDC_PASSWORD, security_token=SFDC_TOKEN)
+        sf = Salesforce(
+            username=settings.SFDC_ACCOUNT,
+            password=settings.SFDC_PASSWORD,
+            security_token=settings.SFDC_TOKEN)
         logger.info('send sign-up to SFDC with data: %s', payload)
-        res = sf.apexecute(SFDC_REVOLV_SIGNUP, method='POST', data=payload)
+        res = sf.apexecute(settings.SFDC_REVOLV_SIGNUP, method='POST', data=payload)
         if res.lower() != 'success':
             raise SFDCException(res)
         logger.info('SFDC sign-up: sucess.')
@@ -39,9 +42,12 @@ def send_donation_info(name, amount, project, address=''):
     try:
         res = None
         payload = {'donorName': name, 'projectName': project, 'donationAmount': amount, 'donorAddress': address}
-        sf = Salesforce(username=SFDC_ACCOUNT, password=SFDC_PASSWORD, security_token=SFDC_TOKEN)
+        sf = Salesforce(
+            username=settings.SFDC_ACCOUNT,
+            password=settings.SFDC_PASSWORD,
+            security_token=settings.SFDC_TOKEN)
         logger.info('send donation to SFDC with data: %s', payload)
-        res = sf.apexecute(SFDC_REVOLV_DONATION, method='POST', data=payload)
+        res = sf.apexecute(settings.SFDC_REVOLV_DONATION, method='POST', data=payload)
         if res.lower() != 'success':
             raise SFDCException(res)
         logger.info('SFDC donation: success.')
