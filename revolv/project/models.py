@@ -12,6 +12,7 @@ from revolv.lib.utils import ImportProxy
 from revolv.payments.models import Payment, PaymentType
 from revolv.project.stats import KilowattStatsAggregator
 
+
 class ProjectManager(models.Manager):
     """
     Manager for running custom operations on the Projects.
@@ -679,6 +680,10 @@ class Project(models.Model):
         self.is_paid_off = True
         self.save()
 
+    def __unicode__(self):
+        return self.title
+
+
 class ProjectUpdate(models.Model):
     factories = ImportProxy("revolv.project.factories", "ProjectUpdateFactories")
     update_text = RichTextField(
@@ -696,6 +701,9 @@ class ProjectUpdate(models.Model):
         Project,
         related_name="updates"
     )
+
+    def __unicode__(self):
+        return '%s at %s: %s' % (self.project, self.date, self.update_text[:50])
 
 
 class Category(models.Model):
@@ -719,6 +727,9 @@ class Category(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        verbose_name_plural = 'categories'
+
 
 class DonationLevel(models.Model):
     """
@@ -727,3 +738,6 @@ class DonationLevel(models.Model):
     project = models.ForeignKey(Project)
     description = models.TextField()
     amount = models.IntegerField()
+
+    def __unicode__(self):
+        return '%s: %s = %s' % (self.project, self.amount, self.description)
