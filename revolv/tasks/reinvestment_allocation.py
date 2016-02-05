@@ -40,6 +40,7 @@ def calculate_montly_reinvesment_allocation():
                 .get(year=date.today().year, repayment_type=ProjectMontlyRepaymentConfig.SOLAR_SEED_FUND)
         except ProjectMontlyRepaymentConfig.DoesNotExist:
             logger.error("Project {0} - {%} doesn't have repayment config!".format(project.id, project.title))
+            continue
 
         AdminRepayment.objects.create(amount=repayment_config.amount,
                                       project=project,
