@@ -3,6 +3,8 @@ import sys
 from revolv.settings.base import *  # noqa
 
 DEBUG = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 
 #INSTALLED_APPS += (
 #    'debug_toolbar',
