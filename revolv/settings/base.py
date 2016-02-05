@@ -219,6 +219,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'  # for the {% compress %} tags in wagtail to work
+)
+
 # If using Celery, tell it to obey our logging configuration.
 CELERYD_HIJACK_ROOT_LOGGER = False
 
@@ -273,6 +279,7 @@ from datetime import datetime
 djcelery.setup_loader()
 
 EMAIL_TEMPLATES_PATH = os.path.join(
+    BASE_DIR,
     'templates',
     'emails',
     'emails.yml'
