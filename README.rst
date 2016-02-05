@@ -74,6 +74,11 @@ that currently exists.  (That one is for testing the template itself.)::
 Development
 -----------
 
+Currently this project assumes some data in the database. To seed the database and aovid 500 errors
+due to code which can't handle an empty database run::
+
+    (revolv)$ ./manage.py seed
+
 You should be able to run the development server via the configured `dev` script::
 
     (revolv)$ npm run dev
