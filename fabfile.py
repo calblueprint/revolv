@@ -37,6 +37,7 @@ def staging():
 def production():
     env.environment = 'production'
     env.master = '52.26.161.105'
+    env.master = 'ec2-52-26-161-105.us-west-2.compute.amazonaws.com'
     initialize_env()
 
 
