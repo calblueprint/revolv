@@ -36,7 +36,7 @@ def staging():
 @task
 def production():
     env.environment = 'production'
-    env.master = 'CHANGEME'
+    env.master = '52.26.161.105'
     initialize_env()
 
 
@@ -200,6 +200,9 @@ def setup_minion(*roles):
     install_salt(SALT_VERSION, minion=True, restart=True)
     # queries server for its fully qualified domain name to get minion id
     key_name = run('python -c "import socket; print socket.getfqdn()"')
+    # line above is coming up with an INTERNAL name that does not match exising key
+    # line below is the existing key...???????
+    key_name = 'ec2-52-26-161-105.us-west-2.compute.amazonaws.com'
     time.sleep(5)
     execute(accept_key, key_name)
 

@@ -8,7 +8,7 @@ Overview
 Revolv is deployed on the following stack.
 
 - OS: Ubuntu 14.04 LTS
-- Python: 3.4
+- Python: 2.7
 - Database: Postgres 9.3
 - Application Server: Gunicorn
 - Frontend Server: Nginx
