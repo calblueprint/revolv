@@ -12,7 +12,8 @@ repo:
 
 # Addtional public environment variables to set for the project
 env:
-  FOO: BAR
+    NEW_RELIC_APP_NAME: re-volv production
+    NEW_RELIC_MONITOR_MODE: "true"
 
 # Uncomment and update username/password to enable HTTP basic auth
 # Password must be GPG encrypted.
@@ -81,6 +82,21 @@ secrets:
       8UmlrSgGq2wAXSGoomffEQExn6Dj2bTKIAVKWvtKbStLJi2ZefSIghZVYdv4tpTT
       830oMCwnOkqOEcyz
       =b/1z
+      -----END PGP MESSAGE-----
+
+    "NEW_RELIC_LICENSE_KEY": |-
+      -----BEGIN PGP MESSAGE-----
+      Version: GnuPG v1
+
+      hQEMA9aTfmR7xthMAQf8CdmomEDvs0aq7jesJRyxsSEwBe+PUgBa/gBfjWS9ZPiR
+      yJEuyhn00VUzQMp+mGEwJVfT8jZ55PcO8texLhvQPEnEk3B/h4+hOL8gT8AnCnfT
+      moYcqYFcBdnq12iu5j3miCatHDdl7mPWckKIFlHmhAVjFt56eknnQHndBxNqxhxj
+      IdudML7Ugrx2iY2DUfAsmDf9tVxoCnCX00yQwY0uOAuMAXLZhs0CRHyrLVNEqnRi
+      h+cQzSiQJgA5sKqwMnkkljhaeMU6DskZOg2hKfGUzZjsvqersT04adZ0OSlxzTD5
+      pl3AlCYjTU16EYv+9cJ2DBx7rntPRiPF1OrwT1T2bdJjATnFNvA7xvwtuGV/d5gG
+      rqJjH8Yr1j/EQpb2LEkIyNYT9uq1a23sUzh+OhjS8fjvwQxfRZxfH0t4SC3aPmgA
+      s4QeQFqdD02/LG8vyzd5yHrmYnO50TTKnMuyk8VWv2GgrGsV
+      =9z5X
       -----END PGP MESSAGE-----
 
 # Private deploy key. Must be GPG encrypted.
