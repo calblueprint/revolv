@@ -28,3 +28,4 @@ django-sekizai==0.8.1
 django-sesame==1.1
 python-social-auth==0.2
 simple-salesforce>=0.68
+stripe=1.29.1

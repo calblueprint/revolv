@@ -176,9 +176,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'revolv_db',
-        'USER': 'revolv',
-        'PASSWORD': 'revolv',
-        'HOST': '127.0.0.1',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '',
     }
 }
@@ -213,7 +213,7 @@ MEDIA_URL = S3_URL + MEDIA_PATH
 MEDIA_SERVE_LOCALLY = False
 if not AWS_ACCESS_KEY_ID and IS_LOCAL:
     # Local developer hasn't gotten our official AWS keys, so let's
-    # allow them to 
+    # allow them to
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     MEDIA_URL = MEDIA_PATH
     MEDIA_SERVE_LOCALLY = True
@@ -462,3 +462,6 @@ LOGGING = {
         }
     },
 }
+
+STRIPE_SECRET_KEY = 'asdf'
+STRIPE_PUBLISHABLE = 'asdf'
