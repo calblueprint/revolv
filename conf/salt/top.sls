@@ -7,6 +7,7 @@ base:
     - locale.utf8
     - newrelic_sysmon
     - project.devs
+    - forward_logs
   'environment:local':
     - match: grain
     - vagrant.user

@@ -136,6 +136,11 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'public', 'media')
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
+if os.path.exists("/dev/log"):
+    SYSLOG_PATH = "/dev/log"
+else:
+    SYSLOG_PATH = "/var/run/syslog"
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -147,6 +152,9 @@ LOGGING = {
     'formatters': {
         'basic': {
             'format': '%(asctime)s %(name)-20s %(levelname)-8s %(message)s',
+        },
+        'papertrail': {
+            'format': 'django %(asctime)s %(name)s %(levelname)s: %(message)s',
         },
     },
     'handlers': {
@@ -160,21 +168,29 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'basic',
         },
+        'syslog': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.SysLogHandler',
+            'address': SYSLOG_PATH,
+            'facility': 'local6',
+            'filters': ['require_debug_false'],
+            'formatter': 'papertrail',
+        },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['mail_admins', 'syslog'],
             'level': 'ERROR',
             'propagate': True,
         },
         'django.security': {
-            'handlers': ['mail_admins'],
+            'handlers': ['mail_admins', 'syslog'],
             'level': 'ERROR',
             'propagate': True,
         },
     },
     'root': {
-        'handlers': ['console', ],
+        'handlers': ['console', 'syslog'],
         'level': 'INFO',
     },
 }
