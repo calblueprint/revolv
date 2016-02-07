@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.http.response import HttpResponseBadRequest
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView, DetailView, UpdateView, TemplateView
 from django.views.generic.edit import FormView
 from django.views.decorators.http import require_http_methods
@@ -19,6 +19,19 @@ from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate
 from revolv.tasks.sfdc import send_donation_info
+
+def project_paid(request, pk):
+    import stripe
+    stripe.api_key = "sk_test_qGg7hZyyafQSnpT61BcJoy0Y"
+    token = stripe.Token.retrieve(request.POST['stripeToken'])
+
+    amount_cents = int(request.POST['amount_cents'])
+    print(amount_cents)
+    charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
+
+    project = get_object_or_404(Project, pk=pk)
+    return redirect('project:view', pk=project.pk)
+
 
 class DonationLevelFormSetMixin(object):
     """
