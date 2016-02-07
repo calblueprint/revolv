@@ -174,15 +174,13 @@
               Back {{ project.title }} and support solar energy!
               {% if user.is_authenticated %}
                   <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
-                  <form action="{% url 'project:project_paid' pk=project.pk %}" method="POST">
+                  <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="amount_cents" value="200">
                     <script
                       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                      data-key="pk_test_WTg26CUSsSi9WY9cAE5Nerpp"
-                      data-amount="2000"
-                      data-name="Demo Site"
-                      data-description="2 widgets ($20.00)"
+                      data-key="{{ stripe_publishable_key }}"
+                      data-description="Donate $2.00"
                       data-image="/128x128.png"
                       data-locale="auto">
                     </script>

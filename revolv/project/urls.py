@@ -4,12 +4,12 @@ from revolv.project.views import (CreateProjectView, EditProjectUpdateView,
                                   PostProjectUpdateView, ProjectView,
                                   ReviewProjectView, SubmitDonationView,
                                   UpdateProjectView, ProjectListReinvestmentView,
-                                  project_paid)
+                                  stripe_callback)
 
 urlpatterns = patterns(
     '',
     url(r'^create$', is_logged_in(CreateProjectView.as_view()), name='new'),
-    url(r'^(?P<pk>\d+)/paid/$', project_paid, name='project_paid'),
+    url(r'^(?P<pk>\d+)/stripe/$', stripe_callback, name='stripe_callback'),
     url(r'^(?P<pk>\d+)/edit$', is_ambassador(UpdateProjectView.as_view()), name='edit'),
     url(r'^(?P<pk>\d+)/$', ProjectView.as_view(), name='view'),
     url(r'^(?P<pk>\d+)/reinvest/$', 'revolv.project.views.reinvest', name='reinvest'),

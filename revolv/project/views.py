@@ -14,22 +14,29 @@ from revolv.base.users import UserDataMixin
 from revolv.base.utils import is_user_reinvestment_period
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
-from revolv.payments.models import UserReinvestment
+from revolv.payments.models import UserReinvestment, Payment, PaymentType
 from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate
 from revolv.tasks.sfdc import send_donation_info
 
-def project_paid(request, pk):
+def stripe_callback(request, pk):
     import stripe
-    stripe.api_key = "sk_test_qGg7hZyyafQSnpT61BcJoy0Y"
+    stripe.api_key = settings.STRIPE_SECRET_KEY
     token = stripe.Token.retrieve(request.POST['stripeToken'])
 
     amount_cents = int(request.POST['amount_cents'])
-    print(amount_cents)
     charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
 
     project = get_object_or_404(Project, pk=pk)
+
+    payment = Payment.objects.create(
+        user=request.user.revolvuserprofile,
+        entrant=request.user.revolvuserprofile,
+        amount=amount_cents/100.0,
+        project=project,
+        payment_type=PaymentType.objects.get_stripe(),
+    )
     return redirect('project:view', pk=project.pk)
 
 
@@ -236,6 +243,7 @@ class ProjectView(UserDataMixin, DetailView):
     # pass in Project Categories and Maps API key
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
+        context['stripe_publishable_key'] = settings.STRIPE_PUBLISHABLE
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         context['updates'] = self.get_object().updates.order_by('date').reverse()
         context['donor_count'] = self.get_object().donors.count()

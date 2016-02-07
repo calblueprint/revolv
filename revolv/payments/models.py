@@ -152,6 +152,11 @@ class PaymentTypeManager(models.Manager):
             queryset = super(PaymentTypeManager, self).get_queryset()
         return queryset.get(name=PaymentType._PAYPAL)
 
+    def get_stripe(self, queryset=None):
+        if queryset is None:
+            queryset = super(PaymentTypeManager, self).get_queryset()
+        return queryset.get(name=PaymentType._STRIPE)
+
     def get_reinvestment_fragment(self, queryset=None):
         """Return the PaymentTypeManager for reinvestment_fragment payments."""
         if queryset is None:
@@ -184,6 +189,7 @@ class PaymentType(models.Model):
         already completed projects.
     """
     _PAYPAL = 'paypal'
+    _STRIPE = 'stripe'
     _CHECK = 'check'
     _REINVESTMENT = 'reinvestment_fragment'
 
@@ -194,6 +200,10 @@ class PaymentType(models.Model):
     @property
     def paypal(self):
         return self.objects.get_paypal()
+
+    @property
+    def stripe(self):
+        return self.objects.get_stripe()
 
     @property
     def reinvestment_fragment(self):
