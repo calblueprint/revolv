@@ -114,6 +114,67 @@ secrets:
       =ZhYg
       -----END PGP MESSAGE-----
 
+    "SOCIAL_AUTH_FACEBOOK_KEY": |-
+      -----BEGIN PGP MESSAGE-----
+      Version: GnuPG v1
+
+      hQEMA9aTfmR7xthMAQgAyxPm+UvTNAtzp7s4bLhijXMRzULgATrHYtnKILdJWJkm
+      vLXZzNUZrorDsvnnoV0YC+5Ynj8BqupzwFb/lwuNApseywmhYaJGZkQH+LoLfBge
+      ti/B6RGpDgnjeIQRwdv4KEP0Szay4Fz5m6DeqbumdGmQWtC+Cat/9tZoWdcJTve7
+      Z3u+rCInYXzoysz5XsVxk+vuoeg84536KgFYj0REUdLPJO8OQzseJ9enkRsGdjlm
+      ZTaM4q+0Ht+jEqCJjyp9vpLSu+sJ8aRW3sR3NHVVH5ZCYocmKQigKaTkj6fJOOJN
+      wHOjlEmoL4LtdwsG61vSi2zyULYk9NHDBn/NXG+LGdJLAejoHwHpTZjBe1nrnF1L
+      /h2XEB7Vl7f1DBsL6cuS7UZPFYE3oks/e32G4iAQniy85evAqFHbeoLyVTmG4HYB
+      nTHyFBJb7y2yZvDj
+      =2JuF
+      -----END PGP MESSAGE-----
+
+    "SOCIAL_AUTH_FACEBOOK_SECRET": |-
+      -----BEGIN PGP MESSAGE-----
+      Version: GnuPG v1
+
+      hQEMA9aTfmR7xthMAQf8COMs+oRmM61Rf0kiC9+B/Afoao7icJu2B+582H+nJsTY
+      xMkIN7gWn20nnlZzQWIZLVGUc79Lu36Iko+1ks3Jjj5/JG31sWiG30aNcaRFW214
+      h0uldqDg+RGzqCpVpKHUl47q9TBs/Lzi9Swc/XczU68rZc0I9vQHWTc0Q94RkbTb
+      4M4+aVdACQjjgd5shyrdX7dpotqRhTrSFthwdBldFXT0mB8IyD91mpKL+cBChwvX
+      oi1VnahiRxW3FbE/J5GjA5kgnckF9rIYAE1O0KZWoiBKa43MVzYX+ToFjakowwRv
+      nm0WfRV0sw89uHsBjtEOKfK4vSkZY23voXNm22wDvtJbARaBIQjaDuBADHxJXvRv
+      nnqmLtgDgryWOu2goTAMwBDWsPCBzaGBzGEd/dPy1PGedbEUc4zjMzxZRbMgLL1v
+      sTrOVMTM5b225XaaaKG/80+l/JUXVMkwRfzx7g==
+      =hcbB
+      -----END PGP MESSAGE-----
+
+    "SOCIAL_AUTH_GOOGLE_OAUTH2_KEY": |-
+      -----BEGIN PGP MESSAGE-----
+      Version: GnuPG v1
+
+      hQELA9aTfmR7xthMAQf4lPj6lWgcYwN4CVCTILgAxgPXl2lISQXcqMsnryBZRt5/
+      xzG9cN3wjvTwhsZG9F8MOvRHfyxIzYmHHvRDJwGT9GjS76OVQ3uuEB4/cpbnFzYb
+      l2n+p3oL2tBA3/HixyVAk1kgJwbzoxnJx89UTdHTGfngkTEef9J+/5wBqfa+X6D9
+      viQqgkevymNQ+EfPpwkFKaPyBwg5f+m0eLJe84jRpQmkKQC+VmfY/ddhhnWCLYso
+      KP+7cyAx9Cy/m4eiSv5ss5IBKWaSm0o+cYPQ+7xc4Zu/s4IQ805sO32ZcH3uGO/w
+      3ZslBVQj8jQkILrfk42/ls7SB5KYUF62SBr+MdPX0oMBLSEQ9MXh+exnGJQXYd1h
+      wtagwvq7/EiGDNVBE/Zxbzf7x5btfZRzO78pdSkjMUMQFXk1/1BD7Dw9e92IbWFP
+      DGstDkmM1aJwoyiHawQk2orBoFGqqF40HzkCUDxKy2b+RFHVWRiEa7wwtFGxduW7
+      pQU9GKb47HVMYN1SbQJAnVk2iQ==
+      =0T8h
+      -----END PGP MESSAGE-----
+
+    "SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET": |-
+      -----BEGIN PGP MESSAGE-----
+      Version: GnuPG v1
+
+      hQEMA9aTfmR7xthMAQf7BGvzsqY/q8nSFoFx0JLfMu8iuW/3yRWfL+VDxlVhpVUW
+      T2AIY5fG5Oylmb1FdVehGQXFxyD0Vpf28pVrlUXiiyQJ3pvqti99qAl60dpGhyNG
+      v19rS7gOPteo5g77+6g2CGYInAqfC6qWO4xpubibGiYouEoZaiQ6EvKtbXJRYrTz
+      UsSSyV8xGPHHvtamiDLGYSp+O+vLdZ2cw+1sm6HG6ZvwDmE8KdmLX9Xo9znemGRg
+      pcIwc+OELdAZxMUbC1bJ6Tut2VHC7UbjfXl+Abe7TiCgZUSd6sFfWbeja6Ngm/Bn
+      gfrILGLa3LUJGQfGEqGPWQn0j7IqGiN6sJJ0nl5DPdJTAWJOmsEV1UhTeLdJrxd4
+      ZnTzEV2UA5GaQmJ+HGR+Sk9Q3SbyHv2tt/+QXJmdhN3naWecqq6WTK7GYFYGWnHO
+      5LbKpsRAnXv1cxTUM39ad5btXZk=
+      =A6LE
+      -----END PGP MESSAGE-----
+
 # Private deploy key. Must be GPG encrypted.
 github_deploy_key: |-
     -----BEGIN PGP MESSAGE-----
