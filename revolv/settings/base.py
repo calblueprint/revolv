@@ -18,7 +18,7 @@ DEBUG = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
-    ('RE-volv Team', 'copelco@caktusgroup.com'),
+    ('RE-volv Team', 'kmtracey@caktusgroup.com'),
 )
 
 # Application definition
