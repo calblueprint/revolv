@@ -1,6 +1,6 @@
-@import "foundation-settings";
-@import "bower_components/foundation/scss/foundation";
-@import "revolv-settings";
+@import "foundation-settings.scss";
+@import "node_modules/foundation-sites/scss/foundation";
+@import "revolv-settings.scss";
 
 body {
     display: -webkit-box;

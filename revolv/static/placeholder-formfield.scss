@@ -1,5 +1,5 @@
-@import "utils";
-@import "revolv-settings";
+@import "utils.scss";
+@import "revolv-settings.scss";
 
 .placeholder-tooltip-entry {
     @include revolv-form-field();

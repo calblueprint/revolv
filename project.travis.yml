@@ -1,0 +1,44 @@
+language: python
+
+sudo: false
+
+python:
+  - "2.7"
+
+# Match postgresql version to that in conf/pillar/project.sls
+addons:
+  postgresql: "9.3"
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+env:
+  - DJANGO_SETTINGS_MODULE="revolv.settings.dev"
+
+install:
+  - pip install -U pip
+  - pip install -U -r requirements/dev.txt
+
+before_script:
+  - createdb -E UTF-8 revolv -U postgres -O $USER
+  # Uncomment for Requires.IO pushes of develop and master merges (not pull-request builds)
+  # Requires the $REQUIRES_IO_TOKEN environment variable defined at Travis CI for this project
+  # See developer documentation section on depdency tracking for more information.
+  # - if [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then requires.io update-branch -t $REQUIRES_IO_TOKEN -r rescueid -n $TRAVIS_BRANCH . ; fi
+  # Uncomment for PostGIS support
+  # - psql service_info -c "CREATE EXTENSION postgis;" -U postgres
+
+script:
+  - python manage.py makemigrations --dry-run | grep 'No changes detected' || (echo 'There are changes which require migrations.' && exit 1)
+  - coverage run manage.py test
+  - coverage report -m --fail-under 80
+  - flake8 .
+
+notifications:
+  hipchat:
+    rooms:
+      secure: 'FIXME: replace with "travis encrypt <api_token@room_id> --add notifications.hipchat.rooms"'
+    template:
+      - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
+    format: html
