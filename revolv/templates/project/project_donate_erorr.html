@@ -1,0 +1,15 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Payment Error | {% endblock %}
+
+{% block head %}
+<link href='http://fonts.googleapis.com/css?family=Lato:300,500,800' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% block body %}
+<div class="row container">
+	<h1 class="title">There was an error processing your payment</h1>
+	Return to <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+</div>
+{% endblock %}
