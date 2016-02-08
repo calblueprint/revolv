@@ -95,6 +95,16 @@ html {
 /* common style */
 body {
 	background: #fff;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	min-height: 100vh;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
 }
 input,
 button {
@@ -2131,7 +2141,6 @@ a:focus {
 								-webkit-transition: font-size 0.25s ease;
 								transition: font-size 0.25s ease;
 							}
-
 
 				/* .details-active-project-module .info-section */
 				.details-active-project-module .info-section {
