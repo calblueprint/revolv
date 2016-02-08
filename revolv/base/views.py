@@ -168,7 +168,7 @@ class SignInView(TemplateView):
         if self.request.GET.get("next"):
             context["login_redirect_url"] = self.request.GET.get("next")
         else:
-            context["login_redirect_url"] = reverse('home')
+            context["login_redirect_url"] = reverse('dashboard')
         context["referring_endpoint"] = ""
         context["reason"] = self.request.GET.get("reason")
         return context
