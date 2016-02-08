@@ -170,8 +170,8 @@ a:focus {
 			.btn-icon-gray:hover .icon-gg {
 				background-position: -264px -16px;
 			}
-			
-			
+
+
 /* title */
 .title-white-border,
 .title-blue-border {
@@ -227,8 +227,8 @@ a:focus {
 			right: 9px;
 			z-index: 9;
 		}
-		.dropdown-default .btn-default.active, 
-		.dropdown-default .btn-default:active, 
+		.dropdown-default .btn-default.active,
+		.dropdown-default .btn-default:active,
 		.open.dropdown-default>.dropdown-toggle.btn-default {
 			color: #9d9d9d;
 			background-color: #f0f0f0;
@@ -269,7 +269,7 @@ a:focus {
 				background-image: none;
 				filter: none;
 			}
-    
+
 
 
 
@@ -286,7 +286,7 @@ a:focus {
 	.header .container {
 		height: 100%;
 		padding: 0;
-	} 
+	}
 		.header .logo {
 			background: url(../images/logo-white.png);
 			margin: 17px 0 0 85px;
@@ -402,6 +402,12 @@ a:focus {
 				width: 100%!important;
 				height: 993px!important;
 				border: none;
+			}
+			.top-section .section-video-area .mejs-container .mejs-controls {
+				display: none !important;
+			}
+			.top-section .section-video-area .mejs-container .mejs-overlay-button {
+				display: none !important;
 			}
 	.top-section.min-height .container {
 		color: #fff;
@@ -1082,12 +1088,12 @@ a:focus {
 							background: url(../images/logo-ehe-new-hork-eimes.png) no-repeat;
 							width: 137px;
 							height: 113px;
-						} 
+						}
 						.featured-on-module .logo-shareable {
 							background: url(../images/logo-shareable.png) no-repeat;
 							width: 144px;
 							height: 21px;
-						} 
+						}
 						.featured-on-module .logo-philanthropy {
 							background: url(../images/logo-philanthropy.png) no-repeat;
 							width: 153px;
@@ -1098,7 +1104,7 @@ a:focus {
 							width: 153px;
 							height: 44px;
 							margin-bottom: 25px;
-						} 
+						}
 							.featured-on-module .logo-fast-mpany:hover,
 							.featured-on-module .logo-fast-mpany:focus,
 							.featured-on-module .logo-ehe-new-hork-eimes:hover,
@@ -1268,7 +1274,7 @@ a:focus {
     .top100 {
 		margin-top: 100px;
 	}
-	
+
 	/* .titles */
 	.titles.container {
 		padding: 43px 0 0 0;
@@ -1287,8 +1293,8 @@ a:focus {
 			color: #2c3691;
 			line-height: 56px;
 		}
-		
-		
+
+
 	/* sign in page */
 	.contents.sign-in-contents {
 		min-height: 508px;
@@ -1309,15 +1315,15 @@ a:focus {
 			float: left;
 			padding-top: 71px;
 		}
-			.sign-in .sign-in-left h2 {				
+			.sign-in .sign-in-left h2 {
 				font-family: 'Source Sans Pro';
                 font-weight: 900;
 				font-size: 48px;
 				line-height: 52px;
 				color: #2e3192;
-				margin-bottom: 9px;				
+				margin-bottom: 9px;
 			}
-			.sign-in .sign-in-left p {			
+			.sign-in .sign-in-left p {
 				font-size: 14px;
 				line-height: 24px;
 				color: #4b4b4b;
@@ -1328,7 +1334,7 @@ a:focus {
 			}
 			.sign-in .sign-in-left .account {
 				margin-top: 27px;
-			} 
+			}
 			.sign-in .sign-in-left a {
 				font-size: 14px;
 				line-height: 20px;
@@ -1375,8 +1381,8 @@ a:focus {
 					line-height: 43px;
 					letter-spacing: 4px;
 				}
-		
-		
+
+
 	/* sign up page */
 	.contents.sign-up-contents {
 		min-height: 851px;
@@ -1398,15 +1404,15 @@ a:focus {
 			float: left;
 			padding-top: 76px;
 		}
-			.sign-up .sign-up-left h2 {				
+			.sign-up .sign-up-left h2 {
 				font-family: 'Source Sans Pro';
                 font-weight: 900;
 				font-size: 48px;
 				line-height: 52px;
 				color: #2e3192;
-				margin-bottom: 4px;				
+				margin-bottom: 4px;
 			}
-			.sign-up .sign-up-left p {			
+			.sign-up .sign-up-left p {
 				font-size: 14px;
 				line-height: 28px;
 				color: #4b4b4b;
@@ -1417,7 +1423,7 @@ a:focus {
 			}
 			.sign-up .sign-up-left .account {
 				margin-top: 27px;
-			} 
+			}
 			.sign-up .sign-up-left a {
 				font-size: 14px;
 				line-height: 28px;
@@ -1482,8 +1488,8 @@ a:focus {
 					line-height: 43px;
 					letter-spacing: 4px;
 				}
-		
-		
+
+
 	/* what do page */
 	.contents.what-we-do-contents {
 		min-height: 1000px;
@@ -1563,8 +1569,8 @@ a:focus {
 					padding-left: 32px;
 					padding-right: 33px;
 				}
-		
-		
+
+
 	/* about us page */
 	.contents.about-us-contents {
 		min-height: 600px;
@@ -1632,7 +1638,7 @@ a:focus {
 				text-decoration: none;
 				text-align: center;
 			}
-			.mains-tabs .tab-index .row .col-lg-3 a:hover,			
+			.mains-tabs .tab-index .row .col-lg-3 a:hover,
 			.mains-tabs .tab-index .row .col-lg-3 a.active {
 				border-top: 4px solid #00a1d9;
 				color: #4b4b4b;
@@ -1707,10 +1713,10 @@ a:focus {
 						height: 43px;
 						letter-spacing: 4px;
 					}
-	
+
 
 	/* get involved page */
-	
+
 		/* .info-area */
 		.info-area.container {
 			padding: 0 83px 35px 83px;
@@ -1725,7 +1731,7 @@ a:focus {
 				padding-right: 430px;
 				padding-bottom: 17px;
 			}
-					
+
 		/* .list-area */
 		.list-area.container {
 			padding: 0 83px 40px 83px;
@@ -1875,7 +1881,7 @@ a:focus {
 								float: left;
 								margin-left: 12px;
 							}
-					
+
 		/* .past-projects-module */
 		.past-projects-module {
 			background-color: #ededed;
@@ -2041,7 +2047,7 @@ a:focus {
 														.past-projects-module .carousel-control:hover.right .icons {
 															background-position: -384px -16px;
 														}
-	
+
 
 	/* project details page */
 	.details-active-project-module {
@@ -2116,8 +2122,8 @@ a:focus {
 								font-size: 58.26px !important;
 								margin-top: 50px !important;
 							}
-						
-						
+
+
 				/* .details-active-project-module .info-section */
 				.details-active-project-module .info-section {
 					position: relative;
@@ -2235,7 +2241,7 @@ a:focus {
 										font-size: 14px;
 										line-height: 24px;
 									}
-				    
+
 		/* .project-updates-module */
 		.project-updates-module {
 			position: relative;
@@ -2402,7 +2408,7 @@ a:focus {
 									 color: #8a8a8a;
 									 display: block;
 								 }
-				    
+
 		/* .donors-module */
 		.donors-module {
 			position: relative;
@@ -2467,9 +2473,9 @@ a:focus {
 						line-height: 28px;
 						padding: 0 25px 0 0;
 					}
-					
-					
-					
+
+
+
 	/* partners page */
 	.contents.partners-contents {
 		position: relative;
@@ -2482,7 +2488,7 @@ a:focus {
 			padding-right: 22px;
 			margin-right: 83px;
 			margin-bottom: 34px;
-		} 
+		}
 			.partners-contents .titles .title-primary {
 				font-family: 'Source Sans Pro'; font-weight: 900;
 				font-size: 48px;
@@ -2546,7 +2552,7 @@ a:focus {
 					color: #4b4b4b;
 					padding-right: 405px;
 					padding-left: 2px;
-				}			
+				}
 			.partners-contents .btn-wrap {
 				margin: 0 0 0 231px;
 				min-height: 43px;
@@ -2581,7 +2587,7 @@ a:focus {
 					.partners-contents .pager-info li a:hover {
 						background-color: #c3c1c1;
 					}
-				    
+
 		/* .sponsoring-organizations-module */
 		.sponsoring-organizations-module {
 			background: #f4f4f4;
@@ -2684,9 +2690,9 @@ a:focus {
 									.sponsoring-organizations-module .carousel-control:hover.right .icons {
 										background-position: -384px -16px;
 									}
-				
-				
-				
+
+
+
 	/* solar ambassador program page */
 	.contents.solar-ambassador-program-contents {
 		min-height: 1000px;
@@ -2737,19 +2743,19 @@ a:focus {
 					padding-left: 41px;
 					padding-right: 39px;
 				}
-				
-					
-	
+
+
+
 
 	/* blog page */
-	
+
 		.titles.container .title-blog {
 			margin-right: 83px;
 			min-width: 133px;
 			letter-spacing: 9px;
 			padding-left: 20px;
 		}
-		
+
 		/* .grid-data */
 		.grid-data.container {
 			padding: 0 68px;
@@ -2951,7 +2957,7 @@ a:focus {
 								float: left;
 								margin: 0 6px 0 7px;
 							}
-		
+
 		/* .loading-bar */
 		.loading-bar {
 			text-align: center;
@@ -2963,8 +2969,8 @@ a:focus {
 				height: 22px;
 				display: block;
 				margin: 0 auto;
-			}						
-					
+			}
+
 			/* .blog-details-data */
 			.blog-details-data.container {
 				padding: 0 83px;
@@ -3032,8 +3038,8 @@ a:focus {
 							}
 							.blog-details-data.container .info-box .info-main .rights .down25 {
 								padding-bottom: 27px;
-							}					
-					
+							}
+
 			/* .related-blog-module */
 			.related-blog-module {
 				padding: 26px 0 7px 0;
@@ -3096,7 +3102,7 @@ a:focus {
 						.related-blog-module .carousel-inner>.active {
 							min-height: 620px;
 						}
-				    
+
 		/* .comments-module */
 		.comments-module {
 			background: #f4f4f4;
@@ -3187,7 +3193,7 @@ a:focus {
 				/* .comments-module .comments-area .quick-reply */
 				.comments-module .comments-area .quick-reply {
 					padding: 38px 0 121px 0;
-					position: relative;	
+					position: relative;
 				}
 					.comments-module .comments-area .quick-reply .quick-reply-txt {
 						float: left;
@@ -3276,7 +3282,7 @@ a:focus {
 		top: 0;
 		left: 0;
 		z-index: 99;
-	} 
+	}
 	/* .footer .row */
 	.footer .row {
 		margin: 0;
@@ -3381,7 +3387,7 @@ a:focus {
 .modal.modal-default .modal-dialog {
 	width: 1170px;
 	margin: 109px auto;
-}	
+}
 	.modal.modal-default .modal-content {
 		-webkit-box-shadow: 0 0 40px rgba(34,34,33,.9);
 		box-shadow: 0 0 40px rgba(34,34,33,.9);
@@ -3526,7 +3532,7 @@ a:focus {
 @media (min-width: 1221px) {
 .container {
     width: 1200px;
-} 
+}
 }
 
 
@@ -3590,8 +3596,8 @@ a:focus {
 			top: 6px;
 			right: 7px;
 		}
-			.dropdown-default .btn-default.active .icon-arrow-down, 
-			.dropdown-default .btn-default:active .icon-arrow-down, 
+			.dropdown-default .btn-default.active .icon-arrow-down,
+			.dropdown-default .btn-default:active .icon-arrow-down,
 			.open.dropdown-default>.dropdown-toggle.btn-default .icon-arrow-down {
 				background-position: -52px 0;
 			}
@@ -3613,11 +3619,11 @@ a:focus {
 	line-height: 35px;
 	padding: 0 5px;
 }
-			
-			
+
+
 .container {
 	width: auto;
-} 
+}
 
 
 /* .header */
@@ -4088,12 +4094,12 @@ a:focus {
 						background-size: 115.5px auto;
 						width: 116px;
 						height: 96px;
-					} 
+					}
 					.featured-on-module .logo-shareable {
 						background-size: 119px auto;
 						width: 119px;
 						height: 17px;
-					} 
+					}
 						.featured-on-module .logo-shareable:hover,
 						.featured-on-module .logo-shareable:focus {
 							background-position: center -16px;
@@ -4108,7 +4114,7 @@ a:focus {
 						width: 126px;
 						height: 37px;
 						margin-bottom: 13px;
-					} 
+					}
 						.featured-on-module .logo-clean-technica:hover,
 						.featured-on-module .logo-clean-technica:focus {
 							background-position: center -36.5px;
@@ -4212,7 +4218,7 @@ a:focus {
 .top150 {
 	margin-top: 124px;
 }
-	
+
 	/* .titles */
 	.titles.container {
 		padding: 35px 0 0 0;
@@ -4228,7 +4234,7 @@ a:focus {
 			font-size: 39.68px;
 			line-height: 48px;
 		}
-	
+
 
 	/* sign in page */
 	.contents.sign-in-contents {
@@ -4250,18 +4256,18 @@ a:focus {
 		.sign-in .sign-in-left {
 			padding-top: 56px;
 		}
-			.sign-in .sign-in-left h2 {				
+			.sign-in .sign-in-left h2 {
 				font-size: 40px;
 				line-height: 48px;
-				margin-bottom: 7px;				
+				margin-bottom: 7px;
 			}
-			.sign-in .sign-in-left p {			
+			.sign-in .sign-in-left p {
 				font-size: 12px;
 				line-height: 20px;
 			}
 			.sign-in .sign-in-left .account {
 				margin-top: 19px;
-			} 
+			}
 			.sign-in .sign-in-left a {
 				font-size: 12px;
 				line-height: 20px;
@@ -4293,7 +4299,7 @@ a:focus {
 					font-size: 12px;
 					letter-spacing: 2px;
 				}
-	
+
 
 	/* sign up page */
 	.contents.sign-up-contents {
@@ -4315,18 +4321,18 @@ a:focus {
 		.sign-up .sign-up-left {
 			padding-top: 61px;
 		}
-			.sign-up .sign-up-left h2 {			
+			.sign-up .sign-up-left h2 {
 				font-size: 40px;
 				line-height: 48px;
-				margin-bottom: 1px;				
+				margin-bottom: 1px;
 			}
-			.sign-up .sign-up-left p {			
+			.sign-up .sign-up-left p {
 				font-size: 12px;
 				line-height: 23px;
 			}
 			.sign-up .sign-up-left .account {
 				margin-top: 23px;
-			} 
+			}
 			.sign-up .sign-up-left a {
 				font-size: 12px;
 				line-height: 23px;
@@ -4369,7 +4375,7 @@ a:focus {
 					line-height: 36px;
 					letter-spacing: 3px;
 				}
-	
+
 
 	/* what do page */
 	.contents.what-we-do-contents {
@@ -4437,7 +4443,7 @@ a:focus {
 					padding-left: 27px;
 					padding-right: 29px;
 				}
-	
+
 
 	/* about us page */
 	.contents.about-us-contents {
@@ -4534,10 +4540,10 @@ a:focus {
 						height: 36px;
 						letter-spacing: 3px;
 					}
-	
+
 
 	/* get involved page */
-	
+
 		/* .info-area */
 		.info-area.container {
 			padding: 0 69px 35px 69px;
@@ -4551,7 +4557,7 @@ a:focus {
 				padding-right: 340px;
 				padding-bottom: 17px;
 			}
-					
+
 		/* .list-area */
 		.list-area.container {
 			padding: 0 69px 34px 69px;
@@ -4631,7 +4637,7 @@ a:focus {
 								float: left;
 								margin-left: 12px;
 							}
-					
+
 		/* .past-projects-module */
 		.past-projects-module {
 			padding-bottom: 45px;
@@ -4721,7 +4727,7 @@ a:focus {
 												.past-projects-module .carousel-control:hover.right .icons {
 													background-position: -310px -13px;
 												}
-	
+
 
 		/* project details page */
 		.details-active-project-module .banners.min-height455 {
@@ -4818,7 +4824,7 @@ a:focus {
 										font-size: 11.57px;
 										line-height: 20px;
 									}
-				    
+
 		/* .project-updates-module */
 		.project-updates-module .container {
 			padding: 38px 39px 20px 92px;
@@ -4948,7 +4954,7 @@ a:focus {
 								 .project-updates-module .main-area .venue-bottom p span {
 									 font-size: 11.57px;
 								 }
-				    
+
 			/* .donors-module */
 			.donors-module .titles.container {
 				padding: 0;
@@ -4988,11 +4994,11 @@ a:focus {
 						line-height: 23px;
 						padding: 0 15px 0 0;
 						margin-top: -2px;
-					}							
-					
-					
-					
-					
+					}
+
+
+
+
 	/* partners page */
 	.partners-contents .container {
 		padding: 35px 0 37px 70px;
@@ -5005,7 +5011,7 @@ a:focus {
 		padding-right: 16px;
 		margin-right: 68px;
 		margin-bottom: 25px;
-	} 
+	}
 		.partners-contents .titles .title-primary {
 			font-size: 40px;
 			line-height: 46px;
@@ -5015,7 +5021,7 @@ a:focus {
 			font-size: 12px;
 			line-height: 24px;
 		}
-	
+
 		/* .partners-contents .list */
 		.partners-contents .list-wrap {
 			margin-top: 41px;
@@ -5055,7 +5061,7 @@ a:focus {
 					line-height: 23px;
 					padding-right: 350px;
 					padding-left: 2px;
-				}			
+				}
 			.partners-contents .btn-wrap {
 				margin: 0 0 0 191px;
 			}
@@ -5078,8 +5084,8 @@ a:focus {
 						font-size: 13px;
 						line-height: 32px;
 						height: 32px;
-					}	
-				    
+					}
+
 		/* .sponsoring-organizations-module */
 		.sponsoring-organizations-module {
 			min-height: 320px;
@@ -5151,10 +5157,10 @@ a:focus {
 											  .sponsoring-organizations-module .carousel-control:hover.right .icons {
 												  background-position: -310px -13px;
 											  }
-				
-				
-				
-				
+
+
+
+
 	/* solar ambassador program page */
 	.solar-contents .article-detail {
 		padding: 35px 41px 62px 71px;
@@ -5196,9 +5202,9 @@ a:focus {
 				padding-left: 33px;
 				padding-right: 36px;
 			}
-				
-					
-	
+
+
+
 
 	/* blog page */
 	.titles.container .title-blog {
@@ -5207,7 +5213,7 @@ a:focus {
 		letter-spacing: 8px;
 		padding-left: 12px;
 	}
-	
+
 	/* .grid-data */
 	.grid-data.container {
 		padding: 0 55px;
@@ -5343,7 +5349,7 @@ a:focus {
 						.grid-area.row .info-main .bottom-bar .social-ul li {
 							margin: 0 5px 0 6px;
 						}
-	
+
 	/* .loading-bar */
 	.loading-bar {
 		padding: 0 0 58px 0;
@@ -5352,8 +5358,8 @@ a:focus {
 			background-size: 106px auto;
 			width: 106px;
 			height: 18px;
-		}						
-				
+		}
+
 		/* .blog-details-data */
 		.blog-details-data.container {
 			padding: 0 68px;
@@ -5400,8 +5406,8 @@ a:focus {
 					}
 					.blog-details-data.container .info-box .info-main .rights .down25 {
 						padding-bottom: 20px;
-					}					
-				
+					}
+
 		/* .related-blog-module */
 		.related-blog-module {
 			padding: 20px 0 7px 0;
@@ -5447,7 +5453,7 @@ a:focus {
 					.related-blog-module .carousel-inner>.active {
 						min-height: 512px;
 					}
-				
+
 		/* .comments-module */
 		.comments-module .container {
 			padding: 30px 68px 0 68px;
@@ -5554,9 +5560,9 @@ a:focus {
 						padding: 2px 0 0 3px;
 
 					}
-							
-							
-	
+
+
+
 /* .footer */
 .footer .row {
 	padding: 0 82px 0 95px;
@@ -5635,7 +5641,7 @@ a:focus {
 .modal.modal-default .modal-dialog {
 	width: 967px;
 	margin: 90px auto;
-}	
+}
 	/* .modal-default .modal-header */
 	.modal.modal-default .modal-header {
 		text-align: center;
@@ -5732,7 +5738,7 @@ a:focus {
 							  line-height: 21px;
 						  }
 }
-						
+
 
 
 
@@ -5791,8 +5797,8 @@ a:focus {
 			top: 16px;
 			right: 17px;
 		}
-			.dropdown-default .btn-default.active .icon-arrow-down, 
-			.dropdown-default .btn-default:active .icon-arrow-down, 
+			.dropdown-default .btn-default.active .icon-arrow-down,
+			.dropdown-default .btn-default:active .icon-arrow-down,
 			.open.dropdown-default>.dropdown-toggle.btn-default .icon-arrow-down {
 				background-position: -113px 0;
 			}
@@ -5805,9 +5811,9 @@ a:focus {
 				padding: 0 25px;
 				line-height: 26px;
 			}
-			
-			
-			
+
+
+
 /* title */
 .title-white-border,
 .title-blue-border {
@@ -6035,8 +6041,8 @@ a:focus {
 						.mobile-circle {
 							display: none;
 						}
-						
-	
+
+
 					/* .active-projects-module .info-main */
 					.active-projects-module .info-main {
 						padding: 86px 61px 34px 58px;
@@ -6196,8 +6202,8 @@ a:focus {
 				margin-right: 85px;
 				margin-left: 85px;
 			}
-				.how-it-works-module .row .carousel-control, 
-				.how-it-works-module .row .carousel-control .icons, 
+				.how-it-works-module .row .carousel-control,
+				.how-it-works-module .row .carousel-control .icons,
 				.how-it-works-module .row .carousel-indicators {
 					display: block;
 				}
@@ -6205,8 +6211,8 @@ a:focus {
 						float: none;
 						display: none;
 					}
-					.how-it-works-module .step-row .carousel-inner>.active, 
-					.how-it-works-module .step-row .carousel-inner>.next, 
+					.how-it-works-module .step-row .carousel-inner>.active,
+					.how-it-works-module .step-row .carousel-inner>.next,
 					.how-it-works-module .step-row .carousel-inner>.prev {
 						display: block;
 					}
@@ -6274,7 +6280,7 @@ a:focus {
 								width: 18px;
 								height: 18px;
 								background-color: rgba(41,41,41,1);
-							}	
+							}
 								.how-it-works-module .step-row .module-box {
 									padding: 10px 33px 0 33px;
 									min-height: 170px;
@@ -6447,12 +6453,12 @@ a:focus {
 							background-size: 137px auto;
 							width: 137px;
 							height: 113px;
-						} 
+						}
 						.featured-on-module .logo-shareable {
 							background-size: 144px auto;
 							width: 144px;
 							height: 21px;
-						} 
+						}
 						.featured-on-module .logo-philanthropy {
 							background-size: 153px auto;
 							width: 153px;
@@ -6462,7 +6468,7 @@ a:focus {
 							background-size: 153px auto;
 							width: 153px;
 							height: 44px;
-						} 
+						}
 							.featured-on-module .logo-fast-mpany:hover,
 							.featured-on-module .logo-fast-mpany:focus,
 							.featured-on-module .logo-ehe-new-hork-eimes:hover,
@@ -6505,8 +6511,8 @@ a:focus {
 							.featured-on-module .carousel-control:hover.right .icons {
 								background-position: -384px -16px;
 							}
-			
-			
+
+
 
 	/* .newsletter-module */
 	.newsletter-module {
@@ -6575,7 +6581,7 @@ a:focus {
 	.top150 {
 		margin-top: 185px;
 	}
-	
+
 	/* .titles */
 	.titles.container {
 		padding: 52px 0 0 0;
@@ -6591,7 +6597,7 @@ a:focus {
 			font-size: 49.15px;
 			line-height: 60px;
 		}
-	
+
 
 	/* sign in page */
 	.contents.sign-in-contents {
@@ -6614,18 +6620,18 @@ a:focus {
 			float: none;
 			padding-top: 92px;
 		}
-			.sign-in .sign-in-left h2 {				
+			.sign-in .sign-in-left h2 {
 				font-size: 48px;
 				line-height: 52px;
-				margin-bottom: 11px;				
+				margin-bottom: 11px;
 			}
-			.sign-in .sign-in-left p {			
+			.sign-in .sign-in-left p {
 				font-size: 16px;
 				line-height: 32px;
 			}
 			.sign-in .sign-in-left .account {
 				margin-top: 32px;
-			} 
+			}
 			.sign-in .sign-in-left a {
 				font-size: 16px;
 				line-height: 32px;
@@ -6657,7 +6663,7 @@ a:focus {
 					letter-spacing: 4px;
 					font-size: 14px;
 				}
-	
+
 
 	/* sign up page */
 	.contents.sign-up-contents {
@@ -6679,18 +6685,18 @@ a:focus {
 			float: none;
 			padding-top: 82px;
 		}
-			.sign-up .sign-up-left h2 {				
+			.sign-up .sign-up-left h2 {
 				font-size: 48px;
 				line-height: 52px;
-				margin-bottom: 11px;				
+				margin-bottom: 11px;
 			}
-			.sign-up .sign-up-left p {			
+			.sign-up .sign-up-left p {
 				font-size: 16px;
 				line-height: 32px;
 			}
 			.sign-up .sign-up-left .account {
 				margin-top: 32px;
-			} 
+			}
 			.sign-up .sign-up-left a {
 				font-size: 16px;
 				line-height: 32px;
@@ -6733,7 +6739,7 @@ a:focus {
 					line-height: 47px;
 					letter-spacing: 4px;
 				}
-	
+
 
 	/* what do page */
 	.contents.what-we-do-contents {
@@ -6802,7 +6808,7 @@ a:focus {
 					padding-left: 39px;
 					padding-right: 36px;
 				}
-	
+
 
 	/* about us page */
 	.contents.about-us-contents {
@@ -6904,10 +6910,10 @@ a:focus {
 					.mains-tabs .tab-content .tab-funded .content-right p {
 						margin-bottom: 30px;
 						padding-right: 35px;
-					}				
+					}
 				.mains-tabs .tab-content .tab-funded .content-right  {
 					padding-top: 40px;
-				}					
+				}
 					.mains-tabs .tab-content .tab-funded .content-right p {
 						padding-right: 35px;
 						padding-top: 2px;
@@ -6929,10 +6935,10 @@ a:focus {
 					.mains-tabs .tab-content .tab-involved .btn-blue:nth-child(2n) {
 						float: right;
 					}
-					
-	
+
+
 	/* get involved page */
-	
+
 		/* .info-area */
 		.info-area.container {
 			padding: 0 30px 35px 60px;
@@ -6946,7 +6952,7 @@ a:focus {
 				padding-right: 70px;
 				padding-bottom: 17px;
 			}
-					
+
 		/* .list-area */
 		.list-area.container {
 			background: #ededed;
@@ -7072,7 +7078,7 @@ a:focus {
 								margin-left: 0;
 								margin-right: 18px;
 							}
-					
+
 		/* .past-projects-module */
 		.past-projects-module {
 			background-color: #fff;
@@ -7176,7 +7182,7 @@ a:focus {
 													.past-projects-module .carousel-control:hover.right .icons {
 														background-position: -384px -16px;
 													}
-	
+
 
 	/* project details page */
 	.details-active-project-module .banners.min-height455 {
@@ -7309,7 +7315,7 @@ a:focus {
 										margin-left: -10px;
 										display: block;
 									}
-							
+
 							.details-active-project-module .txt-area .txt-td {
 								line-height: 20px;
 							}
@@ -7323,7 +7329,7 @@ a:focus {
 									font-size: 16.38px;
 									line-height: 32px;
 								}
-				    
+
 			/* .project-updates-module */
 			.project-updates-module .container {
 				padding: 57px 31px 20px 31px;
@@ -7424,7 +7430,7 @@ a:focus {
 												.project-updates-module .list-area .main-info .btn-icon-gray:hover .icon-gg {
 													background-position: -264px -16px;
 												}
-								 
+
 				/* .project-updates-module .right-aside */
 				.project-updates-module .right-aside {
 					width: 100%;
@@ -7495,7 +7501,7 @@ a:focus {
 					 .project-updates-module .venue-area {
 						 display: none;
 					 }
-				    
+
 			/* .donors-module */
 			.donors-module .titles.container {
 				text-align: center;
@@ -7555,8 +7561,8 @@ a:focus {
 						line-height: 35px;
 						padding: 0 45px 0 0;
 					}
-								
-					
+
+
 	/* partners page */
 	.partners-contents .container {
 		padding: 50px 0 11px 42px;
@@ -7570,7 +7576,7 @@ a:focus {
 		margin-right: 39px;
 		margin-bottom: 40px;
 		letter-spacing: 8px;
-	} 
+	}
 		.partners-contents .titles .title-primary {
 			font-size: 48px;
 			line-height: 52px;
@@ -7619,7 +7625,7 @@ a:focus {
 					line-height: 32px;
 					padding-right: 41px;
 					padding-left: 2px;
-				}			
+				}
 			.partners-contents .btn-wrap {
 				position: absolute;
 				top: 205px;
@@ -7630,7 +7636,7 @@ a:focus {
 					line-height: 43px;
 					padding-left: 48px;
 					padding-right: 44px;
-				}	
+				}
 			/* .partners-contents .pager-info */
 			.partners-contents .pager-info {
 				margin-top: 23px;
@@ -7647,7 +7653,7 @@ a:focus {
 						line-height: 39px;
 						height: 39px;
 					}
-				    
+
 		/* .sponsoring-organizations-module */
 		.sponsoring-organizations-module {
 			min-height: 450px;
@@ -7744,10 +7750,10 @@ a:focus {
 								.sponsoring-organizations-module .carousel-control:hover.right .icons {
 									background-position: -384px -16px;
 								}
-				
-				
-				
-					
+
+
+
+
 	/* solar ambassador program page */
 	.solar-contents .article-detail {
 		padding: 50px 39px 49px 72px;
@@ -7764,7 +7770,7 @@ a:focus {
 		.solar-contents .article-detail .detail-left {
 			padding-right: 0;
 			padding-top: 85px;
-		}		
+		}
 		.solar-contents .article-detail .detail-left p {
 			margin-top: 10px;
 			padding-left: 5px;
@@ -7797,9 +7803,9 @@ a:focus {
 				padding-right: 36px;
 				margin-right: 0;
 			}
-				
-					
-	
+
+
+
 
 	/* blog page */
 	.titles.container .title-blog {
@@ -7809,7 +7815,7 @@ a:focus {
 		padding-left: 14px;
 		margin-top: -2px;
 	}
-	
+
 	/* .grid-data */
 	.grid-data.container {
 		padding: 0;
@@ -7975,8 +7981,8 @@ a:focus {
 							.grid-area.row .info-main .bottom-bar .btn-icon-gray .icons {
 								margin-top: 7px;
 							}
-		
-		
+
+
 		/* .loading-bar */
 		.loading-bar {
 			padding: 0 0 45px 0;
@@ -7988,7 +7994,7 @@ a:focus {
 				height: 22px;
 				display: block;
 				margin: 0 auto;
-			}	
+			}
 			/* .blog-details-data */
 			.blog-details-data.container {
 				padding: 0;
@@ -8059,8 +8065,8 @@ a:focus {
 						}
 						.blog-details-data.container .info-box .info-main .rights .down25 {
 							padding-bottom: 0;
-						}					
-					
+						}
+
 			/* .related-blog-module */
 			.related-blog-module {
 				padding: 26px 0 7px 0;
@@ -8142,7 +8148,7 @@ a:focus {
 					.related-blog-module .carousel-inner>.active {
 						min-height: 590px;
 					}
-				    
+
 			/* .comments-module */
 			.comments-module .container {
 				padding: 37px 38px 0 38px;
@@ -8273,9 +8279,9 @@ a:focus {
 							font-size: 14px;
 							padding: 2px 0 0 3px;
 						}
-	
-	
-	
+
+
+
 /* .footer */
 .footer .row {
 	padding: 0 23px 0 65px;
@@ -8392,7 +8398,7 @@ a:focus {
 .modal.modal-default .modal-dialog {
 	width: 706px;
 	margin: 209px auto;
-}	
+}
 	/* .modal-default .modal-header */
 	.modal.modal-default .btn-close {
 		background-position: -480px -88px;
@@ -8468,7 +8474,7 @@ a:focus {
 				display: none;
 			}
 }
-						
+
 
 
 
@@ -8541,8 +8547,8 @@ body {
 			width: 8px;
 			height: 8px;
 		}
-			.dropdown-default .btn-default.active .icon-arrow-down, 
-			.dropdown-default .btn-default:active .icon-arrow-down, 
+			.dropdown-default .btn-default.active .icon-arrow-down,
+			.dropdown-default .btn-default:active .icon-arrow-down,
 			.open.dropdown-default>.dropdown-toggle.btn-default .icon-arrow-down {
 				background-position: -56.5px 0;
 			}
@@ -8779,10 +8785,10 @@ body {
 						.tablet-circle {
 							display: none;
 						}
-						
-						
-						
-						
+
+
+
+
 					/* .active-projects-module .info-main */
 					.active-projects-module .info-main {
 						padding: 38px 29px 27px 30px;
@@ -8953,7 +8959,7 @@ body {
 							.how-it-works-module .carousel-indicators .active {
 								width: 9px;
 								height: 9px;
-							}	
+							}
 								.how-it-works-module .step-row .module-box {
 									padding: 5px 16px 0 16px;
 									min-height: 85px;
@@ -9079,12 +9085,12 @@ body {
 							background-size: 68.5px auto;
 							width: 68.5px;
 							height: 56.5px;
-						} 
+						}
 						.featured-on-module .logo-shareable {
 							background-size: 72px auto;
 							width: 72px;
 							height: 10.5px;
-						} 
+						}
 						.featured-on-module .logo-philanthropy {
 							background-size: 76.5px auto;
 							width: 76.5px;
@@ -9094,7 +9100,7 @@ body {
 							background-size: 76.5px auto;
 							width: 76.5px;
 							height: 22px;
-						} 
+						}
 			.featured-on-module .carousel-control.left,
 			.featured-on-module .carousel-control.right {
 				border: 1px solid #fff;
@@ -9126,8 +9132,8 @@ body {
 							.featured-on-module .carousel-control:hover.right .icons {
 								background-position: -192px -8px;
 							}
-			
-			
+
+
 
 	/* .newsletter-module */
 	.newsletter-module {
@@ -9185,7 +9191,7 @@ body {
 	.top150 {
 		margin-top: 92px;
 	}
-	
+
 	/* .titles */
 	.titles.container {
 		padding: 26px 0 0 0;
@@ -9201,9 +9207,9 @@ body {
 			font-size: 24px;
 			line-height: 30px;
 		}
-		
-			
-							
+
+
+
 	/* sign in page */
 	.contents.sign-in-contents {
 		min-height: 450px;
@@ -9228,12 +9234,12 @@ body {
 			float: none;
 			padding-top: 46px;
 		}
-			.sign-in .sign-in-left h2 {				
+			.sign-in .sign-in-left h2 {
 				font-size: 24px;
 				line-height: 26px;
-				margin-bottom: 7px;				
+				margin-bottom: 7px;
 			}
-			.sign-in .sign-in-left p {			
+			.sign-in .sign-in-left p {
 				font-size: 8px;
 				line-height: 16px;
 				padding-left: 0;
@@ -9243,7 +9249,7 @@ body {
 			}
 			.sign-in .sign-in-left .account p {
 				line-height: 10px;
-			} 
+			}
 			.sign-in .sign-in-left .account a {
 				font-size: 8px;
 				line-height: 10px;
@@ -9285,7 +9291,7 @@ body {
 	}
 	.sign-up {
 		padding: 26px 15px 12px 28px;
-	}	
+	}
 		.sign-up .title-blue-border {
 			border-width: 1px;
 		}
@@ -9301,21 +9307,21 @@ body {
 		.sign-up .sign-up-left {
 			float: none;
 			padding-top: 41px;
-			padding-left: 2px; 
+			padding-left: 2px;
 		}
-			.sign-up .sign-up-left h2 {				
+			.sign-up .sign-up-left h2 {
 				font-size: 24px;
 				line-height: 26px;
-				margin-bottom: 6px;				
+				margin-bottom: 6px;
 			}
-			.sign-up .sign-up-left p {			
+			.sign-up .sign-up-left p {
 				font-size: 8px;
 				line-height: 16px;
 				padding-left: 0;
 			}
 			.sign-up .sign-up-left .account {
 				margin-top: 16px;
-			}  
+			}
 			.sign-up .sign-up-left a {
 				font-size: 8px;
 				line-height: 16px;
@@ -9363,7 +9369,7 @@ body {
 					letter-spacing: 2px;
 				}
 
-	
+
 	/* what do page */
 	.contents.what-we-do-contents {
 		min-height: 500px;
@@ -9479,7 +9485,7 @@ body {
 			padding-left: 18px;
 			padding-right: 17px;
 			margin-left: 2px;
-		}		
+		}
 		/* .mains-tabs */
 		.mains-tabs .container {
 			width: 100%;
@@ -9501,10 +9507,10 @@ body {
 				border-width: 2px;
 			}
 			.mains-tabs .tab-index .row .col-lg-3 a:hover {
-				border-width: 2px; 
+				border-width: 2px;
 			}
 			.mains-tabs .tab-index .row .col-lg-3 a.active {
-				border-width: 2px; 
+				border-width: 2px;
 			}
 		.mains-tabs .tab-content {
 			min-height: 450px;
@@ -9521,7 +9527,7 @@ body {
 				margin-top: 23px;
 				width: 100%;
 				height: 248px;
-			}		
+			}
 			.mains-tabs .tab-content .content-right {
 				margin-left: 14px;
 			}
@@ -9548,7 +9554,7 @@ body {
 					}
 				.mains-tabs .tab-content .tab-funded .content-right  {
 					padding-top: 18px;
-				}					
+				}
 					.mains-tabs .tab-content .tab-funded .content-right p {
 						padding-right: 19px;
 						padding-top: 2px;
@@ -9570,11 +9576,11 @@ body {
 					.mains-tabs .tab-content .tab-involved .btn-blue:nth-child(2n) {
 						float: right;
 					}
-					
-	
+
+
 
 	/* get involved page */
-	
+
 		/* .info-area */
 		.info-area.container {
 			padding: 0 15px 18px 30px;
@@ -9588,7 +9594,7 @@ body {
 				padding-right: 35px;
 				padding-bottom: 8px;
 			}
-					
+
 		/* .list-area */
 		.list-area.container {
 			padding: 0 0 20px 0;
@@ -9688,7 +9694,7 @@ body {
 							.list-area .row .rights .bottom-bar .social-ul li {
 								margin-right: 9px;
 							}
-					
+
 		/* .past-projects-module */
 		  .past-projects-module .title-past-projects {
 			  letter-spacing: 5px;
@@ -9778,7 +9784,7 @@ body {
 											  .past-projects-module .carousel-control:hover.right .icons {
 												  background-position: -192px -8px;
 											  }
-	
+
 
 	/* project details page */
 	.details-active-project-module .banners.min-height455 {
@@ -9879,7 +9885,7 @@ body {
 							.details-active-project-module .txt-area .btn-icon-gray {
 								width: 35px;
 							}
-							
+
 							.details-active-project-module .txt-area .txt-td {
 								line-height: 10px;
 
@@ -9893,7 +9899,7 @@ body {
 									font-size: 8px;
 									line-height: 16px;
 								}
-				    
+
 			/* .project-updates-module */
 			.project-updates-module .container {
 				padding: 28px 16px 10px 16px;
@@ -9980,7 +9986,7 @@ body {
 												.project-updates-module .list-area .main-info .btn-icon-gray:hover .icon-gg {
 													background-position: -132px -8px;
 												}
-								 
+
 				/* .project-updates-module .right-aside */
 				.project-updates-module .right-aside {
 					margin-top: 19px;
@@ -10029,7 +10035,7 @@ body {
 							bottom: 12px;
 							left: 16px;
 						}
-				    
+
 			/* .donors-module */
 			.donors-module .titles.container {
 				min-height: 50px;
@@ -10074,14 +10080,14 @@ body {
 						line-height: 17px;
 						padding: 0 22px 0 0;
 					}
-					
 
-	/* solar ambassador program page */	
+
+	/* solar ambassador program page */
 	.contents.solar-ambassador-program-contents {
 		min-height: 800px;
 		margin-top: 91px;
 	}
-		/* .article-detail */	
+		/* .article-detail */
 		.solar-contents .article-detail {
 			padding: 26px 15px 12px 32px;
 		}
@@ -10104,7 +10110,7 @@ body {
 			}
 			.solar-contents .article-detail .detail-left .title-img {
 				margin-bottom: 11px;
-			}		
+			}
 			.solar-contents .article-detail .detail-left p {
 				margin-top: 5px;
 				padding-left: 3px;
@@ -10141,7 +10147,7 @@ body {
 					margin-right: 0;
 					clear: both;
 				}
-	
+
 
 	/* partners page */
 	.contents.partners-contents {
@@ -10164,7 +10170,7 @@ body {
 			margin-right: 15px;
 			margin-bottom: 20px;
 			letter-spacing: 3px;
-		} 
+		}
 		.partners-contents .titles .title-primary {
 			font-size: 24px;
 			line-height: 26px;
@@ -10215,7 +10221,7 @@ body {
 					line-height: 16px;
 					padding-right: 20px;
 					padding-left: 1px;
-				}			
+				}
 			.partners-contents .btn-wrap {
 				position: absolute;
 				left: -188px;
@@ -10227,7 +10233,7 @@ body {
 					padding-left: 24px;
 					padding-right: 25px;
 					letter-spacing: 2px;
-				}		
+				}
 			/* .partners-contents .pager-info */
 			.partners-contents .pager-info {
 				margin-top: -20px;
@@ -10244,8 +10250,8 @@ body {
 						font-size: 8px;
 						line-height: 20px;
 						height: 20px;
-					}	
-				    
+					}
+
 		/* .sponsoring-organizations-module */
 		.sponsoring-organizations-module {
 			min-height: 225px;
@@ -10319,9 +10325,9 @@ body {
 								.sponsoring-organizations-module .carousel-control:hover.right .icons {
 									background-position: -192px -8px;
 								}
-				
-					
-	
+
+
+
 
 	/* blog page */
 	.titles.container .title-blog {
@@ -10331,7 +10337,7 @@ body {
 		padding-left: 7px;
 		margin-top: -1px;
 	}
-	
+
 	/* .grid-data */
 	.grid-data.container {
 		padding: 0;
@@ -10478,8 +10484,8 @@ body {
 							.grid-area.row .info-main .bottom-bar .btn-icon-gray .icons {
 								margin-top: 3.5px;
 							}
-		
-		
+
+
 		/* .loading-bar */
 		.loading-bar {
 			padding: 0 0 9px 0;
@@ -10489,7 +10495,7 @@ body {
 				background-size: 64px auto;
 				width: 64px;
 				height: 21px;
-			}	
+			}
 			/* .blog-details-data */
 			.blog-details-data.container {
 				min-height: 150px;
@@ -10541,8 +10547,8 @@ body {
 						.blog-details-data.container .info-box .info-main .lefts .font14,
 						.blog-details-data.container .info-box .down25 {
 							padding-bottom: 17px;
-						}			
-					
+						}
+
 			/* .related-blog-module */
 			.related-blog-module {
 				padding: 13px 0 3px 0;
@@ -10606,7 +10612,7 @@ body {
 					.related-blog-module .carousel-inner>.active {
 						min-height: 295px;
 					}
-				    
+
 			/* .comments-module */
 			.comments-module .container {
 				padding: 18px 19px 0 19px;
@@ -10737,10 +10743,10 @@ body {
 							padding: 1px 0 0 1.5px;
 
 						}
-	
-	
-	
-	
+
+
+
+
 /* .footer */
 .footer .row {
 	padding: 0 21.5px 0 32.5px;
@@ -10831,7 +10837,7 @@ body {
 .modal.modal-default .modal-dialog {
 	width: 346px;
 	margin: 102px auto;
-}	
+}
 	/* .modal-default .modal-header */
 	.modal.modal-default .btn-close {
 		background-position: -240px -44px;
@@ -10896,11 +10902,11 @@ body {
 						}
 }
 
-	
-	
-	
-/* iPads (min-width : 992px) and (max-width : 1024px) */	
-@media (min-width : 992px) and (max-width : 1024px) and (-webkit-min-device-pixel-ratio : 1.5){ 
+
+
+
+/* iPads (min-width : 992px) and (max-width : 1024px) */
+@media (min-width : 992px) and (max-width : 1024px) and (-webkit-min-device-pixel-ratio : 1.5){
 	.header .logo,
 	.footer .bottoms .logo {
 		background: url(../images/logo-white@2x.png) no-repeat;
@@ -10928,11 +10934,11 @@ body {
 	}
 }
 
-	
-	
-	
-/* iPads (min-width : 768px) and (max-width : 991px) */	
-@media (min-width : 768px) and (max-width : 991px) and (-webkit-min-device-pixel-ratio : 1.5){ 
+
+
+
+/* iPads (min-width : 768px) and (max-width : 991px) */
+@media (min-width : 768px) and (max-width : 991px) and (-webkit-min-device-pixel-ratio : 1.5){
 	.header .logo,
 	.footer .bottoms .logo {
 		background: url(../images/tablet/tablet-logo-white@2x.png);
@@ -10966,11 +10972,11 @@ body {
 	}
 }
 
-	
-	
-	
-/* iPhone (min-width : 375px) and (max-width : 767px) */	
-@media (min-width : 375px) and (max-width : 767px) and (-webkit-min-device-pixel-ratio : 1.5){ 
+
+
+
+/* iPhone (min-width : 375px) and (max-width : 767px) */
+@media (min-width : 375px) and (max-width : 767px) and (-webkit-min-device-pixel-ratio : 1.5){
 	.header .logo,
 	.footer .bottoms .logo {
 		background: url(../images/mobile/mobile-logo-white@2x.png);
@@ -11017,7 +11023,7 @@ body {
 
 .payment-modal-content .modal-header {
     font-weight: bold;
-    font-size: 18px; 
+    font-size: 18px;
 }
 
 label.checkmark {
