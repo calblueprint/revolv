@@ -14,7 +14,7 @@ class SignupForm(UserCreationForm):
     first_name = forms.CharField(label="First name")
     last_name = forms.CharField(label="Last name")
     address = forms.CharField(label="Address", required=False)
-    subscribed_to_newsletter = forms.BooleanField(initial=True, required=False, label="Subscribe me to the Re-volv Newsletter.", help_text="Subscribe me to the Revolv Newsletter")
+    subscribed_to_newsletter = forms.BooleanField(initial=True, required=False, label="Subscribe me to the RE-volv Newsletter.", help_text="Subscribe me to the Revolv Newsletter")
 
     def save(self, commit=True):
         """
