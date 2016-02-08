@@ -413,6 +413,12 @@ a:focus {
 				height: 993px!important;
 				border: none;
 			}
+			.top-section .section-video-area .mejs-container .mejs-controls {
+				display: none !important;
+			}
+			.top-section .section-video-area .mejs-container .mejs-overlay-button {
+				display: none !important;
+			}
 	.top-section.min-height .container {
 		color: #fff;
 		text-align: center;
