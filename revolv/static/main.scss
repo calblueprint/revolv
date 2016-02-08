@@ -1,8 +1,8 @@
-@import "foundation-settings";
-@import "revolv-settings";
-@import "bower_components/foundation/scss/foundation";
-@import "modal";
-@import "nav";
+@import "foundation-settings.scss";
+@import "revolv-settings.scss";
+@import "node_modules/foundation-sites/scss/foundation.scss";
+@import "modal.scss";
+@import "nav.scss";
 
 body {
     background-color: $revolv-tan-bg;
@@ -36,7 +36,7 @@ input, select, textarea {
     vertical-align: middle;
 }
 
-@import "footer";
+@import "footer.scss";
 
 @media #{$medium-up} {
     .table-social-accounts button.submit-button {
