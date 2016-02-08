@@ -228,6 +228,7 @@ $(document).ready(function(){
   {
     $("#video-player").mediaelementplayer({
         flashScriptAccess: 'always',
+        loop: true
     });
   }
 
@@ -308,7 +309,8 @@ $(document).ready(function(){
   $(".status-indicator input").each(function(){
     animateKnob($(this));
   });
-  //show pecentage value animate  function animateKnob ($elem) {
+
+  //show pecentage value animate  function animateKnob ($elem) {
     var endval = parseInt($elem.attr("data-oldvalue"));
     var m1 = 0;
     var tmr1 = self.setInterval(function(){delayProgress()},10);
