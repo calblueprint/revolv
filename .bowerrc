@@ -1,6 +1,0 @@
-{
-  "directory": "revolv/static/bower_components",
-  "analytics": false,
-  "timeout": 120000,
-  "registry": "https://bower.herokuapp.com"
-}
