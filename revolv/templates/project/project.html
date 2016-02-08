@@ -164,23 +164,36 @@
             <div class="value-txt">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
             <h5 class="title-h5">OUR APPRECIATION</h5>
               {{ donation_level.description }}
-            <a href="#" class="btn-blue btn-i-want-to-donate" data-toggle="modal" data-target="#donate-modal">I WANT TO DONATE</a>
+              <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="amount_cents" value="{{ donation_level.amount }}">
+                <script
+                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="{{ stripe_publishable_key }}"
+                  data-description="Donate ${{ donation_level.amount }}"
+                  data-image="/128x128.png"
+                  data-locale="auto">
+                </script>
+              </form>
           </div>
           {% endfor %}
           <!-- end .module-box -->
         {% else %}
           <div class="module-box">
+            <div class="value-txt">$10.00</div>
             <h5 class="title-h5">BACK THIS PROJECT</h5>
               Back {{ project.title }} and support solar energy!
               {% if user.is_authenticated %}
                   <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
+                  {% for level in project_donation_levels %}
+                  {% endfor %}
                   <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
                     {% csrf_token %}
-                    <input type="hidden" name="amount_cents" value="200">
+                    <input type="hidden" name="amount_cents" value="1000">
                     <script
                       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                       data-key="{{ stripe_publishable_key }}"
-                      data-description="Donate $2.00"
+                      data-description="Donate $10.00"
                       data-image="/128x128.png"
                       data-locale="auto">
                     </script>

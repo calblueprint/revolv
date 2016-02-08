@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.http.response import HttpResponseBadRequest
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import CreateView, DetailView, UpdateView, TemplateView
 from django.views.generic.edit import FormView
 from django.views.decorators.http import require_http_methods
@@ -17,7 +17,7 @@ from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.models import UserReinvestment, Payment, PaymentType
 from revolv.payments.services import PaymentService
 from revolv.project import forms
-from revolv.project.models import Category, Project, ProjectUpdate
+from revolv.project.models import Category, Project, ProjectUpdate, DonationLevel
 from revolv.tasks.sfdc import send_donation_info
 
 def stripe_callback(request, pk):
@@ -25,10 +25,20 @@ def stripe_callback(request, pk):
     stripe.api_key = settings.STRIPE_SECRET_KEY
     token = stripe.Token.retrieve(request.POST['stripeToken'])
 
-    amount_cents = int(request.POST['amount_cents'])
-    charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
-
     project = get_object_or_404(Project, pk=pk)
+
+    amount_cents = int(request.POST['amount_cents'])
+    try:
+        charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
+    except stripe.error.CardError, e:
+        msg = body['error']['message']
+    except stripe.error.APIConnectionError, e:
+        msg = body['error']['message']
+    except Exception, e:
+        #log it
+        msg = "Payment error. The RE-volv has been notified."
+        return render(request, "project/project_donate_erorr.html", {"msg": msg, "project": project})
+        pass
 
     payment = Payment.objects.create(
         user=request.user.revolvuserprofile,
