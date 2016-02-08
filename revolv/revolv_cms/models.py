@@ -1,8 +1,71 @@
 from django.db import models
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtailsettings import BaseSetting, register_setting
+
+class ImageBlock(blocks.StructBlock):
+    """
+    A block for images whose layout properties and size can be set to one of
+    a small number of useful values.
+    """
+    image = ImageChooserBlock()
+    size = blocks.ChoiceBlock(choices=[
+        ('tiny', 'Tiny'),
+        ('small', 'Small'),
+        ('medium', 'Medium'),
+        ('large', 'Large'),
+        ('full_width', 'Full Width'),
+    ], default='medium', required=True)
+    layout = blocks.ChoiceBlock(choices=[
+        ('img-inline', 'Inline'),
+        ('img-block', 'Block'),
+        ('img-left', 'Float Left'),
+        ('img-right', 'Float Right'),
+        ('img-center', 'Center'),
+    ], default='inline', required=True)
+
+    class Meta:
+        template = 'revolv_cms/blocks/image_block.html'
+
+
+class RichListBlock(blocks.StructBlock):
+    """
+    A list block with rich structure.
+    """
+    list_content = blocks.ListBlock(blocks.StructBlock([
+        # ('centered_row', blocks.BooleanBlock(default=False, required=False)),
+        ('display_type', blocks.ChoiceBlock(choices=[
+            ('li_block', 'Block'),
+            ('li_inline', 'Inline'),
+            ('li_row', 'Row'),
+            ('li_col', 'Column'),
+        ], required=True, default='li_block')),
+        ('main_axis', blocks.ChoiceBlock([
+            ('m_start', 'Start'),
+            ('m_end', 'End'),
+            ('m_center', 'Center'),
+            ('m_space_between', 'Space Between'),
+            ('m_space_around', 'Space Around'),
+        ], required=True, default='m_start')),
+        ('perpendicular_axis', blocks.ChoiceBlock([
+            ('p_start', 'Start'),
+            ('p_end', 'End'),
+            ('p_center', 'Center'),
+            ('p_baseline', 'Baseline'),
+            ('p_stretch', 'Stretch'),
+        ], required=True, default='p_start')),
+        ('content', blocks.StreamBlock([
+            ('rich_text', blocks.RichTextBlock()),
+            ('image', ImageBlock()),
+        ])),
+    ]))
+
+    class Meta:
+        template = 'revolv_cms/blocks/rich_list.html'
 
 
 class RevolvCustomPage(Page):
@@ -17,13 +80,17 @@ class RevolvCustomPage(Page):
     can be at any level in the menu hierarchy which we need for both the header
     and footer menus.
     """
-    body = RichTextField()
+    body = StreamField([
+        ('rich_text', blocks.RichTextBlock()),
+        ('image', ImageBlock()),
+        ('rich_list', RichListBlock()),
+    ])
     search_name = "Custom Page"
 
     indexed_fields = ('body', )
     content_panels = [
         FieldPanel('title', classname="full title"),
-        FieldPanel('body', classname="full"),
+        StreamFieldPanel('body'),
     ]
 
 
@@ -460,4 +527,3 @@ class ShareThisSettings(BaseSetting):
     """
     image = models.URLField(verbose_name='Image Url', help_text='The Url of image that will be used in ShareThis widget')
     description = models.CharField(max_length=200, help_text="The description that will be used in ShareThis widget")
-

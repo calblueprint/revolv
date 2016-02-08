@@ -2,6 +2,10 @@
 import os
 import sys
 
+from revolv import load_env
+
+load_env.load_env()
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "revolv.settings")
 

@@ -1,4 +1,6 @@
-@import "mixins";
+@import "mixins.scss";
+@import "node_modules/foundation-sites/scss/foundation/components/_global.scss";
+@import "revolv-settings.scss";
 
 .revolv-reveal-modal-table {
     position: fixed;

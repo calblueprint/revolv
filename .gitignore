@@ -6,7 +6,7 @@ __pycache__/
 *.so
 
 # VIM
-*.swp
+*.sw[po]
 *.un~
 
 # Virtualenv
@@ -71,3 +71,17 @@ node_modules/
 celerybeat.pid
 # IDEA
 .idea
+
+# RE-volv dist
+revolv/media/
+
+*.orig
+*/settings/local.py
+public/static/
+public/media/
+conf/pillar/*/deploy
+*.priv
+.env
+node_modules
+*/static/js/bundle.js
+*/static/js/vendors.js

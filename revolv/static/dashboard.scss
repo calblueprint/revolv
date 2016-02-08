@@ -1,13 +1,13 @@
-@import "utils";
-@import "mixins";
-@import "foundation-settings";
-@import "bower_components/foundation/scss/foundation";
-@import "fontawesome-settings";
-@import "bower_components/fontawesome/scss/font-awesome";
+@import "utils.scss";
+@import "mixins.scss";
+@import "foundation-settings.scss";
+@import "node_modules/foundation-sites/scss/foundation.scss";
+@import "fontawesome-settings.scss";
+@import "node_modules/font-awesome/scss/font-awesome.scss";
 
-@import "revolv-settings";
-@import "nav";
-@import "placeholder-formfield";
+@import "revolv-settings.scss";
+@import "nav.scss";
+@import "placeholder-formfield.scss";
 
 html, body, .main-row {
     height: 100%;

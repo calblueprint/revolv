@@ -1,7 +1,7 @@
 from collections import namedtuple
 
+from django.conf import settings
 from django.contrib.auth.models import Group, User
-from revolv.settings import ADMIN_REINVESTMENT_DATE_DT
 import datetime
 
 
@@ -35,4 +35,4 @@ def is_user_reinvestment_period():
     """
     :return: True if now is in user reinvestment period
     """
-    return True if datetime.datetime.now() < ADMIN_REINVESTMENT_DATE_DT else False
+    return True if datetime.datetime.now() < settings.ADMIN_REINVESTMENT_DATE_DT else False
