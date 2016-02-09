@@ -5,11 +5,12 @@
 {% endcomment %}
 {% load staticfiles revolv_cms_tags %}
 
-<header class="header after-scroll-header">
+<header class="header after-scroll-header {% block "header-classes" %}{% endblock "header-classes" %}">
   <div class="container">
     <div class="lefts pull-left">
       <a href="/" class="logo"></a>
     </div>
+    {% block "extra-header" %}{% endblock %}
     <!-- end .logo -->
     <div class="rights pull-right">
       <div class="txt pull-left">
