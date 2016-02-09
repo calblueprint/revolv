@@ -1269,11 +1269,21 @@ a:focus {
 
 
 /* .contents */
+header.edit-project-header {
+	text-align: center;
+}
+	header.edit-project-header > .container > h1 {
+		display: inline-block;
+		color: #11ADE5;
+		font-size: 2rem;
+		text-align: center;
+		line-height: 75px;
+	}
 .edit-project .header-container {
     height: 0;
 }
 .edit-project .form-section {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .contents {
 	min-height: 450px;
