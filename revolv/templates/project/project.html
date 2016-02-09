@@ -181,28 +181,47 @@
         {% else %}
           <div class="module-box payment-module">
             <h5 class="title-h5">BACK THIS PROJECT</h5>
-              Back {{ project.title }} and support solar energy!
-              {% if user.is_authenticated %}
-                  <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
-                  {% for level in project_donation_levels %}
-                  {% endfor %}
-                  <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="amount_cents" value="1000">
-                    <input name="metadata" value="100" type="hidden">
-                    <script
-                      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                      data-key="{{ stripe_publishable_key }}"
-                      data-description="Donate $10.00"
-                      data-image="/128x128.png"
-                      data-locale="auto">
-                    </script>
-                  </form>
-                    Tip to help support Organization:
-                    <input type="number" name="tip_edit" min="0" max="100" step="1" value="0">
-              {% else %}
-                  <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
-              {% endif %}
+            <div class="back-the-project">Back {{ project.title }} and support solar energy!</div>
+
+            <div class="inputs">
+              <label for="value">Donation</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" name="value" value="10" step="1" class="form-control">
+              </div>
+
+              <label for="tip_edit">Tip</label>
+              <div class="input-group">
+                <input type="number" name="tip_edit" min="0" max="100" step="1" value="15" class="form-control">
+                <span class="input-group-addon">%</span>
+              </div>
+
+              <label for="total">Total</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" name="total" value="10" step="1" class="form-control" disabled>
+              </div>
+            </div>
+
+            {% if user.is_authenticated %}
+              <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
+              {% for level in project_donation_levels %}
+              {% endfor %}
+              <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="amount_cents" value="1000">
+                <input name="metadata" value="1.00" type="hidden">
+                <script
+                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="{{ stripe_publishable_key }}"
+                  data-description="Donate"
+                  data-image="{% static "images/revolv-logo.png" %}"
+                  data-locale="auto">
+                </script>
+              </form>
+            {% else %}
+              <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
+            {% endif %}
           </div>
           {% endif %}
           <!-- end .module-box -->
