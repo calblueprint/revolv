@@ -85,3 +85,6 @@ conf/pillar/*/deploy
 node_modules
 */static/js/bundle.js
 */static/js/vendors.js
+
+# Generated css
+revolv/static/*.css
