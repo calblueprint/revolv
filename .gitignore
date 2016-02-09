@@ -72,6 +72,9 @@ celerybeat.pid
 # IDEA
 .idea
 
+# RE-volv dist
+revolv/media/
+
 *.orig
 */settings/local.py
 public/static/
@@ -83,3 +86,5 @@ node_modules
 */static/js/bundle.js
 */static/js/vendors.js
 
+# Generated css
+revolv/static/*.css

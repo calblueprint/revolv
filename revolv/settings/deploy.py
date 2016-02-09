@@ -32,7 +32,7 @@ CACHES = {
 }
 
 EMAIL_SUBJECT_PREFIX = '[Revolv %s] ' % ENVIRONMENT.title()
-DEFAULT_FROM_EMAIL = 'noreply@%(DOMAIN)s' % os.environ
+DEFAULT_FROM_EMAIL = 'info@re-volv.org'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 SESSION_COOKIE_SECURE = True

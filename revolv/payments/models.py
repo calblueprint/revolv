@@ -63,6 +63,9 @@ class AdminRepayment(models.Model):
     objects = AdminRepaymentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminRepaymentFactories")
 
+    def __unicode__(self):
+        return '%s for %s' % (self.amount, self.project)
+
 
 class AdminReinvestmentManager(models.Manager):
     """
@@ -127,6 +130,9 @@ class AdminReinvestment(models.Model):
 
     objects = AdminReinvestmentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminReinvestmentFactories")
+
+    def __unicode__(self):
+        return '%s for %s' % (self.amount, self.project)
 
 
 class PaymentTypeManager(models.Manager):
@@ -193,6 +199,9 @@ class PaymentType(models.Model):
     def reinvestment_fragment(self):
         return self.objects.get_reinvestment_fragment()
 
+    def __unicode__(self):
+        return self.name
+
 
 class RepaymentFragmentManager(models.Manager):
     """
@@ -252,6 +261,9 @@ class RepaymentFragment(models.Model):
 
     objects = RepaymentFragmentManager()
     factories = ImportProxy("revolv.payments.factories", "RepaymentFragmentFactories")
+
+    def __unicode__(self):
+        return '%s to %s for %s' % (self.amount, self.user, self.project)
 
 
 class UserReinvestmentManager(models.Manager):
@@ -493,6 +505,9 @@ class Payment(models.Model):
     def is_organic(self):
         return self.user == self.entrant
 
+    def __unicode__(self):
+        return '%s from %s for %s' % (self.amount, self.user, self.project)
+
 
 class ProjectMontlyRepaymentConfig(models.Model):
     """
@@ -510,3 +525,6 @@ class ProjectMontlyRepaymentConfig(models.Model):
     repayment_type = models.CharField(max_length=3, choices=REPAYMENT_TYPE_CHOICES)
     amount = models.FloatField()
     factories = ImportProxy('revolv.payments.factories', 'ProjectMontlyRepaymentConfigFactory')
+
+    def __unicode__(self):
+        return '%s %s in %s for %s' % (self.repayment_type, self.amount, self.year, self.project)
