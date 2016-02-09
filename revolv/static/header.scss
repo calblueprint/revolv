@@ -1,0 +1,33 @@
+@import "breakpoints.scss";
+
+$max-large-nav: 102px;
+$x-large-nav: 85px;
+$large-nav: 185px;
+$medium-nav: 92.5px;
+
+.nav-margins {
+  /*
+    Helper class for elements whose position must be adjusted to accommodate
+    the top navigation element.
+  */
+
+  @media (max-width: $revolv-medium) {
+    margin-top: $medium-nav;
+  }
+
+  @media (max-width: $revolv-large) {
+    margin-top: $large-nav;
+  }
+
+  @media (max-width: $revolv-x-large) {
+    margin-top: $x-large-nav;
+  }
+
+  // largest
+  margin-top: $max-large-nav;
+}
+
+header.top-section-header {
+  background-color: black;
+  .home-page-content & {margin-top: 0;}
+}
