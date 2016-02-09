@@ -259,7 +259,7 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
         # log in the newly created user model. if there is a problem, error
         auth_login(self.request, u)
         messages.success(self.request, 'Signed up successfully!')
-        return redirect("home")
+        return redirect("dashboard")
 
     def get_context_data(self, *args, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
