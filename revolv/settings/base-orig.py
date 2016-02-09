@@ -417,6 +417,7 @@ SFDC_TOKEN = os.environ.get('SFDC_TOKEN')
 SFDC_REVOLV_SIGNUP = 'login'
 SFDC_REVOLV_DONATION = 'donation'
 
+
 # Used for error logging. See https://docs.djangoproject.com/en/1.7/topics/logging
 LOGGING = {
     'version': 1,
@@ -463,5 +464,6 @@ LOGGING = {
     },
 }
 
-STRIPE_SECRET_KEY = 'asdf'
-STRIPE_PUBLISHABLE = 'asdf'
+#Stripe
+STRIPE_SECRET_KEY = 'sk_test_NoHD98Ut8uIJYbzfgisPVI9N'
+STRIPE_PUBLISHABLE = 'pk_test_W7T0xyvfKErlPJlBjZBCs6VW'
