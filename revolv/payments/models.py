@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from revolv.lib.utils import ImportProxy
 
@@ -520,3 +521,12 @@ class ProjectMontlyRepaymentConfig(models.Model):
     repayment_type = models.CharField(max_length=3, choices=REPAYMENT_TYPE_CHOICES)
     amount = models.FloatField()
     factories = ImportProxy('revolv.payments.factories', 'ProjectMontlyRepaymentConfigFactory')
+
+
+class Tip(models.Model):
+    """
+        Percentage of payment user elects to add to donation toward Revolv overhead costs
+    """
+    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+    user = models.ForeignKey(User)
+    amount = models.FloatField()
