@@ -34,12 +34,12 @@
             <a href="{% url 'logout' %}" class="btn-blue pull-left btn-donate">SIGN OUT</a>
           </li>
           {% else %}
-            <a href="{% url 'signin' %}#signup" class="component-link btn-blue pull-left btn-donate before-scroll" data-component="signup">SIGN UP</a>
-            <a href="{% url 'signin' %}#login" class="component-link btn-blue pull-left btn-donate before-scroll" data-component="login">SIGN IN</a>
+            <a href="{% url 'signin' %}#signup" class="component-link btn-blue pull-left btn-donate" data-component="signup">SIGN UP</a>
+            <a href="{% url 'signin' %}#login" class="component-link btn-blue pull-left btn-donate" data-component="login">SIGN IN</a>
         {% endif %}
 
       </div>
-      <a href="get-involved.html" class="btn-blue btn-donate pull-left after-scroll">DONATE NOW</a>
+      <a href="{% url 'projects_list' %}" class="btn-blue btn-donate pull-left after-scroll">DONATE NOW</a>
     </div>
   </div>
 </header>
@@ -72,7 +72,7 @@
             <p>
               {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
             </p>
-            <a href="get-involved.html" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
+            <a href="{% url 'projects_list' %}" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
           </div>
         </div>
         <!-- end .item -->

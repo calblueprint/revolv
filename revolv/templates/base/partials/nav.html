@@ -28,7 +28,7 @@
       {% if project %}
         <a href="#" class="btn-blue btn-donate pull-left" data-toggle="modal" data-target="#donate-modal">DONATE NOW</a>
       {% else %}
-        <a href="/get-involved.html" class="btn-blue btn-donate pull-left">DONATE NOW</a>
+        <a href="{% url 'projects_list' %}" class="btn-blue btn-donate pull-left">DONATE NOW</a>
       {% endif %}
     </div>
   </div>
