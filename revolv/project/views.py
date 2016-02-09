@@ -49,6 +49,7 @@ def stripe_callback(request, pk):
         project=project,
         payment_type=PaymentType.objects.get_stripe(),
     )
+    tip = Tip.objects.create(amount=tip_cents/100.0, user=XXX, payment_type=PaymentType.objects.get_stripe())
     return redirect('project:view', pk=project.pk)
 
 
