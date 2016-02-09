@@ -87,13 +87,4 @@ node_modules
 */static/js/vendors.js
 
 # Generated css
-revolv/static/dashboard.css
-revolv/static/fontawesome-settings.css
-revolv/static/footer.css
-revolv/static/foundation-settings.css
-revolv/static/mixins.css
-revolv/static/modal.css
-revolv/static/nav.css
-revolv/static/placeholder-formfield.css
-revolv/static/revolv-settings.css
-revolv/static/utils.css
+revolv/static/*.css
