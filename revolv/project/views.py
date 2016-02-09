@@ -29,7 +29,8 @@ def stripe_callback(request, pk):
     project = get_object_or_404(Project, pk=pk)
 
     tip_cents = int(request.POST['metadata'])
-    amount_cents = int(request.POST['amount_cents']) - tip_cents
+    amount_cents = int(request.POST['amount_cents'])
+    donation_cents = amount_cents - tip_cents
 
     try:
         charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
@@ -47,7 +48,7 @@ def stripe_callback(request, pk):
     payment = Payment.objects.create(
         user=request.user.revolvuserprofile,
         entrant=request.user.revolvuserprofile,
-        amount=amount_cents/100.0,
+        amount=donation_cents/100.0,
         project=project,
         payment_type=PaymentType.objects.get_stripe(),
     )
