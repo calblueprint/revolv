@@ -189,7 +189,8 @@
                   {% endfor %}
                   <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
                     {% csrf_token %}
-                    <input type="hidden" name="amount_cents" value="1000"><meta name="tip-amount" content="1.00"><meta name="donation-amount" content="100.00">
+                    <input type="hidden" name="amount_cents" value="1000">
+                    <input name="metadata" value="1.00" type="hidden">
                     <script
                       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                       data-key="{{ stripe_publishable_key }}"
@@ -198,10 +199,9 @@
                       data-locale="auto">
                     </script>
                   </form>
-                  <h3>Donate an amount of your choice to Project</h3>
+                  <!-- <h3>Donate an amount of your choice to Project</h3>
                     <form class="stripe" action='project:stripe_callback' pk=project.pk method="POST">
                       <input type="number" name="amount_cents">
-                      <input type="hidden" name="tip_cents" value="0">
                       <script
                               src="https://checkout.stripe.com/checkout.js"
                               class="stripe-button"
@@ -209,11 +209,11 @@
                               data-description="Donate your own amount"
                               data-locale="auto">
                       </script>
-                    </form>
+                    </form> -->
                     Tip to help support Organization:
                     <input type="number" name="tip_edit" min="0" max="100" step="1" value="0">
               {% else %}
-                  <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p><meta name="tip-amount" content="1.00"><meta name="donation-amount" content="100.00"></a>
+                  <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
               {% endif %}
           </div>
           {% endif %}

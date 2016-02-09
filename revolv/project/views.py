@@ -31,13 +31,14 @@ def stripe_callback(request, pk):
     amount_cents = int(request.POST['amount_cents'])
     try:
         charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
+        print request.POST
     except stripe.error.CardError, e:
         msg = body['error']['message']
     except stripe.error.APIConnectionError, e:
         msg = body['error']['message']
     except Exception, e:
         #log it
-        msg = "Payment error. The RE-volv has been notified."
+        msg = "Payment error. Re-volv has been notified."
         return render(request, "project/project_donate_erorr.html", {"msg": msg, "project": project})
         pass
 
