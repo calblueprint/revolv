@@ -15,7 +15,7 @@ from revolv.base.users import UserDataMixin
 from revolv.base.utils import is_user_reinvestment_period
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
-from revolv.payments.models import UserReinvestment, Payment, PaymentType
+from revolv.payments.models import UserReinvestment, Payment, PaymentType, Tip
 from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate, DonationLevel
@@ -28,7 +28,9 @@ def stripe_callback(request, pk):
 
     project = get_object_or_404(Project, pk=pk)
 
-    amount_cents = int(request.POST['amount_cents'])
+    tip_cents = int(request.POST['metadata'])
+    amount_cents = int(request.POST['amount_cents']) - tip_cents
+
     try:
         charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
         print request.POST
@@ -49,7 +51,13 @@ def stripe_callback(request, pk):
         project=project,
         payment_type=PaymentType.objects.get_stripe(),
     )
-    tip = Tip.objects.create(amount=tip_cents/100.0, user=XXX, payment_type=PaymentType.objects.get_stripe())
+    print payment
+    tip = Tip.objects.create(
+        amount=tip_cents/100.0,
+        user=request.user.revolvuserprofile,
+    )
+    print tip.amount
+    print tip.user
     return redirect('project:view', pk=project.pk)
 
 

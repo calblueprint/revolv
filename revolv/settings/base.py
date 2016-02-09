@@ -415,3 +415,7 @@ SFDC_TOKEN = os.environ.get('SFDC_TOKEN')
 
 SFDC_REVOLV_SIGNUP = 'login'
 SFDC_REVOLV_DONATION = 'donation'
+
+#Stripe
+STRIPE_SECRET_KEY = 'sk_test_NoHD98Ut8uIJYbzfgisPVI9N'
+STRIPE_PUBLISHABLE = 'pk_test_W7T0xyvfKErlPJlBjZBCs6VW'

@@ -190,7 +190,7 @@
                   <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="amount_cents" value="1000">
-                    <input name="metadata" value="1.00" type="hidden">
+                    <input name="metadata" value="100" type="hidden">
                     <script
                       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                       data-key="{{ stripe_publishable_key }}"

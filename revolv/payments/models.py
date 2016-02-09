@@ -546,5 +546,5 @@ class Tip(models.Model):
         Percentage of payment user elects to add to donation toward Revolv overhead costs
     """
     timestamp = models.DateTimeField(auto_now_add=True, blank=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey('base.RevolvUserProfile')
     amount = models.FloatField()
