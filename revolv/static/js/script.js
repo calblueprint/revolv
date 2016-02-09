@@ -223,6 +223,7 @@ $(document).ready(function(){
   {
     $("#video-player").mediaelementplayer({
         flashScriptAccess: 'always',
+        loop: true
     });
   }
 
@@ -283,8 +284,11 @@ $(document).ready(function(){
   $(".status-indicator input").each(function(){$(this).val(0).trigger('change').delay(2000);});
   $(".status-indicator input").knob({
     'draw' : function () {
+      if (typeof this._max === 'undefined') {
+        this._max = parseInt($(this.i).data('oldvalue'));
+      }
        $(this.i).val(this.cv + '%');
-       if(this.cv === 100) {
+       if(this.cv === 85 && (this._max === 100 || this._max === 0)) {
           // Three digits, not one or two, so we make it a bit smaller
          $(this.i).css({"font-family" : "Source Sans Pro", "font-size" : "22px", "color" : "#003399", "font-weight" : "700"});
          $(this.i).addClass('smaller');
@@ -300,14 +304,15 @@ $(document).ready(function(){
   $(".status-indicator input").each(function(){
     animateKnob($(this));
   });
-  //show pecentage value animate  function animateKnob (elem) {
-    var endval = parseInt(elem.attr("data-oldvalue"));
+
+  //show pecentage value animate  function animateKnob ($elem) {
+    var endval = parseInt($elem.attr("data-oldvalue"));
     var m1 = 0;
     var tmr1 = self.setInterval(function(){delayProgress()},10);
     function delayProgress(){
       m1 += 1;
-      elem.val(m1).trigger('change');
-      if(m1 === endval) {
+      $elem.val(m1).trigger('change');
+      if(m1 === endval || m1 === 100) {
         window.clearInterval(tmr1);
       }
     }

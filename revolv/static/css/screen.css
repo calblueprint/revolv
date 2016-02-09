@@ -95,6 +95,16 @@ html {
 /* common style */
 body {
 	background: #fff;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	min-height: 100vh;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
 }
 input,
 button {
@@ -403,6 +413,12 @@ a:focus {
 				height: 993px!important;
 				border: none;
 			}
+			.top-section .section-video-area .mejs-container .mejs-controls {
+				display: none !important;
+			}
+			.top-section .section-video-area .mejs-container .mejs-overlay-button {
+				display: none !important;
+			}
 	.top-section.min-height .container {
 		color: #fff;
 		text-align: center;
@@ -605,16 +621,26 @@ a:focus {
 							}
 							.active-projects-module .img-main .funded-round .status-indicator input {
 								margin-top: 27px !important;
+								font-size: 29px !important;
+							}
+							.active-projects-module .img-main .funded-round .status-indicator input.smaller {
+								font-size: 23px !important;
+								margin-top: 29px !important;
+								-webkit-transition: all 0.25s ease;
+								transition: all 0.25s ease;
 							}
                             .active-projects-module.embedded .img-main .funded-round .status-indicator input {
-                                margin-top: -88px !important;
-                                margin-left: 23px!important;
+                                margin-top: -85px !important;
+                                margin-left: 26px!important;
                                 box-shadow: none;
 							}
                             .active-projects-module.embedded .img-main .funded-round .status-indicator input.smaller {
-                                margin-top: -80px !important;
-                                margin-left: 25px!important;
+                                margin-top: -81px !important;
+                                margin-left: 27px!important;
+																font-size: 23px !important;
                                 box-shadow: none;
+																-webkit-transition: font-size 0.25s ease;
+																transition: font-size 0.25s ease;
 							}
 
 						.status-indicator {
@@ -2123,7 +2149,11 @@ a:focus {
 								font-size: 58.26px !important;
 								margin-top: 50px !important;
 							}
-
+							.details-active-project-module .banner-section .funded-round .status-indicator input.smaller {
+								font-size: 44.26px !important;
+								-webkit-transition: font-size 0.25s ease;
+								transition: font-size 0.25s ease;
+							}
 
 				/* .details-active-project-module .info-section */
 				.details-active-project-module .info-section {
@@ -3817,6 +3847,23 @@ a:focus {
 					  font-size: 24.8px !important;
 					  margin-top: 22px !important;
 				  }
+						.active-projects-module.embedded .img-main .funded-round .status-indicator input {
+							margin-top: -75px !important;
+							margin-left: 22px !important;
+						}
+						.active-projects-module.embedded .img-main .funded-round .status-indicator input.smaller {
+							font-size: 20.5px !important;
+							margin-top: -73px !important;
+							margin-left: 22px !important;
+							-webkit-transition: font-size 0.25s ease;
+							transition: font-size 0.25s ease;
+						}
+						.active-projects-module .img-main .funded-round .status-indicator input.smaller {
+							font-size: 20px !important;
+							margin-top: 22px !important;
+							-webkit-transition: font-size 0.25s ease;
+							transition: font-size 0.25s ease;
+						}
 				  .small-circle {
 					  display: block;
 				  }
@@ -4772,6 +4819,11 @@ a:focus {
 						.details-active-project-module .banner-section .funded-round .status-indicator input {
 							font-size: 48.17px !important;
 							margin-top: 40px !important;
+						}
+						.details-active-project-module .banner-section .funded-round .status-indicator input.smaller {
+							font-size: 37.17px !important;
+							-webkit-transition: font-size 0.25s ease;
+							transition: font-size 0.25s ease;
 						}
 				/* .details-active-project-module .info-section */
 				.details-active-project-module .info-section .container {
@@ -6029,6 +6081,19 @@ a:focus {
 								height: 80px !important;
 								margin-left: -185px!important;
 							}
+							.active-projects-module .img-main .funded-round .status-indicator input.smaller {
+								font-size: 64px !important;
+								margin-top: 41px !important;
+								-webkit-transition: font-size 0.25s ease;
+								transition: font-size 0.25s ease;
+							}
+								.active-projects-module.embedded .img-main .funded-round .status-indicator input {
+									margin-top: -170px !important;
+								}
+								.active-projects-module.embedded .img-main .funded-round .status-indicator input.smaller {
+									margin-top: -165px !important;
+									font-size: 60px !important;
+								}
 						.status-indicator {
 							transform: rotateY(180deg);
 							-webkit-transform: rotateY(180deg);
@@ -7023,6 +7088,11 @@ a:focus {
 							font-size: 42.4px !important;
 							margin-top: 34px !important;
 						}
+							.get-involved-contents .funded-round .status-indicator input.smaller {
+								font-size: 32.4px !important;
+								-webkit-transition: font-size 0.25s ease;
+								transition: font-size 0.25s ease;
+							}
 					/* .list-area .info-main */
 					.list-area .info-main {
 						padding-top: 5px;
@@ -7241,6 +7311,11 @@ a:focus {
 							font-size: 42.4px !important;
 							margin-top: 40px !important;
 						}
+							.details-active-project-module .banner-section .funded-round .status-indicator input.smaller {
+								font-size: 32.4px !important;
+								-webkit-transition: font-size 0.25s ease;
+								transition: font-size 0.25s ease;
+							}
 				/* .details-active-project-module .info-section */
 				.details-active-project-module .info-section .container {
 					padding: 4px 29px 0 33px;
@@ -8784,6 +8859,21 @@ body {
 								height: 80px !important;
 								margin-left: -92px!important;
 							}
+								.active-projects-module .img-main .funded-round .status-indicator input.smaller {
+									font-size: 32px !important;
+									margin-top: 3px !important;
+									-webkit-transition: font-size 0.25s ease;
+									transition: font-size 0.25s ease;
+								}
+								.active-projects-module.embedded .img-main .funded-round .status-indicator input {
+									margin-top: -102.5px !important;
+									margin-left: 8px !important;
+								}
+									.active-projects-module.embedded .img-main .funded-round .status-indicator input.smaller {
+										margin-top: -102.5px !important;
+										margin-left: 10px !important;
+										font-size: 30px !important;
+									}
 						.mobile-circle {
 							display: block;
 						}
@@ -9836,6 +9926,11 @@ body {
 							font-size: 20.2px !important;
 							margin-top: 16px !important;
 						}
+							.details-active-project-module .banner-section .funded-round .status-indicator input.smaller {
+								font-size: 16.2px !important;
+								-webkit-transition: font-size 0.25s ease;
+								transition: font-size 0.25s ease;
+							}
 				/* .details-active-project-module .info-section */
 				.details-active-project-module .info-section .container {
 					padding: 2px 14px 0 16px;
