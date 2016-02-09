@@ -1,7 +1,7 @@
-@import "foundation-settings";
-@import "bower_components/foundation/scss/foundation";
-@import "revolv-settings";
-@import "utils";
+@import "foundation-settings.scss";
+@import "node_modules/foundation-sites/scss/foundation.scss";
+@import "revolv-settings.scss";
+@import "utils.scss";
 
 .placeholder-tooltip-entry {
     @include revolv-form-field();
@@ -33,7 +33,7 @@ $gray-5: #555555;
 }
 
 .form-section {
-    
+
     .section {
         margin-bottom: 50px;
     }

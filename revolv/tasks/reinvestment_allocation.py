@@ -1,8 +1,8 @@
 from revolv.project.models import Project
 from revolv.payments.models import ProjectMontlyRepaymentConfig, AdminRepayment
 from revolv.base.models import RevolvUserProfile
-from revolv.settings import ADMIN_PAYMENT_USERNAME
 from revolv.tasks.monthly_reminders import user_reinvestment_reminder
+from django.conf import settings
 from django.db.models import Sum
 from celery.task import task
 from datetime import date
@@ -25,6 +25,7 @@ def calculate_montly_reinvesment_allocation():
     3. Set project monthly_reinvestment_cap with above value
     4. Send email alert to user
     """
+    ADMIN_PAYMENT_USERNAME = settings.ADMIN_PAYMENT_USERNAME
     logger.info('Calculate monthly allocation')
     try:
         admin = RevolvUserProfile.objects.get(user__username=ADMIN_PAYMENT_USERNAME)
@@ -39,7 +40,8 @@ def calculate_montly_reinvesment_allocation():
             repayment_config = project.projectmontlyrepaymentconfig_set\
                 .get(year=date.today().year, repayment_type=ProjectMontlyRepaymentConfig.SOLAR_SEED_FUND)
         except ProjectMontlyRepaymentConfig.DoesNotExist:
-            logger.error("Project {0} - {%} doesn't have repayment config!".format(project.id, project.title))
+            logger.error("Project %s - %s doesn't have repayment config!", project.id, project.title)
+            continue
 
         AdminRepayment.objects.create(amount=repayment_config.amount,
                                       project=project,
