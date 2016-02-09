@@ -210,6 +210,8 @@
                               data-locale="auto">
                       </script>
                     </form>
+                    Tip to help support Organization:
+                    <input type="number" name="tip_edit" min="0" max="100" step="1" value="0">
               {% else %}
                   <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p><meta name="tip-amount" content="1.00"><meta name="donation-amount" content="100.00"></a>
               {% endif %}
