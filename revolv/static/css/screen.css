@@ -409,7 +409,7 @@ a:focus {
 			.top-section .section-video-area .mejs-container .mejs-overlay-button {
 				display: none !important;
 			}
-	.top-section.min-height .container {
+	.top-section.nav-margins .container {
 		color: #fff;
 		text-align: center;
 		position: absolute;
