@@ -160,7 +160,7 @@
       <aside class="right-aside">
         {% if project_donation_levels|length > 0 %}
           {% for donation_level in project_donation_levels %}
-          <div class="module-box">
+          <div class="module-box payment-module">
             <div class="value-txt">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
             <h5 class="title-h5">OUR APPRECIATION</h5>
               {{ donation_level.description }}
@@ -179,8 +179,7 @@
           {% endfor %}
           <!-- end .module-box -->
         {% else %}
-          <div class="module-box">
-            <div class="value-txt">$10.00</div>
+          <div class="module-box payment-module">
             <h5 class="title-h5">BACK THIS PROJECT</h5>
               Back {{ project.title }} and support solar energy!
               {% if user.is_authenticated %}
@@ -316,6 +315,40 @@ if (embedUrl === "error") {
         });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<script type="text/javascript">
+  $(function ($) {
+    $('.payment-module').each(function () {
+      var $module = $(this);
+
+      var $value = $module.find('input[name="value"]');
+      var $tip = $module.find('input[name="tip_edit"]');
+      var $total = $module.find('input[name="total"]');
+
+      var $amount = $module.find('input[name="amount_cents"]');
+      var $meta = $module.find('input[name="metadata"]');
+
+      function update () {
+        var val = parseFloat($value.val());
+        var scale = parseFloat($tip.val()) / 100;
+        var added = scale * val;
+
+        if (isNaN(val) || isNaN(scale)) {
+          return false;
+        }
+
+        $amount.val(Math.round((val + added) * 100));
+        $meta.val(Math.round(added * 100));
+        $total.val((val + added).toFixed(2));
+      }
+
+      $value.on('change keyup', update);
+      $tip.on('change keyup', update);
+
+      update();
+    });
+  });
 </script>
 
 {% endblock %}

@@ -41,7 +41,7 @@ def stripe_callback(request, pk):
     except Exception, e:
         #log it
         msg = "Payment error. Re-volv has been notified."
-        return render(request, "project/project_donate_erorr.html", {"msg": msg, "project": project})
+        return render(request, "project/project_donate_error.html", {"msg": msg, "project": project})
         pass
 
     payment = Payment.objects.create(
