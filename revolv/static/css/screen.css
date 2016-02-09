@@ -360,14 +360,15 @@ a:focus {
     .home-page-content .header.after-scroll-header {
         margin-top: inherit;
     }
+			.home-page-content .header.after-scroll-header .txt a.btn-blue {
+				color: white;
+			}
 			.home-page-content .header.after-scroll-header .after-scroll {
 				display: block;
 			}
-			.home-page-content .header.after-scroll-header .before-scroll {
-				display: none;
-			}
 	.header a.btn-blue {
 		text-decoration: none;
+		color: white;
 	}
 		.header a.btn-blue:hover {
 			color: white;
@@ -3688,7 +3689,7 @@ a:focus {
 	}
 		.header .txt {
 			font-size: 11.57px;
-			padding: 2px 14px 3px 0;
+			padding: 0 0 3px 0;
 			line-height: 22px;
 		}
 	/* .after-scroll-header */

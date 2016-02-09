@@ -30,8 +30,8 @@
 
         {% if request.user.is_authenticated %}
           <li class="user-controls has-dropdown">
-            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate before-scroll">DASHBOARD</a>
-            <a href="{% url 'logout' %}" class="btn-blue pull-left btn-donate before-scroll">SIGN OUT</a>
+            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate">DASHBOARD</a>
+            <a href="{% url 'logout' %}" class="btn-blue pull-left btn-donate">SIGN OUT</a>
           </li>
           {% else %}
             <a href="{% url 'signin' %}#signup" class="component-link btn-blue pull-left btn-donate before-scroll" data-component="signup">SIGN UP</a>
