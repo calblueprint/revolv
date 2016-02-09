@@ -95,16 +95,6 @@ html {
 /* common style */
 body {
 	background: #fff;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-	min-height: 100vh;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	    -ms-flex-direction: column;
-	        flex-direction: column;
 }
 input,
 button {
@@ -1279,11 +1269,21 @@ a:focus {
 
 
 /* .contents */
+header.edit-project-header {
+	text-align: center;
+}
+	header.edit-project-header > .container > h1 {
+		display: inline-block;
+		color: #11ADE5;
+		font-size: 2rem;
+		text-align: center;
+		line-height: 75px;
+	}
 .edit-project .header-container {
     height: 0;
 }
 .edit-project .form-section {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .contents {
 	min-height: 450px;
