@@ -35,7 +35,7 @@
       <img src="{{project.cover_photo.url}}" class="desktop-banner" alt="Banner">
       <img src="{{project.cover_photo.url}}" class="mobile-banner" alt="Banner">
     </div>
-    <!-- end .banner -->  
+    <!-- end .banner -->
     <div class="banner-section">
       <div class="container">
         <div class="title-white-border title-active-project pull-right">{{ project.status_display|upper }}</div>
@@ -44,25 +44,25 @@
         </h1>
         <div class="funded-round">
           <span class="status-text">
-            <span class="round-depict">FUNDED</span>               
+            <span class="round-depict">FUNDED</span>
           </span>
           <!-- end .status-text -->
             <div class="status-indicator desktop-circle">
               <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="210" data-height="210" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
-            </div>   
+            </div>
             <div class="status-indicator small-circle">
               <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="175" data-height="175" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".13">
-            </div>   
+            </div>
             <div class="status-indicator tablet-circle">
               <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="152" data-height="152" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".16">
-            </div>    
+            </div>
             <div class="status-indicator mobile-circle">
               <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="75" data-height="75" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
-            </div> 
+            </div>
         </div>
       </div>
     </div>
-    <!-- end .banner-section -->  
+    <!-- end .banner-section -->
     <div class="info-section">
       <div class="container">
         <div class="info-main">
@@ -101,7 +101,7 @@
                   {{ project.tagline }}
                 </p>
                 <p class="font14">
-                  {{ project.description|safe }} 
+                  {{ project.description|safe }}
                 </p>
               </div>
             </div>
@@ -110,10 +110,10 @@
         <!-- end .video-main -->
       </div>
     </div>
-    <!-- end .info-section -->  
+    <!-- end .info-section -->
   </div>
   <!-- end .details-active-project-module -->
-  
+
   <div class="project-updates-module">
     <div class="container">
       <div class="main-area">
@@ -160,41 +160,85 @@
       <aside class="right-aside">
         {% if project_donation_levels|length > 0 %}
           {% for donation_level in project_donation_levels %}
-          <div class="module-box">
+          <div class="module-box payment-module">
             <div class="value-txt">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
             <h5 class="title-h5">OUR APPRECIATION</h5>
               {{ donation_level.description }}
-            <a href="#" class="btn-blue btn-i-want-to-donate" data-toggle="modal" data-target="#donate-modal">I WANT TO DONATE</a>
+              <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="amount_cents" value="{{ donation_level.amount }}">
+                <script
+                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="{{ stripe_publishable_key }}"
+                  data-description="Donate ${{ donation_level.amount }}"
+                  data-image="/128x128.png"
+                  data-locale="auto">
+                </script>
+              </form>
           </div>
           {% endfor %}
           <!-- end .module-box -->
         {% else %}
-          <div class="module-box">
+          <div class="module-box payment-module">
             <h5 class="title-h5">BACK THIS PROJECT</h5>
-              Back {{ project.title }} and support solar energy!
-              {% if user.is_authenticated %}
-                  <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
-                  <a class="btn-blue btn-i-want-to-donate" id="donate-button" data-toggle="modal" data-target="#donate-modal"><p>DONATE</p></a>
-              {% else %}
-                  <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
-              {% endif %}
+            <div class="back-the-project">Back {{ project.title }} and support solar energy!</div>
+
+            <div class="inputs">
+              <label for="value">Donation</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" name="value" value="10" step="1" class="form-control">
+              </div>
+
+              <label for="tip_edit">Tip</label>
+              <div class="input-group">
+                <input type="number" name="tip_edit" min="0" max="100" step="1" value="15" class="form-control">
+                <span class="input-group-addon">%</span>
+              </div>
+
+              <label for="total">Total</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" name="total" value="10" step="1" class="form-control" disabled>
+              </div>
+            </div>
+
+            {% if user.is_authenticated %}
+              <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
+              {% for level in project_donation_levels %}
+              {% endfor %}
+              <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="amount_cents" value="1000">
+                <input name="metadata" value="1.00" type="hidden">
+                <script
+                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="{{ stripe_publishable_key }}"
+                  data-description="Donate"
+                  data-image="{% static "images/revolv-logo.png" %}"
+                  data-locale="auto">
+                </script>
+              </form>
+            {% else %}
+              <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
+            {% endif %}
           </div>
           {% endif %}
           <!-- end .module-box -->
       </aside>
       <!-- end .list-area -->
-    </div>    
+    </div>
   </div>
   <!-- end .project-updates-module -->
-  
+
   <div class="donors-module">
     <div class="mains-tabs">
       <nav class="tab-index">
-        <div class="container">         
+        <div class="container">
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-6"><a href="javascript:;" class="active">DONORS</a></div>
           </div>
-        </div>   
+        </div>
         <!-- end .row -->
       </nav>
       <!-- end .nav -->
@@ -212,13 +256,13 @@
               <!-- end .col-md-6 -->
             </div>
           </div>
-          <!-- end .tab-gold -->      
+          <!-- end .tab-gold -->
         </div>
       </div>
       <!-- end .tab-content -->
     </div>
     <!-- end .tabs -->
-      
+
   </div>
   <!-- end .donors-module -->
 
@@ -290,6 +334,40 @@ if (embedUrl === "error") {
         });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<script type="text/javascript">
+  $(function ($) {
+    $('.payment-module').each(function () {
+      var $module = $(this);
+
+      var $value = $module.find('input[name="value"]');
+      var $tip = $module.find('input[name="tip_edit"]');
+      var $total = $module.find('input[name="total"]');
+
+      var $amount = $module.find('input[name="amount_cents"]');
+      var $meta = $module.find('input[name="metadata"]');
+
+      function update () {
+        var val = parseFloat($value.val());
+        var scale = parseFloat($tip.val()) / 100;
+        var added = scale * val;
+
+        if (isNaN(val) || isNaN(scale)) {
+          return false;
+        }
+
+        $amount.val(Math.round((val + added) * 100));
+        $meta.val(Math.round(added * 100));
+        $total.val((val + added).toFixed(2));
+      }
+
+      $value.on('change keyup', update);
+      $tip.on('change keyup', update);
+
+      update();
+    });
+  });
 </script>
 
 {% endblock %}

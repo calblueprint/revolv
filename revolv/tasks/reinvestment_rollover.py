@@ -1,8 +1,8 @@
+from django.conf import settings
 
 from revolv.project.models import Project
 from revolv.payments.models import ProjectMontlyRepaymentConfig, AdminReinvestment
 from revolv.base.models import RevolvUserProfile
-from revolv.settings import ADMIN_PAYMENT_USERNAME
 
 from celery.task import task
 
@@ -27,6 +27,7 @@ def distribute_reinvestment_fund():
     """
 
     time.sleep(60)
+    ADMIN_PAYMENT_USERNAME = settings.ADMIN_PAYMENT_USERNAME
 
     try:
         admin = RevolvUserProfile.objects.get(user__username=ADMIN_PAYMENT_USERNAME)
@@ -45,10 +46,3 @@ def distribute_reinvestment_fund():
             )
         project.monthly_reinvestment_cap = 0.0
         project.save()
-
-
-
-
-
-
-

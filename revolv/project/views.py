@@ -2,11 +2,12 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.contrib import messages
+
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.http.response import HttpResponseBadRequest
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import CreateView, DetailView, UpdateView, TemplateView
 from django.views.generic.edit import FormView
 from django.views.decorators.http import require_http_methods
@@ -14,11 +15,52 @@ from revolv.base.users import UserDataMixin
 from revolv.base.utils import is_user_reinvestment_period
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
-from revolv.payments.models import UserReinvestment
+from revolv.payments.models import UserReinvestment, Payment, PaymentType, Tip
 from revolv.payments.services import PaymentService
 from revolv.project import forms
-from revolv.project.models import Category, Project, ProjectUpdate
+from revolv.project.models import Category, Project, ProjectUpdate, DonationLevel
 from revolv.tasks.sfdc import send_donation_info
+
+def stripe_callback(request, pk):
+    import stripe
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    token = stripe.Token.retrieve(request.POST['stripeToken'])
+
+    project = get_object_or_404(Project, pk=pk)
+
+    tip_cents = int(request.POST['metadata'])
+    amount_cents = int(request.POST['amount_cents'])
+    donation_cents = amount_cents - tip_cents
+
+    try:
+        charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
+        print request.POST
+    except stripe.error.CardError, e:
+        msg = body['error']['message']
+    except stripe.error.APIConnectionError, e:
+        msg = body['error']['message']
+    except Exception, e:
+        #log it
+        msg = "Payment error. Re-volv has been notified."
+        return render(request, "project/project_donate_error.html", {"msg": msg, "project": project})
+        pass
+
+    payment = Payment.objects.create(
+        user=request.user.revolvuserprofile,
+        entrant=request.user.revolvuserprofile,
+        amount=donation_cents/100.0,
+        project=project,
+        payment_type=PaymentType.objects.get_stripe(),
+    )
+    print payment
+    tip = Tip.objects.create(
+        amount=tip_cents/100.0,
+        user=request.user.revolvuserprofile,
+    )
+    print tip.amount
+    print tip.user
+    return redirect('project:view', pk=project.pk)
+
 
 class DonationLevelFormSetMixin(object):
     """
@@ -223,6 +265,7 @@ class ProjectView(UserDataMixin, DetailView):
     # pass in Project Categories and Maps API key
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
+        context['stripe_publishable_key'] = settings.STRIPE_PUBLISHABLE
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         context['updates'] = self.get_object().updates.order_by('date').reverse()
         context['donor_count'] = self.get_object().donors.count()
