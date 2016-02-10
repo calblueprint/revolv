@@ -66,7 +66,7 @@
     <p>
       {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
     </p>
-    <a href="get-involved.html" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
+    <a href="{% url 'projects_list' %}" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
   </div>
 </div>
 <!-- end .top-section -->
