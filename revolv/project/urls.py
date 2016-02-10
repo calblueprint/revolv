@@ -7,7 +7,7 @@ from revolv.project.views import (CreateProjectView, EditProjectUpdateView,
 
 urlpatterns = patterns(
     '',
-    url(r'^create$', is_logged_in(CreateProjectView.as_view()), name='new'),
+    url(r'^create$', is_ambassador(CreateProjectView.as_view()), name='new'),
     url(r'^(?P<pk>\d+)/edit$', is_ambassador(UpdateProjectView.as_view()), name='edit'),
     url(r'^(?P<pk>\d+)/$', ProjectView.as_view(), name='view'),
     url(r'^(?P<pk>\d+)/reinvest/$', 'revolv.project.views.reinvest', name='reinvest'),
