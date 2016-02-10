@@ -5828,6 +5828,11 @@ header.edit-project-header > .container > h1 {
     height: 56vw!important;
     border: none;
   }
+  .top-section.nav-margins .section-video-overlay {
+    top: 100%;
+    -webkit-transform: translate(-50%, -115%);
+    transform: translate(-50%, -115%);
+  }
   .top-section.min-height .container {
     top: 55px;
   }
@@ -8466,11 +8471,6 @@ header.edit-project-header > .container > h1 {
     height: 56vw!important;
     border: none;
   }
-  .top-section.nav-margins .section-video-overlay {
-    top: 100%;
-    -webkit-transform: translate(-50%, -115%);
-    transform: translate(-50%, -115%);
-  }
   .top-section.nav-margins .section-video-overlay .btn-donate-now {
     letter-spacing: 2px;
     min-width: 125px;
@@ -10713,6 +10713,18 @@ header.edit-project-header > .container > h1 {
     line-height: 18px;
     width: 240px;
     padding: 11px 0 22px 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .top-section .section-video-area iframe, .top-section .section-video-area video, .top-section .section-video-area .mejs-container, .top-section .section-video-area .me-plugin, .top-section .section-video-area embed, .top-section .section-video-area .mejs-overlay-play {
+    width: 200vw !important;
+    height: 112vw !important;
+  }
+  .top-section.nav-margins .section-video-overlay {
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
 }
 
