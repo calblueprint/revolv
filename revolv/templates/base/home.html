@@ -30,16 +30,16 @@
 
         {% if request.user.is_authenticated %}
           <li class="user-controls has-dropdown">
-            <span class="block"><a href="{% url "dashboard" %}">Dashboard</a></span>
-            <span class="block"><a href="{% url "logout" %}">Sign Out</a></li>
+            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate">DASHBOARD</a>
+            <a href="{% url 'logout' %}" class="btn-blue pull-left btn-donate">SIGN OUT</a>
           </li>
           {% else %}
-            <span class="block"><a class="component-link" data-component="signup" href="{% url "signin" %}#signup">Sign Up</a> here</span>
-            <span class="block"><a class="component-link" data-component="login" href="{% url "signin" %}#login">Sign In</a></span>
+            <a href="{% url 'signin' %}#signup" class="component-link btn-blue pull-left btn-donate" data-component="signup">SIGN UP</a>
+            <a href="{% url 'signin' %}#login" class="component-link btn-blue pull-left btn-donate" data-component="login">SIGN IN</a>
         {% endif %}
 
       </div>
-      <a href="get-involved.html" class="btn-blue btn-donate pull-left">DONATE NOW</a>
+      <a href="{% url 'projects_list' %}" class="btn-blue btn-donate pull-left after-scroll">DONATE NOW</a>
     </div>
   </div>
 </header>
@@ -72,7 +72,7 @@
             <p>
               {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
             </p>
-            <a href="get-involved.html" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
+            <a href="{% url 'projects_list' %}" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
           </div>
         </div>
         <!-- end .item -->

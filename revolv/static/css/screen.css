@@ -208,7 +208,7 @@ a:hover {
 .header .txt {
   font-size: 14px;
   color: #fff;
-  padding: 2px 14px 3px 0;
+  padding: 0 0 3px 0;
   line-height: 26px;
 }
 .header .txt .block {
@@ -251,8 +251,27 @@ a:hover {
 .home-page-content .header {
   margin-top: 5px;
 }
+.home-page-content .header .after-scroll {
+  display: none;
+}
 .home-page-content .header.after-scroll-header {
   margin-top: inherit;
+}
+.home-page-content .header.after-scroll-header .txt a.btn-blue {
+  color: white;
+}
+.home-page-content .header.after-scroll-header .after-scroll {
+  display: block;
+}
+.header a.btn-blue {
+  text-decoration: none;
+  color: white;
+}
+.header a.btn-blue:hover {
+  color: white;
+}
+.header a.btn-blue:last-child {
+  margin-left: 1rem;
 }
 
 /* .top-section */
@@ -1177,11 +1196,21 @@ a:hover {
 
 /* .contents */
 
+header.edit-project-header {
+  text-align: center;
+}
+header.edit-project-header > .container > h1 {
+  display: inline-block;
+  color: #11ADE5;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 75px;
+}
 .edit-project .header-container {
   height: 0;
 }
 .edit-project .form-section {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .contents {
   min-height: 450px;
@@ -3663,7 +3692,7 @@ a:hover {
   }
   .header .txt {
     font-size: 11.57px;
-    padding: 2px 14px 3px 0;
+    padding: 0 0 3px 0;
     line-height: 22px;
   }
   /* .after-scroll-header */
@@ -4881,6 +4910,14 @@ a:hover {
     font-size: 49.6px;
     padding: 0;
   }
+  .project-updates-module .right-aside .module-box .title-h5 {
+    font-size: 13.23px;
+    margin: 10px 14px 0 13px;
+    border-top: 2px solid #c3c3c3;
+    border-bottom: 2px solid #c3c3c3;
+    height: 29px;
+    line-height: 29px;
+  }
   .project-updates-module .right-aside .module-box ul {
     padding: 29px 0 17px 0;
   }
@@ -5759,7 +5796,7 @@ a:hover {
   }
   .header .txt {
     font-size: 16.38px;
-    padding: 2px 14px 3px 0;
+    padding: 0 0 3px 0;
     line-height: 26px;
   }
   /* .after-scroll-header */
@@ -7313,6 +7350,19 @@ a:hover {
     line-height: 70px;
     padding: 0 0 20px 0;
     width: 295px;
+  }
+  .project-updates-module .right-aside .module-box .title-h5 {
+    font-size: 16.38px;
+    text-align: left;
+    border-top: none;
+    border-bottom: 2px solid #c3c3c3;
+    width: 45%;
+    margin: 0;
+    height: 33px;
+    line-height: 33px;
+    position: absolute;
+    top: 18px;
+    right: 45px;
   }
   .project-updates-module .right-aside .module-box ul {
     padding: 34px 0 25px 0;
@@ -9734,6 +9784,14 @@ a:hover {
     line-height: 35px;
     padding: 0 0 10px 0;
     width: 148px;
+  }
+  .project-updates-module .right-aside .module-box .title-h5 {
+    font-size: 8px;
+    border-bottom: 1px solid #c3c3c3;
+    height: 16px;
+    line-height: 16px;
+    top: 9px;
+    right: 22px;
   }
   .project-updates-module .right-aside .module-box ul {
     padding: 17px 0 12px 0;
