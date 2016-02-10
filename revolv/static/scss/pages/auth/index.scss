@@ -5,6 +5,9 @@ $include-html-global-classes: false !default;
 @import "revolv/static/scss/include/component/placeholder-formfield.scss";
 
 
+.contents.auth {
+  padding: 20px;
+}
 
 .component-row {
     &.login, &.password-reset, &.password-reset-done, &.password-reset-confirm, &.password-reset-complete, &.password-change {
@@ -83,4 +86,10 @@ $include-html-global-classes: false !default;
 }
 .slb_socialButtons span{
   margin-left: 10px;
+}
+
+@media #{$large-up} {
+  .contents.auth {
+    padding: 0;
+  }
 }
