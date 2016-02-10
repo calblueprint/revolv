@@ -1,7 +1,7 @@
-@import "foundation-settings.scss";
+@import "revolv/static/scss/include/foundation-settings.scss";
 @import "node_modules/foundation-sites/scss/foundation.scss";
-@import "revolv-settings.scss";
-@import "utils.scss";
+@import "revolv/static/scss/include/revolv-settings.scss";
+@import "revolv/static/scss/include/utils.scss";
 
 .placeholder-tooltip-entry {
     @include revolv-form-field();
