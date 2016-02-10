@@ -209,7 +209,7 @@ a:hover {
 .header .txt {
   font-size: 14px;
   color: #fff;
-  padding: 2px 14px 3px 0;
+  padding: 0 0 3px 0;
   line-height: 26px;
 }
 .header .txt .block {
@@ -254,9 +254,28 @@ a:hover {
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
   margin-top: 0;
 }
+.home-page-content .header .after-scroll {
+  display: none;
+}
 .home-page-content .header.after-scroll-header {
   margin-top: inherit;
   background-color: white;
+}
+.home-page-content .header.after-scroll-header .txt a.btn-blue {
+  color: white;
+}
+.home-page-content .header.after-scroll-header .after-scroll {
+  display: block;
+}
+.header a.btn-blue {
+  text-decoration: none;
+  color: white;
+}
+.header a.btn-blue:hover {
+  color: white;
+}
+.header a.btn-blue:last-child {
+  margin-left: 1rem;
 }
 
 /* .top-section */
@@ -3668,7 +3687,7 @@ header.edit-project-header > .container > h1 {
   }
   .header .txt {
     font-size: 11.57px;
-    padding: 2px 14px 3px 0;
+    padding: 0 0 3px 0;
     line-height: 22px;
   }
   /* .after-scroll-header */
@@ -5772,7 +5791,7 @@ header.edit-project-header > .container > h1 {
   }
   .header .txt {
     font-size: 16.38px;
-    padding: 2px 14px 3px 0;
+    padding: 0 0 3px 0;
     line-height: 26px;
   }
   /* .after-scroll-header */
