@@ -348,6 +348,7 @@ a:focus {
     }
     .home-page-content .header.after-scroll-header {
         margin-top: inherit;
+				background-color: white;
     }
 
 
