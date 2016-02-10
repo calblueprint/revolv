@@ -1023,6 +1023,13 @@ a:hover {
   min-width: 298px;
   letter-spacing: 4px;
 }
+.testimonial-module .user-group > p {
+  text-align: center;
+  font-size: 100%;
+}
+.testimonial-module .user-group > p > emph {
+  font-style: italic;
+}
 
 /* .featured-on-module */
 
