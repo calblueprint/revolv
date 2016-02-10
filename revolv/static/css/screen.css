@@ -303,7 +303,6 @@ a:hover {
 }
 .top-section .section-video-area iframe, .top-section .section-video-area video, .top-section .section-video-area .mejs-container, .top-section .section-video-area .me-plugin, .top-section .section-video-area embed, .top-section .section-video-area .mejs-overlay-play {
   width: 100%!important;
-  /*height: 993px!important;*/
   height: 56vw!important;
   border: none;
 }
@@ -353,8 +352,6 @@ a:hover {
   left: 50%;
   -webkit-transform: translate(-50%, -35%);
   transform: translate(-50%, -35%);
-  /*margin-left: -600px;*/
-  padding: 0;
 }
 
 /* .top-section .carousel */
@@ -3700,7 +3697,6 @@ header.edit-project-header > .container > h1 {
   }
   .top-section .section-video-area iframe, .top-section .section-video-area video, .top-section .section-video-area .mejs-container, .top-section .section-video-area .me-plugin, .top-section .section-video-area embed, .top-section .section-video-area .mejs-overlay-play {
     width: 100%!important;
-    /*height: 815px!important;*/
     height: 56vw!important;
     border: none;
   }
@@ -5809,7 +5805,6 @@ header.edit-project-header > .container > h1 {
   }
   .top-section .section-video-area iframe, .top-section .section-video-area video, .top-section .section-video-area .mejs-container, .top-section .section-video-area .me-plugin, .top-section .section-video-area embed, .top-section .section-video-area .mejs-overlay-play {
     width: 100%!important;
-    /*height: 1366px!important;*/
     height: 56vw!important;
     border: none;
   }
@@ -8440,7 +8435,6 @@ header.edit-project-header > .container > h1 {
     min-height: 667px;
   }
   .top-section .section-video-area iframe, .top-section .section-video-area video, .top-section .section-video-area .mejs-container, .top-section .section-video-area .me-plugin, .top-section .section-video-area embed, .top-section .section-video-area .mejs-overlay-play {
-    /*height: 667px!important;*/
     height: 56vw !important;
   }
   .top-section .section-video img {
@@ -8449,7 +8443,6 @@ header.edit-project-header > .container > h1 {
   }
   .top-section .section-video-area iframe, .top-section .section-video-area video, .top-section .section-video-area .mejs-container, .top-section .section-video-area .me-plugin, .top-section .section-video-area embed, .top-section .section-video-area .mejs-overlay-play {
     width: 100%!important;
-    /*height: 667px!important;*/
     height: 56vw!important;
     border: none;
   }
@@ -10689,6 +10682,7 @@ header.edit-project-header > .container > h1 {
     z-index: 999;
   }
 }
+
 @media (max-width: 550px) {
   .top-section.nav-margins .section-video-overlay .titles {
     font-size: 24px;
