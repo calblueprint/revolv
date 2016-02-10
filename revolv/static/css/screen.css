@@ -285,6 +285,7 @@ a:hover {
   width: 100%;
   min-height: 150px;
   position: relative;
+  overflow-x: hidden;
 }
 .top-section.fixed {
   position: fixed;
@@ -321,9 +322,16 @@ a:hover {
   width: 100%;
   height: 993px;
 }
+.top-section .section-video-area {
+  height: 56vw !important;
+}
 .top-section .section-video-area iframe, .top-section .section-video-area video, .top-section .section-video-area .mejs-container, .top-section .section-video-area .me-plugin, .top-section .section-video-area embed, .top-section .section-video-area .mejs-overlay-play {
   width: 100%!important;
   height: 56vw!important;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
   border: none;
 }
 .top-section .section-video-area .mejs-container .mejs-controls {
@@ -10717,9 +10725,16 @@ header.edit-project-header > .container > h1 {
 }
 
 @media (max-width: 700px) {
+  .top-section .section-video-area {
+    height: 112vw !important;
+  }
   .top-section .section-video-area iframe, .top-section .section-video-area video, .top-section .section-video-area .mejs-container, .top-section .section-video-area .me-plugin, .top-section .section-video-area embed, .top-section .section-video-area .mejs-overlay-play {
     width: 200vw !important;
     height: 112vw !important;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
   .top-section.nav-margins .section-video-overlay {
     top: 50%;
