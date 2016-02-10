@@ -14,7 +14,7 @@
     </script>
     <script src="{% static 'js/mediaelement-and-player.min.js' %}"></script>
     <link href="{% static 'css/mediaelementplayer.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'home.css' %}" rel="stylesheet" />
+    <link href="{% static 'dist/css/pages/home/index.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block body_class %}class="home-page-content"{% endblock %}
@@ -567,13 +567,10 @@
 <!-- end .featured-on-module -->
 
 <div class="newsletter-module">
-  <div class="img-area">
-    <div class="img-opacity"></div>
+  <div class="parallax-window" id="parallax-anchor"></div>
+  <div class="img-preload">
     <img src="{% static 'images/small/small-newsletter-bg.jpg' %}" class="small-img" alt="">
     <img src="{% static 'images/mobile/mobile-newsletter-bg.jpg' %}" class="mobile-img" alt="">
-    <div class="desktop-img"></div>
-    <div class="small-img"></div>
-    <div class="mobile-img"></div>
   </div>
   <div class="container animated">
     <div class="title-white-border title-newsletter">NEWSLETTER SIGNUP</div>

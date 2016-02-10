@@ -174,18 +174,13 @@ $(document).ready(function(){
 
   if(($(window).width()+17)>= 1200 && js_urls['newsletter-bg.jpg'])
   {
-    $(".newsletter-module .img-area .desktop-img").parallax({imageSrc: js_urls['newsletter-bg.jpg']});
-    $(".newsletter-module .img-area img").addClass("hide");
+    $('#parallax-anchor').parallax({imageSrc: js_urls['newsletter-bg.jpg']});
   }
-  else if(($(window).width()+17)<= 1199 && ($(window).width()+17)> 1024 && js_urls['small-newsletter-bg.jpg'])
+  else if(js_urls['small-newsletter-bg.jpg'])
   {
-    $(".newsletter-module .img-area .small-img").parallax({imageSrc: js_urls['small-newsletter-bg.jpg']});
-    $(".newsletter-module .img-area img").addClass("hide");
+    $('#parallax-anchor').parallax({imageSrc: js_urls['small-newsletter-bg.jpg']});
   }
-  else
-  {
-    $(".newsletter-module .img-area img").removeClass("hide");
-  }
+
   //click Down arrow in Home page
   $(".down-arrow-button").click(function(){
     var scroll_offset = $(".active-projects-module").offset();
