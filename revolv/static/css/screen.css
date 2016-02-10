@@ -342,7 +342,9 @@ a:focus {
 		position: absolute;
 	}
     .home-page-content .header {
-        margin-top: 5px;
+        background-color: rgba(0,0,0,0.15);
+				box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+				margin-top: 0;
     }
     .home-page-content .header.after-scroll-header {
         margin-top: inherit;
@@ -410,6 +412,37 @@ a:focus {
 			.top-section .section-video-area .mejs-container .mejs-overlay-button {
 				display: none !important;
 			}
+	.top-section.nav-margins .section-video-overlay {
+		color: white;
+		text-align: center;
+		position: absolute;
+		white-space: nowrap;
+		left: 50%;
+		top: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+		.top-section.nav-margins .section-video-overlay .titles {
+			font-family: 'Source Sans Pro';
+			font-weight: 900;
+			font-size: 48px;
+			text-transform: uppercase;
+			line-height: 58px;
+			text-shadow: 0 0 15px rgba(0,0,0,0.5);
+		}
+		.top-section.nav-margins .section-video-overlay p {
+			font-size: 20px;
+			line-height: 36px;
+			width: 480px;
+			margin: 0 auto;
+			padding: 5px 0 32px 0;
+			text-shadow: 0 0 15px rgba(0,0,0,0.5);
+		}
+		.top-section.nav-margins .section-video-overlay .btn-donate-now {
+			letter-spacing: 4.5px;
+			min-width: 172px;
+			padding-left: 15px;
+		}
 	.top-section.nav-margins .container {
 		color: #fff;
 		text-align: center;
@@ -8723,6 +8756,16 @@ body {
 				height: 56vw!important;
 				border: none;
 			}
+	.top-section.nav-margins .section-video-overlay {
+		top: 100%;
+		-webkit-transform: translate(-50%, -115%);
+		transform: translate(-50%, -115%);
+	}
+	.top-section.nav-margins .section-video-overlay .btn-donate-now {
+		letter-spacing: 2px;
+		min-width: 125px;
+		padding-left: 7.5px;
+	}
 	/* .top-section .carousel */
 	.top-section .carousel {
 		top: 75px;
@@ -11069,7 +11112,18 @@ body {
 }
 
 
-
+@media (max-width: 550px) {
+	.top-section.nav-margins .section-video-overlay .titles {
+		font-size: 24px;
+		line-height: 29px;
+	}
+	.top-section.nav-margins .section-video-overlay p {
+		font-size: 10px;
+		line-height: 18px;
+		width: 240px;
+		padding: 11px 0 22px 0;
+	}
+}
 
 /* iPhone (min-width : 375px) and (max-width : 767px) */
 @media (min-width : 375px) and (max-width : 767px) and (-webkit-min-device-pixel-ratio : 1.5){

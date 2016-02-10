@@ -59,27 +59,14 @@
     </div>
   </div>
   <!-- end .section-video -->
-  <div class="container">
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="">
-      <a class="down-arrow-button" href="javascript:;"><div class="icons icon-arrow-down"></div></a>
-
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <div class="item-info">
-            <div class="titles">
-              {{ settings.revolv_cms.MainPageSettings.site_tagline|safe }}
-            </div>
-            <p>
-              {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
-            </p>
-            <a href="get-involved.html" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
-          </div>
-        </div>
-        <!-- end .item -->
-      </div>
+  <div class="section-video-overlay">
+    <div class="titles">
+      {{ settings.revolv_cms.MainPageSettings.site_tagline|safe }}
     </div>
-    <!-- end .carousel -->
+    <p>
+      {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
+    </p>
+    <a href="get-involved.html" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
   </div>
 </div>
 <!-- end .top-section -->
