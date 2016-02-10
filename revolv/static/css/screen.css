@@ -3359,6 +3359,9 @@ header.edit-project-header > .container > h1 {
 .footer .row .col-menu dt {
   padding-bottom: 0;
 }
+.footer .row .col-menu dt + dt {
+  padding-bottom: 4px;
+}
 
 /* .footer .col-info */
 
@@ -3368,6 +3371,7 @@ header.edit-project-header > .container > h1 {
 .footer .row .col-info dt {
   padding-bottom: 4px;
 }
+.footer .row .col-menu a,
 .footer .row .col-info a {
   color: #8a8a8a;
   font-size: 12px;
@@ -8147,6 +8151,9 @@ header.edit-project-header > .container > h1 {
     line-height: 25px;
     padding: 20px 0;
   }
+  .footer .row .col-menu dt + dt {
+    padding: 7px 0;
+  }
   .footer .row .col-menu dt a, .footer .row .col-info dt a {
     font-size: 21.5px;
   }
@@ -8186,6 +8193,7 @@ header.edit-project-header > .container > h1 {
   .footer .row .col-info dt {
     padding-bottom: 7px;
   }
+  .footer .row .col-menu a,
   .footer .row .col-info a {
     font-size: 16.38px;
   }
