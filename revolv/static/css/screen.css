@@ -1093,23 +1093,6 @@ a:hover {
   height: 448px;
   background: transparent;
 }
-.newsletter-module .img-area {
-  /*background: rgba(40,40,40,1);*/
-  position: relative;
-}
-.newsletter-module .img-area .desktop-img {
-  min-height: 449px;
-  background: transparent;
-  overflow: hidden;
-}
-.newsletter-module .img-area .img-opacity {
-  background: rgba(0, 0, 0, 0);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 .newsletter-module .small-img, .newsletter-module .mobile-img {
   display: none;
 }
