@@ -1,0 +1,11 @@
+{% extends "base/partials/nav.html" %}
+
+{% block "header-classes" %}edit-project-header{% endblock "header-classes" %}
+
+{% block "extra-header" %}
+  {% if project.id %}
+    <h1>Edit Project</h1>
+  {% else %}
+    <h1>Create Project</h1>
+  {% endif %}
+{% endblock %}
