@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from revolv.lib.utils import ImportProxy
 
@@ -152,6 +153,11 @@ class PaymentTypeManager(models.Manager):
             queryset = super(PaymentTypeManager, self).get_queryset()
         return queryset.get(name=PaymentType._PAYPAL)
 
+    def get_stripe(self, queryset=None):
+        if queryset is None:
+            queryset = super(PaymentTypeManager, self).get_queryset()
+        return queryset.get(name=PaymentType._STRIPE)
+
     def get_reinvestment_fragment(self, queryset=None):
         """Return the PaymentTypeManager for reinvestment_fragment payments."""
         if queryset is None:
@@ -184,6 +190,7 @@ class PaymentType(models.Model):
         already completed projects.
     """
     _PAYPAL = 'paypal'
+    _STRIPE = 'stripe'
     _CHECK = 'check'
     _REINVESTMENT = 'reinvestment_fragment'
 
@@ -194,6 +201,10 @@ class PaymentType(models.Model):
     @property
     def paypal(self):
         return self.objects.get_paypal()
+
+    @property
+    def stripe(self):
+        return self.objects.get_stripe()
 
     @property
     def reinvestment_fragment(self):
@@ -528,3 +539,15 @@ class ProjectMontlyRepaymentConfig(models.Model):
 
     def __unicode__(self):
         return '%s %s in %s for %s' % (self.repayment_type, self.amount, self.year, self.project)
+
+
+class Tip(models.Model):
+    """
+        Percentage of payment user elects to add to donation toward Revolv overhead costs
+    """
+    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+    user = models.ForeignKey('base.RevolvUserProfile')
+    amount = models.FloatField()
+
+    def __unicode__(self):
+        return 'Tip of %s from %s at %s' % (self.amount, self.user, self.timestamp)

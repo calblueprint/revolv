@@ -284,7 +284,7 @@ WAGTAIL_SITE_NAME = 'RE-volv'
 WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = 'content-management-bot@re-volv.org'
 
 # Login settings
-LOGIN_URL = '/signin'
+LOGIN_URL = '/signin/'
 
 import djcelery
 from celery.schedules import crontab
@@ -415,3 +415,7 @@ SFDC_TOKEN = os.environ.get('SFDC_TOKEN')
 
 SFDC_REVOLV_SIGNUP = 'login'
 SFDC_REVOLV_DONATION = 'donation'
+
+# Stripe
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE = os.environ.get('STRIPE_PUBLISHABLE')
