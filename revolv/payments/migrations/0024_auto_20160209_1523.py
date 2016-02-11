@@ -10,6 +10,11 @@ def populate_data(apps, schema_editor):
     PaymentType.objects.create(name="stripe")
 
 
+def unpopulate_data(apps, schema_editor):
+    PaymentType = apps.get_model("payments", "PaymentType")
+    PaymentType.objects.filter(name="stripe").delete()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -17,5 +22,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(populate_data),
+        migrations.RunPython(populate_data, unpopulate_data),
     ]
