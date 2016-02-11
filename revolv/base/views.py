@@ -284,7 +284,7 @@ class LogoutView(UserDataMixin, View):
 class DashboardRedirect(UserDataMixin, View):
     """
     Redirects user to appropriate dashboard. (e.g. Administrators automagically
-    go to the /dashboard/admin endpoint)
+    go to the /my-portfolio/admin endpoint)
 
     Redirects to home page if not authenticated.
     """
@@ -314,7 +314,7 @@ def password_change(request):
     return auth_views.password_change(
         request,
         template_name="base/auth/change_password.html",
-        post_change_redirect="/dashboard/donor/?password_change_success",
+        post_change_redirect="/my-portfolio/donor/?password_change_success",
     )
 
 
