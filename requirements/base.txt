@@ -2,6 +2,7 @@ Django==1.7.1
 psycopg2==2.5.3
 django-facebook==6.0.1
 Pillow==2.9.0
+Willow==0.2.2
 mock==1.0.1
 paypalrestsdk==1.4.1
 pytz==2014.7
