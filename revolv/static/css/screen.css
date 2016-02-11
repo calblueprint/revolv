@@ -8406,6 +8406,9 @@ header.edit-project-header > .container > h1 {
   .container {
     width: auto;
   }
+  .active-projects-module .container {
+    max-width: 375px;
+  }
   /* .header */
   .header {
     margin-top: 5px;
