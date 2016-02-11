@@ -69,7 +69,7 @@
                     <div class="table-value small-6 large-5 columns">${{ project.funding_goal|floatformat:"2"|intcomma }}</div>
                 </div>
                 <div class="row funding-stats-table-row">
-                    <div class="description small-6 large-7 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.donor_stats_table.amount_donated|floatformat:"0"_description}}</div>
+                    <div class="description small-6 large-7 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.donor_stats_table_amount_donated_description}}</div>
                     <div class="table-value small-6 large-5 columns">${{ project.amount_donated|floatformat:"0"|intcomma }}</div>
                 </div>
                 <div class="row funding-stats-table-row">
@@ -147,7 +147,7 @@
                     <div class="table-value small-6 medium-6 large-5 columns">${{ project.funding_goal|floatformat:"2"|intcomma }}</div>
                 </div>
                 <div class="row repayment-stats-table-row">
-                    <div class="description small-6 medium-6 large-7 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.repayment_stats_table.amount_donated|floatformat:"0"_description }}</div>
+                    <div class="description small-6 medium-6 large-7 columns">{{ settings.revolv_cms.ProjectStatisticsSettings.repayment_stats_table_amount_donated_description }}</div>
                     <div class="table-value small-6 medium-6 large-5 columns">${{ project.amount_donated|floatformat:"0"|intcomma }}</div>
                 </div>
                 <div class="row repayment-stats-table-row">
