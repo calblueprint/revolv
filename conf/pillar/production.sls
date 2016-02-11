@@ -174,6 +174,36 @@ secrets:
       =A6LE
       -----END PGP MESSAGE-----
 
+    "STRIPE_SECRET_KEY": |-
+      -----BEGIN PGP MESSAGE-----
+      Version: GnuPG v2
+
+      hQEMA9aTfmR7xthMAQgAySHCOeh2kZ4wjv5lJMYirjVIC5HX3vxN4lzmBuybDBho
+      DPRsVQ8kcRx/6Ev4cxLpJie6aKla3P/cgRE4ZcuMmlUFfqkQzvn9wteae/wOfLD9
+      dkhp1Te0mLyqRPG7sl2xK1XzofWXnC8ewqI99aC4Dwe+sy3QwmCqY7QKQuibBJgE
+      iua8pGLgDP196lI40XtnPwEryhvrkDjsWCtyKRwnbbzqQSXvZ+CYzxlvGhLnETE8
+      WdexQIpbOa6umR3lQ4t1V3B/F+gsbmUDiN37BBRByOXELijPXcze3bIzd1wJQN3m
+      WscOR7Arz7WdGECOQScFrl38jy5MNSeeIeVZ/BewjdJbAR8+yiqyotly4lbtx2FH
+      RIwGBKEqUPnP42gY5/J2INzsesmiOVEi0LisaqAaAmarA2rJxf6bZoIbRisYLgVu
+      jZmTLInTKDNm3O6E9eKQTz/aqoXqAAkHHqFY4Q==
+      =jeIe
+      -----END PGP MESSAGE-----
+
+    "STRIPE_PUBLISHABLE": |-
+      -----BEGIN PGP MESSAGE-----
+      Version: GnuPG v2
+
+      hQEMA9aTfmR7xthMAQf/bcmd5uVqZlxqmf30zWkNnZmHW8boY8/t7iIu6n3sMtnA
+      uqdVhpmnqFZCFqy8q/t3+Nwi1NeaJeF8nTnzB9UQ6QIBgwDH4vclG1IaqF+m9fgT
+      EvDnalJ+Ry0Vxpq3yuxL5GO/LkjdAps0ZBAweC+2SuyquvSU2cLtVM3p2aEdtIXU
+      5YJLtN/Feufj88VetXzE35ZMwFvejX9mxJ7Rbou6nFWlXTsf1rU3SC4fpc++H4sM
+      ziP32OsI90RzVCLBo7TjBnU0jGNXGK9KaiQThLjrdjz7OH4FKz61YrlcqfR0XfFk
+      BvzX0HRjPBAuf4VuxZ6hM6Kj2cV6lJq9e2OLnZwCrNJbASG54NkEvCLKYMN2H9dX
+      JAGrk0u8hC4QepTzrsB8UFYhS1a7JCg2OwbHtF84A/ES596z6o/cXNOjgGZuBZns
+      FSAej1cMGGcC4bf16+XUMcC2zDN+nrLwoWU0GA==
+      =pHqD
+      -----END PGP MESSAGE-----
+
 # Private deploy key. Must be GPG encrypted.
 github_deploy_key: |-
     -----BEGIN PGP MESSAGE-----
