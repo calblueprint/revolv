@@ -22,29 +22,41 @@ from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate, DonationLevel
 from revolv.tasks.sfdc import send_donation_info
 
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
-
-
-def stripe_callback(request, pk):
-    token = stripe.Token.retrieve(request.POST['stripeToken'])
-
+def stripe_payment(request, pk):
+    try:
+        token = request.POST['stripeToken']
+        tip_cents = int(request.POST['metadata'])
+        amount_cents = int(request.POST['amount_cents'])
+    Except KeyError:
+        #how to log message with our implementation of logging
+   try:
+    tip_cents = int(tip_cents)
+    amount_cents = int(amount_cents])
+    if not (0 < amount_cents < MAX_PAYMENT_CENTS):
+        raise ValueError('amount_cents cannot be negative')
+    if not (0 <= tip_cents < MAX_PAYMENT_CENTS):
+        raise ValueError('tip_cents cannot be negative')
+    except ValueError:
+        log message, return invalid request error
     project = get_object_or_404(Project, pk=pk)
-
-    tip_cents = int(request.POST['metadata'])
-    amount_cents = int(request.POST['amount_cents'])
+    #where should above line go?
     donation_cents = amount_cents - tip_cents
 
+
+    error_msg = None
     try:
-        charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
+        stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
     except stripe.error.CardError, e:
-        msg = body['error']['message']
+        error_msg = body['error']['message']
+        #do we need to define "body" or does it come with stripe?
     except stripe.error.APIConnectionError, e:
-        msg = body['error']['message']
+        error_msg = body['error']['message']
     except Exception, e:
-        #log it
-        msg = "Payment error. Re-volv has been notified."
+        error_msg = "Payment error. Re-volv has been notified."
+    if error_msg:
         return render(request, "project/project_donate_error.html", {"msg": msg, "project": project})
-        pass
 
     payment = Payment.objects.create(
         user=request.user.revolvuserprofile,

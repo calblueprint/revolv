@@ -164,7 +164,7 @@
             <div class="value-txt">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
             <h5 class="title-h5">OUR APPRECIATION</h5>
               {{ donation_level.description }}
-              <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
+              <form action="{% url 'project:stripe_payment' pk=project.pk %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="amount_cents" value="{{ donation_level.amount }}">
                 <script
@@ -207,7 +207,7 @@
               <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
               {% for level in project_donation_levels %}
               {% endfor %}
-              <form action="{% url 'project:stripe_callback' pk=project.pk %}" method="POST">
+              <form action="{% url 'project:stripe_payment' pk=project.pk %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="amount_cents" value="1000">
                 <input name="metadata" value="1.00" type="hidden">
