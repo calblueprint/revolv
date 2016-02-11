@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('join_the_movement', models.CharField(default=b'Join the movement.', help_text=b"Large text directly before the call to action donation button at the bottom of the projects page, e.g. 'Join the movement.'", max_length=200)),
-                ('start_funding_button_text', models.CharField(default=b'Contact Us to Fund a New Project', help_text=b'The label on the green call to action button at the bottom of the homepage.', max_length=50)),
+                ('start_funding_button_text', models.CharField(default=b'Contact us to fund a new project', help_text=b'The label on the green call to action button at the bottom of the homepage.', max_length=50)),
                 ('single_project_heading', models.CharField(default=b'OUR CURRENT PROJECT', help_text=b"The heading to display above the featured project on the projects list page when there is only one active project, e.g. 'Our current project'", max_length=50)),
                 ('multiple_projects_heading', models.CharField(default=b'OUR CURRENT PROJECTS', help_text=b"The heading to display above the featured project on the projects list when there are multiple active projects, e.g. 'Our current project'", max_length=50)),
                 ('site', models.OneToOneField(editable=False, to='wagtailcore.Site')),
