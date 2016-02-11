@@ -416,6 +416,6 @@ SFDC_TOKEN = os.environ.get('SFDC_TOKEN')
 SFDC_REVOLV_SIGNUP = 'login'
 SFDC_REVOLV_DONATION = 'donation'
 
-#Stripe
+# Stripe
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 STRIPE_PUBLISHABLE = os.environ.get('STRIPE_PUBLISHABLE')
