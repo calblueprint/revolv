@@ -11,6 +11,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import CreateView, DetailView, UpdateView, TemplateView
 from django.views.generic.edit import FormView
 from django.views.decorators.http import require_http_methods
+import stripe
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import is_user_reinvestment_period
 from revolv.lib.mailer import send_revolv_email
@@ -21,9 +22,10 @@ from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate, DonationLevel
 from revolv.tasks.sfdc import send_donation_info
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
 def stripe_callback(request, pk):
-    import stripe
-    stripe.api_key = settings.STRIPE_SECRET_KEY
     token = stripe.Token.retrieve(request.POST['stripeToken'])
 
     project = get_object_or_404(Project, pk=pk)
@@ -34,7 +36,6 @@ def stripe_callback(request, pk):
 
     try:
         charge = stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
-        print request.POST
     except stripe.error.CardError, e:
         msg = body['error']['message']
     except stripe.error.APIConnectionError, e:
@@ -52,13 +53,10 @@ def stripe_callback(request, pk):
         project=project,
         payment_type=PaymentType.objects.get_stripe(),
     )
-    print payment
     tip = Tip.objects.create(
         amount=tip_cents/100.0,
         user=request.user.revolvuserprofile,
     )
-    print tip.amount
-    print tip.user
     return redirect('project:view', pk=project.pk)
 
 

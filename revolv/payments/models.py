@@ -548,3 +548,6 @@ class Tip(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, blank=True)
     user = models.ForeignKey('base.RevolvUserProfile')
     amount = models.FloatField()
+
+    def __unicode__(self):
+        return 'Tip of %s from %s at %s' % (self.amount, self.user, self.timestamp)
