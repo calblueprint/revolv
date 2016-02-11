@@ -1,8 +1,8 @@
 from decimal import Decimal
+import logging
 
 from django.conf import settings
 from django.contrib import messages
-
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
@@ -12,6 +12,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, TemplateVie
 from django.views.generic.edit import FormView
 from django.views.decorators.http import require_http_methods
 import stripe
+
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import is_user_reinvestment_period
 from revolv.lib.mailer import send_revolv_email
@@ -23,52 +24,63 @@ from revolv.project.models import Category, Project, ProjectUpdate, DonationLeve
 from revolv.tasks.sfdc import send_donation_info
 
 
+logger = logging.getLogger(__name__)
+MAX_PAYMENT_CENTS = 99999999
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
 def stripe_payment(request, pk):
     try:
         token = request.POST['stripeToken']
-        tip_cents = int(request.POST['metadata'])
-        amount_cents = int(request.POST['amount_cents'])
-    Except KeyError:
-        #how to log message with our implementation of logging
-   try:
-    tip_cents = int(tip_cents)
-    amount_cents = int(amount_cents])
-    if not (0 < amount_cents < MAX_PAYMENT_CENTS):
-        raise ValueError('amount_cents cannot be negative')
-    if not (0 <= tip_cents < MAX_PAYMENT_CENTS):
-        raise ValueError('tip_cents cannot be negative')
-    except ValueError:
-        log message, return invalid request error
-    project = get_object_or_404(Project, pk=pk)
-    #where should above line go?
-    donation_cents = amount_cents - tip_cents
+        tip_cents = request.POST['metadata']
+        amount_cents = request.POST['amount_cents']
+    except KeyError:
+        logger.exception('stripe_payment called without required POST data')
+        return HttpResponseBadRequest('bad POST data')
 
+    try:
+        tip_cents = int(tip_cents)
+        amount_cents = int(amount_cents)
+        if not (0 < amount_cents < MAX_PAYMENT_CENTS):
+            raise ValueError('amount_cents cannot be negative')
+        if not (0 <= tip_cents < amount_cents):
+            raise ValueError('tip_cents cannot be negative or more than project contribution')
+    except ValueError:
+        logger.exception('stripe_payment called with improper POST data')
+        return HttpResponseBadRequest('bad POST data')
+
+    project = get_object_or_404(Project, pk=pk)
+
+    donation_cents = amount_cents - tip_cents
 
     error_msg = None
     try:
-        stripe.Charge.create(source=request.POST['stripeToken'], currency="usd", amount=amount_cents)
-    except stripe.error.CardError, e:
+        stripe.Charge.create(source=token, currency="usd", amount=amount_cents)
+    except stripe.error.CardError as e:
+        body = e.json_body
         error_msg = body['error']['message']
-        #do we need to define "body" or does it come with stripe?
-    except stripe.error.APIConnectionError, e:
+    except stripe.error.APIConnectionError as e:
+        body = e.json_body
         error_msg = body['error']['message']
-    except Exception, e:
+    except Exception:
         error_msg = "Payment error. Re-volv has been notified."
     if error_msg:
-        return render(request, "project/project_donate_error.html", {"msg": msg, "project": project})
+        return render(request, "project/project_donate_error.html", {
+            "msg": error_msg, "project": project
+        })
 
-    payment = Payment.objects.create(
+    Payment.objects.create(
         user=request.user.revolvuserprofile,
         entrant=request.user.revolvuserprofile,
         amount=donation_cents/100.0,
         project=project,
         payment_type=PaymentType.objects.get_stripe(),
     )
-    tip = Tip.objects.create(
-        amount=tip_cents/100.0,
-        user=request.user.revolvuserprofile,
-    )
+    if tip_cents > 0:
+        Tip.objects.create(
+            amount=tip_cents/100.0,
+            user=request.user.revolvuserprofile,
+        )
     return redirect('project:view', pk=project.pk)
 
 
