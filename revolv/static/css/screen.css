@@ -189,6 +189,9 @@ a:hover {
   left: 0;
   z-index: 1019;
 }
+.after-header {
+  margin-top: 102px;
+}
 .header .container {
   height: 100%;
   padding: 0;
@@ -3679,6 +3682,9 @@ header.edit-project-header > .container > h1 {
     margin-top: 30px;
     height: 85px;
   }
+  .after-header {
+    margin-top: 85px;
+  }
   .header .logo {
     background: url(../images/logo-white.png) no-repeat;
     background-size: 141px auto;
@@ -5775,6 +5781,9 @@ header.edit-project-header > .container > h1 {
   .header {
     margin-top: 10px;
     height: 185px;
+  }
+  .after-header {
+    margin-top: 185px;
   }
   .header .logo {
     background: url(../images/tablet/tablet-logo-white.png);
@@ -8415,6 +8424,9 @@ header.edit-project-header > .container > h1 {
   .header {
     margin-top: 5px;
     height: 92.5px;
+  }
+  .after-header {
+    margin-top: 92.5px;
   }
   .header .logo {
     background-repeat: no-repeat;

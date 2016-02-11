@@ -26,7 +26,7 @@
 {% block body %}
 <div class='main-row dashboard'>
 
-    <div class="container-fluid top100">
+    <div class="container-fluid after-header">
       {% if role == 'ambassador' or role == 'admin' %}
           <div class="dashboard-sidebar col-md-2">
             {% include "base/partials/dashboard_sidebar.html" with user=user %}

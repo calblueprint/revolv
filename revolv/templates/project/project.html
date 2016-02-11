@@ -29,13 +29,13 @@
     </div>
 {% endif %}
 
-<div class="contents project-details-contents top100">
+<div class="contents project-details-contents after-header">
   <div class="details-active-project-module">
     <div class="banners min-height455">
       <img src="{{project.cover_photo.url}}" class="desktop-banner" alt="Banner">
       <img src="{{project.cover_photo.url}}" class="mobile-banner" alt="Banner">
     </div>
-    <!-- end .banner -->  
+    <!-- end .banner -->
     <div class="banner-section">
       <div class="container">
         <div class="title-white-border title-active-project pull-right">{{ project.status_display|upper }}</div>
@@ -44,25 +44,25 @@
         </h1>
         <div class="funded-round">
           <span class="status-text">
-            <span class="round-depict">FUNDED</span>               
+            <span class="round-depict">FUNDED</span>
           </span>
           <!-- end .status-text -->
             <div class="status-indicator desktop-circle">
               <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="210" data-height="210" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
-            </div>   
+            </div>
             <div class="status-indicator small-circle">
               <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="175" data-height="175" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".13">
-            </div>   
+            </div>
             <div class="status-indicator tablet-circle">
               <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="152" data-height="152" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".16">
-            </div>    
+            </div>
             <div class="status-indicator mobile-circle">
               <input type="text" value="{{ project.percent_complete }}" data-min="0" data-width="75" data-height="75" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
-            </div> 
+            </div>
         </div>
       </div>
     </div>
-    <!-- end .banner-section -->  
+    <!-- end .banner-section -->
     <div class="info-section">
       <div class="container">
         <div class="info-main">
@@ -101,7 +101,7 @@
                   {{ project.tagline }}
                 </p>
                 <p class="font14">
-                  {{ project.description|safe }} 
+                  {{ project.description|safe }}
                 </p>
               </div>
             </div>
@@ -110,10 +110,10 @@
         <!-- end .video-main -->
       </div>
     </div>
-    <!-- end .info-section -->  
+    <!-- end .info-section -->
   </div>
   <!-- end .details-active-project-module -->
-  
+
   <div class="project-updates-module">
     <div class="container">
       <div class="main-area">
@@ -183,18 +183,18 @@
           <!-- end .module-box -->
       </aside>
       <!-- end .list-area -->
-    </div>    
+    </div>
   </div>
   <!-- end .project-updates-module -->
-  
+
   <div class="donors-module">
     <div class="mains-tabs">
       <nav class="tab-index">
-        <div class="container">         
+        <div class="container">
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-6"><a href="javascript:;" class="active">DONORS</a></div>
           </div>
-        </div>   
+        </div>
         <!-- end .row -->
       </nav>
       <!-- end .nav -->
@@ -212,13 +212,13 @@
               <!-- end .col-md-6 -->
             </div>
           </div>
-          <!-- end .tab-gold -->      
+          <!-- end .tab-gold -->
         </div>
       </div>
       <!-- end .tab-content -->
     </div>
     <!-- end .tabs -->
-      
+
   </div>
   <!-- end .donors-module -->
 
