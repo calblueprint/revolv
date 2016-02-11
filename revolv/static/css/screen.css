@@ -2354,6 +2354,9 @@ header.edit-project-header > .container > h1 {
   padding: 24px;
   margin: 0 0 32px 0;
 }
+.project-updates-module .right-aside .module-box p {
+  padding: 0.5rem 0;
+}
 .project-updates-module .right-aside .module-box .inputs {
   text-align: left;
 }
@@ -2386,6 +2389,7 @@ header.edit-project-header > .container > h1 {
   text-align: center;
   background-color: transparent;
   border: none;
+  margin: 0 auto;
 }
 .project-updates-module .right-aside .module-box .title-h5 {
   font-family: 'Source Sans Pro';
@@ -7383,19 +7387,6 @@ header.edit-project-header > .container > h1 {
     padding: 0 0 20px 0;
     width: 295px;
   }
-  .project-updates-module .right-aside .module-box .title-h5 {
-    font-size: 16.38px;
-    text-align: left;
-    border-top: none;
-    border-bottom: 2px solid #c3c3c3;
-    width: 45%;
-    margin: 0;
-    height: 33px;
-    line-height: 33px;
-    position: absolute;
-    top: 18px;
-    right: 45px;
-  }
   .project-updates-module .right-aside .module-box ul {
     padding: 34px 0 25px 0;
     width: 45%;
@@ -9822,14 +9813,6 @@ header.edit-project-header > .container > h1 {
     line-height: 35px;
     padding: 0 0 10px 0;
     width: 148px;
-  }
-  .project-updates-module .right-aside .module-box .title-h5 {
-    font-size: 8px;
-    border-bottom: 1px solid #c3c3c3;
-    height: 16px;
-    line-height: 16px;
-    top: 9px;
-    right: 22px;
   }
   .project-updates-module .right-aside .module-box ul {
     padding: 17px 0 12px 0;

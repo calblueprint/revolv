@@ -161,20 +161,34 @@
         {% if project_donation_levels %}
           {% for donation_level in project_donation_levels %}
           <div class="module-box payment-module">
-            <div class="value-txt">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
+            <div class="value-txt" data-value="{{ donation_level.amount }}">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
             <h5 class="title-h5">OUR APPRECIATION</h5>
-              {{ donation_level.description }}
-              <form action="{% url 'project:stripe_payment' pk=project.pk %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="amount_cents" value="{{ donation_level.amount }}">
-                <script
-                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                  data-key="{{ stripe_publishable_key }}"
-                  data-description="Donate ${{ donation_level.amount }}"
-                  data-image="/128x128.png"
-                  data-locale="auto">
-                </script>
-              </form>
+            <p>{{ donation_level.description }}</p>
+            <div class="inputs">
+              <label for="tip_edit">Tip</label>
+              <div class="input-group">
+                <input type="number" name="tip_edit" min="0" max="100" step="1" value="15" class="form-control">
+                <span class="input-group-addon">%</span>
+              </div>
+
+              <label for="total">Total</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" name="total" value="10" step="1" class="form-control" disabled>
+              </div>
+            </div>
+            <form action="{% url 'project:stripe_payment' pk=project.pk %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="amount_cents" value="{{ donation_level.amount }}">
+              <input name="metadata" value="1.00" type="hidden">
+              <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ stripe_publishable_key }}"
+                data-description="Donate ${{ donation_level.amount }}"
+                data-image="{% static "images/revolv-logo.png" %}"
+                data-locale="auto">
+              </script>
+            </form>
           </div>
           {% endfor %}
           <!-- end .module-box -->
@@ -341,6 +355,10 @@ if (embedUrl === "error") {
       var $module = $(this);
 
       var $value = $module.find('input[name="value"]');
+      if (!$value.length) {
+        $value = $module.find('.value-txt');
+      }
+
       var $tip = $module.find('input[name="tip_edit"]');
       var $total = $module.find('input[name="total"]');
 
@@ -348,7 +366,7 @@ if (embedUrl === "error") {
       var $meta = $module.find('input[name="metadata"]');
 
       function update () {
-        var val = parseFloat($value.val());
+        var val = parseFloat($value.val() || $value.data('value'));
         var scale = parseFloat($tip.val()) / 100;
         var added = scale * val;
 
