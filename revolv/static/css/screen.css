@@ -267,7 +267,8 @@ a:hover {
 .home-page-content .header.after-scroll-header .after-scroll {
   display: block;
 }
-.header a.btn-blue {
+.header a.btn-blue,
+.header.after-scroll-header a.btn-blue {
   text-decoration: none;
   color: white;
 }
