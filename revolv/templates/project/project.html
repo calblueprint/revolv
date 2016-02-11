@@ -158,7 +158,7 @@
       </div>
       <!-- end .main-area -->
       <aside class="right-aside">
-        {% if project_donation_levels|length > 0 %}
+        {% if project_donation_levels %}
           {% for donation_level in project_donation_levels %}
           <div class="module-box payment-module">
             <div class="value-txt">$ {{ donation_level.amount|floatformat:"0"|intcomma }}</div>
@@ -178,10 +178,10 @@
           </div>
           {% endfor %}
           <!-- end .module-box -->
-        {% else %}
+        {% endif %}
           <div class="module-box payment-module">
             <h5 class="title-h5">BACK THIS PROJECT</h5>
-            <div class="back-the-project">Back {{ project.title }} and support solar energy!</div>
+            <div class="back-the-project">Back {{ project.title }} and support solar energy with a !</div>
 
             <div class="inputs">
               <label for="value">Donation</label>
@@ -223,7 +223,6 @@
               <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
             {% endif %}
           </div>
-          {% endif %}
           <!-- end .module-box -->
       </aside>
       <!-- end .list-area -->

@@ -83,7 +83,8 @@ def stripe_payment(request, pk):
             amount=tip_cents/100.0,
             user=request.user.revolvuserprofile,
         )
-    return redirect('project:view', pk=project.pk)
+    # return redirect('project:view', pk=project.pk)
+    return redirect('dashboard')
 
 
 class DonationLevelFormSetMixin(object):
