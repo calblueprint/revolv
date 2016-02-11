@@ -1,0 +1,9 @@
+{% load staticfiles %}
+
+<li>
+  <a href="javascript:;" class="head-img {% if testimonial_active %}active{% endif %}">
+    <i class="icons icon-arrow-down"></i>
+    <img src="{% static testimonial_image %}" class="desktop-head" alt="Head">
+    <img src="{% static testimonial_image_mobile %}" class="mobile-head" alt="Head">
+  </a>
+</li>
