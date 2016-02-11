@@ -213,8 +213,8 @@ class Project(models.Model):
     video_url = models.URLField(
         'Video URL',
         max_length=255,
-        blank=True,
-        help_text='Optional: Link to a Youtube video about the project or community.'
+        blank=False,
+        help_text='Link to a Youtube video about the project or community.',
     )
     # power output of array in kilowatts
     impact_power = models.FloatField(
@@ -270,7 +270,7 @@ class Project(models.Model):
         options={'quality': 80},
         default=None,
         help_text='Choose a beautiful high resolution image to represent this project.',
-        blank=True
+        blank=False,
     )
     preview_photo = ImageSpecField(
         source='cover_photo',
