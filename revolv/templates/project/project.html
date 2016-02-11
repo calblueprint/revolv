@@ -187,7 +187,7 @@
               <label for="value">Donation</label>
               <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input type="number" name="value" value="10" step="1" class="form-control">
+                <input type="number" name="value" min="0" value="10" step="1" class="form-control">
               </div>
 
               <label for="tip_edit">Tip</label>
@@ -362,6 +362,34 @@ if (embedUrl === "error") {
         $total.val((val + added).toFixed(2));
       }
 
+      function prepress (e) {
+        /*
+          Prevent the user from ever entering in "-".
+        */
+        if (e.keyCode === 189 || e.keyCode === 187) {
+          e.preventDefault();
+        }
+
+        /*
+          If we hook this to the 'keyup' event, there's a noticeable delay
+          before the reversion takes place. This ensures that it happens
+          *almost* invisibly.
+        */
+        setTimeout(postpress.bind(this), 0);
+      }
+
+      function postpress () {
+        /*
+          Revert changes to inputs that take us past 2 decimal points.
+        */
+        var val = $(this).val();
+        if ((val+'').match(/^\d+\.\d\d\d+/)) {
+          $(this).val((val+'').match(/^\d+\.\d\d/)[0]);
+        }
+      }
+
+      $value.on('keydown', prepress);
+      $tip.on('keydown', prepress);
       $value.on('change keyup', update);
       $tip.on('change keyup', update);
 
