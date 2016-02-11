@@ -47,9 +47,9 @@ function rebuild(options) {
 
   sassTask({
     development: options.development,
-    src: './revolv/static/**/*.scss',
-    watch: './revolv/static/**/*.scss',
-    dest: './revolv/static/'
+    src: './revolv/static/scss/**/index.scss',
+    watch: './revolv/static/scss/**/*.scss',
+    dest: './revolv/static/dist/css/'
   });
 }
 

@@ -14,6 +14,7 @@
     </script>
     <script src="{% static 'js/mediaelement-and-player.min.js' %}"></script>
     <link href="{% static 'css/mediaelementplayer.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dist/css/pages/home/index.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block body_class %}class="home-page-content"{% endblock %}
@@ -47,7 +48,7 @@
 
 {% block body %}
 
-<div class="top-section min-height">
+<div class="top-section nav-margins">
   <div class="section-video">
     <div class="section-video-area">
       <div class="video-opacity"></div>
@@ -58,27 +59,14 @@
     </div>
   </div>
   <!-- end .section-video -->
-  <div class="container">
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="">
-      <a class="down-arrow-button" href="javascript:;"><div class="icons icon-arrow-down"></div></a>
-
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <div class="item-info">
-            <div class="titles">
-              {{ settings.revolv_cms.MainPageSettings.site_tagline|safe }}
-            </div>
-            <p>
-              {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
-            </p>
-            <a href="{% url 'projects_list' %}" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
-          </div>
-        </div>
-        <!-- end .item -->
-      </div>
+  <div class="section-video-overlay">
+    <div class="titles">
+      {{ settings.revolv_cms.MainPageSettings.site_tagline|safe }}
     </div>
-    <!-- end .carousel -->
+    <p>
+      {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
+    </p>
+    <a href="get-involved.html" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
   </div>
 </div>
 <!-- end .top-section -->
@@ -365,7 +353,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe1</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -380,7 +370,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe2</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -395,7 +387,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe3</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -410,7 +404,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe4</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -425,7 +421,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe5</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -440,7 +438,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe6</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -455,7 +455,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe7</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -470,7 +472,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe8</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -485,7 +489,9 @@
       <div class="user-group">
         <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe9</a></span>
         <span class="txt block">First Volunteer</span>
-        <span class="block"><a href="{% url 'project:new' %}" class="btn-blue">START YOUR OWN PROJECT</a></span>
+        <p>
+          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
+        </p>
       </div>
     </div>
     <!-- end .info-area -->
@@ -579,13 +585,10 @@
 <!-- end .featured-on-module -->
 
 <div class="newsletter-module">
-  <div class="img-area">
-    <div class="img-opacity"></div>
+  <div class="parallax-window" id="parallax-anchor"></div>
+  <div class="img-preload">
     <img src="{% static 'images/small/small-newsletter-bg.jpg' %}" class="small-img" alt="">
     <img src="{% static 'images/mobile/mobile-newsletter-bg.jpg' %}" class="mobile-img" alt="">
-    <div class="desktop-img"></div>
-    <div class="small-img"></div>
-    <div class="mobile-img"></div>
   </div>
   <div class="container animated">
     <div class="title-white-border title-newsletter">NEWSLETTER SIGNUP</div>
