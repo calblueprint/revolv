@@ -17,7 +17,7 @@
 
         {% if request.user.is_authenticated %}
           <li class="user-controls has-dropdown">
-            <span class="block"><a href="{% url "dashboard" %}">Dashboard</a></span>
+            <span class="block"><a href="{% url "dashboard" %}">My Portfolio</a></span>
             <span class="block"><a href="{% url "logout" %}">Sign Out</a></li>
           </li>
           {% else %}

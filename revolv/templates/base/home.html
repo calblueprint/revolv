@@ -31,7 +31,7 @@
 
         {% if request.user.is_authenticated %}
           <li class="user-controls has-dropdown">
-            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate">DASHBOARD</a>
+            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate">MY PORTFOLIO</a>
             <a href="{% url 'logout' %}" class="btn-blue pull-left btn-donate">SIGN OUT</a>
           </li>
           {% else %}

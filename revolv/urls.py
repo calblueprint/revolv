@@ -17,11 +17,11 @@ urlpatterns = patterns(
 
     url(r'^$', base_views.HomePageView.as_view(), name='home'),
     url(r'^project/', include('revolv.project.urls', namespace='project')),
-    url(r'^dashboard/$', base_views.DashboardRedirect.as_view(), name='dashboard'),
-    url(r'^dashboard/categories/$', base_views.CategoryPreferenceSetterView.as_view(), name='dashboard_category_setter'),
-    url(r'^dashboard/admin/', include('revolv.administrator.urls', namespace='administrator')),
-    url(r'^dashboard/ambassador/', include('revolv.ambassador.urls', namespace='ambassador')),
-    url(r'^dashboard/donor/', include('revolv.donor.urls', namespace='donor')),
+    url(r'^my-portfolio/$', base_views.DashboardRedirect.as_view(), name='dashboard'),
+    url(r'^my-portfolio/categories/$', base_views.CategoryPreferenceSetterView.as_view(), name='dashboard_category_setter'),
+    url(r'^my-portfolio/admin/', include('revolv.administrator.urls', namespace='administrator')),
+    url(r'^my-portfolio/ambassador/', include('revolv.ambassador.urls', namespace='ambassador')),
+    url(r'^my-portfolio/donor/', include('revolv.donor.urls', namespace='donor')),
 
     url(r'^what-we-do/projects/', base_views.ProjectListView.as_view(), name='projects_list'),
     url(r'^signin/$', base_views.SignInView.as_view(), name='signin'),
