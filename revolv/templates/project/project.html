@@ -366,7 +366,7 @@ if (embedUrl === "error") {
         /*
           Prevent the user from ever entering in "-".
         */
-        if (e.keyCode === 189) {
+        if (e.keyCode === 189 || e.keyCode === 187) {
           e.preventDefault();
         }
 
