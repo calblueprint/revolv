@@ -20,7 +20,7 @@ from revolv.payments.forms import CreditCardDonationForm
 from revolv.payments.models import UserReinvestment, Payment, PaymentType, Tip
 from revolv.payments.services import PaymentService
 from revolv.project import forms
-from revolv.project.models import Category, Project, ProjectUpdate, DonationLevel
+from revolv.project.models import Category, Project, ProjectUpdate
 from revolv.tasks.sfdc import send_donation_info
 
 
@@ -29,6 +29,7 @@ MAX_PAYMENT_CENTS = 99999999
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
+@login_required
 def stripe_payment(request, pk):
     try:
         token = request.POST['stripeToken']
@@ -64,6 +65,7 @@ def stripe_payment(request, pk):
         error_msg = body['error']['message']
     except Exception:
         error_msg = "Payment error. Re-volv has been notified."
+        logger.exception(error_msg)
     if error_msg:
         return render(request, "project/project_donate_error.html", {
             "msg": error_msg, "project": project
