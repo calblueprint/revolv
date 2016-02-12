@@ -2130,8 +2130,13 @@ header.edit-project-header > .container > h1 {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 110px;
-  margin: 6px 0 0 -55px;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  margin-top: 6px;
+  white-space: nowrap;
+}
+.details-active-project-module .banner-section .funded-round .round-depict > span {
+  font-size: 75%;
 }
 .details-active-project-module .banner-section .funded-round .status-indicator input {
   font-size: 58.26px !important;
@@ -4816,7 +4821,6 @@ header.edit-project-header > .container > h1 {
     font-size: 22.48px;
     text-align: center;
     width: 170px;
-    margin: 6px 0 0 -85px;
   }
   .details-active-project-module .banner-section .funded-round .status-indicator input {
     font-size: 48.17px !important;
@@ -7167,7 +7171,6 @@ header.edit-project-header > .container > h1 {
     font-size: 19.79px;
     text-align: center;
     width: 170px;
-    margin: 6px 0 0 -85px;
   }
   .details-active-project-module .banner-section .funded-round .status-indicator input {
     font-size: 42.4px !important;
@@ -9639,7 +9642,7 @@ header.edit-project-header > .container > h1 {
   .details-active-project-module .banner-section .funded-round .round-depict {
     font-size: 9.66px;
     width: 85px;
-    margin: 3px 0 0 -44px;
+    margin-top: 3px;
   }
   .details-active-project-module .banner-section .funded-round .status-indicator {
     margin-top: 2px;
