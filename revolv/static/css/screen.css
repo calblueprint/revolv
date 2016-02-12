@@ -10843,11 +10843,24 @@ label.checkmark.animate:after {
   margin-top: 7px;
   font-size: 11px;
 }
+.dashboard .stats .info > div:first-child {
+  height: 36px;
+}
+.dashboard .stats .info > div:last-child {
+  margin-top: 4px;
+}
+.dashboard .stats .info > div:not(.tall):first-child {
+  line-height: 56px;
+}
+.dashboard .stats .info > .tall:first-child {
+  padding-top: 4px;
+}
+.dashboard .stats .stats-img {
+  height: 80px;
+}
 .dashboard .stats .info .val {
-  display: block;
   font-size: 52px;
-  line-height: 38px;
-  margin-bottom: -2px;
+  line-height: 52px;
   font-weight: bold;
 }
 .dashboard .stats .info .units {

@@ -8,39 +8,66 @@
 
   <div class="row stats">
       <div class="col-md-2">
-        <img src="{% static "images/dashboard/solar-panel-desktop.png" %}" />
+        <div class="stats-img">
+          <img src="{% static "images/dashboard/solar-panel-desktop.png" %}" />
+        </div>
         <div class="info">
-            Built <span class="val">{{ statistics.kwh }} <span class="units">kwH</span></span> of solar energy capacity
+            <div>Built</div>
+            <span class="val">{{ statistics.kwh }} </span>
+            <span class="units">kwH</span>
+            <div>of solar energy capacity</div>
         </div>
       </div>
       <div class="col-md-2">
-        <img src="{% static "images/dashboard/cloud-desktop.png" %}" />
+        <div class="stats-img">
+          <img src="{% static "images/dashboard/cloud-desktop.png" %}" />
+        </div>
         <div class="info">
-            Avoided <span class="val">{{ statistics.carbon_dioxide }} <span class="units">lbs</span> </span> of carbon dioxide emissions
+            <div>Avoided</div>
+            <span class="val">{{ statistics.carbon_dioxide }} </span>
+            <span class="units">lbs</span>
+            <div class="tall">of carbon dioxide emissions</div>
         </div>
       </div>
       <div class="col-md-2">
-        <img src="{% static "images/dashboard/trees-desktop.png" %}" />
+        <div class="stats-img">
+          <img src="{% static "images/dashboard/trees-desktop.png" %}" />
+        </div>
         <div class="info">
-            Equivalent to planting <span class="val">{{ statistics.trees }} <span class="units">acres</span></span> of trees
+            <div>Equivalent to planting</div>
+            <span class="val">{{ statistics.trees }} </span>
+            <span class="units">acres</span>
+            <div>of trees</div>
         </div>
       </div>
       <div class="col-md-2">
-        <img src="{% static "images/dashboard/house-desktop.png" %}" />
+        <div class="stats-img">
+          <img src="{% static "images/dashboard/house-desktop.png" %}" />
+        </div>
         <div class="info">
-            Supported <span class="val">{{ statistics.project_count }} </span> community-serving organizations
+            <div>Supported</div>
+            <span class="val">{{ statistics.project_count }} </span>
+            <div class="tall">community-serving organizations</div>
         </div>
       </div>
       <div class="col-md-2">
-        <img src="{% static "images/dashboard/person-desktop.png" %}" />
+        <div class="stats-img">
+          <img src="{% static "images/dashboard/person-desktop.png" %}" />
+        </div>
         <div class="info">
-            Provided solar energy to organizations serving <span class="val">{{ statistics.people_served }} <span class="units">people</span></span> in their community
+            <div class="tall">Provided solar energy to organizations serving</div>
+            <span class="val">{{ statistics.people_served }} </span>
+            <span class="units">people</span>
+            <div>in their community</div>
         </div>
       </div>
       <div class="col-md-2">
-        <img src="{% static "images/dashboard/money-desktop.png" %}" />
+        <div class="stats-img">
+          <img src="{% static "images/dashboard/money-desktop.png" %}" />
+        </div>
         <div class="info">
-            Total amount donated <span class="val">{{ statistics.total_donated }}</span>
+            <div>Total amount donated</div>
+            <span class="val">{{ statistics.total_donated }}</span>
         </div>
       </div>
   </div>
