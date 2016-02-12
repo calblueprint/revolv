@@ -67,7 +67,7 @@
       <div class="container">
         <div class="info-main">
           <div class="blue-bar">
-            <span class="pull-left"><span class="bold">${{ project.amount_donated }}</span> Donated</span>
+            <span class="pull-left"><span class="bold">${{ project.amount_donated|floatformat:"0"|intcomma }}</span> Donated</span>
             <span class="pull-right"><span class="bold">{{ project.days_left }}</span> Days Left</span>
           </div>
           <!-- end .blue-bar -->
