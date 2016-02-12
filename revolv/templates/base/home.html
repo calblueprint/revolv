@@ -276,225 +276,43 @@
     <div class="title-blue-border title-testimonial">TESTIMONIAL</div>
     <div class="row head-row">
       <ul>
-        <li>
-          <a href="javascript:;" class="head-img">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img1.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img1.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;" class="head-img">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img2.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img2.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;" class="head-img">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img3.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img3.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;" class="head-img active">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img4.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img4.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;" class="head-img">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img5.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img5.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;" class="head-img">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img6.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img6.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;" class="head-img">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img7.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img7.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;" class="head-img">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img8.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img8.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
-        <li class="mobile-show">
-          <a href="javascript:;" class="head-img">
-            <i class="icons icon-arrow-down"></i>
-            <img src="{% static 'images/testimonial-img9.jpg' %}" class="desktop-head" alt="Head">
-            <img src="{% static 'images/mobile/mobile-testimonial-img9.jpg' %}" class="mobile-head" alt="Head">
-          </a>
-        </li>
+        {% with testimonial_image="images/testimonials/enio_ximenes.png" testimonial_image_mobile="images/testimonials/enio_ximenes.png" %}
+          {% include "base/partials/testimonial-head.html" %}
+        {% endwith %}
+        {% with testimonial_image="images/testimonials/darryl_dea.png" testimonial_image_mobile="images/testimonials/darryl_dea.png" %}
+          {% include "base/partials/testimonial-head.html" %}
+        {% endwith %}
+        {% with testimonial_image="images/testimonials/rebecca_johnson.png" testimonial_image_mobile="images/testimonials/rebecca_johnson.png" testimonial_active=True %}
+          {% include "base/partials/testimonial-head.html" %}
+        {% endwith %}
+        {% with testimonial_image="images/testimonials/jennifer_martin.png" testimonial_image_mobile="images/testimonials/jennifer_martin.png" %}
+          {% include "base/partials/testimonial-head.html" %}
+        {% endwith %}
+        {% with testimonial_image="images/testimonials/ralph_silber.png" testimonial_image_mobile="images/testimonials/ralph_silber.png" %}
+          {% include "base/partials/testimonial-head.html" %}
+        {% endwith %}
       </ul>
     </div>
     <!-- end .head-row -->
-    <div class="info-area hide">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe1</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
-    <div class="info-area hide">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe2</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
-    <div class="info-area hide">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe3</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
-    <div class="info-area">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe4</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
-    <div class="info-area hide">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe5</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
-    <div class="info-area hide">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe6</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
-    <div class="info-area hide">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe7</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
-    <div class="info-area hide">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe8</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
-    <div class="info-area hide">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-      </p>
-      <div class="user-group">
-        <span class="block"><a href="javascript:;" class="link-blue">Jhon Doe9</a></span>
-        <span class="txt block">First Volunteer</span>
-        <p>
-          <emph>Have a project idea? Contact us at <a href="mailto:info@re-volv.org">info@re-volv.org</a>.</emph>
-        </p>
-      </div>
-    </div>
-    <!-- end .info-area -->
+    {% with testimonial_name="Enio Ximenes" testimonial_position="Donor" testimonial_text="I had the pleasure to see one of RE-volv’s projects right in my neighborhood, at a worker-owned grocery co-op called Other Avenues. I try to volunteer on the solar installs as much as I can and I grab every chance I can get to raise funds for RE-volv because I know that every dollar is well spent, and will be used over and over again to bring positive change and progress while helping other nonprofits that are doing important work." %}
+      {% include "base/partials/testimonial-info-area.html" %}
+    {% endwith %}
+
+    {% with testimonial_name="Darryl Dea" testimonial_position="President, Other Avenues Food Cooperative" testimonial_text="Over the years I’d been looking at different possibilities and then RE-volv came around, and it was like the perfect fit for us! Contributing to this revolving fund that’s going to, futher down the line, help out other co-ops and nonprofits, we’re excited about that. This is going to save us in the neighborhood of $300,000 over the course of 20 years!" %}
+      {% include "base/partials/testimonial-info-area.html" %}
+    {% endwith %}
+
+    {% with testimonial_name="Rebecca Johnson" testimonial_position="Executive Director, Shawl-Anderson Dance Center" testimonial_text="We’re really excited and honored to be the first project for RE-volv. We’d been looking to go solar for quite a few years, and when Andreas came to us and proposed this amazing plan, it was like a perfect fit. This is another reason for people to say ‘yes,’ to being here, and another reason to love being here." testimonial_active=True %}
+      {% include "base/partials/testimonial-info-area.html" %}
+    {% endwith %}
+
+    {% with testimonial_name="Jennifer Martin" testimonial_position="Chair, RE-volv Board of Directors; Executive Director, Center for Resource Solutions" testimonial_text="What’s really inspiring about RE-volv and what excites me about being involved in the organization is the real tangible feeling you get when you can actually see the results of the labor." %}
+      {% include "base/partials/testimonial-info-area.html" %}
+    {% endwith %}
+
+    {% with testimonial_name="Ralph Silber" testimonial_position="Greening Committee Chair, Kehilla Community Synagogue" testimonial_text="One of our basic values is about community and community building and the importance of that. And because of the crowdfunding model that RE-volv uses, it fit perfectly with our idea. Even if somebody would have handed us a check for the money we needed, that wouldn’t have been our first choice, because by doing the fundraising we were accomplishing one of our other goals which is informing more people about the availability of solar." %}
+      {% include "base/partials/testimonial-info-area.html" %}
+    {% endwith %}
   </div>
 </div>
 <!-- end .testimonial-module -->

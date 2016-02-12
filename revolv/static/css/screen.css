@@ -6298,9 +6298,7 @@ header.edit-project-header > .container > h1 {
     display: block;
   }
   .testimonial-module .head-row li {
-    display: block;
-    float: left;
-    width: 33.33333333%;
+    display: inline-block;
   }
   .testimonial-module .head-row li .head-img {
     display: block;
