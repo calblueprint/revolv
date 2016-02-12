@@ -173,8 +173,8 @@
 
               <label for="total">Total</label>
               <div class="input-group">
-                <span class="input-group-addon">$</span>
                 <input type="number" name="total" value="10" step="1" class="form-control" disabled>
+                  <span class="input-group-addon">$</span>
               </div>
             </div>
             <form action="{% url 'project:stripe_payment' pk=project.pk %}" method="POST">
@@ -200,8 +200,8 @@
             <div class="inputs">
               <label for="value">Donation</label>
               <div class="input-group">
-                <span class="input-group-addon">$</span>
                 <input type="number" name="value" min="0" value="10" step="1" class="form-control">
+                  <span class="input-group-addon">$</span>
               </div>
 
               <label for="tip_edit">Tip</label>
@@ -212,8 +212,8 @@
 
               <label for="total">Total</label>
               <div class="input-group">
-                <span class="input-group-addon">$</span>
                 <input type="number" name="total" value="10" step="1" class="form-control" disabled>
+                  <span class="input-group-addon">$</span>
               </div>
             </div>
 
