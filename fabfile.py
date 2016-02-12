@@ -6,7 +6,7 @@ import time
 import yaml
 
 from fabric.api import env, execute, get, hide, local, put, require, run, settings, sudo, task
-from fabric.contrib import files, project
+from fabric.contrib import files, project, console
 from fabric.utils import abort
 
 DEFAULT_SALT_LOGLEVEL = 'info'
@@ -56,6 +56,7 @@ def vagrant():
 def initialize_env():
     """Build some common variables into the env dictionary."""
     env.gpg_key = os.path.join(CONF_ROOT, '{}.pub.gpg'.format(env.environment))
+    env.project = 'revolv'
 
 
 def get_salt_version(command):
@@ -370,3 +371,48 @@ def manage_run(command):
 @task
 def manage_shell():
     manage_run('shell')
+
+
+@task
+def get_db_dump(clean=False):
+    """Get db dump of remote enviroment."""
+    require('environment')
+    db_name = '%(project)s_%(environment)s' % env
+    dump_file = db_name + '.sql' % env
+    project_root = os.path.join('/var', 'www', env.project)
+    temp_file = os.path.join(project_root, dump_file)
+    flags = '-Ox'
+    if clean:
+        flags += 'c'
+    dump_command = 'pg_dump %s %s -U %s > %s' % (flags, db_name, db_name, temp_file)
+    with settings(host_string=env.master):
+        sudo(dump_command, user=env.project)
+        get(temp_file, dump_file)
+
+
+@task
+def reset_local_db():
+    """ Reset local database from remote host """
+    require('environment')
+    question = 'Are you sure you want to reset your local ' \
+               'database with the %(environment)s database?' % env
+    if not console.confirm(question, default=False):
+        abort('Local database reset aborted.')
+    remote_db_name = '%(project)s_%(environment)s' % env
+    db_dump_name = remote_db_name + '.sql'
+    local_db_name = env.project
+    get_db_dump()
+    with settings(warn_only=True):
+        local('dropdb %s' % local_db_name)
+    local('createdb -E UTF-8 %s' % local_db_name)
+    local('cat %s | psql %s' % (db_dump_name, local_db_name))
+
+
+@task
+def reset_local_media():
+    """ Reset local media from remote host """
+    require('environment')
+    media_source = os.path.join('/var', 'www', env.project, 'public', 'media')
+    media_target = os.path.join(PROJECT_ROOT, 'public')
+    with settings():
+        local("rsync -rvaz %s:%s %s" % (env.master, media_source, media_target))

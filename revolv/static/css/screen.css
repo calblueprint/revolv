@@ -189,6 +189,9 @@ a:hover {
   left: 0;
   z-index: 1019;
 }
+.after-header {
+  margin-top: 102px;
+}
 .header .container {
   height: 100%;
   padding: 0;
@@ -2352,8 +2355,23 @@ header.edit-project-header > .container > h1 {
   text-align: center;
   background: #ededed;
   min-height: 200px;
-  padding: 12px 0 32px 0;
+  padding: 24px;
   margin: 0 0 32px 0;
+}
+.project-updates-module .right-aside .module-box p {
+  padding: 0.5rem 0;
+}
+.project-updates-module .right-aside .module-box .inputs {
+  text-align: left;
+}
+.project-updates-module .right-aside .module-box .inputs .input-group > * {
+  border-radius: 0;
+}
+.project-updates-module .right-aside .module-box .inputs label {
+  margin: 5px;
+}
+.project-updates-module .right-aside .module-box .inputs input[name="total"] {
+  cursor: auto;
 }
 .project-updates-module .right-aside .module-box .type-txt {
   font-family: 'Source Sans Pro';
@@ -2371,6 +2389,11 @@ header.edit-project-header > .container > h1 {
   line-height: 65px;
   color: #282828;
   padding: 0 0 20px 0;
+  max-width: 100%;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  margin: 0 auto;
 }
 .project-updates-module .right-aside .module-box .title-h5 {
   font-family: 'Source Sans Pro';
@@ -2382,6 +2405,30 @@ header.edit-project-header > .container > h1 {
   margin: 0 18px 0 16px;
   height: 33px;
   line-height: 33px;
+}
+.project-updates-module .right-aside .module-box .back-the-project {
+  margin: 15px 0;
+}
+.project-updates-module .right-aside .module-box .tip-text {
+  margin: 15px 0;
+}
+.project-updates-module .right-aside .module-box form {
+  margin-top: 15px;
+}
+.project-updates-module .right-aside .module-box .stripe-button-el {
+  border-radius: 0;
+  background: #14b1e7;
+  text-transform: uppercase;
+  width: 100%;
+}
+.project-updates-module .right-aside .module-box .stripe-button-el > span {
+  background: transparent;
+  box-shadow: none;
+  font-family: 'Source Sans Pro';
+  font-size: 16px;
+  line-height: 43px;
+  font-weight: 900;
+  height: auto;
 }
 .project-updates-module .right-aside .module-box ul {
   padding: 34px 0 25px 0;
@@ -3680,6 +3727,9 @@ header.edit-project-header > .container > h1 {
     margin-top: 30px;
     height: 85px;
   }
+  .after-header {
+    margin-top: 85px;
+  }
   .header .logo {
     background: url(../images/logo-white.png) no-repeat;
     background-size: 141px auto;
@@ -4895,7 +4945,7 @@ header.edit-project-header > .container > h1 {
   }
   .project-updates-module .right-aside .module-box {
     min-height: 120px;
-    padding: 12px 0 22px 0;
+    padding: 24px;
     margin: 0 0 26px 0;
   }
   .project-updates-module .right-aside .module-box .type-txt {
@@ -5776,6 +5826,9 @@ header.edit-project-header > .container > h1 {
   .header {
     margin-top: 10px;
     height: 185px;
+  }
+  .after-header {
+    margin-top: 185px;
   }
   .header .logo {
     background: url(../images/tablet/tablet-logo-white.png);
@@ -7328,7 +7381,7 @@ header.edit-project-header > .container > h1 {
   }
   .project-updates-module .right-aside .module-box {
     min-height: 226px;
-    padding: 12px 0 32px 0;
+    padding: 24px;
     margin: 0 32px 32px 32px;
     position: relative;
   }
@@ -7343,19 +7396,6 @@ header.edit-project-header > .container > h1 {
     line-height: 70px;
     padding: 0 0 20px 0;
     width: 295px;
-  }
-  .project-updates-module .right-aside .module-box .title-h5 {
-    font-size: 16.38px;
-    text-align: left;
-    border-top: none;
-    border-bottom: 2px solid #c3c3c3;
-    width: 45%;
-    margin: 0;
-    height: 33px;
-    line-height: 33px;
-    position: absolute;
-    top: 18px;
-    right: 45px;
   }
   .project-updates-module .right-aside .module-box ul {
     padding: 34px 0 25px 0;
@@ -8416,6 +8456,9 @@ header.edit-project-header > .container > h1 {
   .header {
     margin-top: 5px;
     height: 92.5px;
+  }
+  .after-header {
+    margin-top: 92.5px;
   }
   .header .logo {
     background-repeat: no-repeat;
@@ -9769,7 +9812,7 @@ header.edit-project-header > .container > h1 {
   }
   .project-updates-module .right-aside .module-box {
     min-height: 113px;
-    padding: 6px 0 16px 0;
+    padding: 12px;
     margin: 0 16px 10px 16px;
   }
   .project-updates-module .right-aside .module-box .type-txt {
@@ -9783,14 +9826,6 @@ header.edit-project-header > .container > h1 {
     line-height: 35px;
     padding: 0 0 10px 0;
     width: 148px;
-  }
-  .project-updates-module .right-aside .module-box .title-h5 {
-    font-size: 8px;
-    border-bottom: 1px solid #c3c3c3;
-    height: 16px;
-    line-height: 16px;
-    top: 9px;
-    right: 22px;
   }
   .project-updates-module .right-aside .module-box ul {
     padding: 17px 0 12px 0;

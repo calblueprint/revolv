@@ -31,7 +31,7 @@
 
         {% if request.user.is_authenticated %}
           <li class="user-controls has-dropdown">
-            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate">DASHBOARD</a>
+            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate">MY PORTFOLIO</a>
             <a href="{% url 'logout' %}" class="btn-blue pull-left btn-donate">SIGN OUT</a>
           </li>
           {% else %}
@@ -66,7 +66,7 @@
     <p>
       {{ settings.revolv_cms.MainPageSettings.site_subheading|safe }}
     </p>
-    <a href="get-involved.html" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
+    <a href="{% url 'projects_list' %}" class="btn-blue btn-donate-now">{{ settings.revolv_cms.MainPageSettings.learn_button_text }}</a>
   </div>
 </div>
 <!-- end .top-section -->
@@ -113,7 +113,7 @@
           <!-- end .img-main -->
           <div class="info-main">
             <div class="blue-bar">
-              <span class="pull-left">${{ active_project.amount_donated }}</span>
+              <span class="pull-left">${{ active_project.amount_donated|floatformat:"0"|intcomma }}</span>
               <span class="pull-right">{{ active_project.days_left }} Days Left</span>
             </div>
             <!-- end .blue-bar -->

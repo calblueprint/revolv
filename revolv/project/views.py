@@ -1,4 +1,5 @@
 from decimal import Decimal
+import logging
 
 from django.conf import settings
 from django.contrib import messages
@@ -6,19 +7,85 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.http.response import HttpResponseBadRequest
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import CreateView, DetailView, UpdateView, TemplateView
 from django.views.generic.edit import FormView
 from django.views.decorators.http import require_http_methods
+import stripe
+
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import is_user_reinvestment_period
 from revolv.lib.mailer import send_revolv_email
 from revolv.payments.forms import CreditCardDonationForm
-from revolv.payments.models import UserReinvestment
+from revolv.payments.models import UserReinvestment, Payment, PaymentType, Tip
 from revolv.payments.services import PaymentService
 from revolv.project import forms
 from revolv.project.models import Category, Project, ProjectUpdate
 from revolv.tasks.sfdc import send_donation_info
+
+
+logger = logging.getLogger(__name__)
+MAX_PAYMENT_CENTS = 99999999
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+@login_required
+def stripe_payment(request, pk):
+    try:
+        token = request.POST['stripeToken']
+        tip_cents = request.POST['metadata']
+        amount_cents = request.POST['amount_cents']
+    except KeyError:
+        logger.exception('stripe_payment called without required POST data')
+        return HttpResponseBadRequest('bad POST data')
+
+    try:
+        tip_cents = int(tip_cents)
+        amount_cents = int(amount_cents)
+        if not (0 < amount_cents < MAX_PAYMENT_CENTS):
+            raise ValueError('amount_cents cannot be negative')
+        if not (0 <= tip_cents < amount_cents):
+            raise ValueError('tip_cents cannot be negative or more than project contribution')
+    except ValueError:
+        logger.exception('stripe_payment called with improper POST data')
+        return HttpResponseBadRequest('bad POST data')
+
+    project = get_object_or_404(Project, pk=pk)
+
+    donation_cents = amount_cents - tip_cents
+
+    error_msg = None
+    try:
+        stripe.Charge.create(source=token, currency="usd", amount=amount_cents)
+    except stripe.error.CardError as e:
+        body = e.json_body
+        error_msg = body['error']['message']
+    except stripe.error.APIConnectionError as e:
+        body = e.json_body
+        error_msg = body['error']['message']
+    except Exception:
+        error_msg = "Payment error. Re-volv has been notified."
+        logger.exception(error_msg)
+    if error_msg:
+        return render(request, "project/project_donate_error.html", {
+            "msg": error_msg, "project": project
+        })
+
+    Payment.objects.create(
+        user=request.user.revolvuserprofile,
+        entrant=request.user.revolvuserprofile,
+        amount=donation_cents/100.0,
+        project=project,
+        payment_type=PaymentType.objects.get_stripe(),
+    )
+    if tip_cents > 0:
+        Tip.objects.create(
+            amount=tip_cents/100.0,
+            user=request.user.revolvuserprofile,
+        )
+    # return redirect('project:view', pk=project.pk)
+    return redirect('dashboard')
+
 
 class DonationLevelFormSetMixin(object):
     """
@@ -223,6 +290,7 @@ class ProjectView(UserDataMixin, DetailView):
     # pass in Project Categories and Maps API key
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
+        context['stripe_publishable_key'] = settings.STRIPE_PUBLISHABLE
         context['GOOGLEMAPS_API_KEY'] = settings.GOOGLEMAPS_API_KEY
         context['updates'] = self.get_object().updates.order_by('date').reverse()
         context['donor_count'] = self.get_object().donors.count()

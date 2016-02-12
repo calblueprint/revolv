@@ -116,4 +116,3 @@ class ProjectMontlyRepaymentConfigFactory(factory.django.DjangoModelFactory):
     year = 2015
     amount = 100.0
     repayment_type = 'SSF'
-

@@ -10,10 +10,10 @@ from revolv.project.models import Project, ProjectUpdate
 
 
 class DashboardTestCase(TestUserMixin, TestCase):
-    DASH_BASE = "/dashboard/"
-    ADMIN_DASH = "/dashboard/admin/"
-    AMBAS_DASH = "/dashboard/ambassador/"
-    DONOR_DASH = "/dashboard/donor/"
+    DASH_BASE = "/my-portfolio/"
+    ADMIN_DASH = "/my-portfolio/admin/"
+    AMBAS_DASH = "/my-portfolio/ambassador/"
+    DONOR_DASH = "/my-portfolio/donor/"
     HOME_URL = "/"
 
     def test_dash_redirects(self):
@@ -42,7 +42,7 @@ class AuthIntegrationTest(TestUserMixin, WebTest, UserTestingMixin):
         """Given a user and their current password, assert they can change it via the auth pages."""
         self.send_user_login_request(user, password, webtest=True)
 
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         change_pass_resp = dash_resp.click(linkid="change_password_link").maybe_follow()
         form = change_pass_resp.forms["change_password_form"]
         form["old_password"] = password
@@ -56,7 +56,7 @@ class AuthIntegrationTest(TestUserMixin, WebTest, UserTestingMixin):
         self.assertNoUserAuthed(no_user_authed_resp)
 
         self.send_user_login_request(user, password, webtest=True)
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         change_pass_resp = dash_resp.click(linkid="change_password_link").maybe_follow()
         form = change_pass_resp.forms["change_password_form"]
         form["old_password"] = password
@@ -130,7 +130,7 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         """
         project = Project.factories.base.build(tagline=tagline)
 
-        dashboard_response = self.app.get("/dashboard/").maybe_follow()
+        dashboard_response = self.app.get("/my-portfolio/").maybe_follow()
         create_page_response = dashboard_response.click(linkid="create_project").maybe_follow()
         project_form = create_page_response.forms["project_form"]
         project_form = self.fill_form_from_model(project_form, project)
@@ -165,7 +165,7 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.send_test_user_login_request(webtest=True)
 
         project = Project.factories.drafted.create(ambassador=self.test_profile)
-        dash_response = self.app.get("/dashboard/").maybe_follow()
+        dash_response = self.app.get("/my-portfolio/").maybe_follow()
         propose_form = dash_response.forms["propose_form_%i" % project.pk]
         new_dash_response = propose_form.submit("_propose").maybe_follow()
         self.assertEqual(new_dash_response.status_code, 200)
@@ -190,17 +190,17 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         project2 = Project.factories.proposed.create(ambassador=ambassador)
 
         self.send_user_login_request(admin_user, "admin_pass", webtest=True)
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         staged_resp = dash_resp.forms["stage_deny_form_%i" % project1.pk].submit("_stage").maybe_follow()
         self.assertEqual(staged_resp.status_code, 200)
         self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.STAGED)
 
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         approved_resp = dash_resp.forms["approve_form_%i" % project1.pk].submit("_approve").maybe_follow()
         self.assertEqual(approved_resp.status_code, 200)
         self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.ACTIVE)
 
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         unapproved_resp = dash_resp.forms["complete_form_%i" % project1.pk].submit("_unapprove").maybe_follow()
         self.assertEqual(unapproved_resp.status_code, 200)
         self.assertEqual(Project.objects.get(id=project1.pk).project_status, Project.STAGED)
@@ -211,7 +211,7 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
 
         self.app.get("/logout/")
         self.send_user_login_request(amb_user, "amb_pass", webtest=True)
-        amb_dash_resp = self.app.get("/dashboard/").maybe_follow()
+        amb_dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project1.pk, Project.STAGED))
         self.assert_in_response_html(amb_dash_resp, "project-status-%i-%s" % (project2.pk, Project.DRAFTED))
 
@@ -227,19 +227,19 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.send_test_user_login_request(webtest=True)
         project = Project.factories.active.create()
 
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         self.assert_in_response_html(dash_resp, "project-status-%i-%s" % (project.id, Project.ACTIVE))
         completed_resp = dash_resp.forms["complete_form_%i" % project.pk].submit("_complete").maybe_follow()
         self.assertEqual(completed_resp.status_code, 200)
         self.assertEqual(Project.objects.get(id=project.pk).project_status, Project.COMPLETED)
 
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         self.assert_in_response_html(dash_resp, "project-status-%i-%s" % (project.id, Project.COMPLETED))
         incompleted_resp = dash_resp.forms["incomplete_form_%i" % project.pk].submit("_incomplete").maybe_follow()
         self.assertEqual(incompleted_resp.status_code, 200)
         self.assertEqual(Project.objects.get(id=project.pk).project_status, Project.ACTIVE)
 
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         self.assert_in_response_html(dash_resp, "project-status-%i-%s" % (project.id, Project.ACTIVE))
 
     def assert_can_post_update_for_project(self, user, password, project):
@@ -250,7 +250,7 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         self.app.get("/logout/")
         update_count = project.updates.count()
         self.send_user_login_request(user, password, webtest=True)
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         updates_resp = dash_resp.forms["post_project_updates_form_%i" % project.pk].submit().maybe_follow()
         edit_page_form = updates_resp.forms["project_update_form"]
         edit_page_form = self.fill_form_from_model(edit_page_form, ProjectUpdate.factories.base.build())
@@ -298,12 +298,12 @@ class DashboardIntegrationTest(TestUserMixin, WebTest, WebTestMixin):
         project2 = Project.factories.drafted.create(ambassador=amb2)
 
         self.send_user_login_request(amb1_user, "amb1_pass", webtest=True)
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         self.assert_in_response_html(dash_resp, "project-%i" % project1.pk)
         self.assert_not_in_response_html(dash_resp, "project-%i" % project2.pk)
 
         self.app.get("/logout/")
         self.send_user_login_request(amb2_user, "amb2_pass", webtest=True)
-        dash_resp = self.app.get("/dashboard/").maybe_follow()
+        dash_resp = self.app.get("/my-portfolio/").maybe_follow()
         self.assert_in_response_html(dash_resp, "project-%i" % project2.pk)
         self.assert_not_in_response_html(dash_resp, "project-%i" % project1.pk)

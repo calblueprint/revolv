@@ -213,7 +213,7 @@ MEDIA_URL = S3_URL + MEDIA_PATH
 MEDIA_SERVE_LOCALLY = False
 if not AWS_ACCESS_KEY_ID and IS_LOCAL:
     # Local developer hasn't gotten our official AWS keys, so let's
-    # allow them to 
+    # allow them to
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     MEDIA_URL = MEDIA_PATH
     MEDIA_SERVE_LOCALLY = True
