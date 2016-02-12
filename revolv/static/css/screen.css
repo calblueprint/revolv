@@ -672,10 +672,10 @@ a:hover {
   margin-left: -11px;*/
 }
 .our-impacts-module .row .col-md-3:nth-child(2) .module-box .titles {
-  padding-right: 30px;
+  /*padding-right: 30px;*/
 }
 .our-impacts-module .row .col-md-3:nth-child(3) .module-box .icons {
-  margin-left: 8%;
+  /*margin-left: 8%;*/
 }
 .our-impacts-module .row .col-md-3:nth-child(3) .module-box .titles {
   letter-spacing: -1.8px;
@@ -697,20 +697,29 @@ a:hover {
 .our-impacts-module .module-box .icons {
   width: 168px;
   height: 160px;
-  margin: 0 auto;
   display: block;
+  position: relative;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 .our-impacts-module .module-box .icon-people {
   background-position: 0 -184px;
 }
 .our-impacts-module .module-box .icon-home-ok {
   background-position: -168px -184px;
+  -webkit-transform: translateX(-42%);
+  transform: translateX(-42%);
 }
 .our-impacts-module .module-box .icon-tree {
   background-position: -336px -190px;
+  -webkit-transform: translateX(-65%);
+  transform: translateX(-65%);
 }
 .our-impacts-module .module-box .icon-user {
   background-position: -504px -178px;
+  -webkit-transform: translateX(-48%);
+  transform: translateX(-48%);
 }
 .our-impacts-module .module-box .titles {
   font-family: 'Source Sans Pro';
@@ -3945,10 +3954,10 @@ header.edit-project-header > .container > h1 {
     margin-left: -11px;*/
   }
   .our-impacts-module .row .col-md-3:nth-child(2) .module-box .titles {
-    padding-right: 30px;
+    /*padding-right: 30px;*/
   }
   .our-impacts-module .row .col-md-3:nth-child(3) .module-box .icons {
-    margin-left: 5%;
+    /*margin-left: 5%;*/
   }
   .our-impacts-module .row .col-md-3:nth-child(3) .module-box .titles {
     padding-top: 14px;
@@ -6069,13 +6078,13 @@ header.edit-project-header > .container > h1 {
     margin-left: 0;
   }
   .our-impacts-module .row .col-md-3:nth-child(2) .module-box .icons {
-    margin-left: auto;
+    /*margin-left: auto;*/
   }
   .our-impacts-module .row .col-md-3:nth-child(2) .module-box .titles {
     padding-right: 0;
   }
   .our-impacts-module .row .col-md-3:nth-child(3) .module-box .icons {
-    margin-left: auto;
+    /*margin-left: auto;*/
   }
   .our-impacts-module .row .col-md-3:nth-child(3) .module-box .titles {
     letter-spacing: -1.8px;
@@ -8694,7 +8703,7 @@ header.edit-project-header > .container > h1 {
     background-position: 0 -92px;
   }
   .our-impacts-module .module-box .icon-home-ok {
-    background-position: -78px -92px;
+    background-position: -84px -92px;
   }
   .our-impacts-module .module-box .icon-tree {
     background-position: -177px -85px;
