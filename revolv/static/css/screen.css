@@ -672,48 +672,43 @@ a:hover {
 }
 .our-impacts-module .row .col-md-3:nth-child(1) .module-box {
   float: left;
-  width: 170px;
-  margin-left: -11px;
-}
-.our-impacts-module .row .col-md-3:nth-child(2) .module-box .titles {
-  padding-right: 30px;
-}
-.our-impacts-module .row .col-md-3:nth-child(3) .module-box .icons {
-  margin-left: 8%;
 }
 .our-impacts-module .row .col-md-3:nth-child(3) .module-box .titles {
   letter-spacing: -1.8px;
-  padding-top: 20px;
-  line-height: 40px;
 }
 .our-impacts-module .row .col-md-3:nth-child(4) .module-box {
   float: right;
-  width: 194px;
-}
-.our-impacts-module .row .col-md-3:nth-child(4) .module-box .titles {
-  padding-top: 20px;
-  line-height: 50px;
 }
 .our-impacts-module .module-box {
   text-align: center;
+  width: 100%;
 }
 .our-impacts-module .module-box .icons {
   width: 168px;
   height: 160px;
-  margin: 0 auto;
   display: block;
+  position: relative;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 .our-impacts-module .module-box .icon-people {
   background-position: 0 -184px;
 }
 .our-impacts-module .module-box .icon-home-ok {
   background-position: -168px -184px;
+  -webkit-transform: translateX(-42%);
+  transform: translateX(-42%);
 }
 .our-impacts-module .module-box .icon-tree {
   background-position: -336px -190px;
+  -webkit-transform: translateX(-65%);
+  transform: translateX(-65%);
 }
 .our-impacts-module .module-box .icon-user {
   background-position: -504px -178px;
+  -webkit-transform: translateX(-48%);
+  transform: translateX(-48%);
 }
 .our-impacts-module .module-box .titles {
   font-family: 'Source Sans Pro';
@@ -727,6 +722,7 @@ a:hover {
 }
 .our-impacts-module .module-box .font48 {
   font-size: 48px;
+  height: 66px;
 }
 .our-impacts-module .module-box .font72 {
   font-size: 72px;
@@ -742,6 +738,7 @@ a:hover {
   line-height: 22px;
   display: block;
   position: relative;
+  padding-top: 1rem;
 }
 .our-impacts-module .module-box .txt .position {
   position: relative;
@@ -3951,27 +3948,8 @@ header.edit-project-header > .container > h1 {
     margin: 0 58px 0 80px;
     padding: 0 0 30px 0;
   }
-  .our-impacts-module .row .col-md-3:nth-child(1) .module-box {
-    width: 140px;
-    margin-left: -11px;
-  }
-  .our-impacts-module .row .col-md-3:nth-child(2) .module-box .titles {
-    padding-right: 30px;
-  }
-  .our-impacts-module .row .col-md-3:nth-child(3) .module-box .icons {
-    margin-left: 5%;
-  }
-  .our-impacts-module .row .col-md-3:nth-child(3) .module-box .titles {
-    padding-top: 14px;
-    line-height: 25px;
-  }
   .our-impacts-module .row .col-md-3:nth-child(4) .module-box {
     float: right;
-    width: 155px;
-  }
-  .our-impacts-module .row .col-md-3:nth-child(4) .module-box .titles {
-    padding-top: 14px;
-    line-height: 35px;
   }
   .our-impacts-module .module-box .icons {
     width: 136px;
@@ -3991,6 +3969,7 @@ header.edit-project-header > .container > h1 {
   }
   .our-impacts-module .module-box .titles {
     line-height: 45px;
+    height: 45px;
   }
   .our-impacts-module .module-box .font20 {
     font-size: 16.53px;
@@ -4004,7 +3983,6 @@ header.edit-project-header > .container > h1 {
   .our-impacts-module .module-box .txt {
     font-size: 14.88px;
     line-height: 17px;
-    padding-top: 6px
   }
   /* .how-it-works-module */
   .how-it-works-module .container {
@@ -6081,27 +6059,15 @@ header.edit-project-header > .container > h1 {
     width: 100%;
     margin-left: 0;
   }
-  .our-impacts-module .row .col-md-3:nth-child(2) .module-box .icons {
-    margin-left: auto;
-  }
   .our-impacts-module .row .col-md-3:nth-child(2) .module-box .titles {
     padding-right: 0;
   }
-  .our-impacts-module .row .col-md-3:nth-child(3) .module-box .icons {
-    margin-left: auto;
-  }
   .our-impacts-module .row .col-md-3:nth-child(3) .module-box .titles {
     letter-spacing: -1.8px;
-    padding-top: 20px;
-    line-height: 40px;
   }
   .our-impacts-module .row .col-md-3:nth-child(4) .module-box {
     float: none;
     width: 100%;
-  }
-  .our-impacts-module .row .col-md-3:nth-child(4) .module-box .titles {
-    padding-top: 5px;
-    line-height: 50px;
   }
   .our-impacts-module .module-box .icons {
     width: 168px;
@@ -6121,6 +6087,7 @@ header.edit-project-header > .container > h1 {
   }
   .our-impacts-module .module-box .titles {
     line-height: 66px;
+    height: 66px;
   }
   .our-impacts-module .module-box .font20 {
     font-size: 20.48px;
@@ -8693,12 +8660,6 @@ header.edit-project-header > .container > h1 {
   }
   .our-impacts-module .row .col-md-3:nth-child(3) .module-box .titles {
     letter-spacing: -0.9px;
-    padding-top: 10px;
-    line-height: 20px;
-  }
-  .our-impacts-module .row .col-md-3:nth-child(4) .module-box .titles {
-    padding-top: 2px;
-    line-height: 25px;
   }
   .our-impacts-module .module-box .icons {
     width: 84px;
@@ -8708,7 +8669,7 @@ header.edit-project-header > .container > h1 {
     background-position: 0 -92px;
   }
   .our-impacts-module .module-box .icon-home-ok {
-    background-position: -78px -92px;
+    background-position: -84px -92px;
   }
   .our-impacts-module .module-box .icon-tree {
     background-position: -177px -85px;
@@ -8719,6 +8680,7 @@ header.edit-project-header > .container > h1 {
   }
   .our-impacts-module .module-box .titles {
     line-height: 33px;
+    height: 33px;
   }
   .our-impacts-module .module-box .font20 {
     font-size: 9px;
@@ -10900,16 +10862,32 @@ label.checkmark.animate:after {
   margin-top: 70px;
   font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
 }
+.dashboard .stats > * {
+  padding-bottom: 2rem;
+}
 .dashboard .stats .info {
   text-transform: uppercase;
   margin-top: 7px;
   font-size: 11px;
 }
+.dashboard .stats .info > div:first-child {
+  height: 36px;
+}
+.dashboard .stats .info > div:last-child {
+  margin-top: 4px;
+}
+.dashboard .stats .info > div:not(.tall):first-child {
+  line-height: 56px;
+}
+.dashboard .stats .info > .tall:first-child {
+  padding-top: 4px;
+}
+.dashboard .stats .stats-img {
+  height: 80px;
+}
 .dashboard .stats .info .val {
-  display: block;
   font-size: 52px;
-  line-height: 38px;
-  margin-bottom: -2px;
+  line-height: 52px;
   font-weight: bold;
 }
 .dashboard .stats .info .units {

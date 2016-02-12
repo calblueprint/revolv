@@ -11,7 +11,9 @@ function increaseCount1(currentValue1,step1,value1){
   {
     return;
   }
-  setTimeout("increaseCount1("+currentValue1+","+step1+","+value1+")",100);
+  setTimeout(function () {
+    increaseCount1(currentValue1, step1, value1);
+  }, 100);
 }
 
 //count for 2nd Number of "OUR IMPACTS" section in Home page
@@ -25,7 +27,9 @@ function increaseCount2(currentValue2,step2,value2){
   {
     return;
   }
-  setTimeout("increaseCount2("+currentValue2+","+step2+","+value2+")",100);
+  setTimeout(function () {
+    increaseCount2(currentValue2, step2, value2);
+  }, 100);
 }
 
 //count for 3rd Number of "OUR IMPACTS" section in Home page
@@ -39,7 +43,9 @@ function increaseCount3(currentValue3,step3,value3){
   {
     return;
   }
-  setTimeout("increaseCount3("+currentValue3+","+step3+","+value3+")",100);
+  setTimeout(function () {
+    increaseCount3(currentValue3, step3, value3);
+  }, 100);
 }
 
 //count for 4th Number of "OUR IMPACTS" section in Home page
@@ -53,7 +59,9 @@ function increaseCount4(currentValue4,step4,value4){
   {
     return;
   }
-  setTimeout("increaseCount4("+currentValue4+","+step4+","+value4+")",100);
+  setTimeout(function () {
+    increaseCount4(currentValue4, step4, value4);
+  }, 100);
 }
 
 //format the Number text
@@ -82,7 +90,6 @@ function format(number){
     }
     number = mag + number.substring(digit);
   }
-  number = number.toString().replace(",",".").replace(",",".");
   return number;
 }
 
