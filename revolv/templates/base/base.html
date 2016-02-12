@@ -11,7 +11,7 @@
     <meta property="og:image" content="{% if project.cover_photo %}{{ project.cover_photo.url |fullmediaurl }}{% else %}{{ settings.revolv_cms.ShareThisSettings.image|fullmediaurl }}{% endif %}" />
     <meta property="og:description" content="{% if project.description %} {{ project.description }}
                                             {% else %} {{ settings.revolv_cms.ShareThisSettings.description }}{% endif %}" />
-
+    <link rel="icon" type="image/png" href="{% static 'images/revolv-logo.png' %}" />
     {% block meta %}
     {% endblock %}
 
