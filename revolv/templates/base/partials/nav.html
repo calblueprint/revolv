@@ -13,16 +13,16 @@
     {% block "extra-header" %}{% endblock %}
     <!-- end .logo -->
     <div class="rights pull-right">
-      <div class="txt pull-left">
+      <div class="pull-left">
 
         {% if request.user.is_authenticated %}
           <li class="user-controls has-dropdown">
-            <span class="block"><a href="{% url "dashboard" %}">My Portfolio</a></span>
-            <span class="block"><a href="{% url "logout" %}">Sign Out</a></li>
+            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate">DASHBOARD</a>
+            <a href="{% url 'logout' %}" class="btn-blue pull-left btn-donate">SIGN OUT</a>
           </li>
           {% else %}
-            <span class="block"><a class="component-link" data-component="signup" href="{% url "signin" %}#signup">Sign Up</a> here</span>
-            <span class="block"><a class="component-link" data-component="login" href="{% url "signin" %}#login">Sign In</a></span>
+          <a href="{% url 'signin' %}#signup" class="component-link btn-blue pull-left btn-donate" data-component="signup">SIGN UP</a>
+          <a href="{% url 'signin' %}#login" class="component-link btn-blue pull-left btn-donate" data-component="login">SIGN IN</a>
         {% endif %}
 
       </div>
