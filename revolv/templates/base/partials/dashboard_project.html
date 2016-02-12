@@ -57,7 +57,7 @@
                         <svg class="dashboard-internal-graphics-container"></svg>
                         <div class="text-container">
                             <p class="percentage-text">{{ project.percent_complete }}%</p>
-                            <p class="funded">FUNDED</p>
+                            <p class="funded"><span>OF</span> ${{ project.funding_goal|floatformat:0|intcomma }}</p>
                         </div>
                         <div class="percentage-container hide">{{ project.partial_completeness_as_js }}</div>
                     </div>
