@@ -10838,6 +10838,9 @@ label.checkmark.animate:after {
   margin-top: 70px;
   font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
 }
+.dashboard .stats > * {
+  padding-bottom: 2rem;
+}
 .dashboard .stats .info {
   text-transform: uppercase;
   margin-top: 7px;
