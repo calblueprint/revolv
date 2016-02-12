@@ -1106,6 +1106,32 @@ a:hover {
   height: 44px;
   margin-bottom: 25px;
 }
+.featured-on-module .logo-forbes {
+  background: url(../images/logo-forbes.png) no-repeat;
+  background-position: top;
+  background-size: 100% auto;
+  height: 38.3px;
+  width: 150px;
+}
+.featured-on-module .logo-whitehouse {
+  background: url(../images/logo-whitehouse.png) no-repeat;
+  background-position: top;
+  background-size: 100% auto;
+  height: 102.075px;
+  width: 150px;
+}
+.featured-on-module .logo-doe {
+  background: url(../images/logo-doe.png) no-repeat;
+  background-position: top;
+  background-size: 100% auto;
+  height: 113px;
+  width: 115px;
+}
+.featured-on-module .logo-forbes:hover,
+.featured-on-module .logo-whitehouse:hover,
+.featured-on-module .logo-doe:hover {
+  background-position: center 100%;
+}
 .featured-on-module .logo-fast-mpany:hover, .featured-on-module .logo-fast-mpany:focus, .featured-on-module .logo-ehe-new-hork-eimes:hover, .featured-on-module .logo-ehe-new-hork-eimes:focus, .featured-on-module .logo-shareable:hover, .featured-on-module .logo-shareable:focus, .featured-on-module .logo-philanthropy:hover, .featured-on-module .logo-philanthropy:focus, .featured-on-module .logo-clean-technica:hover, .featured-on-module .logo-clean-technica:focus {
   background-position: center bottom;
 }
@@ -8964,6 +8990,18 @@ header.edit-project-header > .container > h1 {
     background-size: 76.5px auto;
     width: 76.5px;
     height: 22px;
+  }
+  .featured-on-module .logo-forbes {
+    height: 20.043px;
+    width: 76.5px;
+  }
+  .featured-on-module .logo-whitehouse {
+    height: 52.2086702px;
+    width: 76.5px;
+  }
+  .featured-on-module .logo-doe {
+    width: 75.7031247px;
+    height: 75px;
   }
   .featured-on-module .carousel-control.left, .featured-on-module .carousel-control.right {
     border: 1px solid #fff;
