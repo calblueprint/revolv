@@ -8471,11 +8471,10 @@ header.edit-project-header > .container > h1 {
     min-width: 66px;
   }
   .header .rights {
-    padding: 33px 24px 0 0;
+    padding: 33px 12px 0 0;
   }
   .header .txt {
     font-size: 8px;
-    padding: 0 10px 3px 0;
     line-height: 13px;
   }
   /* .after-scroll-header */
@@ -8490,7 +8489,7 @@ header.edit-project-header > .container > h1 {
     margin: 18.5px 0 0 16px;
   }
   .header.after-scroll-header .rights {
-    padding: 33px 24px 0 0;
+    padding: 33px 12px 0 0;
   }
   /* .top-section */
   .top-section {
@@ -10714,6 +10713,15 @@ header.edit-project-header > .container > h1 {
     top: 0;
     right: 0;
     z-index: 999;
+  }
+}
+
+@media (max-width: 414px) {
+  .header.after-scroll-header .logo {
+    width: 75px;
+  }
+  .header.after-scroll-header .rights {
+    padding: 33px 8px 0 0;
   }
 }
 
