@@ -645,6 +645,13 @@ a:hover {
 .active-projects-module .info-main .dark-blue-bar {
   background: #003399;
 }
+.active-projects-module .info-main .actual-energy,
+.details-active-project-module .info-main .actual-energy {
+  max-width: 40%;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .active-projects-module .info-main .blue-bar span, .active-projects-module .info-main .dark-blue-bar span {
   font-family: 'Source Sans Pro';
   font-weight: 700;
@@ -2163,7 +2170,7 @@ header.edit-project-header > .container > h1 {
   color: #fff;
   height: 65px;
   line-height: 65px;
-  padding: 0 55px;
+  padding: 0 25px;
   overflow: hidden;
   margin-top: 15px;
 }
@@ -4839,7 +4846,7 @@ header.edit-project-header > .container > h1 {
     font-size: 22.48px;
     height: 53px;
     line-height: 53px;
-    padding: 0 47px;
+    padding: 0 18px;
     margin-top: 13px;
   }
   /* .details-active-project-module .video-main */
@@ -7190,7 +7197,7 @@ header.edit-project-header > .container > h1 {
     font-size: 19.79px;
     height: 47px;
     line-height: 47px;
-    padding: 0 40px;
+    padding: 0 18px;
     margin-top: 12px;
   }
   /* .details-active-project-module .video-main */
@@ -9666,7 +9673,7 @@ header.edit-project-header > .container > h1 {
     font-size: 9.66px;
     height: 23px;
     line-height: 23px;
-    padding: 0 20px;
+    padding: 0 10px;
     margin-top: 6px;
   }
   /* .details-active-project-module .video-main */
