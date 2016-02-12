@@ -578,10 +578,14 @@ a:hover {
   color: #039;
   display: block;
   position: absolute;
-  top: 50%;
+  top: 47.5%;
   left: 50%;
   width: 110px;
   margin: 2px 0 0 -55px;
+  text-shadow: 0 0 5px rgba(255,255,255,0.75);
+}
+.active-projects-module .img-main .funded-round .round-depict > span {
+  font-size: 75%;
 }
 .active-projects-module .img-main .funded-round .status-indicator input {
   margin-top: 27px !important;
