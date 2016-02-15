@@ -9,6 +9,7 @@ ENVIRONMENT = os.environ['ENVIRONMENT']
 SECRET_KEY = os.environ['SECRET_KEY']
 
 DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 
 DATABASES['default']['NAME'] = 'revolv_%s' % ENVIRONMENT.lower()
 DATABASES['default']['USER'] = 'revolv_%s' % ENVIRONMENT.lower()
