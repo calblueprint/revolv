@@ -287,7 +287,7 @@ $(document).ready(function(){
   });
 
   //show animation for progress bar
-  $(".status-indicator input").each(function(){$(this).attr("data-oldvalue", $(this).val()); console.log('Born with:', $(this).val(), $(this).data('oldvalue'));});
+  $(".status-indicator input").each(function(){$(this).attr("data-oldvalue", $(this).val());});
   $(".status-indicator input").each(function(){$(this).val(0).trigger('change').delay(2000);});
   $(".status-indicator input").knob({
     'draw' : function () {
