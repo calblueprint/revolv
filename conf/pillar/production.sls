@@ -2,7 +2,7 @@
 
 environment: production
 
-domain: re-volv.org
+domain: solarseedfund.org
 
 repo:
   url: git@github.com:caktus/revolv.git
