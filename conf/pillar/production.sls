@@ -2,8 +2,7 @@
 
 environment: production
 
-# FIXME: Change to match production domain name
-domain: revolv-prod.cakt.us
+domain: re-volv.org
 
 repo:
   url: git@github.com:caktus/revolv.git
