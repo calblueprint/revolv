@@ -6,18 +6,12 @@
 {% block head %}
     <script type="text/javascript">
         window.PARTIAL_COMPLETENESS = {{ project.partial_completeness_as_js }};
-        var is_reinvestment = {% if is_reinvestment %}true{% else %}false{% endif %};
-        var reinvestment_amount = {{ reinvestment_amount }};
-        var reinvestment_url = '{{ reinvestment_url }}';
     </script>
 {% endblock %}
 
 {% block title %}Project | {% endblock %}
 
 {% block body %}
-{% include "project/partials/payment_modal.html" %}
-{% include "project/partials/confirm_modal.html" %}
-{% include "project/partials/success_modal.html" with project=project %}
 {%  if is_draft_mode == True %}
     <div class="draft-mode-div">
         <span class="draft-mode-title">
@@ -218,7 +212,6 @@
             </div>
 
             {% if user.is_authenticated %}
-              <a class="btn-blue btn-i-want-to-donate" id="reinvest-button" href="#reinvest" data-reveal-id="reinvest-modal"><p>REINVEST ${{ reinvestment_amount }}</p></a>
               {% for level in project_donation_levels %}
               {% endfor %}
               <form action="{% url 'project:stripe_payment' pk=project.pk %}" method="POST">
@@ -283,28 +276,10 @@
 <!-- end .contents -->
 {% endblock %}
 
-{% block nav-donate-link %}
-HI!
-<a class="btn-blue btn-donate pull-left" id="donate-button" data-toggle="modal" data-target="#donate-modal">DONATE NOW</a>
-{% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript">
-    // initialize constants for use in payment_modal.js
-    window.PROJECT_ID = {{project.pk}};
-</script>
-
 <script type="text/javascript"
     src="//maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
-</script>
-
-{# jQuery.payment necessary for sexy card info validation #}
-<script type="text/javascript"
-        src="//cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.2/jquery.payment.min.js">
-</script>
-<script type="text/javascript" src="{% static "js/vendor/spin.min.js" %}"></script>
-<script type="text/javascript">
-{% include "project/partials/payment_modal.js" with project=project %}
 </script>
 
 {% if project.video_url %}
