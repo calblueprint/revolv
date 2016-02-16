@@ -287,7 +287,7 @@ $(document).ready(function(){
   });
 
   //show animation for progress bar
-  $(".status-indicator input").each(function(){$(this).attr("data-oldvalue", $(this).val());});
+  $(".status-indicator input").each(function(){$(this).attr("data-oldvalue", $(this).val()); console.log('Born with:', $(this).val(), $(this).data('oldvalue'));});
   $(".status-indicator input").each(function(){$(this).val(0).trigger('change').delay(2000);});
   $(".status-indicator input").knob({
     'draw' : function () {
@@ -315,12 +315,16 @@ $(document).ready(function(){
   //show pecentage value animate  function animateKnob ($elem) {
     var endval = parseInt($elem.attr("data-oldvalue"));
     var m1 = 0;
-    var tmr1 = self.setInterval(function(){delayProgress()},10);
-    function delayProgress(){
-      m1 += 1;
-      $elem.val(m1).trigger('change');
-      if(m1 === endval || m1 === 100) {
-        window.clearInterval(tmr1);
+    var tmr1;
+
+    if (m1 < endval) {
+      tmr1 = self.setInterval(delayProgress,10);
+      function delayProgress(){
+        m1 += 1;
+        $elem.val(m1).trigger('change');
+        if(m1 === endval || m1 === 100) {
+          clearInterval(tmr1);
+        }
       }
     }
   }
