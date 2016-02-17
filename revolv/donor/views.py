@@ -5,6 +5,7 @@ from django.db.models import Sum
 
 from revolv.base.users import UserDataMixin
 from revolv.base.utils import ProjectGroup
+from revolv.payments.models import Payment
 from revolv.project.models import Project, Category
 from revolv.project.utils import aggregate_stats
 
@@ -25,13 +26,12 @@ def humanize_integers(d):
     for k in d:
         d[k] = humanize_int(int(d[k]))
 
-
-def total_donations():
-    total = 0
-    for project in Project.objects.all():
-        total += project.amount_donated_organically
-    return total
-
+def total_donations(profile):
+    payments = Payment.objects.filter(entrant=profile, user=profile)
+    if payments:
+        return payments.aggregate(Sum('amount'))['amount__sum']
+    else:
+        return 0
 
 class DonorDashboardView(UserDataMixin, TemplateView):
     """
@@ -59,10 +59,11 @@ class DonorDashboardView(UserDataMixin, TemplateView):
 
         context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
         statistics_dictionary = aggregate_stats(self.user_profile)
-        statistics_dictionary['total_donated'] = total_donations()
+        statistics_dictionary['total_donated'] = total_donations(self.user_profile)
         statistics_dictionary['people_served'] = Project.objects.aggregate(n=Sum('people_affected'))['n']
         humanize_integers(statistics_dictionary)
         context['statistics'] = statistics_dictionary
+
 
         context['category_setter_url'] = reverse('dashboard_category_setter')
         context['categories'] = Category.objects.all().order_by('title')
