@@ -6013,7 +6013,7 @@ header.edit-project-header > .container > h1 {
     margin: 51px auto;
   }
   .active-projects-module .row {
-    margin: 0 64px;
+    margin: 0 auto;
   }
   /* .active-projects-module .module-box */
   .active-projects-module .module-box {
@@ -6033,6 +6033,9 @@ header.edit-project-header > .container > h1 {
     font-size: 43.01px;
     line-height: 62px;
     padding: 0 130px 46px 130px;
+  }
+  .active-projects-module .img-main .img-link {
+    height: 750px;
   }
   .active-projects-module .img-main .funded-round {
     width: 240px;
@@ -8623,7 +8626,7 @@ header.edit-project-header > .container > h1 {
     margin: 25px auto;
   }
   .active-projects-module .row {
-    margin: 0 32px;
+    margin: 0 auto;
   }
   /* .active-projects-module .module-box */
   .active-projects-module .module-box {
@@ -8632,6 +8635,9 @@ header.edit-project-header > .container > h1 {
   /* .active-projects-module .img-main */
   .active-projects-module .img-main .txt-table {
     height: 312px;
+  }
+  .active-projects-module .img-main .img-link {
+    height: 300px;
   }
   .active-projects-module .img-main .txt {
     font-size: 21px;
