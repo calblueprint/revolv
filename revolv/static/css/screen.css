@@ -4914,9 +4914,7 @@ header.edit-project-header > .container > h1 {
   }
   /* .project-updates-module .main-area */
   .project-updates-module .main-area {
-    width: auto;
-    float: none;
-    margin-right: 304px;
+    width: 580px;
   }
   .project-updates-module .main-area .title-project-updates {
     width: 274px;
@@ -4968,9 +4966,6 @@ header.edit-project-header > .container > h1 {
   /* .project-updates-module .right-aside */
   .project-updates-module .right-aside {
     width: 252px;
-    position: absolute;
-    top: 38px;
-    right: 39px;
   }
   .project-updates-module .right-aside .module-box {
     min-height: 120px;
