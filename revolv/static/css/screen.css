@@ -2463,6 +2463,11 @@ header.edit-project-header > .container > h1 {
   background: #14b1e7;
   text-transform: uppercase;
   width: 100%;
+  color: white;
+  border: none;
+}
+.project-updates-module .right-aside .module-box .stripe-button-el:hover {
+  background: #2c3691;
 }
 .project-updates-module .right-aside .module-box .stripe-button-el > span {
   background: transparent;
