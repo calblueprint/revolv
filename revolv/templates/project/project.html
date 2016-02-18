@@ -307,7 +307,7 @@ $(function ($) {
 
     if (typeof amount !== 'undefined') {
       handler.open({
-        description: 'Donate $' + (amount / 100).toFixed(2)
+        description: 'Donate $' + parseFloat((amount / 100).toFixed(2)).toLocaleString()
         , amount: amount
         , metadata: metadata
         , token: function (token) {
