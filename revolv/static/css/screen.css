@@ -352,7 +352,8 @@ a:hover {
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  max-width: 65%;
+  max-width: 100%;
+  width: 100%;
 }
 .top-section.nav-margins .section-video-overlay .titles {
   font-family: 'Source Sans Pro';
@@ -365,7 +366,6 @@ a:hover {
 .top-section.nav-margins .section-video-overlay p {
   font-size: 20px;
   line-height: 36px;
-  max-width: 480px;
   margin: 0 auto;
   padding: 5px 0 32px 0;
   text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -10743,7 +10743,7 @@ header.edit-project-header > .container > h1 {
   .top-section.nav-margins .section-video-overlay p {
     font-size: 10px;
     line-height: 18px;
-    width: 240px;
+    width: 100%;
     padding: 11px 0 22px 0;
   }
 }
@@ -10969,7 +10969,7 @@ label.checkmark.animate:after {
   .top-section.nav-margins .section-video-overlay p {
     font-size: 10px;
     line-height: 18px;
-    width: 240px;
+    width: 100%;
     padding: 11px 0 22px 0;
   }
 }
