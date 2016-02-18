@@ -175,6 +175,9 @@
               {% csrf_token %}
               <input type="hidden" name="amount_cents" value="{{ donation_level.amount }}">
               <input name="metadata" value="1.00" type="hidden">
+              <button type="submit" class="stripe-button-el" style="visibility: visible;">
+                <span style="display: block; min-height: 30px;">Pay with Card</span>
+              </button>
             </form>
           </div>
           {% endfor %}
@@ -211,14 +214,6 @@
                 {% csrf_token %}
                 <input type="hidden" name="amount_cents" value="1000">
                 <input name="metadata" value="1.00" type="hidden">
-                <!-- <script
-                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                  data-key="{{ stripe_publishable_key }}"
-                  data-description="Donate"
-                  data-image="{% static "images/revolv-logo.png" %}"
-                  data-locale="auto"
-                  async>
-                </script> -->
                 <button type="submit" class="stripe-button-el" style="visibility: visible;">
                   <span style="display: block; min-height: 30px;">Pay with Card</span>
                 </button>
@@ -281,14 +276,6 @@
 
 <script src="https://checkout.stripe.com/checkout.js"></script>
 
-<!-- <script
-  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-  data-key="{{ stripe_publishable_key }}"
-  data-description="Donate ${{ donation_level.amount }}"
-  data-image="{% static "images/revolv-logo.png" %}"
-  data-locale="auto">
-</script> -->
-
 <script>
 $(function ($) {
   var handler = StripeCheckout.configure({
@@ -296,14 +283,17 @@ $(function ($) {
     , image: '{% static "images/revolv-logo.png" %}'
     , locale: 'auto'
     , name: 'RE-volv'
-    , token: function (token) {
-      console.log(token);
-    }
   });
 
-  $('.stripe-button-el').closest('form').on('submit', function (e) {
+  $(window).on('popstate', function () {
+    handler.close();
+  });
+
+  $('.stripe-button-el').on('click', function (e) {
     e.preventDefault();
-    var serialized = $(this).serializeArray();
+    var $form = $(this).closest('form');
+    var serialized = $form.serializeArray();
+    var endpoint = $form.attr('action');
     var amount, metadata;
 
     $.each(serialized, function () {
@@ -320,6 +310,24 @@ $(function ($) {
         description: 'Donate $' + (amount / 100).toFixed(2)
         , amount: amount
         , metadata: metadata
+        , token: function (token) {
+          var id = token.id;
+          var email = token.email;
+
+          var $id = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', 'stripeToken')
+            .val(id);
+          var $email = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', 'stripeEmail')
+            .val(email);
+
+          $id.appendTo($form);
+          $email.appendTo($form);
+
+          $form.trigger('submit');
+        }
       });
     }
   });
