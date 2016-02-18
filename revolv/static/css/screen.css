@@ -531,10 +531,21 @@ a:hover {
 .active-projects-module .img-main .img-link {
   background-color: #000;
   display: block;
+  overflow: hidden;
+  position: relative;
+  height: 300px;
 }
-.active-projects-module .img-main .img-link img {
-  opacity: 0.6;
+.active-projects-module .img-main .img-link .img {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
   width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 .active-projects-module .img-main .img-link:hover img {
   opacity: 1;
