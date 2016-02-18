@@ -175,13 +175,9 @@
               {% csrf_token %}
               <input type="hidden" name="amount_cents" value="{{ donation_level.amount }}">
               <input name="metadata" value="1.00" type="hidden">
-              <script
-                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="{{ stripe_publishable_key }}"
-                data-description="Donate ${{ donation_level.amount }}"
-                data-image="{% static "images/revolv-logo.png" %}"
-                data-locale="auto">
-              </script>
+              <button type="submit" class="stripe-button-el" style="visibility: visible;">
+                <span style="display: block; min-height: 30px;">Pay with Card</span>
+              </button>
             </form>
           </div>
           {% endfor %}
@@ -218,13 +214,9 @@
                 {% csrf_token %}
                 <input type="hidden" name="amount_cents" value="1000">
                 <input name="metadata" value="1.00" type="hidden">
-                <script
-                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                  data-key="{{ stripe_publishable_key }}"
-                  data-description="Donate"
-                  data-image="{% static "images/revolv-logo.png" %}"
-                  data-locale="auto">
-                </script>
+                <button type="submit" class="stripe-button-el" style="visibility: visible;">
+                  <span style="display: block; min-height: 30px;">Pay with Card</span>
+                </button>
               </form>
             {% else %}
               <a class="btn-blue btn-i-want-to-donate" id="donate-button" href="/signin/?next=/project/{{project.pk}}/&reason=donate#login"><p>DONATE</p></a>
@@ -280,6 +272,66 @@
 {% block javascripts %}
 <script type="text/javascript"
     src="//maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_API_KEY}}">
+</script>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+$(function ($) {
+  var handler = StripeCheckout.configure({
+    key: '{{ stripe_publishable_key }}'
+    , image: '{% static "images/revolv-logo.png" %}'
+    , locale: 'auto'
+    , name: 'RE-volv'
+  });
+
+  $(window).on('popstate', function () {
+    handler.close();
+  });
+
+  $('.stripe-button-el').on('click', function (e) {
+    e.preventDefault();
+    var $form = $(this).closest('form');
+    var serialized = $form.serializeArray();
+    var endpoint = $form.attr('action');
+    var amount, metadata;
+
+    $.each(serialized, function () {
+      if (this.name === 'amount_cents') {
+        amount = this.value;
+      }
+      if (this.name === 'metadata') {
+        metadata = this.value;
+      }
+    });
+
+    if (typeof amount !== 'undefined') {
+      handler.open({
+        description: 'Donate $' + parseFloat((amount / 100).toFixed(2)).toLocaleString()
+        , amount: amount
+        , metadata: metadata
+        , token: function (token) {
+          var id = token.id;
+          var email = token.email;
+
+          var $id = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', 'stripeToken')
+            .val(id);
+          var $email = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', 'stripeEmail')
+            .val(email);
+
+          $id.appendTo($form);
+          $email.appendTo($form);
+
+          $form.trigger('submit');
+        }
+      });
+    }
+  });
+});
 </script>
 
 {% if project.video_url %}
