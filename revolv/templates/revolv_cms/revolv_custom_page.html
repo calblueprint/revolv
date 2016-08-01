@@ -3,14 +3,16 @@
 {% block title %}{{ self.title }} | {% endblock title %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static "cms-page.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dist/css/pages/cms-page/index.css' %}">
 {% endblock head %}
 
 {% block body %}
-<div class="cms-content-row row">
-    <div class="small-12 columns">
-        <h1>{{ self.title }}</h1>
-        {{ self.body|richtext }}
+    <div class="cms-content-row row after-header">
+        <div class="small-12 columns">
+            <h1>{{ self.title }}</h1>
+            {% for block in self.body %}
+                {{ block }}
+            {% endfor %}
+        </div>
     </div>
-</div>
 {% endblock body %}

@@ -95,7 +95,7 @@ class BaseStaffDashboardView(UserDataMixin, TemplateView):
 
         context['donated_projects'] = Project.objects.donated_projects(self.user_profile)
         statistics_dictionary = aggregate_stats(self.user_profile)
-        statistics_dictionary['total_donated'] = total_donations()
+        statistics_dictionary['total_donated'] = total_donations(self.user_profile)
         statistics_dictionary['people_served'] = Project.objects.aggregate(n=Sum('people_affected'))['n']
         humanize_integers(statistics_dictionary)
         context['statistics'] = statistics_dictionary
@@ -168,7 +168,7 @@ class SignInView(TemplateView):
         if self.request.GET.get("next"):
             context["login_redirect_url"] = self.request.GET.get("next")
         else:
-            context["login_redirect_url"] = reverse('home')
+            context["login_redirect_url"] = reverse('dashboard')
         context["referring_endpoint"] = ""
         context["reason"] = self.request.GET.get("reason")
         return context
@@ -259,7 +259,7 @@ class SignupView(RedirectToSigninOrHomeMixin, FormView):
         # log in the newly created user model. if there is a problem, error
         auth_login(self.request, u)
         messages.success(self.request, 'Signed up successfully!')
-        return redirect("home")
+        return redirect("dashboard")
 
     def get_context_data(self, *args, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
@@ -284,7 +284,7 @@ class LogoutView(UserDataMixin, View):
 class DashboardRedirect(UserDataMixin, View):
     """
     Redirects user to appropriate dashboard. (e.g. Administrators automagically
-    go to the /dashboard/admin endpoint)
+    go to the /my-portfolio/admin endpoint)
 
     Redirects to home page if not authenticated.
     """
@@ -314,7 +314,7 @@ def password_change(request):
     return auth_views.password_change(
         request,
         template_name="base/auth/change_password.html",
-        post_change_redirect="/dashboard/donor/?password_change_success",
+        post_change_redirect="/my-portfolio/donor/?password_change_success",
     )
 
 

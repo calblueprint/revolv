@@ -1,27 +1,46 @@
 {
   "name": "revolv",
-  "version": "1.0.0",
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-sass": "~0.8.0"
+  "version": "0.0.0",
+  "description": "The Revolv Project",
+  "main": "",
+  "engines": {
+    "node": ">=4.2 <4.3"
   },
-  "dependencies": {
-    "bower": "^1.4.1"
+  "directories": {
+    "doc": "docs"
   },
-  "description": "About Blueprint ======= We strive to make beautiful engineering accessible and useful for those who create communities and promote public welfare. Our vision is a world where the good, passionate, and visionary have the biggest impact on our communities and society.",
-  "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "build": "./node_modules/.bin/gulp deploy",
+    "dev": "./node_modules/.bin/gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/calblueprint/revolv.git"
+    "url": "git@github.com:[ORGANIZATION]/revolv.git"
   },
   "author": "",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/calblueprint/revolv/issues"
+    "url": "https://github.com/[ORGANIZATION]/revolv/issues"
+  },
+  "homepage": "https://github.com/[ORGANIZATION]/revolv#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "file-exists": "^1.0.0",
+    "font-awesome": "^4.5.0",
+    "foundation": "^4.2.1",
+    "foundation-sites": "^5.5.3",
+    "gulp": "^3.8.9",
+    "gulp-connect": "^2.2.0",
+    "gulp-cssmin": "^0.1.6",
+    "gulp-if": "^1.2.4",
+    "gulp-jasmine2-phantomjs": "^0.1.1",
+    "gulp-livereload": "^2.1.1",
+    "gulp-notify": "^1.4.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "jquery": "^2.1",
+    "yargs": "^3.31.0"
   }
 }

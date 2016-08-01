@@ -1,0 +1,100 @@
+@import "revolv/static/scss/include/revolv-settings.scss";
+// a little hacky but we need access to the $large-range variable
+@import "node_modules/foundation-sites/scss/foundation/components/_global.scss";
+
+/**
+ * This file overrides specific foundation settings in order to make foundation
+ * work nicely with revolv's design. Note that only some, but not all, of
+ * foundation's settings are overriden here: for the full list, see _settings.scss
+ * in revolv/static/node_modules/foundation-sites/scss/foundation.
+ */
+
+// 34. Top Bar
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Background color for the top bar
+$topbar-bg-color: $revolv-header-color;
+$topbar-bg: $revolv-header-color;
+
+// Height and margin
+$topbar-height: $revolv-header-height;
+$topbar-margin-bottom: 10px;
+
+// Style the top bar dropdown elements
+$topbar-dropdown-bg: $revolv-header-color;
+$topbar-dropdown-link-color: white;
+$topbar-dropdown-link-bg: $revolv-header-color;
+// $topbar-dropdown-link-weight: $font-weight-normal;
+// $topbar-dropdown-toggle-size: 5px;
+// $topbar-dropdown-toggle-color: $white;
+// $topbar-dropdown-toggle-alpha: 0.4;
+
+// Set the link colors and styles for top-level nav
+$topbar-link-color: white;
+// $topbar-link-color-hover: $white;
+// $topbar-link-color-active: $white;
+// $topbar-link-color-active-hover: $white;
+// $topbar-link-weight: $font-weight-normal;
+$topbar-link-font-size: 0.9rem;
+// $topbar-link-hover-lightness: -10%; // Darken by 10%
+$topbar-link-bg: transparent;
+// $topbar-link-bg-color-hover: $revolv-header-color;
+$topbar-link-bg-hover: darken($revolv-header-color, 10%);
+// $topbar-link-bg-active: $primary-color;
+// $topbar-link-bg-active-hover: scale-color($primary-color, $lightness: -14%);
+// $topbar-link-font-family: $body-font-family;
+// $topbar-link-text-transform: none;
+// $topbar-link-padding: $topbar-height / 3;
+// $topbar-back-link-size: $h5-font-size;
+// $topbar-link-dropdown-padding: 20px;
+
+// $topbar-button-font-size: 0.75rem;
+// $topbar-button-top: 7px;
+
+$topbar-dropdown-label-color: $revolv-header-color;
+// $topbar-dropdown-label-text-transform: uppercase;
+// $topbar-dropdown-label-font-weight: $font-weight-bold;
+// $topbar-dropdown-label-font-size: rem-calc(10);
+$topbar-dropdown-label-bg: $revolv-header-color;
+
+// Top menu icon styles
+// $topbar-menu-link-transform: uppercase;
+// $topbar-menu-link-font-size: rem-calc(13);
+// $topbar-menu-link-weight: $font-weight-bold;
+// $topbar-menu-link-color: $white;
+// $topbar-menu-icon-color: $white;
+// $topbar-menu-link-color-toggled: $jumbo;
+// $topbar-menu-icon-color-toggled: $jumbo;
+
+// Transitions and breakpoint styles
+// $topbar-transition-speed: 300ms;
+// Using rem-calc for the below breakpoint causes issues with top bar
+// $topbar-breakpoint: #{lower-bound($medium-range)}; // Change to 9999px for always mobile layout
+$topbar-media-query: $large-up;
+
+// Divider Styles
+// $topbar-divider-border-bottom: solid 1px  scale-color($topbar-bg-color, $lightness: 13%);
+// $topbar-divider-border-top: solid 1px scale-color($topbar-bg-color, $lightness: -50%);
+
+// 31. Tabs
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// $include-html-tabs-classes: $include-html-classes;
+
+// $tabs-navigation-padding: rem-calc(16);
+$tabs-navigation-bg-color: $revolv-light-blue-bg;
+$tabs-navigation-active-bg-color: white;
+// $tabs-navigation-hover-bg-color: scale-color($tabs-navigation-bg-color, $lightness: -6%);
+// $tabs-navigation-font-color: $jet;
+// $tabs-navigation-active-font-color: $tabs-navigation-font-color;
+// $tabs-navigation-font-size: rem-calc(16);
+// $tabs-navigation-font-family: $body-font-family;
+
+// $tabs-content-margin-bottom: rem-calc(24);
+// $tabs-content-padding: $column-gutter/2;
+
+// $tabs-vertical-navigation-margin-bottom: 1.25rem;
+
+// Modals
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+$close-reveal-modal-class: "close-revolv-reveal-modal";

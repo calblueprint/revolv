@@ -12,6 +12,7 @@ from revolv.lib.utils import ImportProxy
 from revolv.payments.models import Payment, PaymentType
 from revolv.project.stats import KilowattStatsAggregator
 
+
 class ProjectManager(models.Manager):
     """
     Manager for running custom operations on the Projects.
@@ -212,8 +213,8 @@ class Project(models.Model):
     video_url = models.URLField(
         'Video URL',
         max_length=255,
-        blank=True,
-        help_text='Optional: Link to a Youtube video about the project or community.'
+        blank=False,
+        help_text='Link to a Youtube video about the project or community.',
     )
     # power output of array in kilowatts
     impact_power = models.FloatField(
@@ -269,7 +270,7 @@ class Project(models.Model):
         options={'quality': 80},
         default=None,
         help_text='Choose a beautiful high resolution image to represent this project.',
-        blank=True
+        blank=False,
     )
     preview_photo = ImageSpecField(
         source='cover_photo',
@@ -679,6 +680,10 @@ class Project(models.Model):
         self.is_paid_off = True
         self.save()
 
+    def __unicode__(self):
+        return self.title
+
+
 class ProjectUpdate(models.Model):
     factories = ImportProxy("revolv.project.factories", "ProjectUpdateFactories")
     update_text = RichTextField(
@@ -696,6 +701,9 @@ class ProjectUpdate(models.Model):
         Project,
         related_name="updates"
     )
+
+    def __unicode__(self):
+        return '%s at %s: %s' % (self.project, self.date, self.update_text[:50])
 
 
 class Category(models.Model):
@@ -719,6 +727,9 @@ class Category(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        verbose_name_plural = 'categories'
+
 
 class DonationLevel(models.Model):
     """
@@ -727,3 +738,6 @@ class DonationLevel(models.Model):
     project = models.ForeignKey(Project)
     description = models.TextField()
     amount = models.IntegerField()
+
+    def __unicode__(self):
+        return '%s: %s = %s' % (self.project, self.amount, self.description)

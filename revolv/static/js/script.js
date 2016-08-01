@@ -11,7 +11,9 @@ function increaseCount1(currentValue1,step1,value1){
   {
     return;
   }
-  setTimeout("increaseCount1("+currentValue1+","+step1+","+value1+")",100);
+  setTimeout(function () {
+    increaseCount1(currentValue1, step1, value1);
+  }, 100);
 }
 
 //count for 2nd Number of "OUR IMPACTS" section in Home page
@@ -25,7 +27,9 @@ function increaseCount2(currentValue2,step2,value2){
   {
     return;
   }
-  setTimeout("increaseCount2("+currentValue2+","+step2+","+value2+")",100);
+  setTimeout(function () {
+    increaseCount2(currentValue2, step2, value2);
+  }, 100);
 }
 
 //count for 3rd Number of "OUR IMPACTS" section in Home page
@@ -39,7 +43,9 @@ function increaseCount3(currentValue3,step3,value3){
   {
     return;
   }
-  setTimeout("increaseCount3("+currentValue3+","+step3+","+value3+")",100);
+  setTimeout(function () {
+    increaseCount3(currentValue3, step3, value3);
+  }, 100);
 }
 
 //count for 4th Number of "OUR IMPACTS" section in Home page
@@ -53,7 +59,9 @@ function increaseCount4(currentValue4,step4,value4){
   {
     return;
   }
-  setTimeout("increaseCount4("+currentValue4+","+step4+","+value4+")",100);
+  setTimeout(function () {
+    increaseCount4(currentValue4, step4, value4);
+  }, 100);
 }
 
 //format the Number text
@@ -82,38 +90,37 @@ function format(number){
     }
     number = mag + number.substring(digit);
   }
-  number = number.toString().replace(",",".").replace(",",".");
   return number;
 }
 
 $(document).ready(function(){
-	
+
   //style the form elements
   if($(".form-container").length>0){
     $('.form-container').jqTransform({imgPath:'/static/images/'});
   }
-  
+
   //swipe on carousel
   $(".carousel-inner").hammer().on('swipeleft', function(){
     $(this).parent().find(".right.carousel-control").click();
   });
-  
+
   $(".carousel-inner").hammer().on('swiperight', function(){
     $(this).parent().find(".left.carousel-control").click();
   });
-  
+
   $(".active-projects-module").css("opacity", 0);
   $(".our-impacts-module").css("opacity", 0);
   $(".how-it-works-module").css("opacity", 0);
   $(".testimonial-module").css("opacity", 0);
   $(".featured-on-module").css("opacity", 0);
   $(".newsletter-module .container").css("opacity", 0);
- 
+
   //show reveal animation effect when Scrolling down the Home page
   $(".active-projects-module").waypoint(function() {
       $(".active-projects-module").addClass("fadeInUp");
   }, { offset: "70%"});
-  
+
   if($(".our-impacts-module").length>0)
   {
     var Counting = false;
@@ -121,33 +128,33 @@ $(document).ready(function(){
     var value2 = parseInt($(".our-impacts-module .module-box .titles").eq(1).html().replace('.',''));
     var value3 = parseInt($(".our-impacts-module .module-box .titles").eq(2).html().replace('<span class="font20">lbs</span>','').replace('.','').replace('.',''));
     var value4 = parseInt($(".our-impacts-module .module-box .titles").eq(3).html().replace('.',''));
-    
+
     var step1 = parseInt(value1/(5*10));
     step1 = (step1<1)?1:step1;
-    
+
     var step2 = parseInt(value2/(5*10));
     step2 = (step2<1)?1:step2;
-    
+
     var step3 = parseInt(value3/(5*10));
     step3 = (step3<1)?1:step3;
-    
+
     var step4 = parseInt(value4/(5*10));
     step4 = (step4<1)?1:step4;
-    
+
     var currentValue1 = 0;
     var currentValue2 = 0;
     var currentValue3 = 0;
     var currentValue4 = 0;
-    
+
     $(".our-impacts-module .module-box .titles").eq(0).html(0);
     $(".our-impacts-module .module-box .titles").eq(1).html(0);
     $(".our-impacts-module .module-box .titles").eq(2).html(0+'<span class="font20">lbs</span>');
     $(".our-impacts-module .module-box .titles").eq(3).html(0);
   }
-  
+
   $(".our-impacts-module").waypoint(function() {
     $(".our-impacts-module").addClass("fadeInUp");
-    
+
     if(!Counting)
     {
       Counting = true;
@@ -167,28 +174,23 @@ $(document).ready(function(){
       $(".featured-on-module").addClass("fadeInUp");
   }, { offset: "70%"});
   $(".newsletter-module").waypoint(function() {
-      $(".newsletter-module .container").addClass("fadeInUp");    
+      $(".newsletter-module .container").addClass("fadeInUp");
   }, { offset: "70%"});
-  
+
   //set parallax images for NewLetter section in Home page
-  
+
   if(($(window).width()+17)>= 1200 && js_urls['newsletter-bg.jpg'])
   {
-    $(".newsletter-module .img-area .desktop-img").parallax({imageSrc: js_urls['newsletter-bg.jpg']});
-    $(".newsletter-module .img-area img").addClass("hide");
+    $('#parallax-anchor').parallax({imageSrc: js_urls['newsletter-bg.jpg']});
   }
-  else if(($(window).width()+17)<= 1199 && ($(window).width()+17)> 1024 && js_urls['small-newsletter-bg.jpg'])
+  else if(js_urls['small-newsletter-bg.jpg'])
   {
-    $(".newsletter-module .img-area .small-img").parallax({imageSrc: js_urls['small-newsletter-bg.jpg']});
-    $(".newsletter-module .img-area img").addClass("hide");
+    $('#parallax-anchor').parallax({imageSrc: js_urls['small-newsletter-bg.jpg']});
   }
-  else
-  {
-    $(".newsletter-module .img-area img").removeClass("hide");
-  }
+
   //click Down arrow in Home page
   $(".down-arrow-button").click(function(){
-    var scroll_offset = $(".active-projects-module").offset();  
+    var scroll_offset = $(".active-projects-module").offset();
     $("body,html").animate({
       scrollTop:scroll_offset.top
     },1000);
@@ -200,38 +202,39 @@ $(document).ready(function(){
         $("header").slideDown();
       }
     },1500)
-    
+
   });
-  
+
   //click option in Dropdown list
   $(".dropdown-menu li a").click(function(){
     $(this).parents(".dropdown").find("li a").removeClass("active");
     $(this).addClass("active");
-    
+
     $(this).parents(".dropdown").find(".selected-option").html($(this).html());
     $(this).parents(".dropdown").find(".selected-option").attr("title",$(this).html());
   })
-  
+
   //hover on User photos in Testimonial section in Home page
   $(".testimonial-module .head-row ul li .head-img").hover(function(){
     var index = $(this).parents(".testimonial-module .head-row ul").find(".head-img").index($(this));
-    
+
     $(this).parents(".testimonial-module .head-row ul").find(".head-img.active").removeClass("active");
     $(this).addClass("active");
-    
+
     $(this).parents(".testimonial-module").find(".info-area").addClass("hide");
     $(this).parents(".testimonial-module").find(".info-area").eq(index).removeClass("hide");
   })
-  
+
   //loading Home page
   if($(".home-page-content").length>0)
-  {    
+  {
     $("#video-player").mediaelementplayer({
-        flashScriptAccess: 'always',    
+        flashScriptAccess: 'always',
+        loop: true
     });
   }
-  
-  
+
+
   //scroll Home page
   //scroll to page to show/hide top bar
   var loading_blog_content = false;
@@ -239,7 +242,7 @@ $(document).ready(function(){
     if($(".home-page-content").length>0)
     {
       //scroll to How it works section
-      if($(window).scrollTop()+1>=($(".active-projects-module").offset().top) ){  
+      if($(window).scrollTop()+1>=($(".active-projects-module").offset().top) ){
         if(!$("header").hasClass("after-scroll-header"))
         {
           $("header").removeClass("top-section-header").addClass("after-scroll-header");
@@ -259,11 +262,11 @@ $(document).ready(function(){
         }
       }
     }
-    
+
     //scroll down to show more contents in Blog page
     if($(".blog-page-content").length>0)
     {
-      if($(window).scrollTop()+1>=($(".grid-area").offset().top-$(window).height()+$(".grid-area").height()) ){  
+      if($(window).scrollTop()+1>=($(".grid-area").offset().top-$(window).height()+$(".grid-area").height()) ){
         if(!loading_blog_content)
         {
           loading_blog_content = true;
@@ -282,14 +285,17 @@ $(document).ready(function(){
       }
     }
   });
-  
+
   //show animation for progress bar
   $(".status-indicator input").each(function(){$(this).attr("data-oldvalue", $(this).val());});
   $(".status-indicator input").each(function(){$(this).val(0).trigger('change').delay(2000);});
   $(".status-indicator input").knob({
     'draw' : function () {
+      if (typeof this._max === 'undefined') {
+        this._max = parseInt($(this.i).data('oldvalue'));
+      }
        $(this.i).val(this.cv + '%');
-       if(this.cv === 100) {
+       if(this.cv === 85 && (this._max === 100 || this._max === 0)) {
           // Three digits, not one or two, so we make it a bit smaller
          $(this.i).css({"font-family" : "Source Sans Pro", "font-size" : "22px", "color" : "#003399", "font-weight" : "700"});
          $(this.i).addClass('smaller');
@@ -305,30 +311,36 @@ $(document).ready(function(){
   $(".status-indicator input").each(function(){
     animateKnob($(this));
   });
-    //show pecentage value animate  function animateKnob (elem) {
-    var endval = parseInt(elem.attr("data-oldvalue"));
+
+  //show pecentage value animate  function animateKnob ($elem) {
+    var endval = parseInt($elem.attr("data-oldvalue"));
     var m1 = 0;
-    var tmr1 = self.setInterval(function(){delayProgress()},10);
+    var tmr1;
+    
     function delayProgress(){
       m1 += 1;
-      elem.val(m1).trigger('change');
-      if(m1 === endval) {            
-        window.clearInterval(tmr1);
+      $elem.val(m1).trigger('change');
+      if(m1 === endval || m1 === 100) {
+        clearInterval(tmr1);
       }
-    } 
+    }
+
+    if (m1 < endval) {
+      tmr1 = self.setInterval(delayProgress,10);
+    }
   }
-  
+
   //click tabs
   $(".mains-tabs .tab-index .row a").click(function(){
     var index = $(this).parents(".mains-tabs .tab-index").find(".row a").index($(this));
 
     $(this).parents(".mains-tabs .tab-index").find(".row a").removeClass("active");
     $(this).addClass("active");
-    
+
     $(this).parents(".mains-tabs").find(".tab-content .tab-content-section").removeClass("active");
     $(this).parents(".mains-tabs").find(".tab-content .tab-content-section").eq(index).addClass("active");
   })
-  
+
   //click on Login button in Sign In page
   $(".btn-login").click(function(){
     var pass = true;
@@ -344,13 +356,13 @@ $(document).ready(function(){
         $("input.required-input").eq(i).parent().removeClass("input-error-style");
       }
     }
-    
+
     if(pass)
     {
       location.href = "home.html";
     }
   })
-  
+
   //click on Sign Up button in Sign Up page
   $(".btn-signup").click(function(){
     var pass = true;
@@ -390,18 +402,18 @@ $(document).ready(function(){
         $("input.required-input").eq(i).parent().removeClass("input-error-style");
       }
     }
-    
+
     if(!$(".required-checkbox").prev().hasClass("jqTransformChecked"))
     {
       pass = false;
     }
-    
+
     if(pass)
     {
       location.href = "home.html";
     }
   })
-  
+
   //check Email format
   function checkMail(mail){
     var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -412,33 +424,33 @@ $(document).ready(function(){
       return false;
     }
   }
-  
+
   //focus on input box in Sign In/Sign Up pages
   $("input.required-input").focus(function(){
     $(this).parent().removeClass("input-error-style");
   })
-  
+
   //click Enter key
-  $(document).keydown(function(event){ 
-    if(event.keyCode===13){ 
+  $(document).keydown(function(event){
+    if(event.keyCode===13){
       if($(".btn-login").length>0)
       {
         $(".btn-login").click();
       }
-      
+
       if($(".btn-signup").length>0)
       {
         $(".btn-signup").click();
       }
-    } 
-  }); 
-  
+    }
+  });
+
   //load google map
   if($("#map-canvas").length>0)
   {
     loadMap();
   }
-  
+
   //load the google map
   function loadMap(){
     function initialize() {
@@ -450,13 +462,13 @@ $(document).ready(function(){
       };
       var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
       var myLatlng = new google.maps.LatLng(-22.363882,131.044922);
-      
+
       var marker = new google.maps.Marker({
         position: myLatlng,
         map: map
       });
     }
-    
+
     initialize();
   }
 })

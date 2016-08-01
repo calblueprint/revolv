@@ -1,0 +1,93 @@
+@import "revolv/static/scss/include/utils.scss";
+@import "revolv/static/scss/include/foundation-settings.scss";
+@import "node_modules/foundation-sites/scss/foundation.scss";
+@import "revolv/static/scss/include/revolv-settings.scss";
+@import "revolv/static/scss/include/component/active-project.scss";
+body {
+    background-color: $revolv-tan-bg;
+}
+
+.spacer {
+    height: 0px !important;
+}
+
+
+
+.divider-title {
+    font-size: 24px;
+    margin: 30px auto;
+    width: 75%;
+    color: $revolv-dark-blue;
+    font-weight: 100;
+     margin-top:110px;
+    @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-dark-blue, $bg-color: $revolv-tan-bg);
+
+    margin-bottom: 1.5em; // override
+    &.heading-error {
+        color: $revolv-red;
+        @include text-with-divider($revolv-signin-header-font-size, $divider-color: $revolv-red, $bg-color: $revolv-tan-bg);
+        margin-bottom: 1.5em; // override
+    }
+}
+
+.about {
+    position: relative;
+    width: 600px;
+    text-align: center;
+    color: $revolv-about-font-color;
+    padding-top:150px;
+    .about-inset {
+        margin: 0 auto;
+        padding: 30px 30px;
+    }
+    h2{
+        font-size: 36px;
+        line-height: 36px;
+        color: $revolv-about-font-color;
+    }
+}
+
+.button {
+    height: auto;
+    line-height: initial;
+    font-size: 24px;
+    border-radius: 5px;
+    color: white;
+    margin: 30px auto;
+}
+.donate {
+    background-color: #1bb580;
+}
+.donate:hover {
+    background-color: #137F5A;
+}
+
+// --- Mobile Responsiveness Styles ------------------------------------------------------
+
+@media #{$small-only} {
+    .about {
+        width: 100%;
+        h2 {
+            font-size: 20px;
+            line-height: 30px;
+        }
+    }
+    .button {
+        margin-top: 10px;
+        font-size: 16px;
+        width: 80%;
+    }
+
+    .divider-title {
+        font-size: 18px;
+        width: 90%;
+        margin-top:110px;
+    }
+}
+
+@media #{$small-only}, #{$medium-only} {
+    // extra qualifiers for more specificity in order to overload non-mobile styles
+    body {
+        height: 100% !important;
+    }
+}

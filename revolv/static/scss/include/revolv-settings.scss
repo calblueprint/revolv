@@ -1,0 +1,98 @@
+// global ---------------------------------------------------------------------
+
+$revolv-logo-color-light: #02B2E2;
+$revolv-logo-color-dark: #2C398C;
+
+$revolv-light-blue-bg: #E9F6FC;
+$revolv-very-light-blue-bg: #F5FBFE;
+$revolv-gray-bg: #F9F9FA;
+$revolv-tan-bg: #EBECE7;
+
+$revolv-yellow: #F0AD4E;
+$revolv-red: #E83D3D;
+$revolv-blue: #11ADE5;
+$revolv-dark-blue: #064f7e;
+$revolv-light-blue: #1DB0E6;
+$revolv-green: #4CB032;
+$revolv-icon-blue: #9ADBF4;
+$body-font-family: "Lato", sans-serif;
+$lato-font-family: "Lato", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+
+$revolv-dashboard-orange: #fdb131;
+$revolv-dashboard-green: #0ca336;
+$revolv-dashboard-yellow: #efd700;
+$revolv-dashboard-light-blue: #afd5e0;
+
+
+// header ---------------------------------------------------------------------
+
+$revolv-header-color: rgba(4, 78, 126, 0.75);
+$revolv-header-height: rem-calc(65px);
+
+// footer ---------------------------------------------------------------------
+
+$revolv-footer-heading-font-size: 16px;
+$revolv-footer-detail-font-size: 16px;
+$revolv-footer-text-color: #EEEEEE;
+
+// homepage -------------------------------------------------------------------
+
+$revolv-shade-z-index: 1;
+
+$revolv-cover-photo-height: 550px;
+// /**
+//  * Height of the main cover photo on the homepage in mobile phone landscape AND
+//  * portrait orientations.
+//  */
+$revolv-mobile-cover-photo-height: 200px;
+
+// /**
+//  * The amount of margin betweent he different sections of the homepage (project badges
+//  * and infographic)
+// */
+$revolv-homepage-sections-margin: 40px;
+// /**
+//  * The values by which the inset of the cover photo (the part that has a description
+//  * of re-volv and "about re-volv") should be offset from the upper right corner
+//  * of the cover photo.
+//  */
+$revolv-cover-inset-top-offset: 50px;
+$revolv-cover-inset-right-offset: 50px;
+$revolv-cover-inset-min-width: 300px;
+$revolv-cover-inset-max-width: 600px;
+// /**
+//  * Font size of the title "About RE-volv"
+//  */
+$revolv-cover-inset-title-size: 64px;
+$revolv-cover-inset-title-size-mobile: 40px;
+$revolv-cover-inset-paragraph-size: 20px;
+$revolv-cover-inset-opacity: 0.7;
+
+// project badges
+$revolv-project-badge-fulfilled-color: #FECE59;
+$revolv-project-badge-unfulfilled-color: #FFF4CC;
+$revolv-project-badge-stroke-width: 20px;
+$revolv-project-badge-radius: 130px;
+$revolv-project-badge-inset-height: 65%;
+
+// stats bar
+$revolv-stat-number-font-size: 36px;
+$revolv-stat-description-font-size: 18px;
+
+// About RE-volv
+$revolv-about-font-color: #ADADA9;
+$revolv-about-inset-title-size: 48px;
+$revolv-about-inset-paragraph-size: 20px;
+
+// homepage animation's navigation spine
+$revolv-first-item-dark-blue: #044E7E;
+$revolv-second-item-light-blue: #1DB0E6;
+$revolv-third-item-yellow: #F0AD4E;
+
+
+// signin page -------------------------------------------------------------------
+$revolv-signin-header-font-size: 25px;
+$revolv-error-color: #F46B7B;
+
+// dashboard ---------------------------------------------------------------------
+$revolv-dashboard-header-height: 55px;

@@ -6,7 +6,7 @@
 
 {% block head %}
 
-    <link rel="stylesheet" type="text/css" href="{% static "projects-list.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dist/css/pages/projects-list/index.css' %}">
 
     <script type="text/javascript" src="{% static "js/vendor/d3.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/base/util/util.js" %}"></script>
@@ -52,7 +52,7 @@
                 <!-- Call to action -->
                 {% if not is_reinvestment %}
                 <h2>{{ settings.revolv_cms.ActiveProjectsPageSettings.join_the_movement }}</h2>
-                <a href="{% url "project:new" %}" class="donate button">{{ settings.revolv_cms.ActiveProjectsPageSettings.start_funding_button_text }}</a>
+                <a href="mailto:info@re-volv.org" class="donate button">{{ settings.revolv_cms.ActiveProjectsPageSettings.start_funding_button_text }}</a>
                 {% endif %}
             </div>
         </div>

@@ -4,7 +4,7 @@
 {% block title %}Sign in | {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static "auth.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "dist/css/pages/auth/index.css" %}">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" >
 {% endblock %}
 
@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="contents top150">
+<div class="contents top150 auth">
 
 <div class="login" {% if referring_endpoint == "signup" or referring_endpoint == "" %}style="display: none"{% endif %}>
   <div class="row">
@@ -36,6 +36,7 @@
         <br/>
         <p>If you're new here, please <a class="component-link" data-component="signup">create an account</a>.</p>
         <p>If you forgot your password, you can <a id="password_reset_link" href="/password_reset/">reset it here</a>.</p>
+        <br/>
     </div>
     <div class="col-md-3 col-md-push-3 col-sm-push-2 col-sm-6">
         <form action="/login/" method="post" id="login_form">
@@ -57,20 +58,13 @@
         </form>
 
         <div class="social-login-buttons">
-                <p class="slb-title">Or login with your social account below:</p>
+                <p class="slb-title">Or login with your Google account below:</p>
                 <br/>
             <a href="{% url "social:begin" "google-oauth2" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
                         {% else %}{% url "home" %}{% endif %}" class="slb-btn-google">
                 <button class="row slb_socialButtons slb-google">
                     <i class="fa fa-google-plus visible-xs"></i>
                     <span class="hidden-xs">Google</span>
-                </button>
-            </a>
-            <a href="{% url "social:begin" "facebook" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
-                        {% else %}{% url "home" %}{% endif %}" class="slb-btn-facebook">
-                <button class="row slb_socialButtons slb-facebook">
-                    <i class="fa fa-facebook visible-xs"></i>
-                    <span class="hidden-xs">Facebook</span>
                 </button>
             </a>
         </div>
@@ -87,20 +81,13 @@
         <br/>
         <p>Already have an account? Log in <a class="component-link" data-component="login">here</a>.</p>
         <br/>
-        <p>Or you can login with your social account below</p>
+        <p>Or you can login with your Google account below:</p>
         <div class="social-login-buttons">
                 <a href="{% url "social:begin" "google-oauth2" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
                         {% else %}{% url "home" %}{% endif %}" class="slb-btn-google">
                     <button class="row slb_socialButtons slb-google">
                         <i class="fa fa-google-plus visible-xs"></i>
                         <span class="hidden-xs">Google</span>
-                    </button>
-                </a>
-                <a href="{% url "social:begin" "facebook" %}?next={% if login_redirect_url %}{{ login_redirect_url }}
-                        {% else %}{% url "home" %}{% endif %}" class="slb-btn-facebook">
-                    <button class="row slb_socialButtons slb-facebook">
-                        <i class="fa fa-facebook visible-xs"></i>
-                        <span class="hidden-xs">Facebook</span>
                     </button>
                 </a>
         </div>
@@ -129,9 +116,6 @@
             </div>
             <div class="form-group">
               {% include "base/partials/placeholder_formfield.html" with field=signup_form.email %}
-            </div>
-            <div class="form-group">
-              {% include "base/partials/placeholder_formfield.html" with field=signup_form.address %}
             </div>
             <div class="form-group">
               <label class="checkbox-field-label">

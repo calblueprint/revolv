@@ -5,31 +5,28 @@
 {% endcomment %}
 {% load staticfiles revolv_cms_tags %}
 
-<header class="header after-scroll-header">
+<header class="header after-scroll-header {% block "header-classes" %}{% endblock "header-classes" %}">
   <div class="container">
     <div class="lefts pull-left">
       <a href="/" class="logo"></a>
     </div>
+    {% block "extra-header" %}{% endblock %}
     <!-- end .logo -->
     <div class="rights pull-right">
-      <div class="txt pull-left">
+      <div class="pull-left">
 
         {% if request.user.is_authenticated %}
           <li class="user-controls has-dropdown">
-            <span class="block"><a href="{% url "dashboard" %}">Dashboard</a></span>
-            <span class="block"><a href="{% url "logout" %}">Sign Out</a></li>
+            <a href="{% url 'dashboard' %}" class="btn-blue pull-left btn-donate">MY PORTFOLIO</a>
+            <a href="{% url 'logout' %}" class="btn-blue pull-left btn-donate">SIGN OUT</a>
           </li>
           {% else %}
-            <span class="block"><a class="component-link" data-component="signup" href="{% url "signin" %}#signup">Sign Up</a> here</span>
-            <span class="block"><a class="component-link" data-component="login" href="{% url "signin" %}#login">Sign In</a></span>
+          <a href="{% url 'signin' %}#signup" class="component-link btn-blue pull-left btn-donate" data-component="signup">SIGN UP</a>
+          <a href="{% url 'signin' %}#login" class="component-link btn-blue pull-left btn-donate" data-component="login">SIGN IN</a>
         {% endif %}
 
       </div>
-      {% if project %}
-        <a href="#" class="btn-blue btn-donate pull-left" data-toggle="modal" data-target="#donate-modal">DONATE NOW</a>
-      {% else %}
-        <a href="/get-involved.html" class="btn-blue btn-donate pull-left">DONATE NOW</a>
-      {% endif %}
+        <a href="{% url 'projects_list' %}" class="btn-blue btn-donate pull-left">DONATE NOW</a>
     </div>
   </div>
 </header>

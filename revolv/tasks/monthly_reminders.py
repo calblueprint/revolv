@@ -1,7 +1,7 @@
 from revolv.base.models import RevolvUserProfile
 from revolv.lib.mailer import send_revolv_email
-from revolv.settings import SITE_URL
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from sesame import utils
 
@@ -18,6 +18,7 @@ def user_reinvestment_reminder():
     2. For each user send updated email
 
     """
+    SITE_URL = settings.SITE_URL
     project_reinvest_list_url = SITE_URL + reverse('project:reinvest_list')
     unsubscribe_update_url = SITE_URL + reverse('unsubscribe', kwargs={'action': 'updates'})
     for user in RevolvUserProfile.objects.filter(reinvest_pool__gt=0.0, subscribed_to_updates=True):

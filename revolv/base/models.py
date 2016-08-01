@@ -8,6 +8,7 @@ from revolv.base.utils import get_group_by_name, get_profile
 from revolv.lib.utils import ImportProxy
 from revolv.payments.models import Payment
 
+
 class RevolvUserProfileManager(models.Manager):
     def create_user(self, *args, **kwargs):
         """
@@ -137,3 +138,6 @@ class RevolvUserProfile(FacebookModel):
         if len(name.strip()) == 0:
             name = self.user.username
         return name
+
+    def __unicode__(self):
+        return self.get_full_name()

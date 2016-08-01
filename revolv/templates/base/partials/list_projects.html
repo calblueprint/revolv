@@ -1,4 +1,4 @@
-{% load static %}
+{% load static humanize %}
 
 <div class="active-projects-module animated embedded">
   <div class="container">
@@ -13,39 +13,38 @@
                     {{ active_project.title }}
                 </span>
               </span>
-              <img src="{% static 'images/active-projects-img1.jpg' %}" class="desktop-img" alt="Active Projects">
-              <img src="{% static 'images/mobile/mobile-active-projects-img1.jpg' %}" class="mobile-img" alt="Active Projects">
+              <div class="img" style="background-image:url({% static 'images/solar-panels.jpg' %})"></div>
             </a>
             <div class="funded-round">
               <div class="status-circular">
                 <span class="status-text">
-                  <span class="round-depict">FUNDED</span>               
+                  <span class="round-depict"><span>OF</span> ${{ active_project.funding_goal|floatformat:0|intcomma }}</span>
                 </span>
                 <!-- end .status-text -->
                 <div class="status-indicator desktop-circle">
                   <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="105" data-height="105" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".24">
-                </div>   
+                </div>
                 <div class="status-indicator small-circle">
                   <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="92" data-height="92" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".2">
-                </div>   
+                </div>
                 <div class="status-indicator tablet-circle">
                   <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="200" data-height="200" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
-                </div>    
+                </div>
                 <div class="status-indicator mobile-circle">
                   <input type="text" value="{{ active_project.percent_complete }}" data-min="0" data-width="98" data-height="98" data-bgcolor="#fff" data-fgcolor="#14b1e7" data-max="100" data-readonly="true" data-thickness=".12">
-                </div>                              
+                </div>
               </div>
             </div>
           </div>
           <!-- end .img-main -->
           <div class="info-main">
             <div class="blue-bar">
-              <span class="pull-left">${{ active_project.amount_donated }}</span>
+              <span class="pull-left">${{ active_project.amount_donated|floatformat:"0"|intcomma }}</span>
               <span class="pull-right">{{ active_project.days_left }} Days Left</span>
             </div>
             <!-- end .blue-bar -->
             <div class="dark-blue-bar">
-              <span class="pull-left">{{ active_project.actual_energy }} kwH Saved</span>
+              <span class="pull-left actual-energy">{{ active_project.actual_energy }} lbs CO<sub>2</sub></span>
               <span class="pull-right">{{ active_project.donors.count }} Donors</span>
             </div>
             <!-- end .blue-bar -->

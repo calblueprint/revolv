@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from revolv.lib.utils import ImportProxy
 
@@ -62,6 +63,9 @@ class AdminRepayment(models.Model):
 
     objects = AdminRepaymentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminRepaymentFactories")
+
+    def __unicode__(self):
+        return '%s for %s' % (self.amount, self.project)
 
 
 class AdminReinvestmentManager(models.Manager):
@@ -128,6 +132,9 @@ class AdminReinvestment(models.Model):
     objects = AdminReinvestmentManager()
     factories = ImportProxy("revolv.payments.factories", "AdminReinvestmentFactories")
 
+    def __unicode__(self):
+        return '%s for %s' % (self.amount, self.project)
+
 
 class PaymentTypeManager(models.Manager):
     """
@@ -145,6 +152,11 @@ class PaymentTypeManager(models.Manager):
         if queryset is None:
             queryset = super(PaymentTypeManager, self).get_queryset()
         return queryset.get(name=PaymentType._PAYPAL)
+
+    def get_stripe(self, queryset=None):
+        if queryset is None:
+            queryset = super(PaymentTypeManager, self).get_queryset()
+        return queryset.get(name=PaymentType._STRIPE)
 
     def get_reinvestment_fragment(self, queryset=None):
         """Return the PaymentTypeManager for reinvestment_fragment payments."""
@@ -178,6 +190,7 @@ class PaymentType(models.Model):
         already completed projects.
     """
     _PAYPAL = 'paypal'
+    _STRIPE = 'stripe'
     _CHECK = 'check'
     _REINVESTMENT = 'reinvestment_fragment'
 
@@ -190,8 +203,15 @@ class PaymentType(models.Model):
         return self.objects.get_paypal()
 
     @property
+    def stripe(self):
+        return self.objects.get_stripe()
+
+    @property
     def reinvestment_fragment(self):
         return self.objects.get_reinvestment_fragment()
+
+    def __unicode__(self):
+        return self.name
 
 
 class RepaymentFragmentManager(models.Manager):
@@ -252,6 +272,9 @@ class RepaymentFragment(models.Model):
 
     objects = RepaymentFragmentManager()
     factories = ImportProxy("revolv.payments.factories", "RepaymentFragmentFactories")
+
+    def __unicode__(self):
+        return '%s to %s for %s' % (self.amount, self.user, self.project)
 
 
 class UserReinvestmentManager(models.Manager):
@@ -493,6 +516,9 @@ class Payment(models.Model):
     def is_organic(self):
         return self.user == self.entrant
 
+    def __unicode__(self):
+        return '%s from %s for %s' % (self.amount, self.user, self.project)
+
 
 class ProjectMontlyRepaymentConfig(models.Model):
     """
@@ -510,3 +536,18 @@ class ProjectMontlyRepaymentConfig(models.Model):
     repayment_type = models.CharField(max_length=3, choices=REPAYMENT_TYPE_CHOICES)
     amount = models.FloatField()
     factories = ImportProxy('revolv.payments.factories', 'ProjectMontlyRepaymentConfigFactory')
+
+    def __unicode__(self):
+        return '%s %s in %s for %s' % (self.repayment_type, self.amount, self.year, self.project)
+
+
+class Tip(models.Model):
+    """
+        Percentage of payment user elects to add to donation toward Revolv overhead costs
+    """
+    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+    user = models.ForeignKey('base.RevolvUserProfile')
+    amount = models.FloatField()
+
+    def __unicode__(self):
+        return 'Tip of %s from %s at %s' % (self.amount, self.user, self.timestamp)
